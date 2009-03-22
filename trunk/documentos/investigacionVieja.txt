@@ -1,0 +1,31 @@
+La investigación a realizarse en el presente proyecto,  se llevará a cabo, tomando en cuenta diversas fuentes de información,  herramientas de investigación y conocimientos propios para el diseño y desarrollo del   sistema.
+
+Fuentes de Información: 
+Entre las fuentes de información que se  tienen, se puede mencionar:  
+1.	Personal de la Unidad de Hardware del Departamento de la UES-FMO.
+•	Lic. José Antonio Madrid
+•	Ing. Luis Alonso Barrera
+
+2.	Estudiantes de la carrera de Ingeniería de Sistemas Informáticos usuarios del Laboratorio de cómputo a cargo de la Unidad de Hardware.
+
+3.	Consulta de material bibliográfico, tales como:
+•	Tesis
+•	Libros
+•	Folletos
+•	Revistas
+•	Sitios Web
+Herramientas de Investigación: 
+Para el desarrollo de la  investigación en lo que se refiere a la recolección de información, se utilizarán diferentes medios, entre los que se mencionan:  
+
+1.  Entrevistas: 
+Entrevista es una forma de comunicación interpersonal, que tiene por  objeto proporcionar o recabar información  a través de preguntas y  respuestas directas, y en virtud de las cuales se toman determinadas decisiones. 
+Esta herramienta se utilizará para establecer  una comunicación más directa con el personal docente y administrativo de las distintas instituciones educativas,  así como otras instituciones  afines; con la finalidad de conocer la situación actual, profundizar en ciertos aspectos de interés y obtener información relevante para el desarrollo del presente trabajo de grado.   
+
+2.  Cuestionarios:   
+Es una forma o técnica de recabar información que permite estudiar: actitudes, creencias, comportamientos y características de  una o muchas personas.  
+Estas herramientas de recolección de información se realizaran con el fin de economizar tiempo a los objetos de estudio  y enfocar preguntas más específicas respecto a su objetivo.  
+Para el diseño de esta herramienta se tomaran en cuenta varios aspectos, a saber:  
+•	Formulación de preguntas abiertas, en las situaciones en las que se necesite ampliación del tema.  
+•	Formulación de preguntas dicotómicas (SI o NO)  
+•	Redacción de preguntas de selección múltiple, con el fin de que el cuestionario  tenga una gama de alternativas como respuestas.
+ 
