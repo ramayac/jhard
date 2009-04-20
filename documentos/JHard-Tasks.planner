@@ -20,7 +20,7 @@
     </calendar>
   </calendars>
   <tasks>
-    <task id="1" name="Desarrollo del anteproyecto" note="" work="0" duration="921600" start="20090305T000000Z" end="20090417T170000Z" work-start="20090305T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+    <task id="1" name="Desarrollo del anteproyecto" note="" work="0" duration="892800" start="20090305T000000Z" end="20090416T170000Z" work-start="20090305T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
       <task id="2" name="Analisis de requerimientos del proyecto" note="" work="0" duration="489600" start="20090305T000000Z" end="20090327T170000Z" work-start="20090305T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
         <task id="3" name="Entrevistas con los usuarios finales" note="" work="0" duration="230400" start="20090305T000000Z" end="20090316T170000Z" work-start="20090305T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
         <task id="4" name="Entrevistas con el administrador de los servidores" note="" work="0" duration="86400" start="20090306T000000Z" end="20090310T170000Z" work-start="20090306T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
@@ -58,168 +58,171 @@
           <constraint type="must-start-on" time="20090316T000000Z"/>
         </task>
       </task>
-      <task id="13" name="Revisiones y correcciones de los usuarios finales" note="" work="0" duration="576000" start="20090323T000000Z" end="20090417T170000Z" work-start="20090323T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+      <task id="13" name="Revisiones y correcciones de los usuarios finales" note="" work="0" duration="547200" start="20090323T000000Z" end="20090416T170000Z" work-start="20090323T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
         <constraint type="start-no-earlier-than" time="20090323T000000Z"/>
       </task>
     </task>
-    <task id="14" name="Entrega y defensa del anteproyecto" note="" work="0" duration="28800" start="20090417T170000Z" end="20090420T170000Z" work-start="20090420T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+    <task id="14" name="Entrega y defensa del anteproyecto" note="" work="0" duration="28800" start="20090417T000000Z" end="20090417T170000Z" work-start="20090417T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
       <constraint type="start-no-earlier-than" time="20090417T000000Z"/>
       <predecessors>
         <predecessor id="1" predecessor-id="13" type="FS"/>
       </predecessors>
     </task>
-    <task id="15" name="Desarrollo de la propuesta de software" note="" work="432000" duration="2131200" start="20090420T170000Z" end="20090731T170000Z" work-start="20090421T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+    <task id="15" name="Elaboracion del documento de tesis" note="" work="28800" duration="2160000" start="20090420T000000Z" end="20090731T170000Z" work-start="20090420T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-duration">
+      <constraint type="start-no-earlier-than" time="20090420T000000Z"/>
+    </task>
+    <task id="16" name="Desarrollo de la propuesta de software" note="" work="432000" duration="2160000" start="20090417T170000Z" end="20090731T170000Z" work-start="20090420T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
       <predecessors>
         <predecessor id="1" predecessor-id="14" type="FS"/>
       </predecessors>
-      <task id="16" name="Dise&#xF1;o de prototipos de interfaces de usuarios" note="" work="0" duration="144000" start="20090420T170000Z" end="20090427T170000Z" work-start="20090421T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+      <task id="17" name="Dise&#xF1;o de prototipos de interfaces de usuarios" note="" work="0" duration="144000" start="20090417T170000Z" end="20090424T170000Z" work-start="20090420T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
         <constraint type="start-no-earlier-than" time="20090323T080000Z"/>
       </task>
-      <task id="17" name="Dise&#xF1;o del diagrama entidad-relacion" note="" work="0" duration="144000" start="20090421T000000Z" end="20090427T170000Z" work-start="20090421T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+      <task id="18" name="Dise&#xF1;o del diagrama entidad-relacion" note="" work="0" duration="144000" start="20090421T000000Z" end="20090427T170000Z" work-start="20090421T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
         <constraint type="must-start-on" time="20090421T000000Z"/>
       </task>
-      <task id="18" name="Definicion del diccionario de datos" note="" work="0" duration="86400" start="20090427T170000Z" end="20090430T170000Z" work-start="20090428T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+      <task id="19" name="Definicion del diccionario de datos" note="" work="0" duration="86400" start="20090427T170000Z" end="20090430T170000Z" work-start="20090428T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
         <constraint type="start-no-earlier-than" time="20090320T130000Z"/>
         <predecessors>
-          <predecessor id="1" predecessor-id="17" type="FS"/>
+          <predecessor id="1" predecessor-id="18" type="FS"/>
         </predecessors>
       </task>
-      <task id="19" name="Dise&#xF1;o de diagramas UML" note="" work="0" duration="201600" start="20090423T000000Z" end="20090501T170000Z" work-start="20090423T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
-        <task id="20" name="Dise&#xF1;o del diagrama de casos de uso" note="" work="0" duration="86400" start="20090423T000000Z" end="20090427T170000Z" work-start="20090423T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+      <task id="20" name="Dise&#xF1;o de diagramas UML" note="" work="0" duration="201600" start="20090423T000000Z" end="20090501T170000Z" work-start="20090423T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+        <task id="21" name="Dise&#xF1;o del diagrama de casos de uso" note="" work="0" duration="86400" start="20090423T000000Z" end="20090427T170000Z" work-start="20090423T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
           <constraint type="must-start-on" time="20090423T000000Z"/>
         </task>
-        <task id="21" name="Dise&#xF1;o del diagrama de estados" note="" work="0" duration="57600" start="20090423T000000Z" end="20090424T170000Z" work-start="20090423T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+        <task id="22" name="Dise&#xF1;o del diagrama de estados" note="" work="0" duration="57600" start="20090423T000000Z" end="20090424T170000Z" work-start="20090423T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
           <constraint type="must-start-on" time="20090423T000000Z"/>
         </task>
-        <task id="22" name="Dise&#xF1;o del diagrama de clases" note="" work="0" duration="144000" start="20090427T000000Z" end="20090501T170000Z" work-start="20090427T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+        <task id="23" name="Dise&#xF1;o del diagrama de clases" note="" work="0" duration="144000" start="20090427T000000Z" end="20090501T170000Z" work-start="20090427T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
           <constraint type="start-no-earlier-than" time="20090427T000000Z"/>
         </task>
       </task>
-      <task id="23" name="Desarrollo de la base de datos" note="" work="0" duration="288000" start="20090427T170000Z" end="20090511T170000Z" work-start="20090428T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+      <task id="24" name="Desarrollo de la base de datos" note="" work="0" duration="288000" start="20090427T170000Z" end="20090511T170000Z" work-start="20090428T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
         <predecessors>
-          <predecessor id="1" predecessor-id="17" type="FS"/>
+          <predecessor id="1" predecessor-id="18" type="FS"/>
         </predecessors>
       </task>
-      <task id="24" name="Insercion de valores de prueba a la base de datos" note="" work="0" duration="144000" start="20090511T170000Z" end="20090518T170000Z" work-start="20090512T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+      <task id="25" name="Insercion de valores de prueba a la base de datos" note="" work="0" duration="144000" start="20090511T170000Z" end="20090518T170000Z" work-start="20090512T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
         <predecessors>
-          <predecessor id="1" predecessor-id="23" type="FS"/>
+          <predecessor id="1" predecessor-id="24" type="FS"/>
         </predecessors>
       </task>
-      <task id="25" name="Desarrollo de la capa de acceso a datos" note="" work="0" duration="57600" start="20090511T170000Z" end="20090513T170000Z" work-start="20090512T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+      <task id="26" name="Desarrollo de la capa de acceso a datos" note="" work="0" duration="57600" start="20090511T170000Z" end="20090513T170000Z" work-start="20090512T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
         <predecessors>
-          <predecessor id="1" predecessor-id="23" type="FS"/>
+          <predecessor id="1" predecessor-id="24" type="FS"/>
         </predecessors>
       </task>
-      <task id="26" name="Desarrollo de la capa de negocio" note="" work="432000" duration="691200" start="20090513T170000Z" end="20090616T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+      <task id="27" name="Desarrollo de la capa de negocio" note="" work="432000" duration="691200" start="20090513T170000Z" end="20090616T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
         <predecessors>
-          <predecessor id="1" predecessor-id="25" type="FS"/>
+          <predecessor id="1" predecessor-id="26" type="FS"/>
         </predecessors>
-        <task id="27" name="Desarrollo del modulo de seguridad" note="" work="432000" start="20090513T170000Z" end="20090616T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-          <task id="28" name="Definicion de roles de acceso" note="" work="28800" start="20090513T170000Z" end="20090514T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-          <task id="29" name="Asignacion de roles de acceso a los modulos y servicios" note="" work="86400" start="20090513T170000Z" end="20090518T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-          <task id="30" name="Integracion del modulo de seguridad a las interfaces individuales" note="" work="144000" start="20090609T170000Z" end="20090616T170000Z" work-start="20090610T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <task id="28" name="Desarrollo del modulo de seguridad" note="" work="432000" start="20090513T170000Z" end="20090616T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <task id="29" name="Definicion de roles de acceso" note="" work="28800" start="20090513T170000Z" end="20090514T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+          <task id="30" name="Asignacion de roles de acceso a los modulos y servicios" note="" work="86400" start="20090513T170000Z" end="20090518T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+          <task id="31" name="Integracion del modulo de seguridad a las interfaces individuales" note="" work="144000" start="20090609T170000Z" end="20090616T170000Z" work-start="20090610T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
             <predecessors>
-              <predecessor id="1" predecessor-id="49" type="FS"/>
-              <predecessor id="1" predecessor-id="45" type="FS"/>
-              <predecessor id="1" predecessor-id="41" type="FS"/>
-              <predecessor id="1" predecessor-id="37" type="FS"/>
-              <predecessor id="1" predecessor-id="33" type="FS"/>
+              <predecessor id="1" predecessor-id="50" type="FS"/>
+              <predecessor id="1" predecessor-id="46" type="FS"/>
+              <predecessor id="1" predecessor-id="42" type="FS"/>
+              <predecessor id="1" predecessor-id="38" type="FS"/>
+              <predecessor id="1" predecessor-id="34" type="FS"/>
             </predecessors>
           </task>
-          <task id="31" name="Desarrollo de las pantallas de login/logout" note="" work="28800" start="20090518T000000Z" end="20090518T170000Z" work-start="20090518T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <task id="32" name="Desarrollo de las pantallas de login/logout" note="" work="28800" start="20090518T000000Z" end="20090518T170000Z" work-start="20090518T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
             <constraint type="must-start-on" time="20090518T000000Z"/>
           </task>
-          <task id="32" name="Desarrollo de la pantalla de mantenimiento de usuarios y roles" note="" work="144000" start="20090518T000000Z" end="20090522T170000Z" work-start="20090518T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+          <task id="33" name="Desarrollo de la pantalla de mantenimiento de usuarios y roles" note="" work="144000" start="20090518T000000Z" end="20090522T170000Z" work-start="20090518T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
             <constraint type="must-start-on" time="20090518T000000Z"/>
           </task>
         </task>
-        <task id="33" name="Desarrollo del modulo de peticiones de servicios" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
-          <task id="34" name="Desarrollo de las clases de negocio" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
-          <task id="35" name="Desarrollo de las interfaces individuales" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
-          <task id="36" name="Desarrollo y ejecucion de pruebas unitarias" note="" work="0" duration="288000" start="20090513T170000Z" end="20090527T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
+        <task id="34" name="Desarrollo del modulo de peticiones de servicios" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+          <task id="35" name="Desarrollo de las clases de negocio" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
+          <task id="36" name="Desarrollo de las interfaces individuales" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
+          <task id="37" name="Desarrollo y ejecucion de pruebas unitarias" note="" work="0" duration="288000" start="20090513T170000Z" end="20090527T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
         </task>
-        <task id="37" name="Desarrollo del modulo de admon. de grupos de laboratorio" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
-          <task id="38" name="Desarrollo de las clases de negocio" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
-          <task id="39" name="Desarrollo de las interfaces individuales" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
-          <task id="40" name="Desarrollo y ejecucion de las pruebas unitarias" note="" work="0" duration="288000" start="20090513T170000Z" end="20090527T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
+        <task id="38" name="Desarrollo del modulo de admon. de grupos de laboratorio" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+          <task id="39" name="Desarrollo de las clases de negocio" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
+          <task id="40" name="Desarrollo de las interfaces individuales" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
+          <task id="41" name="Desarrollo y ejecucion de las pruebas unitarias" note="" work="0" duration="288000" start="20090513T170000Z" end="20090527T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
         </task>
-        <task id="41" name="Desarrollo del modulo de inventario" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
-          <task id="42" name="Desarrollo de las clases de negocio" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
-          <task id="43" name="Desarrollo de las interfaces individuales " note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
-          <task id="44" name="Desarrollo y ejecucion de las pruebas unitarias" note="" work="0" duration="288000" start="20090513T170000Z" end="20090527T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
+        <task id="42" name="Desarrollo del modulo de inventario" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+          <task id="43" name="Desarrollo de las clases de negocio" note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
+          <task id="44" name="Desarrollo de las interfaces individuales " note="" work="0" duration="432000" start="20090513T170000Z" end="20090603T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
+          <task id="45" name="Desarrollo y ejecucion de las pruebas unitarias" note="" work="0" duration="288000" start="20090513T170000Z" end="20090527T170000Z" work-start="20090514T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
         </task>
-        <task id="45" name="Desarrollo del modulo de promocion de cursos" note="" work="0" duration="432000" start="20090520T000000Z" end="20090609T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+        <task id="46" name="Desarrollo del modulo de promocion de cursos" note="" work="0" duration="432000" start="20090520T000000Z" end="20090609T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
           <constraint type="start-no-earlier-than" time="20090609T080000Z"/>
-          <task id="46" name="Desarrollo de las clases de negocio" note="" work="0" duration="432000" start="20090520T000000Z" end="20090609T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+          <task id="47" name="Desarrollo de las clases de negocio" note="" work="0" duration="432000" start="20090520T000000Z" end="20090609T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
             <constraint type="must-start-on" time="20090520T000000Z"/>
           </task>
-          <task id="47" name="Desarrollo de las interfaces individuales" note="" work="0" duration="432000" start="20090520T000000Z" end="20090609T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+          <task id="48" name="Desarrollo de las interfaces individuales" note="" work="0" duration="432000" start="20090520T000000Z" end="20090609T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
             <constraint type="must-start-on" time="20090520T000000Z"/>
           </task>
-          <task id="48" name="Desarrollo y ejecucion de las pruebas unitarias" note="" work="0" duration="288000" start="20090520T000000Z" end="20090602T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+          <task id="49" name="Desarrollo y ejecucion de las pruebas unitarias" note="" work="0" duration="288000" start="20090520T000000Z" end="20090602T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
             <constraint type="must-start-on" time="20090520T000000Z"/>
           </task>
         </task>
-        <task id="49" name="Desarrollo del modulo de reserva de equipo multimedia" note="" work="0" duration="432000" start="20090520T000000Z" end="20090609T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+        <task id="50" name="Desarrollo del modulo de reserva de equipo multimedia" note="" work="0" duration="432000" start="20090520T000000Z" end="20090609T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
           <constraint type="start-no-earlier-than" time="20090609T130000Z"/>
-          <task id="50" name="Desarrollo de las clases de negocio" note="" work="0" duration="432000" start="20090520T000000Z" end="20090609T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+          <task id="51" name="Desarrollo de las clases de negocio" note="" work="0" duration="432000" start="20090520T000000Z" end="20090609T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
             <constraint type="must-start-on" time="20090520T000000Z"/>
           </task>
-          <task id="51" name="Desarrollo de las interfaces individuales" note="" work="0" duration="432000" start="20090520T000000Z" end="20090609T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+          <task id="52" name="Desarrollo de las interfaces individuales" note="" work="0" duration="432000" start="20090520T000000Z" end="20090609T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
             <constraint type="must-start-on" time="20090520T000000Z"/>
           </task>
-          <task id="52" name="Desarrollo y ejecucion de las pruebas unitarias" note="" work="0" duration="288000" start="20090520T000000Z" end="20090602T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+          <task id="53" name="Desarrollo y ejecucion de las pruebas unitarias" note="" work="0" duration="288000" start="20090520T000000Z" end="20090602T170000Z" work-start="20090520T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
             <constraint type="must-start-on" time="20090520T000000Z"/>
           </task>
         </task>
       </task>
-      <task id="53" name="Desarrollo de la interfaz general del usuario" note="" work="0" duration="288000" start="20090616T170000Z" end="20090630T170000Z" work-start="20090617T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+      <task id="54" name="Desarrollo de la interfaz general del usuario" note="" work="0" duration="288000" start="20090616T170000Z" end="20090630T170000Z" work-start="20090617T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
         <constraint type="start-no-earlier-than" time="20090406T080000Z"/>
         <predecessors>
-          <predecessor id="1" predecessor-id="26" type="FS"/>
+          <predecessor id="1" predecessor-id="27" type="FS"/>
         </predecessors>
-        <task id="54" name="Integracion de modulos en una interfaz comun" note="" work="0" duration="288000" start="20090616T170000Z" end="20090630T170000Z" work-start="20090617T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
-        <task id="55" name="Desarrollo de la API de servicios web" note="" work="0" duration="288000" start="20090616T170000Z" end="20090630T170000Z" work-start="20090617T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
+        <task id="55" name="Integracion de modulos en una interfaz comun" note="" work="0" duration="288000" start="20090616T170000Z" end="20090630T170000Z" work-start="20090617T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
+        <task id="56" name="Desarrollo de la API de servicios web" note="" work="0" duration="288000" start="20090616T170000Z" end="20090630T170000Z" work-start="20090617T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
       </task>
-      <task id="56" name="Testing y correccion de errores" note="" work="0" duration="432000" start="20090616T170000Z" end="20090707T170000Z" work-start="20090617T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+      <task id="57" name="Testing y correccion de errores" note="" work="0" duration="432000" start="20090616T170000Z" end="20090707T170000Z" work-start="20090617T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
         <predecessors>
-          <predecessor id="1" predecessor-id="26" type="FS"/>
+          <predecessor id="1" predecessor-id="27" type="FS"/>
         </predecessors>
       </task>
-      <task id="57" name="Pruebas funcionales por parte de los usuarios" note="" work="0" duration="288000" start="20090630T170000Z" end="20090714T170000Z" work-start="20090701T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+      <task id="58" name="Pruebas funcionales por parte de los usuarios" note="" work="0" duration="288000" start="20090630T170000Z" end="20090714T170000Z" work-start="20090701T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
         <constraint type="start-no-earlier-than" time="20090504T080000Z"/>
         <predecessors>
-          <predecessor id="1" predecessor-id="53" type="FS"/>
+          <predecessor id="1" predecessor-id="54" type="FS"/>
         </predecessors>
       </task>
-      <task id="58" name="Margen de tiempo para posibles retrasos en el desarrollo" note="" work="0" duration="720000" start="20090629T000000Z" end="20090731T170000Z" work-start="20090629T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+      <task id="59" name="Margen de tiempo para posibles retrasos en el desarrollo" note="" work="0" duration="720000" start="20090629T000000Z" end="20090731T170000Z" work-start="20090629T080000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
         <constraint type="must-start-on" time="20090629T000000Z"/>
       </task>
     </task>
-    <task id="59" name="Primera entrega de la propuesta de software" note="" work="0" duration="28800" start="20090807T160000Z" end="20090810T160000Z" work-start="20090807T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+    <task id="60" name="Primera entrega de la propuesta de software" note="" work="0" duration="28800" start="20090807T160000Z" end="20090810T160000Z" work-start="20090807T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
       <constraint type="start-no-earlier-than" time="20090807T160000Z"/>
       <predecessors>
-        <predecessor id="1" predecessor-id="15" type="FS"/>
-        <predecessor id="1" predecessor-id="53" type="FS"/>
+        <predecessor id="1" predecessor-id="16" type="FS"/>
+        <predecessor id="1" predecessor-id="54" type="FS"/>
       </predecessors>
     </task>
-    <task id="60" name="Desarrollo final de la propuesta de software" note="" work="0" duration="576000" start="20090810T160000Z" end="20090907T160000Z" work-start="20090810T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
-      <predecessors>
-        <predecessor id="1" predecessor-id="59" type="FS"/>
-      </predecessors>
-      <task id="61" name="Analisis de las observaciones recibidas de la primera entrega" note="" work="0" duration="86400" start="20090810T160000Z" end="20090813T160000Z" work-start="20090810T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
-      <task id="62" name="Desarrollo de requerimientos funcionales faltantes" note="" work="0" duration="576000" start="20090810T160000Z" end="20090907T160000Z" work-start="20090810T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
-      <task id="63" name="Correcciones de errores encontrados" note="" work="0" duration="432000" start="20090810T160000Z" end="20090831T160000Z" work-start="20090810T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
-      <task id="64" name="Elaboracion de la presentacion final" note="" work="0" duration="28800" start="20090810T160000Z" end="20090811T160000Z" work-start="20090810T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
-    </task>
-    <task id="65" name="Entrega final de la propuesta de software" note="" work="0" duration="28800" start="20090907T160000Z" end="20090908T160000Z" work-start="20090907T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+    <task id="61" name="Desarrollo final de la propuesta de software" note="" work="0" duration="432000" start="20090810T160000Z" end="20090831T160000Z" work-start="20090810T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
       <predecessors>
         <predecessor id="1" predecessor-id="60" type="FS"/>
       </predecessors>
+      <task id="62" name="Analisis de las observaciones recibidas de la primera entrega" note="" work="0" duration="86400" start="20090810T160000Z" end="20090813T160000Z" work-start="20090810T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
+      <task id="63" name="Desarrollo de requerimientos funcionales faltantes" note="" work="0" duration="432000" start="20090810T160000Z" end="20090831T160000Z" work-start="20090810T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
+      <task id="64" name="Correcciones de errores encontrados" note="" work="0" duration="432000" start="20090810T160000Z" end="20090831T160000Z" work-start="20090810T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
+      <task id="65" name="Elaboracion de la presentacion final" note="" work="0" duration="28800" start="20090810T160000Z" end="20090811T160000Z" work-start="20090810T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration"/>
     </task>
-    <task id="66" name="Defensa de la propuesta de software" note="" work="0" duration="28800" start="20090908T160000Z" end="20090909T160000Z" work-start="20090908T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+    <task id="66" name="Entrega final de la propuesta de software" note="" work="0" duration="28800" start="20090831T160000Z" end="20090901T160000Z" work-start="20090831T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
       <predecessors>
-        <predecessor id="1" predecessor-id="65" type="FS"/>
+        <predecessor id="1" predecessor-id="61" type="FS"/>
+      </predecessors>
+    </task>
+    <task id="67" name="Defensa de la propuesta de software" note="" work="0" duration="28800" start="20090901T160000Z" end="20090902T160000Z" work-start="20090901T160000Z" percent-complete="0" priority="500" type="normal" scheduling="fixed-duration">
+      <predecessors>
+        <predecessor id="1" predecessor-id="66" type="FS"/>
       </predecessors>
     </task>
   </tasks>
