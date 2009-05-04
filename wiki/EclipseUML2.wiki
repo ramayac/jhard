@@ -17,3 +17,5 @@ Para poder realizar diagramas UML2 en Eclipse Ganymede se requieren los siguient
 Hay que agregar estos repositorios (update sites) al site manager de Eclpise para poder descargarlos e instalarlos. Para ello, abrir el menu Help -> Software Updates...
 
 Aparecera el cuadro de dialogo de Software Updtes. Seleccionar la pestania Available Software y hacer clic en el boton Add site... en el nuevo cuadro de dialogo que aparece, insertar la URL del repositorio o tambien llamado update site.
+
+http://img142.imageshack.us/img142/3826/imgeclipse1.png
