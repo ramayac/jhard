@@ -24,3 +24,5 @@ Imagen del cuadro de dialogo donde agregar las URL de los repositorios a instala
 Una vez agregados los repositorios, hay que seleccionar los paquetes a para luego hacer clic en el boton Install... y seguir los pasos del asistente de la instalacion.
 
 <a href="http://img104.imageshack.us/my.php?image=eclipseuml2.png" target="_blank"><img src="http://img104.imageshack.us/img104/6935/eclipseuml2.th.png" border="0" /></a><br />Imagen de los paquetes necesarios, seleccionados y listos para instalarse.
+
+Una vez instalados los paquetes, es posible crear diagramas UML2 en eclipse. Para ello, se debe crear un nuevo proyecto Java (o de cualquier otro tipo relacionado), un nuevo paquete. Teniendo el nuevo paquete seleccionado, clic en File (o clic derecho sobre el paquete) -> New -> Other. Aparecera el siguiente cuadro de dialogo, en el cual seleccionamos la seccion UML 2.1 Diagrams en la cual aparecen todos los tipos de diagramas UML disponibles:
