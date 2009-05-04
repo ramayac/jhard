@@ -1,4 +1,5 @@
 #summary Guia para utilizar Dali e instalar el soporte para toplink en Eclipse ganymede
+#labels Featured,Phase-Implementation
 
 = Introduction =
 
