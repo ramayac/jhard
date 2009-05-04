@@ -1,0 +1,17 @@
+#summary Guia para instalar y realizar diagramas de UML2 en Eclipse Ganymede
+
+= Introduction =
+
+Esta guia resume los pasos necesarios para instalar los paquetes relacionados con y poder realizar diagramas UML usando Eclipse Ganymede.
+
+
+= Details =
+
+Para poder realizar diagramas UML2 en Eclipse Ganymede se requieren los siguientes paquetes:
+
+* Model Development Tools - MDT (el cual incluye los paquetes UML2 y OCL, el cual es requerido) Update site: [http://www.eclipse.org/modeling/mdt/updates/ Eclipse MDT]
+* Ecilpse Modeling Framework - EMF (el cual incluye los paquetes Query, Transaction y Validation que tambien so requeridos) Update site: [http://download.eclipse.org/modeling/emf/updates/releases/ Eclipse EMF]
+* Graphical Editing Framework - GEF. Update site: [http://download.eclipse.org/tools/gef/updates/releases/ Eclipse GEF]
+* Graphical Modeling Framework - GMF. Update site: [http://download.eclipse.org/modeling/gmf/updates/releases/ Eclipse GMF]
+
+
