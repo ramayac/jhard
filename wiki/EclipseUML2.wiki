@@ -13,3 +13,7 @@ Para poder realizar diagramas UML2 en Eclipse Ganymede se requieren los siguient
   * Ecilpse Modeling Framework - EMF (el cual incluye los paquetes Query, Transaction y Validation que tambien so requeridos) Update site: [http://download.eclipse.org/modeling/emf/updates/releases/ Eclipse EMF]
   * Graphical Editing Framework - GEF. Update site: [http://download.eclipse.org/tools/gef/updates/releases/ Eclipse GEF]
   * Graphical Modeling Framework - GMF. Update site: [http://download.eclipse.org/modeling/gmf/updates/releases/ Eclipse GMF]
+
+Hay que agregar estos repositorios (update sites) al site manager de Eclpise para poder descargarlos e instalarlos. Para ello, abrir el menu Help -> Software Updates...
+
+Aparecera el cuadro de dialogo de Software Updtes. Seleccionar la pestania Available Software y hacer clic en el boton Add site... en el nuevo cuadro de dialogo que aparece, insertar la URL del repositorio o tambien llamado update site.
