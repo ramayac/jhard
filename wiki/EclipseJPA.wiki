@@ -1,13 +1,18 @@
-#summary One-sentence summary of this page.
+#summary Guia para utilizar Dali e instalar el soporte para toplink en Eclipse ganymede
 
 = Introduction =
 
-Add your content here.
+Esta guia demostrara los pasos necesarios para configurar Eclipse ganymede y poder realizar mappings desde bases de datos relacionales a java beans utilizando la implementacion de JPA Toplink.
 
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+El plugin Dali viene instalado por defecto en el Web Platform Tools, incluido en Eclipse Ganymede por lo que no es necesario instalar plugins extra.
+
+Clic en el menu Window -> Preferences...
+
+En el cuadro de dialogo que aparece, navegar hasta la opcion Java -> Build Path -> User Libraries. Clic en el boton New...
+
+Escribir un nombre en el cuadro que aparece (de preferencia, llamarla 'eclipselink') y clic en OK:
+
+<a href="http://img154.imageshack.us/my.php?image=eclipsejpa1.png" target="_blank"><img src="http://img154.imageshack.us/img154/2184/eclipsejpa1.th.png" border="0"  /></a><br />
