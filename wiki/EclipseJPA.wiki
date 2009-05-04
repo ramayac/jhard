@@ -22,4 +22,6 @@ Escribir un nombre en el cuadro que aparece (de preferencia, llamarla 'eclipseli
 
 <a href="http://img154.imageshack.us/my.php?image=eclipsejpa1.png" target="_blank"><img src="http://img154.imageshack.us/img154/2184/eclipsejpa1.th.png" border="0"  /></a><br />
 
-Luego de crear esta libreria, seleccionarla y hacer clic en el boton Add Jars... seleccionar los jars llamados eclipselink.jar y javax.persistence.x.jar (x es un numero de version).
+Luego de crear esta libreria, seleccionarla y hacer clic en el boton Add Jars... seleccionar los jars llamados eclipselink.jar y javax.persistence.x.jar (x es un numero de version). Luego dar clic en el boton ok para cerrar las preferencias.
+
+Ahora, crear un nuevo proyecto de tipo JPA (File -> New -> JPA -> JPA Project). En el primer paso del asistente: escribir el nombre del proyecto, seleccionar el runtime, la configuracion y dar clic en el boton Next. En el segundo paso del asistente: seleccionar la plataforma a utilizar (eclipselink), seleccionar la conexion a utilizar, el esquema de la conexion (en caso que el gestor de bases de datos lo soporte) y la implementacion de JPA a utilizar, que en nuestro caso nada mas aparecera disponible la User Library que acabamos de crear con el nombre de eclipselink. Clic en el boton Finish.
