@@ -18,5 +18,9 @@ Hay que agregar estos repositorios (update sites) al site manager de Eclpise par
 
 Aparecera el cuadro de dialogo de Software Updtes. Seleccionar la pestania Available Software y hacer clic en el boton Add site... en el nuevo cuadro de dialogo que aparece, insertar la URL del repositorio o tambien llamado update site.
 
-<a href="http://img142.imageshack.us/my.php?image=imgeclipse1.png" target="_blank"><img src="http://img142.imageshack.us/img142/3826/imgeclipse1.th.png" border="0"  /></a>
+<a href="http://img142.imageshack.us/my.php?image=imgeclipse1.png" target="_blank"><img src="http://img142.imageshack.us/img142/3826/imgeclipse1.th.png" border="0"  /></a><br/>
 Imagen del cuadro de dialogo donde agregar las URL de los repositorios a instalar.
+
+Una vez agregados los repositorios, hay que seleccionar los paquetes a para luego hacer clic en el boton Install... y seguir los pasos del asistente de la instalacion.
+
+<a href="http://img104.imageshack.us/my.php?image=eclipseuml2.png" target="_blank"><img src="http://img104.imageshack.us/img104/6935/eclipseuml2.th.png" border="0" /></a><br />Imagen de los paquetes necesarios, seleccionados y listos para instalarse.
