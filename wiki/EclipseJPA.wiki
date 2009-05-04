@@ -2,17 +2,24 @@
 
 = Introduction =
 
-Esta guia demostrara los pasos necesarios para configurar Eclipse ganymede y poder realizar mappings desde bases de datos relacionales a java beans utilizando la implementacion de JPA Toplink.
+Esta guia demostrara los pasos necesarios para configurar Eclipse ganymede y poder realizar mappings desde bases de datos relacionales a java beans utilizando la implementacion de JPA Eclipselink.
 
 
 = Details =
 
+Descargar la implementacion de JPA llamada eclipselink del sitio: [http://www.eclipse.org/eclipselink/downloads/index.php#1.1.0 Eclipselink sitio de descarga] De preferencia, descargar la version Zip Installer.
+
+Luego, descomprimir este zip y en la carpeta descomprimida, buscar los jars llamados eclipselink.jar (en la carpeta ~/jlib/) y javax.persistence.x.jar (en la carpeta ~/jlib/jpa/) y copiarlos a una ruta absoluta de la computadora.
+
+
 El plugin Dali viene instalado por defecto en el Web Platform Tools, incluido en Eclipse Ganymede por lo que no es necesario instalar plugins extra.
 
-Clic en el menu Window -> Preferences...
+Dentro de eclipse, clic en el menu Window -> Preferences...
 
 En el cuadro de dialogo que aparece, navegar hasta la opcion Java -> Build Path -> User Libraries. Clic en el boton New...
 
 Escribir un nombre en el cuadro que aparece (de preferencia, llamarla 'eclipselink') y clic en OK:
 
 <a href="http://img154.imageshack.us/my.php?image=eclipsejpa1.png" target="_blank"><img src="http://img154.imageshack.us/img154/2184/eclipsejpa1.th.png" border="0"  /></a><br />
+
+Luego de crear esta libreria, seleccionarla y hacer clic en el boton Add Jars... seleccionar los jars llamados eclipselink.jar y javax.persistence.x.jar (x es un numero de version).
