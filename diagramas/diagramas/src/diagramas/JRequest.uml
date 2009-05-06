@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Package xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmi:id="_Z6gBoDjqEd6jBcdYa_we3w">
+  <elementImport xmi:id="_Z7s7gDjqEd6jBcdYa_we3w">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+  </elementImport>
+  <elementImport xmi:id="_Z7tikDjqEd6jBcdYa_we3w">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+  </elementImport>
+  <elementImport xmi:id="_Z7tikTjqEd6jBcdYa_we3w">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#UnlimitedNatural"/>
+  </elementImport>
+  <elementImport xmi:id="_Z7tikjjqEd6jBcdYa_we3w">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+  </elementImport>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_dEU5UDjqEd6jBcdYa_we3w" name="Usuario"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_f5r84DjqEd6jBcdYa_we3w" name="Administrador"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_kDu7cDjqEd6jBcdYa_we3w" name="Solicita Soporte Técnico">
+    <extend xmi:id="_CKjlEDjrEd6jBcdYa_we3w" extendedCase="_4eiywDjqEd6jBcdYa_we3w"/>
+    <extend xmi:id="_zcuh4DjuEd6jBcdYa_we3w" extendedCase="_szgLIDjuEd6jBcdYa_we3w"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_4eiywDjqEd6jBcdYa_we3w" name="Brinda Ayuda en línea"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_EjxfMDjrEd6jBcdYa_we3w" memberEnd="_EjxfMTjrEd6jBcdYa_we3w _EjzUYDjrEd6jBcdYa_we3w" navigableOwnedEnd="_EjxfMTjrEd6jBcdYa_we3w _EjzUYDjrEd6jBcdYa_we3w">
+    <ownedEnd xmi:id="_EjxfMTjrEd6jBcdYa_we3w" name="src" type="_dEU5UDjqEd6jBcdYa_we3w" association="_EjxfMDjrEd6jBcdYa_we3w">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_EjytUTjrEd6jBcdYa_we3w" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_EjytUDjrEd6jBcdYa_we3w" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_EjzUYDjrEd6jBcdYa_we3w" name="solicita soporte tecnico" type="_kDu7cDjqEd6jBcdYa_we3w" association="_EjxfMDjrEd6jBcdYa_we3w">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_EjzUYjjrEd6jBcdYa_we3w" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_EjzUYTjrEd6jBcdYa_we3w" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_pshzIDjuEd6jBcdYa_we3w" name="Prioriza las solicitudes"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_szgLIDjuEd6jBcdYa_we3w" name="Contesta soluciones en línea"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_vRDLoDjuEd6jBcdYa_we3w" memberEnd="_vRDysDjuEd6jBcdYa_we3w _vREZwDjuEd6jBcdYa_we3w" navigableOwnedEnd="_vRDysDjuEd6jBcdYa_we3w _vREZwDjuEd6jBcdYa_we3w">
+    <ownedEnd xmi:id="_vRDysDjuEd6jBcdYa_we3w" name="src" type="_f5r84DjqEd6jBcdYa_we3w" association="_vRDLoDjuEd6jBcdYa_we3w">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_vRDysjjuEd6jBcdYa_we3w" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_vRDysTjuEd6jBcdYa_we3w" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_vREZwDjuEd6jBcdYa_we3w" name="dst" type="_pshzIDjuEd6jBcdYa_we3w" association="_vRDLoDjuEd6jBcdYa_we3w">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_vREZwjjuEd6jBcdYa_we3w" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_vREZwTjuEd6jBcdYa_we3w" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_wvHFEDjuEd6jBcdYa_we3w" memberEnd="_wvHFETjuEd6jBcdYa_we3w _wvHsIjjuEd6jBcdYa_we3w" navigableOwnedEnd="_wvHFETjuEd6jBcdYa_we3w _wvHsIjjuEd6jBcdYa_we3w">
+    <ownedEnd xmi:id="_wvHFETjuEd6jBcdYa_we3w" name="src" type="_f5r84DjqEd6jBcdYa_we3w" association="_wvHFEDjuEd6jBcdYa_we3w">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wvHsITjuEd6jBcdYa_we3w" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_wvHsIDjuEd6jBcdYa_we3w" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_wvHsIjjuEd6jBcdYa_we3w" name="contesta y brinda soluciones" type="_szgLIDjuEd6jBcdYa_we3w" association="_wvHFEDjuEd6jBcdYa_we3w">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wvITMDjuEd6jBcdYa_we3w" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_wvHsIzjuEd6jBcdYa_we3w" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_UhAbIDjvEd6jBcdYa_we3w" name="Actualiza estados del servicio"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_XI8twDjvEd6jBcdYa_we3w" memberEnd="_XI9U0DjvEd6jBcdYa_we3w _XI974DjvEd6jBcdYa_we3w" navigableOwnedEnd="_XI9U0DjvEd6jBcdYa_we3w _XI974DjvEd6jBcdYa_we3w">
+    <ownedEnd xmi:id="_XI9U0DjvEd6jBcdYa_we3w" name="src" type="_f5r84DjqEd6jBcdYa_we3w" association="_XI8twDjvEd6jBcdYa_we3w">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_XI9U0jjvEd6jBcdYa_we3w" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XI9U0TjvEd6jBcdYa_we3w" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_XI974DjvEd6jBcdYa_we3w" name="actualiza estados del servicio" type="_UhAbIDjvEd6jBcdYa_we3w" association="_XI8twDjvEd6jBcdYa_we3w">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_XI974jjvEd6jBcdYa_we3w" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XI974TjvEd6jBcdYa_we3w" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+</uml:Package>
