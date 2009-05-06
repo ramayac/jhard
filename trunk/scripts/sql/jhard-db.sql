@@ -14,8 +14,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Facultad` (
   `idfacultad` INT NOT NULL COMMENT 'Id correlativo unico de cada facultad' ,
   `nombre` VARCHAR(200) NOT NULL COMMENT 'Nombre de la facultad' ,
   PRIMARY KEY (`idfacultad`) )
-ENGINE = InnoDB
-COMMENT = 'Registra las posibles facultades a las que pertenecen las carreras';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -35,8 +34,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Carrera` (
     REFERENCES `JHard`.`Facultad` (`idfacultad` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra las carreras disponibles en la facultad, de cuyas materias se pueden impartir cursos a los estudiantes';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -56,8 +54,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Materia` (
     REFERENCES `JHard`.`Carrera` (`idcarrera` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra las materias relacionadas con una carrera, de las cuales se pueden impartir cursos a los estudiantes';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -71,8 +68,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Usuario` (
   `clave` VARCHAR(15) NOT NULL COMMENT 'Clave de acceso del usuario' ,
   `rol` VARCHAR(45) NULL COMMENT 'Rol que juega este usuario dentro del sistema, el cual define los modulos y acciones a las que tiene acceso' ,
   PRIMARY KEY (`idusuario`) )
-ENGINE = InnoDB
-COMMENT = 'Registra los usuarios que tienen acceso al sistema';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -94,8 +90,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Instructor` (
     REFERENCES `JHard`.`Usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra a los instructores encargados de dar las clases de cada curso que poseen asignado';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -116,8 +111,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Docente` (
     REFERENCES `JHard`.`Usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra los docentes responsables y asignados a un determinado curso';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -154,8 +148,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Curso` (
     REFERENCES `JHard`.`Docente` (`iddocente` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra los cursos efectuados cada anho/mes de las materias de cada carrera de la facultad, relacionadas con la unidad de hardware/software';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -177,8 +170,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Estudiante` (
     REFERENCES `JHard`.`Usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Tabla que registra todos los estudiantes inscritos en alguna carrera de la facultad y que llevan algun curso en la unidad de hardware y software';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -203,8 +195,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Inscripcion` (
     REFERENCES `JHard`.`Estudiante` (`idestudiante` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra la inscripcion de un estudiante a un curso en un determinado ciclo/anho de estudio.';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -216,8 +207,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Ubicacion` (
   `idubicacion` INT NOT NULL COMMENT 'Id correlativo unico de cada ubicacion' ,
   `nombre` VARCHAR(45) NULL COMMENT 'Nombre de la ubicacion' ,
   PRIMARY KEY (`idubicacion`) )
-ENGINE = InnoDB
-COMMENT = 'Registra las ubicaciones donde puede estar un equipo y/o las aulas donde se reciben clases';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -245,8 +235,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Horario` (
     REFERENCES `JHard`.`Ubicacion` (`idubicacion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra los horarios (lugar, hora inicio, hora fin) en los que se llevan a cabo las clases de determinados cursos';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -281,8 +270,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Clase` (
     REFERENCES `JHard`.`Docente` (`iddocente` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra las clases pertenecientes a un curso, a las que asisten los estudiantes y el instructor';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -294,8 +282,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Marca` (
   `idmarca` INT NOT NULL COMMENT 'Id correlativo unico de cada marca' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre de la marca' ,
   PRIMARY KEY (`idmarca`) )
-ENGINE = InnoDB
-COMMENT = 'Registra las marcas que poseen los equipos, piezas y/o accesorios de hardware';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -309,8 +296,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Clasificacion` (
   `descripcion` TEXT NULL COMMENT 'Descripcion de la clasificacion' ,
   `idsuperior` INT NULL COMMENT 'Referencia a la clasificacion padre. Si este campo es nulo, indica que esta es una clasificacion raiz' ,
   PRIMARY KEY (`idclasificacion`) )
-ENGINE = InnoDB
-COMMENT = 'Registra la gerarquia de clasificaciones a las que puede estar relacionado un equipo o software';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -337,8 +323,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Equipo` (
     REFERENCES `JHard`.`Clasificacion` (`idclasificacion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra los equipos de hardware de los cuales se poseen existencias en la unidad de hardware y software';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -351,8 +336,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`EstadoEquipo` (
   `nombre` VARCHAR(45) NOT NULL COMMENT 'Nombre del estado' ,
   `descripcion` TEXT NULL COMMENT 'Descripcion del estado' ,
   PRIMARY KEY (`idestado`) )
-ENGINE = InnoDB
-COMMENT = 'Registro de los diferentes estados en los que se puede encontrar une equipo';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -367,8 +351,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Adquisicion` (
   `descripcion` TEXT NULL COMMENT 'Detalles de la adquisicion' ,
   `proveedor` VARCHAR(100) NULL COMMENT 'Nombre del proveedor o tienda donde se compro el equipo o software (en caso de haber sido comprado)' ,
   PRIMARY KEY (`idadquisicion`) )
-ENGINE = InnoDB
-COMMENT = 'Registra las adquisiciones (compras o donaciones) recibidas de hardware y software';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -408,8 +391,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Existencia` (
     REFERENCES `JHard`.`Adquisicion` (`idadquisicion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra las existencias de equipos de hardware, piezas y accesorios';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -441,8 +423,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Asistencia` (
     REFERENCES `JHard`.`Existencia` (`idexistencia` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra las asistencias de cada estudiante a un curso al cual se encuentra inscrito, ademas del equipo que utilizo.';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -471,8 +452,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Software` (
     REFERENCES `JHard`.`Clasificacion` (`idclasificacion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra los elementos de software existentes en la facultad y disponibles para instalar en los equipos';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -498,8 +478,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Instalacion` (
     REFERENCES `JHard`.`Existencia` (`idexistencia` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra las instalaciones de software realizadas en equipos de computo';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -519,8 +498,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`EquipoSimple` (
     REFERENCES `JHard`.`EstadoEquipo` (`idestado` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra los equipos simples a los que se les da mantenimiento pero no pertenecen al inventario de la unidad de hardware y software';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -553,8 +531,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`BitacoraEstados` (
     REFERENCES `JHard`.`EquipoSimple` (`idEquipoSimple` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra los cambios de estado que ha sufrido un equipo a lo largo del tiempo';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -568,8 +545,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Tecnico` (
   `nombres` VARCHAR(200) NOT NULL COMMENT 'Nombres del tecnico' ,
   `cargo` VARCHAR(200) NOT NULL COMMENT 'Cargo que desempenia el tecnico' ,
   PRIMARY KEY (`idtecnico`) )
-ENGINE = InnoDB
-COMMENT = 'Registra los tecnicos encargados de darle mantenimiento a los equipos';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -602,8 +578,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Solicitud` (
     REFERENCES `JHard`.`Usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra las solicitudes de mantenimiento realizadas';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -637,8 +612,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Mantenimiento` (
     REFERENCES `JHard`.`Existencia` (`idexistencia` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra los mantenimientos aplicados a los equipos';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -672,8 +646,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Pieza` (
     REFERENCES `JHard`.`Marca` (`idmarca` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra las piezas internas que posee un equipo de hardware';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -707,8 +680,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Accesorio` (
     REFERENCES `JHard`.`Equipo` (`idequipo` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra los accesorios que poseen los equipos de hardware';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -741,8 +713,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`AtributoHardware` (
     REFERENCES `JHard`.`Accesorio` (`idaccesorio` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra atributos especiales que puede poseer un elemento de hardware';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -754,8 +725,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`EstadoReserva` (
   `idestadoreserva` INT NOT NULL COMMENT 'Id correlativo unico de cada reserva' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre del estado de la reserva' ,
   PRIMARY KEY (`idestadoreserva`) )
-ENGINE = InnoDB
-COMMENT = 'Registra los posibles estados en los que se puede encontrar una reserva';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -771,8 +741,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Solicitante` (
   `valordocumento` VARCHAR(45) NOT NULL COMMENT 'Valor del documento presentado para la solicitud' ,
   `visible` INT NOT NULL DEFAULT 1 COMMENT 'Es 1 por defecto. Indica que el usuario esta activo. Al momento de borrar usuarios del sistema, nada mas cambiar este estado a 0.' ,
   PRIMARY KEY (`idsolicitante`) )
-ENGINE = InnoDB
-COMMENT = 'Registra a las personas que solicitan equipo multimedia';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -788,8 +757,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Responsable` (
   `valordocumento` VARCHAR(45) NOT NULL COMMENT 'Valor del documento presentado para solicitar el equipo' ,
   `visible` INT NOT NULL DEFAULT 1 COMMENT 'Es 1 por defecto. Indica que el usuario esta activo. Al momento de borrar usuarios del sistema, nada mas cambiar este estado a 0.' ,
   PRIMARY KEY (`idresponsable`) )
-ENGINE = InnoDB
-COMMENT = 'Registra a las personas responsables del prestamo de un equipo';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -846,8 +814,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Reserva` (
     REFERENCES `JHard`.`Usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra las reservas de equipo multimedia de la unidad de hardware y software de la facultad';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -866,8 +833,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Administrador` (
     REFERENCES `JHard`.`Usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra los usuarios con privilegios especiales dentro del sistema';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -887,8 +853,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`BitacoraCambiosUsuario` (
     REFERENCES `JHard`.`Usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Registra cada uno de los cambios que los usuarios realizan sobre la base de datos';
+ENGINE = InnoDB;
 
 
 
