@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Package xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmi:id="_Cp7LMDj3Ed6spf9iCvymEQ">
+  <elementImport xmi:id="_CrR2EDj3Ed6spf9iCvymEQ">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+  </elementImport>
+  <elementImport xmi:id="_CreqYDj3Ed6spf9iCvymEQ">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+  </elementImport>
+  <elementImport xmi:id="_CreqYTj3Ed6spf9iCvymEQ">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#UnlimitedNatural"/>
+  </elementImport>
+  <elementImport xmi:id="_CreqYjj3Ed6spf9iCvymEQ">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+  </elementImport>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_ZzRFUDj3Ed6spf9iCvymEQ" name="Administrador"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_reUKwDj3Ed6spf9iCvymEQ" name="Agregar Usuarios"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_unN1YDj3Ed6spf9iCvymEQ" name="Asignar privilegios a usuarios"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_P19nUDj6Ed6spf9iCvymEQ" name="Eliminar usuarios"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Q2IY8Dj8Ed6spf9iCvymEQ" memberEnd="_Q2JAADj8Ed6spf9iCvymEQ _Q2JnETj8Ed6spf9iCvymEQ" navigableOwnedEnd="_Q2JAADj8Ed6spf9iCvymEQ _Q2JnETj8Ed6spf9iCvymEQ">
+    <ownedEnd xmi:id="_Q2JAADj8Ed6spf9iCvymEQ" name="src" type="_ZzRFUDj3Ed6spf9iCvymEQ" association="_Q2IY8Dj8Ed6spf9iCvymEQ">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Q2JnEDj8Ed6spf9iCvymEQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Q2JAATj8Ed6spf9iCvymEQ" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_Q2JnETj8Ed6spf9iCvymEQ" name="dst" type="_reUKwDj3Ed6spf9iCvymEQ" association="_Q2IY8Dj8Ed6spf9iCvymEQ">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Q2JnEzj8Ed6spf9iCvymEQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Q2JnEjj8Ed6spf9iCvymEQ" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Rn8QYDj8Ed6spf9iCvymEQ" memberEnd="_Rn8QYTj8Ed6spf9iCvymEQ _Rn9egDj8Ed6spf9iCvymEQ" navigableOwnedEnd="_Rn8QYTj8Ed6spf9iCvymEQ _Rn9egDj8Ed6spf9iCvymEQ">
+    <ownedEnd xmi:id="_Rn8QYTj8Ed6spf9iCvymEQ" name="src" type="_ZzRFUDj3Ed6spf9iCvymEQ" association="_Rn8QYDj8Ed6spf9iCvymEQ">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Rn83cTj8Ed6spf9iCvymEQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Rn83cDj8Ed6spf9iCvymEQ" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_Rn9egDj8Ed6spf9iCvymEQ" name="dst" type="_unN1YDj3Ed6spf9iCvymEQ" association="_Rn8QYDj8Ed6spf9iCvymEQ">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Rn9egjj8Ed6spf9iCvymEQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Rn9egTj8Ed6spf9iCvymEQ" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_SSfpQDj8Ed6spf9iCvymEQ" memberEnd="_SSfpQTj8Ed6spf9iCvymEQ _SSgQUDj8Ed6spf9iCvymEQ" navigableOwnedEnd="_SSfpQTj8Ed6spf9iCvymEQ _SSgQUDj8Ed6spf9iCvymEQ">
+    <ownedEnd xmi:id="_SSfpQTj8Ed6spf9iCvymEQ" name="src" type="_ZzRFUDj3Ed6spf9iCvymEQ" association="_SSfpQDj8Ed6spf9iCvymEQ">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_SSfpQzj8Ed6spf9iCvymEQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_SSfpQjj8Ed6spf9iCvymEQ" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_SSgQUDj8Ed6spf9iCvymEQ" name="dst" type="_P19nUDj6Ed6spf9iCvymEQ" association="_SSfpQDj8Ed6spf9iCvymEQ">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_SSgQUjj8Ed6spf9iCvymEQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_SSgQUTj8Ed6spf9iCvymEQ" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+</uml:Package>
