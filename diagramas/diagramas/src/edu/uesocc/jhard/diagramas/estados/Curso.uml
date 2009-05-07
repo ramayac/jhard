@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:StateMachine xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmi:id="_yHX3kDqmEd6gx7wh6M6ELQ" name="Curso">
+  <region xmi:id="_JUExQDqzEd6gx7wh6M6ELQ">
+    <subvertex xmi:type="uml:Pseudostate" xmi:id="_RryNoDq0Ed6gx7wh6M6ELQ"/>
+    <subvertex xmi:type="uml:FinalState" xmi:id="_SFH6sDq0Ed6gx7wh6M6ELQ"/>
+    <subvertex xmi:type="uml:State" xmi:id="_UNCpcDq0Ed6gx7wh6M6ELQ" name="PendienteInscripcion"/>
+    <subvertex xmi:type="uml:State" xmi:id="_qSLUkDq0Ed6gx7wh6M6ELQ" name="Iniciado"/>
+    <subvertex xmi:type="uml:State" xmi:id="_doXe8Dq1Ed6gx7wh6M6ELQ" name="Finalizado"/>
+    <transition xmi:id="_djeNUDq0Ed6gx7wh6M6ELQ" target="_UNCpcDq0Ed6gx7wh6M6ELQ" source="_RryNoDq0Ed6gx7wh6M6ELQ"/>
+    <transition xmi:id="_rcfyoDq0Ed6gx7wh6M6ELQ" target="_qSLUkDq0Ed6gx7wh6M6ELQ" source="_UNCpcDq0Ed6gx7wh6M6ELQ"/>
+    <transition xmi:id="_erH8cDq1Ed6gx7wh6M6ELQ" target="_doXe8Dq1Ed6gx7wh6M6ELQ" source="_qSLUkDq0Ed6gx7wh6M6ELQ"/>
+    <transition xmi:id="_nJ4RcDq1Ed6gx7wh6M6ELQ" target="_SFH6sDq0Ed6gx7wh6M6ELQ" source="_doXe8Dq1Ed6gx7wh6M6ELQ"/>
+  </region>
+</uml:StateMachine>
