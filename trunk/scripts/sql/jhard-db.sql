@@ -11,7 +11,7 @@ USE `JHard`;
 DROP TABLE IF EXISTS `JHard`.`Facultad` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Facultad` (
-  `idfacultad` INT NOT NULL COMMENT 'Id correlativo unico de cada facultad' ,
+  `idfacultad` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada facultad' ,
   `nombre` VARCHAR(200) NOT NULL COMMENT 'Nombre de la facultad' ,
   PRIMARY KEY (`idfacultad`) )
 ENGINE = InnoDB;
@@ -23,7 +23,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Carrera` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Carrera` (
-  `idcarrera` INT NOT NULL COMMENT 'Id correlativo unico de cada carrera' ,
+  `idcarrera` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada carrera' ,
   `codigo` VARCHAR(7) NOT NULL COMMENT 'Codigo de la carrera, distintivo en el sistema adacad' ,
   `nombre` VARCHAR(200) NOT NULL COMMENT 'Nombre de la carrera' ,
   `idfacultad` INT NOT NULL COMMENT 'Referencia a la facultad a la cual pertenece esta carrera' ,
@@ -43,7 +43,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Materia` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Materia` (
-  `idmateria` INT NOT NULL COMMENT 'Id correlativo unico de cada materia' ,
+  `idmateria` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada materia' ,
   `codigo` VARCHAR(7) NOT NULL COMMENT 'Codigo de la materia, con el cual se identifica en adacad' ,
   `nombre` VARCHAR(200) NOT NULL COMMENT 'Nombre de la materia' ,
   `idcarrera` INT NOT NULL COMMENT 'Referencia a la carrera a la cual pertenece esta materia' ,
@@ -58,16 +58,35 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `JHard`.`Rol`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `JHard`.`Rol` ;
+
+CREATE  TABLE IF NOT EXISTS `JHard`.`Rol` (
+  `idrol` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada rol' ,
+  `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre del rol' ,
+  `descripcion` TEXT NOT NULL COMMENT 'Descripcion del rol' ,
+  PRIMARY KEY (`idrol`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `JHard`.`Usuario`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `JHard`.`Usuario` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Usuario` (
-  `idusuario` INT NOT NULL COMMENT 'Id correlativo unico para cada usuario' ,
+  `idusuario` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada usuario' ,
   `nombre` VARCHAR(25) NOT NULL COMMENT 'Nombre del usuario' ,
   `clave` VARCHAR(15) NOT NULL COMMENT 'Clave de acceso del usuario' ,
-  `rol` VARCHAR(45) NULL COMMENT 'Rol que juega este usuario dentro del sistema, el cual define los modulos y acciones a las que tiene acceso' ,
-  PRIMARY KEY (`idusuario`) )
+  `idrol` INT NULL COMMENT 'Referencia al rol que juega este usuario dentro del sistema, el cual define los modulos y acciones a las que tiene acceso' ,
+  PRIMARY KEY (`idusuario`) ,
+  INDEX `fkidrol_usuario` (`idrol` ASC) ,
+  CONSTRAINT `fkidrol_usuario`
+    FOREIGN KEY (`idrol` )
+    REFERENCES `JHard`.`Rol` (`idrol` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -77,7 +96,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Instructor` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Instructor` (
-  `idinstructor` INT NOT NULL COMMENT 'Id correlativo unico para cada instructor' ,
+  `idinstructor` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada instructor' ,
   `carnet` VARCHAR(7) NOT NULL COMMENT 'Carnet con el cual se encuentra registrado en adacad' ,
   `apellidos` VARCHAR(200) NOT NULL COMMENT 'Apellidos del instructor' ,
   `nombres` VARCHAR(200) NOT NULL COMMENT 'Nombres del instructor' ,
@@ -99,7 +118,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Docente` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Docente` (
-  `iddocente` INT NOT NULL COMMENT 'Id correlativo unico para cada docente' ,
+  `iddocente` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada docente' ,
   `Apellidos` VARCHAR(200) NOT NULL COMMENT 'Apellidos del docente' ,
   `Nombres` VARCHAR(200) NOT NULL COMMENT 'Nombres del docente' ,
   `idusuario` INT NOT NULL COMMENT 'Referencia al usuario con el que el docente ingresa al sistema' ,
@@ -115,12 +134,24 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `JHard`.`EstadoCurso`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `JHard`.`EstadoCurso` ;
+
+CREATE  TABLE IF NOT EXISTS `JHard`.`EstadoCurso` (
+  `idestadocurso` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada estado del curso' ,
+  `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre del estado del curso' ,
+  PRIMARY KEY (`idestadocurso`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `JHard`.`Curso`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `JHard`.`Curso` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Curso` (
-  `idcurso` INT NOT NULL COMMENT 'Id correlativo unico de cada curso' ,
+  `idcurso` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada curso' ,
   `nombre` VARCHAR(200) NOT NULL COMMENT 'Nombre del curso (por si este difiere del nombre de la materia o por si no esta relacionado con una materia especifica)' ,
   `cupomax` INT NOT NULL COMMENT 'Cantidad maxima de alumnos que pueden inscribirse a este curso' ,
   `idmateria` INT NULL COMMENT 'Referencia a la materia relacionada con este curso (en caso que este relacionado con alguna)' ,
@@ -129,10 +160,12 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Curso` (
   `ciclo` INT NULL COMMENT 'Ciclo en el que se imparte este curso (1=ciclo impar, 2=ciclo par)' ,
   `anio` INT NULL COMMENT 'anio en el que se imparte este curso' ,
   `iddocente` INT NOT NULL COMMENT 'Referencia al docente encargado de impartir este curso' ,
+  `idestado` INT NULL ,
   PRIMARY KEY (`idcurso`) ,
   INDEX `fkidmateria_curso` (`idmateria` ASC) ,
   INDEX `fkidinstructor_curso` (`idinstructor` ASC) ,
   INDEX `fkiddocente_curso` (`iddocente` ASC) ,
+  INDEX `fkidestado_curso` (`idestado` ASC) ,
   CONSTRAINT `fkidmateria_curso`
     FOREIGN KEY (`idmateria` )
     REFERENCES `JHard`.`Materia` (`idmateria` )
@@ -147,6 +180,11 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Curso` (
     FOREIGN KEY (`iddocente` )
     REFERENCES `JHard`.`Docente` (`iddocente` )
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fkidestado_curso`
+    FOREIGN KEY (`idestado` )
+    REFERENCES `JHard`.`EstadoCurso` (`idestadocurso` )
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -157,7 +195,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Estudiante` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Estudiante` (
-  `idestudiante` INT NOT NULL COMMENT 'Id correlativo unico para cada estudiante' ,
+  `idestudiante` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada estudiante' ,
   `carnet` VARCHAR(7) NOT NULL COMMENT 'Carnet del estudiante, representativo y distintivo en el registro de la facultad' ,
   `apellidos` VARCHAR(200) NOT NULL COMMENT 'Apellidos del estudiante' ,
   `nombres` VARCHAR(200) NOT NULL COMMENT 'Nombres del estudiante' ,
@@ -179,7 +217,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Inscripcion` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Inscripcion` (
-  `idinscripcion` INT NOT NULL COMMENT 'Id correlativo unico para cada inscripcion' ,
+  `idinscripcion` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada inscripcion' ,
   `idcurso` INT NOT NULL COMMENT 'Referencia al curso al cual se inscribio el estudiante' ,
   `idestudiante` INT NOT NULL COMMENT 'Referencia al estudiante inscrito en este curso' ,
   PRIMARY KEY (`idinscripcion`) ,
@@ -204,7 +242,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Ubicacion` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Ubicacion` (
-  `idubicacion` INT NOT NULL COMMENT 'Id correlativo unico de cada ubicacion' ,
+  `idubicacion` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada ubicacion' ,
   `nombre` VARCHAR(45) NULL COMMENT 'Nombre de la ubicacion' ,
   PRIMARY KEY (`idubicacion`) )
 ENGINE = InnoDB;
@@ -216,7 +254,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Horario` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Horario` (
-  `idhorario` INT NOT NULL COMMENT 'Id correlativo unico para cada horario' ,
+  `idhorario` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada horario' ,
   `diasemana` INT NOT NULL COMMENT 'Dia de la semana que se brinda el curso (1= lunes, 7= domingo)' ,
   `horainicio` TIME NOT NULL COMMENT 'Hora a la que da inicio el curso' ,
   `horafin` TIME NOT NULL COMMENT 'Hora a la que finaliza el curso' ,
@@ -244,7 +282,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Clase` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Clase` (
-  `idclase` INT NOT NULL COMMENT 'Id correlativo unico para cada clase' ,
+  `idclase` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada clase' ,
   `fecha` DATE NOT NULL COMMENT 'Fecha en la que se llevo a cabo esta clase' ,
   `idhorario` INT NOT NULL COMMENT 'Referencia al horario en el que se recibio esta clase' ,
   `idinstructor` INT NULL COMMENT 'Referencia al instructor encargado de dar esta clase (en caso que haya sido un instructor)' ,
@@ -279,7 +317,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Marca` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Marca` (
-  `idmarca` INT NOT NULL COMMENT 'Id correlativo unico de cada marca' ,
+  `idmarca` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada marca' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre de la marca' ,
   PRIMARY KEY (`idmarca`) )
 ENGINE = InnoDB;
@@ -291,7 +329,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Clasificacion` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Clasificacion` (
-  `idclasificacion` INT NOT NULL COMMENT 'Id correlativo unico de cada clasificacion' ,
+  `idclasificacion` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada clasificacion' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre de la clasificacion' ,
   `descripcion` TEXT NULL COMMENT 'Descripcion de la clasificacion' ,
   `idsuperior` INT NULL COMMENT 'Referencia a la clasificacion padre. Si este campo es nulo, indica que esta es una clasificacion raiz' ,
@@ -305,7 +343,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Equipo` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Equipo` (
-  `idequipo` INT NOT NULL COMMENT 'Id correlativo unico de cada equipo' ,
+  `idequipo` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada equipo' ,
   `idmarca` INT NOT NULL COMMENT 'Referencia a la marca que posee este equipo' ,
   `nombre` VARCHAR(45) NOT NULL COMMENT 'Nombre del equipo' ,
   `modelo` VARCHAR(15) NOT NULL COMMENT 'Modelo al cual pertenece el equipo' ,
@@ -332,7 +370,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`EstadoEquipo` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`EstadoEquipo` (
-  `idestado` INT NOT NULL COMMENT 'Id correlativo unico de cada estado' ,
+  `idestado` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada estado' ,
   `nombre` VARCHAR(45) NOT NULL COMMENT 'Nombre del estado' ,
   `descripcion` TEXT NULL COMMENT 'Descripcion del estado' ,
   PRIMARY KEY (`idestado`) )
@@ -345,7 +383,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Adquisicion` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Adquisicion` (
-  `idadquisicion` INT NOT NULL COMMENT 'Id correlativo unico de la adquisicion' ,
+  `idadquisicion` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de la adquisicion' ,
   `fecha` DATE NOT NULL COMMENT 'Fecha en la que se adquirio el equipo o software' ,
   `precio` DOUBLE NOT NULL COMMENT 'Precio de compra del equipo o software (dejar a cero si fue una donacion)' ,
   `descripcion` TEXT NULL COMMENT 'Detalles de la adquisicion' ,
@@ -360,7 +398,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Existencia` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Existencia` (
-  `idexistencia` INT NOT NULL COMMENT 'Id correlativo unico para cada existencia' ,
+  `idexistencia` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada existencia' ,
   `idhardware` INT NOT NULL COMMENT 'Referencia al hardware al cual pertenece esta existencia' ,
   `idubicacion` INT NOT NULL COMMENT 'Referencia a la ubicacion donde se encuentra localizada esta existencia' ,
   `idestado` INT NOT NULL COMMENT 'Referencia al estado en el que se encuentra esta existencia' ,
@@ -400,7 +438,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Asistencia` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Asistencia` (
-  `idasistencia` INT NOT NULL COMMENT 'Id correlativo unico para cada asistencia' ,
+  `idasistencia` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada asistencia' ,
   `idestudiante` INT NOT NULL COMMENT 'Referencia al estudiante que asistio al curso' ,
   `idclase` INT NOT NULL COMMENT 'Referencia a la clase a la cual pertenece esta asistencia' ,
   `idequipoexistente` INT NOT NULL COMMENT 'Referencia al equipo de hardware que se utilizo en dicha asistencia a la clase' ,
@@ -432,7 +470,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Software` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Software` (
-  `idsoftware` INT NOT NULL COMMENT 'Id correlativo unico de cada software' ,
+  `idsoftware` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada software' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre del software' ,
   `version` VARCHAR(15) NOT NULL COMMENT 'Version del software' ,
   `idadquisicion` INT NULL COMMENT 'Referencia a los datos de adquisicion del software (en caso de poseerlos)' ,
@@ -461,7 +499,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Instalacion` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Instalacion` (
-  `idinstalacion` INT NOT NULL COMMENT 'Id correlativo unico de cada instalacion' ,
+  `idinstalacion` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada instalacion' ,
   `idsoftware` INT NOT NULL COMMENT 'Referencia al software instalado' ,
   `fechainstalacion` DATE NOT NULL COMMENT 'Fecha en la que se realizo la instalacion' ,
   `idequipoexistente` INT NOT NULL COMMENT 'Referencia al equipo donde se instalo el software' ,
@@ -487,7 +525,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`EquipoSimple` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`EquipoSimple` (
-  `idEquipoSimple` INT NOT NULL COMMENT 'Id correlativo unico de cada equipo simple' ,
+  `idEquipoSimple` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada equipo simple' ,
   `descripcion` TEXT NOT NULL COMMENT 'Descripcion del equipo simple' ,
   `propietario` VARCHAR(200) NOT NULL COMMENT 'Nombre del propietario del equipo simple' ,
   `idestado` INT NOT NULL COMMENT 'Referencia al estado en el que se encuentra el equipo simple' ,
@@ -507,7 +545,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`BitacoraEstados` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`BitacoraEstados` (
-  `idbitacora` INT NOT NULL COMMENT 'Id correlativo unico de cada bitacora' ,
+  `idbitacora` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada bitacora' ,
   `fecha` DATE NOT NULL COMMENT 'Fecha en la que ocurrio el cambio de estado' ,
   `idestado` INT NOT NULL COMMENT 'Referencia al estado al cual cambio el equipo' ,
   `descripcion` TEXT NOT NULL COMMENT 'Descripcion del cambio realizado' ,
@@ -540,7 +578,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Tecnico` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Tecnico` (
-  `idtecnico` INT NOT NULL COMMENT 'Id correlativo unico para cada tecnico' ,
+  `idtecnico` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada tecnico' ,
   `apellidos` VARCHAR(200) NOT NULL COMMENT 'Apellidos del tecnico' ,
   `nombres` VARCHAR(200) NOT NULL COMMENT 'Nombres del tecnico' ,
   `cargo` VARCHAR(200) NOT NULL COMMENT 'Cargo que desempenia el tecnico' ,
@@ -554,7 +592,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Solicitud` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Solicitud` (
-  `idsolicitud` INT NOT NULL COMMENT 'Id correlativo unico de cada solicitud' ,
+  `idsolicitud` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada solicitud' ,
   `fecha` DATE NOT NULL COMMENT 'Fecha en la que se registro la solicitud' ,
   `descripcion` TEXT NOT NULL COMMENT 'Descripcion de la solicitud' ,
   `idusuario` INT NOT NULL COMMENT 'Usuario que registro la solicitud' ,
@@ -587,7 +625,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Mantenimiento` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Mantenimiento` (
-  `idmantenimiento` INT NOT NULL COMMENT 'Id correlativo unico de cada mantenimiento' ,
+  `idmantenimiento` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada mantenimiento' ,
   `fecha` DATE NOT NULL COMMENT 'Fecha en la que se efectuo el mantenimiento' ,
   `descripcion` TEXT NOT NULL COMMENT 'Descripcion del mantenimiento' ,
   `idtecnico` INT NOT NULL COMMENT 'Referencia al tecnico que efectuo el mantenimiento' ,
@@ -621,7 +659,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Pieza` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Pieza` (
-  `idpieza` INT NOT NULL COMMENT 'Id correlativo unico de cada pieza' ,
+  `idpieza` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada pieza' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre de la pieza' ,
   `idmarca` INT NOT NULL COMMENT 'Referencia a la marca de la pieza' ,
   `modelo` VARCHAR(15) NOT NULL COMMENT 'Modelo de la pieza' ,
@@ -655,7 +693,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Accesorio` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Accesorio` (
-  `idaccesorio` INT NOT NULL COMMENT 'Id correlativo unico de cada accesorio' ,
+  `idaccesorio` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada accesorio' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre del accesorio' ,
   `idmarca` INT NOT NULL COMMENT 'Referencia a la marca del accesorio' ,
   `modelo` VARCHAR(15) NOT NULL COMMENT 'Modelo del accesorio' ,
@@ -689,7 +727,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`AtributoHardware` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`AtributoHardware` (
-  `idatributohardware` INT NOT NULL COMMENT 'Id correlativo unico del atributo de hardware' ,
+  `idatributohardware` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico del atributo de hardware' ,
   `nombre` VARCHAR(45) NOT NULL COMMENT 'Nombre del atributo' ,
   `valor` VARCHAR(45) NOT NULL COMMENT 'Valor del atributo' ,
   `unidadmedida` VARCHAR(45) NOT NULL COMMENT 'Unidad de medida del atributo' ,
@@ -722,7 +760,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`EstadoReserva` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`EstadoReserva` (
-  `idestadoreserva` INT NOT NULL COMMENT 'Id correlativo unico de cada reserva' ,
+  `idestadoreserva` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada reserva' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre del estado de la reserva' ,
   PRIMARY KEY (`idestadoreserva`) )
 ENGINE = InnoDB;
@@ -734,7 +772,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Solicitante` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Solicitante` (
-  `idsolicitante` INT NOT NULL COMMENT 'Id correlativo unico de cada persona solicitante' ,
+  `idsolicitante` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada persona solicitante' ,
   `apellidos` VARCHAR(200) NOT NULL COMMENT 'Apellidos del solicitante' ,
   `nombres` VARCHAR(200) NOT NULL COMMENT 'Nombres del solicitante' ,
   `tipodocumento` VARCHAR(45) NOT NULL COMMENT 'Tipo de documento presentado para la solicitud' ,
@@ -750,7 +788,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Responsable` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Responsable` (
-  `idresponsable` INT NOT NULL COMMENT 'Id correlativo unico para cada responsable' ,
+  `idresponsable` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada responsable' ,
   `apellidos` VARCHAR(200) NOT NULL COMMENT 'Apellidos de la persona responsable' ,
   `nombres` VARCHAR(200) NOT NULL COMMENT 'Nombres de la persona responsable' ,
   `tipodocumento` VARCHAR(45) NOT NULL COMMENT 'Tipo de documento presentado para solicitar el equipo' ,
@@ -766,7 +804,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`Reserva` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`Reserva` (
-  `idreserva` INT NOT NULL COMMENT 'Id correlativo unico de cada reserva' ,
+  `idreserva` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada reserva' ,
   `fechareserva` DATE NOT NULL COMMENT 'fecha en la que se reservo el equipo' ,
   `fechahorainicioprestamo` DATETIME NOT NULL COMMENT 'Fecha y hora inicial a la que se utilizara el equipo' ,
   `fechahorafinprestamo` DATETIME NOT NULL COMMENT 'Fecha y hora final a la que se utilizara el equipo' ,
@@ -842,7 +880,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `JHard`.`BitacoraCambiosUsuario` ;
 
 CREATE  TABLE IF NOT EXISTS `JHard`.`BitacoraCambiosUsuario` (
-  `idbitacora` INT NOT NULL COMMENT 'Id correlativo unico de cada bitacora' ,
+  `idbitacora` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada bitacora' ,
   `idusuario` INT NOT NULL COMMENT 'Referencia al usuario que realizo el cambio' ,
   `descripcion` TEXT NOT NULL COMMENT 'Descripcion del cambio que realizo el usuario' ,
   `fechahora` DATETIME NOT NULL COMMENT 'Fecha y hora a la que el usuario realizo el cambio' ,
