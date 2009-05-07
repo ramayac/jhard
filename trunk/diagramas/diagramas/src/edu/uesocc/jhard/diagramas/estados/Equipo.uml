@@ -20,6 +20,7 @@
     <transition xmi:id="_mwONADpBEd6k49lORvQ7mA" target="_wn6gUDpAEd6k49lORvQ7mA" source="_GqQWIDpBEd6k49lORvQ7mA"/>
     <transition xmi:id="_x2Wz8DpBEd6k49lORvQ7mA" target="_6rhTQDpAEd6k49lORvQ7mA" source="_GqQWIDpBEd6k49lORvQ7mA"/>
     <transition xmi:id="_NHTnMDpDEd6k49lORvQ7mA" target="_X9WrEDpAEd6k49lORvQ7mA" source="_GqQWIDpBEd6k49lORvQ7mA"/>
+    <transition xmi:id="_TJ3hwDqfEd6gx7wh6M6ELQ" target="_6MdOIDo_Ed6k49lORvQ7mA" source="_X9WrEDpAEd6k49lORvQ7mA"/>
   </region>
   <connectionPoint xmi:id="_y-P7ADo_Ed6k49lORvQ7mA"/>
 </uml:StateMachine>
