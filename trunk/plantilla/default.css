@@ -154,7 +154,7 @@ input, textarea, select {
 	line-height: normal;
 }
 
-#logo h1 { padding-top: 16px; }
+#logo h1 { padding-top: 16px; font-family: "Times New roman"; }
 
 #logo h1 a {
 	text-decoration: none;
@@ -165,7 +165,7 @@ input, textarea, select {
 
 #logo h2 {
 	/*padding: 45px 0 0 15px;*/
-	font: italic 16px Georgia, "Times New Roman", Times, serif;
+	font: italic 14px Georgia, "Times New Roman", Times, serif;
 	color: #B6ACA2;
 }
 
@@ -287,7 +287,7 @@ input, textarea, select {
 }
 
 .inputTexto {
-	width: 115px;
+	width: 110px;
 	margin-right: 5px;
 	padding: 3px;
 	border: 1px solid #F0F0F0;
