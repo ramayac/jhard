@@ -2,15 +2,15 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-CREATE SCHEMA IF NOT EXISTS `JHard` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
-USE `JHard`;
+CREATE SCHEMA IF NOT EXISTS `jhard` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+USE `jhard`;
 
 -- -----------------------------------------------------
--- Table `JHard`.`Facultad`
+-- Table `jhard`.`facultad`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Facultad` ;
+DROP TABLE IF EXISTS `jhard`.`facultad` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Facultad` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`facultad` (
   `idfacultad` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada facultad' ,
   `nombre` VARCHAR(200) NOT NULL COMMENT 'Nombre de la facultad' ,
   PRIMARY KEY (`idfacultad`) )
@@ -18,11 +18,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Carrera`
+-- Table `jhard`.`carrera`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Carrera` ;
+DROP TABLE IF EXISTS `jhard`.`carrera` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Carrera` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`carrera` (
   `idcarrera` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada carrera' ,
   `codigo` VARCHAR(7) NOT NULL COMMENT 'Codigo de la carrera, distintivo en el sistema adacad' ,
   `nombre` VARCHAR(200) NOT NULL COMMENT 'Nombre de la carrera' ,
@@ -31,18 +31,18 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Carrera` (
   INDEX `fkidfacultad_carrera` (`idfacultad` ASC) ,
   CONSTRAINT `fkidfacultad_carrera`
     FOREIGN KEY (`idfacultad` )
-    REFERENCES `JHard`.`Facultad` (`idfacultad` )
+    REFERENCES `jhard`.`facultad` (`idfacultad` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Materia`
+-- Table `jhard`.`materia`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Materia` ;
+DROP TABLE IF EXISTS `jhard`.`materia` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Materia` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`materia` (
   `idmateria` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada materia' ,
   `codigo` VARCHAR(7) NOT NULL COMMENT 'Codigo de la materia, con el cual se identifica en adacad' ,
   `nombre` VARCHAR(200) NOT NULL COMMENT 'Nombre de la materia' ,
@@ -51,18 +51,18 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Materia` (
   INDEX `fkidcarrera_materia` (`idcarrera` ASC) ,
   CONSTRAINT `fkidcarrera_materia`
     FOREIGN KEY (`idcarrera` )
-    REFERENCES `JHard`.`Carrera` (`idcarrera` )
+    REFERENCES `jhard`.`carrera` (`idcarrera` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Rol`
+-- Table `jhard`.`rol`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Rol` ;
+DROP TABLE IF EXISTS `jhard`.`rol` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Rol` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`rol` (
   `idrol` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada rol' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre del rol' ,
   `descripcion` TEXT NOT NULL COMMENT 'Descripcion del rol' ,
@@ -71,11 +71,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Usuario`
+-- Table `jhard`.`usuario`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Usuario` ;
+DROP TABLE IF EXISTS `jhard`.`usuario` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Usuario` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`usuario` (
   `idusuario` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada usuario' ,
   `nombre` VARCHAR(25) NOT NULL COMMENT 'Nombre del usuario' ,
   `clave` VARCHAR(15) NOT NULL COMMENT 'Clave de acceso del usuario' ,
@@ -84,18 +84,18 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Usuario` (
   INDEX `fkidrol_usuario` (`idrol` ASC) ,
   CONSTRAINT `fkidrol_usuario`
     FOREIGN KEY (`idrol` )
-    REFERENCES `JHard`.`Rol` (`idrol` )
+    REFERENCES `jhard`.`rol` (`idrol` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Instructor`
+-- Table `jhard`.`instructor`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Instructor` ;
+DROP TABLE IF EXISTS `jhard`.`instructor` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Instructor` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`instructor` (
   `idinstructor` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada instructor' ,
   `carnet` VARCHAR(7) NOT NULL COMMENT 'Carnet con el cual se encuentra registrado en adacad' ,
   `apellidos` VARCHAR(200) NOT NULL COMMENT 'Apellidos del instructor' ,
@@ -106,18 +106,18 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Instructor` (
   INDEX `fkidusuario_instructor` (`idusuario` ASC) ,
   CONSTRAINT `fkidusuario_instructor`
     FOREIGN KEY (`idusuario` )
-    REFERENCES `JHard`.`Usuario` (`idusuario` )
+    REFERENCES `jhard`.`usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Docente`
+-- Table `jhard`.`docente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Docente` ;
+DROP TABLE IF EXISTS `jhard`.`docente` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Docente` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`docente` (
   `iddocente` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada docente' ,
   `Apellidos` VARCHAR(200) NOT NULL COMMENT 'Apellidos del docente' ,
   `Nombres` VARCHAR(200) NOT NULL COMMENT 'Nombres del docente' ,
@@ -127,18 +127,18 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Docente` (
   INDEX `fkidusuario_docente` (`idusuario` ASC) ,
   CONSTRAINT `fkidusuario_docente`
     FOREIGN KEY (`idusuario` )
-    REFERENCES `JHard`.`Usuario` (`idusuario` )
+    REFERENCES `jhard`.`usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`EstadoCurso`
+-- Table `jhard`.`estadocurso`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`EstadoCurso` ;
+DROP TABLE IF EXISTS `jhard`.`estadocurso` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`EstadoCurso` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`estadocurso` (
   `idestadocurso` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada estado del curso' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre del estado del curso' ,
   PRIMARY KEY (`idestadocurso`) )
@@ -146,11 +146,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Curso`
+-- Table `jhard`.`curso`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Curso` ;
+DROP TABLE IF EXISTS `jhard`.`curso` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Curso` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`curso` (
   `idcurso` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada curso' ,
   `nombre` VARCHAR(200) NOT NULL COMMENT 'Nombre del curso (por si este difiere del nombre de la materia o por si no esta relacionado con una materia especifica)' ,
   `cupomax` INT NOT NULL COMMENT 'Cantidad maxima de alumnos que pueden inscribirse a este curso' ,
@@ -168,33 +168,33 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Curso` (
   INDEX `fkidestado_curso` (`idestado` ASC) ,
   CONSTRAINT `fkidmateria_curso`
     FOREIGN KEY (`idmateria` )
-    REFERENCES `JHard`.`Materia` (`idmateria` )
+    REFERENCES `jhard`.`materia` (`idmateria` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidinstructor_curso`
     FOREIGN KEY (`idinstructor` )
-    REFERENCES `JHard`.`Instructor` (`idinstructor` )
+    REFERENCES `jhard`.`instructor` (`idinstructor` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkiddocente_curso`
     FOREIGN KEY (`iddocente` )
-    REFERENCES `JHard`.`Docente` (`iddocente` )
+    REFERENCES `jhard`.`docente` (`iddocente` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidestado_curso`
     FOREIGN KEY (`idestado` )
-    REFERENCES `JHard`.`EstadoCurso` (`idestadocurso` )
+    REFERENCES `jhard`.`estadocurso` (`idestadocurso` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Estudiante`
+-- Table `jhard`.`estudiante`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Estudiante` ;
+DROP TABLE IF EXISTS `jhard`.`estudiante` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Estudiante` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`estudiante` (
   `idestudiante` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada estudiante' ,
   `carnet` VARCHAR(7) NOT NULL COMMENT 'Carnet del estudiante, representativo y distintivo en el registro de la facultad' ,
   `apellidos` VARCHAR(200) NOT NULL COMMENT 'Apellidos del estudiante' ,
@@ -205,18 +205,18 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Estudiante` (
   INDEX `fkidusuario_estudiante` (`idusuario` ASC) ,
   CONSTRAINT `fkidusuario_estudiante`
     FOREIGN KEY (`idusuario` )
-    REFERENCES `JHard`.`Usuario` (`idusuario` )
+    REFERENCES `jhard`.`usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Inscripcion`
+-- Table `jhard`.`inscripcion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Inscripcion` ;
+DROP TABLE IF EXISTS `jhard`.`inscripcion` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Inscripcion` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`inscripcion` (
   `idinscripcion` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada inscripcion' ,
   `idcurso` INT NOT NULL COMMENT 'Referencia al curso al cual se inscribio el estudiante' ,
   `idestudiante` INT NOT NULL COMMENT 'Referencia al estudiante inscrito en este curso' ,
@@ -225,23 +225,23 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Inscripcion` (
   INDEX `fkidestudiante_inscripcion` (`idestudiante` ASC) ,
   CONSTRAINT `fkidcurso_inscripcion`
     FOREIGN KEY (`idcurso` )
-    REFERENCES `JHard`.`Curso` (`idcurso` )
+    REFERENCES `jhard`.`curso` (`idcurso` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidestudiante_inscripcion`
     FOREIGN KEY (`idestudiante` )
-    REFERENCES `JHard`.`Estudiante` (`idestudiante` )
+    REFERENCES `jhard`.`estudiante` (`idestudiante` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Ubicacion`
+-- Table `jhard`.`ubicacion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Ubicacion` ;
+DROP TABLE IF EXISTS `jhard`.`ubicacion` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Ubicacion` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`ubicacion` (
   `idubicacion` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada ubicacion' ,
   `nombre` VARCHAR(45) NULL COMMENT 'Nombre de la ubicacion' ,
   PRIMARY KEY (`idubicacion`) )
@@ -249,11 +249,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Horario`
+-- Table `jhard`.`horario`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Horario` ;
+DROP TABLE IF EXISTS `jhard`.`horario` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Horario` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`horario` (
   `idhorario` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada horario' ,
   `diasemana` INT NOT NULL COMMENT 'Dia de la semana que se brinda el curso (1= lunes, 7= domingo)' ,
   `horainicio` TIME NOT NULL COMMENT 'Hora a la que da inicio el curso' ,
@@ -265,23 +265,23 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Horario` (
   INDEX `fkidaula_horario` (`idaula` ASC) ,
   CONSTRAINT `fkidcurso_horario`
     FOREIGN KEY (`idcurso` )
-    REFERENCES `JHard`.`Curso` (`idcurso` )
+    REFERENCES `jhard`.`curso` (`idcurso` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidaula_horario`
     FOREIGN KEY (`idaula` )
-    REFERENCES `JHard`.`Ubicacion` (`idubicacion` )
+    REFERENCES `jhard`.`ubicacion` (`idubicacion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Clase`
+-- Table `jhard`.`clase`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Clase` ;
+DROP TABLE IF EXISTS `jhard`.`clase` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Clase` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`clase` (
   `idclase` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada clase' ,
   `fecha` DATE NOT NULL COMMENT 'Fecha en la que se llevo a cabo esta clase' ,
   `idhorario` INT NOT NULL COMMENT 'Referencia al horario en el que se recibio esta clase' ,
@@ -295,28 +295,28 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Clase` (
   INDEX `fkiddocente_clase` (`iddocente` ASC) ,
   CONSTRAINT `fkidhorario_clase`
     FOREIGN KEY (`idhorario` )
-    REFERENCES `JHard`.`Horario` (`idhorario` )
+    REFERENCES `jhard`.`horario` (`idhorario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidinstructor_clase`
     FOREIGN KEY (`idinstructor` )
-    REFERENCES `JHard`.`Instructor` (`idinstructor` )
+    REFERENCES `jhard`.`instructor` (`idinstructor` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkiddocente_clase`
     FOREIGN KEY (`iddocente` )
-    REFERENCES `JHard`.`Docente` (`iddocente` )
+    REFERENCES `jhard`.`docente` (`iddocente` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Marca`
+-- Table `jhard`.`marca`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Marca` ;
+DROP TABLE IF EXISTS `jhard`.`marca` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Marca` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`marca` (
   `idmarca` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada marca' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre de la marca' ,
   PRIMARY KEY (`idmarca`) )
@@ -324,11 +324,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Clasificacion`
+-- Table `jhard`.`clasificacion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Clasificacion` ;
+DROP TABLE IF EXISTS `jhard`.`clasificacion` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Clasificacion` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`clasificacion` (
   `idclasificacion` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada clasificacion' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre de la clasificacion' ,
   `descripcion` TEXT NULL COMMENT 'Descripcion de la clasificacion' ,
@@ -338,11 +338,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Equipo`
+-- Table `jhard`.`equipo`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Equipo` ;
+DROP TABLE IF EXISTS `jhard`.`equipo` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Equipo` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`equipo` (
   `idequipo` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada equipo' ,
   `idmarca` INT NOT NULL COMMENT 'Referencia a la marca que posee este equipo' ,
   `nombre` VARCHAR(45) NOT NULL COMMENT 'Nombre del equipo' ,
@@ -353,23 +353,23 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Equipo` (
   INDEX `fkidclasificacion_equipo` (`idclasificacion` ASC) ,
   CONSTRAINT `fkidmarca_equipo`
     FOREIGN KEY (`idmarca` )
-    REFERENCES `JHard`.`Marca` (`idmarca` )
+    REFERENCES `jhard`.`marca` (`idmarca` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidclasificacion_equipo`
     FOREIGN KEY (`idclasificacion` )
-    REFERENCES `JHard`.`Clasificacion` (`idclasificacion` )
+    REFERENCES `jhard`.`clasificacion` (`idclasificacion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`EstadoEquipo`
+-- Table `jhard`.`estadoequipo`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`EstadoEquipo` ;
+DROP TABLE IF EXISTS `jhard`.`estadoequipo` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`EstadoEquipo` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`estadoequipo` (
   `idestado` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada estado' ,
   `nombre` VARCHAR(45) NOT NULL COMMENT 'Nombre del estado' ,
   `descripcion` TEXT NULL COMMENT 'Descripcion del estado' ,
@@ -378,11 +378,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Adquisicion`
+-- Table `jhard`.`adquisicion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Adquisicion` ;
+DROP TABLE IF EXISTS `jhard`.`adquisicion` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Adquisicion` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`adquisicion` (
   `idadquisicion` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de la adquisicion' ,
   `fecha` DATE NOT NULL COMMENT 'Fecha en la que se adquirio el equipo o software' ,
   `precio` DOUBLE NOT NULL COMMENT 'Precio de compra del equipo o software (dejar a cero si fue una donacion)' ,
@@ -393,11 +393,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Existencia`
+-- Table `jhard`.`existencia`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Existencia` ;
+DROP TABLE IF EXISTS `jhard`.`existencia` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Existencia` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`existencia` (
   `idexistencia` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada existencia' ,
   `idhardware` INT NOT NULL COMMENT 'Referencia al hardware al cual pertenece esta existencia' ,
   `idubicacion` INT NOT NULL COMMENT 'Referencia a la ubicacion donde se encuentra localizada esta existencia' ,
@@ -411,33 +411,33 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Existencia` (
   INDEX `fkidadquisicion_existencia` (`idadquisicion` ASC) ,
   CONSTRAINT `fkidhardware_existencia`
     FOREIGN KEY (`idhardware` )
-    REFERENCES `JHard`.`Equipo` (`idequipo` )
+    REFERENCES `jhard`.`equipo` (`idequipo` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidubicacion_existencia`
     FOREIGN KEY (`idubicacion` )
-    REFERENCES `JHard`.`Ubicacion` (`idubicacion` )
+    REFERENCES `jhard`.`ubicacion` (`idubicacion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidestado_existencia`
     FOREIGN KEY (`idestado` )
-    REFERENCES `JHard`.`EstadoEquipo` (`idestado` )
+    REFERENCES `jhard`.`estadoequipo` (`idestado` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidadquisicion_existencia`
     FOREIGN KEY (`idadquisicion` )
-    REFERENCES `JHard`.`Adquisicion` (`idadquisicion` )
+    REFERENCES `jhard`.`adquisicion` (`idadquisicion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Asistencia`
+-- Table `jhard`.`asistencia`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Asistencia` ;
+DROP TABLE IF EXISTS `jhard`.`asistencia` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Asistencia` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`asistencia` (
   `idasistencia` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada asistencia' ,
   `idestudiante` INT NOT NULL COMMENT 'Referencia al estudiante que asistio al curso' ,
   `idclase` INT NOT NULL COMMENT 'Referencia a la clase a la cual pertenece esta asistencia' ,
@@ -448,28 +448,28 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Asistencia` (
   INDEX `fkidequipoexistente_asistencia` (`idequipoexistente` ASC) ,
   CONSTRAINT `fkidestudiante_asistencia`
     FOREIGN KEY (`idestudiante` )
-    REFERENCES `JHard`.`Estudiante` (`idestudiante` )
+    REFERENCES `jhard`.`estudiante` (`idestudiante` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidclase_asistencia`
     FOREIGN KEY (`idclase` )
-    REFERENCES `JHard`.`Clase` (`idclase` )
+    REFERENCES `jhard`.`clase` (`idclase` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidequipoexistente_asistencia`
     FOREIGN KEY (`idequipoexistente` )
-    REFERENCES `JHard`.`Existencia` (`idexistencia` )
+    REFERENCES `jhard`.`existencia` (`idexistencia` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Software`
+-- Table `jhard`.`software`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Software` ;
+DROP TABLE IF EXISTS `jhard`.`software` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Software` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`software` (
   `idsoftware` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada software' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre del software' ,
   `version` VARCHAR(15) NOT NULL COMMENT 'Version del software' ,
@@ -482,23 +482,23 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Software` (
   INDEX `fkidclasificacion_software` (`idclasificacion` ASC) ,
   CONSTRAINT `fkidadquisicion_software`
     FOREIGN KEY (`idadquisicion` )
-    REFERENCES `JHard`.`Adquisicion` (`idadquisicion` )
+    REFERENCES `jhard`.`adquisicion` (`idadquisicion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidclasificacion_software`
     FOREIGN KEY (`idclasificacion` )
-    REFERENCES `JHard`.`Clasificacion` (`idclasificacion` )
+    REFERENCES `jhard`.`clasificacion` (`idclasificacion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Instalacion`
+-- Table `jhard`.`instalacion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Instalacion` ;
+DROP TABLE IF EXISTS `jhard`.`instalacion` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Instalacion` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`instalacion` (
   `idinstalacion` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada instalacion' ,
   `idsoftware` INT NOT NULL COMMENT 'Referencia al software instalado' ,
   `fechainstalacion` DATE NOT NULL COMMENT 'Fecha en la que se realizo la instalacion' ,
@@ -508,23 +508,23 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Instalacion` (
   INDEX `fkidequipoexistente_instalacion` (`idequipoexistente` ASC) ,
   CONSTRAINT `fkidsoftware_instalacion`
     FOREIGN KEY (`idsoftware` )
-    REFERENCES `JHard`.`Software` (`idsoftware` )
+    REFERENCES `jhard`.`software` (`idsoftware` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidequipoexistente_instalacion`
     FOREIGN KEY (`idequipoexistente` )
-    REFERENCES `JHard`.`Existencia` (`idexistencia` )
+    REFERENCES `jhard`.`existencia` (`idexistencia` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`EquipoSimple`
+-- Table `jhard`.`equiposimple`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`EquipoSimple` ;
+DROP TABLE IF EXISTS `jhard`.`equiposimple` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`EquipoSimple` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`equiposimple` (
   `idEquipoSimple` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada equipo simple' ,
   `descripcion` TEXT NOT NULL COMMENT 'Descripcion del equipo simple' ,
   `propietario` VARCHAR(200) NOT NULL COMMENT 'Nombre del propietario del equipo simple' ,
@@ -533,18 +533,18 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`EquipoSimple` (
   INDEX `fkidestado_equiposimple` (`idestado` ASC) ,
   CONSTRAINT `fkidestado_equiposimple`
     FOREIGN KEY (`idestado` )
-    REFERENCES `JHard`.`EstadoEquipo` (`idestado` )
+    REFERENCES `jhard`.`estadoequipo` (`idestado` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`BitacoraEstados`
+-- Table `jhard`.`bitacoraestados`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`BitacoraEstados` ;
+DROP TABLE IF EXISTS `jhard`.`bitacoraestados` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`BitacoraEstados` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`bitacoraestados` (
   `idbitacora` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada bitacora' ,
   `fecha` DATE NOT NULL COMMENT 'Fecha en la que ocurrio el cambio de estado' ,
   `idestado` INT NOT NULL COMMENT 'Referencia al estado al cual cambio el equipo' ,
@@ -556,28 +556,28 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`BitacoraEstados` (
   INDEX `fkidequiposimple_bitacoraestados` (`idequipoexistente` ASC) ,
   CONSTRAINT `fkidestado_bitacoraestados`
     FOREIGN KEY (`idestado` )
-    REFERENCES `JHard`.`EstadoEquipo` (`idestado` )
+    REFERENCES `jhard`.`estadoequipo` (`idestado` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidequipoexistente_bitacoraestados`
     FOREIGN KEY (`idequipoexistente` )
-    REFERENCES `JHard`.`Existencia` (`idexistencia` )
+    REFERENCES `jhard`.`existencia` (`idexistencia` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidequiposimple_bitacoraestados`
     FOREIGN KEY (`idequipoexistente` )
-    REFERENCES `JHard`.`EquipoSimple` (`idEquipoSimple` )
+    REFERENCES `jhard`.`equiposimple` (`idEquipoSimple` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Tecnico`
+-- Table `jhard`.`tecnico`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Tecnico` ;
+DROP TABLE IF EXISTS `jhard`.`tecnico` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Tecnico` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`tecnico` (
   `idtecnico` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada tecnico' ,
   `apellidos` VARCHAR(200) NOT NULL COMMENT 'Apellidos del tecnico' ,
   `nombres` VARCHAR(200) NOT NULL COMMENT 'Nombres del tecnico' ,
@@ -587,13 +587,14 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Solicitud`
+-- Table `jhard`.`solicitud`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Solicitud` ;
+DROP TABLE IF EXISTS `jhard`.`solicitud` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Solicitud` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`solicitud` (
   `idsolicitud` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada solicitud' ,
   `fecha` DATE NOT NULL COMMENT 'Fecha en la que se registro la solicitud' ,
+  `prioridad` VARCHAR(25) NOT NULL COMMENT 'Tipo de prioridad en la cual se clasifican las solicitudes de mantenimiento. Sus posibles valores son: Alta, Media y Baja' ,
   `descripcion` TEXT NOT NULL COMMENT 'Descripcion de la solicitud' ,
   `idusuario` INT NOT NULL COMMENT 'Usuario que registro la solicitud' ,
   `idequipoexistente` INT NOT NULL COMMENT 'Equipo al cual se desea efectuar un mantenimiento' ,
@@ -603,28 +604,28 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Solicitud` (
   INDEX `fkidusuario_solicitud` (`idusuario` ASC) ,
   CONSTRAINT `fkidequipoexistente_solicitud`
     FOREIGN KEY (`idequipoexistente` )
-    REFERENCES `JHard`.`Existencia` (`idexistencia` )
+    REFERENCES `jhard`.`existencia` (`idexistencia` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidequiposimple_solicitud`
     FOREIGN KEY (`idequipoexistente` )
-    REFERENCES `JHard`.`EquipoSimple` (`idEquipoSimple` )
+    REFERENCES `jhard`.`equiposimple` (`idEquipoSimple` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidusuario_solicitud`
     FOREIGN KEY (`idusuario` )
-    REFERENCES `JHard`.`Usuario` (`idusuario` )
+    REFERENCES `jhard`.`usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Mantenimiento`
+-- Table `jhard`.`mantenimiento`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Mantenimiento` ;
+DROP TABLE IF EXISTS `jhard`.`mantenimiento` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Mantenimiento` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`mantenimiento` (
   `idmantenimiento` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada mantenimiento' ,
   `fecha` DATE NOT NULL COMMENT 'Fecha en la que se efectuo el mantenimiento' ,
   `descripcion` TEXT NOT NULL COMMENT 'Descripcion del mantenimiento' ,
@@ -637,28 +638,28 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Mantenimiento` (
   INDEX `fkidequipoexistente_mantenimiento` (`idequipoexistente` ASC) ,
   CONSTRAINT `fkidtecnico_mantenimiento`
     FOREIGN KEY (`idtecnico` )
-    REFERENCES `JHard`.`Tecnico` (`idtecnico` )
+    REFERENCES `jhard`.`tecnico` (`idtecnico` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidsolicitud_mantenimiento`
     FOREIGN KEY (`idsolicitud` )
-    REFERENCES `JHard`.`Solicitud` (`idsolicitud` )
+    REFERENCES `jhard`.`solicitud` (`idsolicitud` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidequipoexistente_mantenimiento`
     FOREIGN KEY (`idequipoexistente` )
-    REFERENCES `JHard`.`Existencia` (`idexistencia` )
+    REFERENCES `jhard`.`existencia` (`idexistencia` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Pieza`
+-- Table `jhard`.`pieza`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Pieza` ;
+DROP TABLE IF EXISTS `jhard`.`pieza` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Pieza` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`pieza` (
   `idpieza` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada pieza' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre de la pieza' ,
   `idmarca` INT NOT NULL COMMENT 'Referencia a la marca de la pieza' ,
@@ -671,28 +672,28 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Pieza` (
   INDEX `fkidmarca_pieza` (`idmarca` ASC) ,
   CONSTRAINT `fkidclasificacion_pieza`
     FOREIGN KEY (`idclasificacion` )
-    REFERENCES `JHard`.`Clasificacion` (`idclasificacion` )
+    REFERENCES `jhard`.`clasificacion` (`idclasificacion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidequipo_pieza`
     FOREIGN KEY (`idequipo` )
-    REFERENCES `JHard`.`Equipo` (`idequipo` )
+    REFERENCES `jhard`.`equipo` (`idequipo` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidmarca_pieza`
     FOREIGN KEY (`idmarca` )
-    REFERENCES `JHard`.`Marca` (`idmarca` )
+    REFERENCES `jhard`.`marca` (`idmarca` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Accesorio`
+-- Table `jhard`.`accesorio`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Accesorio` ;
+DROP TABLE IF EXISTS `jhard`.`accesorio` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Accesorio` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`accesorio` (
   `idaccesorio` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada accesorio' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre del accesorio' ,
   `idmarca` INT NOT NULL COMMENT 'Referencia a la marca del accesorio' ,
@@ -705,28 +706,28 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Accesorio` (
   INDEX `fkidequipo_accesorio` (`idequipo` ASC) ,
   CONSTRAINT `fkidmarca_accesorio`
     FOREIGN KEY (`idmarca` )
-    REFERENCES `JHard`.`Marca` (`idmarca` )
+    REFERENCES `jhard`.`marca` (`idmarca` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidclasificacion_accesorio`
     FOREIGN KEY (`idclasificacion` )
-    REFERENCES `JHard`.`Clasificacion` (`idclasificacion` )
+    REFERENCES `jhard`.`clasificacion` (`idclasificacion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidequipo_accesorio`
     FOREIGN KEY (`idequipo` )
-    REFERENCES `JHard`.`Equipo` (`idequipo` )
+    REFERENCES `jhard`.`equipo` (`idequipo` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`AtributoHardware`
+-- Table `jhard`.`atributohardware`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`AtributoHardware` ;
+DROP TABLE IF EXISTS `jhard`.`atributohardware` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`AtributoHardware` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`atributohardware` (
   `idatributohardware` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico del atributo de hardware' ,
   `nombre` VARCHAR(45) NOT NULL COMMENT 'Nombre del atributo' ,
   `valor` VARCHAR(45) NOT NULL COMMENT 'Valor del atributo' ,
@@ -738,28 +739,28 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`AtributoHardware` (
   INDEX `fkidaccesorio_atributohardware` (`idhardware` ASC) ,
   CONSTRAINT `fkidequipo_atributohardware`
     FOREIGN KEY (`idhardware` )
-    REFERENCES `JHard`.`Equipo` (`idequipo` )
+    REFERENCES `jhard`.`equipo` (`idequipo` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidpieza_atributohardware`
     FOREIGN KEY (`idhardware` )
-    REFERENCES `JHard`.`Pieza` (`idpieza` )
+    REFERENCES `jhard`.`pieza` (`idpieza` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidaccesorio_atributohardware`
     FOREIGN KEY (`idhardware` )
-    REFERENCES `JHard`.`Accesorio` (`idaccesorio` )
+    REFERENCES `jhard`.`accesorio` (`idaccesorio` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`EstadoReserva`
+-- Table `jhard`.`estadoreserva`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`EstadoReserva` ;
+DROP TABLE IF EXISTS `jhard`.`estadoreserva` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`EstadoReserva` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`estadoreserva` (
   `idestadoreserva` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada reserva' ,
   `nombre` VARCHAR(100) NOT NULL COMMENT 'Nombre del estado de la reserva' ,
   PRIMARY KEY (`idestadoreserva`) )
@@ -767,11 +768,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Solicitante`
+-- Table `jhard`.`solicitante`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Solicitante` ;
+DROP TABLE IF EXISTS `jhard`.`solicitante` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Solicitante` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`solicitante` (
   `idsolicitante` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada persona solicitante' ,
   `apellidos` VARCHAR(200) NOT NULL COMMENT 'Apellidos del solicitante' ,
   `nombres` VARCHAR(200) NOT NULL COMMENT 'Nombres del solicitante' ,
@@ -783,11 +784,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Responsable`
+-- Table `jhard`.`responsable`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Responsable` ;
+DROP TABLE IF EXISTS `jhard`.`responsable` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Responsable` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`responsable` (
   `idresponsable` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada responsable' ,
   `apellidos` VARCHAR(200) NOT NULL COMMENT 'Apellidos de la persona responsable' ,
   `nombres` VARCHAR(200) NOT NULL COMMENT 'Nombres de la persona responsable' ,
@@ -799,11 +800,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Reserva`
+-- Table `jhard`.`reserva`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Reserva` ;
+DROP TABLE IF EXISTS `jhard`.`reserva` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Reserva` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`reserva` (
   `idreserva` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada reserva' ,
   `fechareserva` DATE NOT NULL COMMENT 'fecha en la que se reservo el equipo' ,
   `fechahorainicioprestamo` DATETIME NOT NULL COMMENT 'Fecha y hora inicial a la que se utilizara el equipo' ,
@@ -824,43 +825,43 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Reserva` (
   INDEX `fkidusuario_reserva` (`idusuario` ASC) ,
   CONSTRAINT `fkidestado_reserva`
     FOREIGN KEY (`idestado` )
-    REFERENCES `JHard`.`EstadoReserva` (`idestadoreserva` )
+    REFERENCES `jhard`.`estadoreserva` (`idestadoreserva` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidequipoexistente_reserva`
     FOREIGN KEY (`idequipoexistente` )
-    REFERENCES `JHard`.`Existencia` (`idexistencia` )
+    REFERENCES `jhard`.`existencia` (`idexistencia` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidubicacion_reserva`
     FOREIGN KEY (`idubicacion` )
-    REFERENCES `JHard`.`Ubicacion` (`idubicacion` )
+    REFERENCES `jhard`.`ubicacion` (`idubicacion` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidsolicitante_reserva`
     FOREIGN KEY (`idsolicitante` )
-    REFERENCES `JHard`.`Solicitante` (`idsolicitante` )
+    REFERENCES `jhard`.`solicitante` (`idsolicitante` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidresponsable_reserva`
     FOREIGN KEY (`idresponsable` )
-    REFERENCES `JHard`.`Responsable` (`idresponsable` )
+    REFERENCES `jhard`.`responsable` (`idresponsable` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidusuario_reserva`
     FOREIGN KEY (`idusuario` )
-    REFERENCES `JHard`.`Usuario` (`idusuario` )
+    REFERENCES `jhard`.`usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`Administrador`
+-- Table `jhard`.`administrador`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`Administrador` ;
+DROP TABLE IF EXISTS `jhard`.`administrador` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`Administrador` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`administrador` (
   `idadministrador` INT NOT NULL COMMENT 'Id correlativo unico de cada administrador' ,
   `clave` VARCHAR(45) NOT NULL COMMENT 'Clave del administrador' ,
   `idusuario` INT NOT NULL COMMENT 'referencia al usuario relacionado con este admnistrador' ,
@@ -868,18 +869,18 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`Administrador` (
   INDEX `fkidusuario_administrador` (`idusuario` ASC) ,
   CONSTRAINT `fkidusuario_administrador`
     FOREIGN KEY (`idusuario` )
-    REFERENCES `JHard`.`Usuario` (`idusuario` )
+    REFERENCES `jhard`.`usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `JHard`.`BitacoraCambiosUsuario`
+-- Table `jhard`.`bitacoracambiosusuario`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `JHard`.`BitacoraCambiosUsuario` ;
+DROP TABLE IF EXISTS `jhard`.`bitacoracambiosusuario` ;
 
-CREATE  TABLE IF NOT EXISTS `JHard`.`BitacoraCambiosUsuario` (
+CREATE  TABLE IF NOT EXISTS `jhard`.`bitacoracambiosusuario` (
   `idbitacora` INT NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada bitacora' ,
   `idusuario` INT NOT NULL COMMENT 'Referencia al usuario que realizo el cambio' ,
   `descripcion` TEXT NOT NULL COMMENT 'Descripcion del cambio que realizo el usuario' ,
@@ -888,7 +889,7 @@ CREATE  TABLE IF NOT EXISTS `JHard`.`BitacoraCambiosUsuario` (
   INDEX `fkidusuario_bitacoracambiosusuario` (`idusuario` ASC) ,
   CONSTRAINT `fkidusuario_bitacoracambiosusuario`
     FOREIGN KEY (`idusuario` )
-    REFERENCES `JHard`.`Usuario` (`idusuario` )
+    REFERENCES `jhard`.`usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
