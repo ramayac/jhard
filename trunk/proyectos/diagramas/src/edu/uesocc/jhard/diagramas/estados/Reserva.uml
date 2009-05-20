@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:StateMachine xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmi:id="_o6LMYDqfEd6gx7wh6M6ELQ" name="Reserva">
+  <region xmi:id="_z83dwDqfEd6gx7wh6M6ELQ">
+    <subvertex xmi:type="uml:Pseudostate" xmi:id="_0qfYwDqfEd6gx7wh6M6ELQ"/>
+    <subvertex xmi:type="uml:FinalState" xmi:id="_1KXLoDqfEd6gx7wh6M6ELQ"/>
+    <subvertex xmi:type="uml:State" xmi:id="_5dl7YDqfEd6gx7wh6M6ELQ" name="Programada"/>
+    <subvertex xmi:type="uml:State" xmi:id="_BhuUcDqhEd6gx7wh6M6ELQ" name="En ejecucion"/>
+    <subvertex xmi:type="uml:State" xmi:id="_bVje4DqhEd6gx7wh6M6ELQ" name="Abandonada"/>
+    <subvertex xmi:type="uml:State" xmi:id="_VKaq8DqkEd6gx7wh6M6ELQ" name="Finalizada"/>
+    <subvertex xmi:type="uml:State" xmi:id="_s-kcoDqkEd6gx7wh6M6ELQ" name="Cancelada"/>
+    <transition xmi:id="_z4YJ4DqgEd6gx7wh6M6ELQ" target="_5dl7YDqfEd6gx7wh6M6ELQ" source="_0qfYwDqfEd6gx7wh6M6ELQ"/>
+    <transition xmi:id="_DMAE8DqhEd6gx7wh6M6ELQ" name="" target="_BhuUcDqhEd6gx7wh6M6ELQ" source="_5dl7YDqfEd6gx7wh6M6ELQ"/>
+    <transition xmi:id="_BZ5GwDqkEd6gx7wh6M6ELQ" target="_bVje4DqhEd6gx7wh6M6ELQ" source="_5dl7YDqfEd6gx7wh6M6ELQ"/>
+    <transition xmi:id="_NrEkgDqkEd6gx7wh6M6ELQ" target="_1KXLoDqfEd6gx7wh6M6ELQ" source="_bVje4DqhEd6gx7wh6M6ELQ"/>
+    <transition xmi:id="_WsJjcDqkEd6gx7wh6M6ELQ" target="_VKaq8DqkEd6gx7wh6M6ELQ" source="_BhuUcDqhEd6gx7wh6M6ELQ"/>
+    <transition xmi:id="_r7To0DqkEd6gx7wh6M6ELQ" target="_1KXLoDqfEd6gx7wh6M6ELQ" source="_VKaq8DqkEd6gx7wh6M6ELQ"/>
+    <transition xmi:id="_t95LoDqkEd6gx7wh6M6ELQ" target="_s-kcoDqkEd6gx7wh6M6ELQ" source="_5dl7YDqfEd6gx7wh6M6ELQ"/>
+    <transition xmi:id="_7fAAMDqkEd6gx7wh6M6ELQ" target="_1KXLoDqfEd6gx7wh6M6ELQ" source="_s-kcoDqkEd6gx7wh6M6ELQ"/>
+  </region>
+</uml:StateMachine>
