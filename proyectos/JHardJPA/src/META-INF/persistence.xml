@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="JHardJPA">
+		<class>edu.uesocc.jhard.jpa.Accesorio</class>
+		<class>edu.uesocc.jhard.jpa.Administrador</class>
+		<class>edu.uesocc.jhard.jpa.Adquisicion</class>
+		<class>edu.uesocc.jhard.jpa.Asistencia</class>
+		<class>edu.uesocc.jhard.jpa.Atributohardware</class>
+		<class>edu.uesocc.jhard.jpa.Bitacoracambiosusuario</class>
+		<class>edu.uesocc.jhard.jpa.Bitacoraestados</class>
+		<class>edu.uesocc.jhard.jpa.Carrera</class>
+		<class>edu.uesocc.jhard.jpa.Clase</class>
+		<class>edu.uesocc.jhard.jpa.Clasificacion</class>
+		<class>edu.uesocc.jhard.jpa.Curso</class>
+		<class>edu.uesocc.jhard.jpa.Docente</class>
+		<class>edu.uesocc.jhard.jpa.Equipo</class>
+		<class>edu.uesocc.jhard.jpa.Equiposimple</class>
+		<class>edu.uesocc.jhard.jpa.Estadocurso</class>
+		<class>edu.uesocc.jhard.jpa.Estadoequipo</class>
+		<class>edu.uesocc.jhard.jpa.Estadoreserva</class>
+		<class>edu.uesocc.jhard.jpa.Estudiante</class>
+		<class>edu.uesocc.jhard.jpa.Existencia</class>
+		<class>edu.uesocc.jhard.jpa.Facultad</class>
+		<class>edu.uesocc.jhard.jpa.Horario</class>
+		<class>edu.uesocc.jhard.jpa.Inscripcion</class>
+		<class>edu.uesocc.jhard.jpa.Instalacion</class>
+		<class>edu.uesocc.jhard.jpa.Instructor</class>
+		<class>edu.uesocc.jhard.jpa.Mantenimiento</class>
+		<class>edu.uesocc.jhard.jpa.Marca</class>
+		<class>edu.uesocc.jhard.jpa.Materia</class>
+		<class>edu.uesocc.jhard.jpa.Pieza</class>
+		<class>edu.uesocc.jhard.jpa.Reserva</class>
+		<class>edu.uesocc.jhard.jpa.Responsable</class>
+		<class>edu.uesocc.jhard.jpa.Rol</class>
+		<class>edu.uesocc.jhard.jpa.Software</class>
+		<class>edu.uesocc.jhard.jpa.Solicitante</class>
+		<class>edu.uesocc.jhard.jpa.Solicitud</class>
+		<class>edu.uesocc.jhard.jpa.Tecnico</class>
+		<class>edu.uesocc.jhard.jpa.Ubicacion</class>
+		<class>edu.uesocc.jhard.jpa.Usuario</class>
+	</persistence-unit>
+</persistence>

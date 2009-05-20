@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:StateMachine xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmi:id="_eYpVUDoFEd68eewV-jK02w" name="Equipo">
+  <nestedClassifier xmi:type="uml:StateMachine" xmi:id="_f7FMEDo_Ed6k49lORvQ7mA"/>
+  <nestedClassifier xmi:type="uml:StateMachine" xmi:id="_gv8XgDo_Ed6k49lORvQ7mA"/>
+  <region xmi:id="_xyNlsDo_Ed6k49lORvQ7mA">
+    <subvertex xmi:type="uml:Pseudostate" xmi:id="_1L1z8Do_Ed6k49lORvQ7mA"/>
+    <subvertex xmi:type="uml:FinalState" xmi:id="_6MdOIDo_Ed6k49lORvQ7mA"/>
+    <subvertex xmi:type="uml:State" xmi:id="_9U3JgDo_Ed6k49lORvQ7mA" name="Funcional Ocioso"/>
+    <subvertex xmi:type="uml:State" xmi:id="_X9WrEDpAEd6k49lORvQ7mA" name="Funcional en Uso"/>
+    <subvertex xmi:type="uml:State" xmi:id="_k-YRYDpAEd6k49lORvQ7mA" name="Fallido Esperando Mantenimiento"/>
+    <subvertex xmi:type="uml:State" xmi:id="_wn6gUDpAEd6k49lORvQ7mA" name="Fallido irreparale"/>
+    <subvertex xmi:type="uml:State" xmi:id="_6rhTQDpAEd6k49lORvQ7mA" name="Fallido con Solicitud de Mantenimiento"/>
+    <subvertex xmi:type="uml:State" xmi:id="_GqQWIDpBEd6k49lORvQ7mA" name="En Proceso de Mantenimiento"/>
+    <transition xmi:id="_RFrooDpAEd6k49lORvQ7mA" target="_9U3JgDo_Ed6k49lORvQ7mA" source="_1L1z8Do_Ed6k49lORvQ7mA"/>
+    <transition xmi:id="_Zq1gkDpAEd6k49lORvQ7mA" target="_X9WrEDpAEd6k49lORvQ7mA" source="_9U3JgDo_Ed6k49lORvQ7mA"/>
+    <transition xmi:id="_nBh04DpAEd6k49lORvQ7mA" target="_k-YRYDpAEd6k49lORvQ7mA" source="_X9WrEDpAEd6k49lORvQ7mA"/>
+    <transition xmi:id="_-83MoDpAEd6k49lORvQ7mA" target="_6rhTQDpAEd6k49lORvQ7mA" source="_k-YRYDpAEd6k49lORvQ7mA"/>
+    <transition xmi:id="_QJ4SQDpBEd6k49lORvQ7mA" target="_GqQWIDpBEd6k49lORvQ7mA" source="_6rhTQDpAEd6k49lORvQ7mA"/>
+    <transition xmi:id="_gfz-4DpBEd6k49lORvQ7mA" target="_6MdOIDo_Ed6k49lORvQ7mA" source="_wn6gUDpAEd6k49lORvQ7mA"/>
+    <transition xmi:id="_mwONADpBEd6k49lORvQ7mA" target="_wn6gUDpAEd6k49lORvQ7mA" source="_GqQWIDpBEd6k49lORvQ7mA"/>
+    <transition xmi:id="_x2Wz8DpBEd6k49lORvQ7mA" target="_6rhTQDpAEd6k49lORvQ7mA" source="_GqQWIDpBEd6k49lORvQ7mA"/>
+    <transition xmi:id="_NHTnMDpDEd6k49lORvQ7mA" target="_X9WrEDpAEd6k49lORvQ7mA" source="_GqQWIDpBEd6k49lORvQ7mA"/>
+    <transition xmi:id="_TJ3hwDqfEd6gx7wh6M6ELQ" target="_6MdOIDo_Ed6k49lORvQ7mA" source="_X9WrEDpAEd6k49lORvQ7mA"/>
+  </region>
+  <connectionPoint xmi:id="_y-P7ADo_Ed6k49lORvQ7mA"/>
+</uml:StateMachine>
