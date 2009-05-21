@@ -145,7 +145,11 @@ INSERT INTO `Usuario` (`idusuario`,`nombre`,`clave`,`rol`) VALUES
  (8,'fredy','instructor','Instructor'),
  (9,'hugol','firpomadrid','Instructor');
 
+/*DROP USER IF EXISTS jharduser;*/
 
+GRANT ALL PRIVILEGES ON jhard.* TO 'jharduser'@'localhost' IDENTIFIED BY 'jhardpwd' WITH GRANT OPTION;
+ 
+ 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
