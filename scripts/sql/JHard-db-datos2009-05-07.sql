@@ -147,7 +147,7 @@ INSERT INTO `usuario` (`idusuario`,`nombre`,`clave`,`rol`) VALUES
 
 /*DROP USER IF EXISTS jharduser;*/
 
-GRANT ALL PRIVILEGES ON jhard.* TO 'jharduser'@'localhost' IDENTIFIED BY 'jhardpwd' WITH GRANT OPTION;
+/*GRANT ALL PRIVILEGES ON jhard.* TO 'jharduser'@'localhost' IDENTIFIED BY 'jhardpwd' WITH GRANT OPTION;*/
  
  
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

@@ -1,5 +1,0 @@
-INDEX VERSION 1.125+/mnt/Vista/Users/Hugol/Documents/UES/JHard/diagramas/.metadata/.plugins/org.eclipse.jdt.core
-1588208250.index
-1746423388.index
-255361168.index
-1181456295.index
