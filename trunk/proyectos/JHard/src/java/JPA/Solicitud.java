@@ -1,0 +1,167 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package JPA;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+/**
+ *
+ * @author Hugol
+ */
+@Entity
+@Table(name = "solicitud")
+@NamedQueries({@NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s"), @NamedQuery(name = "Solicitud.findByIdsolicitud", query = "SELECT s FROM Solicitud s WHERE s.idsolicitud = :idsolicitud"), @NamedQuery(name = "Solicitud.findByFecha", query = "SELECT s FROM Solicitud s WHERE s.fecha = :fecha"), @NamedQuery(name = "Solicitud.findByPrioridad", query = "SELECT s FROM Solicitud s WHERE s.prioridad = :prioridad")})
+public class Solicitud implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idsolicitud")
+    private Integer idsolicitud;
+    @Basic(optional = false)
+    @Column(name = "fecha")
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
+    @Basic(optional = false)
+    @Column(name = "prioridad")
+    private String prioridad;
+    @Basic(optional = false)
+    @Lob
+    @Column(name = "descripcion")
+    private String descripcion;
+    @OneToMany(mappedBy = "idsolicitud")
+    private List<Mantenimiento> mantenimientoCollection;
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia")
+    @ManyToOne(optional = false)
+    private Existencia idequipoexistente;
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idEquipoSimple")
+    @ManyToOne(optional = false)
+    private Equiposimple idequipoexistente1;
+    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
+    @ManyToOne(optional = false)
+    private Usuario idusuario;
+
+    public Solicitud() {
+    }
+
+    public Solicitud(Integer idsolicitud) {
+        this.idsolicitud = idsolicitud;
+    }
+
+    public Solicitud(Integer idsolicitud, Date fecha, String prioridad, String descripcion) {
+        this.idsolicitud = idsolicitud;
+        this.fecha = fecha;
+        this.prioridad = prioridad;
+        this.descripcion = descripcion;
+    }
+
+    public Integer getIdsolicitud() {
+        return idsolicitud;
+    }
+
+    public void setIdsolicitud(Integer idsolicitud) {
+        this.idsolicitud = idsolicitud;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(String prioridad) {
+        this.prioridad = prioridad;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public List<Mantenimiento> getMantenimientoCollection() {
+        return mantenimientoCollection;
+    }
+
+    public void setMantenimientoCollection(List<Mantenimiento> mantenimientoCollection) {
+        this.mantenimientoCollection = mantenimientoCollection;
+    }
+
+    public Existencia getIdequipoexistente() {
+        return idequipoexistente;
+    }
+
+    public void setIdequipoexistente(Existencia idequipoexistente) {
+        this.idequipoexistente = idequipoexistente;
+    }
+
+    public Equiposimple getIdequipoexistente1() {
+        return idequipoexistente1;
+    }
+
+    public void setIdequipoexistente1(Equiposimple idequipoexistente1) {
+        this.idequipoexistente1 = idequipoexistente1;
+    }
+
+    public Usuario getIdusuario() {
+        return idusuario;
+    }
+
+    public void setIdusuario(Usuario idusuario) {
+        this.idusuario = idusuario;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idsolicitud != null ? idsolicitud.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Solicitud)) {
+            return false;
+        }
+        Solicitud other = (Solicitud) object;
+        if ((this.idsolicitud == null && other.idsolicitud != null) || (this.idsolicitud != null && !this.idsolicitud.equals(other.idsolicitud))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "JPA.Solicitud[idsolicitud=" + idsolicitud + "]";
+    }
+
+}
