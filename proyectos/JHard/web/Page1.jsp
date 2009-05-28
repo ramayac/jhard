@@ -11,6 +11,7 @@
             <head id="outputHead1">
                 <ice:outputStyle href="./resources/stylesheet.css" id="outputStyle1"/>
                 <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
+                <link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <ice:form id="form1">
