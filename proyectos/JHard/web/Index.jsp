@@ -29,7 +29,7 @@
                                 <a href="#">Principal</a>
                             </li>
                             <li>
-                                <a href="jrequestUserd.iface">Mantenimientos</a>
+                                <a href="jrequestUser.iface">Mantenimientos</a>
                             </li>
                             <li>
                                 <a href="#">Grupos de Laboratorio</a>
