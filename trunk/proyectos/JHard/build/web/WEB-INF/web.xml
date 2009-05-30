@@ -90,7 +90,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
+        <welcome-file>faces/Index.jsp</welcome-file>
         <welcome-file>index.html</welcome-file>
-        <welcome-file>faces/Page1.jsp</welcome-file>
         </welcome-file-list>
     </web-app>

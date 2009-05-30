@@ -1,13 +1,19 @@
 /*
- * Page1.java
+ * jrequestUser.java
  *
- * Created on 25-may-2009, 23:02:55
- * Copyright Hugol
+ * Created on 05-29-2009, 10:56:59 AM
+ * Copyright hugol
  */
 package jhard;
 
+import com.icesoft.faces.component.ext.HtmlCommandButton;
+import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
+import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
+import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
+import com.icesoft.faces.component.jsfcl.data.MenuBarBean;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import javax.faces.FacesException;
+
 
 /**
  * <p>Page bean that corresponds to a similarly named JSP page.  This
@@ -16,7 +22,7 @@ import javax.faces.FacesException;
  * lifecycle methods and event handlers where you may add behavior
  * to respond to incoming events.</p>
  */
-public class Page1 extends AbstractPageBean {
+public class jrequestUser extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
     private int __placeholder;
 
@@ -27,13 +33,49 @@ public class Page1 extends AbstractPageBean {
      */
     private void _init() throws Exception {
     }
+    private DefaultSelectedData selectOneMenu1Bean = new DefaultSelectedData();
+
+    public DefaultSelectedData getSelectOneMenu1Bean() {
+        return selectOneMenu1Bean;
+    }
+
+    public void setSelectOneMenu1Bean(DefaultSelectedData dsd) {
+        this.selectOneMenu1Bean = dsd;
+    }
+    private DefaultSelectionItems selectOneMenu1DefaultItems = new DefaultSelectionItems();
+
+    public DefaultSelectionItems getSelectOneMenu1DefaultItems() {
+        return selectOneMenu1DefaultItems;
+    }
+
+    public void setSelectOneMenu1DefaultItems(DefaultSelectionItems dsi) {
+        this.selectOneMenu1DefaultItems = dsi;
+    }
+    private HtmlSelectOneMenu selectOneMenu1 = new HtmlSelectOneMenu();
+
+    public HtmlSelectOneMenu getSelectOneMenu1() {
+        return selectOneMenu1;
+    }
+
+    public void setSelectOneMenu1(HtmlSelectOneMenu hsom) {
+        this.selectOneMenu1 = hsom;
+    }
+    private HtmlCommandButton button1 = new HtmlCommandButton();
+
+    public HtmlCommandButton getButton1() {
+        return button1;
+    }
+
+    public void setButton1(HtmlCommandButton hcb) {
+        this.button1 = hcb;
+    }
 
     // </editor-fold>
 
     /**
      * <p>Construct a new Page bean instance.</p>
      */
-    public Page1() {
+    public jrequestUser() {
     }
 
     /**
@@ -48,6 +90,7 @@ public class Page1 extends AbstractPageBean {
      * values submitted with this request.  Instead, they represent the
      * property values that were saved for this view when it was rendered.</p>
      */
+    @Override
     public void init() {
         // Perform initializations inherited from our superclass
         super.init();
@@ -61,7 +104,7 @@ public class Page1 extends AbstractPageBean {
         try {
             _init();
         } catch (Exception e) {
-            log("Page1 Initialization Failure", e);
+            log("jrequestUser Initialization Failure", e);
             throw e instanceof FacesException ? (FacesException) e: new FacesException(e);
         }
         
@@ -78,6 +121,7 @@ public class Page1 extends AbstractPageBean {
      * is processing a form submit.  Customize this method to allocate
      * resources that will be required in your event handlers.</p>
      */
+    @Override
     public void preprocess() {
     }
 
@@ -89,6 +133,7 @@ public class Page1 extends AbstractPageBean {
      * this method to allocate resources that will be required for rendering
      * this page.</p>
      */
+    @Override
     public void prerender() {
     }
 
@@ -100,7 +145,36 @@ public class Page1 extends AbstractPageBean {
      * <code>preprocess()</code>, or <code>prerender()</code> methods (or
      * acquired during execution of an event handler).</p>
      */
+    @Override
     public void destroy() {
     }
+
+    /**
+     * <p>Return a reference to the scoped data bean.</p>
+     *
+     * @return reference to the scoped data bean
+     */
+    protected SessionBean1 getSessionBean1() {
+        return (SessionBean1) getBean("SessionBean1");
+    }
+
+    /**
+     * <p>Return a reference to the scoped data bean.</p>
+     *
+     * @return reference to the scoped data bean
+     */
+    protected RequestBean1 getRequestBean1() {
+        return (RequestBean1) getBean("RequestBean1");
+    }
+
+    /**
+     * <p>Return a reference to the scoped data bean.</p>
+     *
+     * @return reference to the scoped data bean
+     */
+    protected ApplicationBean1 getApplicationBean1() {
+        return (ApplicationBean1) getBean("ApplicationBean1");
+    }
+
 }
 
