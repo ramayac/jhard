@@ -15,8 +15,8 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>Page1</managed-bean-name>
-        <managed-bean-class>jhard.Page1</managed-bean-class>
+        <managed-bean-name>Index</managed-bean-name>
+        <managed-bean-class>jhard.Index</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>
@@ -28,5 +28,15 @@
         <managed-bean-name>ApplicationBean1</managed-bean-name>
         <managed-bean-class>jhard.ApplicationBean1</managed-bean-class>
         <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>jrequest</managed-bean-name>
+        <managed-bean-class>jhard.jrequest</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>jrequestUser</managed-bean-name>
+        <managed-bean-class>jhard.jrequestUser</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 </faces-config>
