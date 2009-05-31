@@ -26,28 +26,28 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "accesorio")
+@Table(name = "accesorio", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Accesorio.findAll", query = "SELECT a FROM Accesorio a"), @NamedQuery(name = "Accesorio.findByIdaccesorio", query = "SELECT a FROM Accesorio a WHERE a.idaccesorio = :idaccesorio"), @NamedQuery(name = "Accesorio.findByNombre", query = "SELECT a FROM Accesorio a WHERE a.nombre = :nombre"), @NamedQuery(name = "Accesorio.findByModelo", query = "SELECT a FROM Accesorio a WHERE a.modelo = :modelo")})
 public class Accesorio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idaccesorio")
+    @Column(name = "idaccesorio", nullable = false)
     private Integer idaccesorio;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
     @Basic(optional = false)
-    @Column(name = "modelo")
+    @Column(name = "modelo", nullable = false, length = 15)
     private String modelo;
-    @JoinColumn(name = "idclasificacion", referencedColumnName = "idclasificacion")
+    @JoinColumn(name = "idclasificacion", referencedColumnName = "idclasificacion", nullable = false)
     @ManyToOne(optional = false)
     private Clasificacion idclasificacion;
     @JoinColumn(name = "idequipo", referencedColumnName = "idequipo")
     @ManyToOne
     private Equipo idequipo;
-    @JoinColumn(name = "idmarca", referencedColumnName = "idmarca")
+    @JoinColumn(name = "idmarca", referencedColumnName = "idmarca", nullable = false)
     @ManyToOne(optional = false)
     private Marca idmarca;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idhardware")
@@ -144,7 +144,7 @@ public class Accesorio implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Accesorio[idaccesorio=" + idaccesorio + "]";
+        return "edu.ues.jhard.jpa.Accesorio[idaccesorio=" + idaccesorio + "]";
     }
 
 }

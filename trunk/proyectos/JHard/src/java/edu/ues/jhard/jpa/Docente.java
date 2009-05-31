@@ -26,29 +26,29 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "docente")
+@Table(name = "docente", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Docente.findAll", query = "SELECT d FROM Docente d"), @NamedQuery(name = "Docente.findByIddocente", query = "SELECT d FROM Docente d WHERE d.iddocente = :iddocente"), @NamedQuery(name = "Docente.findByApellidos", query = "SELECT d FROM Docente d WHERE d.apellidos = :apellidos"), @NamedQuery(name = "Docente.findByNombres", query = "SELECT d FROM Docente d WHERE d.nombres = :nombres"), @NamedQuery(name = "Docente.findByVisible", query = "SELECT d FROM Docente d WHERE d.visible = :visible")})
 public class Docente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "iddocente")
+    @Column(name = "iddocente", nullable = false)
     private Integer iddocente;
     @Basic(optional = false)
-    @Column(name = "Apellidos")
+    @Column(name = "Apellidos", nullable = false, length = 200)
     private String apellidos;
     @Basic(optional = false)
-    @Column(name = "Nombres")
+    @Column(name = "Nombres", nullable = false, length = 200)
     private String nombres;
     @Basic(optional = false)
-    @Column(name = "visible")
+    @Column(name = "visible", nullable = false)
     private int visible;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddocente")
     private List<Curso> cursoCollection;
     @OneToMany(mappedBy = "iddocente")
     private List<Clase> claseCollection;
-    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
+    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario idusuario;
 
@@ -144,7 +144,7 @@ public class Docente implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Docente[iddocente=" + iddocente + "]";
+        return "edu.ues.jhard.jpa.Docente[iddocente=" + iddocente + "]";
     }
 
 }

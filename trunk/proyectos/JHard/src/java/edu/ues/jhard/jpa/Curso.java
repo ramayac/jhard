@@ -29,23 +29,23 @@ import javax.persistence.TemporalType;
  * @author Hugol
  */
 @Entity
-@Table(name = "curso")
+@Table(name = "curso", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c"), @NamedQuery(name = "Curso.findByIdcurso", query = "SELECT c FROM Curso c WHERE c.idcurso = :idcurso"), @NamedQuery(name = "Curso.findByNombre", query = "SELECT c FROM Curso c WHERE c.nombre = :nombre"), @NamedQuery(name = "Curso.findByCupomax", query = "SELECT c FROM Curso c WHERE c.cupomax = :cupomax"), @NamedQuery(name = "Curso.findByFechainicio", query = "SELECT c FROM Curso c WHERE c.fechainicio = :fechainicio"), @NamedQuery(name = "Curso.findByCiclo", query = "SELECT c FROM Curso c WHERE c.ciclo = :ciclo"), @NamedQuery(name = "Curso.findByAnio", query = "SELECT c FROM Curso c WHERE c.anio = :anio")})
 public class Curso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idcurso")
+    @Column(name = "idcurso", nullable = false)
     private Integer idcurso;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 200)
     private String nombre;
     @Basic(optional = false)
-    @Column(name = "cupomax")
+    @Column(name = "cupomax", nullable = false)
     private int cupomax;
     @Basic(optional = false)
-    @Column(name = "fechainicio")
+    @Column(name = "fechainicio", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechainicio;
     @Column(name = "ciclo")
@@ -56,13 +56,13 @@ public class Curso implements Serializable {
     private List<Inscripcion> inscripcionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcurso")
     private List<Horario> horarioCollection;
-    @JoinColumn(name = "iddocente", referencedColumnName = "iddocente")
+    @JoinColumn(name = "iddocente", referencedColumnName = "iddocente", nullable = false)
     @ManyToOne(optional = false)
     private Docente iddocente;
     @JoinColumn(name = "idestado", referencedColumnName = "idestadocurso")
     @ManyToOne
     private Estadocurso idestado;
-    @JoinColumn(name = "idinstructor", referencedColumnName = "idinstructor")
+    @JoinColumn(name = "idinstructor", referencedColumnName = "idinstructor", nullable = false)
     @ManyToOne(optional = false)
     private Instructor idinstructor;
     @JoinColumn(name = "idmateria", referencedColumnName = "idmateria")
@@ -201,7 +201,7 @@ public class Curso implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Curso[idcurso=" + idcurso + "]";
+        return "edu.ues.jhard.jpa.Curso[idcurso=" + idcurso + "]";
     }
 
 }

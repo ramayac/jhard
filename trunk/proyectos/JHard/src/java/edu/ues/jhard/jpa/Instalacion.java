@@ -26,23 +26,23 @@ import javax.persistence.TemporalType;
  * @author Hugol
  */
 @Entity
-@Table(name = "instalacion")
+@Table(name = "instalacion", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Instalacion.findAll", query = "SELECT i FROM Instalacion i"), @NamedQuery(name = "Instalacion.findByIdinstalacion", query = "SELECT i FROM Instalacion i WHERE i.idinstalacion = :idinstalacion"), @NamedQuery(name = "Instalacion.findByFechainstalacion", query = "SELECT i FROM Instalacion i WHERE i.fechainstalacion = :fechainstalacion")})
 public class Instalacion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idinstalacion")
+    @Column(name = "idinstalacion", nullable = false)
     private Integer idinstalacion;
     @Basic(optional = false)
-    @Column(name = "fechainstalacion")
+    @Column(name = "fechainstalacion", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechainstalacion;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia")
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia", nullable = false)
     @ManyToOne(optional = false)
     private Existencia idequipoexistente;
-    @JoinColumn(name = "idsoftware", referencedColumnName = "idsoftware")
+    @JoinColumn(name = "idsoftware", referencedColumnName = "idsoftware", nullable = false)
     @ManyToOne(optional = false)
     private Software idsoftware;
 
@@ -112,7 +112,7 @@ public class Instalacion implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Instalacion[idinstalacion=" + idinstalacion + "]";
+        return "edu.ues.jhard.jpa.Instalacion[idinstalacion=" + idinstalacion + "]";
     }
 
 }

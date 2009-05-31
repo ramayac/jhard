@@ -23,31 +23,31 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "atributohardware")
+@Table(name = "atributohardware", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Atributohardware.findAll", query = "SELECT a FROM Atributohardware a"), @NamedQuery(name = "Atributohardware.findByIdatributohardware", query = "SELECT a FROM Atributohardware a WHERE a.idatributohardware = :idatributohardware"), @NamedQuery(name = "Atributohardware.findByNombre", query = "SELECT a FROM Atributohardware a WHERE a.nombre = :nombre"), @NamedQuery(name = "Atributohardware.findByValor", query = "SELECT a FROM Atributohardware a WHERE a.valor = :valor"), @NamedQuery(name = "Atributohardware.findByUnidadmedida", query = "SELECT a FROM Atributohardware a WHERE a.unidadmedida = :unidadmedida")})
 public class Atributohardware implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idatributohardware")
+    @Column(name = "idatributohardware", nullable = false)
     private Integer idatributohardware;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
     @Basic(optional = false)
-    @Column(name = "valor")
+    @Column(name = "valor", nullable = false, length = 45)
     private String valor;
     @Basic(optional = false)
-    @Column(name = "unidadmedida")
+    @Column(name = "unidadmedida", nullable = false, length = 45)
     private String unidadmedida;
-    @JoinColumn(name = "idhardware", referencedColumnName = "idaccesorio")
+    @JoinColumn(name = "idhardware", referencedColumnName = "idaccesorio", nullable = false)
     @ManyToOne(optional = false)
     private Accesorio idhardware;
-    @JoinColumn(name = "idhardware", referencedColumnName = "idequipo")
+    @JoinColumn(name = "idhardware", referencedColumnName = "idequipo", nullable = false)
     @ManyToOne(optional = false)
     private Equipo idhardware1;
-    @JoinColumn(name = "idhardware", referencedColumnName = "idpieza")
+    @JoinColumn(name = "idhardware", referencedColumnName = "idpieza", nullable = false)
     @ManyToOne(optional = false)
     private Pieza idhardware2;
 
@@ -143,7 +143,7 @@ public class Atributohardware implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Atributohardware[idatributohardware=" + idatributohardware + "]";
+        return "edu.ues.jhard.jpa.Atributohardware[idatributohardware=" + idatributohardware + "]";
     }
 
 }

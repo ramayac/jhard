@@ -23,22 +23,22 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "asistencia")
+@Table(name = "asistencia", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Asistencia.findAll", query = "SELECT a FROM Asistencia a"), @NamedQuery(name = "Asistencia.findByIdasistencia", query = "SELECT a FROM Asistencia a WHERE a.idasistencia = :idasistencia")})
 public class Asistencia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idasistencia")
+    @Column(name = "idasistencia", nullable = false)
     private Integer idasistencia;
-    @JoinColumn(name = "idclase", referencedColumnName = "idclase")
+    @JoinColumn(name = "idclase", referencedColumnName = "idclase", nullable = false)
     @ManyToOne(optional = false)
     private Clase idclase;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia")
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia", nullable = false)
     @ManyToOne(optional = false)
     private Existencia idequipoexistente;
-    @JoinColumn(name = "idestudiante", referencedColumnName = "idestudiante")
+    @JoinColumn(name = "idestudiante", referencedColumnName = "idestudiante", nullable = false)
     @ManyToOne(optional = false)
     private Estudiante idestudiante;
 
@@ -103,7 +103,7 @@ public class Asistencia implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Asistencia[idasistencia=" + idasistencia + "]";
+        return "edu.ues.jhard.jpa.Asistencia[idasistencia=" + idasistencia + "]";
     }
 
 }

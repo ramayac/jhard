@@ -27,23 +27,23 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "equiposimple")
+@Table(name = "equiposimple", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Equiposimple.findAll", query = "SELECT e FROM Equiposimple e"), @NamedQuery(name = "Equiposimple.findByIdEquipoSimple", query = "SELECT e FROM Equiposimple e WHERE e.idEquipoSimple = :idEquipoSimple"), @NamedQuery(name = "Equiposimple.findByPropietario", query = "SELECT e FROM Equiposimple e WHERE e.propietario = :propietario")})
 public class Equiposimple implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idEquipoSimple")
+    @Column(name = "idEquipoSimple", nullable = false)
     private Integer idEquipoSimple;
     @Basic(optional = false)
     @Lob
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", nullable = false, length = 65535)
     private String descripcion;
     @Basic(optional = false)
-    @Column(name = "propietario")
+    @Column(name = "propietario", nullable = false, length = 200)
     private String propietario;
-    @JoinColumn(name = "idestado", referencedColumnName = "idestado")
+    @JoinColumn(name = "idestado", referencedColumnName = "idestado", nullable = false)
     @ManyToOne(optional = false)
     private Estadoequipo idestado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idequipoexistente1")
@@ -134,7 +134,7 @@ public class Equiposimple implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Equiposimple[idEquipoSimple=" + idEquipoSimple + "]";
+        return "edu.ues.jhard.jpa.Equiposimple[idEquipoSimple=" + idEquipoSimple + "]";
     }
 
 }

@@ -504,12 +504,14 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${libs.icefaces-jsf12-runtime-support.classpath}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.libs.icefaces-jsf12-runtime-support.classpath" todir="${dist.ear.dir}"/>
         <copyfiles files="${libs.toplink.classpath}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.libs.toplink.classpath" todir="${dist.ear.dir}"/>
         <copyfiles files="${libs.MySQLDriver.classpath}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.libs.MySQLDriver.classpath" todir="${dist.ear.dir}"/>
+        <copyfiles files="${libs.hibernate-persistence.classpath}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.libs.hibernate-persistence.classpath" todir="${dist.ear.dir}"/>
+        <copyfiles files="${libs.hibernate-support.classpath}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.libs.hibernate-support.classpath" todir="${dist.ear.dir}"/>
         <copyfiles files="${libs.exceptionhandler-runtime.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.jstl.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.icefaces-runtime-180.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <mkdir dir="${build.web.dir}/META-INF"/>
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${manifest.libs.jsf-1-2_09.classpath} ${manifest.libs.jsf12-support-runtime-modified.classpath} ${manifest.libs.icefaces-jsf12-bm.classpath} ${manifest.libs.icefaces-jsf12-runtime-support.classpath} ${manifest.libs.toplink.classpath} ${manifest.libs.MySQLDriver.classpath} "/>
+            <attribute name="Class-Path" value="${manifest.libs.jsf-1-2_09.classpath} ${manifest.libs.jsf12-support-runtime-modified.classpath} ${manifest.libs.icefaces-jsf12-bm.classpath} ${manifest.libs.icefaces-jsf12-runtime-support.classpath} ${manifest.libs.toplink.classpath} ${manifest.libs.MySQLDriver.classpath} ${manifest.libs.hibernate-persistence.classpath} ${manifest.libs.hibernate-support.classpath} "/>
         </manifest>
     </target>
     <target depends="init" name="library-inclusion-in-archive" unless="dist.ear.dir">
@@ -519,6 +521,8 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${libs.icefaces-jsf12-runtime-support.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.toplink.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.MySQLDriver.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${libs.hibernate-persistence.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${libs.hibernate-support.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.exceptionhandler-runtime.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.jstl.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.icefaces-runtime-180.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>

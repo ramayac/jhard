@@ -27,30 +27,30 @@ import javax.persistence.TemporalType;
  * @author Hugol
  */
 @Entity
-@Table(name = "bitacoraestados")
+@Table(name = "bitacoraestados", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Bitacoraestados.findAll", query = "SELECT b FROM Bitacoraestados b"), @NamedQuery(name = "Bitacoraestados.findByIdbitacora", query = "SELECT b FROM Bitacoraestados b WHERE b.idbitacora = :idbitacora"), @NamedQuery(name = "Bitacoraestados.findByFecha", query = "SELECT b FROM Bitacoraestados b WHERE b.fecha = :fecha")})
 public class Bitacoraestados implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idbitacora")
+    @Column(name = "idbitacora", nullable = false)
     private Integer idbitacora;
     @Basic(optional = false)
-    @Column(name = "fecha")
+    @Column(name = "fecha", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fecha;
     @Basic(optional = false)
     @Lob
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", nullable = false, length = 65535)
     private String descripcion;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia")
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia", nullable = false)
     @ManyToOne(optional = false)
     private Existencia idequipoexistente;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idEquipoSimple")
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idEquipoSimple", nullable = false)
     @ManyToOne(optional = false)
     private Equiposimple idequipoexistente1;
-    @JoinColumn(name = "idestado", referencedColumnName = "idestado")
+    @JoinColumn(name = "idestado", referencedColumnName = "idestado", nullable = false)
     @ManyToOne(optional = false)
     private Estadoequipo idestado;
 
@@ -137,7 +137,7 @@ public class Bitacoraestados implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Bitacoraestados[idbitacora=" + idbitacora + "]";
+        return "edu.ues.jhard.jpa.Bitacoraestados[idbitacora=" + idbitacora + "]";
     }
 
 }

@@ -24,17 +24,17 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "facultad")
+@Table(name = "facultad", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Facultad.findAll", query = "SELECT f FROM Facultad f"), @NamedQuery(name = "Facultad.findByIdfacultad", query = "SELECT f FROM Facultad f WHERE f.idfacultad = :idfacultad"), @NamedQuery(name = "Facultad.findByNombre", query = "SELECT f FROM Facultad f WHERE f.nombre = :nombre")})
 public class Facultad implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idfacultad")
+    @Column(name = "idfacultad", nullable = false)
     private Integer idfacultad;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 200)
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idfacultad")
     private List<Carrera> carreraCollection;
@@ -97,7 +97,7 @@ public class Facultad implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Facultad[idfacultad=" + idfacultad + "]";
+        return "edu.ues.jhard.jpa.Facultad[idfacultad=" + idfacultad + "]";
     }
 
 }

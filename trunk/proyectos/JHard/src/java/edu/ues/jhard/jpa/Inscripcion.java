@@ -23,19 +23,19 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "inscripcion")
+@Table(name = "inscripcion", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Inscripcion.findAll", query = "SELECT i FROM Inscripcion i"), @NamedQuery(name = "Inscripcion.findByIdinscripcion", query = "SELECT i FROM Inscripcion i WHERE i.idinscripcion = :idinscripcion")})
 public class Inscripcion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idinscripcion")
+    @Column(name = "idinscripcion", nullable = false)
     private Integer idinscripcion;
-    @JoinColumn(name = "idcurso", referencedColumnName = "idcurso")
+    @JoinColumn(name = "idcurso", referencedColumnName = "idcurso", nullable = false)
     @ManyToOne(optional = false)
     private Curso idcurso;
-    @JoinColumn(name = "idestudiante", referencedColumnName = "idestudiante")
+    @JoinColumn(name = "idestudiante", referencedColumnName = "idestudiante", nullable = false)
     @ManyToOne(optional = false)
     private Estudiante idestudiante;
 
@@ -92,7 +92,7 @@ public class Inscripcion implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Inscripcion[idinscripcion=" + idinscripcion + "]";
+        return "edu.ues.jhard.jpa.Inscripcion[idinscripcion=" + idinscripcion + "]";
     }
 
 }

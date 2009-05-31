@@ -25,22 +25,22 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "materia")
+@Table(name = "materia", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m"), @NamedQuery(name = "Materia.findByIdmateria", query = "SELECT m FROM Materia m WHERE m.idmateria = :idmateria"), @NamedQuery(name = "Materia.findByCodigo", query = "SELECT m FROM Materia m WHERE m.codigo = :codigo"), @NamedQuery(name = "Materia.findByNombre", query = "SELECT m FROM Materia m WHERE m.nombre = :nombre")})
 public class Materia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idmateria")
+    @Column(name = "idmateria", nullable = false)
     private Integer idmateria;
     @Basic(optional = false)
-    @Column(name = "codigo")
+    @Column(name = "codigo", nullable = false, length = 7)
     private String codigo;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 200)
     private String nombre;
-    @JoinColumn(name = "idcarrera", referencedColumnName = "idcarrera")
+    @JoinColumn(name = "idcarrera", referencedColumnName = "idcarrera", nullable = false)
     @ManyToOne(optional = false)
     private Carrera idcarrera;
     @OneToMany(mappedBy = "idmateria")
@@ -121,7 +121,7 @@ public class Materia implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Materia[idmateria=" + idmateria + "]";
+        return "edu.ues.jhard.jpa.Materia[idmateria=" + idmateria + "]";
     }
 
 }

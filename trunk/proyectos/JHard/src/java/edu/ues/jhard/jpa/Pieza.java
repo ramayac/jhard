@@ -26,28 +26,28 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "pieza")
+@Table(name = "pieza", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Pieza.findAll", query = "SELECT p FROM Pieza p"), @NamedQuery(name = "Pieza.findByIdpieza", query = "SELECT p FROM Pieza p WHERE p.idpieza = :idpieza"), @NamedQuery(name = "Pieza.findByNombre", query = "SELECT p FROM Pieza p WHERE p.nombre = :nombre"), @NamedQuery(name = "Pieza.findByModelo", query = "SELECT p FROM Pieza p WHERE p.modelo = :modelo")})
 public class Pieza implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idpieza")
+    @Column(name = "idpieza", nullable = false)
     private Integer idpieza;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
     @Basic(optional = false)
-    @Column(name = "modelo")
+    @Column(name = "modelo", nullable = false, length = 15)
     private String modelo;
-    @JoinColumn(name = "idclasificacion", referencedColumnName = "idclasificacion")
+    @JoinColumn(name = "idclasificacion", referencedColumnName = "idclasificacion", nullable = false)
     @ManyToOne(optional = false)
     private Clasificacion idclasificacion;
     @JoinColumn(name = "idequipo", referencedColumnName = "idequipo")
     @ManyToOne
     private Equipo idequipo;
-    @JoinColumn(name = "idmarca", referencedColumnName = "idmarca")
+    @JoinColumn(name = "idmarca", referencedColumnName = "idmarca", nullable = false)
     @ManyToOne(optional = false)
     private Marca idmarca;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idhardware2")
@@ -144,7 +144,7 @@ public class Pieza implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Pieza[idpieza=" + idpieza + "]";
+        return "edu.ues.jhard.jpa.Pieza[idpieza=" + idpieza + "]";
     }
 
 }

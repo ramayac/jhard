@@ -24,21 +24,21 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "rol")
+@Table(name = "rol", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r"), @NamedQuery(name = "Rol.findByIdrol", query = "SELECT r FROM Rol r WHERE r.idrol = :idrol"), @NamedQuery(name = "Rol.findByNombre", query = "SELECT r FROM Rol r WHERE r.nombre = :nombre")})
 public class Rol implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idrol")
+    @Column(name = "idrol", nullable = false)
     private Integer idrol;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
     @Basic(optional = false)
     @Lob
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", nullable = false, length = 65535)
     private String descripcion;
     @OneToMany(mappedBy = "idrol")
     private List<Usuario> usuarioCollection;
@@ -110,7 +110,7 @@ public class Rol implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Rol[idrol=" + idrol + "]";
+        return "edu.ues.jhard.jpa.Rol[idrol=" + idrol + "]";
     }
 
 }

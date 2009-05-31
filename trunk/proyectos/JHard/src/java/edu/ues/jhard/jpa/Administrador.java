@@ -21,18 +21,18 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "administrador")
+@Table(name = "administrador", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Administrador.findAll", query = "SELECT a FROM Administrador a"), @NamedQuery(name = "Administrador.findByIdadministrador", query = "SELECT a FROM Administrador a WHERE a.idadministrador = :idadministrador"), @NamedQuery(name = "Administrador.findByClave", query = "SELECT a FROM Administrador a WHERE a.clave = :clave")})
 public class Administrador implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "idadministrador")
+    @Column(name = "idadministrador", nullable = false)
     private Integer idadministrador;
     @Basic(optional = false)
-    @Column(name = "clave")
+    @Column(name = "clave", nullable = false, length = 45)
     private String clave;
-    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
+    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario idusuario;
 
@@ -94,7 +94,7 @@ public class Administrador implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Administrador[idadministrador=" + idadministrador + "]";
+        return "edu.ues.jhard.jpa.Administrador[idadministrador=" + idadministrador + "]";
     }
 
 }

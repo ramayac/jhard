@@ -29,30 +29,30 @@ import javax.persistence.TemporalType;
  * @author Hugol
  */
 @Entity
-@Table(name = "horario")
+@Table(name = "horario", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Horario.findAll", query = "SELECT h FROM Horario h"), @NamedQuery(name = "Horario.findByIdhorario", query = "SELECT h FROM Horario h WHERE h.idhorario = :idhorario"), @NamedQuery(name = "Horario.findByDiasemana", query = "SELECT h FROM Horario h WHERE h.diasemana = :diasemana"), @NamedQuery(name = "Horario.findByHorainicio", query = "SELECT h FROM Horario h WHERE h.horainicio = :horainicio"), @NamedQuery(name = "Horario.findByHorafin", query = "SELECT h FROM Horario h WHERE h.horafin = :horafin")})
 public class Horario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idhorario")
+    @Column(name = "idhorario", nullable = false)
     private Integer idhorario;
     @Basic(optional = false)
-    @Column(name = "diasemana")
+    @Column(name = "diasemana", nullable = false)
     private int diasemana;
     @Basic(optional = false)
-    @Column(name = "horainicio")
+    @Column(name = "horainicio", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date horainicio;
     @Basic(optional = false)
-    @Column(name = "horafin")
+    @Column(name = "horafin", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date horafin;
-    @JoinColumn(name = "idaula", referencedColumnName = "idubicacion")
+    @JoinColumn(name = "idaula", referencedColumnName = "idubicacion", nullable = false)
     @ManyToOne(optional = false)
     private Ubicacion idaula;
-    @JoinColumn(name = "idcurso", referencedColumnName = "idcurso")
+    @JoinColumn(name = "idcurso", referencedColumnName = "idcurso", nullable = false)
     @ManyToOne(optional = false)
     private Curso idcurso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idhorario")
@@ -150,7 +150,7 @@ public class Horario implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Horario[idhorario=" + idhorario + "]";
+        return "edu.ues.jhard.jpa.Horario[idhorario=" + idhorario + "]";
     }
 
 }

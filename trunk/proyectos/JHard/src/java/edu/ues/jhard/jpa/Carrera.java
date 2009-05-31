@@ -26,24 +26,24 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "carrera")
+@Table(name = "carrera", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Carrera.findAll", query = "SELECT c FROM Carrera c"), @NamedQuery(name = "Carrera.findByIdcarrera", query = "SELECT c FROM Carrera c WHERE c.idcarrera = :idcarrera"), @NamedQuery(name = "Carrera.findByCodigo", query = "SELECT c FROM Carrera c WHERE c.codigo = :codigo"), @NamedQuery(name = "Carrera.findByNombre", query = "SELECT c FROM Carrera c WHERE c.nombre = :nombre")})
 public class Carrera implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idcarrera")
+    @Column(name = "idcarrera", nullable = false)
     private Integer idcarrera;
     @Basic(optional = false)
-    @Column(name = "codigo")
+    @Column(name = "codigo", nullable = false, length = 7)
     private String codigo;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 200)
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcarrera")
     private List<Materia> materiaCollection;
-    @JoinColumn(name = "idfacultad", referencedColumnName = "idfacultad")
+    @JoinColumn(name = "idfacultad", referencedColumnName = "idfacultad", nullable = false)
     @ManyToOne(optional = false)
     private Facultad idfacultad;
 
@@ -122,7 +122,7 @@ public class Carrera implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Carrera[idcarrera=" + idcarrera + "]";
+        return "edu.ues.jhard.jpa.Carrera[idcarrera=" + idcarrera + "]";
     }
 
 }

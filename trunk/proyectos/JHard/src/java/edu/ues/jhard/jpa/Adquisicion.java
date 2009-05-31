@@ -27,26 +27,26 @@ import javax.persistence.TemporalType;
  * @author Hugol
  */
 @Entity
-@Table(name = "adquisicion")
+@Table(name = "adquisicion", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Adquisicion.findAll", query = "SELECT a FROM Adquisicion a"), @NamedQuery(name = "Adquisicion.findByIdadquisicion", query = "SELECT a FROM Adquisicion a WHERE a.idadquisicion = :idadquisicion"), @NamedQuery(name = "Adquisicion.findByFecha", query = "SELECT a FROM Adquisicion a WHERE a.fecha = :fecha"), @NamedQuery(name = "Adquisicion.findByPrecio", query = "SELECT a FROM Adquisicion a WHERE a.precio = :precio"), @NamedQuery(name = "Adquisicion.findByProveedor", query = "SELECT a FROM Adquisicion a WHERE a.proveedor = :proveedor")})
 public class Adquisicion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idadquisicion")
+    @Column(name = "idadquisicion", nullable = false)
     private Integer idadquisicion;
     @Basic(optional = false)
-    @Column(name = "fecha")
+    @Column(name = "fecha", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fecha;
     @Basic(optional = false)
-    @Column(name = "precio")
+    @Column(name = "precio", nullable = false)
     private double precio;
     @Lob
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", length = 65535)
     private String descripcion;
-    @Column(name = "proveedor")
+    @Column(name = "proveedor", length = 100)
     private String proveedor;
     @OneToMany(mappedBy = "idadquisicion")
     private List<Software> softwareCollection;
@@ -144,7 +144,7 @@ public class Adquisicion implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Adquisicion[idadquisicion=" + idadquisicion + "]";
+        return "edu.ues.jhard.jpa.Adquisicion[idadquisicion=" + idadquisicion + "]";
     }
 
 }

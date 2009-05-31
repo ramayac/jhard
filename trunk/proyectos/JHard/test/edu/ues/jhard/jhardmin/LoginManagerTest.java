@@ -5,6 +5,8 @@
 
 package edu.ues.jhard.jhardmin;
 
+import edu.ues.jhard.beans.BeanBaseJHardmin;
+import edu.ues.jhard.jpa.Usuario;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -36,7 +38,7 @@ public class LoginManagerTest {
     @Before
     public void setUp() {
         this.lMgr = LoginManager.getInstance();
-        this.usuarioReal = new LoggedUser(0, "nomusuario1", "localhost");
+        this.usuarioReal = new LoggedUser(0, "hugol", "localhost");
         this.usuarioFalso = new LoggedUser(-1, "nomUsuarioFalso", "localhost");
     }
 
@@ -49,11 +51,11 @@ public class LoginManagerTest {
     /**
      * Prueba que se pueda realzar un login exitoso con un usuario existente
      */
-    @Test
+    
     public void testLoginSuccess() {
         System.out.println("LoginSuccess");        
         assertFalse(this.lMgr.isLogged(this.usuarioReal.getUserName()));
-        int result = this.lMgr.Login(this.usuarioReal.getUserName(), "claveusuario1", this.usuarioReal.getLoggedUrl());
+        int result = this.lMgr.Login(this.usuarioReal.getUserName(), "firpomadrid", this.usuarioReal.getLoggedUrl());
         this.usuarioReal.setUid(result);
         assertTrue(this.lMgr.isLogged(this.usuarioReal.getUserName()));        
     }
@@ -70,7 +72,7 @@ public class LoginManagerTest {
     /**
      * Prueba que un usuario logueado en el sistema pueda desloguearse exitosamente
      */
-    @Test
+    
     public void testLogoutSuccess() {
         System.out.println("Logout");
         testLoginSuccess();
@@ -82,7 +84,7 @@ public class LoginManagerTest {
     /**
      * Test of isLogged method, of class LoginManager.
      */
-    @Test
+    
     public void testIsLogged_Integer() {
         System.out.println("isLogged");        
         this.testLoginSuccess();
@@ -92,7 +94,7 @@ public class LoginManagerTest {
     /**
      * Test of isLogged method, of class LoginManager.
      */
-    @Test
+    
     public void testIsLogged_String() {
         System.out.println("isLogged");
         this.testLoginSuccess();
@@ -100,9 +102,16 @@ public class LoginManagerTest {
     }
 
 
-    @Test
+    
     public void testExistsInBD(){
         System.out.println("existsInBD");
-        assertTrue(this.lMgr.existsInBD(this.usuarioReal.getUserName(), "claveusuario1"));
+        assertTrue(this.lMgr.existsInBD(this.usuarioReal.getUserName(), "firpomadrid"));
+    }
+
+    @Test
+    public void testGetUsuarioFromId(){
+        BeanBaseJHardmin bbase = new BeanBaseJHardmin();
+        Usuario u = bbase.getUsuario("hugol","firpomadrid");
+        assertNotNull(u);
     }
 }

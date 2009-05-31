@@ -26,17 +26,17 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "existencia")
+@Table(name = "existencia", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Existencia.findAll", query = "SELECT e FROM Existencia e"), @NamedQuery(name = "Existencia.findByIdexistencia", query = "SELECT e FROM Existencia e WHERE e.idexistencia = :idexistencia"), @NamedQuery(name = "Existencia.findByCodigo", query = "SELECT e FROM Existencia e WHERE e.codigo = :codigo")})
 public class Existencia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idexistencia")
+    @Column(name = "idexistencia", nullable = false)
     private Integer idexistencia;
     @Basic(optional = false)
-    @Column(name = "codigo")
+    @Column(name = "codigo", nullable = false, length = 45)
     private String codigo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idequipoexistente")
     private List<Mantenimiento> mantenimientoCollection;
@@ -45,13 +45,13 @@ public class Existencia implements Serializable {
     @JoinColumn(name = "idadquisicion", referencedColumnName = "idadquisicion")
     @ManyToOne
     private Adquisicion idadquisicion;
-    @JoinColumn(name = "idestado", referencedColumnName = "idestado")
+    @JoinColumn(name = "idestado", referencedColumnName = "idestado", nullable = false)
     @ManyToOne(optional = false)
     private Estadoequipo idestado;
-    @JoinColumn(name = "idhardware", referencedColumnName = "idequipo")
+    @JoinColumn(name = "idhardware", referencedColumnName = "idequipo", nullable = false)
     @ManyToOne(optional = false)
     private Equipo idhardware;
-    @JoinColumn(name = "idubicacion", referencedColumnName = "idubicacion")
+    @JoinColumn(name = "idubicacion", referencedColumnName = "idubicacion", nullable = false)
     @ManyToOne(optional = false)
     private Ubicacion idubicacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idequipoexistente")
@@ -193,7 +193,7 @@ public class Existencia implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Existencia[idexistencia=" + idexistencia + "]";
+        return "edu.ues.jhard.jpa.Existencia[idexistencia=" + idexistencia + "]";
     }
 
 }
