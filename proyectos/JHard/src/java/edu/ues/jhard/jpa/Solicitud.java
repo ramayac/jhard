@@ -29,35 +29,35 @@ import javax.persistence.TemporalType;
  * @author Hugol
  */
 @Entity
-@Table(name = "solicitud")
+@Table(name = "solicitud", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s"), @NamedQuery(name = "Solicitud.findByIdsolicitud", query = "SELECT s FROM Solicitud s WHERE s.idsolicitud = :idsolicitud"), @NamedQuery(name = "Solicitud.findByFecha", query = "SELECT s FROM Solicitud s WHERE s.fecha = :fecha"), @NamedQuery(name = "Solicitud.findByPrioridad", query = "SELECT s FROM Solicitud s WHERE s.prioridad = :prioridad")})
 public class Solicitud implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idsolicitud")
+    @Column(name = "idsolicitud", nullable = false)
     private Integer idsolicitud;
     @Basic(optional = false)
-    @Column(name = "fecha")
+    @Column(name = "fecha", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fecha;
     @Basic(optional = false)
-    @Column(name = "prioridad")
+    @Column(name = "prioridad", nullable = false, length = 25)
     private String prioridad;
     @Basic(optional = false)
     @Lob
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", nullable = false, length = 65535)
     private String descripcion;
     @OneToMany(mappedBy = "idsolicitud")
     private List<Mantenimiento> mantenimientoCollection;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia")
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia", nullable = false)
     @ManyToOne(optional = false)
     private Existencia idequipoexistente;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idEquipoSimple")
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idEquipoSimple", nullable = false)
     @ManyToOne(optional = false)
     private Equiposimple idequipoexistente1;
-    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
+    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario idusuario;
 
@@ -161,7 +161,7 @@ public class Solicitud implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Solicitud[idsolicitud=" + idsolicitud + "]";
+        return "edu.ues.jhard.jpa.Solicitud[idsolicitud=" + idsolicitud + "]";
     }
 
 }

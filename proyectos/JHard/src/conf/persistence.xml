@@ -2,43 +2,43 @@
 <persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
   <persistence-unit name="JHardPU" transaction-type="RESOURCE_LOCAL">
     <provider>oracle.toplink.essentials.PersistenceProvider</provider>
-    <class>edu.ues.jhard.jpa.Ubicacion</class>
-    <class>edu.ues.jhard.jpa.Solicitud</class>
-    <class>edu.ues.jhard.jpa.Bitacoraestados</class>
-    <class>edu.ues.jhard.jpa.Reserva</class>
-    <class>edu.ues.jhard.jpa.Administrador</class>
-    <class>edu.ues.jhard.jpa.Materia</class>
-    <class>edu.ues.jhard.jpa.Software</class>
     <class>edu.ues.jhard.jpa.Accesorio</class>
-    <class>edu.ues.jhard.jpa.Curso</class>
-    <class>edu.ues.jhard.jpa.Clasificacion</class>
-    <class>edu.ues.jhard.jpa.Asistencia</class>
-    <class>edu.ues.jhard.jpa.Solicitante</class>
-    <class>edu.ues.jhard.jpa.Clase</class>
-    <class>edu.ues.jhard.jpa.Mantenimiento</class>
-    <class>edu.ues.jhard.jpa.Marca</class>
-    <class>edu.ues.jhard.jpa.Horario</class>
+    <class>edu.ues.jhard.jpa.Administrador</class>
     <class>edu.ues.jhard.jpa.Adquisicion</class>
+    <class>edu.ues.jhard.jpa.Asistencia</class>
+    <class>edu.ues.jhard.jpa.Atributohardware</class>
+    <class>edu.ues.jhard.jpa.Bitacoracambiosusuario</class>
+    <class>edu.ues.jhard.jpa.Bitacoraestados</class>
+    <class>edu.ues.jhard.jpa.Carrera</class>
+    <class>edu.ues.jhard.jpa.Clase</class>
+    <class>edu.ues.jhard.jpa.Clasificacion</class>
+    <class>edu.ues.jhard.jpa.Curso</class>
+    <class>edu.ues.jhard.jpa.Docente</class>
+    <class>edu.ues.jhard.jpa.Equipo</class>
+    <class>edu.ues.jhard.jpa.Equiposimple</class>
     <class>edu.ues.jhard.jpa.Estadocurso</class>
-    <class>edu.ues.jhard.jpa.Usuario</class>
+    <class>edu.ues.jhard.jpa.Estadoequipo</class>
     <class>edu.ues.jhard.jpa.Estadoreserva</class>
+    <class>edu.ues.jhard.jpa.Estudiante</class>
+    <class>edu.ues.jhard.jpa.Existencia</class>
+    <class>edu.ues.jhard.jpa.Facultad</class>
+    <class>edu.ues.jhard.jpa.Horario</class>
     <class>edu.ues.jhard.jpa.Inscripcion</class>
     <class>edu.ues.jhard.jpa.Instalacion</class>
-    <class>edu.ues.jhard.jpa.Bitacoracambiosusuario</class>
-    <class>edu.ues.jhard.jpa.Existencia</class>
-    <class>edu.ues.jhard.jpa.Carrera</class>
-    <class>edu.ues.jhard.jpa.Estudiante</class>
-    <class>edu.ues.jhard.jpa.Facultad</class>
-    <class>edu.ues.jhard.jpa.Estadoequipo</class>
-    <class>edu.ues.jhard.jpa.Docente</class>
-    <class>edu.ues.jhard.jpa.Equiposimple</class>
     <class>edu.ues.jhard.jpa.Instructor</class>
-    <class>edu.ues.jhard.jpa.Tecnico</class>
-    <class>edu.ues.jhard.jpa.Equipo</class>
-    <class>edu.ues.jhard.jpa.Rol</class>
-    <class>edu.ues.jhard.jpa.Responsable</class>
+    <class>edu.ues.jhard.jpa.Mantenimiento</class>
+    <class>edu.ues.jhard.jpa.Marca</class>
+    <class>edu.ues.jhard.jpa.Materia</class>
     <class>edu.ues.jhard.jpa.Pieza</class>
-    <class>edu.ues.jhard.jpa.Atributohardware</class>
+    <class>edu.ues.jhard.jpa.Reserva</class>
+    <class>edu.ues.jhard.jpa.Responsable</class>
+    <class>edu.ues.jhard.jpa.Rol</class>
+    <class>edu.ues.jhard.jpa.Software</class>
+    <class>edu.ues.jhard.jpa.Solicitante</class>
+    <class>edu.ues.jhard.jpa.Solicitud</class>
+    <class>edu.ues.jhard.jpa.Tecnico</class>
+    <class>edu.ues.jhard.jpa.Ubicacion</class>
+    <class>edu.ues.jhard.jpa.Usuario</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="toplink.jdbc.user" value="jharduser"/>

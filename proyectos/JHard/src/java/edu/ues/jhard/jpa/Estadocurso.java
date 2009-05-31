@@ -23,17 +23,17 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "estadocurso")
+@Table(name = "estadocurso", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Estadocurso.findAll", query = "SELECT e FROM Estadocurso e"), @NamedQuery(name = "Estadocurso.findByIdestadocurso", query = "SELECT e FROM Estadocurso e WHERE e.idestadocurso = :idestadocurso"), @NamedQuery(name = "Estadocurso.findByNombre", query = "SELECT e FROM Estadocurso e WHERE e.nombre = :nombre")})
 public class Estadocurso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idestadocurso")
+    @Column(name = "idestadocurso", nullable = false)
     private Integer idestadocurso;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
     @OneToMany(mappedBy = "idestado")
     private List<Curso> cursoCollection;
@@ -96,7 +96,7 @@ public class Estadocurso implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Estadocurso[idestadocurso=" + idestadocurso + "]";
+        return "edu.ues.jhard.jpa.Estadocurso[idestadocurso=" + idestadocurso + "]";
     }
 
 }

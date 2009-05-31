@@ -25,20 +25,20 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "clasificacion")
+@Table(name = "clasificacion", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Clasificacion.findAll", query = "SELECT c FROM Clasificacion c"), @NamedQuery(name = "Clasificacion.findByIdclasificacion", query = "SELECT c FROM Clasificacion c WHERE c.idclasificacion = :idclasificacion"), @NamedQuery(name = "Clasificacion.findByNombre", query = "SELECT c FROM Clasificacion c WHERE c.nombre = :nombre"), @NamedQuery(name = "Clasificacion.findByIdsuperior", query = "SELECT c FROM Clasificacion c WHERE c.idsuperior = :idsuperior")})
 public class Clasificacion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idclasificacion")
+    @Column(name = "idclasificacion", nullable = false)
     private Integer idclasificacion;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
     @Lob
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", length = 65535)
     private String descripcion;
     @Column(name = "idsuperior")
     private Integer idsuperior;
@@ -149,7 +149,7 @@ public class Clasificacion implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Clasificacion[idclasificacion=" + idclasificacion + "]";
+        return "edu.ues.jhard.jpa.Clasificacion[idclasificacion=" + idclasificacion + "]";
     }
 
 }

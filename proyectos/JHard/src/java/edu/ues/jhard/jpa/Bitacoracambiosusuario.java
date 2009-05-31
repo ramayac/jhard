@@ -27,24 +27,24 @@ import javax.persistence.TemporalType;
  * @author Hugol
  */
 @Entity
-@Table(name = "bitacoracambiosusuario")
+@Table(name = "bitacoracambiosusuario", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Bitacoracambiosusuario.findAll", query = "SELECT b FROM Bitacoracambiosusuario b"), @NamedQuery(name = "Bitacoracambiosusuario.findByIdbitacora", query = "SELECT b FROM Bitacoracambiosusuario b WHERE b.idbitacora = :idbitacora"), @NamedQuery(name = "Bitacoracambiosusuario.findByFechahora", query = "SELECT b FROM Bitacoracambiosusuario b WHERE b.fechahora = :fechahora")})
 public class Bitacoracambiosusuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idbitacora")
+    @Column(name = "idbitacora", nullable = false)
     private Integer idbitacora;
     @Basic(optional = false)
     @Lob
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", nullable = false, length = 65535)
     private String descripcion;
     @Basic(optional = false)
-    @Column(name = "fechahora")
+    @Column(name = "fechahora", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechahora;
-    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
+    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario idusuario;
 
@@ -115,7 +115,7 @@ public class Bitacoracambiosusuario implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Bitacoracambiosusuario[idbitacora=" + idbitacora + "]";
+        return "edu.ues.jhard.jpa.Bitacoracambiosusuario[idbitacora=" + idbitacora + "]";
     }
 
 }

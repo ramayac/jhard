@@ -6,7 +6,12 @@
  */
 package jhard;
 
+import com.icesoft.faces.component.ext.HtmlCommandButton;
+import com.icesoft.faces.component.ext.HtmlInputSecret;
+import com.icesoft.faces.component.ext.HtmlInputText;
+import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
+import edu.ues.jhard.beans.BeanBaseJHardmin;
 import javax.faces.FacesException;
 
 /**
@@ -26,6 +31,42 @@ public class Index extends AbstractPageBean {
      * here is subject to being replaced.</p>
      */
     private void _init() throws Exception {
+    }
+    private HtmlInputText txtUser = new HtmlInputText();
+
+    public HtmlInputText getTxtUser() {
+        return txtUser;
+    }
+
+    public void setTxtUser(HtmlInputText hit) {
+        this.txtUser = hit;
+    }
+    private HtmlInputSecret txtPass = new HtmlInputSecret();
+
+    public HtmlInputSecret getTxtPass() {
+        return txtPass;
+    }
+
+    public void setTxtPass(HtmlInputSecret his) {
+        this.txtPass = his;
+    }
+    private HtmlCommandButton btnLogin = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnLogin() {
+        return btnLogin;
+    }
+
+    public void setBtnLogin(HtmlCommandButton hcb) {
+        this.btnLogin = hcb;
+    }
+    private HtmlOutputLabel txtUserLogin = new HtmlOutputLabel();
+
+    public HtmlOutputLabel getTxtUserLogin() {
+        return txtUserLogin;
+    }
+
+    public void setTxtUserLogin(HtmlOutputLabel hol) {
+        this.txtUserLogin = hol;
     }
 
     // </editor-fold>
@@ -101,6 +142,28 @@ public class Index extends AbstractPageBean {
      * acquired during execution of an event handler).</p>
      */
     public void destroy() {
+    }
+
+    public String btnLogin_action() {
+
+        String nomUser = (String) this.txtUser.getValue();
+        String nomPass = (String) this.txtPass.getValue();
+
+        BeanBaseJHardmin bb = new BeanBaseJHardmin();
+
+        if (bb.getUsuario(1)!=null){
+            this.txtUser.setValue(bb.getUsuario(1).getIdusuario());
+        }
+
+//        if (bb.getUsuario(nomUser, nomPass)!=null){
+//            this.txtUserLogin.setTitle(bb.getUsuario(nomUser, nomPass).getNombre());
+//        }
+//        else{
+//            this.txtUserLogin.setTitle("Usuario incorrecto");
+//        }
+
+
+        return null;
     }
 }
 

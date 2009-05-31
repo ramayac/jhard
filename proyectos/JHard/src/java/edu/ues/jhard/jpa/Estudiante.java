@@ -26,30 +26,30 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "estudiante")
+@Table(name = "estudiante", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Estudiante.findAll", query = "SELECT e FROM Estudiante e"), @NamedQuery(name = "Estudiante.findByIdestudiante", query = "SELECT e FROM Estudiante e WHERE e.idestudiante = :idestudiante"), @NamedQuery(name = "Estudiante.findByCarnet", query = "SELECT e FROM Estudiante e WHERE e.carnet = :carnet"), @NamedQuery(name = "Estudiante.findByApellidos", query = "SELECT e FROM Estudiante e WHERE e.apellidos = :apellidos"), @NamedQuery(name = "Estudiante.findByNombres", query = "SELECT e FROM Estudiante e WHERE e.nombres = :nombres"), @NamedQuery(name = "Estudiante.findByVisible", query = "SELECT e FROM Estudiante e WHERE e.visible = :visible")})
 public class Estudiante implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idestudiante")
+    @Column(name = "idestudiante", nullable = false)
     private Integer idestudiante;
     @Basic(optional = false)
-    @Column(name = "carnet")
+    @Column(name = "carnet", nullable = false, length = 7)
     private String carnet;
     @Basic(optional = false)
-    @Column(name = "apellidos")
+    @Column(name = "apellidos", nullable = false, length = 200)
     private String apellidos;
     @Basic(optional = false)
-    @Column(name = "nombres")
+    @Column(name = "nombres", nullable = false, length = 200)
     private String nombres;
     @Basic(optional = false)
-    @Column(name = "visible")
+    @Column(name = "visible", nullable = false)
     private int visible;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestudiante")
     private List<Inscripcion> inscripcionCollection;
-    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
+    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario idusuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestudiante")
@@ -156,7 +156,7 @@ public class Estudiante implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Estudiante[idestudiante=" + idestudiante + "]";
+        return "edu.ues.jhard.jpa.Estudiante[idestudiante=" + idestudiante + "]";
     }
 
 }

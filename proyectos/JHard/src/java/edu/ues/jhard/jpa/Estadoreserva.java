@@ -24,17 +24,17 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "estadoreserva")
+@Table(name = "estadoreserva", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Estadoreserva.findAll", query = "SELECT e FROM Estadoreserva e"), @NamedQuery(name = "Estadoreserva.findByIdestadoreserva", query = "SELECT e FROM Estadoreserva e WHERE e.idestadoreserva = :idestadoreserva"), @NamedQuery(name = "Estadoreserva.findByNombre", query = "SELECT e FROM Estadoreserva e WHERE e.nombre = :nombre")})
 public class Estadoreserva implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idestadoreserva")
+    @Column(name = "idestadoreserva", nullable = false)
     private Integer idestadoreserva;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestado")
     private List<Reserva> reservaCollection;
@@ -97,7 +97,7 @@ public class Estadoreserva implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Estadoreserva[idestadoreserva=" + idestadoreserva + "]";
+        return "edu.ues.jhard.jpa.Estadoreserva[idestadoreserva=" + idestadoreserva + "]";
     }
 
 }

@@ -26,29 +26,29 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "software")
+@Table(name = "software", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Software.findAll", query = "SELECT s FROM Software s"), @NamedQuery(name = "Software.findByIdsoftware", query = "SELECT s FROM Software s WHERE s.idsoftware = :idsoftware"), @NamedQuery(name = "Software.findByNombre", query = "SELECT s FROM Software s WHERE s.nombre = :nombre"), @NamedQuery(name = "Software.findByVersion", query = "SELECT s FROM Software s WHERE s.version = :version"), @NamedQuery(name = "Software.findByCodigolicencia", query = "SELECT s FROM Software s WHERE s.codigolicencia = :codigolicencia"), @NamedQuery(name = "Software.findByCantidadlicencias", query = "SELECT s FROM Software s WHERE s.cantidadlicencias = :cantidadlicencias")})
 public class Software implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idsoftware")
+    @Column(name = "idsoftware", nullable = false)
     private Integer idsoftware;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
     @Basic(optional = false)
-    @Column(name = "version")
+    @Column(name = "version", nullable = false, length = 15)
     private String version;
-    @Column(name = "codigolicencia")
+    @Column(name = "codigolicencia", length = 45)
     private String codigolicencia;
     @Column(name = "cantidadlicencias")
     private Integer cantidadlicencias;
     @JoinColumn(name = "idadquisicion", referencedColumnName = "idadquisicion")
     @ManyToOne
     private Adquisicion idadquisicion;
-    @JoinColumn(name = "idclasificacion", referencedColumnName = "idclasificacion")
+    @JoinColumn(name = "idclasificacion", referencedColumnName = "idclasificacion", nullable = false)
     @ManyToOne(optional = false)
     private Clasificacion idclasificacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idsoftware")
@@ -153,7 +153,7 @@ public class Software implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Software[idsoftware=" + idsoftware + "]";
+        return "edu.ues.jhard.jpa.Software[idsoftware=" + idsoftware + "]";
     }
 
 }

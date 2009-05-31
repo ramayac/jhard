@@ -24,17 +24,17 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "marca")
+@Table(name = "marca", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Marca.findAll", query = "SELECT m FROM Marca m"), @NamedQuery(name = "Marca.findByIdmarca", query = "SELECT m FROM Marca m WHERE m.idmarca = :idmarca"), @NamedQuery(name = "Marca.findByNombre", query = "SELECT m FROM Marca m WHERE m.nombre = :nombre")})
 public class Marca implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idmarca")
+    @Column(name = "idmarca", nullable = false)
     private Integer idmarca;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmarca")
     private List<Accesorio> accesorioCollection;
@@ -117,7 +117,7 @@ public class Marca implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Marca[idmarca=" + idmarca + "]";
+        return "edu.ues.jhard.jpa.Marca[idmarca=" + idmarca + "]";
     }
 
 }

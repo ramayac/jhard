@@ -27,47 +27,47 @@ import javax.persistence.TemporalType;
  * @author Hugol
  */
 @Entity
-@Table(name = "reserva")
+@Table(name = "reserva", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r"), @NamedQuery(name = "Reserva.findByIdreserva", query = "SELECT r FROM Reserva r WHERE r.idreserva = :idreserva"), @NamedQuery(name = "Reserva.findByFechareserva", query = "SELECT r FROM Reserva r WHERE r.fechareserva = :fechareserva"), @NamedQuery(name = "Reserva.findByFechahorainicioprestamo", query = "SELECT r FROM Reserva r WHERE r.fechahorainicioprestamo = :fechahorainicioprestamo"), @NamedQuery(name = "Reserva.findByFechahorafinprestamo", query = "SELECT r FROM Reserva r WHERE r.fechahorafinprestamo = :fechahorafinprestamo")})
 public class Reserva implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idreserva")
+    @Column(name = "idreserva", nullable = false)
     private Integer idreserva;
     @Basic(optional = false)
-    @Column(name = "fechareserva")
+    @Column(name = "fechareserva", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechareserva;
     @Basic(optional = false)
-    @Column(name = "fechahorainicioprestamo")
+    @Column(name = "fechahorainicioprestamo", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechahorainicioprestamo;
     @Basic(optional = false)
-    @Column(name = "fechahorafinprestamo")
+    @Column(name = "fechahorafinprestamo", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechahorafinprestamo;
     @Basic(optional = false)
     @Lob
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", nullable = false, length = 65535)
     private String descripcion;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia")
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia", nullable = false)
     @ManyToOne(optional = false)
     private Existencia idequipoexistente;
-    @JoinColumn(name = "idestado", referencedColumnName = "idestadoreserva")
+    @JoinColumn(name = "idestado", referencedColumnName = "idestadoreserva", nullable = false)
     @ManyToOne(optional = false)
     private Estadoreserva idestado;
-    @JoinColumn(name = "idresponsable", referencedColumnName = "idresponsable")
+    @JoinColumn(name = "idresponsable", referencedColumnName = "idresponsable", nullable = false)
     @ManyToOne(optional = false)
     private Responsable idresponsable;
-    @JoinColumn(name = "idsolicitante", referencedColumnName = "idsolicitante")
+    @JoinColumn(name = "idsolicitante", referencedColumnName = "idsolicitante", nullable = false)
     @ManyToOne(optional = false)
     private Solicitante idsolicitante;
-    @JoinColumn(name = "idubicacion", referencedColumnName = "idubicacion")
+    @JoinColumn(name = "idubicacion", referencedColumnName = "idubicacion", nullable = false)
     @ManyToOne(optional = false)
     private Ubicacion idubicacion;
-    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
+    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario idusuario;
 
@@ -196,7 +196,7 @@ public class Reserva implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Reserva[idreserva=" + idreserva + "]";
+        return "edu.ues.jhard.jpa.Reserva[idreserva=" + idreserva + "]";
     }
 
 }

@@ -26,20 +26,25 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "usuario")
-@NamedQueries({@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"), @NamedQuery(name = "Usuario.findByIdusuario", query = "SELECT u FROM Usuario u WHERE u.idusuario = :idusuario"), @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"), @NamedQuery(name = "Usuario.findByClave", query = "SELECT u FROM Usuario u WHERE u.clave = :clave")})
+@Table(name = "usuario", catalog = "jhard", schema = "")
+@NamedQueries({@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
+                @NamedQuery(name = "Usuario.findByIdusuario", query = "SELECT u FROM Usuario u WHERE u.idusuario = :idusuario"),
+                @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
+                @NamedQuery(name = "Usuario.findByClave", query = "SELECT u FROM Usuario u WHERE u.clave = :clave"),
+                @NamedQuery(name = "Usuario.findByUser", query = "SELECT u FROM Usuario u WHERE u.clave = :clave AND u.nombre = :nombre")})
+
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idusuario")
+    @Column(name = "idusuario", nullable = false)
     private Integer idusuario;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 25)
     private String nombre;
     @Basic(optional = false)
-    @Column(name = "clave")
+    @Column(name = "clave", nullable = false, length = 15)
     private String clave;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
     private List<Instructor> instructorCollection;
@@ -182,7 +187,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Usuario[idusuario=" + idusuario + "]";
+        return "edu.ues.jhard.jpa.Usuario[idusuario=" + idusuario + "]";
     }
 
 }

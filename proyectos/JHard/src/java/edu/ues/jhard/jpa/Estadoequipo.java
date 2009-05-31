@@ -25,20 +25,20 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "estadoequipo")
+@Table(name = "estadoequipo", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Estadoequipo.findAll", query = "SELECT e FROM Estadoequipo e"), @NamedQuery(name = "Estadoequipo.findByIdestado", query = "SELECT e FROM Estadoequipo e WHERE e.idestado = :idestado"), @NamedQuery(name = "Estadoequipo.findByNombre", query = "SELECT e FROM Estadoequipo e WHERE e.nombre = :nombre")})
 public class Estadoequipo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idestado")
+    @Column(name = "idestado", nullable = false)
     private Integer idestado;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
     @Lob
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", length = 65535)
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestado")
     private List<Equiposimple> equiposimpleCollection;
@@ -129,7 +129,7 @@ public class Estadoequipo implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Estadoequipo[idestado=" + idestado + "]";
+        return "edu.ues.jhard.jpa.Estadoequipo[idestado=" + idestado + "]";
     }
 
 }

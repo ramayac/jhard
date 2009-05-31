@@ -24,23 +24,23 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "tecnico")
+@Table(name = "tecnico", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Tecnico.findAll", query = "SELECT t FROM Tecnico t"), @NamedQuery(name = "Tecnico.findByIdtecnico", query = "SELECT t FROM Tecnico t WHERE t.idtecnico = :idtecnico"), @NamedQuery(name = "Tecnico.findByApellidos", query = "SELECT t FROM Tecnico t WHERE t.apellidos = :apellidos"), @NamedQuery(name = "Tecnico.findByNombres", query = "SELECT t FROM Tecnico t WHERE t.nombres = :nombres"), @NamedQuery(name = "Tecnico.findByCargo", query = "SELECT t FROM Tecnico t WHERE t.cargo = :cargo")})
 public class Tecnico implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idtecnico")
+    @Column(name = "idtecnico", nullable = false)
     private Integer idtecnico;
     @Basic(optional = false)
-    @Column(name = "apellidos")
+    @Column(name = "apellidos", nullable = false, length = 200)
     private String apellidos;
     @Basic(optional = false)
-    @Column(name = "nombres")
+    @Column(name = "nombres", nullable = false, length = 200)
     private String nombres;
     @Basic(optional = false)
-    @Column(name = "cargo")
+    @Column(name = "cargo", nullable = false, length = 200)
     private String cargo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtecnico")
     private List<Mantenimiento> mantenimientoCollection;
@@ -121,7 +121,7 @@ public class Tecnico implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Tecnico[idtecnico=" + idtecnico + "]";
+        return "edu.ues.jhard.jpa.Tecnico[idtecnico=" + idtecnico + "]";
     }
 
 }

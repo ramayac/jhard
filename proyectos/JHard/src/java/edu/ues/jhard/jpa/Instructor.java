@@ -26,28 +26,28 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "instructor")
+@Table(name = "instructor", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Instructor.findAll", query = "SELECT i FROM Instructor i"), @NamedQuery(name = "Instructor.findByIdinstructor", query = "SELECT i FROM Instructor i WHERE i.idinstructor = :idinstructor"), @NamedQuery(name = "Instructor.findByCarnet", query = "SELECT i FROM Instructor i WHERE i.carnet = :carnet"), @NamedQuery(name = "Instructor.findByApellidos", query = "SELECT i FROM Instructor i WHERE i.apellidos = :apellidos"), @NamedQuery(name = "Instructor.findByNombres", query = "SELECT i FROM Instructor i WHERE i.nombres = :nombres"), @NamedQuery(name = "Instructor.findByVisible", query = "SELECT i FROM Instructor i WHERE i.visible = :visible")})
 public class Instructor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idinstructor")
+    @Column(name = "idinstructor", nullable = false)
     private Integer idinstructor;
     @Basic(optional = false)
-    @Column(name = "carnet")
+    @Column(name = "carnet", nullable = false, length = 7)
     private String carnet;
     @Basic(optional = false)
-    @Column(name = "apellidos")
+    @Column(name = "apellidos", nullable = false, length = 200)
     private String apellidos;
     @Basic(optional = false)
-    @Column(name = "nombres")
+    @Column(name = "nombres", nullable = false, length = 200)
     private String nombres;
     @Basic(optional = false)
-    @Column(name = "visible")
+    @Column(name = "visible", nullable = false)
     private int visible;
-    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
+    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario idusuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idinstructor")
@@ -156,7 +156,7 @@ public class Instructor implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Instructor[idinstructor=" + idinstructor + "]";
+        return "edu.ues.jhard.jpa.Instructor[idinstructor=" + idinstructor + "]";
     }
 
 }

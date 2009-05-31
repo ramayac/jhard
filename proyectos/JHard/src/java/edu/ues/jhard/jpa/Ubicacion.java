@@ -24,16 +24,16 @@ import javax.persistence.Table;
  * @author Hugol
  */
 @Entity
-@Table(name = "ubicacion")
+@Table(name = "ubicacion", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Ubicacion.findAll", query = "SELECT u FROM Ubicacion u"), @NamedQuery(name = "Ubicacion.findByIdubicacion", query = "SELECT u FROM Ubicacion u WHERE u.idubicacion = :idubicacion"), @NamedQuery(name = "Ubicacion.findByNombre", query = "SELECT u FROM Ubicacion u WHERE u.nombre = :nombre")})
 public class Ubicacion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idubicacion")
+    @Column(name = "idubicacion", nullable = false)
     private Integer idubicacion;
-    @Column(name = "nombre")
+    @Column(name = "nombre", length = 45)
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idaula")
     private List<Horario> horarioCollection;
@@ -111,7 +111,7 @@ public class Ubicacion implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Ubicacion[idubicacion=" + idubicacion + "]";
+        return "edu.ues.jhard.jpa.Ubicacion[idubicacion=" + idubicacion + "]";
     }
 
 }

@@ -30,29 +30,29 @@ import javax.persistence.TemporalType;
  * @author Hugol
  */
 @Entity
-@Table(name = "clase")
+@Table(name = "clase", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Clase.findAll", query = "SELECT c FROM Clase c"), @NamedQuery(name = "Clase.findByIdclase", query = "SELECT c FROM Clase c WHERE c.idclase = :idclase"), @NamedQuery(name = "Clase.findByFecha", query = "SELECT c FROM Clase c WHERE c.fecha = :fecha"), @NamedQuery(name = "Clase.findByTema", query = "SELECT c FROM Clase c WHERE c.tema = :tema")})
 public class Clase implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idclase")
+    @Column(name = "idclase", nullable = false)
     private Integer idclase;
     @Basic(optional = false)
-    @Column(name = "fecha")
+    @Column(name = "fecha", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fecha;
     @Basic(optional = false)
-    @Column(name = "tema")
+    @Column(name = "tema", nullable = false, length = 45)
     private String tema;
     @Lob
-    @Column(name = "observaciones")
+    @Column(name = "observaciones", length = 65535)
     private String observaciones;
     @JoinColumn(name = "iddocente", referencedColumnName = "iddocente")
     @ManyToOne
     private Docente iddocente;
-    @JoinColumn(name = "idhorario", referencedColumnName = "idhorario")
+    @JoinColumn(name = "idhorario", referencedColumnName = "idhorario", nullable = false)
     @ManyToOne(optional = false)
     private Horario idhorario;
     @JoinColumn(name = "idinstructor", referencedColumnName = "idinstructor")
@@ -160,7 +160,7 @@ public class Clase implements Serializable {
 
     @Override
     public String toString() {
-        return "JPA.Clase[idclase=" + idclase + "]";
+        return "edu.ues.jhard.jpa.Clase[idclase=" + idclase + "]";
     }
 
 }
