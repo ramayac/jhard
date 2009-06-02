@@ -151,16 +151,20 @@ public class Index extends AbstractPageBean {
 
         BeanBaseJHardmin bb = new BeanBaseJHardmin();
 
-        if (bb.getUsuario(1)!=null){
-            this.txtUser.setValue(bb.getUsuario(1).getIdusuario());
-        }
-
-//        if (bb.getUsuario(nomUser, nomPass)!=null){
-//            this.txtUserLogin.setTitle(bb.getUsuario(nomUser, nomPass).getNombre());
+//        if (bb.getUsuario(1)!=null){
+//            this.txtUser.setValue(bb.getUsuario(1).getIdusuario());
 //        }
 //        else{
-//            this.txtUserLogin.setTitle("Usuario incorrecto");
+//            this.txtUser.setValue("JODEEER");
+//            this.txtUserLogin.setValue("PUTAAAAA");
+//
 //        }
+        if (bb.getUsuario(nomUser, nomPass)!=null){
+            this.txtUserLogin.setValue(bb.getUsuario(nomUser, nomPass).getNombre());
+        }
+        else{
+            this.txtUserLogin.setValue("Usuario Incorrecto");
+        }
 
 
         return null;
