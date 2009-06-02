@@ -137,15 +137,15 @@ INSERT INTO `rol` (`idrol`,`nombre`,`descripcion`) VALUES
 (6,'Instructor','Instructor de materia UES-FMO');
 
 INSERT INTO `usuario` (`idusuario`,`nombre`,`clave`,`idrol`) VALUES 
- (1,'LuisBarrera','admin','Administrador',1),
- (2,'Madrid','admin','Administrador',1),
- (3,'Claudia','canon','Administrativo',2),
- (4,'Stanley','doc','Docente',3),
- (5,'Carmencita','derecho','Administrativo',2),
- (6,'Gabriel','editor','Editor de Contenido',4),
- (7,'Rebekita','pecas','Estudiante',5),
- (8,'fredy','instructor','Instructor',6),
- (9,'hugol','firpomadrid','Instructor',6);
+ (1,'LuisBarrera','admin',1),
+ (2,'Madrid','admin',1),
+ (3,'Claudia','canon',2),
+ (4,'Stanley','doc',3),
+ (5,'Carmencita','derecho',2),
+ (6,'Gabriel','editor',4),
+ (7,'Rebekita','pecas',5),
+ (8,'fredy','instructor',6),
+ (9,'hugol','firpomadrid',6);
 
 INSERT INTO `administrador` (`idadministrador`,`clave`,`idusuario`) VALUES 
  (1,'admin',1),
