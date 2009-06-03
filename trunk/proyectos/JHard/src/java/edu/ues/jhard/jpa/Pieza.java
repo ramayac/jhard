@@ -6,9 +6,8 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +22,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "pieza", catalog = "jhard", schema = "")
@@ -50,8 +49,8 @@ public class Pieza implements Serializable {
     @JoinColumn(name = "idmarca", referencedColumnName = "idmarca", nullable = false)
     @ManyToOne(optional = false)
     private Marca idmarca;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idhardware2")
-    private List<Atributohardware> atributohardwareCollection;
+    @OneToMany(mappedBy = "idpieza")
+    private Collection<Atributohardware> atributohardwareCollection;
 
     public Pieza() {
     }
@@ -114,11 +113,11 @@ public class Pieza implements Serializable {
         this.idmarca = idmarca;
     }
 
-    public List<Atributohardware> getAtributohardwareCollection() {
+    public Collection<Atributohardware> getAtributohardwareCollection() {
         return atributohardwareCollection;
     }
 
-    public void setAtributohardwareCollection(List<Atributohardware> atributohardwareCollection) {
+    public void setAtributohardwareCollection(Collection<Atributohardware> atributohardwareCollection) {
         this.atributohardwareCollection = atributohardwareCollection;
     }
 

@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "mantenimiento", catalog = "jhard", schema = "")
@@ -44,15 +44,18 @@ public class Mantenimiento implements Serializable {
     @Lob
     @Column(name = "descripcion", nullable = false, length = 65535)
     private String descripcion;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia", nullable = false)
-    @ManyToOne(optional = false)
-    private Existencia idequipoexistente;
-    @JoinColumn(name = "idsolicitud", referencedColumnName = "idsolicitud")
-    @ManyToOne
-    private Solicitud idsolicitud;
     @JoinColumn(name = "idtecnico", referencedColumnName = "idtecnico", nullable = false)
     @ManyToOne(optional = false)
     private Tecnico idtecnico;
+    @JoinColumn(name = "idsolicitud", referencedColumnName = "idsolicitud")
+    @ManyToOne
+    private Solicitud idsolicitud;
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia")
+    @ManyToOne
+    private Existencia idequipoexistente;
+    @JoinColumn(name = "idequiposimple", referencedColumnName = "idEquipoSimple")
+    @ManyToOne
+    private Equiposimple idequiposimple;
 
     public Mantenimiento() {
     }
@@ -91,12 +94,12 @@ public class Mantenimiento implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Existencia getIdequipoexistente() {
-        return idequipoexistente;
+    public Tecnico getIdtecnico() {
+        return idtecnico;
     }
 
-    public void setIdequipoexistente(Existencia idequipoexistente) {
-        this.idequipoexistente = idequipoexistente;
+    public void setIdtecnico(Tecnico idtecnico) {
+        this.idtecnico = idtecnico;
     }
 
     public Solicitud getIdsolicitud() {
@@ -107,12 +110,20 @@ public class Mantenimiento implements Serializable {
         this.idsolicitud = idsolicitud;
     }
 
-    public Tecnico getIdtecnico() {
-        return idtecnico;
+    public Existencia getIdequipoexistente() {
+        return idequipoexistente;
     }
 
-    public void setIdtecnico(Tecnico idtecnico) {
-        this.idtecnico = idtecnico;
+    public void setIdequipoexistente(Existencia idequipoexistente) {
+        this.idequipoexistente = idequipoexistente;
+    }
+
+    public Equiposimple getIdequiposimple() {
+        return idequiposimple;
+    }
+
+    public void setIdequiposimple(Equiposimple idequiposimple) {
+        this.idequiposimple = idequiposimple;
     }
 
     @Override

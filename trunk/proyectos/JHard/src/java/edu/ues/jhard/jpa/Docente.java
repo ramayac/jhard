@@ -6,7 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +23,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "docente", catalog = "jhard", schema = "")
@@ -45,9 +45,9 @@ public class Docente implements Serializable {
     @Column(name = "visible", nullable = false)
     private int visible;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddocente")
-    private List<Curso> cursoCollection;
+    private Collection<Curso> cursoCollection;
     @OneToMany(mappedBy = "iddocente")
-    private List<Clase> claseCollection;
+    private Collection<Clase> claseCollection;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario idusuario;
@@ -98,19 +98,19 @@ public class Docente implements Serializable {
         this.visible = visible;
     }
 
-    public List<Curso> getCursoCollection() {
+    public Collection<Curso> getCursoCollection() {
         return cursoCollection;
     }
 
-    public void setCursoCollection(List<Curso> cursoCollection) {
+    public void setCursoCollection(Collection<Curso> cursoCollection) {
         this.cursoCollection = cursoCollection;
     }
 
-    public List<Clase> getClaseCollection() {
+    public Collection<Clase> getClaseCollection() {
         return claseCollection;
     }
 
-    public void setClaseCollection(List<Clase> claseCollection) {
+    public void setClaseCollection(Collection<Clase> claseCollection) {
         this.claseCollection = claseCollection;
     }
 

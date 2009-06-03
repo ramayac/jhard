@@ -6,7 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +21,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "rol", catalog = "jhard", schema = "")
@@ -41,7 +41,7 @@ public class Rol implements Serializable {
     @Column(name = "descripcion", nullable = false, length = 65535)
     private String descripcion;
     @OneToMany(mappedBy = "idrol")
-    private List<Usuario> usuarioCollection;
+    private Collection<Usuario> usuarioCollection;
 
     public Rol() {
     }
@@ -80,11 +80,11 @@ public class Rol implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<Usuario> getUsuarioCollection() {
+    public Collection<Usuario> getUsuarioCollection() {
         return usuarioCollection;
     }
 
-    public void setUsuarioCollection(List<Usuario> usuarioCollection) {
+    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
         this.usuarioCollection = usuarioCollection;
     }
 

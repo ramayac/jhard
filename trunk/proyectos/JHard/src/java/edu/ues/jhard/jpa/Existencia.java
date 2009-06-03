@@ -6,7 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +23,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "existencia", catalog = "jhard", schema = "")
@@ -38,30 +38,30 @@ public class Existencia implements Serializable {
     @Basic(optional = false)
     @Column(name = "codigo", nullable = false, length = 45)
     private String codigo;
+    @OneToMany(mappedBy = "idequipoexistente")
+    private Collection<Mantenimiento> mantenimientoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idequipoexistente")
-    private List<Mantenimiento> mantenimientoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idequipoexistente")
-    private List<Instalacion> instalacionCollection;
-    @JoinColumn(name = "idadquisicion", referencedColumnName = "idadquisicion")
-    @ManyToOne
-    private Adquisicion idadquisicion;
-    @JoinColumn(name = "idestado", referencedColumnName = "idestado", nullable = false)
-    @ManyToOne(optional = false)
-    private Estadoequipo idestado;
+    private Collection<Instalacion> instalacionCollection;
     @JoinColumn(name = "idhardware", referencedColumnName = "idequipo", nullable = false)
     @ManyToOne(optional = false)
     private Equipo idhardware;
     @JoinColumn(name = "idubicacion", referencedColumnName = "idubicacion", nullable = false)
     @ManyToOne(optional = false)
     private Ubicacion idubicacion;
+    @JoinColumn(name = "idestado", referencedColumnName = "idestado", nullable = false)
+    @ManyToOne(optional = false)
+    private Estadoequipo idestado;
+    @JoinColumn(name = "idadquisicion", referencedColumnName = "idadquisicion")
+    @ManyToOne
+    private Adquisicion idadquisicion;
+    @OneToMany(mappedBy = "idequipoexistente")
+    private Collection<Solicitud> solicitudCollection;
+    @OneToMany(mappedBy = "idequipoexistente")
+    private Collection<Bitacoraestados> bitacoraestadosCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idequipoexistente")
-    private List<Solicitud> solicitudCollection;
+    private Collection<Asistencia> asistenciaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idequipoexistente")
-    private List<Bitacoraestados> bitacoraestadosCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idequipoexistente")
-    private List<Asistencia> asistenciaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idequipoexistente")
-    private List<Reserva> reservaCollection;
+    private Collection<Reserva> reservaCollection;
 
     public Existencia() {
     }
@@ -91,36 +91,20 @@ public class Existencia implements Serializable {
         this.codigo = codigo;
     }
 
-    public List<Mantenimiento> getMantenimientoCollection() {
+    public Collection<Mantenimiento> getMantenimientoCollection() {
         return mantenimientoCollection;
     }
 
-    public void setMantenimientoCollection(List<Mantenimiento> mantenimientoCollection) {
+    public void setMantenimientoCollection(Collection<Mantenimiento> mantenimientoCollection) {
         this.mantenimientoCollection = mantenimientoCollection;
     }
 
-    public List<Instalacion> getInstalacionCollection() {
+    public Collection<Instalacion> getInstalacionCollection() {
         return instalacionCollection;
     }
 
-    public void setInstalacionCollection(List<Instalacion> instalacionCollection) {
+    public void setInstalacionCollection(Collection<Instalacion> instalacionCollection) {
         this.instalacionCollection = instalacionCollection;
-    }
-
-    public Adquisicion getIdadquisicion() {
-        return idadquisicion;
-    }
-
-    public void setIdadquisicion(Adquisicion idadquisicion) {
-        this.idadquisicion = idadquisicion;
-    }
-
-    public Estadoequipo getIdestado() {
-        return idestado;
-    }
-
-    public void setIdestado(Estadoequipo idestado) {
-        this.idestado = idestado;
     }
 
     public Equipo getIdhardware() {
@@ -139,35 +123,51 @@ public class Existencia implements Serializable {
         this.idubicacion = idubicacion;
     }
 
-    public List<Solicitud> getSolicitudCollection() {
+    public Estadoequipo getIdestado() {
+        return idestado;
+    }
+
+    public void setIdestado(Estadoequipo idestado) {
+        this.idestado = idestado;
+    }
+
+    public Adquisicion getIdadquisicion() {
+        return idadquisicion;
+    }
+
+    public void setIdadquisicion(Adquisicion idadquisicion) {
+        this.idadquisicion = idadquisicion;
+    }
+
+    public Collection<Solicitud> getSolicitudCollection() {
         return solicitudCollection;
     }
 
-    public void setSolicitudCollection(List<Solicitud> solicitudCollection) {
+    public void setSolicitudCollection(Collection<Solicitud> solicitudCollection) {
         this.solicitudCollection = solicitudCollection;
     }
 
-    public List<Bitacoraestados> getBitacoraestadosCollection() {
+    public Collection<Bitacoraestados> getBitacoraestadosCollection() {
         return bitacoraestadosCollection;
     }
 
-    public void setBitacoraestadosCollection(List<Bitacoraestados> bitacoraestadosCollection) {
+    public void setBitacoraestadosCollection(Collection<Bitacoraestados> bitacoraestadosCollection) {
         this.bitacoraestadosCollection = bitacoraestadosCollection;
     }
 
-    public List<Asistencia> getAsistenciaCollection() {
+    public Collection<Asistencia> getAsistenciaCollection() {
         return asistenciaCollection;
     }
 
-    public void setAsistenciaCollection(List<Asistencia> asistenciaCollection) {
+    public void setAsistenciaCollection(Collection<Asistencia> asistenciaCollection) {
         this.asistenciaCollection = asistenciaCollection;
     }
 
-    public List<Reserva> getReservaCollection() {
+    public Collection<Reserva> getReservaCollection() {
         return reservaCollection;
     }
 
-    public void setReservaCollection(List<Reserva> reservaCollection) {
+    public void setReservaCollection(Collection<Reserva> reservaCollection) {
         this.reservaCollection = reservaCollection;
     }
 

@@ -6,7 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +23,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "equipo", catalog = "jhard", schema = "")
@@ -42,19 +42,19 @@ public class Equipo implements Serializable {
     @Column(name = "modelo", nullable = false, length = 15)
     private String modelo;
     @OneToMany(mappedBy = "idequipo")
-    private List<Accesorio> accesorioCollection;
+    private Collection<Accesorio> accesorioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idhardware")
-    private List<Existencia> existenciaCollection;
-    @JoinColumn(name = "idclasificacion", referencedColumnName = "idclasificacion", nullable = false)
-    @ManyToOne(optional = false)
-    private Clasificacion idclasificacion;
+    private Collection<Existencia> existenciaCollection;
     @JoinColumn(name = "idmarca", referencedColumnName = "idmarca", nullable = false)
     @ManyToOne(optional = false)
     private Marca idmarca;
+    @JoinColumn(name = "idclasificacion", referencedColumnName = "idclasificacion", nullable = false)
+    @ManyToOne(optional = false)
+    private Clasificacion idclasificacion;
     @OneToMany(mappedBy = "idequipo")
-    private List<Pieza> piezaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idhardware1")
-    private List<Atributohardware> atributohardwareCollection;
+    private Collection<Pieza> piezaCollection;
+    @OneToMany(mappedBy = "idhardware")
+    private Collection<Atributohardware> atributohardwareCollection;
 
     public Equipo() {
     }
@@ -93,28 +93,20 @@ public class Equipo implements Serializable {
         this.modelo = modelo;
     }
 
-    public List<Accesorio> getAccesorioCollection() {
+    public Collection<Accesorio> getAccesorioCollection() {
         return accesorioCollection;
     }
 
-    public void setAccesorioCollection(List<Accesorio> accesorioCollection) {
+    public void setAccesorioCollection(Collection<Accesorio> accesorioCollection) {
         this.accesorioCollection = accesorioCollection;
     }
 
-    public List<Existencia> getExistenciaCollection() {
+    public Collection<Existencia> getExistenciaCollection() {
         return existenciaCollection;
     }
 
-    public void setExistenciaCollection(List<Existencia> existenciaCollection) {
+    public void setExistenciaCollection(Collection<Existencia> existenciaCollection) {
         this.existenciaCollection = existenciaCollection;
-    }
-
-    public Clasificacion getIdclasificacion() {
-        return idclasificacion;
-    }
-
-    public void setIdclasificacion(Clasificacion idclasificacion) {
-        this.idclasificacion = idclasificacion;
     }
 
     public Marca getIdmarca() {
@@ -125,19 +117,27 @@ public class Equipo implements Serializable {
         this.idmarca = idmarca;
     }
 
-    public List<Pieza> getPiezaCollection() {
+    public Clasificacion getIdclasificacion() {
+        return idclasificacion;
+    }
+
+    public void setIdclasificacion(Clasificacion idclasificacion) {
+        this.idclasificacion = idclasificacion;
+    }
+
+    public Collection<Pieza> getPiezaCollection() {
         return piezaCollection;
     }
 
-    public void setPiezaCollection(List<Pieza> piezaCollection) {
+    public void setPiezaCollection(Collection<Pieza> piezaCollection) {
         this.piezaCollection = piezaCollection;
     }
 
-    public List<Atributohardware> getAtributohardwareCollection() {
+    public Collection<Atributohardware> getAtributohardwareCollection() {
         return atributohardwareCollection;
     }
 
-    public void setAtributohardwareCollection(List<Atributohardware> atributohardwareCollection) {
+    public void setAtributohardwareCollection(Collection<Atributohardware> atributohardwareCollection) {
         this.atributohardwareCollection = atributohardwareCollection;
     }
 

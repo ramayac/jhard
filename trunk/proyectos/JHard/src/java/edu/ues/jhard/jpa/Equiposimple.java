@@ -6,9 +6,8 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +23,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "equiposimple", catalog = "jhard", schema = "")
@@ -43,13 +42,15 @@ public class Equiposimple implements Serializable {
     @Basic(optional = false)
     @Column(name = "propietario", nullable = false, length = 200)
     private String propietario;
+    @OneToMany(mappedBy = "idequiposimple")
+    private Collection<Mantenimiento> mantenimientoCollection;
     @JoinColumn(name = "idestado", referencedColumnName = "idestado", nullable = false)
     @ManyToOne(optional = false)
     private Estadoequipo idestado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idequipoexistente1")
-    private List<Solicitud> solicitudCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idequipoexistente1")
-    private List<Bitacoraestados> bitacoraestadosCollection;
+    @OneToMany(mappedBy = "idequiposimple")
+    private Collection<Solicitud> solicitudCollection;
+    @OneToMany(mappedBy = "idequiposimple")
+    private Collection<Bitacoraestados> bitacoraestadosCollection;
 
     public Equiposimple() {
     }
@@ -88,6 +89,14 @@ public class Equiposimple implements Serializable {
         this.propietario = propietario;
     }
 
+    public Collection<Mantenimiento> getMantenimientoCollection() {
+        return mantenimientoCollection;
+    }
+
+    public void setMantenimientoCollection(Collection<Mantenimiento> mantenimientoCollection) {
+        this.mantenimientoCollection = mantenimientoCollection;
+    }
+
     public Estadoequipo getIdestado() {
         return idestado;
     }
@@ -96,19 +105,19 @@ public class Equiposimple implements Serializable {
         this.idestado = idestado;
     }
 
-    public List<Solicitud> getSolicitudCollection() {
+    public Collection<Solicitud> getSolicitudCollection() {
         return solicitudCollection;
     }
 
-    public void setSolicitudCollection(List<Solicitud> solicitudCollection) {
+    public void setSolicitudCollection(Collection<Solicitud> solicitudCollection) {
         this.solicitudCollection = solicitudCollection;
     }
 
-    public List<Bitacoraestados> getBitacoraestadosCollection() {
+    public Collection<Bitacoraestados> getBitacoraestadosCollection() {
         return bitacoraestadosCollection;
     }
 
-    public void setBitacoraestadosCollection(List<Bitacoraestados> bitacoraestadosCollection) {
+    public void setBitacoraestadosCollection(Collection<Bitacoraestados> bitacoraestadosCollection) {
         this.bitacoraestadosCollection = bitacoraestadosCollection;
     }
 

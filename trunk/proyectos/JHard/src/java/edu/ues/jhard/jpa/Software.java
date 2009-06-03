@@ -6,7 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +23,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "software", catalog = "jhard", schema = "")
@@ -52,7 +52,7 @@ public class Software implements Serializable {
     @ManyToOne(optional = false)
     private Clasificacion idclasificacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idsoftware")
-    private List<Instalacion> instalacionCollection;
+    private Collection<Instalacion> instalacionCollection;
 
     public Software() {
     }
@@ -123,11 +123,11 @@ public class Software implements Serializable {
         this.idclasificacion = idclasificacion;
     }
 
-    public List<Instalacion> getInstalacionCollection() {
+    public Collection<Instalacion> getInstalacionCollection() {
         return instalacionCollection;
     }
 
-    public void setInstalacionCollection(List<Instalacion> instalacionCollection) {
+    public void setInstalacionCollection(Collection<Instalacion> instalacionCollection) {
         this.instalacionCollection = instalacionCollection;
     }
 

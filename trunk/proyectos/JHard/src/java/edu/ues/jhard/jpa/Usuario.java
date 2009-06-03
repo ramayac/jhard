@@ -6,7 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,16 +23,11 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "usuario", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
-                @NamedQuery(name = "Usuario.findByIdusuario", query = "SELECT u FROM Usuario u WHERE u.idusuario = :idusuario"),
-                @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
-                @NamedQuery(name = "Usuario.findByClave", query = "SELECT u FROM Usuario u WHERE u.clave = :clave"),
-                @NamedQuery(name = "Usuario.findByUser", query = "SELECT u FROM Usuario u WHERE u.clave = :clave AND u.nombre = :nombre")})
-
+@NamedQueries({@NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"), @NamedQuery(name = "Usuario.findByIdusuario", query = "SELECT u FROM Usuario u WHERE u.idusuario = :idusuario"), @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"), @NamedQuery(name = "Usuario.findByClave", query = "SELECT u FROM Usuario u WHERE u.clave = :clave")})
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,22 +42,24 @@ public class Usuario implements Serializable {
     @Column(name = "clave", nullable = false, length = 15)
     private String clave;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
-    private List<Instructor> instructorCollection;
+    private Collection<Instructor> instructorCollection;
     @JoinColumn(name = "idrol", referencedColumnName = "idrol")
     @ManyToOne
     private Rol idrol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
-    private List<Administrador> administradorCollection;
+    private Collection<Administrador> administradorCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
-    private List<Estudiante> estudianteCollection;
+    private Collection<Estudiante> estudianteCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
-    private List<Solicitud> solicitudCollection;
+    private Collection<Solicitud> solicitudCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
-    private List<Bitacoracambiosusuario> bitacoracambiosusuarioCollection;
+    private Collection<Entrada> entradaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
-    private List<Reserva> reservaCollection;
+    private Collection<Bitacoracambiosusuario> bitacoracambiosusuarioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
-    private List<Docente> docenteCollection;
+    private Collection<Reserva> reservaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
+    private Collection<Docente> docenteCollection;
 
     public Usuario() {
     }
@@ -101,11 +98,11 @@ public class Usuario implements Serializable {
         this.clave = clave;
     }
 
-    public List<Instructor> getInstructorCollection() {
+    public Collection<Instructor> getInstructorCollection() {
         return instructorCollection;
     }
 
-    public void setInstructorCollection(List<Instructor> instructorCollection) {
+    public void setInstructorCollection(Collection<Instructor> instructorCollection) {
         this.instructorCollection = instructorCollection;
     }
 
@@ -117,51 +114,59 @@ public class Usuario implements Serializable {
         this.idrol = idrol;
     }
 
-    public List<Administrador> getAdministradorCollection() {
+    public Collection<Administrador> getAdministradorCollection() {
         return administradorCollection;
     }
 
-    public void setAdministradorCollection(List<Administrador> administradorCollection) {
+    public void setAdministradorCollection(Collection<Administrador> administradorCollection) {
         this.administradorCollection = administradorCollection;
     }
 
-    public List<Estudiante> getEstudianteCollection() {
+    public Collection<Estudiante> getEstudianteCollection() {
         return estudianteCollection;
     }
 
-    public void setEstudianteCollection(List<Estudiante> estudianteCollection) {
+    public void setEstudianteCollection(Collection<Estudiante> estudianteCollection) {
         this.estudianteCollection = estudianteCollection;
     }
 
-    public List<Solicitud> getSolicitudCollection() {
+    public Collection<Solicitud> getSolicitudCollection() {
         return solicitudCollection;
     }
 
-    public void setSolicitudCollection(List<Solicitud> solicitudCollection) {
+    public void setSolicitudCollection(Collection<Solicitud> solicitudCollection) {
         this.solicitudCollection = solicitudCollection;
     }
 
-    public List<Bitacoracambiosusuario> getBitacoracambiosusuarioCollection() {
+    public Collection<Entrada> getEntradaCollection() {
+        return entradaCollection;
+    }
+
+    public void setEntradaCollection(Collection<Entrada> entradaCollection) {
+        this.entradaCollection = entradaCollection;
+    }
+
+    public Collection<Bitacoracambiosusuario> getBitacoracambiosusuarioCollection() {
         return bitacoracambiosusuarioCollection;
     }
 
-    public void setBitacoracambiosusuarioCollection(List<Bitacoracambiosusuario> bitacoracambiosusuarioCollection) {
+    public void setBitacoracambiosusuarioCollection(Collection<Bitacoracambiosusuario> bitacoracambiosusuarioCollection) {
         this.bitacoracambiosusuarioCollection = bitacoracambiosusuarioCollection;
     }
 
-    public List<Reserva> getReservaCollection() {
+    public Collection<Reserva> getReservaCollection() {
         return reservaCollection;
     }
 
-    public void setReservaCollection(List<Reserva> reservaCollection) {
+    public void setReservaCollection(Collection<Reserva> reservaCollection) {
         this.reservaCollection = reservaCollection;
     }
 
-    public List<Docente> getDocenteCollection() {
+    public Collection<Docente> getDocenteCollection() {
         return docenteCollection;
     }
 
-    public void setDocenteCollection(List<Docente> docenteCollection) {
+    public void setDocenteCollection(Collection<Docente> docenteCollection) {
         this.docenteCollection = docenteCollection;
     }
 

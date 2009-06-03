@@ -20,7 +20,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "asistencia", catalog = "jhard", schema = "")
@@ -32,15 +32,15 @@ public class Asistencia implements Serializable {
     @Basic(optional = false)
     @Column(name = "idasistencia", nullable = false)
     private Integer idasistencia;
+    @JoinColumn(name = "idestudiante", referencedColumnName = "idestudiante", nullable = false)
+    @ManyToOne(optional = false)
+    private Estudiante idestudiante;
     @JoinColumn(name = "idclase", referencedColumnName = "idclase", nullable = false)
     @ManyToOne(optional = false)
     private Clase idclase;
     @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia", nullable = false)
     @ManyToOne(optional = false)
     private Existencia idequipoexistente;
-    @JoinColumn(name = "idestudiante", referencedColumnName = "idestudiante", nullable = false)
-    @ManyToOne(optional = false)
-    private Estudiante idestudiante;
 
     public Asistencia() {
     }
@@ -57,6 +57,14 @@ public class Asistencia implements Serializable {
         this.idasistencia = idasistencia;
     }
 
+    public Estudiante getIdestudiante() {
+        return idestudiante;
+    }
+
+    public void setIdestudiante(Estudiante idestudiante) {
+        this.idestudiante = idestudiante;
+    }
+
     public Clase getIdclase() {
         return idclase;
     }
@@ -71,14 +79,6 @@ public class Asistencia implements Serializable {
 
     public void setIdequipoexistente(Existencia idequipoexistente) {
         this.idequipoexistente = idequipoexistente;
-    }
-
-    public Estudiante getIdestudiante() {
-        return idestudiante;
-    }
-
-    public void setIdestudiante(Estudiante idestudiante) {
-        this.idestudiante = idestudiante;
     }
 
     @Override

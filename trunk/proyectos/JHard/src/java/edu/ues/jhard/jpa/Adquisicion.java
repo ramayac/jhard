@@ -6,8 +6,8 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "adquisicion", catalog = "jhard", schema = "")
@@ -49,9 +49,9 @@ public class Adquisicion implements Serializable {
     @Column(name = "proveedor", length = 100)
     private String proveedor;
     @OneToMany(mappedBy = "idadquisicion")
-    private List<Software> softwareCollection;
+    private Collection<Software> softwareCollection;
     @OneToMany(mappedBy = "idadquisicion")
-    private List<Existencia> existenciaCollection;
+    private Collection<Existencia> existenciaCollection;
 
     public Adquisicion() {
     }
@@ -106,19 +106,19 @@ public class Adquisicion implements Serializable {
         this.proveedor = proveedor;
     }
 
-    public List<Software> getSoftwareCollection() {
+    public Collection<Software> getSoftwareCollection() {
         return softwareCollection;
     }
 
-    public void setSoftwareCollection(List<Software> softwareCollection) {
+    public void setSoftwareCollection(Collection<Software> softwareCollection) {
         this.softwareCollection = softwareCollection;
     }
 
-    public List<Existencia> getExistenciaCollection() {
+    public Collection<Existencia> getExistenciaCollection() {
         return existenciaCollection;
     }
 
-    public void setExistenciaCollection(List<Existencia> existenciaCollection) {
+    public void setExistenciaCollection(Collection<Existencia> existenciaCollection) {
         this.existenciaCollection = existenciaCollection;
     }
 

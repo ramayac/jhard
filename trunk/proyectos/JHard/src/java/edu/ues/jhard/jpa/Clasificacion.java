@@ -6,7 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,7 +22,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "clasificacion", catalog = "jhard", schema = "")
@@ -43,13 +43,13 @@ public class Clasificacion implements Serializable {
     @Column(name = "idsuperior")
     private Integer idsuperior;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasificacion")
-    private List<Accesorio> accesorioCollection;
+    private Collection<Accesorio> accesorioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasificacion")
-    private List<Software> softwareCollection;
+    private Collection<Software> softwareCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasificacion")
-    private List<Equipo> equipoCollection;
+    private Collection<Equipo> equipoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclasificacion")
-    private List<Pieza> piezaCollection;
+    private Collection<Pieza> piezaCollection;
 
     public Clasificacion() {
     }
@@ -95,35 +95,35 @@ public class Clasificacion implements Serializable {
         this.idsuperior = idsuperior;
     }
 
-    public List<Accesorio> getAccesorioCollection() {
+    public Collection<Accesorio> getAccesorioCollection() {
         return accesorioCollection;
     }
 
-    public void setAccesorioCollection(List<Accesorio> accesorioCollection) {
+    public void setAccesorioCollection(Collection<Accesorio> accesorioCollection) {
         this.accesorioCollection = accesorioCollection;
     }
 
-    public List<Software> getSoftwareCollection() {
+    public Collection<Software> getSoftwareCollection() {
         return softwareCollection;
     }
 
-    public void setSoftwareCollection(List<Software> softwareCollection) {
+    public void setSoftwareCollection(Collection<Software> softwareCollection) {
         this.softwareCollection = softwareCollection;
     }
 
-    public List<Equipo> getEquipoCollection() {
+    public Collection<Equipo> getEquipoCollection() {
         return equipoCollection;
     }
 
-    public void setEquipoCollection(List<Equipo> equipoCollection) {
+    public void setEquipoCollection(Collection<Equipo> equipoCollection) {
         this.equipoCollection = equipoCollection;
     }
 
-    public List<Pieza> getPiezaCollection() {
+    public Collection<Pieza> getPiezaCollection() {
         return piezaCollection;
     }
 
-    public void setPiezaCollection(List<Pieza> piezaCollection) {
+    public void setPiezaCollection(Collection<Pieza> piezaCollection) {
         this.piezaCollection = piezaCollection;
     }
 

@@ -6,7 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,7 +21,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "tecnico", catalog = "jhard", schema = "")
@@ -43,7 +43,7 @@ public class Tecnico implements Serializable {
     @Column(name = "cargo", nullable = false, length = 200)
     private String cargo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtecnico")
-    private List<Mantenimiento> mantenimientoCollection;
+    private Collection<Mantenimiento> mantenimientoCollection;
 
     public Tecnico() {
     }
@@ -91,11 +91,11 @@ public class Tecnico implements Serializable {
         this.cargo = cargo;
     }
 
-    public List<Mantenimiento> getMantenimientoCollection() {
+    public Collection<Mantenimiento> getMantenimientoCollection() {
         return mantenimientoCollection;
     }
 
-    public void setMantenimientoCollection(List<Mantenimiento> mantenimientoCollection) {
+    public void setMantenimientoCollection(Collection<Mantenimiento> mantenimientoCollection) {
         this.mantenimientoCollection = mantenimientoCollection;
     }
 

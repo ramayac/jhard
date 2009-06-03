@@ -12,8 +12,10 @@
     <class>edu.ues.jhard.jpa.Carrera</class>
     <class>edu.ues.jhard.jpa.Clase</class>
     <class>edu.ues.jhard.jpa.Clasificacion</class>
+    <class>edu.ues.jhard.jpa.Comentarios</class>
     <class>edu.ues.jhard.jpa.Curso</class>
     <class>edu.ues.jhard.jpa.Docente</class>
+    <class>edu.ues.jhard.jpa.Entrada</class>
     <class>edu.ues.jhard.jpa.Equipo</class>
     <class>edu.ues.jhard.jpa.Equiposimple</class>
     <class>edu.ues.jhard.jpa.Estadocurso</class>
@@ -36,6 +38,8 @@
     <class>edu.ues.jhard.jpa.Software</class>
     <class>edu.ues.jhard.jpa.Solicitante</class>
     <class>edu.ues.jhard.jpa.Solicitud</class>
+    <class>edu.ues.jhard.jpa.Tag</class>
+    <class>edu.ues.jhard.jpa.TagEntrada</class>
     <class>edu.ues.jhard.jpa.Tecnico</class>
     <class>edu.ues.jhard.jpa.Ubicacion</class>
     <class>edu.ues.jhard.jpa.Usuario</class>

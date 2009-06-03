@@ -6,7 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +20,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "estadocurso", catalog = "jhard", schema = "")
@@ -36,7 +36,7 @@ public class Estadocurso implements Serializable {
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
     @OneToMany(mappedBy = "idestado")
-    private List<Curso> cursoCollection;
+    private Collection<Curso> cursoCollection;
 
     public Estadocurso() {
     }
@@ -66,11 +66,11 @@ public class Estadocurso implements Serializable {
         this.nombre = nombre;
     }
 
-    public List<Curso> getCursoCollection() {
+    public Collection<Curso> getCursoCollection() {
         return cursoCollection;
     }
 
-    public void setCursoCollection(List<Curso> cursoCollection) {
+    public void setCursoCollection(Collection<Curso> cursoCollection) {
         this.cursoCollection = cursoCollection;
     }
 

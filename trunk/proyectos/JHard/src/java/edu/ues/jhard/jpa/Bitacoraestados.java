@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "bitacoraestados", catalog = "jhard", schema = "")
@@ -44,15 +44,15 @@ public class Bitacoraestados implements Serializable {
     @Lob
     @Column(name = "descripcion", nullable = false, length = 65535)
     private String descripcion;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia", nullable = false)
-    @ManyToOne(optional = false)
-    private Existencia idequipoexistente;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idEquipoSimple", nullable = false)
-    @ManyToOne(optional = false)
-    private Equiposimple idequipoexistente1;
     @JoinColumn(name = "idestado", referencedColumnName = "idestado", nullable = false)
     @ManyToOne(optional = false)
     private Estadoequipo idestado;
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia")
+    @ManyToOne
+    private Existencia idequipoexistente;
+    @JoinColumn(name = "idequiposimple", referencedColumnName = "idEquipoSimple")
+    @ManyToOne
+    private Equiposimple idequiposimple;
 
     public Bitacoraestados() {
     }
@@ -91,6 +91,14 @@ public class Bitacoraestados implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public Estadoequipo getIdestado() {
+        return idestado;
+    }
+
+    public void setIdestado(Estadoequipo idestado) {
+        this.idestado = idestado;
+    }
+
     public Existencia getIdequipoexistente() {
         return idequipoexistente;
     }
@@ -99,20 +107,12 @@ public class Bitacoraestados implements Serializable {
         this.idequipoexistente = idequipoexistente;
     }
 
-    public Equiposimple getIdequipoexistente1() {
-        return idequipoexistente1;
+    public Equiposimple getIdequiposimple() {
+        return idequiposimple;
     }
 
-    public void setIdequipoexistente1(Equiposimple idequipoexistente1) {
-        this.idequipoexistente1 = idequipoexistente1;
-    }
-
-    public Estadoequipo getIdestado() {
-        return idestado;
-    }
-
-    public void setIdestado(Estadoequipo idestado) {
-        this.idestado = idestado;
+    public void setIdequiposimple(Equiposimple idequiposimple) {
+        this.idequiposimple = idequiposimple;
     }
 
     @Override
