@@ -1,9 +1,3 @@
--- MySQL Administrator dump 1.4
---
--- ------------------------------------------------------
--- Server version	5.0.51a-community-nt
-
-
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
@@ -555,11 +549,12 @@ CREATE  TABLE IF NOT EXISTS `jhard`.`bitacoraestados` (
   `fecha` DATE NOT NULL COMMENT 'Fecha en la que ocurrio el cambio de estado' ,
   `idestado` INT NOT NULL COMMENT 'Referencia al estado al cual cambio el equipo' ,
   `descripcion` TEXT NOT NULL COMMENT 'Descripcion del cambio realizado' ,
-  `idequipoexistente` INT NOT NULL COMMENT 'Referencia al equipo que sufrio el cambio de estado' ,
+  `idequipoexistente` INT NULL COMMENT 'Referencia al equipo que sufrio el cambio de estado' ,
+  `idequiposimple` INT NULL ,
   PRIMARY KEY (`idbitacora`) ,
   INDEX `fkidestado_bitacoraestados` (`idestado` ASC) ,
   INDEX `fkidequipoexistente_bitacoraestados` (`idequipoexistente` ASC) ,
-  INDEX `fkidequiposimple_bitacoraestados` (`idequipoexistente` ASC) ,
+  INDEX `fkidequiposimple_bitacoraestados` (`idequiposimple` ASC) ,
   CONSTRAINT `fkidestado_bitacoraestados`
     FOREIGN KEY (`idestado` )
     REFERENCES `jhard`.`estadoequipo` (`idestado` )
@@ -571,7 +566,7 @@ CREATE  TABLE IF NOT EXISTS `jhard`.`bitacoraestados` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidequiposimple_bitacoraestados`
-    FOREIGN KEY (`idequipoexistente` )
+    FOREIGN KEY (`idequiposimple` )
     REFERENCES `jhard`.`equiposimple` (`idEquipoSimple` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -603,10 +598,11 @@ CREATE  TABLE IF NOT EXISTS `jhard`.`solicitud` (
   `prioridad` VARCHAR(25) NOT NULL COMMENT 'Tipo de prioridad en la cual se clasifican las solicitudes de mantenimiento. Sus posibles valores son: Alta, Media y Baja' ,
   `descripcion` TEXT NOT NULL COMMENT 'Descripcion de la solicitud' ,
   `idusuario` INT NOT NULL COMMENT 'Usuario que registro la solicitud' ,
-  `idequipoexistente` INT NOT NULL COMMENT 'Equipo al cual se desea efectuar un mantenimiento' ,
+  `idequipoexistente` INT NULL COMMENT 'Equipo al cual se desea efectuar un mantenimiento' ,
+  `idequiposimple` INT NULL ,
   PRIMARY KEY (`idsolicitud`) ,
   INDEX `fkidequipoexistente_solicitud` (`idequipoexistente` ASC) ,
-  INDEX `fkidequiposimple_solicitud` (`idequipoexistente` ASC) ,
+  INDEX `fkidequiposimple_solicitud` (`idequiposimple` ASC) ,
   INDEX `fkidusuario_solicitud` (`idusuario` ASC) ,
   CONSTRAINT `fkidequipoexistente_solicitud`
     FOREIGN KEY (`idequipoexistente` )
@@ -614,7 +610,7 @@ CREATE  TABLE IF NOT EXISTS `jhard`.`solicitud` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidequiposimple_solicitud`
-    FOREIGN KEY (`idequipoexistente` )
+    FOREIGN KEY (`idequiposimple` )
     REFERENCES `jhard`.`equiposimple` (`idEquipoSimple` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
@@ -637,11 +633,13 @@ CREATE  TABLE IF NOT EXISTS `jhard`.`mantenimiento` (
   `descripcion` TEXT NOT NULL COMMENT 'Descripcion del mantenimiento' ,
   `idtecnico` INT NOT NULL COMMENT 'Referencia al tecnico que efectuo el mantenimiento' ,
   `idsolicitud` INT NULL COMMENT 'Referencia a la solicitud de mantenimiento realizada, en caso de existir una' ,
-  `idequipoexistente` INT NOT NULL COMMENT 'Referencia al equipo al cual se efectuo el mantenimiento' ,
+  `idequipoexistente` INT NULL COMMENT 'Referencia al equipo al cual se efectuo el mantenimiento' ,
+  `idequiposimple` INT NULL ,
   PRIMARY KEY (`idmantenimiento`) ,
   INDEX `fkidtecnico_mantenimiento` (`idtecnico` ASC) ,
   INDEX `fkidsolicitud_mantenimiento` (`idsolicitud` ASC) ,
   INDEX `fkidequipoexistente_mantenimiento` (`idequipoexistente` ASC) ,
+  INDEX `fkidequiposimple_mantenimiento` (`idequiposimple` ASC) ,
   CONSTRAINT `fkidtecnico_mantenimiento`
     FOREIGN KEY (`idtecnico` )
     REFERENCES `jhard`.`tecnico` (`idtecnico` )
@@ -655,6 +653,11 @@ CREATE  TABLE IF NOT EXISTS `jhard`.`mantenimiento` (
   CONSTRAINT `fkidequipoexistente_mantenimiento`
     FOREIGN KEY (`idequipoexistente` )
     REFERENCES `jhard`.`existencia` (`idexistencia` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fkidequiposimple_mantenimiento`
+    FOREIGN KEY (`idequiposimple` )
+    REFERENCES `jhard`.`equiposimple` (`idEquipoSimple` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -738,23 +741,25 @@ CREATE  TABLE IF NOT EXISTS `jhard`.`atributohardware` (
   `nombre` VARCHAR(45) NOT NULL COMMENT 'Nombre del atributo' ,
   `valor` VARCHAR(45) NOT NULL COMMENT 'Valor del atributo' ,
   `unidadmedida` VARCHAR(45) NOT NULL COMMENT 'Unidad de medida del atributo' ,
-  `idhardware` INT NOT NULL COMMENT 'Referencia al elemento de hardware (equipo, pieza o accesorio) al que pertenece el atributo' ,
+  `idhardware` INT NULL COMMENT 'Referencia al elemento de hardware (equipo, pieza o accesorio) al que pertenece el atributo' ,
+  `idpieza` INT NULL ,
+  `idaccesorio` INT NULL ,
   PRIMARY KEY (`idatributohardware`) ,
   INDEX `fkidequipo_atributohardware` (`idhardware` ASC) ,
-  INDEX `fkidpieza_atributohardware` (`idhardware` ASC) ,
-  INDEX `fkidaccesorio_atributohardware` (`idhardware` ASC) ,
+  INDEX `fkidpieza_atributohardware` (`idpieza` ASC) ,
+  INDEX `fkidaccesorio_atributohardware` (`idaccesorio` ASC) ,
   CONSTRAINT `fkidequipo_atributohardware`
     FOREIGN KEY (`idhardware` )
     REFERENCES `jhard`.`equipo` (`idequipo` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidpieza_atributohardware`
-    FOREIGN KEY (`idhardware` )
+    FOREIGN KEY (`idpieza` )
     REFERENCES `jhard`.`pieza` (`idpieza` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fkidaccesorio_atributohardware`
-    FOREIGN KEY (`idhardware` )
+    FOREIGN KEY (`idaccesorio` )
     REFERENCES `jhard`.`accesorio` (`idaccesorio` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -899,6 +904,101 @@ CREATE  TABLE IF NOT EXISTS `jhard`.`bitacoracambiosusuario` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `jhard`.`tag`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `jhard`.`tag` ;
+
+CREATE  TABLE IF NOT EXISTS `jhard`.`tag` (
+  `idtag` INT NOT NULL ,
+  `descripcion` VARCHAR(25) NOT NULL ,
+  PRIMARY KEY (`idtag`) )
+ENGINE = InnoDB
+COMMENT = 'Almacena las etiquetas asociadas con las entradas.';
+
+
+-- -----------------------------------------------------
+-- Table `jhard`.`entrada`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `jhard`.`entrada` ;
+
+CREATE  TABLE IF NOT EXISTS `jhard`.`entrada` (
+  `identrada` INT NOT NULL ,
+  `titulo` VARCHAR(50) NOT NULL ,
+  `descripcion` TEXT NOT NULL ,
+  `fechahora` DATETIME NOT NULL ,
+  `idusuario` INT NOT NULL ,
+  PRIMARY KEY (`identrada`) ,
+  INDEX `fk_entrada_usuario` (`idusuario` ASC) ,
+  CONSTRAINT `fk_entrada_usuario`
+    FOREIGN KEY (`idusuario` )
+    REFERENCES `jhard`.`usuario` (`idusuario` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+COMMENT = 'Entradas del Wiki/CMS\n';
+
+
+-- -----------------------------------------------------
+-- Table `jhard`.`tag_entrada`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `jhard`.`tag_entrada` ;
+
+CREATE  TABLE IF NOT EXISTS `jhard`.`tag_entrada` (
+  `idtagentrada` INT NOT NULL ,
+  `idtag` INT NOT NULL ,
+  `identrada` INT NOT NULL ,
+  PRIMARY KEY (`idtagentrada`, `identrada`, `idtag`) ,
+  INDEX `fk_tag_entrada_tag` (`idtag` ASC) ,
+  INDEX `fk_tag_entrada_entrada` (`identrada` ASC) ,
+  CONSTRAINT `fk_tag_entrada_tag`
+    FOREIGN KEY (`idtag` )
+    REFERENCES `jhard`.`tag` (`idtag` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tag_entrada_entrada`
+    FOREIGN KEY (`identrada` )
+    REFERENCES `jhard`.`entrada` (`identrada` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+COMMENT = 'Rompe la relacion entrada/etiqueta(tag)';
+
+
+-- -----------------------------------------------------
+-- Table `jhard`.`comentarios`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `jhard`.`comentarios` ;
+
+CREATE  TABLE IF NOT EXISTS `jhard`.`comentarios` (
+  `idcoment` INT NOT NULL ,
+  `comentario` VARCHAR(250) NOT NULL ,
+  `fechahorara` DATETIME NOT NULL ,
+  `identrada` INT NOT NULL ,
+  PRIMARY KEY (`idcoment`) ,
+  INDEX `fk_comentarios_entrada` (`identrada` ASC) ,
+  CONSTRAINT `fk_comentarios_entrada`
+    FOREIGN KEY (`identrada` )
+    REFERENCES `jhard`.`entrada` (`identrada` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+COMMENT = 'Comentarios asociados con las entradas, fuera mejor solo asociados con el CMS?';
+
+
+-- -----------------------------------------------------
+-- Table `jhard`.`valoracion`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `jhard`.`valoracion` ;
+
+CREATE  TABLE IF NOT EXISTS `jhard`.`valoracion` (
+  `fk_userid` INT NOT NULL ,
+  `fk_identrada` INT NOT NULL ,
+  INDEX `entrada` USING BTREE () )
+ENGINE = MyISAM
+COMMENT = 'Esta tabla NO tiene relaciones fisicas';
 
 
 
