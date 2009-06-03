@@ -948,7 +948,7 @@ CREATE  TABLE IF NOT EXISTS `jhard`.`tag_entrada` (
   `idtagentrada` INT NOT NULL ,
   `idtag` INT NOT NULL ,
   `identrada` INT NOT NULL ,
-  PRIMARY KEY (`idtagentrada`, `identrada`, `idtag`) ,
+  PRIMARY KEY (`idtagentrada`) ,
   INDEX `fk_tag_entrada_tag` (`idtag` ASC) ,
   INDEX `fk_tag_entrada_entrada` (`identrada` ASC) ,
   CONSTRAINT `fk_tag_entrada_tag`
