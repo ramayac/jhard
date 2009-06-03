@@ -6,8 +6,8 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,7 +26,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "curso", catalog = "jhard", schema = "")
@@ -53,21 +53,21 @@ public class Curso implements Serializable {
     @Column(name = "anio")
     private Integer anio;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcurso")
-    private List<Inscripcion> inscripcionCollection;
+    private Collection<Inscripcion> inscripcionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcurso")
-    private List<Horario> horarioCollection;
+    private Collection<Horario> horarioCollection;
+    @JoinColumn(name = "idmateria", referencedColumnName = "idmateria")
+    @ManyToOne
+    private Materia idmateria;
+    @JoinColumn(name = "idinstructor", referencedColumnName = "idinstructor", nullable = false)
+    @ManyToOne(optional = false)
+    private Instructor idinstructor;
     @JoinColumn(name = "iddocente", referencedColumnName = "iddocente", nullable = false)
     @ManyToOne(optional = false)
     private Docente iddocente;
     @JoinColumn(name = "idestado", referencedColumnName = "idestadocurso")
     @ManyToOne
     private Estadocurso idestado;
-    @JoinColumn(name = "idinstructor", referencedColumnName = "idinstructor", nullable = false)
-    @ManyToOne(optional = false)
-    private Instructor idinstructor;
-    @JoinColumn(name = "idmateria", referencedColumnName = "idmateria")
-    @ManyToOne
-    private Materia idmateria;
 
     public Curso() {
     }
@@ -131,20 +131,36 @@ public class Curso implements Serializable {
         this.anio = anio;
     }
 
-    public List<Inscripcion> getInscripcionCollection() {
+    public Collection<Inscripcion> getInscripcionCollection() {
         return inscripcionCollection;
     }
 
-    public void setInscripcionCollection(List<Inscripcion> inscripcionCollection) {
+    public void setInscripcionCollection(Collection<Inscripcion> inscripcionCollection) {
         this.inscripcionCollection = inscripcionCollection;
     }
 
-    public List<Horario> getHorarioCollection() {
+    public Collection<Horario> getHorarioCollection() {
         return horarioCollection;
     }
 
-    public void setHorarioCollection(List<Horario> horarioCollection) {
+    public void setHorarioCollection(Collection<Horario> horarioCollection) {
         this.horarioCollection = horarioCollection;
+    }
+
+    public Materia getIdmateria() {
+        return idmateria;
+    }
+
+    public void setIdmateria(Materia idmateria) {
+        this.idmateria = idmateria;
+    }
+
+    public Instructor getIdinstructor() {
+        return idinstructor;
+    }
+
+    public void setIdinstructor(Instructor idinstructor) {
+        this.idinstructor = idinstructor;
     }
 
     public Docente getIddocente() {
@@ -161,22 +177,6 @@ public class Curso implements Serializable {
 
     public void setIdestado(Estadocurso idestado) {
         this.idestado = idestado;
-    }
-
-    public Instructor getIdinstructor() {
-        return idinstructor;
-    }
-
-    public void setIdinstructor(Instructor idinstructor) {
-        this.idinstructor = idinstructor;
-    }
-
-    public Materia getIdmateria() {
-        return idmateria;
-    }
-
-    public void setIdmateria(Materia idmateria) {
-        this.idmateria = idmateria;
     }
 
     @Override

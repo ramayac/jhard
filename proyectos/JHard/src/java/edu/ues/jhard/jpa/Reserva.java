@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "reserva", catalog = "jhard", schema = "")
@@ -52,21 +52,21 @@ public class Reserva implements Serializable {
     @Lob
     @Column(name = "descripcion", nullable = false, length = 65535)
     private String descripcion;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia", nullable = false)
-    @ManyToOne(optional = false)
-    private Existencia idequipoexistente;
     @JoinColumn(name = "idestado", referencedColumnName = "idestadoreserva", nullable = false)
     @ManyToOne(optional = false)
     private Estadoreserva idestado;
-    @JoinColumn(name = "idresponsable", referencedColumnName = "idresponsable", nullable = false)
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia", nullable = false)
     @ManyToOne(optional = false)
-    private Responsable idresponsable;
-    @JoinColumn(name = "idsolicitante", referencedColumnName = "idsolicitante", nullable = false)
-    @ManyToOne(optional = false)
-    private Solicitante idsolicitante;
+    private Existencia idequipoexistente;
     @JoinColumn(name = "idubicacion", referencedColumnName = "idubicacion", nullable = false)
     @ManyToOne(optional = false)
     private Ubicacion idubicacion;
+    @JoinColumn(name = "idsolicitante", referencedColumnName = "idsolicitante", nullable = false)
+    @ManyToOne(optional = false)
+    private Solicitante idsolicitante;
+    @JoinColumn(name = "idresponsable", referencedColumnName = "idresponsable", nullable = false)
+    @ManyToOne(optional = false)
+    private Responsable idresponsable;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario idusuario;
@@ -126,14 +126,6 @@ public class Reserva implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Existencia getIdequipoexistente() {
-        return idequipoexistente;
-    }
-
-    public void setIdequipoexistente(Existencia idequipoexistente) {
-        this.idequipoexistente = idequipoexistente;
-    }
-
     public Estadoreserva getIdestado() {
         return idestado;
     }
@@ -142,12 +134,20 @@ public class Reserva implements Serializable {
         this.idestado = idestado;
     }
 
-    public Responsable getIdresponsable() {
-        return idresponsable;
+    public Existencia getIdequipoexistente() {
+        return idequipoexistente;
     }
 
-    public void setIdresponsable(Responsable idresponsable) {
-        this.idresponsable = idresponsable;
+    public void setIdequipoexistente(Existencia idequipoexistente) {
+        this.idequipoexistente = idequipoexistente;
+    }
+
+    public Ubicacion getIdubicacion() {
+        return idubicacion;
+    }
+
+    public void setIdubicacion(Ubicacion idubicacion) {
+        this.idubicacion = idubicacion;
     }
 
     public Solicitante getIdsolicitante() {
@@ -158,12 +158,12 @@ public class Reserva implements Serializable {
         this.idsolicitante = idsolicitante;
     }
 
-    public Ubicacion getIdubicacion() {
-        return idubicacion;
+    public Responsable getIdresponsable() {
+        return idresponsable;
     }
 
-    public void setIdubicacion(Ubicacion idubicacion) {
-        this.idubicacion = idubicacion;
+    public void setIdresponsable(Responsable idresponsable) {
+        this.idresponsable = idresponsable;
     }
 
     public Usuario getIdusuario() {

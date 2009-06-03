@@ -6,7 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,7 +21,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "ubicacion", catalog = "jhard", schema = "")
@@ -36,11 +36,11 @@ public class Ubicacion implements Serializable {
     @Column(name = "nombre", length = 45)
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idaula")
-    private List<Horario> horarioCollection;
+    private Collection<Horario> horarioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idubicacion")
-    private List<Existencia> existenciaCollection;
+    private Collection<Existencia> existenciaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idubicacion")
-    private List<Reserva> reservaCollection;
+    private Collection<Reserva> reservaCollection;
 
     public Ubicacion() {
     }
@@ -65,27 +65,27 @@ public class Ubicacion implements Serializable {
         this.nombre = nombre;
     }
 
-    public List<Horario> getHorarioCollection() {
+    public Collection<Horario> getHorarioCollection() {
         return horarioCollection;
     }
 
-    public void setHorarioCollection(List<Horario> horarioCollection) {
+    public void setHorarioCollection(Collection<Horario> horarioCollection) {
         this.horarioCollection = horarioCollection;
     }
 
-    public List<Existencia> getExistenciaCollection() {
+    public Collection<Existencia> getExistenciaCollection() {
         return existenciaCollection;
     }
 
-    public void setExistenciaCollection(List<Existencia> existenciaCollection) {
+    public void setExistenciaCollection(Collection<Existencia> existenciaCollection) {
         this.existenciaCollection = existenciaCollection;
     }
 
-    public List<Reserva> getReservaCollection() {
+    public Collection<Reserva> getReservaCollection() {
         return reservaCollection;
     }
 
-    public void setReservaCollection(List<Reserva> reservaCollection) {
+    public void setReservaCollection(Collection<Reserva> reservaCollection) {
         this.reservaCollection = reservaCollection;
     }
 

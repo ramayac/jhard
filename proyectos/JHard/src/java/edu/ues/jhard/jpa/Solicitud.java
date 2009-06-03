@@ -6,8 +6,8 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +26,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "solicitud", catalog = "jhard", schema = "")
@@ -50,13 +50,13 @@ public class Solicitud implements Serializable {
     @Column(name = "descripcion", nullable = false, length = 65535)
     private String descripcion;
     @OneToMany(mappedBy = "idsolicitud")
-    private List<Mantenimiento> mantenimientoCollection;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia", nullable = false)
-    @ManyToOne(optional = false)
+    private Collection<Mantenimiento> mantenimientoCollection;
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia")
+    @ManyToOne
     private Existencia idequipoexistente;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idEquipoSimple", nullable = false)
-    @ManyToOne(optional = false)
-    private Equiposimple idequipoexistente1;
+    @JoinColumn(name = "idequiposimple", referencedColumnName = "idEquipoSimple")
+    @ManyToOne
+    private Equiposimple idequiposimple;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario idusuario;
@@ -107,11 +107,11 @@ public class Solicitud implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<Mantenimiento> getMantenimientoCollection() {
+    public Collection<Mantenimiento> getMantenimientoCollection() {
         return mantenimientoCollection;
     }
 
-    public void setMantenimientoCollection(List<Mantenimiento> mantenimientoCollection) {
+    public void setMantenimientoCollection(Collection<Mantenimiento> mantenimientoCollection) {
         this.mantenimientoCollection = mantenimientoCollection;
     }
 
@@ -123,12 +123,12 @@ public class Solicitud implements Serializable {
         this.idequipoexistente = idequipoexistente;
     }
 
-    public Equiposimple getIdequipoexistente1() {
-        return idequipoexistente1;
+    public Equiposimple getIdequiposimple() {
+        return idequiposimple;
     }
 
-    public void setIdequipoexistente1(Equiposimple idequipoexistente1) {
-        this.idequipoexistente1 = idequipoexistente1;
+    public void setIdequiposimple(Equiposimple idequiposimple) {
+        this.idequiposimple = idequiposimple;
     }
 
     public Usuario getIdusuario() {

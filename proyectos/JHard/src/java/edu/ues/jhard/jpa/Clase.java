@@ -6,8 +6,8 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,7 +27,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "clase", catalog = "jhard", schema = "")
@@ -49,17 +49,17 @@ public class Clase implements Serializable {
     @Lob
     @Column(name = "observaciones", length = 65535)
     private String observaciones;
-    @JoinColumn(name = "iddocente", referencedColumnName = "iddocente")
-    @ManyToOne
-    private Docente iddocente;
     @JoinColumn(name = "idhorario", referencedColumnName = "idhorario", nullable = false)
     @ManyToOne(optional = false)
     private Horario idhorario;
     @JoinColumn(name = "idinstructor", referencedColumnName = "idinstructor")
     @ManyToOne
     private Instructor idinstructor;
+    @JoinColumn(name = "iddocente", referencedColumnName = "iddocente")
+    @ManyToOne
+    private Docente iddocente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclase")
-    private List<Asistencia> asistenciaCollection;
+    private Collection<Asistencia> asistenciaCollection;
 
     public Clase() {
     }
@@ -106,14 +106,6 @@ public class Clase implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public Docente getIddocente() {
-        return iddocente;
-    }
-
-    public void setIddocente(Docente iddocente) {
-        this.iddocente = iddocente;
-    }
-
     public Horario getIdhorario() {
         return idhorario;
     }
@@ -130,11 +122,19 @@ public class Clase implements Serializable {
         this.idinstructor = idinstructor;
     }
 
-    public List<Asistencia> getAsistenciaCollection() {
+    public Docente getIddocente() {
+        return iddocente;
+    }
+
+    public void setIddocente(Docente iddocente) {
+        this.iddocente = iddocente;
+    }
+
+    public Collection<Asistencia> getAsistenciaCollection() {
         return asistenciaCollection;
     }
 
-    public void setAsistenciaCollection(List<Asistencia> asistenciaCollection) {
+    public void setAsistenciaCollection(Collection<Asistencia> asistenciaCollection) {
         this.asistenciaCollection = asistenciaCollection;
     }
 

@@ -20,7 +20,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "atributohardware", catalog = "jhard", schema = "")
@@ -41,15 +41,15 @@ public class Atributohardware implements Serializable {
     @Basic(optional = false)
     @Column(name = "unidadmedida", nullable = false, length = 45)
     private String unidadmedida;
-    @JoinColumn(name = "idhardware", referencedColumnName = "idaccesorio", nullable = false)
-    @ManyToOne(optional = false)
-    private Accesorio idhardware;
-    @JoinColumn(name = "idhardware", referencedColumnName = "idequipo", nullable = false)
-    @ManyToOne(optional = false)
-    private Equipo idhardware1;
-    @JoinColumn(name = "idhardware", referencedColumnName = "idpieza", nullable = false)
-    @ManyToOne(optional = false)
-    private Pieza idhardware2;
+    @JoinColumn(name = "idhardware", referencedColumnName = "idequipo")
+    @ManyToOne
+    private Equipo idhardware;
+    @JoinColumn(name = "idpieza", referencedColumnName = "idpieza")
+    @ManyToOne
+    private Pieza idpieza;
+    @JoinColumn(name = "idaccesorio", referencedColumnName = "idaccesorio")
+    @ManyToOne
+    private Accesorio idaccesorio;
 
     public Atributohardware() {
     }
@@ -97,28 +97,28 @@ public class Atributohardware implements Serializable {
         this.unidadmedida = unidadmedida;
     }
 
-    public Accesorio getIdhardware() {
+    public Equipo getIdhardware() {
         return idhardware;
     }
 
-    public void setIdhardware(Accesorio idhardware) {
+    public void setIdhardware(Equipo idhardware) {
         this.idhardware = idhardware;
     }
 
-    public Equipo getIdhardware1() {
-        return idhardware1;
+    public Pieza getIdpieza() {
+        return idpieza;
     }
 
-    public void setIdhardware1(Equipo idhardware1) {
-        this.idhardware1 = idhardware1;
+    public void setIdpieza(Pieza idpieza) {
+        this.idpieza = idpieza;
     }
 
-    public Pieza getIdhardware2() {
-        return idhardware2;
+    public Accesorio getIdaccesorio() {
+        return idaccesorio;
     }
 
-    public void setIdhardware2(Pieza idhardware2) {
-        this.idhardware2 = idhardware2;
+    public void setIdaccesorio(Accesorio idaccesorio) {
+        this.idaccesorio = idaccesorio;
     }
 
     @Override

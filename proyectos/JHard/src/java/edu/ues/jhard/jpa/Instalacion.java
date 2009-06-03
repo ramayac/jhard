@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "instalacion", catalog = "jhard", schema = "")
@@ -39,12 +39,12 @@ public class Instalacion implements Serializable {
     @Column(name = "fechainstalacion", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechainstalacion;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia", nullable = false)
-    @ManyToOne(optional = false)
-    private Existencia idequipoexistente;
     @JoinColumn(name = "idsoftware", referencedColumnName = "idsoftware", nullable = false)
     @ManyToOne(optional = false)
     private Software idsoftware;
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia", nullable = false)
+    @ManyToOne(optional = false)
+    private Existencia idequipoexistente;
 
     public Instalacion() {
     }
@@ -74,20 +74,20 @@ public class Instalacion implements Serializable {
         this.fechainstalacion = fechainstalacion;
     }
 
-    public Existencia getIdequipoexistente() {
-        return idequipoexistente;
-    }
-
-    public void setIdequipoexistente(Existencia idequipoexistente) {
-        this.idequipoexistente = idequipoexistente;
-    }
-
     public Software getIdsoftware() {
         return idsoftware;
     }
 
     public void setIdsoftware(Software idsoftware) {
         this.idsoftware = idsoftware;
+    }
+
+    public Existencia getIdequipoexistente() {
+        return idequipoexistente;
+    }
+
+    public void setIdequipoexistente(Existencia idequipoexistente) {
+        this.idequipoexistente = idequipoexistente;
     }
 
     @Override

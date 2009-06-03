@@ -21,12 +21,12 @@ public class BeanBaseJHardmin extends BeanBase {
             System.out.println("Creando el entity manager...");
             EntityManager eMgr = this.getEntityManager();
             System.out.println("Entity manager creado. Generando el query...");
-            //String strSql = "SELECT * FROM Usuario WHERE nombre = '"+userName+"' AND clave = '"+userPwd+"'";
+            String strSql = "SELECT u FROM Usuario u WHERE u.nombre = '"+userName+"' AND u.clave = '"+userPwd+"'";
             //System.out.println("String sql generado: " + strSql);
-            //Query q = eMgr.createQuery(strSql);
-            Query q = eMgr.createNamedQuery("Usuario.findByUser");
-            q.setParameter("nombre", userName);
-            q.setParameter("clave", userPwd);
+            Query q = eMgr.createQuery(strSql);
+            //Query q = eMgr.createNamedQuery("Usuario.findByUser");
+            //q.setParameter("nombre", userName);
+            //q.setParameter("clave", userPwd);
             u = (Usuario)q.getSingleResult();
             System.out.println("Usuario creado.");
         }

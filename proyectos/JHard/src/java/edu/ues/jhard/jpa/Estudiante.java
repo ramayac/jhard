@@ -6,7 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +23,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "estudiante", catalog = "jhard", schema = "")
@@ -48,12 +48,12 @@ public class Estudiante implements Serializable {
     @Column(name = "visible", nullable = false)
     private int visible;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestudiante")
-    private List<Inscripcion> inscripcionCollection;
+    private Collection<Inscripcion> inscripcionCollection;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario idusuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestudiante")
-    private List<Asistencia> asistenciaCollection;
+    private Collection<Asistencia> asistenciaCollection;
 
     public Estudiante() {
     }
@@ -110,11 +110,11 @@ public class Estudiante implements Serializable {
         this.visible = visible;
     }
 
-    public List<Inscripcion> getInscripcionCollection() {
+    public Collection<Inscripcion> getInscripcionCollection() {
         return inscripcionCollection;
     }
 
-    public void setInscripcionCollection(List<Inscripcion> inscripcionCollection) {
+    public void setInscripcionCollection(Collection<Inscripcion> inscripcionCollection) {
         this.inscripcionCollection = inscripcionCollection;
     }
 
@@ -126,11 +126,11 @@ public class Estudiante implements Serializable {
         this.idusuario = idusuario;
     }
 
-    public List<Asistencia> getAsistenciaCollection() {
+    public Collection<Asistencia> getAsistenciaCollection() {
         return asistenciaCollection;
     }
 
-    public void setAsistenciaCollection(List<Asistencia> asistenciaCollection) {
+    public void setAsistenciaCollection(Collection<Asistencia> asistenciaCollection) {
         this.asistenciaCollection = asistenciaCollection;
     }
 

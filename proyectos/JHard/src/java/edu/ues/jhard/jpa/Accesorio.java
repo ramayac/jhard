@@ -6,9 +6,8 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +22,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "accesorio", catalog = "jhard", schema = "")
@@ -41,17 +40,17 @@ public class Accesorio implements Serializable {
     @Basic(optional = false)
     @Column(name = "modelo", nullable = false, length = 15)
     private String modelo;
+    @JoinColumn(name = "idmarca", referencedColumnName = "idmarca", nullable = false)
+    @ManyToOne(optional = false)
+    private Marca idmarca;
     @JoinColumn(name = "idclasificacion", referencedColumnName = "idclasificacion", nullable = false)
     @ManyToOne(optional = false)
     private Clasificacion idclasificacion;
     @JoinColumn(name = "idequipo", referencedColumnName = "idequipo")
     @ManyToOne
     private Equipo idequipo;
-    @JoinColumn(name = "idmarca", referencedColumnName = "idmarca", nullable = false)
-    @ManyToOne(optional = false)
-    private Marca idmarca;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idhardware")
-    private List<Atributohardware> atributohardwareCollection;
+    @OneToMany(mappedBy = "idaccesorio")
+    private Collection<Atributohardware> atributohardwareCollection;
 
     public Accesorio() {
     }
@@ -90,6 +89,14 @@ public class Accesorio implements Serializable {
         this.modelo = modelo;
     }
 
+    public Marca getIdmarca() {
+        return idmarca;
+    }
+
+    public void setIdmarca(Marca idmarca) {
+        this.idmarca = idmarca;
+    }
+
     public Clasificacion getIdclasificacion() {
         return idclasificacion;
     }
@@ -106,19 +113,11 @@ public class Accesorio implements Serializable {
         this.idequipo = idequipo;
     }
 
-    public Marca getIdmarca() {
-        return idmarca;
-    }
-
-    public void setIdmarca(Marca idmarca) {
-        this.idmarca = idmarca;
-    }
-
-    public List<Atributohardware> getAtributohardwareCollection() {
+    public Collection<Atributohardware> getAtributohardwareCollection() {
         return atributohardwareCollection;
     }
 
-    public void setAtributohardwareCollection(List<Atributohardware> atributohardwareCollection) {
+    public void setAtributohardwareCollection(Collection<Atributohardware> atributohardwareCollection) {
         this.atributohardwareCollection = atributohardwareCollection;
     }
 

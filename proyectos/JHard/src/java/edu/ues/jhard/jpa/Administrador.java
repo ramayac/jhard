@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "administrador", catalog = "jhard", schema = "")

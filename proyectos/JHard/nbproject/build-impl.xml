@@ -498,8 +498,8 @@ exists or setup the property manually. For example like this:
     </target>
     <target depends="init,compile,compile-jsps,-pre-dist,-do-dist-with-manifest,-do-dist-without-manifest" name="do-dist"/>
     <target depends="init" if="dist.ear.dir" name="library-inclusion-in-manifest">
-        <copyfiles files="${libs.jsf-1-2_09.classpath}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.libs.jsf-1-2_09.classpath" todir="${dist.ear.dir}"/>
         <copyfiles files="${libs.jsf12-support-runtime-modified.classpath}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.libs.jsf12-support-runtime-modified.classpath" todir="${dist.ear.dir}"/>
+        <copyfiles files="${libs.jsf12.classpath}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.libs.jsf12.classpath" todir="${dist.ear.dir}"/>
         <copyfiles files="${libs.icefaces-jsf12-bm.classpath}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.libs.icefaces-jsf12-bm.classpath" todir="${dist.ear.dir}"/>
         <copyfiles files="${libs.icefaces-jsf12-runtime-support.classpath}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.libs.icefaces-jsf12-runtime-support.classpath" todir="${dist.ear.dir}"/>
         <copyfiles files="${libs.toplink.classpath}" iftldtodir="${build.web.dir}/WEB-INF" manifestproperty="manifest.libs.toplink.classpath" todir="${dist.ear.dir}"/>
@@ -511,12 +511,12 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${libs.icefaces-runtime-180.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <mkdir dir="${build.web.dir}/META-INF"/>
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${manifest.libs.jsf-1-2_09.classpath} ${manifest.libs.jsf12-support-runtime-modified.classpath} ${manifest.libs.icefaces-jsf12-bm.classpath} ${manifest.libs.icefaces-jsf12-runtime-support.classpath} ${manifest.libs.toplink.classpath} ${manifest.libs.MySQLDriver.classpath} ${manifest.libs.hibernate-persistence.classpath} ${manifest.libs.hibernate-support.classpath} "/>
+            <attribute name="Class-Path" value="${manifest.libs.jsf12-support-runtime-modified.classpath} ${manifest.libs.jsf12.classpath} ${manifest.libs.icefaces-jsf12-bm.classpath} ${manifest.libs.icefaces-jsf12-runtime-support.classpath} ${manifest.libs.toplink.classpath} ${manifest.libs.MySQLDriver.classpath} ${manifest.libs.hibernate-persistence.classpath} ${manifest.libs.hibernate-support.classpath} "/>
         </manifest>
     </target>
     <target depends="init" name="library-inclusion-in-archive" unless="dist.ear.dir">
-        <copyfiles files="${libs.jsf-1-2_09.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.jsf12-support-runtime-modified.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${libs.jsf12.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.icefaces-jsf12-bm.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.icefaces-jsf12-runtime-support.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.toplink.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>

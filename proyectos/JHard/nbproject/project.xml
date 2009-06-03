@@ -11,11 +11,11 @@
                     <file>${libs.icefaces-jsf12-designtime-180.classpath}</file>
                 </library>
                 <library>
-                    <file>${libs.jsf-1-2_09.classpath}</file>
+                    <file>${libs.jsf12-support-runtime-modified.classpath}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library>
-                    <file>${libs.jsf12-support-runtime-modified.classpath}</file>
+                    <file>${libs.jsf12.classpath}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library>

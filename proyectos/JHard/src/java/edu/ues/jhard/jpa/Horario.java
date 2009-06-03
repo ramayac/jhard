@@ -6,8 +6,8 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,7 +26,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "horario", catalog = "jhard", schema = "")
@@ -49,14 +49,14 @@ public class Horario implements Serializable {
     @Column(name = "horafin", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date horafin;
-    @JoinColumn(name = "idaula", referencedColumnName = "idubicacion", nullable = false)
-    @ManyToOne(optional = false)
-    private Ubicacion idaula;
     @JoinColumn(name = "idcurso", referencedColumnName = "idcurso", nullable = false)
     @ManyToOne(optional = false)
     private Curso idcurso;
+    @JoinColumn(name = "idaula", referencedColumnName = "idubicacion", nullable = false)
+    @ManyToOne(optional = false)
+    private Ubicacion idaula;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idhorario")
-    private List<Clase> claseCollection;
+    private Collection<Clase> claseCollection;
 
     public Horario() {
     }
@@ -104,14 +104,6 @@ public class Horario implements Serializable {
         this.horafin = horafin;
     }
 
-    public Ubicacion getIdaula() {
-        return idaula;
-    }
-
-    public void setIdaula(Ubicacion idaula) {
-        this.idaula = idaula;
-    }
-
     public Curso getIdcurso() {
         return idcurso;
     }
@@ -120,11 +112,19 @@ public class Horario implements Serializable {
         this.idcurso = idcurso;
     }
 
-    public List<Clase> getClaseCollection() {
+    public Ubicacion getIdaula() {
+        return idaula;
+    }
+
+    public void setIdaula(Ubicacion idaula) {
+        this.idaula = idaula;
+    }
+
+    public Collection<Clase> getClaseCollection() {
         return claseCollection;
     }
 
-    public void setClaseCollection(List<Clase> claseCollection) {
+    public void setClaseCollection(Collection<Clase> claseCollection) {
         this.claseCollection = claseCollection;
     }
 

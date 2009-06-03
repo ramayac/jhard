@@ -6,7 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,7 +22,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "estadoequipo", catalog = "jhard", schema = "")
@@ -41,11 +41,11 @@ public class Estadoequipo implements Serializable {
     @Column(name = "descripcion", length = 65535)
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestado")
-    private List<Equiposimple> equiposimpleCollection;
+    private Collection<Equiposimple> equiposimpleCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestado")
-    private List<Existencia> existenciaCollection;
+    private Collection<Existencia> existenciaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestado")
-    private List<Bitacoraestados> bitacoraestadosCollection;
+    private Collection<Bitacoraestados> bitacoraestadosCollection;
 
     public Estadoequipo() {
     }
@@ -83,27 +83,27 @@ public class Estadoequipo implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<Equiposimple> getEquiposimpleCollection() {
+    public Collection<Equiposimple> getEquiposimpleCollection() {
         return equiposimpleCollection;
     }
 
-    public void setEquiposimpleCollection(List<Equiposimple> equiposimpleCollection) {
+    public void setEquiposimpleCollection(Collection<Equiposimple> equiposimpleCollection) {
         this.equiposimpleCollection = equiposimpleCollection;
     }
 
-    public List<Existencia> getExistenciaCollection() {
+    public Collection<Existencia> getExistenciaCollection() {
         return existenciaCollection;
     }
 
-    public void setExistenciaCollection(List<Existencia> existenciaCollection) {
+    public void setExistenciaCollection(Collection<Existencia> existenciaCollection) {
         this.existenciaCollection = existenciaCollection;
     }
 
-    public List<Bitacoraestados> getBitacoraestadosCollection() {
+    public Collection<Bitacoraestados> getBitacoraestadosCollection() {
         return bitacoraestadosCollection;
     }
 
-    public void setBitacoraestadosCollection(List<Bitacoraestados> bitacoraestadosCollection) {
+    public void setBitacoraestadosCollection(Collection<Bitacoraestados> bitacoraestadosCollection) {
         this.bitacoraestadosCollection = bitacoraestadosCollection;
     }
 

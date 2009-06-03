@@ -6,7 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,7 +21,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Hugol
+ * @author robertux
  */
 @Entity
 @Table(name = "responsable", catalog = "jhard", schema = "")
@@ -49,7 +49,7 @@ public class Responsable implements Serializable {
     @Column(name = "visible", nullable = false)
     private int visible;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idresponsable")
-    private List<Reserva> reservaCollection;
+    private Collection<Reserva> reservaCollection;
 
     public Responsable() {
     }
@@ -115,11 +115,11 @@ public class Responsable implements Serializable {
         this.visible = visible;
     }
 
-    public List<Reserva> getReservaCollection() {
+    public Collection<Reserva> getReservaCollection() {
         return reservaCollection;
     }
 
-    public void setReservaCollection(List<Reserva> reservaCollection) {
+    public void setReservaCollection(Collection<Reserva> reservaCollection) {
         this.reservaCollection = reservaCollection;
     }
 
