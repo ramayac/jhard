@@ -915,8 +915,7 @@ CREATE  TABLE IF NOT EXISTS `jhard`.`tag` (
   `idtag` INT NOT NULL ,
   `descripcion` VARCHAR(25) NOT NULL ,
   PRIMARY KEY (`idtag`) )
-ENGINE = InnoDB
-COMMENT = 'Almacena las etiquetas asociadas con las entradas.';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -937,8 +936,7 @@ CREATE  TABLE IF NOT EXISTS `jhard`.`entrada` (
     REFERENCES `jhard`.`usuario` (`idusuario` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Entradas del Wiki/CMS\n';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -963,8 +961,7 @@ CREATE  TABLE IF NOT EXISTS `jhard`.`tag_entrada` (
     REFERENCES `jhard`.`entrada` (`identrada` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Rompe la relacion entrada/etiqueta(tag)';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -984,8 +981,7 @@ CREATE  TABLE IF NOT EXISTS `jhard`.`comentarios` (
     REFERENCES `jhard`.`entrada` (`identrada` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Comentarios asociados con las entradas, fuera mejor solo asociados con el CMS?';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -996,9 +992,8 @@ DROP TABLE IF EXISTS `jhard`.`valoracion` ;
 CREATE  TABLE IF NOT EXISTS `jhard`.`valoracion` (
   `fk_userid` INT NOT NULL ,
   `fk_identrada` INT NOT NULL ,
-  INDEX `entrada` USING BTREE () )
-ENGINE = MyISAM
-COMMENT = 'Esta tabla NO tiene relaciones fisicas';
+  INDEX `entrada` USING BTREE (`fk_userid` ASC, `fk_identrada` ASC) )
+ENGINE = MyISAM;
 
 
 
