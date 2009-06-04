@@ -51,11 +51,13 @@ public class LoginManagerTest {
     /**
      * Prueba que se pueda realzar un login exitoso con un usuario existente
      */
-    
+    @Test
     public void testLoginSuccess() {
-        System.out.println("LoginSuccess");        
+        System.out.println("LoginSuccess");
+        this.lMgr.Logout(this.usuarioReal.getUserName());
         assertFalse(this.lMgr.isLogged(this.usuarioReal.getUserName()));
         int result = this.lMgr.Login(this.usuarioReal.getUserName(), "firpomadrid", this.usuarioReal.getLoggedUrl());
+        assertNotSame(-1, result);
         this.usuarioReal.setUid(result);
         assertTrue(this.lMgr.isLogged(this.usuarioReal.getUserName()));        
     }
@@ -63,6 +65,7 @@ public class LoginManagerTest {
     /*
      * Prueba que no se pueda realizar un login con un usuario inexistente
      */
+    @Test
     public void testLoginFail(){
         System.out.println("LoginSuccess");        
         int result = this.lMgr.Login(this.usuarioFalso.getUserName(), "claveusuarioFalsa", this.usuarioFalso.getLoggedUrl());
@@ -72,19 +75,19 @@ public class LoginManagerTest {
     /**
      * Prueba que un usuario logueado en el sistema pueda desloguearse exitosamente
      */
-    
+    @Test
     public void testLogoutSuccess() {
         System.out.println("Logout");
-        testLoginSuccess();
-        assertTrue(this.lMgr.isLogged(this.usuarioReal.getUid()));
-        boolean result = this.lMgr.Logout(this.usuarioReal.getUid());
-        assertTrue(result);
+        this.lMgr.Login(this.usuarioReal.getUserName(), "firpomadrid", this.usuarioReal.getLoggedUrl());
+        assertTrue(this.lMgr.isLogged(this.usuarioReal.getUserName()));
+        boolean isLoggedOut = this.lMgr.Logout(this.usuarioReal.getUserName());
+        assertTrue(isLoggedOut);
     }
 
     /**
      * Test of isLogged method, of class LoginManager.
      */
-    
+    @Test
     public void testIsLogged_Integer() {
         System.out.println("isLogged");        
         this.testLoginSuccess();
@@ -94,7 +97,7 @@ public class LoginManagerTest {
     /**
      * Test of isLogged method, of class LoginManager.
      */
-    
+    @Test
     public void testIsLogged_String() {
         System.out.println("isLogged");
         this.testLoginSuccess();
@@ -102,7 +105,7 @@ public class LoginManagerTest {
     }
 
 
-    
+    @Test
     public void testExistsInBD(){
         System.out.println("existsInBD");
         assertTrue(this.lMgr.existsInBD(this.usuarioReal.getUserName(), "firpomadrid"));

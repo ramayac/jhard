@@ -17,50 +17,30 @@ public class BeanBaseJHardmin extends BeanBase {
 
     public Usuario getUsuario(String userName, String userPwd){
         Usuario u = null;
-        try{
-            System.out.println("Creando el entity manager...");
-            EntityManager eMgr = this.getEntityManager();
-            System.out.println("Entity manager creado. Generando el query...");
-            String strSql = "SELECT u FROM Usuario u WHERE u.nombre = '"+userName+"' AND u.clave = '"+userPwd+"'";
-            //System.out.println("String sql generado: " + strSql);
-            Query q = eMgr.createQuery(strSql);
-            //Query q = eMgr.createNamedQuery("Usuario.findByUser");
-            //q.setParameter("nombre", userName);
-            //q.setParameter("clave", userPwd);
-            u = (Usuario)q.getSingleResult();
-            System.out.println("Usuario creado.");
+        try{            
+            EntityManager eMgr = this.getEntityManager();            
+            String strSql = "SELECT u FROM Usuario u WHERE u.nombre = '"+userName+"' AND u.clave = '"+userPwd+"'";            
+            Query q = eMgr.createQuery(strSql);            
+            u = (Usuario)q.getSingleResult();            
         }
         catch(Exception ex){
             ex.printStackTrace();
-        }
-        System.out.println("Usuario devuelto: " + u);
+        }        
         return u;
     }
 
     public Usuario getUsuario(int id){
         Usuario u = null;
-        try{
-            System.out.println("Creando el entity manager...");
-            EntityManager eMgr = this.getEntityManager();
-            System.out.println("Entity manager creado. Generando el query...");
-            //String strSql = "SELECT u FROM usuario u WHERE u.idusuario = " + String.valueOf(id);
-            //System.out.println("String sql generado: " + strSql);
-            //Query q = eMgr.createQuery(strSql);
-            //Query q = eMgr.createNativeQuery("Select * from usuario limit 1");
+        try{            
+            EntityManager eMgr = this.getEntityManager();            
             Query q = eMgr.createNamedQuery("Usuario.findByIdusuario");
             q.setParameter(id, "idusuario");
 
             u=(Usuario)q.getSingleResult();
-            //Vector v = (Vector)q.getSingleResult();
-            //System.out.println("Vector obtenido: " + v.toString());
-            //u = (Usuario)v.get(0);
-
-            System.out.println("Usuario creado.");
         }
         catch(Exception ex){
             ex.printStackTrace();
-        }
-        System.out.println("Usuario devuelto: " + u);
+        }        
         return u;
     }
 }

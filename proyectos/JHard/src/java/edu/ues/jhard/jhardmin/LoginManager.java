@@ -31,6 +31,9 @@ public class LoginManager {
                 return uid;
             }
         }
+        else{
+            return this.getUser(userName).getUid();
+        }
         return -1;
     }
 
@@ -40,6 +43,18 @@ public class LoginManager {
     public synchronized boolean Logout(int uid){
         if(this.isLogged(uid)){
             this.loggedUsers.remove(uid);
+            return true;
+        }
+        return false;
+    }
+
+    /*
+     * Elimina el usuario representado por su uid de la lista de usuarios logueados
+     */
+    public synchronized boolean Logout(String userName) {
+        if(this.isLogged(userName)){
+            LoggedUser usr = this.getUser(userName);
+            this.loggedUsers.remove(usr.getUid());
             return true;
         }
         return false;
@@ -57,21 +72,14 @@ public class LoginManager {
      * Verifica si un usuario ya se encuentra logueado, segun su id de usuario
      */
     public boolean isLogged(Integer uid){
-        return this.loggedUsers.containsKey(uid);
+        return (this.getUser(uid) != null);
     }
 
     /*
      * Verifica si un usuario ya se encuentra logueado, segun su nombre de usuario
      */
-    public boolean isLogged(String userName){
-        Iterator itUsers = this.loggedUsers.keySet().iterator();
-        boolean userLogged = false;
-        while(itUsers.hasNext()){
-            Integer uid = (Integer)itUsers.next();
-            if(this.loggedUsers.containsKey(uid))
-                return true;
-        }
-        return userLogged;
+    public boolean isLogged(String userName){        
+        return (this.getUser(userName) != null);
     }
 
     /*
@@ -96,5 +104,19 @@ public class LoginManager {
         System.out.println("Obteniendo el usuario...");
         Usuario u = bbase.getUsuario(userName, userPwd);
         return (u != null);
+    }
+
+    public LoggedUser getUser(Integer uid){
+        return this.loggedUsers.get(uid);
+    }
+
+    public LoggedUser getUser(String userName){
+        Iterator itUsers = this.loggedUsers.keySet().iterator();
+        while(itUsers.hasNext()){
+            LoggedUser usr = this.loggedUsers.get((Integer)itUsers.next());
+            if(usr.getUserName().equalsIgnoreCase(userName))
+                return usr;
+        }
+        return null;
     }
 }
