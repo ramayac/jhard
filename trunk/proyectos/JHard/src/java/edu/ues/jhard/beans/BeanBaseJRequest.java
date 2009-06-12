@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class BeanBaseJRequest extends BeanBase{
 
 
+    //CRUD
 
     public Estadoequipo[] getEstadoEquipo() {
         EntityManager em=this.getEntityManager();
@@ -132,7 +133,8 @@ public class BeanBaseJRequest extends BeanBase{
         return eqs;
     }
 
-     public void registrarEquipoSimple(Equiposimple eqs) {
+
+    public void registrarEquipoSimple(Equiposimple eqs) {
         EntityManager em=this.getEntityManager();
         em.getTransaction().begin();
         em.persist(eqs);
@@ -141,8 +143,19 @@ public class BeanBaseJRequest extends BeanBase{
     }
 
 
+//REGLAS DE NEGOCIO
+    public Equiposimple getEquipoSimpleByPropietario() {
+        EntityManager em=this.getEntityManager();
 
-     
+        Query q=em.createNamedQuery("Equiposimple.findAll");
+
+        Equiposimple eqs=(Equiposimple)q.getSingleResult();
+
+        em.refresh(eqs);
+        return eqs;
+    }
+
+
 
 
 
