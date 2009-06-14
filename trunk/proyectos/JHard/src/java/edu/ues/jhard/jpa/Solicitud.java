@@ -30,7 +30,10 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "solicitud", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s"), @NamedQuery(name = "Solicitud.findByIdsolicitud", query = "SELECT s FROM Solicitud s WHERE s.idsolicitud = :idsolicitud"), @NamedQuery(name = "Solicitud.findByFecha", query = "SELECT s FROM Solicitud s WHERE s.fecha = :fecha"), @NamedQuery(name = "Solicitud.findByPrioridad", query = "SELECT s FROM Solicitud s WHERE s.prioridad = :prioridad")})
+@NamedQueries({@NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s"),
+               @NamedQuery(name = "Solicitud.findByIdsolicitud", query = "SELECT s FROM Solicitud s WHERE s.idsolicitud = :idsolicitud"),
+               @NamedQuery(name = "Solicitud.findByFecha", query = "SELECT s FROM Solicitud s WHERE s.fecha = :fecha"),
+               @NamedQuery(name = "Solicitud.findByPrioridad", query = "SELECT s FROM Solicitud s WHERE s.prioridad = :prioridad")})
 public class Solicitud implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

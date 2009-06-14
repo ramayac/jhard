@@ -6,6 +6,7 @@
 package edu.ues.jhard.beans;
 
 import edu.ues.jhard.jpa.*;
+import java.util.Date;
 import javax.persistence.*;
 
 /**
@@ -156,7 +157,43 @@ public class BeanBaseJRequest extends BeanBase{
     }
 
 
+    public Estadoequipo getEstadoEquipoByID() {
+        EntityManager em=this.getEntityManager();
+
+        Query q=em.createNamedQuery("Estadoequipo.findByIdestado");
+
+        Estadoequipo eeq=(Estadoequipo)q.getSingleResult();
+
+       em.refresh(eeq);
+        return eeq;
+    }
 
 
+    public Solicitud getSolicitudByFecha(Date fecha ) {
+        EntityManager em=this.getEntityManager();
+
+        Query q=em.createNamedQuery("Solicitud.findByFecha");
+
+        q.setParameter("fecha", fecha);
+
+        Solicitud s=(Solicitud)q.getSingleResult();
+
+        em.refresh(s);
+        return s;
+    }
+
+    public Solicitud getSolicitudByPrioridad(String prioridad) {
+        EntityManager em=this.getEntityManager();
+
+
+        Query q=em.createNamedQuery("Solicitud.findByPrioridad");
+
+        q.setParameter("prioridad", prioridad);
+
+        Solicitud s=(Solicitud)q.getSingleResult();
+
+        em.refresh(s);
+        return s;
+    }
 
 }

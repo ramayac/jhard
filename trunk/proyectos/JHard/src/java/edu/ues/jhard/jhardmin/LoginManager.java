@@ -5,11 +5,16 @@
 
 package edu.ues.jhard.jhardmin;
 
+import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.jpa.Usuario;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import java.security.*;
 
 /**
  * Administra el login, logout y el mantenimiento de la sesion de los usuarios que usan el sistema
@@ -25,7 +30,8 @@ public class LoginManager {
      */
     public synchronized int Login(String userName, String userPwd, String url){        
         if(!this.isLogged(userName)){
-            if(this.existsInBD(userName, userPwd)){
+           System.out.println("Encriptando...");
+            if(this.existsInBD(userName, encrypt(userPwd))){
                 Integer uid = this.generateUID();
                 this.loggedUsers.put(uid, new LoggedUser(uid, userName, url));
                 return uid;
@@ -118,5 +124,26 @@ public class LoginManager {
                 return usr;
         }
         return null;
+    }
+
+    public String encrypt(String plainText){
+        String encripted = "";
+        System.out.println("Plain text: " + plainText);
+        try{
+            MessageDigest mDig = MessageDigest.getInstance("MD5");
+            mDig.update(plainText.getBytes(), 0, plainText.length());
+            encripted = bytesToHex(mDig.digest());
+            System.out.println("Encripted: " + encripted);
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return encripted;
+    }
+
+    public String bytesToHex(byte[] bytes) throws MessagingException, IOException{
+        ByteArrayOutputStream bas = new ByteArrayOutputStream(bytes.length + bytes.length / 4 + 1);
+        bas.write(bytes);
+        return bas.toString();
     }
 }
