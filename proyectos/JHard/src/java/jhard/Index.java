@@ -12,6 +12,8 @@ import com.icesoft.faces.component.ext.HtmlInputText;
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
+import edu.ues.jhard.jhardmin.LoggedUser;
+import edu.ues.jhard.jhardmin.LoginManager;
 import javax.faces.FacesException;
 
 /**
@@ -149,7 +151,7 @@ public class Index extends AbstractPageBean {
         String nomUser = (String) this.txtUser.getValue();
         String nomPass = (String) this.txtPass.getValue();
 
-        BeanBaseJHardmin bb = new BeanBaseJHardmin();
+//        BeanBaseJHardmin bb = new BeanBaseJHardmin();
 
 //        if (bb.getUsuario(1)!=null){
 //            this.txtUser.setValue(bb.getUsuario(1).getIdusuario());
@@ -159,8 +161,14 @@ public class Index extends AbstractPageBean {
 //            this.txtUserLogin.setValue("PUTAAAAA");
 //
 //        }
-        if (bb.getUsuario(nomUser, nomPass)!=null){
-            this.txtUserLogin.setValue(bb.getUsuario(nomUser, nomPass).getNombre());
+
+        LoginManager lmgr = LoginManager.getInstance();
+        Integer uid = lmgr.Login(nomUser, nomPass, "localhost");
+        if(uid != -1){
+        //if (bb.getUsuario(nomUser, nomPass)!=null){
+            //this.txtUserLogin.setValue(bb.getUsuario(nomUser, nomPass).getNombre());
+            LoggedUser user = lmgr.getUser(uid);
+            this.txtUserLogin.setValue(user.getUserName());
         }
         else{
             this.txtUserLogin.setValue("Usuario Incorrecto");
