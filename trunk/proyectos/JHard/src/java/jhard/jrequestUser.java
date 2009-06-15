@@ -10,8 +10,13 @@ import com.icesoft.faces.component.ext.HtmlCommandButton;
 import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
-import com.icesoft.faces.component.jsfcl.data.MenuBarBean;
+
+import com.sun.data.provider.impl.ObjectArrayDataProvider;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
+
+
+import edu.ues.jhard.jpa.Tecnico;
+import java.util.ArrayList;
 import javax.faces.FacesException;
 
 
@@ -32,6 +37,7 @@ public class jrequestUser extends AbstractPageBean {
      * here is subject to being replaced.</p>
      */
     private void _init() throws Exception {
+        datosProblemas.setArray((java.lang.Object[]) getValue("#{jrequestUser.tecnicos}"));
     }
     private DefaultSelectedData selectOneMenu1Bean = new DefaultSelectedData();
 
@@ -51,26 +57,59 @@ public class jrequestUser extends AbstractPageBean {
     public void setSelectOneMenu1DefaultItems(DefaultSelectionItems dsi) {
         this.selectOneMenu1DefaultItems = dsi;
     }
-    private HtmlSelectOneMenu selectOneMenu1 = new HtmlSelectOneMenu();
+    private HtmlCommandButton btnBuscar = new HtmlCommandButton();
 
-    public HtmlSelectOneMenu getSelectOneMenu1() {
-        return selectOneMenu1;
+    public HtmlCommandButton getBtnBuscar() {
+        return btnBuscar;
     }
 
-    public void setSelectOneMenu1(HtmlSelectOneMenu hsom) {
-        this.selectOneMenu1 = hsom;
+    public void setBtnBuscar(HtmlCommandButton hcb) {
+        this.btnBuscar = hcb;
     }
-    private HtmlCommandButton button1 = new HtmlCommandButton();
+    private ObjectArrayDataProvider datosProblemas = new ObjectArrayDataProvider();
 
-    public HtmlCommandButton getButton1() {
-        return button1;
+    public ObjectArrayDataProvider getDatosProblemas() {
+        return datosProblemas;
     }
 
-    public void setButton1(HtmlCommandButton hcb) {
-        this.button1 = hcb;
+    public void setDatosProblemas(ObjectArrayDataProvider oadp) {
+        this.datosProblemas = oadp;
+    }
+    private HtmlSelectOneMenu comboProblemas = new HtmlSelectOneMenu();
+
+    public HtmlSelectOneMenu getComboProblemas() {
+        return comboProblemas;
+    }
+
+    public void setComboProblemas(HtmlSelectOneMenu hsom) {
+        this.comboProblemas = hsom;
     }
 
     // </editor-fold>
+
+
+    private Tecnico[] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
+
+    private Tecnico tecnicoElegido=tecnicos[0];
+
+    private ArrayList<Tecnico> items=new ArrayList<Tecnico>();
+
+
+    public Tecnico getTecnicoElegido(){
+        return tecnicoElegido;
+    }
+
+    public void setTecnicoElegido(Tecnico tec){
+        this.tecnicoElegido=tec;
+    }
+
+    public Tecnico[] getTecnicos(){
+        return tecnicos;
+    }
+
+    public void setTecnicos(Tecnico[] tec){
+        this.tecnicos=tec;
+    }
 
     /**
      * <p>Construct a new Page bean instance.</p>
@@ -175,6 +214,9 @@ public class jrequestUser extends AbstractPageBean {
     protected ApplicationBean1 getApplicationBean1() {
         return (ApplicationBean1) getBean("ApplicationBean1");
     }
+
+
+
 
 }
 
