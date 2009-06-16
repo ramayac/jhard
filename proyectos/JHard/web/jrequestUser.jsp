@@ -56,14 +56,13 @@
                         <div class="post">
                             <h2 class="title">Mantenimiento de Hardware y Software</h2>
                             <div class="entry">
-                                <p id="text">Este es el sitio si requiere Soporte Técnico ya sea en Hardware o Software en la UES-FMOcc</p>
+                                <p class="text">Este es el sitio si requiere Soporte Técnico ya sea en Hardware o Software en la UES-FMOcc</p>
                                 <ice:form id="form1">
                                     <ice:outputLabel id="lblInstruccion" value="Si su problema se encuentra en la siguiente lista, escoja para ver su solución"/>
                                     <br/>
                                     <br/>
-                                    <ice:selectOneMenu binding="#{jrequestUser.comboProblemas}" id="comboProblemas" partialSubmit="true"
-                                        style="width: 118px" value="#{jrequestUser.datosProblemas}">
-                                        <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUser.selectOneMenu1DefaultItems}"/>
+                                    <ice:selectOneMenu binding="#{jrequestUser.comboProblemas}" id="comboProblemas" partialSubmit="true" style="width: 118px" valueChangeListener="#{jrequestUser.comboProblemas_processValueChange}">
+                                        <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUser.arrayTecnico.options['idtecnico,apellidos']}"/>
                                     </ice:selectOneMenu>
                                     <br/>
                                     <br/>
@@ -76,6 +75,7 @@
                                     <br/>
                                     <ice:commandButton binding="#{jrequestUser.btnBuscar}" id="btnBuscar" style="" value="Buscar"/>
                                 </ice:form>
+                                <ice:outputLabel binding="#{jrequestUser.select}" id="select" value="outputLabel"/>
                             </div>
                         </div>
                     </div>
