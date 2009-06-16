@@ -7,6 +7,7 @@
 package jhard;
 
 import com.icesoft.faces.component.ext.HtmlCommandButton;
+import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
@@ -18,6 +19,7 @@ import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.jpa.Tecnico;
 import java.util.ArrayList;
 import javax.faces.FacesException;
+import javax.faces.event.ValueChangeEvent;
 
 
 /**
@@ -37,8 +39,22 @@ public class jrequestUser extends AbstractPageBean {
      * here is subject to being replaced.</p>
      */
     private void _init() throws Exception {
-        datosProblemas.setArray((java.lang.Object[]) getValue("#{jrequestUser.tecnicos}"));
+        arrayTecnico.setArray((java.lang.Object[]) getValue("#{jrequestUser.tecnicos}"));
+    
     }
+
+
+    private ObjectArrayDataProvider arrayTecnico = new ObjectArrayDataProvider();
+
+    public ObjectArrayDataProvider getArrayTecnico() {
+        return arrayTecnico;
+    }
+
+    public void setArrayTecnido(ObjectArrayDataProvider oadt) {
+        this.arrayTecnico = oadt;
+    }
+
+
     private DefaultSelectedData selectOneMenu1Bean = new DefaultSelectedData();
 
     public DefaultSelectedData getSelectOneMenu1Bean() {
@@ -66,15 +82,6 @@ public class jrequestUser extends AbstractPageBean {
     public void setBtnBuscar(HtmlCommandButton hcb) {
         this.btnBuscar = hcb;
     }
-    private ObjectArrayDataProvider datosProblemas = new ObjectArrayDataProvider();
-
-    public ObjectArrayDataProvider getDatosProblemas() {
-        return datosProblemas;
-    }
-
-    public void setDatosProblemas(ObjectArrayDataProvider oadp) {
-        this.datosProblemas = oadp;
-    }
     private HtmlSelectOneMenu comboProblemas = new HtmlSelectOneMenu();
 
     public HtmlSelectOneMenu getComboProblemas() {
@@ -89,10 +96,8 @@ public class jrequestUser extends AbstractPageBean {
 
 
     private Tecnico[] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
-
     private Tecnico tecnicoElegido=tecnicos[0];
 
-    private ArrayList<Tecnico> items=new ArrayList<Tecnico>();
 
 
     public Tecnico getTecnicoElegido(){
@@ -109,6 +114,15 @@ public class jrequestUser extends AbstractPageBean {
 
     public void setTecnicos(Tecnico[] tec){
         this.tecnicos=tec;
+    }
+    private HtmlOutputLabel select = new HtmlOutputLabel();
+
+    public HtmlOutputLabel getSelect() {
+        return select;
+    }
+
+    public void setSelect(HtmlOutputLabel hol) {
+        this.select = hol;
     }
 
     /**
@@ -213,6 +227,11 @@ public class jrequestUser extends AbstractPageBean {
      */
     protected ApplicationBean1 getApplicationBean1() {
         return (ApplicationBean1) getBean("ApplicationBean1");
+    }
+
+    public void comboProblemas_processValueChange(ValueChangeEvent vce) {
+
+        this.select.setValue(this.comboProblemas.getValue().toString());
     }
 
 

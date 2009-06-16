@@ -9,7 +9,6 @@ import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.jpa.Usuario;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
