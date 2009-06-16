@@ -5,11 +5,11 @@
 
 package edu.ues.jhard.jhardmin;
 
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.jpa.Usuario;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -128,20 +128,52 @@ public class LoginManager {
 
     public String encrypt(String plainText){
         String encripted = "";
-        System.out.println("Plain text: " + plainText);
-        try{
-            MessageDigest mDig = MessageDigest.getInstance("MD5");
-            mDig.update(plainText.getBytes(), 0, plainText.length());
-            encripted = bytesToHex(mDig.digest());
-            System.out.println("Encripted: " + encripted);
+//
+//        System.out.println("Pass normal: " + plainText);
+        
+        
+        try
+         {
+
+            MD5 md = MD5.getInstance();
+            encripted = md.hashData(plainText.getBytes());
+         
+            
         }
-        catch(Exception ex){
-            ex.printStackTrace();
-        }
+         catch(NoSuchAlgorithmException e)
+         {
+             e.printStackTrace(System.out);
+         }
+        
         return encripted;
+        
+//        try{
+//
+//
+//
+//            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+//
+//            System.out.println("ESTOS SON LOS BYTES "+plainText.getBytes());
+//
+//
+//            digest.update(plainText.getBytes());
+//
+//            byte[] hash = digest.digest();
+//
+//            System.out.println("Este es el arreglo de bytes... "+hash);
+
+//            MessageDigest mDig = MessageDigest.getInstance("MD5");
+//            mDig.update(plainText.getBytes(), 0, plainText.length());
+//            encripted = bytesToHex(hash);
+//            System.out.println("Encripted: " + encripted);
+//        }
+//        catch(Exception ex){
+//            ex.printStackTrace();
+//        }
+//        return encripted;
     }
 
-    public String bytesToHex(byte[] bytes) throws MessagingException, IOException{
+    public String bytesToHex(byte[] bytes) throws IOException{
         ByteArrayOutputStream bas = new ByteArrayOutputStream(bytes.length + bytes.length / 4 + 1);
         bas.write(bytes);
         return bas.toString();
