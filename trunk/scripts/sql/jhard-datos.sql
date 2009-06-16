@@ -137,20 +137,21 @@ INSERT INTO `rol` (`idrol`,`nombre`,`descripcion`) VALUES
 (6,'Instructor','Instructor de materia UES-FMO');
 
 INSERT INTO `usuario` (`idusuario`,`nombre`,`clave`,`idrol`) VALUES 
- (1,'LuisBarrera','admin',1),
- (2,'Madrid','admin',1),
- (3,'Claudia','canon',2),
- (4,'Stanley','doc',3),
- (5,'Carmencita','derecho',2),
- (6,'Gabriel','editor',4),
- (7,'Rebekita','pecas',5),
- (8,'fredy','instructor',6),
- (9,'hugol','firpomadrid',6);
+ (1,'LuisBarrera','21232F297A57A5A743894A0E4A801FC3',1),
+ (2,'Madrid','21232F297A57A5A743894A0E4A801FC3',1),
+ (3,'Claudia','9003D1DF22EB4D3820015070385194C8',2),
+ (4,'Stanley','9003D1DF22EB4D3820015070385194C8',3),
+ (5,'Carmencita','9003D1DF22EB4D3820015070385194C8',2),
+ (6,'Gabriel','9003D1DF22EB4D3820015070385194C8',4),
+ (7,'Rebekita','9003D1DF22EB4D3820015070385194C8',5),
+ (8,'fredy','9003D1DF22EB4D3820015070385194C8',6),
+ (9,'hugol','CD82BE786DA71D1DD4EA68C0908AF6E6',6);
+
 
 INSERT INTO `administrador` (`idadministrador`,`clave`,`idusuario`) VALUES 
- (1,'admin',1),
- (2,'admin',2),
- (3,'firpomadrid',9);
+ (1,'21232F297A57A5A743894A0E4A801FC3',1),
+ (2,'21232F297A57A5A743894A0E4A801FC3',2),
+ (3,'CD82BE786DA71D1DD4EA68C0908AF6E6',9);
 
  
 /*DROP USER IF EXISTS jharduser;*/
