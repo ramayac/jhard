@@ -9,7 +9,7 @@
     <f:view>
         <html id="outputHtml1">
             <head id="outputHead1">
-                <ice:outputStyle href="./resources/stylesheet.css" id="outputStyle1"/>
+                <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
                 <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
                 <title>.:: JRequest ::.</title>
@@ -54,22 +54,38 @@
                     <!-- start content -->
                     <div id="content">
                         <div class="post">
-                            <h2 class="title">Requerimientos de Mantenimiento</h2>
+                            <h2 class="title">Mantenimiento de Hardware y Software</h2>
                             <div class="entry">
+                                <p class="text">Este es el sitio si requiere Soporte Técnico ya sea en Hardware o Software en la UES-FMOcc</p>
                                 <ice:form id="form1">
-                                    <ice:outputLabel id="outputLabel1" style=" " value="Problemas más comunes"/>
+                                    <ice:outputLabel id="lblInstruccion" value="Si su problema se encuentra en la siguiente lista, escoja para ver su solución"/>
                                     <br/>
-                                    <ice:selectOneMenu binding="#{jrequestUser.selectOneMenu1}" id="selectOneMenu1" partialSubmit="true" style="width: 118px" value="#{jrequestUser.selectOneMenu1Bean.selectedObject}">
-                                        <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUser.selectOneMenu1DefaultItems}"/>
+                                    <br/>
+                                    <ice:selectOneMenu binding="#{jrequestUser.comboProblemas}" id="comboProblemas" partialSubmit="true" style="width: 142px" valueChangeListener="#{jrequestUser.comboProblemas_processValueChange}">
+                                        <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUser.arrayTecnico.options['idtecnico,apellidos']}"/>
                                     </ice:selectOneMenu>
                                     <br/>
                                     <br/>
-                                    <ice:outputLabel id="outputLabel2" style="" value="Sino existe, ingrese su problema"/>
+                                    <br/>
+                                    <ice:outputLabel id="outputLabel2" value="Si su problema no está en la lista anterior, ingrese palabras clave para realizar una búsqueda"/>
+                                    <br/>
                                     <br/>
                                     <ice:inputText id="inputText1" style=""/>
                                     <br/>
-                                    <ice:commandButton binding="#{jrequestUser.button1}" id="button1" style="" value="Enviar"/>
+                                    <br/>
+                                    <ice:commandButton action="#{jrequestUser.btnBuscar_action}" binding="#{jrequestUser.btnBuscar}" id="btnBuscar" style="" value="Buscar"/>
                                 </ice:form>
+                                <ice:outputLabel binding="#{jrequestUser.select}" id="select" value="outputLabel"/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <ice:form id="form2">
+                                    <ice:outputLabel id="lblSolicitud" value="En cambio, si desea enviar una solicitud de Mantenimiento, pulse el siguiente botón"/>
+                                    <ice:commandButton action="#{jrequestUser.btnSolicitud_action}" binding="#{jrequestUser.btnSolicitud}" id="btnSolicitud" value="Enviar Solicitud"/>
+                                </ice:form>
+                                <br/>
                             </div>
                         </div>
                     </div>
@@ -78,7 +94,7 @@
                     <div id="sidebar">
                         <ul>
                             <li id="search">
-                                <h2>Buscar</h2>
+                                <h2>Búsqueda Wiki</h2>
                                 <form action="" method="get">
                                     <fieldset>
                                         <input class="inputTexto" name="s" type="text" value=""/>

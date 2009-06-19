@@ -41,6 +41,25 @@ public class jrequestAdmin extends AbstractPageBean {
 
     // </editor-fold>
 
+
+    private boolean verControlx=false;
+
+
+    /**
+     * @return the verControlx
+     */
+    public boolean isVerControlx() {
+        return verControlx;
+    }
+
+    /**
+     * @param verControlx the verControlx to set
+     */
+    public void setVerControlx(boolean verControlx) {
+        this.verControlx = verControlx;
+    }
+
+
     /**
      * <p>Construct a new Page bean instance.</p>
      */
@@ -117,6 +136,7 @@ public class jrequestAdmin extends AbstractPageBean {
     @Override
     public void destroy() {
     }
+
 
 }
 
