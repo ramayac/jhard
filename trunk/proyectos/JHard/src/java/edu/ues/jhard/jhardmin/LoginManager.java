@@ -31,7 +31,7 @@ public class LoginManager {
         if(!this.isLogged(userName)){
            System.out.println("Encriptando...");
             if(this.existsInBD(userName, encrypt(userPwd))){
-                Integer uid = this.generateUID();
+                Integer uid = new BeanBaseJHardmin().getUsuario(userName, userPwd).getIdusuario();
                 this.loggedUsers.put(uid, new LoggedUser(uid, userName, url));
                 return uid;
             }
@@ -176,5 +176,13 @@ public class LoginManager {
         ByteArrayOutputStream bas = new ByteArrayOutputStream(bytes.length + bytes.length / 4 + 1);
         bas.write(bytes);
         return bas.toString();
+    }
+
+    public Usuario getUsuario(LoggedUser usr){
+        if(this.isLogged(usr.getUid())){
+            return new BeanBaseJHardmin().getUsuario(usr.getUid());
+        }
+        else
+            return null;
     }
 }
