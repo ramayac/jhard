@@ -114,7 +114,7 @@ public class LoginManagerTest {
     @Test
     public void testGetUsuarioFromId(){
         BeanBaseJHardmin bbase = new BeanBaseJHardmin();
-        Usuario u = bbase.getUsuario("hugol","firpomadrid");
+        Usuario u = bbase.getUsuario("hugol",this.lMgr.encrypt("firpomadrid"));
         assertNotNull(u);
     }
 }

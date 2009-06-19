@@ -30,8 +30,8 @@ public class LoginManager {
     public synchronized int Login(String userName, String userPwd, String url){        
         if(!this.isLogged(userName)){
            System.out.println("Encriptando...");
-            if(this.existsInBD(userName, encrypt(userPwd))){
-                Integer uid = new BeanBaseJHardmin().getUsuario(userName, userPwd).getIdusuario();
+            if(this.existsInBD(userName, userPwd)){
+                Integer uid = new BeanBaseJHardmin().getUsuario(userName, encrypt(userPwd)).getIdusuario();
                 this.loggedUsers.put(uid, new LoggedUser(uid, userName, url));
                 return uid;
             }
@@ -107,7 +107,7 @@ public class LoginManager {
         System.out.println("Creando el bean base...");
         BeanBaseJHardmin bbase = new BeanBaseJHardmin();
         System.out.println("Obteniendo el usuario...");
-        Usuario u = bbase.getUsuario(userName, userPwd);
+        Usuario u = bbase.getUsuario(userName, encrypt(userPwd));
         return (u != null);
     }
 
