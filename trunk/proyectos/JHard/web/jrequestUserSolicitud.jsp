@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-    Document   : jrequestUser
-    Created on : 05-29-2009, 10:56:59 AM
-    Author     : hugol 
+    Document   : jrequestUserSolicitud
+    Created on : 16-jun-2009, 20:39:56
+    Author     : Hugol 
 -->
 <jsp:root version="2.1" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ice="http://www.icesoft.com/icefaces/component" xmlns:jsp="http://java.sun.com/JSP/Page">
     <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"/>
@@ -24,10 +24,10 @@
                     <div id="menu">
                         <ul>
                             <li class="current_page_item">
-                                <a href="#">Principal</a>
+                                <a href="Index.iface">Principal</a>
                             </li>
                             <li>
-                                <a href="jrquest.iface">Mantenimientos</a>
+                                <a href="jrequestUser.iface">Mantenimientos</a>
                             </li>
                             <li>
                                 <a href="#">Grupos de Laboratorio</a>
@@ -54,38 +54,68 @@
                     <!-- start content -->
                     <div id="content">
                         <div class="post">
-                            <h2 class="title">Mantenimiento de Hardware y Software</h2>
+                            <h2 class="title">Solicitud de Mantenimiento de Hardware y Software</h2>
                             <div class="entry">
-                                <p class="text">Este es el sitio si requiere Soporte Técnico ya sea en Hardware o Software en la UES-FMOcc</p>
-                                <ice:form id="form1">
-                                    <ice:outputLabel id="lblInstruccion" value="Si su problema se encuentra en la siguiente lista, escoja para ver su solución"/>
+                                <p class="text">Ingrese su solicitud:</p>
+                                <ice:form id="form1" style="height: 200px">
+                                    <ice:panelPopup autoCentre="true" binding="#{jrequestUserSolicitud.panelPopup1}" draggable="true" id="panelPopup1"
+                                        modal="true" rendered="#{jrequestUserSolicitud.panelPopup1Bean.showDraggablePanel}"
+                                        style="height: 300px; left: 576px; top: 336px; position: absolute; width: 300px" visible="#{jrequestUserSolicitud.panelPopup1Bean.showModalPanel}">
+                                        <f:facet name="header">
+                                            <ice:panelGrid id="panelGrid1" style="display:block;width:180px;height:20px;">
+                                                <ice:outputText id="outputText1" value="Agregar Nuevo Equipo"/>
+                                            </ice:panelGrid>
+                                        </f:facet>
+                                        <f:facet name="body">
+                                            <ice:panelGrid id="panelGrid2" style="display: block; height: 254px; width: 180px">
+                                                <ice:outputLabel id="lblNombreEq" value="Nombre de Equipo"/>
+                                                <ice:inputText binding="#{jrequestUserSolicitud.txtNombreEq}" id="txtNombreEq"/>
+                                                <ice:outputLabel id="lblEstadoEq" value="Estado del Equipo"/>
+                                                <ice:selectOneMenu binding="#{jrequestUserSolicitud.comboEstados}" id="comboEstados" partialSubmit="true">
+                                                    <f:selectItems id="selectOneMenu1selectItems1" value="#{jrequestUserSolicitud.arrayEstados.options['idestado,nombre']}"/>
+                                                </ice:selectOneMenu>
+                                                <ice:commandButton action="#{jrequestUserSolicitud.btnAgregar_action}"
+                                                    binding="#{jrequestUserSolicitud.btnAgregar}" id="btnAgregar" value="Agregar"/>
+                                                <ice:commandButton action="#{jrequestUserSolicitud.btnCerrar_action}"
+                                                    binding="#{jrequestUserSolicitud.btnCerrar}" id="btnCerrar" value="Cerrar"/>
+                                                <ice:message binding="#{jrequestUserSolicitud.mensaje}" errorClass="errorMessage" fatalClass="fatalMessage"
+                                                    for="" id="mensaje" infoClass="infoMessage" showSummary="true" warnClass="warnMessage"/>
+                                            </ice:panelGrid>
+                                        </f:facet>
+                                    </ice:panelPopup>
+                                    <ice:outputLabel id="lblNombre" value="Nombre Usuario"/>
                                     <br/>
                                     <br/>
-                                    <ice:selectOneMenu binding="#{jrequestUser.comboProblemas}" id="comboProblemas" partialSubmit="true" style="width: 142px" valueChangeListener="#{jrequestUser.comboProblemas_processValueChange}">
-                                        <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUser.arrayTecnico.options['idtecnico,apellidos']}"/>
+                                    <ice:inputText binding="#{jrequestUserSolicitud.txtUsuario}" id="txtUsuario" style="width: 190px"/>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <ice:outputLabel id="lbldescripcion" value="Descripción"/>
+                                    <br/>
+                                    <br/>
+                                    <ice:inputTextarea binding="#{jrequestUserSolicitud.txtDescripcion}" id="txtDescripcion" style="height: 72px; width: 190px"/>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <ice:outputLabel id="lblEqSimple" value="Nombre Equipo"/>
+                                    <br/>
+                                    <br/>
+                                    <ice:selectOneMenu binding="#{jrequestUserSolicitud.comboEqSimple}" id="comboEqSimple" partialSubmit="true"
+                                        style="width: 190px" valueChangeListener="#{jrequestUserSolicitud.comboEqSimple_processValueChange}">
+                                        <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUserSolicitud.arrayEqSimple.options['idEquipoSimple,descripcion']}"/>
                                     </ice:selectOneMenu>
+                                    <ice:commandButton action="#{jrequestUserSolicitud.btnAgregarEqSimple_action}"
+                                        binding="#{jrequestUserSolicitud.btnAgregarEqSimple}" id="btnAgregarEqSimple" value="Agregar Equipo"/>
                                     <br/>
                                     <br/>
                                     <br/>
-                                    <ice:outputLabel id="outputLabel2" value="Si su problema no está en la lista anterior, ingrese palabras clave para realizar una búsqueda"/>
+                                    <ice:commandButton action="#{jrequestUserSolicitud.btnEnviar_action}" binding="#{jrequestUserSolicitud.btnEnviar}"
+                                        id="btnEnviar" value="Enviar"/>
                                     <br/>
                                     <br/>
-                                    <ice:inputText id="inputText1" style=""/>
                                     <br/>
-                                    <br/>
-                                    <ice:commandButton action="#{jrequestUser.btnBuscar_action}" binding="#{jrequestUser.btnBuscar}" id="btnBuscar" style="" value="Buscar"/>
+                                    <ice:outputLabel binding="#{jrequestUserSolicitud.lblEstadoSolicitud}" id="lblEstadoSolicitud" value="Estado de la Solicitud"/>
                                 </ice:form>
-                                <ice:outputLabel binding="#{jrequestUser.select}" id="select" value="outputLabel"/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <ice:form id="form2">
-                                    <ice:outputLabel id="lblSolicitud" value="En cambio, si desea enviar una solicitud de Mantenimiento, pulse el siguiente botón"/>
-                                    <ice:commandButton action="#{jrequestUser.btnSolicitud_action}" binding="#{jrequestUser.btnSolicitud}" id="btnSolicitud" value="Enviar Solicitud"/>
-                                </ice:form>
-                                <br/>
                             </div>
                         </div>
                     </div>

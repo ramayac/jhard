@@ -145,14 +145,17 @@ public class BeanBaseJRequest extends BeanBase{
 
 
 //REGLAS DE NEGOCIO
-    public Equiposimple getEquipoSimpleByPropietario() {
+    public Equiposimple[] getEquipoSimpleByPropietario(String propietario) {
         EntityManager em=this.getEntityManager();
 
-        Query q=em.createNamedQuery("Equiposimple.findAll");
+        Query q=em.createNamedQuery("Equiposimple.findByPropietario");
 
-        Equiposimple eqs=(Equiposimple)q.getSingleResult();
+        q.setParameter("propietario", propietario);
 
-        em.refresh(eqs);
+        Equiposimple[] eqs=(Equiposimple[])q.getResultList().toArray(new Equiposimple[0]);
+
+        for(int i=0;i<eqs.length;i++)
+        em.refresh(eqs[i]);
         return eqs;
     }
 
