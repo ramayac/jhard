@@ -34,7 +34,7 @@ public class BeanBaseJHardmin extends BeanBase {
         try{            
             EntityManager eMgr = this.getEntityManager();            
             Query q = eMgr.createNamedQuery("Usuario.findByIdusuario");
-            q.setParameter(id, "idusuario");
+            q.setParameter("idusuario", id);
 
             u=(Usuario)q.getSingleResult();
         }

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-    Document   : jrequestUser
-    Created on : 05-29-2009, 10:56:59 AM
-    Author     : hugol 
+    Document   : jrequestAdmin
+    Created on : 18-jun-2009, 14:18:49
+    Author     : Hugol
 -->
 <jsp:root version="2.1" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ice="http://www.icesoft.com/icefaces/component" xmlns:jsp="http://java.sun.com/JSP/Page">
     <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"/>
     <f:view>
         <html id="outputHtml1">
             <head id="outputHead1">
-                <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
+                <ice:outputStyle href="css/resources/stylesheet.css" id="outputStyle1"/>
                 <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
                 <title>.:: JRequest ::.</title>
@@ -24,10 +24,10 @@
                     <div id="menu">
                         <ul>
                             <li class="current_page_item">
-                                <a href="#">Principal</a>
+                                <a href="Index.iface">Principal</a>
                             </li>
                             <li>
-                                <a href="jrquest.iface">Mantenimientos</a>
+                                <a href="jrequestAdmin.iface">Mantenimientos</a>
                             </li>
                             <li>
                                 <a href="#">Grupos de Laboratorio</a>
@@ -56,37 +56,15 @@
                         <div class="post">
                             <h2 class="title">Mantenimiento de Hardware y Software</h2>
                             <div class="entry">
-                                <p class="text">Este es el sitio si requiere Soporte Técnico ya sea en Hardware o Software en la UES-FMOcc</p>
-                                <ice:form id="form1">
-                                    <ice:outputLabel id="lblInstruccion" value="Si su problema se encuentra en la siguiente lista, escoja para ver su solución"/>
-                                    <br/>
-                                    <br/>
-                                    <ice:selectOneMenu binding="#{jrequestUser.comboProblemas}" id="comboProblemas" partialSubmit="true" style="width: 142px" valueChangeListener="#{jrequestUser.comboProblemas_processValueChange}">
-                                        <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUser.arrayTecnico.options['idtecnico,apellidos']}"/>
-                                    </ice:selectOneMenu>
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <ice:outputLabel id="outputLabel2" value="Si su problema no está en la lista anterior, ingrese palabras clave para realizar una búsqueda"/>
-                                    <br/>
-                                    <br/>
-                                    <ice:inputText id="inputText1" style=""/>
-                                    <br/>
-                                    <br/>
-                                    <ice:commandButton action="#{jrequestUser.btnBuscar_action}" binding="#{jrequestUser.btnBuscar}" id="btnBuscar" style="" value="Buscar"/>
-                                </ice:form>
-                                <ice:outputLabel binding="#{jrequestUser.select}" id="select" value="outputLabel"/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <ice:form id="form2">
-                                    <ice:outputLabel id="lblSolicitud" value="En cambio, si desea enviar una solicitud de Mantenimiento, pulse el siguiente botón"/>
-                                    <ice:commandButton action="#{jrequestUser.btnSolicitud_action}" binding="#{jrequestUser.btnSolicitud}" id="btnSolicitud" value="Enviar Solicitud"/>
-                                </ice:form>
+                                <p class="text">Administración de Solicitudes de Mantenimiento UES-FMOcc</p>
+                                <ice:form id="form1"/>
                                 <br/>
                             </div>
+                            <ice:menuBar id="menuBar1" orientation="vertical" style="  display: block;">
+                                <ice:menuItem actionListener="#{jrequestAdmin.menuBar1menuBar1Bean.primaryListener}" id="menuItem1" value="File"/>
+                                <ice:menuItem actionListener="#{jrequestAdmin.menuBar1menuBar1Bean.primaryListener}" id="menuItem2" value="Open"/>
+                                <ice:menuItem actionListener="#{jrequestAdmin.menuBar1menuBar1Bean.primaryListener}" id="menuItem3" value="Close"/>
+                            </ice:menuBar>
                         </div>
                     </div>
                     <!-- end content -->

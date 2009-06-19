@@ -2,9 +2,10 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="paginaMuestra.html" x="94" y="228" zoom="true"/>
-        <Node id="Index.jsp" x="400" y="150" zoom="false"/>
+        <Node id="paginaMuestra.html" x="44" y="299" zoom="true"/>
+        <Node id="Index.jsp" x="498" y="103" zoom="false"/>
         <Node id="jrequestUser.jsp" x="89" y="124" zoom="false"/>
+        <Node id="jrequestUserSolicitud.jsp" x="396" y="351" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

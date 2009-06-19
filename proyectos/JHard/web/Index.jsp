@@ -67,7 +67,7 @@
                     <div id="sidebar">
                         <ul>
                             <li id="search">
-                                <h2>Buscar</h2>
+                                <h2>Búsqueda Wiki</h2>
                                 <form action="" method="get">
                                     <fieldset>
                                         <input class="inputTexto" name="s" type="text" value=""/>
@@ -86,7 +86,7 @@
                                     <ice:inputSecret binding="#{Index.txtPass}" id="txtPass" redisplay="true" style="width: 120px" value=""/>
                                     <br/>
                                     <br/>
-                                    <ice:commandButton action="#{Index.btnLogin_action}" binding="#{Index.btnLogin}" id="btnLogin" style="" value="Login"/>
+                                    <ice:commandButton action="#{Index.btnLogin_action}" binding="#{Index.btnLogin}" id="btnLogin" value="Login"/>
                                 </ice:form>
                             </li>
                             <li>

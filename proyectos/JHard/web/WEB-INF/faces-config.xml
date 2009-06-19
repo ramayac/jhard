@@ -39,4 +39,26 @@
         <managed-bean-class>jhard.jrequestUser</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>jrequestUserSolicitud</managed-bean-name>
+        <managed-bean-class>jhard.jrequestUserSolicitud</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <navigation-rule>
+        <from-view-id>/jrequestUser.jsp</from-view-id>
+        <navigation-case>
+            <from-outcome>case1</from-outcome>
+            <to-view-id>/jrequestUserSolicitud.jsp</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <managed-bean>
+        <managed-bean-name>pruebaPanelPopUp</managed-bean-name>
+        <managed-bean-class>jhard.pruebaPanelPopUp</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>jrequestAdmin</managed-bean-name>
+        <managed-bean-class>jhard.jrequestAdmin</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>

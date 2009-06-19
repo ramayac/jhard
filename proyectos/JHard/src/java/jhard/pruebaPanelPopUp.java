@@ -1,26 +1,22 @@
 /*
- * jrequestUser.java
+ * pruebaPanelPopUp.java
  *
- * Created on 05-29-2009, 10:56:59 AM
- * Copyright hugol
+ * Created on 17-jun-2009, 17:50:24
+ * Copyright Hugol
  */
 package jhard;
 
-import com.icesoft.faces.component.ext.HtmlCommandButton;
-import com.icesoft.faces.component.ext.HtmlOutputLabel;
+import com.icesoft.faces.component.ext.HtmlInputText;
+import com.icesoft.faces.component.ext.HtmlPanelGrid;
 import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
-
+import com.icesoft.faces.component.jsfcl.data.PopupBean;
+import com.icesoft.faces.component.panelpopup.PanelPopup;
 import com.sun.data.provider.impl.ObjectArrayDataProvider;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
-
-
-import edu.ues.jhard.beans.BeanBaseJRequest;
-import edu.ues.jhard.jpa.Tecnico;
-import java.util.ArrayList;
+import edu.ues.jhard.jpa.Estadoequipo;
 import javax.faces.FacesException;
-import javax.faces.event.ValueChangeEvent;
 
 
 /**
@@ -30,7 +26,7 @@ import javax.faces.event.ValueChangeEvent;
  * lifecycle methods and event handlers where you may add behavior
  * to respond to incoming events.</p>
  */
-public class jrequestUser extends AbstractPageBean {
+public class pruebaPanelPopUp extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
     private int __placeholder;
 
@@ -40,22 +36,35 @@ public class jrequestUser extends AbstractPageBean {
      * here is subject to being replaced.</p>
      */
     private void _init() throws Exception {
-        
-    arrayTecnico.setArray((java.lang.Object[]) getValue("#{jrequestUser.tecnicos}"));
+    arrayEstados.setArray((java.lang.Object[]) getValue("#{pruebaPanelPopUp.estadoequipo}"));
+    }
+    private PopupBean panelPopup1Bean = new PopupBean();
+
+    public PopupBean getPanelPopup1Bean() {
+        return panelPopup1Bean;
     }
 
+    public void setPanelPopup1Bean(PopupBean pb) {
+        this.panelPopup1Bean = pb;
+    }
+    private PanelPopup panelEqSNuevo = new PanelPopup();
 
-    private ObjectArrayDataProvider arrayTecnico = new ObjectArrayDataProvider();
-
-    public ObjectArrayDataProvider getArrayTecnico() {
-        return arrayTecnico;
+    public PanelPopup getPanelEqSNuevo() {
+        return panelEqSNuevo;
     }
 
-    public void setArrayTecnido(ObjectArrayDataProvider oadt) {
-        this.arrayTecnico = oadt;
+    public void setPanelEqSNuevo(PanelPopup pp) {
+        this.panelEqSNuevo = pp;
+    }
+    private HtmlPanelGrid panelGrid2 = new HtmlPanelGrid();
+
+    public HtmlPanelGrid getPanelGrid2() {
+        return panelGrid2;
     }
 
-
+    public void setPanelGrid2(HtmlPanelGrid hpg) {
+        this.panelGrid2 = hpg;
+    }
     private DefaultSelectedData selectOneMenu1Bean = new DefaultSelectedData();
 
     public DefaultSelectedData getSelectOneMenu1Bean() {
@@ -74,71 +83,62 @@ public class jrequestUser extends AbstractPageBean {
     public void setSelectOneMenu1DefaultItems(DefaultSelectionItems dsi) {
         this.selectOneMenu1DefaultItems = dsi;
     }
-    private HtmlCommandButton btnBuscar = new HtmlCommandButton();
+    private HtmlInputText inputText1 = new HtmlInputText();
 
-    public HtmlCommandButton getBtnBuscar() {
-        return btnBuscar;
+    public HtmlInputText getInputText1() {
+        return inputText1;
     }
 
-    public void setBtnBuscar(HtmlCommandButton hcb) {
-        this.btnBuscar = hcb;
+    public void setInputText1(HtmlInputText hit) {
+        this.inputText1 = hit;
     }
-    private HtmlSelectOneMenu comboProblemas = new HtmlSelectOneMenu();
+    private HtmlSelectOneMenu comboEstados = new HtmlSelectOneMenu();
 
-    public HtmlSelectOneMenu getComboProblemas() {
-        return comboProblemas;
+    public HtmlSelectOneMenu getComboEstados() {
+        return comboEstados;
     }
 
-    public void setComboProblemas(HtmlSelectOneMenu hsom) {
-        this.comboProblemas = hsom;
+    public void setComboEstados(HtmlSelectOneMenu hsom) {
+        this.comboEstados = hsom;
+    }
+    private ObjectArrayDataProvider arrayEstados = new ObjectArrayDataProvider();
+
+    public ObjectArrayDataProvider getArrayEstados() {
+        return arrayEstados;
+    }
+
+    public void setArrayEstados(ObjectArrayDataProvider oadp) {
+        this.arrayEstados = oadp;
     }
 
     // </editor-fold>
 
 
-    private Tecnico[] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
-    private Tecnico tecnicoElegido=tecnicos[0];
+
+    private Estadoequipo[] estados = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
+    private Estadoequipo estadoElegido=estados[0];
 
 
 
-    public Tecnico getTecnicoElegido(){
-        return tecnicoElegido;
+    public Estadoequipo getEstadoElegido(){
+        return estadoElegido;
     }
 
-    public void setTecnicoElegido(Tecnico tec){
-        this.tecnicoElegido=tec;
+    public void setEstadoElegido(Estadoequipo ee){
+        this.estadoElegido=ee;
     }
 
-    public Tecnico[] getTecnicos(){
-        return tecnicos;
+    public Estadoequipo[] getEstadoequipo(){
+        return estados;
     }
 
-    public void setTecnicos(Tecnico[] tec){
-        this.tecnicos=tec;
+    public void setEstadoequipo(Estadoequipo[] ee){
+        this.estados=ee;
     }
-    private HtmlOutputLabel select = new HtmlOutputLabel();
-
-    public HtmlOutputLabel getSelect() {
-        return select;
-    }
-
-    public void setSelect(HtmlOutputLabel hol) {
-        this.select = hol;
-    }
-    private HtmlCommandButton btnSolicitud = new HtmlCommandButton();
-
-    public HtmlCommandButton getBtnSolicitud() {
-        return btnSolicitud;
-    }
-
-    public void setBtnSolicitud(HtmlCommandButton hcb) {
-        this.btnSolicitud = hcb;
-    }
-
     /**
      * <p>Construct a new Page bean instance.</p>
      */
-    public jrequestUser() {
+    public pruebaPanelPopUp() {
     }
 
     /**
@@ -155,6 +155,8 @@ public class jrequestUser extends AbstractPageBean {
      */
     @Override
     public void init() {
+        this.panelEqSNuevo.setVisible(false);
+        this.panelEqSNuevo.setRendered(false);
         // Perform initializations inherited from our superclass
         super.init();
         // Perform application initialization that must complete
@@ -165,9 +167,10 @@ public class jrequestUser extends AbstractPageBean {
         // Initialize automatically managed components
         // *Note* - this logic should NOT be modified
         try {
+
             _init();
         } catch (Exception e) {
-            log("jrequestUser Initialization Failure", e);
+            log("pruebaPanelPopUp Initialization Failure", e);
             throw e instanceof FacesException ? (FacesException) e: new FacesException(e);
         }
         
@@ -198,7 +201,9 @@ public class jrequestUser extends AbstractPageBean {
      */
     @Override
     public void prerender() {
-    }
+        
+
+     }
 
     /**
      * <p>Callback method that is called after rendering is completed for
@@ -210,6 +215,15 @@ public class jrequestUser extends AbstractPageBean {
      */
     @Override
     public void destroy() {
+    }
+
+    /**
+     * <p>Return a reference to the scoped data bean.</p>
+     *
+     * @return reference to the scoped data bean
+     */
+    protected ApplicationBean1 getApplicationBean1() {
+        return (ApplicationBean1) getBean("ApplicationBean1");
     }
 
     /**
@@ -230,38 +244,14 @@ public class jrequestUser extends AbstractPageBean {
         return (RequestBean1) getBean("RequestBean1");
     }
 
-    /**
-     * <p>Return a reference to the scoped data bean.</p>
-     *
-     * @return reference to the scoped data bean
-     */
-    protected ApplicationBean1 getApplicationBean1() {
-        return (ApplicationBean1) getBean("ApplicationBean1");
-    }
-
-    public void comboProblemas_processValueChange(ValueChangeEvent vce) {
-
-        String tmp=(String)this.comboProblemas.getValue();
-        Integer id=Integer.valueOf(tmp);
-        Tecnico t=new BeanBaseJRequest().getEntityManager().find(Tecnico.class, id);
+    public String btnEq_action() {
         
-        this.tecnicoElegido= t;
-
-        this.select.setValue(this.tecnicoElegido.getNombres() + this.tecnicoElegido.getApellidos());
-    }
-
-    public String btnBuscar_action() {
-        //return null means stay on the same page
+        this.panelEqSNuevo.setRendered(true);
+        System.out.println("RENDERICE");
+        this.panelEqSNuevo.setVisible(true);
+        System.out.println("PUSE VISIBLE");
         return null;
     }
-
-    public String btnSolicitud_action() {
-        //return null means stay on the same page
-        return "case1";
-    }
-
-
-
 
 }
 
