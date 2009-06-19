@@ -9,9 +9,9 @@
     <f:view>
         <html id="outputHtml1">
             <head id="outputHead1">
-                <ice:outputStyle href="./resources/stylesheet.css" id="outputStyle1"/>
+                <!--ice:outputStyle href="./resources/stylesheet.css" id="outputStyle1"/-->
                 <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
-                <link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+                <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
                 <title>.:: JHard ::.</title>
                 <meta content="" name="keywords"/>
@@ -20,7 +20,6 @@
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
-
                 <!--start header -->
                 <div id="header">
                     <div id="menu">
@@ -68,7 +67,7 @@
                     <div id="sidebar">
                         <ul>
                             <li id="search">
-                                <h2>Buscar</h2>
+                                <h2>Búsqueda Wiki</h2>
                                 <form action="" method="get">
                                     <fieldset>
                                         <input class="inputTexto" name="s" type="text" value=""/>
@@ -77,14 +76,19 @@
                                 </form>
                             </li>
                             <li>
-                                <h2>Usuarios</h2>
-                   <ice:form id="form1">
-                    <ice:inputText id="txtUser" style="width: 120px"/>
-                    <ice:inputSecret id="txtPass" redisplay="true" style="width: 120px" value="******"/>
-                    <ice:commandButton id="btnLogin" style="" value="Login"/>
-                </ice:form>
-
-	</li>
+                                <h2>
+                                    <ice:outputLabel binding="#{Index.txtUserLogin}" id="txtUserLogin" value="Usuarios"/>
+                                </h2>
+                                <ice:form id="form1">
+                                    <ice:inputText binding="#{Index.txtUser}" id="txtUser" style="width: 120px"/>
+                                    <br/>
+                                    <br/>
+                                    <ice:inputSecret binding="#{Index.txtPass}" id="txtPass" redisplay="true" style="width: 120px" value=""/>
+                                    <br/>
+                                    <br/>
+                                    <ice:commandButton action="#{Index.btnLogin_action}" binding="#{Index.btnLogin}" id="btnLogin" value="Login"/>
+                                </ice:form>
+                            </li>
                             <li>
                                 <h2>Otros Vinculos</h2>
                                 <ul>
