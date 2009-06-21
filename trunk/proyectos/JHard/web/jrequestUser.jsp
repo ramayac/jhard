@@ -58,6 +58,9 @@
                             <div class="entry">
                                 <p class="text">Este es el sitio si requiere Soporte Técnico ya sea en Hardware o Software en la UES-FMOcc</p>
                                 <ice:form id="form1">
+                                    <ice:selectInputText id="selectPosts">
+                                        <f:selectItems id="selectInputText1selectedItems"/>
+                                    </ice:selectInputText>
                                     <ice:outputLabel id="lblInstruccion" value="Si su problema se encuentra en la siguiente lista, escoja para ver su solución"/>
                                     <br/>
                                     <br/>

@@ -16,7 +16,18 @@
                 <meta content="" name="keywords"/>
                 <meta content="" name="description"/>
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
+                <script type="text/javascript" src="js/js/jquery.js"></script>
+                <script type="text/javascript" src="js/js/jquery-ui.js"></script>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+
+                <script type="text/javascript">
+                    $.ui.dialog.defaults.bgiframe = true;
+                    $(function() {
+                        $("#divalerta").dialog();
+                    });
+                </script>
+
+
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <!--start header -->
