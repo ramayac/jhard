@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import java.security.*;
+import javax.faces.event.ActionEvent;
 
 /**
  * Administra el login, logout y el mantenimiento de la sesion de los usuarios que usan el sistema
@@ -185,4 +186,5 @@ public class LoginManager {
         else
             return null;
     }
+
 }
