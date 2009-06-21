@@ -77,17 +77,23 @@
                             </li>
                             <li>
                                 <h2>
-                                    <ice:outputLabel binding="#{Index.txtUserLogin}" id="txtUserLogin" value="Usuarios"/>
+                                    <ice:outputLabel id="txtUserLogin" value="Usuarios"/>
                                 </h2>
-                                <ice:form id="form1">
-                                    <ice:inputText binding="#{Index.txtUser}" id="txtUser" style="width: 120px"/>
+                                <ice:form id="frmLogin" rendered="#{JHardminInstance.currentUser == null}">
+                                    <ice:inputText id="txtUser" value="#{JHardminInstance.inputUsrName}" style="width: 120px"/>
                                     <br/>
                                     <br/>
-                                    <ice:inputSecret binding="#{Index.txtPass}" id="txtPass" redisplay="true" style="width: 120px" value=""/>
+                                    <ice:inputSecret id="txtPass" value="#{JHardminInstance.inputUsrPassword}" style="width: 120px"/>
                                     <br/>
                                     <br/>
-                                    <ice:commandButton action="#{Index.btnLogin_action}" binding="#{Index.btnLogin}" id="btnLogin" value="Login"/>
+                                    <ice:commandButton action="#{JHardminInstance.login}"  id="btnLogin" value="Login"/>
                                 </ice:form>
+                                <ice:form rendered="#{JHardminInstance.currentUser != null}">
+                                    <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario" />
+                                    <ice:outputLabel id="lblNomUsuario" value="#{JHardminInstance.currentUser.userName}" />
+                                    <ice:commandButton id="btnLogout" value="Logout" action="#{JHardminInstance.logout}" />
+                                </ice:form>
+                                <ice:outputLabel id="lblLoginFail" value="Nombre de usuario o clave incorrectos" rendered="#{JHardminInstance.loginFail}" />
                             </li>
                             <li>
                                 <h2>Otros Vinculos</h2>

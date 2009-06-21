@@ -13,12 +13,7 @@
         <managed-bean-name>SessionBean1</managed-bean-name>
         <managed-bean-class>jhard.SessionBean1</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>Index</managed-bean-name>
-        <managed-bean-class>jhard.Index</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
+    </managed-bean>   
     <managed-bean>
         <managed-bean-name>RequestBean1</managed-bean-name>
         <managed-bean-class>jhard.RequestBean1</managed-bean-class>
@@ -60,5 +55,10 @@
         <managed-bean-name>jrequestAdmin</managed-bean-name>
         <managed-bean-class>jhard.jrequestAdmin</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>JHardminInstance</managed-bean-name>
+        <managed-bean-class>edu.ues.jhard.beans.BeanBaseJHardmin</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
 </faces-config>
