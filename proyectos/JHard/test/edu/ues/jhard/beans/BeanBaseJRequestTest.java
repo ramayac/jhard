@@ -211,6 +211,17 @@ public class BeanBaseJRequestTest {
      * Test of getEquipoSimpleByPropietario method, of class BeanBaseJRequest.
      */
     //@Test
+<<<<<<< .mine
+    public void testGetEquipoSimpleByPropietario() {
+        System.out.println("getEquipoSimpleByPropietario");
+        BeanBaseJRequest instance = new BeanBaseJRequest();
+        Equiposimple expResult = null;
+        //Equiposimple result = instance.getEquipoSimpleByPropietario();
+        //assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+=======
 //    public void testGetEquipoSimpleByPropietario() {
 //        System.out.println("getEquipoSimpleByPropietario");
 //        BeanBaseJRequest instance = new BeanBaseJRequest();
@@ -220,6 +231,7 @@ public class BeanBaseJRequestTest {
 //        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
 //    }
+>>>>>>> .r161
 
     /**
      * Test of getEstadoEquipoByID method, of class BeanBaseJRequest.
@@ -238,7 +250,7 @@ public class BeanBaseJRequestTest {
     /**
      * Test of getSolicitudByFecha method, of class BeanBaseJRequest.
      */
-    @Test
+    //@Test
     public void testGetSolicitudByFecha() {
         System.out.println("getSolicitudByFecha");
 
@@ -272,10 +284,27 @@ public class BeanBaseJRequestTest {
         //Solicitud expResult = null;
         Solicitud result = instance.getSolicitudByPrioridad(prioridad);
         assertNotNull(result);
-            System.out.println("EXISTE LA PRIORIDAD ALTA!!");
+        System.out.println("EXISTE LA PRIORIDAD ALTA!!");
 
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
+    }
+
+
+    //@Test
+    public void testGetSolicitudPrioridades() {
+        
+        System.out.println("getSolicitudOrderByPrioridades");
+
+        BeanBaseJRequest instance = new BeanBaseJRequest();
+
+        Solicitud[] result = instance.getPrioridades();
+
+        assertNotNull(result);
+
+        System.out.println("ME ORDENA LAS PRIORIDADES POR ALTA, MEDIA Y BAJA");
+
+        
     }
 
 }

@@ -159,6 +159,18 @@ public class BeanBaseJRequest extends BeanBase{
         return eqs;
     }
 
+    public Solicitud[] getPrioridades() {
+        EntityManager em=this.getEntityManager();
+
+        Query q=em.createNamedQuery("Solicitud.findPrioridades");
+
+        Solicitud[] s=(Solicitud[])q.getResultList().toArray(new Equiposimple[0]);
+
+        for(int i=0;i<s.length;i++)
+        em.refresh(s[i]);
+        return s;
+    }
+
 
     public Estadoequipo getEstadoEquipoByID() {
         EntityManager em=this.getEntityManager();
