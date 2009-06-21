@@ -211,7 +211,6 @@ public class BeanBaseJRequestTest {
      * Test of getEquipoSimpleByPropietario method, of class BeanBaseJRequest.
      */
     //@Test
-<<<<<<< .mine
     public void testGetEquipoSimpleByPropietario() {
         System.out.println("getEquipoSimpleByPropietario");
         BeanBaseJRequest instance = new BeanBaseJRequest();
@@ -221,7 +220,6 @@ public class BeanBaseJRequestTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-=======
 //    public void testGetEquipoSimpleByPropietario() {
 //        System.out.println("getEquipoSimpleByPropietario");
 //        BeanBaseJRequest instance = new BeanBaseJRequest();
@@ -231,7 +229,6 @@ public class BeanBaseJRequestTest {
 //        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
 //    }
->>>>>>> .r161
 
     /**
      * Test of getEstadoEquipoByID method, of class BeanBaseJRequest.
