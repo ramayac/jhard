@@ -77,32 +77,38 @@
                             </li>
                             <li>
                                 <h2>
-                                    <ice:outputLabel id="txtUserLogin" value="Usuarios"/>
+                                    <ice:outputLabel id="txtUserLogin" value="Sesión"/>
                                 </h2>
                                 <ice:form id="frmLogin" rendered="#{JHardminInstance.currentUser == null}">
-                                    <ice:inputText id="txtUser" value="#{JHardminInstance.inputUsrName}" style="width: 120px"/>
-                                    <br/>
-                                    <br/>
-                                    <ice:inputSecret id="txtPass" value="#{JHardminInstance.inputUsrPassword}" style="width: 120px"/>
-                                    <br/>
-                                    <br/>
-                                    <ice:commandButton action="#{JHardminInstance.login}"  id="btnLogin" value="Login"/>
+                                    <ice:outputText id="lblLoginFail" styleClass="errorText" rendered="#{JHardminInstance.loginFail}" value="Datos incorrectos"/>
+                                    <p>
+                                        <ice:outputLabel id="lblUser" value="Usuario:"/>
+                                        <ice:inputText id="txtUser" style="width: 120px" value="#{JHardminInstance.inputUsrName}" required="true" requiredMessage="El nombre de usuario es requerido"/>
+                                        <h:message for="txtUser" styleClass="errorText" />
+                                    </p>
+                                    <p>
+                                        <ice:outputLabel id="lblPass" value="Clave:"/>
+                                        <ice:inputSecret id="txtPass" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}" required="true" requiredMessage="La clave de acceso es requerida" />
+                                        <h:message for="txtPass" styleClass="errorText" />
+                                    </p>
+                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" value="Login" styleClass="btnAccion"/>
                                 </ice:form>
-                                <ice:form rendered="#{JHardminInstance.currentUser != null}">
-                                    <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario" />
-                                    <ice:outputLabel id="lblNomUsuario" value="#{JHardminInstance.currentUser.userName}" />
-                                    <ice:commandButton id="btnLogout" value="Logout" action="#{JHardminInstance.logout}" />
+                                <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
+                                    <p>
+                                        <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
+                                        <ice:outputLabel id="lblNomUsuario" styleClass="userName" value="#{JHardminInstance.currentUser.userName}"/>
+                                    </p>
+                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>
                                 </ice:form>
-                                <ice:outputLabel id="lblLoginFail" value="Nombre de usuario o clave incorrectos" rendered="#{JHardminInstance.loginFail}" />
                             </li>
                             <li>
-                                <h2>Otros Vinculos</h2>
+                                <h2>Tareas Comunes</h2>
                                 <ul>
                                     <li>
-                                        <a href="#">Nec metus sed donec</a>
+                                        <a href="#">Cambiar clave de acceso</a>
                                     </li>
                                     <li>
-                                        <a href="#">Magna lacus bibendum mauris</a>
+                                        <a href="#">Administrar usuarios</a>
                                     </li>
                                     <li>
                                         <a href="#">Velit semper nisi molestie</a>

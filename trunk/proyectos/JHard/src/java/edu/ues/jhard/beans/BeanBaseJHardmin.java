@@ -24,6 +24,12 @@ public class BeanBaseJHardmin extends BeanBase {
     private String inputUsrPassword;
     private Boolean loginFail;
 
+    public BeanBaseJHardmin(){
+        this.loginFail = false;
+        this.setInputUsrName("");
+        this.setInputUsrPassword("");
+    }
+
     public Usuario getUsuario(String userName, String userPwd){
         Usuario u = null;
         try{            
@@ -103,12 +109,16 @@ public class BeanBaseJHardmin extends BeanBase {
         else{
             this.setCurrentUser(LoginManager.getInstance().getUser(uid));
             this.setLoginFail(false);
+            this.setInputUsrName("");
+        this.setInputUsrPassword("");
         }
         return "";
     }
 
     public String logout(){
         this.setCurrentUser(null);
+        this.setInputUsrName("");
+        this.setInputUsrPassword("");
         return "";
     }
 

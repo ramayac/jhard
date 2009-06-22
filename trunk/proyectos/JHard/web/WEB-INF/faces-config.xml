@@ -56,4 +56,19 @@
         <managed-bean-class>edu.ues.jhard.beans.BeanBaseJHardmin</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>Index</managed-bean-name>
+        <managed-bean-class>jhard.Index</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>Admin</managed-bean-name>
+        <managed-bean-class>jhard.Admin</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>UserAdmin</managed-bean-name>
+        <managed-bean-class>jhard.UserAdmin</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>
