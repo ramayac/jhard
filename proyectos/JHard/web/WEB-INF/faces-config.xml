@@ -47,26 +47,13 @@
         </navigation-case>
     </navigation-rule>
     <managed-bean>
-        <managed-bean-name>pruebaPanelPopUp</managed-bean-name>
-        <managed-bean-class>jhard.pruebaPanelPopUp</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
         <managed-bean-name>jrequestAdmin</managed-bean-name>
         <managed-bean-class>jhard.jrequestAdmin</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
-<<<<<<< .mine
-    <managed-bean>
-        <managed-bean-name>Page1</managed-bean-name>
-        <managed-bean-class>jhard.Page1</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-=======
     <managed-bean>
         <managed-bean-name>JHardminInstance</managed-bean-name>
         <managed-bean-class>edu.ues.jhard.beans.BeanBaseJHardmin</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
->>>>>>> .r161
 </faces-config>

@@ -403,7 +403,7 @@ public class jrequestUserSolicitud extends AbstractPageBean {
 
     public String btnAgregarEqSimple_action() {
 
-         this.panelPopup1.setRendered(true);
+        this.panelPopup1.setRendered(true);
         System.out.println("RENDERICE");
         this.panelPopup1.setVisible(true);
         System.out.println("PUSE VISIBLE");

@@ -33,7 +33,6 @@ import javax.persistence.TemporalType;
 @NamedQueries({@NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s"),
                @NamedQuery(name = "Solicitud.findByIdsolicitud", query = "SELECT s FROM Solicitud s WHERE s.idsolicitud = :idsolicitud"),
                @NamedQuery(name = "Solicitud.findByFecha", query = "SELECT s FROM Solicitud s WHERE s.fecha = :fecha"),
-               @NamedQuery(name = "Solicitud.findPrioridades", query = "SELECT s from Solicitud s WHERE s.prioridad='alta' UNION SELECT s FROM Solicitud s WHERE s.prioridad = 'media' UNION SELECT s FROM Solicitud s WHERE s.prioridad = 'baja'"),
                @NamedQuery(name = "Solicitud.findByPrioridad", query = "SELECT s FROM Solicitud s WHERE s.prioridad = :prioridad")})
 
 public class Solicitud implements Serializable {
