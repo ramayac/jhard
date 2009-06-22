@@ -9,6 +9,7 @@ package jhard;
 import com.icesoft.faces.component.ext.HtmlCommandButton;
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.icesoft.faces.component.ext.HtmlOutputText;
+import com.icesoft.faces.component.ext.HtmlSelectBooleanCheckbox;
 import com.icesoft.faces.component.ext.HtmlSelectOneListbox;
 import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
@@ -27,6 +28,8 @@ import edu.ues.jhard.jpa.Mantenimiento;
 import edu.ues.jhard.jpa.Solicitud;
 import edu.ues.jhard.jpa.Tecnico;
 import edu.ues.jhard.jpa.Usuario;
+import edu.ues.jhard.jpa.Bitacoraestados;
+import edu.ues.jhard.jpa.Estadoequipo;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -141,6 +144,7 @@ public class jrequestAdmin extends AbstractPageBean {
     private Solicitud[] solicitudes;
     private Mantenimiento[] mantenimientos;
     private Solicitud solicitudElegida=null;
+    private Mantenimiento mantenimientoElegido=null;
     private Tecnico[] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
     private Tecnico tecnicoElegido=tecnicos[0];
 
@@ -462,6 +466,51 @@ public class jrequestAdmin extends AbstractPageBean {
     public void setListaMantenimientos(HtmlSelectOneListbox hsol) {
         this.listaMantenimientos = hsol;
     }
+    private DefaultSelectedData selectBooleanCheckbox1Bean = new DefaultSelectedData();
+
+    public DefaultSelectedData getSelectBooleanCheckbox1Bean() {
+        return selectBooleanCheckbox1Bean;
+    }
+
+    public void setSelectBooleanCheckbox1Bean(DefaultSelectedData dsd) {
+        this.selectBooleanCheckbox1Bean = dsd;
+    }
+    private HtmlOutputText lblMantenimiento = new HtmlOutputText();
+
+    public HtmlOutputText getLblMantenimiento() {
+        return lblMantenimiento;
+    }
+
+    public void setLblMantenimiento(HtmlOutputText hot) {
+        this.lblMantenimiento = hot;
+    }
+    private HtmlCommandButton btnAceptarFinalizado = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnAceptarFinalizado() {
+        return btnAceptarFinalizado;
+    }
+
+    public void setBtnAceptarFinalizado(HtmlCommandButton hcb) {
+        this.btnAceptarFinalizado = hcb;
+    }
+    private HtmlSelectBooleanCheckbox checkFIn = new HtmlSelectBooleanCheckbox();
+
+    public HtmlSelectBooleanCheckbox getCheckFIn() {
+        return checkFIn;
+    }
+
+    public void setCheckFIn(HtmlSelectBooleanCheckbox hsbc) {
+        this.checkFIn = hsbc;
+    }
+    private HtmlCommandButton btnCerrar = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnCerrar() {
+        return btnCerrar;
+    }
+
+    public void setBtnCerrar(HtmlCommandButton hcb) {
+        this.btnCerrar = hcb;
+    }
 
 
     /**
@@ -637,6 +686,80 @@ public class jrequestAdmin extends AbstractPageBean {
 
     public void tabJrequestAdmin_processTabChange(TabChangeEvent tce) {
         
+    }
+
+    public void listaMantenimientos_processValueChange(ValueChangeEvent vce) {
+        String tmp=(String)this.listaMantenimientos.getValue();
+        Integer id=Integer.parseInt(tmp);
+        Mantenimiento m=new BeanBaseJRequest().getEntityManager().find(Mantenimiento.class, id);
+
+        this.mantenimientoElegido=m;
+
+        Equiposimple eq= new BeanBaseJRequest().getEquipoSimpleByID(this.mantenimientoElegido.getIdequiposimple().getIdEquipoSimple());
+
+        this.lblMantenimiento.setValue("¿Finalizado el Mantenimiento de " +this.mantenimientoElegido.getDescripcion() +" al Equipo "+ eq.getDescripcion() +" ?");
+        this.popUpBitacora.setRendered(true);
+        System.out.println("RENDERICE");
+        this.popUpBitacora.setVisible(true);
+        System.out.println("PUSE VISIBLE");
+        this.popUpBitacora.setModal(true);
+        System.out.println("SOLO EL ES MODIFICABLE");
+
+
+    }
+
+    public String btnAceptarFinalizado_action() {
+
+        if(this.checkFIn.isSelected()){
+            Bitacoraestados be = new Bitacoraestados();
+
+            Calendar c = Calendar.getInstance();
+
+            int year = (c.get(Calendar.YEAR))-1900;
+            System.out.println(year);
+
+            be.setFecha(new Date(year, c.get(Calendar.MONTH), c.get(Calendar.DATE)));
+
+            Estadoequipo ee = new BeanBaseJRequest().getEstadoEquipoByID(this.mantenimientoElegido.getIdequiposimple().getIdestado().getIdestado());
+
+            be.setIdestado(ee);
+
+            be.setDescripcion(this.mantenimientoElegido.getDescripcion());
+
+            be.setIdequiposimple(this.mantenimientoElegido.getIdequiposimple());
+
+            new BeanBaseJRequest().registrarBitacoraEstados(be);
+
+            this.popUpBitacora.setRendered(false);
+            System.out.println("RENDERICE");
+            this.popUpBitacora.setVisible(false);
+            System.out.println("PUSE VISIBLE");
+            this.popUpBitacora.setModal(false);
+            System.out.println("SOLO EL ES MODIFICABLE");
+
+            this.lblMensajes.setValue("Mantenimiento realizado con éxito. Se ha ingresado a la bitácora del equipo");
+            this.popUpMensajes.setRendered(true);
+            System.out.println("RENDERICE");
+            this.popUpMensajes.setVisible(true);
+            System.out.println("PUSE VISIBLE");
+            this.popUpMensajes.setModal(true);
+            System.out.println("SOLO EL ES MODIFICABLE");
+
+        }
+
+        return null;
+    }
+
+    public String btnCerrar_action() {
+
+        this.popUpBitacora.setRendered(false);
+        System.out.println("RENDERICE");
+        this.popUpBitacora.setVisible(false);
+        System.out.println("PUSE VISIBLE");
+        this.popUpBitacora.setModal(false);
+        System.out.println("SOLO EL ES MODIFICABLE");
+
+        return null;
     }
 
 

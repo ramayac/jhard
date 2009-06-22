@@ -95,7 +95,8 @@
                                             <ice:panelLayout id="panelLayout2" layout="flow" style="height: 555px; position: inherit; width: 100%; -rave-layout: grid">
                                                 <ice:selectOneListbox binding="#{jrequestAdmin.listaMantenimientos}" id="listaMantenimientos"
                                                     partialSubmit="true" size="2"
-                                                    style="height: 360px; left: 334px; top: 406px; position: absolute; width: 456px" value="#{jrequestAdmin.defaultSelectedData5.selectedObject}">
+                                                    style="height: 360px; left: 334px; top: 406px; position: absolute; width: 456px"
+                                                    value="#{jrequestAdmin.defaultSelectedData5.selectedObject}" valueChangeListener="#{jrequestAdmin.listaMantenimientos_processValueChange}">
                                                     <f:selectItems id="selectOneListbox1selectItems1" value="#{jrequestAdmin.selectOneListbox1DefaultItems3}"/>
                                                 </ice:selectOneListbox>
                                                 <ice:outputLabel id="outputLabel4" style="left: 360px; top: 360px; position: absolute; width: 406px" value="Seleccione un Trabajo de mantenimiento, e indique si ya ha finalizado"/>
@@ -109,15 +110,21 @@
                                         </ice:panelTab>
                                     </ice:panelTabSet>
                                     <ice:panelPopup binding="#{jrequestAdmin.popUpBitacora}" draggable="true" id="popUpBitacora"
-                                        rendered="#{jrequestAdmin.panelPopup2Bean.showDraggablePanel}" style="display: block; width: 214px" visible="#{jrequestAdmin.panelPopup2Bean.showModalPanel}">
+                                        rendered="#{jrequestAdmin.panelPopup2Bean.showDraggablePanel}" style="display: block; height: 189px; width: 357px" visible="#{jrequestAdmin.panelPopup2Bean.showModalPanel}">
                                         <f:facet name="header">
                                             <ice:panelGrid id="panelGrid3" style="display:block;width:180px;height:20px;">
-                                                <ice:outputText id="outputText3" value="header text"/>
+                                                <ice:outputText id="lblTituloMan" value="Mantenimientos JRequest"/>
                                             </ice:panelGrid>
                                         </f:facet>
                                         <f:facet name="body">
-                                            <ice:panelGrid id="panelGrid4" style="display:block;width:180px;height:80px;">
-                                                <ice:outputText id="outputText4" value="body text"/>
+                                            <ice:panelGrid id="panelGrid4" style="display: block; height: 134px" width="326">
+                                                <ice:outputText binding="#{jrequestAdmin.lblMantenimiento}" id="lblMantenimiento" value="MANTENIMIENTO QUE ESTARA FINALIZADO"/>
+                                                <ice:outputLabel id="lblFin" value="Finalizado"/>
+                                                <ice:selectBooleanCheckbox binding="#{jrequestAdmin.checkFIn}" id="checkFIn" partialSubmit="true" value="#{jrequestAdmin.selectBooleanCheckbox1Bean.selectedBoolean}"/>
+                                                <ice:commandButton action="#{jrequestAdmin.btnAceptarFinalizado_action}"
+                                                    binding="#{jrequestAdmin.btnAceptarFinalizado}" id="btnAceptarFinalizado" value="OK"/>
+                                                <ice:commandButton action="#{jrequestAdmin.btnCerrar_action}" binding="#{jrequestAdmin.btnCerrar}"
+                                                    id="btnCerrar" value="Cerrar"/>
                                             </ice:panelGrid>
                                         </f:facet>
                                     </ice:panelPopup>
