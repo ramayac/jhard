@@ -25,11 +25,23 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author robertux
+ * @author Rodrigo
  */
 @Entity
 @Table(name = "entrada", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Entrada.findAll", query = "SELECT e FROM Entrada e"), @NamedQuery(name = "Entrada.findByIdentrada", query = "SELECT e FROM Entrada e WHERE e.identrada = :identrada"), @NamedQuery(name = "Entrada.findByTitulo", query = "SELECT e FROM Entrada e WHERE e.titulo = :titulo"), @NamedQuery(name = "Entrada.findByFechahora", query = "SELECT e FROM Entrada e WHERE e.fechahora = :fechahora")})
+@NamedQueries({
+    @NamedQuery(name = "Entrada.findAll", query = "SELECT e FROM Entrada e"),
+    //SELECT * FROM `jhard`.`entrada` ORDER BY 1 DESC LIMIT 5
+    //@NamedQuery(name = "Entrada.findLastFive", query = "SELECT e FROM Entrada e ORDER BY 1 DESC LIMIT 5"),
+    //@NamedQuery(name = "Entrada.findLastN",query = "SELECT e FROM Entrada e ORDER BY 1 DESC LIMIT :numero"),
+    @NamedQuery(name = "Entrada.findByIdentrada",
+        query = "SELECT e FROM Entrada e WHERE e.identrada = :identrada"),
+    //@NamedQuery(name = "Entrada.findByTitulo", query = "SELECT e FROM Entrada e WHERE e.titulo = :titulo"), //what for?
+    @NamedQuery(name = "Entrada.findByFechahora", 
+        query = "SELECT e FROM Entrada e WHERE e.fechahora = :fechahora")
+    //@NamedQuery(name = "Entrada.findByRangoFechahora", query = "SELECT e FROM Entrada e WHERE e.fechahora IN BETWEEN :defecha AND :hastafecha")
+})
+
 public class Entrada implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,7 +64,8 @@ public class Entrada implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "identrada")
     private Collection<TagEntrada> tagEntradaCollection;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
+    //@Column(name = "idusuario", nullable = false)
     private Usuario idusuario;
 
     public Entrada() {

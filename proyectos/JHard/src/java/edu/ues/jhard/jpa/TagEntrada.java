@@ -18,11 +18,19 @@ import javax.persistence.Table;
 
 /**
  *
- * @author robertux
+ * @author Rodrigo
  */
 @Entity
 @Table(name = "tag_entrada", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "TagEntrada.findAll", query = "SELECT t FROM TagEntrada t"), @NamedQuery(name = "TagEntrada.findByIdtagentrada", query = "SELECT t FROM TagEntrada t WHERE t.idtagentrada = :idtagentrada")})
+@NamedQueries({
+    @NamedQuery(name = "TagEntrada.findAll", query = "SELECT t FROM TagEntrada t"),
+    @NamedQuery(name = "TagEntrada.findByIdtagentrada",
+        query = "SELECT t FROM TagEntrada t WHERE t.idtagentrada = :idtagentrada"),
+    @NamedQuery(name = "TagEntrada.findByIdentrada", 
+        query = "SELECT t FROM TagEntrada t WHERE t.identrada = :identrada"),
+    @NamedQuery(name = "TagEntrada.findByIdtag", 
+        query = "SELECT t FROM TagEntrada t WHERE t.identrada = :idtag")
+})
 public class TagEntrada implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
