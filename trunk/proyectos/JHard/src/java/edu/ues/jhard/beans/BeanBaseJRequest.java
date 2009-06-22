@@ -187,10 +187,12 @@ public class BeanBaseJRequest extends BeanBase{
     }
 
 
-    public Estadoequipo getEstadoEquipoByID() {
+    public Estadoequipo getEstadoEquipoByID(Integer idEstado) {
         EntityManager em=this.getEntityManager();
 
         Query q=em.createNamedQuery("Estadoequipo.findByIdestado");
+
+        q.setParameter("idestado", idEstado);
 
         Estadoequipo eeq=(Estadoequipo)q.getSingleResult();
 

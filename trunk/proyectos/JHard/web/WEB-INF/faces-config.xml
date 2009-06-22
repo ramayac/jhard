@@ -56,6 +56,13 @@
         <managed-bean-class>edu.ues.jhard.beans.BeanBaseJHardmin</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+<<<<<<< .mine
+    <managed-bean>
+        <managed-bean-name>jwikiUser</managed-bean-name>
+        <managed-bean-class>jhard.jwikiUser</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+=======
     <managed-bean>
         <managed-bean-name>Index</managed-bean-name>
         <managed-bean-class>jhard.Index</managed-bean-class>
@@ -71,4 +78,5 @@
         <managed-bean-class>jhard.UserAdmin</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+>>>>>>> .r171
 </faces-config>
