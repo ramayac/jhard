@@ -2633,3 +2633,25 @@ Disabled classes for the calendar controls
     border-bottom: 1px solid #ABABAB;
     cursor: n-resize;
 }
+
+#frmLogin label{
+    float: left;
+    width: 50px;
+}
+
+#frmLogin p, #frmLogout p{
+    margin: 5px;
+}
+
+.errorText{
+    color: red;
+}
+
+.btnAccion{
+    position: relative;
+    left: 120px;
+}
+
+.userName{
+    font-weight: bold;
+}
