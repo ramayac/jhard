@@ -288,18 +288,21 @@ public class BeanBaseJRequestTest {
     }
 
 
-    //@Test
-    public void testGetSolicitudPrioridades() {
+    @Test
+    public void testGetSolicitudesByPrioridad() {
         
-        System.out.println("getSolicitudOrderByPrioridades");
+        System.out.println("getSolicitudesByPrioridad");
 
         BeanBaseJRequest instance = new BeanBaseJRequest();
 
-        Solicitud[] result = instance.getPrioridades();
+        String prioridad="Media";
+        
+        Solicitud[] result = instance.getSolicitudesByPrioridad(prioridad);
 
         assertNotNull(result);
 
-        System.out.println("ME ORDENA LAS PRIORIDADES POR ALTA, MEDIA Y BAJA");
+        System.out.println(result);
+        System.out.println("OBTENGO TODAS LAS SOLICITUDES DE UNA PRIORIDAD ");
 
         
     }
