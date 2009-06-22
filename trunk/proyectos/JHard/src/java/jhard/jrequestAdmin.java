@@ -15,12 +15,14 @@ import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
 import com.icesoft.faces.component.jsfcl.data.PopupBean;
 import com.icesoft.faces.component.panelpopup.PanelPopup;
+import com.icesoft.faces.component.paneltabset.TabChangeEvent;
 import com.sun.data.provider.impl.ObjectArrayDataProvider;
 import com.sun.data.provider.impl.ObjectListDataProvider;
 import com.sun.rave.faces.data.DefaultSelectItemsArray;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.beans.BeanBaseJRequest;
+import edu.ues.jhard.jpa.Equiposimple;
 import edu.ues.jhard.jpa.Mantenimiento;
 import edu.ues.jhard.jpa.Solicitud;
 import edu.ues.jhard.jpa.Tecnico;
@@ -59,6 +61,9 @@ public class jrequestAdmin extends AbstractPageBean {
         selectOneMenu1DefaultItems1.setItems(new String[]{"Alta", "Media", "Baja"});
         selectOneMenu2DefaultItems.setItems(new String[]{"Media", "Baja"});
         selectOneMenu1DefaultItems.setItems(new String[]{"Alta", "Media", "Baja"});
+        selectOneListbox1DefaultItems1.setItems(new String[]{});
+        selectOneListbox1DefaultItems2.setItems(new String[]{});
+        selectOneListbox1DefaultItems3.setItems(new String[]{});
 
         
 
@@ -99,7 +104,22 @@ public class jrequestAdmin extends AbstractPageBean {
         this.listaSol.getChildren().clear();
         this.listaSol.getChildren().add(items);
 
-        
+
+        mantenimientos = new edu.ues.jhard.beans.BeanBaseJRequest().getMantenimiento();
+
+        for(int i=0;i<mantenimientos.length;i++){
+            Equiposimple eq = new BeanBaseJRequest().getEquipoSimpleByID(mantenimientos[i].getIdequiposimple().getIdEquipoSimple());
+
+            String label = eq.getDescripcion() +"  "+ mantenimientos[i].getDescripcion();
+
+            man.add(new SelectItem(mantenimientos[i].getIdmantenimiento(), label));
+        }
+
+        UISelectItems itemsMan = new UISelectItems();
+        itemsMan.setValue(man);
+        this.listaMantenimientos.getChildren().clear();
+        this.listaMantenimientos.getChildren().add(itemsMan);
+
     }
 
 
@@ -119,11 +139,13 @@ public class jrequestAdmin extends AbstractPageBean {
 
 
     private Solicitud[] solicitudes;
+    private Mantenimiento[] mantenimientos;
     private Solicitud solicitudElegida=null;
     private Tecnico[] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
     private Tecnico tecnicoElegido=tecnicos[0];
 
     private ArrayList soc=new ArrayList();
+    private ArrayList man= new ArrayList();
     private UISelectItems items;
 
     public ArrayList getSolicitudes() {
@@ -431,6 +453,15 @@ public class jrequestAdmin extends AbstractPageBean {
     public void setPopUpBitacora(PanelPopup pp) {
         this.popUpBitacora = pp;
     }
+    private HtmlSelectOneListbox listaMantenimientos = new HtmlSelectOneListbox();
+
+    public HtmlSelectOneListbox getListaMantenimientos() {
+        return listaMantenimientos;
+    }
+
+    public void setListaMantenimientos(HtmlSelectOneListbox hsol) {
+        this.listaMantenimientos = hsol;
+    }
 
 
     /**
@@ -602,6 +633,10 @@ public class jrequestAdmin extends AbstractPageBean {
 
 
         return null;
+    }
+
+    public void tabJrequestAdmin_processTabChange(TabChangeEvent tce) {
+        
     }
 
 

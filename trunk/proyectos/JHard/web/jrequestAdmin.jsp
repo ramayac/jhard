@@ -93,8 +93,9 @@
                                         </ice:panelTab>
                                         <ice:panelTab id="tabMantenimientos" label="Mantenimientos">
                                             <ice:panelLayout id="panelLayout2" layout="flow" style="height: 555px; position: inherit; width: 100%; -rave-layout: grid">
-                                                <ice:selectOneListbox id="listaMantenimientos" partialSubmit="true" size="2"
-                                                    style="height: 360px; left: 430px; top: 406px; position: absolute; width: 192px" value="#{jrequestAdmin.defaultSelectedData5.selectedObject}">
+                                                <ice:selectOneListbox binding="#{jrequestAdmin.listaMantenimientos}" id="listaMantenimientos"
+                                                    partialSubmit="true" size="2"
+                                                    style="height: 360px; left: 334px; top: 406px; position: absolute; width: 456px" value="#{jrequestAdmin.defaultSelectedData5.selectedObject}">
                                                     <f:selectItems id="selectOneListbox1selectItems1" value="#{jrequestAdmin.selectOneListbox1DefaultItems3}"/>
                                                 </ice:selectOneListbox>
                                                 <ice:outputLabel id="outputLabel4" style="left: 360px; top: 360px; position: absolute; width: 406px" value="Seleccione un Trabajo de mantenimiento, e indique si ya ha finalizado"/>
