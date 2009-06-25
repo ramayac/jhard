@@ -134,10 +134,10 @@ public class LoginManager {
         
         try
          {
-
+             System.out.println(plainText);
             MD5 md = MD5.getInstance();
             encripted = md.hashData(plainText.getBytes());
-         
+             System.out.println(encripted);
             
         }
          catch(NoSuchAlgorithmException e)
