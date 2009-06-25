@@ -5,6 +5,7 @@
 
 package edu.ues.jhard.jhardmin;
 
+import edu.ues.jhard.jpa.Rol;
 import java.util.Date;
 
 /**
@@ -16,10 +17,12 @@ public class LoggedUser {
     private String userName;
     private String loggedUrl;
     private Date loggedTime;
+    private Rol userRole;
 
-    public LoggedUser(Integer uid, String userName, String loggedUrl){
+    public LoggedUser(Integer uid, String userName, Rol userRole, String loggedUrl){
         this.uid = uid;
         this.userName = userName;
+        this.userRole = userRole;
         this.loggedUrl = loggedUrl;
         this.loggedTime = new Date();
     }
@@ -78,5 +81,19 @@ public class LoggedUser {
      */
     public void setLoggedTime(Date loggedTime) {
         this.loggedTime = loggedTime;
+    }
+
+    /**
+     * @return the userRole
+     */
+    public Rol getUserRole() {
+        return userRole;
+    }
+
+    /**
+     * @param userRole the userRole to set
+     */
+    public void setUserRole(Rol userRole) {
+        this.userRole = userRole;
     }
 }

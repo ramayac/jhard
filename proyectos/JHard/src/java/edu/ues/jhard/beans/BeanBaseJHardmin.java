@@ -7,7 +7,10 @@ package edu.ues.jhard.beans;
 
 import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jhardmin.LoginManager;
+import edu.ues.jhard.jpa.Rol;
 import edu.ues.jhard.jpa.Usuario;
+import edu.ues.jhard.util.ActionMessage;
+import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
@@ -22,12 +25,19 @@ public class BeanBaseJHardmin extends BeanBase {
     private LoggedUser currentUser;
     private String inputUsrName;
     private String inputUsrPassword;
+    private String inputChOldPwd;
+    private String inputChNewPwd;
+    private String inputChNewPwdConfirm;
     private Boolean loginFail;
+    private List<Rol> roleList;
+    private ActionMessage msg;
 
     public BeanBaseJHardmin(){
         this.loginFail = false;
         this.setInputUsrName("");
         this.setInputUsrPassword("");
+        this.roleList = this.getEntityManager().createNamedQuery("Rol.findAll").getResultList();
+        this.msg = new ActionMessage();
     }
 
     public Usuario getUsuario(String userName, String userPwd){
@@ -134,5 +144,108 @@ public class BeanBaseJHardmin extends BeanBase {
      */
     public void setLoginFail(Boolean loginFail) {
         this.loginFail = loginFail;
+    }
+
+    /**
+     * @return the roleList
+     */
+    public List<Rol> getRoleList() {
+        return roleList;
+    }
+
+    public String changePassword(){
+        try{
+            Usuario usr = LoginManager.getInstance().getUsuario(this.currentUser);
+            if(usr.getClave().equalsIgnoreCase(LoginManager.getInstance().encrypt(this.getInputChOldPwd()))){
+                if(this.getInputChNewPwd().equalsIgnoreCase(this.getInputChNewPwdConfirm())){
+                    usr.setClave(LoginManager.getInstance().encrypt(this.getInputChNewPwd()));
+                    this.getEntityManager().getTransaction().begin();
+                    this.getEntityManager().persist(usr);
+                    this.getEntityManager().getTransaction().commit();
+                    this.setInputChOldPwd("");
+                    this.setInputChNewPwd("");
+                    this.setInputChNewPwdConfirm("");
+                    this.msg.setText("Clave cambiada exitosamente");
+                    this.msg.setType("success");
+                }
+                else{
+                    this.msg.setText("Nuevas claves no coinciden");
+                    this.msg.setType("fail");
+                }
+            }
+            else{
+                this.msg.setText("Clave anterior no coincide");
+                this.msg.setType("fail");
+            }
+            this.msg.setVisible(true);
+            return "success! :-)";
+        }
+        catch(Exception ex){            
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+            return "fail  :-(";
+        }
+    }
+
+    public String closePopup(){
+        System.out.println("closePopup invocado.");
+        this.msg.setVisible(false);
+        return "done.";
+    }
+
+    /**
+     * @return the msg
+     */
+    public ActionMessage getMsg() {
+        return msg;
+    }
+
+    /**
+     * @param msg the msg to set
+     */
+    public void setMsg(ActionMessage msg) {
+        this.msg = msg;
+    }
+
+    /**
+     * @return the inputChOldPwd
+     */
+    public String getInputChOldPwd() {
+        return inputChOldPwd;
+    }
+
+    /**
+     * @param inputChOldPwd the inputChOldPwd to set
+     */
+    public void setInputChOldPwd(String inputChOldPwd) {
+        this.inputChOldPwd = inputChOldPwd;
+    }
+
+    /**
+     * @return the inputChNewPwd
+     */
+    public String getInputChNewPwd() {
+        return inputChNewPwd;
+    }
+
+    /**
+     * @param inputChNewPwd the inputChNewPwd to set
+     */
+    public void setInputChNewPwd(String inputChNewPwd) {
+        this.inputChNewPwd = inputChNewPwd;
+    }
+
+    /**
+     * @return the inputChNewPwdConfirm
+     */
+    public String getInputChNewPwdConfirm() {
+        return inputChNewPwdConfirm;
+    }
+
+    /**
+     * @param inputChNewPwdConfirm the inputChNewPwdConfirm to set
+     */
+    public void setInputChNewPwdConfirm(String inputChNewPwdConfirm) {
+        this.inputChNewPwdConfirm = inputChNewPwdConfirm;
     }
 }

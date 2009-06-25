@@ -9,9 +9,9 @@
     <f:view>
         <html id="outputHtml1">
             <head id="outputHead1">
-                <!--ice:outputStyle href="./resources/stylesheet.css" id="outputStyle1"/-->
-                <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
+                <!--ice:outputStyle href="./resources/stylesheet.css" id="outputStyle1"/-->                
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
+                <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
                 <title>.:: JHard ::.</title>
                 <meta content="" name="keywords"/>
@@ -55,9 +55,9 @@
                     <!-- start content -->
                     <div id="content">
                         <div class="post">
-                            <h2 class="title">Requerimientos de Mantenimiento</h2>
+                            <h2 class="title">Página Principal</h2>
                             <div class="entry">
-                                SISTEMA PARA LA UNIDAD DE HARDWARE Y SOFTWARE DE LA UES-FMO
+                                
 
                             </div>
                         </div>
@@ -96,36 +96,38 @@
                                 <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
                                     <p>
                                         <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
-                                        <ice:outputLabel id="lblNomUsuario" styleClass="userName" value="#{JHardminInstance.currentUser.userName}"/>
+                                        <ice:outputLabel id="lblNomUsuario" styleClass="formValue" value="#{JHardminInstance.currentUser.userName}"/>
                                     </p>
                                     <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>
                                 </ice:form>
                             </li>
                             <li>
-                                <h2>Tareas Comunes</h2>
-                                <ul>
-                                    <li>
-                                        <a href="#">Cambiar clave de acceso</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Administrar usuarios</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Velit semper nisi molestie</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Eget tempor eget nonummy</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Nec metus sed donec</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Magna lacus bibendum mauris</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Velit semper nisi molestie</a>
-                                    </li>
-                                </ul>
+                                <ice:form id="frmCommonTasks">
+                                    <h2>Tareas Comunes</h2>
+                                    <ul>
+                                        <li>
+                                            <ice:commandLink value="Cambiar clave de acceso" action="chpwd" rendered="#{JHardminInstance.currentUser != null}"  />
+                                        </li>
+                                        <li>
+                                            <a href="#">Administrar usuarios</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Velit semper nisi molestie</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Eget tempor eget nonummy</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Nec metus sed donec</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Magna lacus bibendum mauris</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Velit semper nisi molestie</a>
+                                        </li>
+                                    </ul>
+                                </ice:form>
                             </li>
                         </ul>
                     </div>
