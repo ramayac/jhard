@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Document   : Admin
+    Created on : 06-23-2009, 10:46:49 PM
+    Author     : Robertux
+-->
+<jsp:root version="2.0" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ice="http://www.icesoft.com/icefaces/component" xmlns:jsp="http://java.sun.com/JSP/Page">
+    <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"/>
+    <f:view>
+        <html id="outputHtml1">
+            <head id="outputHead1">
+                <!--ice:outputStyle href="./resources/stylesheet.css" id="outputStyle1"/-->                
+                <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
+                <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
+                <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+                <title>.:: JHard ::.</title>
+                <meta content="" name="keywords"/>
+                <meta content="" name="description"/>
+                <link href="css/default.css" rel="stylesheet" type="text/css"/>
+                <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+            </head>
+            <body id="outputBody1" style="-rave-layout: grid">
+                <!--start header -->
+                <div id="header">
+                    <div id="menu">
+                        <ul>
+                            <li class="current_page_item">
+                                <a href="#">Principal</a>
+                            </li>
+                            <li>
+                                <a href="jrequestUser.iface">Mantenimientos</a>
+                            </li>
+                            <li>
+                                <a href="#">Grupos de Laboratorio</a>
+                            </li>
+                            <li>
+                                <a href="#">Inventario</a>
+                            </li>
+                            <li>
+                                <a href="#">Wiki y Cursos</a>
+                            </li>
+                            <li class="last">
+                                <a href="#">Cañones</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="logo">
+                    <h1>Laboratorio de Hardware</h1>
+                    <h2>Universidad de El Salvador, Facultad Multidisciplinaria de Occidente</h2>
+                </div>
+                <!-- end header -->
+                <!-- start page -->
+                <div id="page">
+                    <!-- start content -->
+                    <div id="content">
+                        <div class="post">
+                            <ice:form id="frmAdminTasks">
+                            <h2 class="title">Administración de Usuarios</h2>
+                                <ice:panelGroup styleClass="entry" rendered="#{JHardminInstance.currentUser != null}">
+                                    <ice:panelCollapsible expanded="true">
+                                        <f:facet name="header">
+                                            <h:outputText value="Mi Cuenta" />
+                                        </f:facet>
+                                        <ice:panelGroup id="divChngPwd" styleClass="frmElementList">
+                                            <h3>Datos de la cuenta</h3>
+                                            <p>
+                                                <ice:outputLabel id="lblNomUsuario" value="Nombre: " />
+                                                <ice:outputText styleClass="formValue" value="#{JHardminInstance.currentUser.userName}" />
+                                            </p>
+                                            <p>
+                                                <ice:outputLabel id="lblRolUsuario" value="Rol:" />
+                                                <ice:outputText styleClass="formValue" value="#{JHardminInstance.currentUser.userRole.nombre}" />
+                                            </p>
+                                            <h3>Cambiar Clave de Acceso</h3>
+                                            <p>
+                                                <ice:outputLabel id="lblClaveAnterior" value="Clave anterior: " />
+                                                <ice:inputText id="txtClaveAnterior" value="#{JHardminInstance.inputChOldPwd}" required="true" requiredMessage="Debe escribir la clave anterior" />
+                                            </p>
+                                            <p>
+                                                <ice:outputLabel id="lblClaveNueva" value="Nueva clave: " />
+                                                <ice:inputText id="txtClaveNueva" value="#{JHardminInstance.inputChNewPwd}" required="true" requiredMessage="Debe escribir la nueva clave" />
+                                            </p>
+                                            <p>
+                                                <ice:outputLabel id="lblClaveNuevaConfirm" value="Repita la nueva clave: " />
+                                                <ice:inputText id="txtClaveNuevaConfirm" value="#{JHardminInstance.inputChNewPwdConfirm}" required="true" requiredMessage="Debe confirmar la nueva clave" />
+                                            </p>
+                                            <p>
+                                                <ice:commandButton value="Cambiar clave" styleClass="btnAccion" action="#{JHardminInstance.changePassword}" />
+                                            </p>
+                                            <ice:panelPopup styleClass="panelPopup" draggable="true" rendered="#{JHardminInstance.msg.visible}">
+                                                <f:facet name="header">                                                    
+                                                    <h:outputText value="Mensaje" />                                                                                                            
+                                                </f:facet>
+                                                <f:facet name="body">
+                                                    <div align="center">
+                                                        <p>
+                                                            <h:outputText value="#{JHardminInstance.msg.text}" styleClass="#{JHardminInstance.msg.type}" />
+                                                        </p>
+                                                        <ice:commandButton id="btnCerrar" type="button" value="OK" alt="Cerrar" action="#{JHardminInstance.closePopup}"  />
+                                                    </div>
+                                                </f:facet>
+                                            </ice:panelPopup>
+                                        </ice:panelGroup>
+                                    </ice:panelCollapsible>
+                                    <ice:panelCollapsible rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Usuarios" />
+                                        </f:facet>
+                                        <ice:panelLayout>
+                                            
+                                        </ice:panelLayout>
+                                    </ice:panelCollapsible>
+                                </ice:panelGroup>
+                            </ice:form>
+                        </div>
+                    </div>
+                    <!-- end content -->
+                    <!-- start sidebar -->
+                    <div id="sidebar">
+                        <ul>
+                            <li id="search">
+                                <h2>Búsqueda Wiki</h2>
+                                <form action="" method="get">
+                                    <fieldset>
+                                        <input class="inputTexto" name="s" type="text" value=""/>
+                                        <input class="inputBoton" type="submit" value="Buscar"/>
+                                    </fieldset>
+                                </form>
+                            </li>
+                            <li>
+                                <h2>
+                                    <ice:outputLabel id="txtUserLogin" value="Sesión"/>
+                                </h2>
+                                <ice:form id="frmLogin" rendered="#{JHardminInstance.currentUser == null}">
+                                    <ice:outputText id="lblLoginFail" styleClass="errorText" rendered="#{JHardminInstance.loginFail}" value="Datos incorrectos"/>
+                                    <p>
+                                        <ice:outputLabel id="lblUser" value="Usuario:"/>
+                                        <ice:inputText id="txtUser" style="width: 120px" value="#{JHardminInstance.inputUsrName}" required="true" requiredMessage="El nombre de usuario es requerido"/>
+                                        <h:message for="txtUser" styleClass="errorText" />
+                                    </p>
+                                    <p>
+                                        <ice:outputLabel id="lblPass" value="Clave:"/>
+                                        <ice:inputSecret id="txtPass" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}" required="true" requiredMessage="La clave de acceso es requerida" />
+                                        <h:message for="txtPass" styleClass="errorText" />
+                                    </p>
+                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" value="Login" styleClass="btnAccion"/>
+                                </ice:form>
+                                <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
+                                    <p>
+                                        <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
+                                        <ice:outputLabel id="lblNomUsuario" styleClass="userName" value="#{JHardminInstance.currentUser.userName}"/>
+                                    </p>
+                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>
+                                </ice:form>
+                            </li>
+                            <li>
+                                <h2>Tareas Comunes</h2>
+                                <ul>
+                                    <li>
+                                        <a href="#">Cambiar clave de acceso</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Administrar usuarios</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Velit semper nisi molestie</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Eget tempor eget nonummy</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Nec metus sed donec</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Magna lacus bibendum mauris</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Velit semper nisi molestie</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- end sidebar -->
+                    <div style="clear: both;"></div>
+                </div>
+                <!-- end page -->
+                <!-- start footer -->
+                <div id="footer">
+                    <div id="footer-wrap">
+                        <p id="legal" style="line-height: 13px">Universidad de El Salvador Facultad Multidisciplinaria de Occidente <br/>
+	Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/>
+                            <a href="#">Créditos</a> - <a href="http://www.uesocc.edu.sv">Pagina Principal de la UES FMOcc</a>
+                        </p>
+                    </div>
+                </div>
+                <!-- end footer -->
+            </body>
+        </html>
+    </f:view>
+</jsp:root>
+

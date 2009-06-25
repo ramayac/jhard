@@ -32,9 +32,9 @@ public class LoginManager {
         if(!this.isLogged(userName)){
            System.out.println("Encriptando...");
             if(this.existsInBD(userName, userPwd)){
-                Integer uid = new BeanBaseJHardmin().getUsuario(userName, encrypt(userPwd)).getIdusuario();
-                this.loggedUsers.put(uid, new LoggedUser(uid, userName, url));
-                return uid;
+                Usuario usr = new BeanBaseJHardmin().getUsuario(userName, encrypt(userPwd));
+                this.loggedUsers.put(usr.getIdusuario(), new LoggedUser(usr.getIdusuario(), userName, usr.getIdrol(), url));
+                return usr.getIdusuario();
             }
         }
         else{

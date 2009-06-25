@@ -2639,7 +2639,7 @@ Disabled classes for the calendar controls
     width: 50px;
 }
 
-#frmLogin p, #frmLogout p{
+#frmLogin p, #frmLogout p, .frmElementList p{
     margin: 5px;
 }
 
@@ -2652,6 +2652,29 @@ Disabled classes for the calendar controls
     left: 120px;
 }
 
-.userName{
+.formValue{
     font-weight: bold;
+}
+
+.frmElementList{
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+}
+
+.frmElementList label{
+    float: left;
+    width: 120px;
+}
+
+h3{
+    background-color: #E0E0E0;
+}
+
+.success{
+    color: #6DBF5F;
+}
+
+.fail{
+    color: #AF4C4C;
 }
