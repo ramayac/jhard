@@ -83,15 +83,6 @@ public class jrequestUser extends AbstractPageBean {
     public void setBtnBuscar(HtmlCommandButton hcb) {
         this.btnBuscar = hcb;
     }
-    private HtmlSelectOneMenu comboProblemas = new HtmlSelectOneMenu();
-
-    public HtmlSelectOneMenu getComboProblemas() {
-        return comboProblemas;
-    }
-
-    public void setComboProblemas(HtmlSelectOneMenu hsom) {
-        this.comboProblemas = hsom;
-    }
 
     // </editor-fold>
 
@@ -115,15 +106,6 @@ public class jrequestUser extends AbstractPageBean {
 
     public void setTecnicos(Tecnico[] tec){
         this.tecnicos=tec;
-    }
-    private HtmlOutputLabel select = new HtmlOutputLabel();
-
-    public HtmlOutputLabel getSelect() {
-        return select;
-    }
-
-    public void setSelect(HtmlOutputLabel hol) {
-        this.select = hol;
     }
     private HtmlCommandButton btnSolicitud = new HtmlCommandButton();
 
@@ -239,16 +221,16 @@ public class jrequestUser extends AbstractPageBean {
         return (ApplicationBean1) getBean("ApplicationBean1");
     }
 
-    public void comboProblemas_processValueChange(ValueChangeEvent vce) {
-
-        String tmp=(String)this.comboProblemas.getValue();
-        Integer id=Integer.valueOf(tmp);
-        Tecnico t=new BeanBaseJRequest().getEntityManager().find(Tecnico.class, id);
-        
-        this.tecnicoElegido= t;
-
-        this.select.setValue(this.tecnicoElegido.getNombres() + this.tecnicoElegido.getApellidos());
-    }
+//    public void comboProblemas_processValueChange(ValueChangeEvent vce) {
+//
+//        String tmp=(String)this.comboProblemas.getValue();
+//        Integer id=Integer.valueOf(tmp);
+//        Tecnico t=new BeanBaseJRequest().getEntityManager().find(Tecnico.class, id);
+//
+//        this.tecnicoElegido= t;
+//
+//        this.select.setValue(this.tecnicoElegido.getNombres() + this.tecnicoElegido.getApellidos());
+//    }
 
     public String btnBuscar_action() {
         //return null means stay on the same page

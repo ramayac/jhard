@@ -27,7 +27,7 @@
                                 <a href="#">Principal</a>
                             </li>
                             <li>
-                                <a href="jrquest.iface">Mantenimientos</a>
+                                <a href="jrequestUser.iface">Mantenimientos</a>
                             </li>
                             <li>
                                 <a href="#">Grupos de Laboratorio</a>
@@ -58,37 +58,43 @@
                             <div class="entry">
                                 <p class="text">Este es el sitio si requiere Soporte Técnico ya sea en Hardware o Software en la UES-FMOcc</p>
                                 <ice:form id="form1">
-                                    <ice:selectInputText id="selectPosts">
-                                        <f:selectItems id="selectInputText1selectedItems"/>
-                                    </ice:selectInputText>
-                                    <ice:outputLabel id="lblInstruccion" value="Si su problema se encuentra en la siguiente lista, escoja para ver su solución"/>
-                                    <br/>
-                                    <br/>
-                                    <ice:selectOneMenu binding="#{jrequestUser.comboProblemas}" id="comboProblemas" partialSubmit="true" style="width: 142px" valueChangeListener="#{jrequestUser.comboProblemas_processValueChange}">
-                                        <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUser.arrayTecnico.options['idtecnico,apellidos']}"/>
-                                    </ice:selectOneMenu>
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <ice:outputLabel id="outputLabel2" value="Si su problema no está en la lista anterior, ingrese palabras clave para realizar una búsqueda"/>
-                                    <br/>
-                                    <br/>
-                                    <ice:inputText id="inputText1" style=""/>
-                                    <br/>
-                                    <br/>
-                                    <ice:commandButton action="#{jrequestUser.btnBuscar_action}" binding="#{jrequestUser.btnBuscar}" id="btnBuscar" style="" value="Buscar"/>
+                                <ice:panelCollapsible id="panelCollapsible1" style="height: 80px; width: 576px">
+                                    <f:facet name="header">
+                                        <ice:panelGroup id="panelGroup1" styleClass="">
+                                            <ice:outputText id="outputText1" value="Busquedas JWiki"/>
+                                        </ice:panelGroup>
+                                    </f:facet>
+                                    <ice:panelGrid id="panelGrid1" style="height: 144px">
+                                        
+                                            <ice:selectInputText id="selectPosts">
+                                                <f:selectItems id="selectInputText1selectedItems"/>
+                                            </ice:selectInputText>
+                                            <br/>
+                                            <ice:outputLabel id="outputLabel2" value="Ingrese palabras clave para realizar una búsqueda de soluciones"/>
+                                            <ice:inputTextarea id="txtProblemas" style="width: 250px"/>
+                                            <ice:commandButton action="#{jrequestUser.btnBuscar_action}" binding="#{jrequestUser.btnBuscar}" id="btnBuscar" value="Buscar"/>
+                                        
+                                    </ice:panelGrid>
+                                </ice:panelCollapsible>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <ice:panelCollapsible id="panelCollapsible2" style="height: 114px; width: 576px">
+                                    <f:facet name="header">
+                                        <ice:panelGroup id="panelGroup2" styleClass="">
+                                            <ice:outputText id="lblTitulo" value="Envio de Solicitudes de Mantenimiento"/>
+                                        </ice:panelGroup>
+                                    </f:facet>
+                                    <ice:panelGrid id="panelGrid2" style="height: 72px">
+                                            <ice:outputLabel id="lblSolicitud" value="En cambio, si desea enviar una solicitud de Mantenimiento, pulse el siguiente botón"/>
+                                            <ice:commandButton action="#{jrequestUser.btnSolicitud_action}" binding="#{jrequestUser.btnSolicitud}"
+                                                id="btnSolicitud" value="Enviar Solicitud"/>
+                                    </ice:panelGrid>
+                                </ice:panelCollapsible>
                                 </ice:form>
-                                <ice:outputLabel binding="#{jrequestUser.select}" id="select" value="outputLabel"/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <ice:form id="form2">
-                                    <ice:outputLabel id="lblSolicitud" value="En cambio, si desea enviar una solicitud de Mantenimiento, pulse el siguiente botón"/>
-                                    <ice:commandButton action="#{jrequestUser.btnSolicitud_action}" binding="#{jrequestUser.btnSolicitud}" id="btnSolicitud" value="Enviar Solicitud"/>
-                                </ice:form>
-                                <br/>
                             </div>
                         </div>
                     </div>
@@ -106,9 +112,31 @@
                                 </form>
                             </li>
                             <li>
-                                <h2>Usuarios</h2>
-                AQUI VA EL LOGIN
-	</li>
+                                <h2>
+                                    <ice:outputLabel id="txtUserLogin" value="Sesión"/>
+                                </h2>
+                                <ice:form id="frmLogin" rendered="#{JHardminInstance.currentUser == null}">
+                                    <ice:outputText id="lblLoginFail" rendered="#{JHardminInstance.loginFail}" styleClass="errorText" value="Datos incorrectos"/>
+                                    <p>
+                                        <ice:outputLabel id="lblUser" value="Usuario:"/>
+                                        <ice:inputText id="txtUser" required="true" requiredMessage="El nombre de usuario es requerido" style="width: 120px" value="#{JHardminInstance.inputUsrName}"/>
+                                        <h:message for="txtUser" styleClass="errorText"/>
+                                    </p>
+                                    <p>
+                                        <ice:outputLabel id="lblPass" value="Clave:"/>
+                                        <ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}"/>
+                                        <h:message for="txtPass" styleClass="errorText"/>
+                                    </p>
+                                    <ice:commandButton action="#{Index.btnLogin_action}" id="btnLogin" styleClass="btnAccion" value="Login"/>
+                                </ice:form>
+                                <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
+                                    <p>
+                                        <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
+                                        <ice:outputLabel id="lblNomUsuario" styleClass="userName" value="#{JHardminInstance.currentUser.userName}"/>
+                                    </p>
+                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>
+                                </ice:form>
+                            </li>
                             <li>
                                 <h2>Otros Vinculos</h2>
                                 <ul>

@@ -59,6 +59,17 @@ public class BeanBaseJRequest extends BeanBase{
 
     }
 
+     public void modificarBitacoraEstados(Bitacoraestados b, String value){
+
+         EntityManager em = this.getEntityManager();
+         Bitacoraestados be= em.find(Bitacoraestados.class, b.getIdbitacora());
+         be.setDescripcion(value);
+         System.out.println(be.getIdbitacora());
+         em.getTransaction().begin();
+         em.persist(be);
+         em.getTransaction().commit();
+     }
+
 
      public Mantenimiento[] getMantenimiento() {
         EntityManager em=this.getEntityManager();
@@ -100,6 +111,16 @@ public class BeanBaseJRequest extends BeanBase{
         em.getTransaction().commit();
 
     }
+
+     public void eliminarTecnico(Tecnico t){
+         
+         EntityManager em = this.getEntityManager();
+         Tecnico T= em.find(Tecnico.class, t.getIdtecnico());
+         System.out.println(T.getIdtecnico());
+         em.getTransaction().begin();
+         em.remove(T);
+         em.getTransaction().commit();
+     }
 
 
         public Solicitud[] getSolicitud() {
@@ -155,7 +176,7 @@ public class BeanBaseJRequest extends BeanBase{
         Equiposimple[] eqs=(Equiposimple[])q.getResultList().toArray(new Equiposimple[0]);
 
         for(int i=0;i<eqs.length;i++)
-        em.refresh(eqs[i]);
+            em.refresh(eqs[i]);
         return eqs;
     }
 
@@ -226,6 +247,20 @@ public class BeanBaseJRequest extends BeanBase{
 
         em.refresh(s);
         return s;
+    }
+
+    public Bitacoraestados[] getBitacoraEstadosByIdEquipoSimple(Equiposimple e) {
+        EntityManager em=this.getEntityManager();
+
+        Query q=em.createNamedQuery("Bitacoraestados.findoByIdEquipoSimple");
+
+        q.setParameter("idequiposimple", e);
+
+        Bitacoraestados[] be=(Bitacoraestados[])q.getResultList().toArray(new Bitacoraestados[0]);
+
+        for(int i=0;i<be.length;i++)
+            em.refresh(be[i]);
+        return be;
     }
 
 }

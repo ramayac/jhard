@@ -57,14 +57,14 @@
                             <h2 class="title">Mantenimiento de Hardware y Software</h2>
                             <div class="entry">
                                 <p class="text">Administración de Solicitudes de Mantenimiento UES-FMOcc</p>
-                                <ice:form id="form1">
-                                    <ice:panelTabSet height="648" id="tabJrequestAdmin" selectedIndex="1"
-                                        tabChangeListener="#{jrequestAdmin.tabJrequestAdmin_processTabChange}" tabPlacement="Top" width="720">
-                                        <ice:panelTab id="tabSolicitudes" label="Solicitudes" style="vertical-align: bottom; width: 72px">
-                                            <ice:panelLayout id="panelLayout1" layout="flow" style="height: 576px; position: inherit; width: 100%; -rave-layout: grid">
+                                <ice:form id="form1" style="height: 1288px">
+                                    <ice:panelTabSet height="528" id="tabJrequestAdmin" tabChangeListener="#{jrequestAdmin.tabJrequestAdmin_processTabChange}"
+                                        tabPlacement="Top" width="552">
+                                        <ice:panelTab id="tabSolicitudes" label="Solicitudes" style="vertical-align: top; width: 72px">
+                                            <ice:panelLayout id="panelLayout1" layout="flow" style="height: 504px; position: inherit; width: 100%; -rave-layout: grid">
                                                 <ice:selectOneListbox binding="#{jrequestAdmin.listaSol}" id="listaSol" partialSubmit="true" size="2"
                                                     style="height: 360px; left: 298px; top: 426px; position: absolute; width: 252px" value="" valueChangeListener="#{jrequestAdmin.listaSol_processValueChange}">
-                                                    <f:selectItems id="selectOneListbox1selectItems" value="#{jrequestAdmin.selectOneListbox1DefaultItems}"/>
+                                                    <f:selectItems id="selectOneListbox1selectItems" value="#{jrequestAdmin.listaSolDefaultItems}"/>
                                                 </ice:selectOneListbox>
                                                 <ice:selectOneMenu binding="#{jrequestAdmin.comboTecnicos}" id="comboTecnicos" partialSubmit="true"
                                                     style="left: 598px; top: 694px; position: absolute; width: 192px" value="" valueChangeListener="#{jrequestAdmin.comboTecnicos_processValueChange}">
@@ -88,48 +88,123 @@
                                                 <ice:outputLabel id="outputLabel5"
                                                     style="font-weight: bold; left: 600px; top: 672px; position: absolute; width: 144px" value="TÉCNICO A ASIGNAR"/>
                                                 <ice:outputLabel id="outputLabel6"
-                                                    style="font-size: 15px; font-weight: bold; left: 288px; top: 360px; position: relative; width: 550px" value="Seleccione un a solicitud de la lista de la derecha y asígnela a Mantenimiento"/>
+                                                    style="font-size: 15px; font-weight: bold; left: 276px; top: 356px; position: absolute; width: 550px" value="Seleccione un a solicitud de la lista de la derecha y asígnela a Mantenimiento"/>
+                                                <ice:commandButton action="#{jrequestAdmin.btnSolicitudAdmin_action}"
+                                                    binding="#{jrequestAdmin.btnSolicitudAdmin}" id="btnSolicitudAdmin"
+                                                    style="left: 624px; top: 792px; position: absolute; width: 168px" value="Realizar una Solicitud"/>
                                             </ice:panelLayout>
                                         </ice:panelTab>
                                         <ice:panelTab id="tabMantenimientos" label="Mantenimientos">
-                                            <ice:panelLayout id="panelLayout2" layout="flow" style="height: 555px; position: inherit; width: 100%; -rave-layout: grid">
+                                            <ice:panelLayout id="panelLayout2" layout="flow" style="height: 504px; position: inherit; width: 100%; -rave-layout: grid">
                                                 <ice:selectOneListbox binding="#{jrequestAdmin.listaMantenimientos}" id="listaMantenimientos"
                                                     partialSubmit="true" size="2"
                                                     style="height: 360px; left: 334px; top: 406px; position: absolute; width: 456px"
                                                     value="#{jrequestAdmin.defaultSelectedData5.selectedObject}" valueChangeListener="#{jrequestAdmin.listaMantenimientos_processValueChange}">
-                                                    <f:selectItems id="selectOneListbox1selectItems1" value="#{jrequestAdmin.selectOneListbox1DefaultItems3}"/>
+                                                    <f:selectItems id="selectOneListbox1selectItems1" value="#{jrequestAdmin.listaMantenimientosDefaultItems}"/>
                                                 </ice:selectOneListbox>
+                                                <ice:panelPopup autoCentre="true" binding="#{jrequestAdmin.popUpBitacora}" draggable="true" id="popUpBitacora"
+                                                    modal="true" rendered="#{jrequestAdmin.panelPopup2Bean.showDraggablePanel}"
+                                                    style="display: block; height: 189px; left: 276px; top: 593px; position: absolute; width: 357px" visible="#{jrequestAdmin.panelPopup2Bean.showModalPanel}">
+                                                    <f:facet name="header">
+                                                        <ice:panelGrid id="panelGrid3" style="display:block;width:180px;height:20px;">
+                                                            <ice:outputText id="lblTituloMan" value="Mantenimientos JRequest"/>
+                                                        </ice:panelGrid>
+                                                    </f:facet>
+                                                    <f:facet name="body">
+                                                        <ice:panelGrid id="panelGrid4" style="display: block; height: 134px" width="326">
+                                                            <ice:outputText binding="#{jrequestAdmin.lblMantenimiento}" id="lblMantenimiento" value="MANTENIMIENTO QUE ESTARA FINALIZADO"/>
+                                                            <ice:outputLabel id="lblFin" value="Finalizado"/>
+                                                            <ice:selectBooleanCheckbox binding="#{jrequestAdmin.checkFIn}" id="checkFIn" partialSubmit="true" value="#{jrequestAdmin.selectBooleanCheckbox1Bean.selectedBoolean}"/>
+                                                            <ice:inputTextarea binding="#{jrequestAdmin.txtDescripcion}" id="txtDescripcion"/>
+                                                            <ice:commandButton action="#{jrequestAdmin.btnAceptarFinalizado_action}"
+                                                                binding="#{jrequestAdmin.btnAceptarFinalizado}" id="btnAceptarFinalizado" value="OK"/>
+                                                            <ice:commandButton action="#{jrequestAdmin.btnCerrar_action}" binding="#{jrequestAdmin.btnCerrar}"
+                                                                id="btnCerrar" value="Cerrar"/>
+                                                        </ice:panelGrid>
+                                                    </f:facet>
+                                                </ice:panelPopup>
                                                 <ice:outputLabel id="outputLabel4" style="left: 360px; top: 360px; position: absolute; width: 406px" value="Seleccione un Trabajo de mantenimiento, e indique si ya ha finalizado"/>
                                             </ice:panelLayout>
                                         </ice:panelTab>
                                         <ice:panelTab id="tadAdministracion" label="Administracion">
-                                            <ice:panelLayout id="panelLayout3" layout="flow" style="height: 576px; position: inherit; width: 100%; -rave-layout: grid"/>
+                                            <ice:panelLayout id="panelLayout3" layout="flow" style="height: 528px; position: inherit; width: 528px; -rave-layout: grid">
+                                                <ice:outputLabel id="outputLabel9"
+                                                    style="font-size: 14px; font-weight: bold; left: 288px; top: 360px; position: absolute; width: 444px" value="Agregue o elimine Técnicos para servicio de Soporte Tecnico. "/>
+                                                <ice:selectOneListbox binding="#{jrequestAdmin.listaTecnicos}" id="listaTecnicos" partialSubmit="true" size="2"
+                                                    style="height: 192px; left: 286px; top: 430px; position: absolute; width: 192px"
+                                                    value="#{jrequestAdmin.defaultSelectedData7.selectedObject}" valueChangeListener="#{jrequestAdmin.listaTecnicos_processValueChange}">
+                                                    <f:selectItems id="selectOneListbox1selectItems2" value="#{jrequestAdmin.selectOneListbox1DefaultItems6}"/>
+                                                </ice:selectOneListbox>
+                                                <ice:outputLabel id="outputLabel10"
+                                                    style="font-size: 16px; font-weight: bold; left: 552px; top: 432px; position: absolute; width: 142px" value="Nombre Completo"/>
+                                                <ice:outputLabel binding="#{jrequestAdmin.lblNombreTec}" id="lblNombreTec"
+                                                    style="left: 552px; top: 480px; position: absolute; width: 214px" value="Nombre del tecnico"/>
+                                                <ice:commandButton action="#{jrequestAdmin.btnAgregarTec_action}" binding="#{jrequestAdmin.btnAgregarTec}"
+                                                    id="btnAgregarTec" style="left: 552px; top: 600px; position: absolute; width: 168px" value="Agregar Nuevo Técnico"/>
+                                                <ice:panelPopup autoCentre="true" binding="#{jrequestAdmin.popUpAgregarTec}" draggable="true"
+                                                    id="popUpAgregarTec" modal="true" rendered="#{jrequestAdmin.panelPopup1Bean.showDraggablePanel}"
+                                                    style="display: block; height: 172px; left: 276px; top: 665px; position: absolute; width: 285px" visible="#{jrequestAdmin.panelPopup1Bean.showModalPanel}">
+                                                    <f:facet name="header">
+                                                        <ice:panelGrid id="panelGrid5" style="display:block;width:180px;height:20px;">
+                                                            <ice:outputText id="outputText1" value="Agregar Técnico"/>
+                                                        </ice:panelGrid>
+                                                    </f:facet>
+                                                    <f:facet name="body">
+                                                        <ice:panelGrid columns="2" id="panelGrid6" style="display: block; height: 134px" width="278">
+                                                            <ice:outputLabel id="outputLabel7" value="Nombres"/>
+                                                            <ice:inputText binding="#{jrequestAdmin.txtNomTec}" id="txtNomTec"/>
+                                                            <ice:outputLabel id="outputLabel8" value="Apellidos"/>
+                                                            <ice:inputText binding="#{jrequestAdmin.txtApeTec}" id="txtApeTec"/>
+                                                            <ice:commandButton action="#{jrequestAdmin.btnOkTec_action}" binding="#{jrequestAdmin.btnOkTec}"
+                                                                id="btnOkTec" value="Agregar"/>
+                                                            <ice:commandButton action="#{jrequestAdmin.btnCerrarTec_action}"
+                                                                binding="#{jrequestAdmin.btnCerrarTec}" id="btnCerrarTec" value="Cerrar"/>
+                                                        </ice:panelGrid>
+                                                    </f:facet>
+                                                </ice:panelPopup>
+                                                <ice:commandButton action="#{jrequestAdmin.btnEliminarTec_action}" binding="#{jrequestAdmin.btnEliminarTec}"
+                                                    id="btnEliminarTec" style="left: 552px; top: 552px; position: absolute; width: 168px" value="Eliminar Técnico"/>
+                                            </ice:panelLayout>
+                                        </ice:panelTab>
+                                        <ice:panelTab id="tabBitacoras" label="Bitacoras" style="">
+                                            <ice:panelLayout id="panelLayout4" layout="flow" style="height: 552px; position: inherit; width: 552px; -rave-layout: grid">
+                                                <ice:selectInputText action="#{jrequestAdmin.txtEqSimples_action}" binding="#{jrequestAdmin.txtEqSimples}"
+                                                    id="txtEqSimples" rows="50" style="left: 288px; top: 408px; position: absolute;visibility: visible;"
+                                                    valueChangeListener="#{jrequestAdmin.txtEqSimples_processValueChange}" visible="true" width="300">
+                                                    <f:selectItems id="selectInputText1selectedItems" value="#{jrequestAdmin.arrayEqSimples.options['idEquipoSimple,descripcion']}"/>
+                                                </ice:selectInputText>
+                                                <ice:outputLabel id="outputLabel11" style="left: 288px; top: 360px; position: absolute" value="Seleccione un equipo simple"/>
+                                                <ice:selectOneListbox binding="#{jrequestAdmin.listaBitacoras}" id="listaBitacoras" partialSubmit="true"
+                                                    size="2" style="height: 312px; left: 598px; top: 430px; position: absolute; width: 216px"
+                                                    value="#{jrequestAdmin.defaultSelectedData8.selectedObject}" valueChangeListener="#{jrequestAdmin.listaBitacoras_processValueChange}">
+                                                    <f:selectItems id="selectOneListbox1selectItems3" value="#{jrequestAdmin.selectOneListbox1DefaultItems}"/>
+                                                </ice:selectOneListbox>
+                                                <ice:panelPopup autoCentre="true" binding="#{jrequestAdmin.popUpModBitacora}" draggable="true"
+                                                    id="popUpModBitacora" modal="true" rendered="#{jrequestAdmin.panelPopup1Bean2.showDraggablePanel}"
+                                                    style="display: block; height: 261px; left: 264px; top: 552px; position: absolute; width: 381px" visible="#{jrequestAdmin.panelPopup1Bean2.showModalPanel}">
+                                                    <f:facet name="header">
+                                                        <ice:panelGrid id="panelGrid7" style="display:block;width:180px;height:20px;">
+                                                            <ice:outputText id="outputText2" value="Bitácora de Equipos"/>
+                                                        </ice:panelGrid>
+                                                    </f:facet>
+                                                    <f:facet name="body">
+                                                        <ice:panelGrid id="panelGrid99" style="display:block;width:340px;height:168px;">
+                                                            <ice:outputText id="outputText3" style="width: 310px" value="Para actualizar esta bitácora, modifique en el cuadro de texto inferior"/>
+                                                            <ice:inputTextarea binding="#{jrequestAdmin.txtModBitacora}" id="txtModBitacora" style="height: 119px; width: 287px"/>
+                                                            <ice:commandButton action="#{jrequestAdmin.btnAceptarModBitacora_action}"
+                                                                binding="#{jrequestAdmin.btnAceptarModBitacora}" id="btnAceptarModBitacora" value="Aceptar"/>
+                                                            <ice:commandButton action="#{jrequestAdmin.btnCancelarModBitacora_action}"
+                                                                binding="#{jrequestAdmin.btnCancelarModBitacora}" id="btnCancelarModBitacora" value="Cerrar"/>
+                                                        </ice:panelGrid>
+                                                    </f:facet>
+                                                </ice:panelPopup>
+                                            </ice:panelLayout>
                                         </ice:panelTab>
                                         <ice:panelTab id="tabReportes" label="Reportes" style="">
-                                            <ice:panelLayout id="panelLayout4" layout="flow" style="height: 552px; position: inherit; width: 100%; -rave-layout: grid"/>
+                                            <ice:panelLayout id="panelLayout5" layout="flow" style="height: 480px; position: inherit; width: 100%; -rave-layout: grid"/>
                                         </ice:panelTab>
                                     </ice:panelTabSet>
-                                    <ice:panelPopup binding="#{jrequestAdmin.popUpBitacora}" draggable="true" id="popUpBitacora"
-                                        rendered="#{jrequestAdmin.panelPopup2Bean.showDraggablePanel}" style="display: block; height: 189px; width: 357px" visible="#{jrequestAdmin.panelPopup2Bean.showModalPanel}">
-                                        <f:facet name="header">
-                                            <ice:panelGrid id="panelGrid3" style="display:block;width:180px;height:20px;">
-                                                <ice:outputText id="lblTituloMan" value="Mantenimientos JRequest"/>
-                                            </ice:panelGrid>
-                                        </f:facet>
-                                        <f:facet name="body">
-                                            <ice:panelGrid id="panelGrid4" style="display: block; height: 134px" width="326">
-                                                <ice:outputText binding="#{jrequestAdmin.lblMantenimiento}" id="lblMantenimiento" value="MANTENIMIENTO QUE ESTARA FINALIZADO"/>
-                                                <ice:outputLabel id="lblFin" value="Finalizado"/>
-                                                <ice:selectBooleanCheckbox binding="#{jrequestAdmin.checkFIn}" id="checkFIn" partialSubmit="true" value="#{jrequestAdmin.selectBooleanCheckbox1Bean.selectedBoolean}"/>
-                                                <ice:commandButton action="#{jrequestAdmin.btnAceptarFinalizado_action}"
-                                                    binding="#{jrequestAdmin.btnAceptarFinalizado}" id="btnAceptarFinalizado" value="OK"/>
-                                                <ice:commandButton action="#{jrequestAdmin.btnCerrar_action}" binding="#{jrequestAdmin.btnCerrar}"
-                                                    id="btnCerrar" value="Cerrar"/>
-                                            </ice:panelGrid>
-                                        </f:facet>
-                                    </ice:panelPopup>
-                                    <ice:panelPopup binding="#{jrequestAdmin.popUpMensajes}" draggable="true" id="popUpMensajes"
-                                        rendered="#{jrequestAdmin.panelPopup1Bean.showDraggablePanel}" style="display: block; width: 214px" visible="#{jrequestAdmin.panelPopup1Bean.showModalPanel}">
+                                    <ice:panelPopup autoCentre="true" binding="#{jrequestAdmin.popUpMensajes}" draggable="true" id="popUpMensajes" modal="true" style="display: block; width: 214px;visibility: hidden;visibility: hidden;">
                                         <f:facet name="header">
                                             <ice:panelGrid id="panelGrid1" style="display:block;width:180px;height:20px;">
                                                 <ice:outputText id="lblJText" value="JRequest"/>
