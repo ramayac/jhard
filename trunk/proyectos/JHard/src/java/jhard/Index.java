@@ -150,6 +150,8 @@ public class Index extends AbstractPageBean {
 
         String nomUser = (String) this.txtUser.getValue();
         String nomPass = (String) this.txtPass.getValue();
+        System.out.println(nomUser);
+        System.out.println(nomPass);
 
 //        BeanBaseJHardmin bb = new BeanBaseJHardmin();
 

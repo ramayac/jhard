@@ -25,10 +25,17 @@ import javax.persistence.TemporalType;
 /**
  *
  * @author robertux
+ *
+ * Cuidadosamente modificada como si fuera cirugía a corazón abierto por Hugol
  */
 @Entity
 @Table(name = "mantenimiento", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Mantenimiento.findAll", query = "SELECT m FROM Mantenimiento m"), @NamedQuery(name = "Mantenimiento.findByIdmantenimiento", query = "SELECT m FROM Mantenimiento m WHERE m.idmantenimiento = :idmantenimiento"), @NamedQuery(name = "Mantenimiento.findByFecha", query = "SELECT m FROM Mantenimiento m WHERE m.fecha = :fecha")})
+@NamedQueries({@NamedQuery(name = "Mantenimiento.findAll", query = "SELECT m FROM Mantenimiento m"),
+               @NamedQuery(name = "Mantenimiento.findByIdmantenimiento", query = "SELECT m FROM Mantenimiento m WHERE m.idmantenimiento = :idmantenimiento"),
+               @NamedQuery(name = "Mantenimiento.findByEstado", query = "SELECT m FROM Mantenimiento m WHERE m.estado = :estado"),
+               @NamedQuery(name = "Mantenimiento.findByFecha", query = "SELECT m FROM Mantenimiento m WHERE m.fecha = :fecha")})
+
+
 public class Mantenimiento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,6 +63,10 @@ public class Mantenimiento implements Serializable {
     @JoinColumn(name = "idequiposimple", referencedColumnName = "idEquipoSimple")
     @ManyToOne
     private Equiposimple idequiposimple;
+    @Basic(optional = false)
+    @Lob
+    @Column(name = "estado", nullable = false, length = 65535)
+    private String estado;
 
     public Mantenimiento() {
     }
@@ -124,6 +135,14 @@ public class Mantenimiento implements Serializable {
 
     public void setIdequiposimple(Equiposimple idequiposimple) {
         this.idequiposimple = idequiposimple;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     @Override

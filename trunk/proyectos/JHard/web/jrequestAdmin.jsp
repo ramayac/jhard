@@ -58,8 +58,8 @@
                             <div class="entry">
                                 <p class="text">Administración de Solicitudes de Mantenimiento UES-FMOcc</p>
                                 <ice:form id="form1" style="height: 1288px">
-                                    <ice:panelTabSet height="528" id="tabJrequestAdmin" tabChangeListener="#{jrequestAdmin.tabJrequestAdmin_processTabChange}"
-                                        tabPlacement="Top" width="552">
+                                    <ice:panelTabSet height="528" id="tabJrequestAdmin" selectedIndex="1"
+                                        tabChangeListener="#{jrequestAdmin.tabJrequestAdmin_processTabChange}" tabPlacement="Top" width="552">
                                         <ice:panelTab id="tabSolicitudes" label="Solicitudes" style="vertical-align: top; width: 72px">
                                             <ice:panelLayout id="panelLayout1" layout="flow" style="height: 504px; position: inherit; width: 100%; -rave-layout: grid">
                                                 <ice:selectOneListbox binding="#{jrequestAdmin.listaSol}" id="listaSol" partialSubmit="true" size="2"
@@ -88,7 +88,7 @@
                                                 <ice:outputLabel id="outputLabel5"
                                                     style="font-weight: bold; left: 600px; top: 672px; position: absolute; width: 144px" value="TÉCNICO A ASIGNAR"/>
                                                 <ice:outputLabel id="outputLabel6"
-                                                    style="font-size: 15px; font-weight: bold; left: 276px; top: 356px; position: absolute; width: 550px" value="Seleccione un a solicitud de la lista de la derecha y asígnela a Mantenimiento"/>
+                                                    style="font-size: 15px; font-weight: bold; left: 312px; top: 360px; position: absolute; width: 550px" value="Seleccione un a solicitud de la lista de la derecha y asígnela a Mantenimiento"/>
                                                 <ice:commandButton action="#{jrequestAdmin.btnSolicitudAdmin_action}"
                                                     binding="#{jrequestAdmin.btnSolicitudAdmin}" id="btnSolicitudAdmin"
                                                     style="left: 624px; top: 792px; position: absolute; width: 168px" value="Realizar una Solicitud"/>
@@ -129,9 +129,9 @@
                                         <ice:panelTab id="tadAdministracion" label="Administracion">
                                             <ice:panelLayout id="panelLayout3" layout="flow" style="height: 528px; position: inherit; width: 528px; -rave-layout: grid">
                                                 <ice:outputLabel id="outputLabel9"
-                                                    style="font-size: 14px; font-weight: bold; left: 288px; top: 360px; position: absolute; width: 444px" value="Agregue o elimine Técnicos para servicio de Soporte Tecnico. "/>
+                                                    style="font-size: 14px; font-weight: bold; left: 336px; top: 360px; position: absolute; width: 444px" value="Agregue o elimine Técnicos para servicio de Soporte Tecnico. "/>
                                                 <ice:selectOneListbox binding="#{jrequestAdmin.listaTecnicos}" id="listaTecnicos" partialSubmit="true" size="2"
-                                                    style="height: 192px; left: 286px; top: 430px; position: absolute; width: 192px"
+                                                    style="height: 192px; left: 334px; top: 430px; position: absolute; width: 192px"
                                                     value="#{jrequestAdmin.defaultSelectedData7.selectedObject}" valueChangeListener="#{jrequestAdmin.listaTecnicos_processValueChange}">
                                                     <f:selectItems id="selectOneListbox1selectItems2" value="#{jrequestAdmin.selectOneListbox1DefaultItems6}"/>
                                                 </ice:selectOneListbox>
@@ -169,13 +169,13 @@
                                         <ice:panelTab id="tabBitacoras" label="Bitacoras" style="">
                                             <ice:panelLayout id="panelLayout4" layout="flow" style="height: 552px; position: inherit; width: 552px; -rave-layout: grid">
                                                 <ice:selectInputText action="#{jrequestAdmin.txtEqSimples_action}" binding="#{jrequestAdmin.txtEqSimples}"
-                                                    id="txtEqSimples" rows="50" style="left: 288px; top: 408px; position: absolute;visibility: visible;"
+                                                    id="txtEqSimples" rows="50" style="left: 360px; top: 408px; position: absolute; visibility: visible"
                                                     valueChangeListener="#{jrequestAdmin.txtEqSimples_processValueChange}" visible="true" width="300">
                                                     <f:selectItems id="selectInputText1selectedItems" value="#{jrequestAdmin.arrayEqSimples.options['idEquipoSimple,descripcion']}"/>
                                                 </ice:selectInputText>
-                                                <ice:outputLabel id="outputLabel11" style="left: 288px; top: 360px; position: absolute" value="Seleccione un equipo simple"/>
+                                                <ice:outputLabel id="outputLabel11" style="left: 336px; top: 360px; position: absolute" value="Seleccione un equipo simple"/>
                                                 <ice:selectOneListbox binding="#{jrequestAdmin.listaBitacoras}" id="listaBitacoras" partialSubmit="true"
-                                                    size="2" style="height: 312px; left: 598px; top: 430px; position: absolute; width: 216px"
+                                                    size="2" style="height: 312px; left: 622px; top: 430px; position: absolute; width: 216px"
                                                     value="#{jrequestAdmin.defaultSelectedData8.selectedObject}" valueChangeListener="#{jrequestAdmin.listaBitacoras_processValueChange}">
                                                     <f:selectItems id="selectOneListbox1selectItems3" value="#{jrequestAdmin.selectOneListbox1DefaultItems}"/>
                                                 </ice:selectOneListbox>
@@ -236,9 +236,31 @@
                                 </form>
                             </li>
                             <li>
-                                <h2>Usuarios</h2>
-                AQUI VA EL LOGIN
-	</li>
+                                <h2>
+                                    <ice:outputLabel id="txtUserLogin" value="Sesión"/>
+                                </h2>
+                                <ice:form id="frmLogin" rendered="#{JHardminInstance.currentUser == null}">
+                                    <ice:outputText id="lblLoginFail" rendered="#{JHardminInstance.loginFail}" styleClass="errorText" value="Datos incorrectos"/>
+                                    <p>
+                                        <ice:outputLabel id="lblUser" value="Usuario:"/>
+                                        <ice:inputText id="txtUser" required="true" requiredMessage="El nombre de usuario es requerido" style="width: 120px" value="#{JHardminInstance.inputUsrName}"/>
+                                        <h:message for="txtUser" styleClass="errorText"/>
+                                    </p>
+                                    <p>
+                                        <ice:outputLabel id="lblPass" value="Clave:"/>
+                                        <ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}"/>
+                                        <h:message for="txtPass" styleClass="errorText"/>
+                                    </p>
+                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" styleClass="btnAccion" value="Login"/>
+                                </ice:form>
+                                <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
+                                    <p>
+                                        <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
+                                        <ice:outputLabel id="lblNomUsuario" styleClass="formValue" value="#{JHardminInstance.currentUser.userName}"/>
+                                    </p>
+                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>
+                                </ice:form>
+                            </li>
                             <li>
                                 <h2>Otros Vinculos</h2>
                                 <ul>

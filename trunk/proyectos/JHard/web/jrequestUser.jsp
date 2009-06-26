@@ -24,7 +24,7 @@
                     <div id="menu">
                         <ul>
                             <li class="current_page_item">
-                                <a href="#">Principal</a>
+                                <a href="Index.iface">Principal</a>
                             </li>
                             <li>
                                 <a href="jrequestUser.iface">Mantenimientos</a>
@@ -127,12 +127,12 @@
                                         <ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}"/>
                                         <h:message for="txtPass" styleClass="errorText"/>
                                     </p>
-                                    <ice:commandButton action="#{Index.btnLogin_action}" id="btnLogin" styleClass="btnAccion" value="Login"/>
+                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" styleClass="btnAccion" value="Login"/>
                                 </ice:form>
                                 <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
                                     <p>
                                         <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
-                                        <ice:outputLabel id="lblNomUsuario" styleClass="userName" value="#{JHardminInstance.currentUser.userName}"/>
+                                        <ice:outputLabel id="lblNomUsuario" styleClass="formValue" value="#{JHardminInstance.currentUser.userName}"/>
                                     </p>
                                     <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>
                                 </ice:form>

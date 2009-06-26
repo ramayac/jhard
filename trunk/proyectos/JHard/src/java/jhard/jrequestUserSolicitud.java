@@ -21,15 +21,22 @@ import com.sun.rave.faces.data.DefaultSelectItemsArray;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.beans.BeanBaseJRequest;
+import edu.ues.jhard.jhardmin.LoggedUser;
+import edu.ues.jhard.jhardmin.LoginManager;
 import edu.ues.jhard.jpa.Equiposimple;
 import edu.ues.jhard.jpa.Estadoequipo;
 import edu.ues.jhard.jpa.Solicitud;
 import edu.ues.jhard.jpa.Usuario;
 import java.util.Calendar;
 import java.sql.Date;
+import java.util.Collection;
+import java.util.Map;
 import javax.faces.FacesException;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
-import javax.swing.JOptionPane;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -113,9 +120,11 @@ public class jrequestUserSolicitud extends AbstractPageBean {
     // </editor-fold>
 
 
-    private  Equiposimple[] EQS = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimpleByPropietario("Carmencita");
+    private  Equiposimple[] EQS = null;
 
-    private Equiposimple eqElegido = EQS[0];
+    private Equiposimple eqElegido = null;
+
+    private Usuario user=null;
 
 
      public Equiposimple getEQSElegido(){
@@ -299,6 +308,22 @@ public class jrequestUserSolicitud extends AbstractPageBean {
 
 
     public jrequestUserSolicitud() {
+
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession se = (HttpSession) context.getExternalContext().getSession(true);
+
+        System.out.println("DISQ ES ID DE SESION "+ se.getId());
+        //LoggedUser us = LoginManager.getInstance().getUsuario(usr);
+
+//        System.out.println(us.getUserName());
+//
+//        Usuario u = LoginManager.getInstance().getUsuario(us);
+//
+//        EQS = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimpleByPropietario(u.getNombre());
+//
+//        System.out.println("EL USUARIO LOGGEADO ES: "+u.getNombre());
+
     }
 
     /**
@@ -423,9 +448,12 @@ public class jrequestUserSolicitud extends AbstractPageBean {
         System.out.println("COLOCA LA PRIORIDAD");
         s.setDescripcion((String)this.txtDescripcion.getValue());
         System.out.println("COLOCA LA DESCRIPCION");
-        Usuario u = new BeanBaseJHardmin().getUsuario(5);
+        
+        //AGARRO EL USUARIO LOGGEADO
+        
+        //Usuario u = new BeanBaseJHardmin().getUsuario(5);
 
-        s.setIdusuario(u);
+        //s.setIdusuario(u);
         System.out.println("COLOCA EL USUARIO");
 
         String tmp=(String)this.comboEqSimple.getValue();
@@ -484,7 +512,6 @@ public class jrequestUserSolicitud extends AbstractPageBean {
         this.panelPopup1.setRendered(false);
         this.panelPopup1.setModal(false);
         
-        //JOptionPane.showMessageDialog(null, "Equipo Agregado con éxito!");
         
         return null;
     }

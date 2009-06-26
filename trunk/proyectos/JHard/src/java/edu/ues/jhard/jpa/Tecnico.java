@@ -22,6 +22,8 @@ import javax.persistence.Table;
 /**
  *
  * @author robertux
+ *
+ * Cuidadosamente modificada como si fuera cirugía a corazón abierto por Hugol
  */
 @Entity
 @Table(name = "tecnico", catalog = "jhard", schema = "")

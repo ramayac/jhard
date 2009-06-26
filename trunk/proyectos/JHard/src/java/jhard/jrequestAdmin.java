@@ -94,43 +94,114 @@ public class jrequestAdmin extends AbstractPageBean {
 
 
         //LISTA DE SOLICITUDES ORDENADAS POR PRIORIDAD
-        solicitudes = new edu.ues.jhard.beans.BeanBaseJRequest().getSolicitudesByPrioridad("Alta");
+        
+        //Array que se metera en la selectonelistbox
         soc=new ArrayList();
 
+        //Para comparar cuales solicitudes ya tienen mantenimientos relacionados
+        mantenimientos = new edu.ues.jhard.beans.BeanBaseJRequest().getMantenimiento();
+
+        //Consulta de solicitudes por prioridad ALTA
+        solicitudes = new edu.ues.jhard.beans.BeanBaseJRequest().getSolicitudesByPrioridad("Alta");
+
+        //contador
+        int cont=0;
+
+        //Bucle para meter las solicitudes en el ArrayList
         for(int i=0;i<solicitudes.length;i++){
-            Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
-            String label = u.getNombre()+"  "+solicitudes[i].getDescripcion();
-            soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
+
+            cont=0;
+
+            //Comparo y cuento si ya existe un mantenimiento que contenga el ID de la solicitud,
+            //si ya existe, aumento el contador y dicha solicitud ya no se debe de mostrar
+
+            for(int j=0;j<mantenimientos.length;j++){
+                System.out.println(mantenimientos[j].getIdsolicitud().getIdsolicitud()+"  "+solicitudes[i].getIdsolicitud());
+                if (mantenimientos[j].getIdsolicitud().getIdsolicitud().equals(solicitudes[i].getIdsolicitud())){
+                    System.out.println("ENTRO!!!");
+                    cont++;
+                    System.out.println(cont);
+                }
+            }
+
+            if(cont==0){
+                System.out.println("SI ESTO NO ES CERO NO DEBE DE ENTRAR..."+cont);
+                Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
+                String label = u.getNombre()+"  "+solicitudes[i].getDescripcion();
+                soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
+            }
+            
         }
 
+        
+
+        //Consulta de solicitudes por prioridad MEDIA
         solicitudes = new edu.ues.jhard.beans.BeanBaseJRequest().getSolicitudesByPrioridad("Media");
 
+        //contador
+        cont=0;
+
+        //Bucle para meter las solicitudes en el ArrayList
         for(int i=0;i<solicitudes.length;i++){
-            Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
-            String label = u.getNombre()+"  "+solicitudes[i].getDescripcion();
-            soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
+
+            cont=0;
+
+            for(int j=0;j<mantenimientos.length;j++){
+                if (mantenimientos[j].getIdsolicitud().getIdsolicitud().equals(solicitudes[i].getIdsolicitud())){
+                    cont++;
+                }
+            }
+
+            if(cont==0){
+                Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
+                String label = u.getNombre()+"  "+solicitudes[i].getDescripcion();
+                soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
+            }
+
         }
+
+        //Consulta de solicitudes por prioridad BAJA
         solicitudes = new edu.ues.jhard.beans.BeanBaseJRequest().getSolicitudesByPrioridad("Baja");
 
+        //contador
+        cont=0;
+
         for(int i=0;i<solicitudes.length;i++){
-            Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
-            String label = u.getNombre()+"  "+solicitudes[i].getDescripcion();
-            soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
+
+            cont=0;
+
+            for(int j=0;j<mantenimientos.length;j++)
+                if (mantenimientos[j].getIdsolicitud().getIdsolicitud().equals(solicitudes[i].getIdsolicitud()))
+                    cont++;
+
+            if(cont==0){
+
+                Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
+                String label = u.getNombre()+"  "+solicitudes[i].getDescripcion();
+                soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
+            }
         }
 
 
+        //Creo una UISelecItems
         UISelectItems items = new UISelectItems();
+        //Le añado como valor el ArrayList
         items.setValue(soc);
-        
+        //Le meto las UISelectItems como hijos de la selectonelistbox
         this.listaSol.getChildren().add(items);
 
 
         //LISTA DE MANTENIMIENTOS
-        mantenimientos = new edu.ues.jhard.beans.BeanBaseJRequest().getMantenimiento();
 
+        //Agarro todos los mantenimientos
+        mantenimientos = new edu.ues.jhard.beans.BeanBaseJRequest().getMantenimientoByEstado("Pendiente");
+
+        //Creo e instancio el ArrayList que contendrá el selectlistonebox
         man= new ArrayList();
 
+
         for(int i=0;i<mantenimientos.length;i++){
+
             Equiposimple eq = new BeanBaseJRequest().getEquipoSimpleByID(mantenimientos[i].getIdequiposimple().getIdEquipoSimple());
 
             String label = eq.getDescripcion() +"  "+ mantenimientos[i].getDescripcion();
@@ -142,6 +213,8 @@ public class jrequestAdmin extends AbstractPageBean {
         itemsMan.setValue(man);
         
         this.listaMantenimientos.getChildren().add(itemsMan);
+
+
 
 
         //LISTA DE TECNICOS
@@ -954,6 +1027,8 @@ public class jrequestAdmin extends AbstractPageBean {
 
             m.setIdsolicitud(this.solicitudElegida);
 
+            m.setEstado("Pendiente");
+
             new BeanBaseJRequest().registrarMantenimiento(m);
 
             this.lblMensajes.setValue("Solicitud procesada con éxito. Los técnicos se encargarán de satisfacerla");
@@ -1035,6 +1110,8 @@ public class jrequestAdmin extends AbstractPageBean {
 
             be.setIdequiposimple(this.mantenimientoElegido.getIdequiposimple());
 
+            new BeanBaseJRequest().modificarMantenimiento(mantenimientoElegido, "Finalizado");
+            
             new BeanBaseJRequest().registrarBitacoraEstados(be);
 
             this.popUpBitacora.setRendered(false);
