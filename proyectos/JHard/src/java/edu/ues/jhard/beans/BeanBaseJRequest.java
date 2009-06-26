@@ -91,6 +91,17 @@ public class BeanBaseJRequest extends BeanBase{
 
     }
 
+     public void modificarMantenimiento(Mantenimiento m, String value){
+
+         EntityManager em = this.getEntityManager();
+         Mantenimiento M= em.find(Mantenimiento.class, m.getIdmantenimiento());
+         M.setEstado(value);
+         //System.out.println(be.getIdbitacora());
+         em.getTransaction().begin();
+         em.persist(M);
+         em.getTransaction().commit();
+     }
+
 
     public Tecnico[] getTecnico() {
         EntityManager em=this.getEntityManager();
@@ -257,6 +268,20 @@ public class BeanBaseJRequest extends BeanBase{
         q.setParameter("idequiposimple", e);
 
         Bitacoraestados[] be=(Bitacoraestados[])q.getResultList().toArray(new Bitacoraestados[0]);
+
+        for(int i=0;i<be.length;i++)
+            em.refresh(be[i]);
+        return be;
+    }
+
+    public Mantenimiento[] getMantenimientoByEstado(String estado) {
+        EntityManager em=this.getEntityManager();
+
+        Query q=em.createNamedQuery("Mantenimiento.findByEstado");
+
+        q.setParameter("estado", estado);
+
+        Mantenimiento[] be=(Mantenimiento[])q.getResultList().toArray(new Mantenimiento[0]);
 
         for(int i=0;i<be.length;i++)
             em.refresh(be[i]);

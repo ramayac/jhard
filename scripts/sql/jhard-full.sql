@@ -201,13 +201,18 @@ CREATE TABLE `bitacoraestados` (
   CONSTRAINT `fkidequipoexistente_bitacoraestados` FOREIGN KEY (`idequipoexistente`) REFERENCES `existencia` (`idexistencia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidequiposimple_bitacoraestados` FOREIGN KEY (`idequiposimple`) REFERENCES `equiposimple` (`idEquipoSimple`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidestado_bitacoraestados` FOREIGN KEY (`idestado`) REFERENCES `estadoequipo` (`idestado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `bitacoraestados`
 --
 
 /*!40000 ALTER TABLE `bitacoraestados` DISABLE KEYS */;
+INSERT INTO `bitacoraestados` (`idbitacora`,`fecha`,`idestado`,`descripcion`,`idequipoexistente`,`idequiposimple`) VALUES 
+ (1,'2009-06-22',2,'Virus',NULL,4),
+ (2,'2009-06-22',2,'Virus',NULL,4),
+ (3,'2009-06-23',2,'No sirve el monitor porque lo jodi si lo jodi',NULL,13),
+ (4,'2009-06-24',2,'aja si como no',NULL,13);
 /*!40000 ALTER TABLE `bitacoraestados` ENABLE KEYS */;
 
 
@@ -398,6 +403,11 @@ CREATE TABLE `entrada` (
 --
 
 /*!40000 ALTER TABLE `entrada` DISABLE KEYS */;
+INSERT INTO `entrada` (`identrada`,`titulo`,`descripcion`,`fechahora`,`idusuario`) VALUES 
+ (1,'Titulo 1','Lorem ipsum dolor sit amet, \\nconsectetur adipiscing elit. \\nSed cursus dictum cursus. \\nCras nibh augue, pharetra tempor hendrerit at,\\nconvallis id nunc. Maecenas felis lorem,\\nfeugiat nec mollis id, rhoncus pharetra enim.\\nSed quis libero porttitor odio accumsan imperdiet ac iaculis nisl. Maecenas diam orci, porta sit amet ornare a, cursus sit amet massa. Cras a posuere eros. Donec sodales luctus purus. Etiam nibh ante, mollis ac condimentum in, convallis egestas nisi. Integer imperdiet lectus eget velit aliquet rutrum. \\nProin ligula tellus, viverra vitae tincidunt ut, venenatis nec justo. In ut nisl urna. Aliquam erat volutpat. Nam quis sem ut magna fermentum tempus vitae at eros. Vivamus fermentum sem eget nunc viverra vitae consequat diam tempus.','2009-06-01 00:00:00',1),
+ (2,'Titulo 2','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus dictum cursus. Cras nibh augue, pharetra tempor hendrerit at, convallis id nunc. Maecenas felis lorem, feugiat nec mollis id, rhoncus pharetra enim. Sed quis libero porttitor odio accumsan imperdiet ac iaculis nisl. Maecenas diam orci, porta sit amet ornare a, cursus sit amet massa. Cras a posuere eros. Donec sodales luctus purus. Etiam nibh ante, mollis ac condimentum in, convallis egestas nisi. Integer imperdiet lectus eget velit aliquet rutrum. Proin ligula tellus, viverra vitae tincidunt ut, venenatis nec justo. In ut nisl urna. Aliquam erat volutpat. Nam quis sem ut magna fermentum tempus vitae at eros. Vivamus fermentum sem eget nunc viverra vitae consequat diam tempus.','2009-05-30 00:00:00',1),
+ (3,'Titulo 3','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus dictum cursus. Cras nibh augue, pharetra tempor hendrerit at, convallis id nunc. Maecenas felis lorem, feugiat nec mollis id, rhoncus pharetra enim. Sed quis libero porttitor odio accumsan imperdiet ac iaculis nisl. Maecenas diam orci, porta sit amet ornare a, cursus sit amet massa. Cras a posuere eros. Donec sodales luctus purus. Etiam nibh ante, mollis ac condimentum in, convallis egestas nisi. Integer imperdiet lectus eget velit aliquet rutrum. Proin ligula tellus, viverra vitae tincidunt ut, venenatis nec justo. In ut nisl urna. Aliquam erat volutpat. Nam quis sem ut magna fermentum tempus vitae at eros. Vivamus fermentum sem eget nunc viverra vitae consequat diam tempus.','2009-05-30 00:00:00',1),
+ (4,'Titulo 4','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus dictum cursus. Cras nibh augue, pharetra tempor hendrerit at, convallis id nunc. Maecenas felis lorem, feugiat nec mollis id, rhoncus pharetra enim. Sed quis libero porttitor odio accumsan imperdiet ac iaculis nisl. Maecenas diam orci, porta sit amet ornare a, cursus sit amet massa. Cras a posuere eros. Donec sodales luctus purus. Etiam nibh ante, mollis ac condimentum in, convallis egestas nisi. Integer imperdiet lectus eget velit aliquet rutrum. Proin ligula tellus, viverra vitae tincidunt ut, venenatis nec justo. In ut nisl urna. Aliquam erat volutpat. Nam quis sem ut magna fermentum tempus vitae at eros. Vivamus fermentum sem eget nunc viverra vitae consequat diam tempus.','2009-05-30 00:00:00',9);
 /*!40000 ALTER TABLE `entrada` ENABLE KEYS */;
 
 
@@ -443,7 +453,7 @@ CREATE TABLE `equiposimple` (
   PRIMARY KEY  (`idEquipoSimple`),
   KEY `fkidestado_equiposimple` (`idestado`),
   CONSTRAINT `fkidestado_equiposimple` FOREIGN KEY (`idestado`) REFERENCES `estadoequipo` (`idestado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `equiposimple`
@@ -461,7 +471,9 @@ INSERT INTO `equiposimple` (`idEquipoSimple`,`descripcion`,`propietario`,`idesta
  (8,'Compu del Bunker','Carmencita',3),
  (9,'bunker 2','Carmencita',3),
  (10,'Compu Italia','Carmencita',4),
- (11,'Compu Egipto','Carmencita',3);
+ (11,'Compu Egipto','Carmencita',3),
+ (12,'Compu Brasil','Carmencita',1),
+ (13,'Computadora Arq Centeno','Carmencita',2);
 /*!40000 ALTER TABLE `equiposimple` ENABLE KEYS */;
 
 
@@ -736,6 +748,7 @@ CREATE TABLE `mantenimiento` (
   `idsolicitud` int(11) default NULL COMMENT 'Referencia a la solicitud de mantenimiento realizada, en caso de existir una',
   `idequipoexistente` int(11) default NULL COMMENT 'Referencia al equipo al cual se efectuo el mantenimiento',
   `idequiposimple` int(11) default NULL,
+  `estado` text NOT NULL,
   PRIMARY KEY  (`idmantenimiento`),
   KEY `fkidtecnico_mantenimiento` (`idtecnico`),
   KEY `fkidsolicitud_mantenimiento` (`idsolicitud`),
@@ -745,13 +758,18 @@ CREATE TABLE `mantenimiento` (
   CONSTRAINT `fkidequiposimple_mantenimiento` FOREIGN KEY (`idequiposimple`) REFERENCES `equiposimple` (`idEquipoSimple`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidsolicitud_mantenimiento` FOREIGN KEY (`idsolicitud`) REFERENCES `solicitud` (`idsolicitud`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidtecnico_mantenimiento` FOREIGN KEY (`idtecnico`) REFERENCES `tecnico` (`idtecnico`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `mantenimiento`
 --
 
 /*!40000 ALTER TABLE `mantenimiento` DISABLE KEYS */;
+INSERT INTO `mantenimiento` (`idmantenimiento`,`fecha`,`descripcion`,`idtecnico`,`idsolicitud`,`idequipoexistente`,`idequiposimple`,`estado`) VALUES 
+ (1,'3909-06-21','VIRUS MIERDA',5,3,NULL,1,'Pendiente'),
+ (2,'3909-06-21','Virus',3,7,NULL,4,'Finalizado'),
+ (3,'3909-06-21','VIRUS MIERDA',4,3,NULL,1,'Pendiente'),
+ (4,'3909-06-23','No sirve el monitor',4,8,NULL,13,'Finalizado');
 /*!40000 ALTER TABLE `mantenimiento` ENABLE KEYS */;
 
 
@@ -1007,7 +1025,7 @@ CREATE TABLE `solicitud` (
   CONSTRAINT `fkidequipoexistente_solicitud` FOREIGN KEY (`idequipoexistente`) REFERENCES `existencia` (`idexistencia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidequiposimple_solicitud` FOREIGN KEY (`idequiposimple`) REFERENCES `equiposimple` (`idEquipoSimple`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidusuario_solicitud` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `solicitud`
@@ -1020,7 +1038,9 @@ INSERT INTO `solicitud` (`idsolicitud`,`fecha`,`prioridad`,`descripcion`,`idusua
  (3,'2009-06-17','Media','VIRUS MIERDA',10,NULL,1),
  (4,'2009-06-17','Media','a veeeeer!',5,NULL,4),
  (5,'3909-06-17','Media','Esta compu la jode la maitra de derechoo',5,NULL,1),
- (6,'3909-06-17','Media','compu mas basuraaa',5,NULL,7);
+ (6,'3909-06-17','Media','compu mas basuraaa',5,NULL,7),
+ (7,'2009-06-19','Baja','Virus',5,NULL,4),
+ (8,'3909-06-23','Media','No sirve el monitor',5,NULL,13);
 /*!40000 ALTER TABLE `solicitud` ENABLE KEYS */;
 
 
@@ -1078,7 +1098,7 @@ CREATE TABLE `tecnico` (
   `nombres` varchar(200) NOT NULL COMMENT 'Nombres del tecnico',
   `cargo` varchar(200) NOT NULL COMMENT 'Cargo que desempenia el tecnico',
   PRIMARY KEY  (`idtecnico`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tecnico`
@@ -1088,7 +1108,8 @@ CREATE TABLE `tecnico` (
 INSERT INTO `tecnico` (`idtecnico`,`apellidos`,`nombres`,`cargo`) VALUES 
  (3,'Aguirre','Gabriel','Tecnico'),
  (4,'Mineros','Roberto','Tecnico'),
- (5,'Titon','Diego','Tecnico');
+ (5,'Titon','Diego','Tecnico'),
+ (14,'Villatoro','Ana Graciela','Tecnico');
 /*!40000 ALTER TABLE `tecnico` ENABLE KEYS */;
 
 

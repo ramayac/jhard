@@ -25,6 +25,8 @@ import javax.persistence.TemporalType;
 /**
  *
  * @author robertux
+ *
+ * Cuidadosamente modificada como si fuera cirugía a corazón abierto por Hugol
  */
 @Entity
 @Table(name = "bitacoraestados", catalog = "jhard", schema = "")

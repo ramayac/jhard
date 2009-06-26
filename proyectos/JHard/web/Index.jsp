@@ -91,7 +91,7 @@
                                         <ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}"/>
                                         <h:message for="txtPass" styleClass="errorText"/>
                                     </p>
-                                    <ice:commandButton action="#{Index.btnLogin_action}" id="btnLogin" styleClass="btnAccion" value="Login"/>
+                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" styleClass="btnAccion" value="Login"/>
                                 </ice:form>
                                 <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
                                     <p>
