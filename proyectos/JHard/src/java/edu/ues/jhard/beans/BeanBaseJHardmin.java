@@ -30,6 +30,7 @@ public class BeanBaseJHardmin extends BeanBase {
     private String inputChNewPwdConfirm;
     private Boolean loginFail;
     private List<Rol> roleList;
+    private List<Usuario> userList;
     private ActionMessage msg;
 
     public BeanBaseJHardmin(){
@@ -37,6 +38,7 @@ public class BeanBaseJHardmin extends BeanBase {
         this.setInputUsrName("");
         this.setInputUsrPassword("");
         this.roleList = this.getEntityManager().createNamedQuery("Rol.findAll").getResultList();
+        this.userList = this.getEntityManager().createNamedQuery("Usuario.findAll").getResultList();
         this.msg = new ActionMessage();
     }
 
@@ -118,14 +120,15 @@ public class BeanBaseJHardmin extends BeanBase {
             this.setLoginFail(true);
         else{
             this.setCurrentUser(LoginManager.getInstance().getUser(uid));
-            this.setLoginFail(false);
-            this.setInputUsrName("");
-        this.setInputUsrPassword("");
+            this.setLoginFail(false);            
         }
+        this.setInputUsrName("");
+        this.setInputUsrPassword("");
         return "";
     }
 
     public String logout(){
+        LoginManager.getInstance().Logout(this.currentUser.getUid());
         this.setCurrentUser(null);
         this.setInputUsrName("");
         this.setInputUsrPassword("");
@@ -157,11 +160,14 @@ public class BeanBaseJHardmin extends BeanBase {
         try{
             Usuario usr = LoginManager.getInstance().getUsuario(this.currentUser);
             if(usr.getClave().equalsIgnoreCase(LoginManager.getInstance().encrypt(this.getInputChOldPwd()))){
-                if(this.getInputChNewPwd().equalsIgnoreCase(this.getInputChNewPwdConfirm())){
-                    usr.setClave(LoginManager.getInstance().encrypt(this.getInputChNewPwd()));
-                    this.getEntityManager().getTransaction().begin();
-                    this.getEntityManager().persist(usr);
-                    this.getEntityManager().getTransaction().commit();
+                if(this.getInputChNewPwd().equalsIgnoreCase(this.getInputChNewPwdConfirm())){                    
+                    //this.getEntityManager().merge(usr);
+                    //this.getEntityManager().getTransaction().begin();
+                    usr = new Usuario(usr.getIdusuario(), usr.getNombre(), LoginManager.getInstance().encrypt(this.getInputChNewPwd()));
+                    //usr.setClave(LoginManager.getInstance().encrypt(this.getInputChNewPwd()));
+                    this.getEntityManager().merge(usr);
+                    //this.getEntityManager().getTransaction().commit();
+                    System.out.println("Nueva clave: " + usr.getClave());                    
                     this.setInputChOldPwd("");
                     this.setInputChNewPwd("");
                     this.setInputChNewPwdConfirm("");
@@ -190,7 +196,7 @@ public class BeanBaseJHardmin extends BeanBase {
     public String closePopup(){
         System.out.println("closePopup invocado.");
         this.msg.setVisible(false);
-        return "done.";
+        return "";
     }
 
     /**
@@ -247,5 +253,19 @@ public class BeanBaseJHardmin extends BeanBase {
      */
     public void setInputChNewPwdConfirm(String inputChNewPwdConfirm) {
         this.inputChNewPwdConfirm = inputChNewPwdConfirm;
+    }
+
+    /**
+     * @return the userList
+     */
+    public List<Usuario> getUserList() {
+        return userList;
+    }
+
+    /**
+     * @param userList the userList to set
+     */
+    public void setUserList(List<Usuario> userList) {
+        this.userList = userList;
     }
 }

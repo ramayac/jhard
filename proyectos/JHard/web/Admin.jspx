@@ -75,30 +75,28 @@
                                             <h3>Cambiar Clave de Acceso</h3>
                                             <p>
                                                 <ice:outputLabel id="lblClaveAnterior" value="Clave anterior: " />
-                                                <ice:inputText id="txtClaveAnterior" value="#{JHardminInstance.inputChOldPwd}" required="true" requiredMessage="Debe escribir la clave anterior" />
+                                                <ice:inputSecret id="txtClaveAnterior" value="#{JHardminInstance.inputChOldPwd}" />
                                             </p>
                                             <p>
                                                 <ice:outputLabel id="lblClaveNueva" value="Nueva clave: " />
-                                                <ice:inputText id="txtClaveNueva" value="#{JHardminInstance.inputChNewPwd}" required="true" requiredMessage="Debe escribir la nueva clave" />
+                                                <ice:inputSecret id="txtClaveNueva" value="#{JHardminInstance.inputChNewPwd}" />
                                             </p>
                                             <p>
                                                 <ice:outputLabel id="lblClaveNuevaConfirm" value="Repita la nueva clave: " />
-                                                <ice:inputText id="txtClaveNuevaConfirm" value="#{JHardminInstance.inputChNewPwdConfirm}" required="true" requiredMessage="Debe confirmar la nueva clave" />
+                                                <ice:inputSecret id="txtClaveNuevaConfirm" value="#{JHardminInstance.inputChNewPwdConfirm}" />
                                             </p>
                                             <p>
                                                 <ice:commandButton value="Cambiar clave" styleClass="btnAccion" action="#{JHardminInstance.changePassword}" />
                                             </p>
-                                            <ice:panelPopup styleClass="panelPopup" draggable="true" rendered="#{JHardminInstance.msg.visible}">
+                                            <ice:panelPopup styleClass="panelPopup" draggable="true" modal="true" rendered="#{JHardminInstance.msg.visible}" visible="#{JHardminInstance.msg.visible}" clientOnly="true">
                                                 <f:facet name="header">                                                    
-                                                    <h:outputText value="Mensaje" />                                                                                                            
+                                                    <ice:outputText value="Mensaje" />
                                                 </f:facet>
                                                 <f:facet name="body">
-                                                    <div align="center">
-                                                        <p>
-                                                            <h:outputText value="#{JHardminInstance.msg.text}" styleClass="#{JHardminInstance.msg.type}" />
-                                                        </p>
-                                                        <ice:commandButton id="btnCerrar" type="button" value="OK" alt="Cerrar" action="#{JHardminInstance.closePopup}"  />
-                                                    </div>
+                                                    <ice:panelGroup>
+                                                        <p><ice:outputText value="#{JHardminInstance.msg.text}" styleClass="#{JHardminInstance.msg.type}" /></p>
+                                                        <div align="center"><ice:commandButton action="#{JHardminInstance.closePopup}" id="btnCerrar" value="OK" /></div>
+                                                    </ice:panelGroup>
                                                 </f:facet>
                                             </ice:panelPopup>
                                         </ice:panelGroup>
@@ -107,9 +105,28 @@
                                         <f:facet name="header">
                                             <h:outputText value="Usuarios" />
                                         </f:facet>
-                                        <ice:panelLayout>
-                                            
-                                        </ice:panelLayout>
+                                        <ice:panelGroup>
+                                            <ice:dataTable title="Lista de Usuarios del Sistema" value="#{JHardminInstance.userList}" var="user">
+                                                <ice:column>
+                                                    <f:facet name="header">
+                                                        <ice:outputText value="Nombre" />
+                                                    </f:facet>
+                                                    <ice:outputText value="#{user.nombre}" />
+                                                </ice:column>
+                                                <ice:column>
+                                                    <f:facet name="header">
+                                                        <ice:outputText value="Rol" />
+                                                    </f:facet>
+                                                    <ice:outputText value="#{user.idrol.nombre}" />
+                                                </ice:column>
+                                                <ice:column>
+                                                    <ice:commandLink value="Editar" />
+                                                </ice:column>
+                                                <ice:column>
+                                                    <ice:commandLink value="Eliminar" />
+                                                </ice:column>
+                                            </ice:dataTable>
+                                        </ice:panelGroup>
                                     </ice:panelCollapsible>
                                 </ice:panelGroup>
                             </ice:form>
@@ -149,16 +166,17 @@
                                 <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
                                     <p>
                                         <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
-                                        <ice:outputLabel id="lblNomUsuario" styleClass="userName" value="#{JHardminInstance.currentUser.userName}"/>
+                                        <ice:outputLabel id="lblNomUsuario" styleClass="formValue" value="#{JHardminInstance.currentUser.userName}"/>
                                     </p>
                                     <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>
                                 </ice:form>
                             </li>
                             <li>
+                                <ice:form id="frmCommonTasks">
                                 <h2>Tareas Comunes</h2>
                                 <ul>
                                     <li>
-                                        <a href="#">Cambiar clave de acceso</a>
+                                        <ice:commandLink value="Cambiar clave de acceso" action="chpwd" rendered="#{JHardminInstance.currentUser != null}"  />
                                     </li>
                                     <li>
                                         <a href="#">Administrar usuarios</a>
@@ -179,6 +197,7 @@
                                         <a href="#">Velit semper nisi molestie</a>
                                     </li>
                                 </ul>
+                                </ice:form>
                             </li>
                         </ul>
                     </div>
