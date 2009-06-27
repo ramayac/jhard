@@ -13,7 +13,7 @@ Los administradores de la Unidad las atienden, las administran y las solucionan.
 
 El módulo fue mostrado a Luis (Administrador) con un grado de funcionalidad bastante avanzado. Luis se encargó de hacer algunas observaciones que se tomaron en cuenta y fueron agregadas al trabajo, las cuales fueron:
 
-= SOLICITUDES DE LUIS =
+= Solicitudes de Luis =
 
 Cuando se termina un mantenimiento, se debe de colocar el trabajo q se le realizo para arreglar dicho equipo *--->Realizada con éxito*
 
@@ -40,6 +40,8 @@ Manejo de las peticiones de los usuarios por medio del LoggedUser de Roberto *--
 
 A pesar de eso, al módulo le quedan aun algunos puntos por finalizarse, los cuales son:
 
+= Por Finalizar =
+
 Manejo de Roles
 
 Posicionamiento relativo dentro del paneltabSet
@@ -51,7 +53,7 @@ Integración de Hab.la
 
 Incluyo también discusiones con Roberto acerca del mejor desempeño de este módulo y su estado actual:
 
-= DISCUSIONES CON ROBERTO =
+= Discusiones con Roberto =
 
 El equipo simple no debe ser ligado a un usuario... Deben aparecer todos los equipos simples habidos y por haber al momento de hacer una nueva solicitud  *--->Tomado en cuenta y se ha realizado de esta manera*
   
@@ -66,7 +68,7 @@ Seguimiento de la bitacora? *---> Ha sido pedido por Luis, se incluyó y está r
 
 Además, listo los posibles problemas que se pueden tener en el futuro y algunos problemas conocidos:
 
-= POSIBLES PROBLEMAS EN EL FUTURO Y PROBLEMAS CONOCIDOS =
+= Posibles problemas en el futuro y problemas conocidos =
 
 Aun no esta contemplado las bitacoras para equipos del LABCOM-1. Es de facil implementacion solamente hay q agregarle la consulta JPQL del equipo existente :) Lo he dejado de lado a propósito para simplificarlo lo más que pueda y no complicarme la existencia. Luis no es muy exigente, y si se sabe defender la idea, se puede hacer un trabajo bastante bonito y SENCILLO
 
