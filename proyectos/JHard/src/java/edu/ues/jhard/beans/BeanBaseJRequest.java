@@ -59,11 +59,14 @@ public class BeanBaseJRequest extends BeanBase{
 
     }
 
-     public void modificarBitacoraEstados(Bitacoraestados b, String value){
+     public void modificarBitacoraEstados(Bitacoraestados b){
 
          EntityManager em = this.getEntityManager();
          Bitacoraestados be= em.find(Bitacoraestados.class, b.getIdbitacora());
-         be.setDescripcion(value);
+         
+         be.setDescripcion(b.getDescripcion());
+         be.setIdestado(b.getIdestado());
+
          System.out.println(be.getIdbitacora());
          em.getTransaction().begin();
          em.persist(be);

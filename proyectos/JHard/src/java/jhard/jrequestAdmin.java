@@ -36,7 +36,6 @@ import edu.ues.jhard.jpa.Estadoequipo;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
@@ -64,9 +63,12 @@ public class jrequestAdmin extends AbstractPageBean {
     private void _init() throws Exception {
         arrayTecnicos.setArray((java.lang.Object[]) getValue("#{jrequestAdmin.tecnicos}"));
         arrayEqSimples.setArray((java.lang.Object[]) getValue("#{jrequestAdmin.eqs}"));
+        
+
         selectOneMenu1DefaultItems1.setItems(new String[]{"Alta", "Media", "Baja"});
         selectOneMenu2DefaultItems.setItems(new String[]{"Alta", "Media","Baja"});
-        selectOneMenu1DefaultItems.setItems(new String[]{"Alta", "Media", "Baja"});
+
+
         selectOneListbox1DefaultItems1.setItems(new String[]{});
         selectOneListbox1DefaultItems2.setItems(new String[]{});
         selectOneListbox1DefaultItems3.setItems(new String[]{});
@@ -77,8 +79,12 @@ public class jrequestAdmin extends AbstractPageBean {
         selectOneRadio1DefaultItems1.setItems(new String[]{});
         listaMantenimientosDefaultItems.setItems(new String[]{});
         selectOneListbox1DefaultItems.setItems(new String[]{});
+        selectOneMenu1DefaultItems4.setItems(new String[]{});
+        selectOneMenu1DefaultItems3.setItems(new String[]{});
 
-        
+        comboPrioridadDefaultItems.setItems(new String[]{"Alta", "Media", "Baja"});
+        selectOneMenu1DefaultItems2.setItems(new String[]{});
+
 
     }
 
@@ -242,6 +248,25 @@ public class jrequestAdmin extends AbstractPageBean {
     }
 
 
+    private void llenarCombo(){
+
+        //Combo de Estados
+
+        setEEquipo(new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo());
+
+        eeq = new ArrayList();
+
+        for(int i=0;i<getEEquipo().length;i++){
+
+            String label = getEEquipo()[i].getDescripcion();
+            eeq.add(new SelectItem(getEEquipo()[i].getIdestado(),label));
+        }
+
+        UISelectItems itemsEeq = new UISelectItems();
+        itemsEeq.setValue(eeq);
+        this.comboEstado.getChildren().add(itemsEeq);
+
+    }
 
     private boolean verControlx=false;
     /**
@@ -260,10 +285,12 @@ public class jrequestAdmin extends AbstractPageBean {
 
     private Solicitud[] solicitudes;
     private Mantenimiento[] mantenimientos;
+    private Estadoequipo[] eEquipo = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
     private Tecnico[] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
     private Equiposimple[] eqs = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
     private Bitacoraestados[] bitacoras;
     private Tecnico tecnicoElegido=tecnicos[0];
+    private Estadoequipo estadoElegido=getEEquipo()[0];
     private Tecnico tecElegidoLista=null;
     private Solicitud solicitudElegida=null;
     private Mantenimiento mantenimientoElegido=null;
@@ -274,7 +301,16 @@ public class jrequestAdmin extends AbstractPageBean {
     private ArrayList man;
     private ArrayList tec;
     private ArrayList bit;
+    private ArrayList eeq;
 
+
+    public Estadoequipo[] getEEquipo() {
+        return eEquipo;
+    }
+
+    public void setEEquipo(Estadoequipo[] eEquipo) {
+        this.eEquipo = eEquipo;
+    }
 
     public Equiposimple[] getEqs() {
         return eqs;
@@ -425,15 +461,6 @@ public class jrequestAdmin extends AbstractPageBean {
 
     public void setSelectOneMenu1Bean(DefaultSelectedData dsd) {
         this.selectOneMenu1Bean = dsd;
-    }
-    private DefaultSelectionItems selectOneMenu1DefaultItems = new DefaultSelectionItems();
-
-    public DefaultSelectionItems getSelectOneMenu1DefaultItems() {
-        return selectOneMenu1DefaultItems;
-    }
-
-    public void setSelectOneMenu1DefaultItems(DefaultSelectionItems dsi) {
-        this.selectOneMenu1DefaultItems = dsi;
     }
     private HtmlOutputLabel lblNombre = new HtmlOutputLabel();
 
@@ -885,6 +912,69 @@ public class jrequestAdmin extends AbstractPageBean {
     public void setBtnSolicitudAdmin(HtmlCommandButton hcb) {
         this.btnSolicitudAdmin = hcb;
     }
+    private DefaultSelectedData defaultSelectedData9 = new DefaultSelectedData();
+
+    public DefaultSelectedData getDefaultSelectedData9() {
+        return defaultSelectedData9;
+    }
+
+    public void setDefaultSelectedData9(DefaultSelectedData dsd) {
+        this.defaultSelectedData9 = dsd;
+    }
+    private DefaultSelectionItems selectOneMenu1DefaultItems2 = new DefaultSelectionItems();
+
+    public DefaultSelectionItems getSelectOneMenu1DefaultItems2() {
+        return selectOneMenu1DefaultItems2;
+    }
+
+    public void setSelectOneMenu1DefaultItems2(DefaultSelectionItems dsi) {
+        this.selectOneMenu1DefaultItems2 = dsi;
+    }
+    private DefaultSelectItemsArray comboPrioridadDefaultItems = new DefaultSelectItemsArray();
+
+    public DefaultSelectItemsArray getComboPrioridadDefaultItems() {
+        return comboPrioridadDefaultItems;
+    }
+
+    public void setComboPrioridadDefaultItems(DefaultSelectItemsArray dsia) {
+        this.comboPrioridadDefaultItems = dsia;
+    }
+    private DefaultSelectItemsArray selectOneMenu1DefaultItems3 = new DefaultSelectItemsArray();
+
+    public DefaultSelectItemsArray getSelectOneMenu1DefaultItems3() {
+        return selectOneMenu1DefaultItems3;
+    }
+
+    public void setSelectOneMenu1DefaultItems3(DefaultSelectItemsArray dsia) {
+        this.selectOneMenu1DefaultItems3 = dsia;
+    }
+    private DefaultSelectItemsArray selectOneMenu1DefaultItems4 = new DefaultSelectItemsArray();
+
+    public DefaultSelectItemsArray getSelectOneMenu1DefaultItems4() {
+        return selectOneMenu1DefaultItems4;
+    }
+
+    public void setSelectOneMenu1DefaultItems4(DefaultSelectItemsArray dsia) {
+        this.selectOneMenu1DefaultItems4 = dsia;
+    }
+    private HtmlSelectOneMenu comboEstado = new HtmlSelectOneMenu();
+
+    public HtmlSelectOneMenu getComboEstado() {
+        return comboEstado;
+    }
+
+    public void setComboEstado(HtmlSelectOneMenu hsom) {
+        this.comboEstado = hsom;
+    }
+    private ObjectArrayDataProvider arrayEstado = new ObjectArrayDataProvider();
+
+    public ObjectArrayDataProvider getArrayEstado() {
+        return arrayEstado;
+    }
+
+    public void setArrayEstado(ObjectArrayDataProvider oadp) {
+        this.arrayEstado = oadp;
+    }
 
 
     /**
@@ -918,6 +1008,7 @@ public class jrequestAdmin extends AbstractPageBean {
 
         // Perform initializations inherited from our superclass
         this.llenarLista();
+        this.llenarCombo();
         super.init();
         // Perform application initialization that must complete
         // *before* managed components are initialized
@@ -1102,9 +1193,12 @@ public class jrequestAdmin extends AbstractPageBean {
 
             be.setFecha(new Date(year, c.get(Calendar.MONTH), c.get(Calendar.DATE)));
 
-            Estadoequipo ee = new BeanBaseJRequest().getEstadoEquipoByID(this.mantenimientoElegido.getIdequiposimple().getIdestado().getIdestado());
+            String tmp=(String)this.comboEstado.getValue();
+            Integer id=Integer.parseInt(tmp);
+            Estadoequipo e=new BeanBaseJRequest().getEntityManager().find(Estadoequipo.class, id);
+            this.estadoElegido= e;
 
-            be.setIdestado(ee);
+            be.setIdestado(this.estadoElegido);
 
             be.setDescripcion((String)this.txtDescripcion.getValue());
 
@@ -1324,7 +1418,8 @@ public class jrequestAdmin extends AbstractPageBean {
     public String btnAceptarModBitacora_action() {
         this.bitacoraElegida.setDescripcion((String)this.txtModBitacora.getValue());
         System.out.println(bitacoraElegida.getDescripcion());
-        new BeanBaseJRequest().modificarBitacoraEstados(bitacoraElegida, bitacoraElegida.getDescripcion());
+        
+        new BeanBaseJRequest().modificarBitacoraEstados(bitacoraElegida);
 
         this.popUpModBitacora.setRendered(false);
         System.out.println("RENDERICE");
@@ -1349,6 +1444,7 @@ public class jrequestAdmin extends AbstractPageBean {
 
         return "case2";
     }
-   
+
+    
 }
 

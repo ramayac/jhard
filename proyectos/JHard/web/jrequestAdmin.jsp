@@ -83,7 +83,7 @@
                                                     style="left: 600px; top: 552px; position: absolute" value="PERSONA"/>
                                                 <ice:selectOneMenu binding="#{jrequestAdmin.comboPrioridad}" id="comboPrioridad" partialSubmit="true"
                                                     style="left: 598px; top: 622px; position: absolute; width: 192px" value="#{jrequestAdmin.selectOneMenu1Bean.selectedObject}">
-                                                    <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestAdmin.selectOneMenu1DefaultItems}"/>
+                                                    <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestAdmin.comboPrioridadDefaultItems}"/>
                                                 </ice:selectOneMenu>
                                                 <ice:outputLabel id="outputLabel5"
                                                     style="font-weight: bold; left: 600px; top: 672px; position: absolute; width: 144px" value="TÉCNICO A ASIGNAR"/>
@@ -104,7 +104,7 @@
                                                 </ice:selectOneListbox>
                                                 <ice:panelPopup autoCentre="true" binding="#{jrequestAdmin.popUpBitacora}" draggable="true" id="popUpBitacora"
                                                     modal="true" rendered="#{jrequestAdmin.panelPopup2Bean.showDraggablePanel}"
-                                                    style="display: block; height: 189px; left: 276px; top: 593px; position: absolute; width: 357px" visible="#{jrequestAdmin.panelPopup2Bean.showModalPanel}">
+                                                    style="display: block; height: 309px; left: 288px; top: 552px; position: absolute; width: 381px" visible="#{jrequestAdmin.panelPopup2Bean.showModalPanel}">
                                                     <f:facet name="header">
                                                         <ice:panelGrid id="panelGrid3" style="display:block;width:180px;height:20px;">
                                                             <ice:outputText id="lblTituloMan" value="Mantenimientos JRequest"/>
@@ -115,7 +115,12 @@
                                                             <ice:outputText binding="#{jrequestAdmin.lblMantenimiento}" id="lblMantenimiento" value="MANTENIMIENTO QUE ESTARA FINALIZADO"/>
                                                             <ice:outputLabel id="lblFin" value="Finalizado"/>
                                                             <ice:selectBooleanCheckbox binding="#{jrequestAdmin.checkFIn}" id="checkFIn" partialSubmit="true" value="#{jrequestAdmin.selectBooleanCheckbox1Bean.selectedBoolean}"/>
+                                                            <ice:outputLabel id="outputLabel13" value="Escriba el plan de Mantenimiento llevado a cabo:"/>
                                                             <ice:inputTextarea binding="#{jrequestAdmin.txtDescripcion}" id="txtDescripcion"/>
+                                                            <ice:outputLabel id="outputLabel12" value="Nuevo Estado del Equipo"/>
+                                                            <ice:selectOneMenu binding="#{jrequestAdmin.comboEstado}" id="comboEstado" partialSubmit="true" value="#{jrequestAdmin.defaultSelectedData9.selectedObject}">
+                                                                <f:selectItems id="selectOneMenu1selectItems1" value="#{jrequestAdmin.selectOneMenu1DefaultItems2}"/>
+                                                            </ice:selectOneMenu>
                                                             <ice:commandButton action="#{jrequestAdmin.btnAceptarFinalizado_action}"
                                                                 binding="#{jrequestAdmin.btnAceptarFinalizado}" id="btnAceptarFinalizado" value="OK"/>
                                                             <ice:commandButton action="#{jrequestAdmin.btnCerrar_action}" binding="#{jrequestAdmin.btnCerrar}"

@@ -63,21 +63,23 @@
                     <div id="content">
                         <div class="post">
                             <h2 class="title">Solicitud de Mantenimiento de Hardware y Software</h2>
-                            <div class="entry">
+                            <div class="entry" style="height: 507px">
                                 <p class="text">Ingrese su solicitud:</p>
                                 <ice:form id="form1" style="height: 200px">
                                     <ice:panelPopup autoCentre="true" binding="#{jrequestUserSolicitud.panelPopup1}" draggable="true" id="panelPopup1"
                                         modal="true" rendered="#{jrequestUserSolicitud.panelPopup1Bean.showDraggablePanel}"
-                                        style="height: 300px; left: 576px; top: 336px; position: absolute; width: 300px" visible="#{jrequestUserSolicitud.panelPopup1Bean.showModalPanel}">
+                                        style="height: 261px; left: 576px; top: 288px; position: absolute; width: 261px" visible="#{jrequestUserSolicitud.panelPopup1Bean.showModalPanel}">
                                         <f:facet name="header">
                                             <ice:panelGrid id="panelGrid1" style="display:block;width:180px;height:20px;">
                                                 <ice:outputText id="outputText1" value="Agregar Nuevo Equipo"/>
                                             </ice:panelGrid>
                                         </f:facet>
                                         <f:facet name="body">
-                                            <ice:panelGrid id="panelGrid2" style="display: block; height: 254px; width: 180px">
+                                            <ice:panelGrid id="panelGrid2" style="display: block; height: 206px; width: 180px">
                                                 <ice:outputLabel id="lblNombreEq" value="Nombre de Equipo"/>
                                                 <ice:inputText binding="#{jrequestUserSolicitud.txtNombreEq}" id="txtNombreEq"/>
+                                                <ice:outputLabel id="lblPropietario" value="Propietario del Equipo"/>
+                                                <ice:inputText binding="#{jrequestUserSolicitud.txtPropietario}" id="txtPropietario"/>
                                                 <ice:outputLabel id="lblEstadoEq" value="Estado del Equipo"/>
                                                 <ice:selectOneMenu binding="#{jrequestUserSolicitud.comboEstados}" id="comboEstados" partialSubmit="true">
                                                     <f:selectItems id="selectOneMenu1selectItems1" value="#{jrequestUserSolicitud.arrayEstados.options['idestado,nombre']}"/>
@@ -86,22 +88,20 @@
                                                     binding="#{jrequestUserSolicitud.btnAgregar}" id="btnAgregar" value="Agregar"/>
                                                 <ice:commandButton action="#{jrequestUserSolicitud.btnCerrar_action}"
                                                     binding="#{jrequestUserSolicitud.btnCerrar}" id="btnCerrar" value="Cerrar"/>
-                                                <ice:message binding="#{jrequestUserSolicitud.mensaje}" errorClass="errorMessage" fatalClass="fatalMessage"
-                                                    for="" id="mensaje" infoClass="infoMessage" showSummary="true" warnClass="warnMessage"/>
                                             </ice:panelGrid>
                                         </f:facet>
                                     </ice:panelPopup>
-                                    <ice:outputLabel id="lblNombre" value="Nombre Usuario"/>
+                                    <ice:outputLabel id="lblNombre" value="Nombre del Usuario que hace la solicitud"/>
                                     <br/>
+                                    <ice:outputLabel binding="#{jrequestUserSolicitud.lblUsuario}" id="lblUsuario" style="font-size: 14px; font-weight: bold" value="NOMBRE"/>
                                     <br/>
-                                    <ice:inputText binding="#{jrequestUserSolicitud.txtUsuario}" id="txtUsuario" style="width: 190px"/>
                                     <br/>
                                     <br/>
                                     <br/>
                                     <ice:outputLabel id="lbldescripcion" value="Descripción"/>
                                     <br/>
                                     <br/>
-                                    <ice:inputTextarea binding="#{jrequestUserSolicitud.txtDescripcion}" id="txtDescripcion" style="height: 72px; width: 190px"/>
+                                    <ice:inputTextarea binding="#{jrequestUserSolicitud.txtDescripcion}" id="txtDescripcion" style="height: 72px; width: 286px"/>
                                     <br/>
                                     <br/>
                                     <br/>
@@ -109,7 +109,7 @@
                                     <br/>
                                     <br/>
                                     <ice:selectOneMenu binding="#{jrequestUserSolicitud.comboEqSimple}" id="comboEqSimple" partialSubmit="true"
-                                        style="width: 190px" valueChangeListener="#{jrequestUserSolicitud.comboEqSimple_processValueChange}">
+                                        style="width: 286px" valueChangeListener="#{jrequestUserSolicitud.comboEqSimple_processValueChange}">
                                         <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUserSolicitud.arrayEqSimple.options['idEquipoSimple,descripcion']}"/>
                                     </ice:selectOneMenu>
                                     <ice:commandButton action="#{jrequestUserSolicitud.btnAgregarEqSimple_action}"
@@ -122,7 +122,21 @@
                                     <br/>
                                     <br/>
                                     <br/>
-                                    <ice:outputLabel binding="#{jrequestUserSolicitud.lblEstadoSolicitud}" id="lblEstadoSolicitud" value="Estado de la Solicitud"/>
+                                    <ice:panelPopup autoCentre="true" binding="#{jrequestUserSolicitud.panelPopup2}" draggable="true" id="panelPopup2"
+                                        modal="true" rendered="#{jrequestUserSolicitud.panelPopup2Bean.showDraggablePanel}" style="height: 130px; width: 261px" visible="#{jrequestUserSolicitud.panelPopup2Bean.showModalPanel}">
+                                        <f:facet name="header">
+                                            <ice:panelGrid id="panelGrid3" style="display:block;width:180px;height:20px;">
+                                                <ice:outputText id="outputText2" value="JRequest"/>
+                                            </ice:panelGrid>
+                                        </f:facet>
+                                        <f:facet name="body">
+                                            <ice:panelGrid id="panelGrid4" style="display: block; height: 80px" width="206">
+                                                <ice:outputLabel binding="#{jrequestUserSolicitud.lblEstadoSolicitud}" id="lblEstadoSolicitud" value="Estado de la Solicitud"/>
+                                                <ice:commandButton action="#{jrequestUserSolicitud.btnAceptar_action}"
+                                                    binding="#{jrequestUserSolicitud.btnAceptar}" id="btnAceptar" value="Aceptar"/>
+                                            </ice:panelGrid>
+                                        </f:facet>
+                                    </ice:panelPopup>
                                 </ice:form>
                             </div>
                         </div>
