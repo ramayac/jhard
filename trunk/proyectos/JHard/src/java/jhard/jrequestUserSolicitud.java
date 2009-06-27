@@ -9,7 +9,6 @@ package jhard;
 import com.icesoft.faces.component.ext.HtmlCommandButton;
 import com.icesoft.faces.component.ext.HtmlInputText;
 import com.icesoft.faces.component.ext.HtmlInputTextarea;
-import com.icesoft.faces.component.ext.HtmlMessage;
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
@@ -29,14 +28,8 @@ import edu.ues.jhard.jpa.Solicitud;
 import edu.ues.jhard.jpa.Usuario;
 import java.util.Calendar;
 import java.sql.Date;
-import java.util.Collection;
-import java.util.Map;
 import javax.faces.FacesException;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 
 /**
@@ -50,6 +43,7 @@ public class jrequestUserSolicitud extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
     private int __placeholder;
 
+
     /**
      * <p>Automatically managed component initialization.  <strong>WARNING:</strong>
      * This method is automatically generated, so any user-specified code inserted
@@ -59,6 +53,24 @@ public class jrequestUserSolicitud extends AbstractPageBean {
 
     arrayEqSimple.setArray((java.lang.Object[]) getValue("#{jrequestUserSolicitud.EQS}"));
     arrayEstados.setArray((java.lang.Object[]) getValue("#{jrequestUserSolicitud.estadoequipo}"));
+
+    lu= getJHardminInstance().getCurrentUser();
+    //System.out.println("NOMBRE DEL USUARIO LOGGEADO" + lu.getUserName());
+
+
+    U = LoginManager.getInstance().getUsuario(lu);
+
+    //System.out.println(U.getNombre());
+
+    this.lblUsuario.setValue((String)U.getNombre());
+              
+    if(U==null){
+        this.lblUsuario.setValue("Favor Logeese como usuario");
+    }
+    else{
+        this.lblUsuario.setValue(U.getNombre());
+    }
+
     }
 
     private ObjectArrayDataProvider arrayEqSimple = new ObjectArrayDataProvider();
@@ -69,15 +81,6 @@ public class jrequestUserSolicitud extends AbstractPageBean {
 
     public void setArrayEqSimple(ObjectArrayDataProvider oadp) {
         this.arrayEqSimple = oadp;
-    }
-    private HtmlInputText txtUsuario = new HtmlInputText();
-
-    public HtmlInputText getTxtUsuario() {
-        return txtUsuario;
-    }
-
-    public void setTxtUsuario(HtmlInputText hit) {
-        this.txtUsuario = hit;
     }
     private HtmlInputTextarea txtDescripcion = new HtmlInputTextarea();
 
@@ -120,7 +123,7 @@ public class jrequestUserSolicitud extends AbstractPageBean {
     // </editor-fold>
 
 
-    private  Equiposimple[] EQS = null;
+    private  Equiposimple[] EQS = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
 
     private Equiposimple eqElegido = null;
 
@@ -229,7 +232,6 @@ public class jrequestUserSolicitud extends AbstractPageBean {
     private Estadoequipo estadoElegido=estados[0];
 
 
-
     public Estadoequipo getEstadoElegido(){
         return estadoElegido;
     }
@@ -290,40 +292,92 @@ public class jrequestUserSolicitud extends AbstractPageBean {
     public void setBtnCerrar(HtmlCommandButton hcb) {
         this.btnCerrar = hcb;
     }
-    private HtmlMessage mensaje = new HtmlMessage();
+    private HtmlInputText txtPropietario = new HtmlInputText();
 
-    public HtmlMessage getMensaje() {
-        return mensaje;
+    public HtmlInputText getTxtPropietario() {
+        return txtPropietario;
     }
 
-    public void setMensaje(HtmlMessage hm) {
-        this.mensaje = hm;
+    public void setTxtPropietario(HtmlInputText hit) {
+        this.txtPropietario = hit;
+    }
+    private PopupBean panelPopup2Bean = new PopupBean();
+
+    public PopupBean getPanelPopup2Bean() {
+        return panelPopup2Bean;
     }
 
+    public void setPanelPopup2Bean(PopupBean pb) {
+        this.panelPopup2Bean = pb;
+    }
+    private PanelPopup panelPopup2 = new PanelPopup();
+
+    public PanelPopup getPanelPopup2() {
+        return panelPopup2;
+    }
+
+    public void setPanelPopup2(PanelPopup pp) {
+        this.panelPopup2 = pp;
+    }
+    private HtmlCommandButton btnAceptar = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnAceptar() {
+        return btnAceptar;
+    }
+
+    public void setBtnAceptar(HtmlCommandButton hcb) {
+        this.btnAceptar = hcb;
+    }
+
+
+    private LoggedUser lu;
+    private Usuario U;
+
+    public LoggedUser getLu() {
+        return lu;
+    }
+
+    public void setLu(LoggedUser lu) {
+        this.lu = lu;
+    }
+
+    public Usuario getU(){
+        return U;
+    }
+
+    public void setU(Usuario u){
+        this.U=u;
+    }
+
+
+
+//    public JHardminInstance getJHardminInstance() {
+//        return (JHardminInstance) getBean("JHardminInstance");
+//    }
+
+    public  BeanBaseJHardmin getJHardminInstance() {
+        return (BeanBaseJHardmin) getBean("JHardminInstance");
+    }
+
+    private HtmlOutputLabel lblUsuario = new HtmlOutputLabel();
+
+    public HtmlOutputLabel getLblUsuario() {
+        return lblUsuario;
+    }
+
+    public void setLblUsuario(HtmlOutputLabel hol) {
+        this.lblUsuario = hol;
+    }
 
     /**
      * <p>Construct a new Page bean instance.</p>
      */
 
-
-
     public jrequestUserSolicitud() {
 
-        
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpSession se = (HttpSession) context.getExternalContext().getSession(true);
+              
 
-        System.out.println("DISQ ES ID DE SESION "+ se.getId());
-        //LoggedUser us = LoginManager.getInstance().getUsuario(usr);
-
-//        System.out.println(us.getUserName());
-//
-//        Usuario u = LoginManager.getInstance().getUsuario(us);
-//
-//        EQS = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimpleByPropietario(u.getNombre());
-//
-//        System.out.println("EL USUARIO LOGGEADO ES: "+u.getNombre());
-
+              
     }
 
     /**
@@ -342,6 +396,9 @@ public class jrequestUserSolicitud extends AbstractPageBean {
     public void init() {
         this.panelPopup1.setVisible(false);
         this.panelPopup1.setRendered(false);
+        this.panelPopup2.setVisible(false);
+        this.panelPopup2.setRendered(false);
+        this.lblUsuario.setValue(U.getNombre());
         // Perform initializations inherited from our superclass
         super.init();
         // Perform application initialization that must complete
@@ -453,7 +510,9 @@ public class jrequestUserSolicitud extends AbstractPageBean {
         
         //Usuario u = new BeanBaseJHardmin().getUsuario(5);
 
-        //s.setIdusuario(u);
+        this.lblUsuario.setValue(U.getNombre());
+
+        s.setIdusuario(U);
         System.out.println("COLOCA EL USUARIO");
 
         String tmp=(String)this.comboEqSimple.getValue();
@@ -467,7 +526,11 @@ public class jrequestUserSolicitud extends AbstractPageBean {
         System.out.println("COLOCA EL EQ SIMPLE");
         new BeanBaseJRequest().registrarSolicitud(s);
         System.out.println("REGISTRA LA SOLICITUD");
-        this.lblEstadoSolicitud.setValue("Solicitud registrada con éxito. Nuestros técnicos harán la visita a la mayor brevedad posible");
+        
+        this.lblEstadoSolicitud.setValue("Solicitud enviada con éxito. Nuestros técnicos se encargarán de resolverla a la brevedad posible");
+        this.panelPopup2.setVisible(true);
+        this.panelPopup2.setRendered(true);
+        this.panelPopup2.setModal(true);
 
         return null;
     }
@@ -491,7 +554,7 @@ public class jrequestUserSolicitud extends AbstractPageBean {
 
         Usuario u = new BeanBaseJHardmin().getUsuario(5);
 
-        eq.setPropietario(u.getNombre());
+        eq.setPropietario((String)this.txtPropietario.getValue());
 
         String tmp=(String)this.comboEstados.getValue();
         Integer id=Integer.parseInt(tmp);
@@ -502,17 +565,23 @@ public class jrequestUserSolicitud extends AbstractPageBean {
 
         new BeanBaseJRequest().registrarEquipoSimple(eq);
 
-        this.mensaje.setTitle("Equipo Creado con éxito");
         this.EQS = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
         this.eqElegido=this.EQS[this.EQS.length-1];
 
         arrayEqSimple.setArray((java.lang.Object[]) getValue("#{jrequestUserSolicitud.EQS}"));
+
         this.comboEqSimple.setValue(this.eqElegido);
         this.panelPopup1.setVisible(false);
         this.panelPopup1.setRendered(false);
         this.panelPopup1.setModal(false);
-        
-        
+
+        return null;
+    }
+
+    public String btnAceptar_action() {
+        this.panelPopup2.setVisible(false);
+        this.panelPopup2.setRendered(false);
+        this.panelPopup2.setModal(false);
         return null;
     }
 
