@@ -386,3 +386,30 @@ html>body #footer {
 #legal a {
 	color: #FFD2C6;
 }
+
+#frmLogin label{
+    float: left;
+    width: 50px;
+}
+
+#frmLogin p{
+    margin: 5px;
+}
+
+.btnField{
+    position: relative;
+    left: 120px;
+}
+
+.lblLoggedUsrName{
+    font-weight: bold;
+}
+
+.divFail{
+    /*border: 1px solid black;*/
+    color: red;
+}
+
+.popupHeader{
+    padding: 4px 5px;
+}

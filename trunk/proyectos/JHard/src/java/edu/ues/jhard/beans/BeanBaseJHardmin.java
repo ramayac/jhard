@@ -12,6 +12,8 @@ import edu.ues.jhard.jpa.Usuario;
 import edu.ues.jhard.util.ActionMessage;
 import java.util.List;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,6 +34,13 @@ public class BeanBaseJHardmin extends BeanBase {
     private List<Rol> roleList;
     private List<Usuario> userList;
     private ActionMessage msg;
+    private Boolean popUpAddUserVisible;
+    private Usuario newUser;
+    private String newUserPwdConfirm;
+    private Boolean addUserPwdNoMatch;
+    private SelectItem rolSelected;
+    private SelectItemGroup roleItemList;
+    private int userListSize;
 
     public BeanBaseJHardmin(){
         this.loginFail = false;
@@ -40,6 +49,10 @@ public class BeanBaseJHardmin extends BeanBase {
         this.roleList = this.getEntityManager().createNamedQuery("Rol.findAll").getResultList();
         this.userList = this.getEntityManager().createNamedQuery("Usuario.findAll").getResultList();
         this.msg = new ActionMessage();
+        this.setPopUpAddUserVisible(false);
+        this.newUser = new Usuario();
+        this.setAddUserPwdNoMatch(false);
+        this.initSelectItems();
     }
 
     public Usuario getUsuario(String userName, String userPwd){
@@ -159,13 +172,15 @@ public class BeanBaseJHardmin extends BeanBase {
     public String changePassword(){
         try{
             Usuario usr = LoginManager.getInstance().getUsuario(this.currentUser);
+            EntityManager em = this.getEntityManager();
             if(usr.getClave().equalsIgnoreCase(LoginManager.getInstance().encrypt(this.getInputChOldPwd()))){
                 if(this.getInputChNewPwd().equalsIgnoreCase(this.getInputChNewPwdConfirm())){                    
                     //this.getEntityManager().merge(usr);
-                    //this.getEntityManager().getTransaction().begin();
-                    usr = new Usuario(usr.getIdusuario(), usr.getNombre(), LoginManager.getInstance().encrypt(this.getInputChNewPwd()));
-                    //usr.setClave(LoginManager.getInstance().encrypt(this.getInputChNewPwd()));
-                    this.getEntityManager().merge(usr);
+                    //this.getEntityManager().getTransaction().begin();                    
+                    usr.setClave(LoginManager.getInstance().encrypt(this.getInputChNewPwd()));
+                    em.getTransaction().begin();
+                    em.merge(usr);
+                    em.getTransaction().commit();
                     //this.getEntityManager().getTransaction().commit();
                     System.out.println("Nueva clave: " + usr.getClave());                    
                     this.setInputChOldPwd("");
@@ -267,5 +282,138 @@ public class BeanBaseJHardmin extends BeanBase {
      */
     public void setUserList(List<Usuario> userList) {
         this.userList = userList;
+    }
+
+    /**
+     * @return the popUpAddUserVisible
+     */
+    public Boolean getPopUpAddUserVisible() {
+        return popUpAddUserVisible;
+    }
+
+    /**
+     * @param popUpAddUserVisible the popUpAddUserVisible to set
+     */
+    public void setPopUpAddUserVisible(Boolean popUpAddUserVisible) {
+        this.popUpAddUserVisible = popUpAddUserVisible;
+    }
+
+    public String showPopupAddUser(){
+        this.setPopUpAddUserVisible(true);
+        return "success!";
+    }
+
+    public String commitAddUser(){
+        this.setPopUpAddUserVisible(false);
+        if(!this.newUser.getClave().equalsIgnoreCase(this.newUserPwdConfirm)){            
+            this.addUserPwdNoMatch = true;
+            return "fail";
+        }
+        
+        //String idSelectedRol = this.rolSelected.getValue().toString();
+        EntityManager em = this.getEntityManager();
+        Rol r = (Rol)em.createQuery("SELECT r FROM Rol r WHERE r.idrol=" + "1").getSingleResult();
+        em.getTransaction().begin();
+        this.newUser.setIdrol(r);
+        this.newUser.setClave(LoginManager.getInstance().encrypt(this.newUser.getClave()));
+        em.persist(this.newUser);
+        em.getTransaction().commit();
+
+        this.newUser.setNombre("");
+        this.newUser.setClave("");
+        this.popUpAddUserVisible = false;
+        this.userList = em.createNamedQuery("Usuario.findAll").getResultList();
+        return "Done.";
+    }
+
+    public String cancelAddUser(){
+        this.setPopUpAddUserVisible(false);
+        this.newUser = new Usuario();
+        this.newUser.setNombre("");
+        this.newUser.setClave("");
+        return "Done.";
+    }
+
+    /**
+     * @return the newUser
+     */
+    public Usuario getNewUser() {
+        return newUser;
+    }
+
+    /**
+     * @param newUser the newUser to set
+     */
+    public void setNewUser(Usuario newUser) {
+        this.newUser = newUser;
+    }
+
+    /**
+     * @return the newUserPwdConfirm
+     */
+    public String getNewUserPwdConfirm() {
+        return newUserPwdConfirm;
+    }
+
+    /**
+     * @param newUserPwdConfirm the newUserPwdConfirm to set
+     */
+    public void setNewUserPwdConfirm(String newUserPwdConfirm) {
+        this.newUserPwdConfirm = newUserPwdConfirm;
+    }
+
+    /**
+     * @return the addUserPwdNoMatch
+     */
+    public Boolean getAddUserPwdNoMatch() {
+        return addUserPwdNoMatch;
+    }
+
+    /**
+     * @param addUserPwdNoMatch the addUserPwdNoMatch to set
+     */
+    public void setAddUserPwdNoMatch(Boolean addUserPwdNoMatch) {
+        this.addUserPwdNoMatch = addUserPwdNoMatch;
+    }
+
+    /**
+     * @return the rolSelected
+     */
+    public SelectItem getRolSelected() {
+        return rolSelected;
+    }
+
+    /**
+     * @param rolSelected the rolSelected to set
+     */
+    public void setRolSelected(SelectItem rolSelected) {
+        this.rolSelected = rolSelected;
+    }
+
+    /**
+     * @return the roleItemList
+     */
+    public SelectItemGroup getRoleItemList() {
+        return roleItemList;
+    }
+
+    /**
+     * @param roleItemList the roleItemList to set
+     */
+    public void setRoleItemList(SelectItemGroup roleItemList) {
+        this.roleItemList = roleItemList;
+    }
+
+    private void initSelectItems() {
+        this.roleItemList = new SelectItemGroup();
+        SelectItem[] itemArray = new SelectItem[this.roleList.size()];
+        for(int i=0; i<this.roleList.size(); i++){
+            itemArray[i] = new SelectItem(this.roleList.get(i).getIdrol(), this.roleList.get(i).getNombre());
+        }
+        this.roleItemList.setSelectItems(itemArray);
+    }
+
+    public int getUserListSize(){
+        return this.userList.size();
     }
 }
