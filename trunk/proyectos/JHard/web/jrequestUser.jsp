@@ -58,42 +58,36 @@
                             <div class="entry">
                                 <p class="text">Este es el sitio si requiere Soporte Técnico ya sea en Hardware o Software en la UES-FMOcc</p>
                                 <ice:form id="form1">
-                                <ice:panelCollapsible id="panelCollapsible1" style="height: 80px; width: 576px">
-                                    <f:facet name="header">
-                                        <ice:panelGroup id="panelGroup1" styleClass="">
-                                            <ice:outputText id="outputText1" value="Busquedas JWiki"/>
-                                        </ice:panelGroup>
-                                    </f:facet>
-                                    <ice:panelGrid id="panelGrid1" style="height: 144px">
-                                        
-                                            <ice:selectInputText id="selectPosts">
-                                                <f:selectItems id="selectInputText1selectedItems"/>
-                                            </ice:selectInputText>
-                                            <br/>
-                                            <ice:outputLabel id="outputLabel2" value="Ingrese palabras clave para realizar una búsqueda de soluciones"/>
-                                            <ice:inputTextarea id="txtProblemas" style="width: 250px"/>
-                                            <ice:commandButton action="#{jrequestUser.btnBuscar_action}" binding="#{jrequestUser.btnBuscar}" id="btnBuscar" value="Buscar"/>
-                                        
-                                    </ice:panelGrid>
-                                </ice:panelCollapsible>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <ice:panelCollapsible id="panelCollapsible2" style="height: 114px; width: 576px">
-                                    <f:facet name="header">
-                                        <ice:panelGroup id="panelGroup2" styleClass="">
-                                            <ice:outputText id="lblTitulo" value="Envio de Solicitudes de Mantenimiento"/>
-                                        </ice:panelGroup>
-                                    </f:facet>
-                                    <ice:panelGrid id="panelGrid2" style="height: 72px">
-                                            <ice:outputLabel id="lblSolicitud" value="En cambio, si desea enviar una solicitud de Mantenimiento, pulse el siguiente botón"/>
-                                            <ice:commandButton action="#{jrequestUser.btnSolicitud_action}" binding="#{jrequestUser.btnSolicitud}"
-                                                id="btnSolicitud" value="Enviar Solicitud"/>
-                                    </ice:panelGrid>
-                                </ice:panelCollapsible>
+                                    <ice:panelGroup id="grupo2" style="position: inherit; width: 100%; ">
+                                        <ice:panelCollapsible expanded="true" id="panelCollapsible1" style="width: 576px">
+                                            <f:facet name="header">
+                                                <ice:panelGroup id="panelGroup1" styleClass="">
+                                                    <ice:outputText id="outputText1" value="Busquedas JWiki"/>
+                                                </ice:panelGroup>
+                                            </f:facet>
+                                            <ice:panelGrid id="panelGrid1" style="height: 144px">
+                                                <ice:selectInputText id="selectPosts">
+                                                    <f:selectItems id="selectInputText1selectedItems"/>
+                                                </ice:selectInputText>
+                                                <br/>
+                                                <ice:outputLabel id="outputLabel2" value="Ingrese palabras clave para realizar una búsqueda de soluciones"/>
+                                                <ice:inputTextarea id="txtProblemas" style="width: 250px"/>
+                                                <ice:commandButton action="#{jrequestUser.btnBuscar_action}" binding="#{jrequestUser.btnBuscar}" id="btnBuscar" value="Buscar"/>
+                                            </ice:panelGrid>
+                                        </ice:panelCollapsible>
+                                        <ice:panelCollapsible id="panelCollapsible2" style="width: 576px">
+                                            <f:facet name="header">
+                                                <ice:panelGroup id="panelGroup2" styleClass="">
+                                                    <ice:outputText id="lblTitulo" value="Envio de Solicitudes de Mantenimiento"/>
+                                                </ice:panelGroup>
+                                            </f:facet>
+                                            <ice:panelGrid id="panelGrid2" style="height: 72px">
+                                                <ice:outputLabel id="lblSolicitud" value="En cambio, si desea enviar una solicitud de Mantenimiento, pulse el siguiente botón"/>
+                                                <ice:commandButton action="#{jrequestUser.btnSolicitud_action}" binding="#{jrequestUser.btnSolicitud}"
+                                                    id="btnSolicitud" value="Enviar Solicitud"/>
+                                            </ice:panelGrid>
+                                        </ice:panelCollapsible>
+                                    </ice:panelGroup>
                                 </ice:form>
                             </div>
                         </div>

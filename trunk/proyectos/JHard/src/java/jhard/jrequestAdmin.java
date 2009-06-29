@@ -133,7 +133,7 @@ public class jrequestAdmin extends AbstractPageBean {
             if(cont==0){
                 System.out.println("SI ESTO NO ES CERO NO DEBE DE ENTRAR..."+cont);
                 Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
-                String label = u.getNombre()+"  "+solicitudes[i].getDescripcion();
+                String label = u.getNombre()+" - "+solicitudes[i].getDescripcion();
                 soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
             }
             
@@ -160,7 +160,7 @@ public class jrequestAdmin extends AbstractPageBean {
 
             if(cont==0){
                 Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
-                String label = u.getNombre()+"  "+solicitudes[i].getDescripcion();
+                String label = u.getNombre()+" - "+solicitudes[i].getDescripcion();
                 soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
             }
 
@@ -183,7 +183,7 @@ public class jrequestAdmin extends AbstractPageBean {
             if(cont==0){
 
                 Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
-                String label = u.getNombre()+"  "+solicitudes[i].getDescripcion();
+                String label = u.getNombre()+" - "+solicitudes[i].getDescripcion();
                 soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
             }
         }
@@ -210,7 +210,7 @@ public class jrequestAdmin extends AbstractPageBean {
 
             Equiposimple eq = new BeanBaseJRequest().getEquipoSimpleByID(mantenimientos[i].getIdequiposimple().getIdEquipoSimple());
 
-            String label = eq.getDescripcion() +"  "+ mantenimientos[i].getDescripcion();
+            String label = eq.getDescripcion() +" - "+ mantenimientos[i].getDescripcion();
 
             man.add(new SelectItem(mantenimientos[i].getIdmantenimiento(), label));
         }
@@ -1109,7 +1109,7 @@ public class jrequestAdmin extends AbstractPageBean {
 
             Calendar c = Calendar.getInstance();
 
-            m.setFecha(new Date(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE)));
+            m.setFecha(new Date((c.get(Calendar.YEAR))-1900, c.get(Calendar.MONTH), c.get(Calendar.DATE)));
 
 
             m.setIdtecnico(tecnicoElegido);
@@ -1354,7 +1354,7 @@ public class jrequestAdmin extends AbstractPageBean {
 
         for(int i=0;i<bitacoras.length;i++){
 
-            String label = bitacoras[i].getDescripcion()  +"  "+ bitacoras[i].getFecha().toString();
+            String label = bitacoras[i].getDescripcion()  +" - "+ bitacoras[i].getFecha().toString();
 
             bit.add(new SelectItem(bitacoras[i].getIdbitacora(), label));
         }
@@ -1443,6 +1443,9 @@ public class jrequestAdmin extends AbstractPageBean {
     public String btnSolicitudAdmin_action() {
 
         return "case2";
+    }
+
+    public void comboEstado_processValueChange(ValueChangeEvent vce) {
     }
 
     

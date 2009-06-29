@@ -93,7 +93,7 @@
                                     </ice:panelPopup>
                                     <ice:outputLabel id="lblNombre" value="Nombre del Usuario que hace la solicitud"/>
                                     <br/>
-                                    <ice:outputLabel binding="#{jrequestUserSolicitud.lblUsuario}" id="lblUsuario" style="font-size: 14px; font-weight: bold" value="NOMBRE"/>
+                                    <ice:outputLabel binding="#{jrequestUserSolicitud.lblUsuario}" id="lblUsuario" style="font-size: 14px; font-weight: bold"/>
                                     <br/>
                                     <br/>
                                     <br/>
