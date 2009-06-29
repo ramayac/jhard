@@ -1,6 +1,7 @@
 package edu.ues.jhard.beans;
 
 import edu.ues.jhard.jpa.*;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -13,16 +14,19 @@ public class BeanBaseJWiki extends BeanBase {
      * Metodo para obtener las ultimas cinco entradas en jhard.entradas.
      * @return
      */
-//    public Entrada[] getUltimasCincoEntradas(){
-//        EntityManager em=this.getEntityManager();
-//        Query q = em.createNamedQuery("Entrada.findLastFive");
-//
-//        Entrada[] e = (Entrada[]) q.getResultList().toArray(new Entrada[5]);
-//        for (Entrada entrada : e)
-//            em.refresh(entrada);
-//
-//        return e;
-//    }
+    public Entrada[] getUltimasNEntradas(int numero){
+        EntityManager em=this.getEntityManager();
+
+        Query q=em.createNamedQuery("Entrada.findAll");
+        q.setFirstResult(0);
+        q.setMaxResults(numero);
+
+        Entrada[] e=(Entrada[])q.getResultList().toArray(new Entrada[0]);
+
+        for(int i=0;i<e.length;i++)
+            em.refresh(e[i]);
+        return e;
+    }
 
     /**
      * Metodo para obtener una entrada especifica
