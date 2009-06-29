@@ -53,6 +53,23 @@ public class BeanBaseJWikiTest {
         System.out.println("Exito en la prueba!");
     }
 
+    /**
+     *
+     */
+    @Test
+    public void testNEntradas() {
+        int n = 5;
+        System.out.println("getNEntradas");
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        Entrada[] resultado = new Entrada[n];
+        resultado = instance.getUltimasNEntradas(n);
+        if(resultado.length==n)
+            assertNotNull(resultado); //OBVIO que no sera null...
+        else
+            fail("resultado menor que el esperado");
+        
+    }
+
 //    /**
 //     * Test of registrarReserva method, of class BeanBaseJCanon.
 //     */
