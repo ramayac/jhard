@@ -54,22 +54,22 @@ public class jrequestUserSolicitud extends AbstractPageBean {
     arrayEqSimple.setArray((java.lang.Object[]) getValue("#{jrequestUserSolicitud.EQS}"));
     arrayEstados.setArray((java.lang.Object[]) getValue("#{jrequestUserSolicitud.estadoequipo}"));
 
-    lu= getJHardminInstance().getCurrentUser();
-    //System.out.println("NOMBRE DEL USUARIO LOGGEADO" + lu.getUserName());
+//    lu= getJHardminInstance().getCurrentUser();
+//    //System.out.println("NOMBRE DEL USUARIO LOGGEADO" + lu.getUserName());
+//
+//
+//    U = LoginManager.getInstance().getUsuario(lu);
+//
+//    //System.out.println(U.getNombre());
 
-
-    U = LoginManager.getInstance().getUsuario(lu);
-
-    //System.out.println(U.getNombre());
-
-    this.lblUsuario.setValue((String)U.getNombre());
-              
-    if(U==null){
-        this.lblUsuario.setValue("Favor Logeese como usuario");
-    }
-    else{
-        this.lblUsuario.setValue(U.getNombre());
-    }
+//    this.lblUsuario.setValue((String)U.getNombre());
+//
+//    if(U==null){
+//        this.lblUsuario.setValue("Favor Logeese como usuario");
+//    }
+//    else{
+//        this.lblUsuario.setValue(U.getNombre());
+//    }
 
     }
 
@@ -330,8 +330,8 @@ public class jrequestUserSolicitud extends AbstractPageBean {
     }
 
 
-    private LoggedUser lu;
-    private Usuario U;
+    private LoggedUser lu = getJHardminInstance().getCurrentUser();
+    private Usuario U = LoginManager.getInstance().getUsuario(lu);
 
     public LoggedUser getLu() {
         return lu;
@@ -375,7 +375,24 @@ public class jrequestUserSolicitud extends AbstractPageBean {
 
     public jrequestUserSolicitud() {
 
-              
+        lu= getJHardminInstance().getCurrentUser();
+        //System.out.println("NOMBRE DEL USUARIO LOGGEADO" + lu.getUserName());
+
+
+        U = LoginManager.getInstance().getUsuario(lu);
+
+        //System.out.println(U.getNombre());
+
+        this.lblUsuario.setValue((String)U.getNombre());
+
+        if(U==null){
+            this.lblUsuario.setValue("Favor Logeese como usuario");
+            this.btnEnviar.setDisabled(true);
+        }
+        else{
+            this.lblUsuario.setValue(U.getNombre());
+        }
+
 
               
     }
@@ -498,7 +515,7 @@ public class jrequestUserSolicitud extends AbstractPageBean {
         Solicitud s = new Solicitud();
         Calendar c = Calendar.getInstance();
 
-        s.setFecha(new Date(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE)));
+        s.setFecha(new Date((c.get(Calendar.YEAR))-1900, c.get(Calendar.MONTH), c.get(Calendar.DATE)));
 
         System.out.println("COLOCA LA FECHA");
         s.setPrioridad("Media");
