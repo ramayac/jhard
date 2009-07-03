@@ -41,13 +41,6 @@
             <to-view-id>/jrequestUserSolicitud.jsp</to-view-id>
         </navigation-case>
     </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/Index.jsp</from-view-id>
-        <navigation-case>
-            <from-outcome>chpwd</from-outcome>
-            <to-view-id>/Admin.jspx</to-view-id>
-        </navigation-case>
-    </navigation-rule>
     <managed-bean>
         <managed-bean-name>jrequestAdmin</managed-bean-name>
         <managed-bean-class>jhard.jrequestAdmin</managed-bean-class>
@@ -66,6 +59,11 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
+        <managed-bean-name>Redireccion</managed-bean-name>
+        <managed-bean-class>edu.ues.jhard.util.Redireccion</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
         <managed-bean-name>jwikiUser</managed-bean-name>
         <managed-bean-class>jhard.jwikiUser</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
@@ -76,13 +74,13 @@
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>Admin</managed-bean-name>
-        <managed-bean-class>jhard.Admin</managed-bean-class>
+        <managed-bean-name>jcanon</managed-bean-name>
+        <managed-bean-class>jhard.jcanon</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>UserAdmin</managed-bean-name>
-        <managed-bean-class>jhard.UserAdmin</managed-bean-class>
+        <managed-bean-name>JRequestAdministracion</managed-bean-name>
+        <managed-bean-class>jhard.JRequestAdministracion</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>    
+    </managed-bean>
 </faces-config>

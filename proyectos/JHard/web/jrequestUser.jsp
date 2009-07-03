@@ -58,22 +58,55 @@
                             <div class="entry">
                                 <p class="text">Este es el sitio si requiere Soporte Técnico ya sea en Hardware o Software en la UES-FMOcc</p>
                                 <ice:form id="form1">
-                                    <ice:panelGroup id="grupo2" style="position: inherit; width: 100%; ">
+                                    <ice:panelGroup id="grupo2" style="width: 100%; ">
                                         <ice:panelCollapsible expanded="true" id="panelCollapsible1" style="width: 576px">
                                             <f:facet name="header">
                                                 <ice:panelGroup id="panelGroup1" styleClass="">
                                                     <ice:outputText id="outputText1" value="Busquedas JWiki"/>
                                                 </ice:panelGroup>
                                             </f:facet>
-                                            <ice:panelGrid id="panelGrid1" style="height: 144px">
-                                                <ice:selectInputText id="selectPosts">
-                                                    <f:selectItems id="selectInputText1selectedItems"/>
-                                                </ice:selectInputText>
-                                                <br/>
-                                                <ice:outputLabel id="outputLabel2" value="Ingrese palabras clave para realizar una búsqueda de soluciones"/>
-                                                <ice:inputTextarea id="txtProblemas" style="width: 250px"/>
-                                                <ice:commandButton action="#{jrequestUser.btnBuscar_action}" binding="#{jrequestUser.btnBuscar}" id="btnBuscar" value="Buscar"/>
-                                            </ice:panelGrid>
+                                            <ice:panelGroup id="panelGroup13" style="height: 350px">
+                                                <p>
+                                                    <ice:outputLabel id="outputLabel2" value="Ingrese palabras clave para realizar una búsqueda de soluciones"/>
+                                                </p>
+                                                <p>
+                                                    <ice:inputTextarea id="txtProblemas" style="width: 300px"/>
+                                                </p>
+                                                <p>
+                                                    <ice:commandButton action="#{jrequestUser.btnBuscar_action}" binding="#{jrequestUser.btnBuscar}"
+                                                        id="btnBuscar" value="Buscar"/>
+                                                </p>
+                                                <p>
+                                                    <ice:dataTable id="tblListaPost" rows="5" style="" title="Lista de Posts" value="" var="">
+                                                        <ice:column>
+                                                            <f:facet name="header">
+                                                                <ice:outputText value="Nombre"/>
+                                                            </f:facet>
+                                                            <ice:commandLink value="Nombre del Post"/>
+                                                        </ice:column>
+                                                        <ice:column>
+                                                            <f:facet name="header">
+                                                                <ice:outputText value="Descripción"/>
+                                                            </f:facet>
+                                                            <ice:outputText value="Descripción del Post"/>
+                                                        </ice:column>
+                                                    </ice:dataTable>
+                                                    <ice:dataPaginator for="tblListaPost" id="pgrListaPosts" paginator="true" style="">
+                                                        <f:facet name="first">
+                                                            <ice:graphicImage style="border:none;" title="Primera" url="./xmlhttp/css/xp/css-images/arrow-first.gif"/>
+                                                        </f:facet>
+                                                        <f:facet name="previous">
+                                                            <ice:graphicImage style="border:none;" title="Previa" url="./xmlhttp/css/xp/css-images/arrow-previous.gif"/>
+                                                        </f:facet>
+                                                        <f:facet name="next">
+                                                            <ice:graphicImage style="border:none;" title="Siguiente" url="./xmlhttp/css/xp/css-images/arrow-next.gif"/>
+                                                        </f:facet>
+                                                        <f:facet name="last">
+                                                            <ice:graphicImage style="border:none;" title="Última" url="./xmlhttp/css/xp/css-images/arrow-last.gif"/>
+                                                        </f:facet>
+                                                    </ice:dataPaginator>
+                                                </p>
+                                            </ice:panelGroup>
                                         </ice:panelCollapsible>
                                         <ice:panelCollapsible id="panelCollapsible2" style="width: 576px">
                                             <f:facet name="header">
@@ -88,6 +121,20 @@
                                             </ice:panelGrid>
                                         </ice:panelCollapsible>
                                     </ice:panelGroup>
+                                    <ice:panelPopup autoCentre="true" binding="#{jrequestUser.popUpRegister}" draggable="true" id="popUpRegister" modal="true"
+                                        rendered="#{jrequestUser.panelPopup1Bean.showDraggablePanel}" style="height: 46; width: 381px" visible="#{jrequestUser.panelPopup1Bean.showModalPanel}">
+                                        <f:facet name="header">
+                                            <ice:panelGrid id="panelGrid1" style="display: block; height: 20px" width="360">
+                                                <ice:outputText id="lblTit" value="Usted no es un usuario registrado"/>
+                                            </ice:panelGrid>
+                                        </f:facet>
+                                        <f:facet name="body">
+                                            <ice:panelGrid id="panelGrid3" style="display: block; height: 80px" width="350">
+                                                <ice:outputText id="mensaje" value="Debe registrarse para poder acceder a esta opción"/>
+                                                <ice:commandButton action="#{jrequestUser.btnOk_action}" binding="#{jrequestUser.btnOk}" id="btnOk" value="Aceptar"/>
+                                            </ice:panelGrid>
+                                        </f:facet>
+                                    </ice:panelPopup>
                                 </ice:form>
                             </div>
                         </div>
@@ -132,30 +179,32 @@
                                 </ice:form>
                             </li>
                             <li>
-                                <h2>Otros Vinculos</h2>
-                                <ul>
-                                    <li>
-                                        <a href="#">Nec metus sed donec</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Magna lacus bibendum mauris</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Velit semper nisi molestie</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Eget tempor eget nonummy</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Nec metus sed donec</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Magna lacus bibendum mauris</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Velit semper nisi molestie</a>
-                                    </li>
-                                </ul>
+                                <ice:form id="frmCommonTasks">
+                                    <h2>Tareas Comunes</h2>
+                                    <ul>
+                                        <li>
+                                            <ice:commandLink action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}" value="Cambiar clave de acceso"/>
+                                        </li>
+                                        <li>
+                                            <ice:commandLink value="Administrar Solicitudes de JRequest" action="#{Redireccion.jrequestAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"  />
+                                        </li>
+                                        <li>
+                                            <ice:commandLink value="Tareas Administrativas de JRequest" action="#{Redireccion.jrequestAdministracion}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"></ice:commandLink>
+                                        </li>
+                                        <li>
+                                            <ice:commandLink value="Emitir Solicitud de Soporte Técnico" action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
+                                        </li>
+                                        <li>
+                                            <a href="#">Otras Opciones</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Otras Opciones</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Otras Opciones</a>
+                                        </li>
+                                    </ul>
+                                </ice:form>
                             </li>
                         </ul>
                     </div>

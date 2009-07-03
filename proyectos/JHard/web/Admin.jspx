@@ -25,7 +25,7 @@
                     <div id="menu">
                         <ul>
                             <li class="current_page_item">
-                                <a href="#">Principal</a>
+                                <a href="Index.iface">Principal</a>
                             </li>
                             <li>
                                 <a href="jrequestUser.iface">Mantenimientos</a>
@@ -40,7 +40,7 @@
                                 <a href="#">Wiki y Cursos</a>
                             </li>
                             <li class="last">
-                                <a href="#">Cañones</a>
+                                <a href="jcanon.iface">Cañones</a>
                             </li>
                         </ul>
                     </div>
@@ -225,25 +225,25 @@
                                 <h2>Tareas Comunes</h2>
                                 <ul>
                                     <li>
-                                        <ice:commandLink value="Cambiar clave de acceso" action="chpwd" rendered="#{JHardminInstance.currentUser != null}"  />
+                                        <ice:commandLink value="Cambiar clave de acceso" action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}"  />
                                     </li>
                                     <li>
-                                        <a href="#">Administrar usuarios</a>
+                                        <ice:commandLink value="Administrar Solicitudes de JRequest" action="#{Redireccion.jrequestAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"  />
                                     </li>
                                     <li>
-                                        <a href="#">Velit semper nisi molestie</a>
+                                        <ice:commandLink value="Tareas Administrativas de JRequest" action="#{Redireccion.jrequestAdministracion}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"></ice:commandLink>
                                     </li>
                                     <li>
-                                        <a href="#">Eget tempor eget nonummy</a>
+                                        <ice:commandLink value="Emitir Solicitud de Soporte Técnico" action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
                                     </li>
                                     <li>
-                                        <a href="#">Nec metus sed donec</a>
+                                        <a href="#">Otras Opciones</a>
                                     </li>
                                     <li>
-                                        <a href="#">Magna lacus bibendum mauris</a>
+                                        <a href="#">Otras Opciones</a>
                                     </li>
                                     <li>
-                                        <a href="#">Velit semper nisi molestie</a>
+                                        <a href="#">Otras Opciones</a>
                                     </li>
                                 </ul>
                                 </ice:form>

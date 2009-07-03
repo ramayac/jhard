@@ -20,8 +20,6 @@ import com.icesoft.faces.component.jsfcl.data.PopupBean;
 import com.icesoft.faces.component.panelpopup.PanelPopup;
 import com.icesoft.faces.component.paneltabset.TabChangeEvent;
 import com.icesoft.faces.component.selectinputtext.SelectInputText;
-import com.sun.data.provider.impl.ObjectArrayDataProvider;
-import com.sun.data.provider.impl.ObjectListDataProvider;
 import com.sun.rave.faces.data.DefaultSelectItemsArray;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
@@ -61,406 +59,34 @@ public class jrequestAdmin extends AbstractPageBean {
 
 
     private void _init() throws Exception {
-        arrayTecnicos.setArray((java.lang.Object[]) getValue("#{jrequestAdmin.tecnicos}"));
-        arrayEqSimples.setArray((java.lang.Object[]) getValue("#{jrequestAdmin.eqs}"));
-        
+        fakeSol.setItems(new String[]{});
+        fakeMan.setItems(new String[]{});
+        fakeBit.setItems(new String[]{});
 
-        selectOneMenu1DefaultItems1.setItems(new String[]{"Alta", "Media", "Baja"});
-        selectOneMenu2DefaultItems.setItems(new String[]{"Alta", "Media","Baja"});
-
-
-        selectOneListbox1DefaultItems1.setItems(new String[]{});
-        selectOneListbox1DefaultItems2.setItems(new String[]{});
-        selectOneListbox1DefaultItems3.setItems(new String[]{});
-        selectOneListbox1DefaultItems5.setItems(new String[]{});
-        selectOneListbox1DefaultItems6.setItems(new String[]{});
-        listaSolDefaultItems.setItems(new String[]{});
-        selectOneListbox1DefaultItems4.setItems(new String[]{});
-        selectOneRadio1DefaultItems1.setItems(new String[]{});
-        listaMantenimientosDefaultItems.setItems(new String[]{});
-        selectOneListbox1DefaultItems.setItems(new String[]{});
-        selectOneMenu1DefaultItems4.setItems(new String[]{});
-        selectOneMenu1DefaultItems3.setItems(new String[]{});
-
-        comboPrioridadDefaultItems.setItems(new String[]{"Alta", "Media", "Baja"});
-        selectOneMenu1DefaultItems2.setItems(new String[]{});
+        fakeComboPrioridad.setItems(new String[]{"Alta", "Media", "Baja"});
+        fakeComboEstado1.setItems(new String[]{});
+        fakeComboTecnico1.setItems(new String[]{});
 
 
     }
 
-    // </editor-fold>
+    private DefaultSelectItemsArray fakeComboEstado1 = new DefaultSelectItemsArray();
 
-
-
-    //ESTE METODO DEBE DE IR EN EL NEGOCIO
-    public void llenarLista(){
-
-        //Limpio las listas si están llenas
-        limpiarListas();
-
-
-        //LISTA DE SOLICITUDES ORDENADAS POR PRIORIDAD
-        
-        //Array que se metera en la selectonelistbox
-        soc=new ArrayList();
-
-        //Para comparar cuales solicitudes ya tienen mantenimientos relacionados
-        mantenimientos = new edu.ues.jhard.beans.BeanBaseJRequest().getMantenimiento();
-
-        //Consulta de solicitudes por prioridad ALTA
-        solicitudes = new edu.ues.jhard.beans.BeanBaseJRequest().getSolicitudesByPrioridad("Alta");
-
-        //contador
-        int cont=0;
-
-        //Bucle para meter las solicitudes en el ArrayList
-        for(int i=0;i<solicitudes.length;i++){
-
-            cont=0;
-
-            //Comparo y cuento si ya existe un mantenimiento que contenga el ID de la solicitud,
-            //si ya existe, aumento el contador y dicha solicitud ya no se debe de mostrar
-
-            for(int j=0;j<mantenimientos.length;j++){
-                System.out.println(mantenimientos[j].getIdsolicitud().getIdsolicitud()+"  "+solicitudes[i].getIdsolicitud());
-                if (mantenimientos[j].getIdsolicitud().getIdsolicitud().equals(solicitudes[i].getIdsolicitud())){
-                    System.out.println("ENTRO!!!");
-                    cont++;
-                    System.out.println(cont);
-                }
-            }
-
-            if(cont==0){
-                System.out.println("SI ESTO NO ES CERO NO DEBE DE ENTRAR..."+cont);
-                Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
-                String label = u.getNombre()+" - "+solicitudes[i].getDescripcion();
-                soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
-            }
-            
-        }
-
-        
-
-        //Consulta de solicitudes por prioridad MEDIA
-        solicitudes = new edu.ues.jhard.beans.BeanBaseJRequest().getSolicitudesByPrioridad("Media");
-
-        //contador
-        cont=0;
-
-        //Bucle para meter las solicitudes en el ArrayList
-        for(int i=0;i<solicitudes.length;i++){
-
-            cont=0;
-
-            for(int j=0;j<mantenimientos.length;j++){
-                if (mantenimientos[j].getIdsolicitud().getIdsolicitud().equals(solicitudes[i].getIdsolicitud())){
-                    cont++;
-                }
-            }
-
-            if(cont==0){
-                Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
-                String label = u.getNombre()+" - "+solicitudes[i].getDescripcion();
-                soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
-            }
-
-        }
-
-        //Consulta de solicitudes por prioridad BAJA
-        solicitudes = new edu.ues.jhard.beans.BeanBaseJRequest().getSolicitudesByPrioridad("Baja");
-
-        //contador
-        cont=0;
-
-        for(int i=0;i<solicitudes.length;i++){
-
-            cont=0;
-
-            for(int j=0;j<mantenimientos.length;j++)
-                if (mantenimientos[j].getIdsolicitud().getIdsolicitud().equals(solicitudes[i].getIdsolicitud()))
-                    cont++;
-
-            if(cont==0){
-
-                Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
-                String label = u.getNombre()+" - "+solicitudes[i].getDescripcion();
-                soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
-            }
-        }
-
-
-        //Creo una UISelecItems
-        UISelectItems items = new UISelectItems();
-        //Le añado como valor el ArrayList
-        items.setValue(soc);
-        //Le meto las UISelectItems como hijos de la selectonelistbox
-        this.listaSol.getChildren().add(items);
-
-
-        //LISTA DE MANTENIMIENTOS
-
-        //Agarro todos los mantenimientos
-        mantenimientos = new edu.ues.jhard.beans.BeanBaseJRequest().getMantenimientoByEstado("Pendiente");
-
-        //Creo e instancio el ArrayList que contendrá el selectlistonebox
-        man= new ArrayList();
-
-
-        for(int i=0;i<mantenimientos.length;i++){
-
-            Equiposimple eq = new BeanBaseJRequest().getEquipoSimpleByID(mantenimientos[i].getIdequiposimple().getIdEquipoSimple());
-
-            String label = eq.getDescripcion() +" - "+ mantenimientos[i].getDescripcion();
-
-            man.add(new SelectItem(mantenimientos[i].getIdmantenimiento(), label));
-        }
-
-        UISelectItems itemsMan = new UISelectItems();
-        itemsMan.setValue(man);
-        
-        this.listaMantenimientos.getChildren().add(itemsMan);
-
-
-
-
-        //LISTA DE TECNICOS
-         
-        tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
-
-        tec = new ArrayList();
-
-        for(int i=0;i<tecnicos.length;i++){
-            
-            String label = tecnicos[i].getNombres()+" "+tecnicos[i].getApellidos();
-            tec.add(new SelectItem(tecnicos[i].getIdtecnico(),label));
-        }
-
-        UISelectItems itemsTec = new UISelectItems();
-        itemsTec.setValue(tec);
-        this.listaTecnicos.getChildren().add(itemsTec);
-
+    public DefaultSelectItemsArray getFakeComboEstado1() {
+        return fakeComboEstado1;
     }
 
-    private void limpiarListas(){
-        this.listaTecnicos.getChildren().clear();
-        this.listaSol.getChildren().clear();
-        this.listaMantenimientos.getChildren().clear();
+    public void setFakeComboEstado1(DefaultSelectItemsArray dsia) {
+        this.fakeComboEstado1 = dsia;
+    }
+    private DefaultSelectItemsArray fakeComboTecnico1 = new DefaultSelectItemsArray();
+
+    public DefaultSelectItemsArray getFakeComboTecnico1() {
+        return fakeComboTecnico1;
     }
 
-
-    private void llenarCombo(){
-
-        //Combo de Estados
-
-        setEEquipo(new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo());
-
-        eeq = new ArrayList();
-
-        for(int i=0;i<getEEquipo().length;i++){
-
-            String label = getEEquipo()[i].getDescripcion();
-            eeq.add(new SelectItem(getEEquipo()[i].getIdestado(),label));
-        }
-
-        UISelectItems itemsEeq = new UISelectItems();
-        itemsEeq.setValue(eeq);
-        this.comboEstado.getChildren().add(itemsEeq);
-
-    }
-
-    private boolean verControlx=false;
-    /**
-     * @return the verControlx
-     */
-    public boolean isVerControlx() {
-        return verControlx;
-    }
-    /**
-     * @param verControlx the verControlx to set
-     */
-    public void setVerControlx(boolean verControlx) {
-        this.verControlx = verControlx;
-    }
-
-
-    private Solicitud[] solicitudes;
-    private Mantenimiento[] mantenimientos;
-    private Estadoequipo[] eEquipo = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
-    private Tecnico[] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
-    private Equiposimple[] eqs = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
-    private Bitacoraestados[] bitacoras;
-    private Tecnico tecnicoElegido=tecnicos[0];
-    private Estadoequipo estadoElegido=getEEquipo()[0];
-    private Tecnico tecElegidoLista=null;
-    private Solicitud solicitudElegida=null;
-    private Mantenimiento mantenimientoElegido=null;
-    private Bitacoraestados bitacoraElegida=null;
-    private Equiposimple eqSimpleElegido=null;
-
-    private ArrayList soc;
-    private ArrayList man;
-    private ArrayList tec;
-    private ArrayList bit;
-    private ArrayList eeq;
-
-
-    public Estadoequipo[] getEEquipo() {
-        return eEquipo;
-    }
-
-    public void setEEquipo(Estadoequipo[] eEquipo) {
-        this.eEquipo = eEquipo;
-    }
-
-    public Equiposimple[] getEqs() {
-        return eqs;
-    }
-
-    public void setEqs(Equiposimple[] eqs) {
-        this.eqs = eqs;
-    }
-
-
-    public ArrayList getSolicitudes() {
-        return soc;
-    }
-
-    public void setSolicitudes(ArrayList s) {
-        this.soc = s;
-    }
-
-    public Tecnico getTecnicoElegido(){
-        return tecnicoElegido;
-    }
-
-    public void setTecnicoElegido(Tecnico tec){
-        this.tecnicoElegido=tec;
-    }
-
-    public Tecnico[] getTecnicos(){
-        return tecnicos;
-    }
-
-    public void setTecnicos(Tecnico[] tec){
-        this.tecnicos=tec;
-    }
-
-    private DefaultSelectedData selectOneRadio1DataBean = new DefaultSelectedData();
-
-    public DefaultSelectedData getSelectOneRadio1DataBean() {
-        return selectOneRadio1DataBean;
-    }
-
-    public void setSelectOneRadio1DataBean(DefaultSelectedData dsd) {
-        this.selectOneRadio1DataBean = dsd;
-    }
-    private DefaultSelectItemsArray selectOneRadio1DefaultItems1 = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getSelectOneRadio1DefaultItems1() {
-        return selectOneRadio1DefaultItems1;
-    }
-
-    public void setSelectOneRadio1DefaultItems1(DefaultSelectItemsArray dsia) {
-        this.selectOneRadio1DefaultItems1 = dsia;
-    }
-    private DefaultSelectedData selectOneMenu1DataBean = new DefaultSelectedData();
-
-    public DefaultSelectedData getSelectOneMenu1DataBean() {
-        return selectOneMenu1DataBean;
-    }
-
-    public void setSelectOneMenu1DataBean(DefaultSelectedData dsd) {
-        this.selectOneMenu1DataBean = dsd;
-    }
-    private DefaultSelectItemsArray selectOneMenu1DefaultItems1 = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getSelectOneMenu1DefaultItems1() {
-        return selectOneMenu1DefaultItems1;
-    }
-
-    public void setSelectOneMenu1DefaultItems1(DefaultSelectItemsArray dsia) {
-        this.selectOneMenu1DefaultItems1 = dsia;
-    }
-    private DefaultSelectedData selectOneListbox1Bean = new DefaultSelectedData();
-
-    public DefaultSelectedData getSelectOneListbox1Bean() {
-        return selectOneListbox1Bean;
-    }
-
-    public void setSelectOneListbox1Bean(DefaultSelectedData dsd) {
-        this.selectOneListbox1Bean = dsd;
-    }
-    private DefaultSelectedData selectOneMenu2Bean = new DefaultSelectedData();
-
-    public DefaultSelectedData getSelectOneMenu2Bean() {
-        return selectOneMenu2Bean;
-    }
-
-    public void setSelectOneMenu2Bean(DefaultSelectedData dsd) {
-        this.selectOneMenu2Bean = dsd;
-    }
-    private DefaultSelectionItems selectOneMenu2DefaultItems = new DefaultSelectionItems();
-
-    public DefaultSelectionItems getSelectOneMenu2DefaultItems() {
-        return selectOneMenu2DefaultItems;
-    }
-
-    public void setSelectOneMenu2DefaultItems(DefaultSelectionItems dsi) {
-        this.selectOneMenu2DefaultItems = dsi;
-    }
-    private DefaultSelectedData defaultSelectedData5 = new DefaultSelectedData();
-
-    public DefaultSelectedData getDefaultSelectedData5() {
-        return defaultSelectedData5;
-    }
-
-    public void setDefaultSelectedData5(DefaultSelectedData dsd) {
-        this.defaultSelectedData5 = dsd;
-    }
-    private DefaultSelectionItems selectOneListbox1DefaultItems1 = new DefaultSelectionItems();
-
-    public DefaultSelectionItems getSelectOneListbox1DefaultItems1() {
-        return selectOneListbox1DefaultItems1;
-    }
-
-    public void setSelectOneListbox1DefaultItems1(DefaultSelectionItems dsi) {
-        this.selectOneListbox1DefaultItems1 = dsi;
-    }
-    private DefaultSelectItemsArray selectOneListbox1DefaultItems2 = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getSelectOneListbox1DefaultItems2() {
-        return selectOneListbox1DefaultItems2;
-    }
-
-    public void setSelectOneListbox1DefaultItems2(DefaultSelectItemsArray dsia) {
-        this.selectOneListbox1DefaultItems2 = dsia;
-    }
-    private DefaultSelectItemsArray selectOneListbox1DefaultItems3 = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getSelectOneListbox1DefaultItems3() {
-        return selectOneListbox1DefaultItems3;
-    }
-
-    public void setSelectOneListbox1DefaultItems3(DefaultSelectItemsArray dsia) {
-        this.selectOneListbox1DefaultItems3 = dsia;
-    }
-    private PopupBean panelPopup2Bean = new PopupBean();
-
-    public PopupBean getPanelPopup2Bean() {
-        return panelPopup2Bean;
-    }
-
-    public void setPanelPopup2Bean(PopupBean pb) {
-        this.panelPopup2Bean = pb;
-    }
-    private DefaultSelectedData selectOneMenu1Bean = new DefaultSelectedData();
-
-    public DefaultSelectedData getSelectOneMenu1Bean() {
-        return selectOneMenu1Bean;
-    }
-
-    public void setSelectOneMenu1Bean(DefaultSelectedData dsd) {
-        this.selectOneMenu1Bean = dsd;
+    public void setFakeComboTecnico1(DefaultSelectItemsArray dsia) {
+        this.fakeComboTecnico1 = dsia;
     }
     private HtmlOutputLabel lblNombre = new HtmlOutputLabel();
 
@@ -507,33 +133,6 @@ public class jrequestAdmin extends AbstractPageBean {
     public void setBtnProceder(HtmlCommandButton hcb) {
         this.btnProceder = hcb;
     }
-    private ObjectArrayDataProvider arrayTecnicos = new ObjectArrayDataProvider();
-
-    public ObjectArrayDataProvider getArrayTecnicos() {
-        return arrayTecnicos;
-    }
-
-    public void setArrayTecnicos(ObjectArrayDataProvider oadp) {
-        this.arrayTecnicos = oadp;
-    }
-    private ObjectListDataProvider listSolicitudes = new ObjectListDataProvider();
-
-    public ObjectListDataProvider getListSolicitudes() {
-        return listSolicitudes;
-    }
-
-    public void setListSolicitudes(ObjectListDataProvider oldp) {
-        this.listSolicitudes = oldp;
-    }
-    private DefaultSelectedData defaultSelectedData6 = new DefaultSelectedData();
-
-    public DefaultSelectedData getDefaultSelectedData6() {
-        return defaultSelectedData6;
-    }
-
-    public void setDefaultSelectedData6(DefaultSelectedData dsd) {
-        this.defaultSelectedData6 = dsd;
-    }
     private HtmlSelectOneListbox listaSol = new HtmlSelectOneListbox();
 
     public HtmlSelectOneListbox getListaSol() {
@@ -542,24 +141,6 @@ public class jrequestAdmin extends AbstractPageBean {
 
     public void setListaSol(HtmlSelectOneListbox hsol) {
         this.listaSol = hsol;
-    }
-    private ObjectArrayDataProvider arraySolicitudes = new ObjectArrayDataProvider();
-
-    public ObjectArrayDataProvider getArraySolicitudes() {
-        return arraySolicitudes;
-    }
-
-    public void setArraySolicitudes(ObjectArrayDataProvider oadp) {
-        this.arraySolicitudes = oadp;
-    }
-    private ArrayList solicitudes1 = new ArrayList();
-
-    public ArrayList getSolicitudes1() {
-        return solicitudes1;
-    }
-
-    public void setSolicitudes1(ArrayList al) {
-        this.solicitudes1 = al;
     }
     private PanelPopup popUpMensajes = new PanelPopup();
 
@@ -606,14 +187,14 @@ public class jrequestAdmin extends AbstractPageBean {
     public void setListaMantenimientos(HtmlSelectOneListbox hsol) {
         this.listaMantenimientos = hsol;
     }
-    private DefaultSelectedData selectBooleanCheckbox1Bean = new DefaultSelectedData();
+    private DefaultSelectedData fakeFin = new DefaultSelectedData();
 
-    public DefaultSelectedData getSelectBooleanCheckbox1Bean() {
-        return selectBooleanCheckbox1Bean;
+    public DefaultSelectedData getFakeFin() {
+        return fakeFin;
     }
 
-    public void setSelectBooleanCheckbox1Bean(DefaultSelectedData dsd) {
-        this.selectBooleanCheckbox1Bean = dsd;
+    public void setFakeFin(DefaultSelectedData dsd) {
+        this.fakeFin = dsd;
     }
     private HtmlOutputText lblMantenimiento = new HtmlOutputText();
 
@@ -660,15 +241,6 @@ public class jrequestAdmin extends AbstractPageBean {
     public void setPanelPopup1Bean1(PopupBean pb) {
         this.panelPopup1Bean1 = pb;
     }
-    private PopupBean panelPopup1Bean = new PopupBean();
-
-    public PopupBean getPanelPopup1Bean() {
-        return panelPopup1Bean;
-    }
-
-    public void setPanelPopup1Bean(PopupBean pb) {
-        this.panelPopup1Bean = pb;
-    }
     private HtmlInputText txtApeTec = new HtmlInputText();
 
     public HtmlInputText getTxtApeTec() {
@@ -714,122 +286,32 @@ public class jrequestAdmin extends AbstractPageBean {
     public void setPopUpAgregarTec(PanelPopup pp) {
         this.popUpAgregarTec = pp;
     }
-    private DefaultSelectedData defaultSelectedData7 = new DefaultSelectedData();
+    private DefaultSelectItemsArray fakeSol = new DefaultSelectItemsArray();
 
-    public DefaultSelectedData getDefaultSelectedData7() {
-        return defaultSelectedData7;
+    public DefaultSelectItemsArray getFakeSol() {
+        return fakeSol;
     }
 
-    public void setDefaultSelectedData7(DefaultSelectedData dsd) {
-        this.defaultSelectedData7 = dsd;
+    public void setFakeSol(DefaultSelectItemsArray dsia) {
+        this.fakeSol = dsia;
     }
-    private DefaultSelectionItems selectOneListbox1DefaultItems4 = new DefaultSelectionItems();
+    private DefaultSelectItemsArray fakeMan = new DefaultSelectItemsArray();
 
-    public DefaultSelectionItems getSelectOneListbox1DefaultItems4() {
-        return selectOneListbox1DefaultItems4;
-    }
-
-    public void setSelectOneListbox1DefaultItems4(DefaultSelectionItems dsi) {
-        this.selectOneListbox1DefaultItems4 = dsi;
-    }
-    private DefaultSelectItemsArray listaSolDefaultItems = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getListaSolDefaultItems() {
-        return listaSolDefaultItems;
+    public DefaultSelectItemsArray getFakeMan() {
+        return fakeMan;
     }
 
-    public void setListaSolDefaultItems(DefaultSelectItemsArray dsia) {
-        this.listaSolDefaultItems = dsia;
+    public void setFakeMan(DefaultSelectItemsArray dsia) {
+        this.fakeMan = dsia;
     }
-    private DefaultSelectItemsArray listaMantenimientosDefaultItems = new DefaultSelectItemsArray();
+    private DefaultSelectionItems fakeBit = new DefaultSelectionItems();
 
-    public DefaultSelectItemsArray getListaMantenimientosDefaultItems() {
-        return listaMantenimientosDefaultItems;
-    }
-
-    public void setListaMantenimientosDefaultItems(DefaultSelectItemsArray dsia) {
-        this.listaMantenimientosDefaultItems = dsia;
-    }
-    private DefaultSelectItemsArray selectOneListbox1DefaultItems5 = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getSelectOneListbox1DefaultItems5() {
-        return selectOneListbox1DefaultItems5;
+    public DefaultSelectionItems getFakeBit() {
+        return fakeBit;
     }
 
-    public void setSelectOneListbox1DefaultItems5(DefaultSelectItemsArray dsia) {
-        this.selectOneListbox1DefaultItems5 = dsia;
-    }
-    private DefaultSelectItemsArray selectOneListbox1DefaultItems6 = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getSelectOneListbox1DefaultItems6() {
-        return selectOneListbox1DefaultItems6;
-    }
-
-    public void setSelectOneListbox1DefaultItems6(DefaultSelectItemsArray dsia) {
-        this.selectOneListbox1DefaultItems6 = dsia;
-    }
-    private HtmlSelectOneListbox listaTecnicos = new HtmlSelectOneListbox();
-
-    public HtmlSelectOneListbox getListaTecnicos() {
-        return listaTecnicos;
-    }
-
-    public void setListaTecnicos(HtmlSelectOneListbox hsol) {
-        this.listaTecnicos = hsol;
-    }
-    private HtmlCommandButton btnEliminarTec = new HtmlCommandButton();
-
-    public HtmlCommandButton getBtnEliminarTec() {
-        return btnEliminarTec;
-    }
-
-    public void setBtnEliminarTec(HtmlCommandButton hcb) {
-        this.btnEliminarTec = hcb;
-    }
-    private HtmlCommandButton btnAgregarTec = new HtmlCommandButton();
-
-    public HtmlCommandButton getBtnAgregarTec() {
-        return btnAgregarTec;
-    }
-
-    public void setBtnAgregarTec(HtmlCommandButton hcb) {
-        this.btnAgregarTec = hcb;
-    }
-    private HtmlOutputLabel lblNombreTec = new HtmlOutputLabel();
-
-    public HtmlOutputLabel getLblNombreTec() {
-        return lblNombreTec;
-    }
-
-    public void setLblNombreTec(HtmlOutputLabel hol) {
-        this.lblNombreTec = hol;
-    }
-    private ObjectArrayDataProvider arrayEqSimples = new ObjectArrayDataProvider();
-
-    public ObjectArrayDataProvider getArrayEqSimples() {
-        return arrayEqSimples;
-    }
-
-    public void setArrayEqSimples(ObjectArrayDataProvider oadp) {
-        this.arrayEqSimples = oadp;
-    }
-    private DefaultSelectedData defaultSelectedData8 = new DefaultSelectedData();
-
-    public DefaultSelectedData getDefaultSelectedData8() {
-        return defaultSelectedData8;
-    }
-
-    public void setDefaultSelectedData8(DefaultSelectedData dsd) {
-        this.defaultSelectedData8 = dsd;
-    }
-    private DefaultSelectionItems selectOneListbox1DefaultItems = new DefaultSelectionItems();
-
-    public DefaultSelectionItems getSelectOneListbox1DefaultItems() {
-        return selectOneListbox1DefaultItems;
-    }
-
-    public void setSelectOneListbox1DefaultItems(DefaultSelectionItems dsi) {
-        this.selectOneListbox1DefaultItems = dsi;
+    public void setFakeBit(DefaultSelectionItems dsi) {
+        this.fakeBit = dsi;
     }
     private HtmlSelectOneListbox listaBitacoras = new HtmlSelectOneListbox();
 
@@ -912,50 +394,14 @@ public class jrequestAdmin extends AbstractPageBean {
     public void setBtnSolicitudAdmin(HtmlCommandButton hcb) {
         this.btnSolicitudAdmin = hcb;
     }
-    private DefaultSelectedData defaultSelectedData9 = new DefaultSelectedData();
+    private DefaultSelectItemsArray fakeComboPrioridad = new DefaultSelectItemsArray();
 
-    public DefaultSelectedData getDefaultSelectedData9() {
-        return defaultSelectedData9;
+    public DefaultSelectItemsArray getFakeComboPrioridad() {
+        return fakeComboPrioridad;
     }
 
-    public void setDefaultSelectedData9(DefaultSelectedData dsd) {
-        this.defaultSelectedData9 = dsd;
-    }
-    private DefaultSelectionItems selectOneMenu1DefaultItems2 = new DefaultSelectionItems();
-
-    public DefaultSelectionItems getSelectOneMenu1DefaultItems2() {
-        return selectOneMenu1DefaultItems2;
-    }
-
-    public void setSelectOneMenu1DefaultItems2(DefaultSelectionItems dsi) {
-        this.selectOneMenu1DefaultItems2 = dsi;
-    }
-    private DefaultSelectItemsArray comboPrioridadDefaultItems = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getComboPrioridadDefaultItems() {
-        return comboPrioridadDefaultItems;
-    }
-
-    public void setComboPrioridadDefaultItems(DefaultSelectItemsArray dsia) {
-        this.comboPrioridadDefaultItems = dsia;
-    }
-    private DefaultSelectItemsArray selectOneMenu1DefaultItems3 = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getSelectOneMenu1DefaultItems3() {
-        return selectOneMenu1DefaultItems3;
-    }
-
-    public void setSelectOneMenu1DefaultItems3(DefaultSelectItemsArray dsia) {
-        this.selectOneMenu1DefaultItems3 = dsia;
-    }
-    private DefaultSelectItemsArray selectOneMenu1DefaultItems4 = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getSelectOneMenu1DefaultItems4() {
-        return selectOneMenu1DefaultItems4;
-    }
-
-    public void setSelectOneMenu1DefaultItems4(DefaultSelectItemsArray dsia) {
-        this.selectOneMenu1DefaultItems4 = dsia;
+    public void setFakeComboPrioridad(DefaultSelectItemsArray dsia) {
+        this.fakeComboPrioridad = dsia;
     }
     private HtmlSelectOneMenu comboEstado = new HtmlSelectOneMenu();
 
@@ -966,21 +412,188 @@ public class jrequestAdmin extends AbstractPageBean {
     public void setComboEstado(HtmlSelectOneMenu hsom) {
         this.comboEstado = hsom;
     }
-    private ObjectArrayDataProvider arrayEstado = new ObjectArrayDataProvider();
+    private PopupBean panelPopup1Bean3 = new PopupBean();
 
-    public ObjectArrayDataProvider getArrayEstado() {
-        return arrayEstado;
+    public PopupBean getPanelPopup1Bean3() {
+        return panelPopup1Bean3;
     }
 
-    public void setArrayEstado(ObjectArrayDataProvider oadp) {
-        this.arrayEstado = oadp;
+    public void setPanelPopup1Bean3(PopupBean pb) {
+        this.panelPopup1Bean3 = pb;
+    }
+    private PopupBean panelPopup2Bean1 = new PopupBean();
+
+    public PopupBean getPanelPopup2Bean1() {
+        return panelPopup2Bean1;
     }
 
+    public void setPanelPopup2Bean1(PopupBean pb) {
+        this.panelPopup2Bean1 = pb;
+    }
+    private PopupBean panelPopup3Bean = new PopupBean();
+
+    public PopupBean getPanelPopup3Bean() {
+        return panelPopup3Bean;
+    }
+
+    public void setPanelPopup3Bean(PopupBean pb) {
+        this.panelPopup3Bean = pb;
+    }
+//    private HtmlSelectOneMenu comboEstadosEQ = new HtmlSelectOneMenu();
+//
+//    public HtmlSelectOneMenu getComboEstadosEQ() {
+//        return comboEstadosEQ;
+//    }
+//
+//    public void setComboEstadosEQ(HtmlSelectOneMenu hsom) {
+//        this.comboEstadosEQ = hsom;
+//    }
+    // </editor-fold>
+
+
+
+    //ESTE METODO DEBE DE IR EN EL NEGOCIO
+    public void llenarLista(){
+
+        //Limpio las listas si están llenas
+        limpiarListas();
+
+
+        //LISTA DE SOLICITUDES ORDENADAS POR PRIORIDAD
+
+        //Array que se metera en la selectonelistbox
+        ArrayList soc=new ArrayList();
+
+        //Para comparar cuales solicitudes ya tienen mantenimientos relacionados
+        Mantenimiento [] mantenimientos = new edu.ues.jhard.beans.BeanBaseJRequest().getMantenimiento();
+
+        //Consulta de solicitudes por prioridad ALTA
+        Solicitud [] solicitudes = new edu.ues.jhard.beans.BeanBaseJRequest().getSolicitud();
+
+        //contador
+        int cont=0;
+
+        //Bucle para meter las solicitudes en el ArrayList
+        for(int i=0;i<solicitudes.length;i++){
+
+            cont=0;
+
+            //Comparo y cuento si ya existe un mantenimiento que contenga el ID de la solicitud,
+            //si ya existe, aumento el contador y dicha solicitud ya no se debe de mostrar
+
+            for(int j=0;j<mantenimientos.length;j++){
+                //System.out.println(mantenimientos[j].getIdsolicitud().getIdsolicitud()+"  "+solicitudes[i].getIdsolicitud());
+                if (mantenimientos[j].getIdsolicitud().getIdsolicitud().equals(solicitudes[i].getIdsolicitud())){
+//                    System.out.println("ENTRO!!!");
+                    cont++;
+//                    System.out.println(cont);
+                }
+            }
+
+            if(cont==0){
+//                System.out.println("SI ESTO NO ES CERO NO DEBE DE ENTRAR..."+cont);
+                Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
+                String label = u.getNombre()+" - "+solicitudes[i].getDescripcion();
+                soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
+            }
+
+        }
+
+        //Creo una UISelecItems
+        UISelectItems items = new UISelectItems();
+        //Le añado como valor el ArrayList
+        items.setValue(soc);
+        //Le meto las UISelectItems como hijos de la selectonelistbox
+        this.listaSol.getChildren().add(items);
+
+
+        //LISTA DE MANTENIMIENTOS
+
+        //Agarro todos los mantenimientos
+        mantenimientos = new edu.ues.jhard.beans.BeanBaseJRequest().getMantenimientoByEstado("Pendiente");
+
+        //Creo e instancio el ArrayList que contendrá el selectlistonebox
+        ArrayList man= new ArrayList();
+
+
+        for(int i=0;i<mantenimientos.length;i++){
+
+            Equiposimple eq = new BeanBaseJRequest().getEquipoSimpleByID(mantenimientos[i].getIdequiposimple().getIdEquipoSimple());
+
+            String label = eq.getDescripcion() +" - "+ mantenimientos[i].getDescripcion();
+
+            man.add(new SelectItem(mantenimientos[i].getIdmantenimiento(), label));
+        }
+
+        UISelectItems itemsMan = new UISelectItems();
+        itemsMan.setValue(man);
+
+        this.listaMantenimientos.getChildren().add(itemsMan);
+
+
+        
+    }
+
+    private void limpiarListas(){
+        this.listaSol.getChildren().clear();
+        this.listaMantenimientos.getChildren().clear();
+     
+    }
+
+
+    private void llenarCombo(){
+
+        
+        //COMBO DE TECNICOS
+
+        Tecnico [] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
+
+        ArrayList tec = new ArrayList();
+
+        for(int i=0;i<tecnicos.length;i++){
+
+            String label = tecnicos[i].getNombres()+" "+tecnicos[i].getApellidos();
+            tec.add(new SelectItem(tecnicos[i].getIdtecnico(),label));
+        }
+
+        UISelectItems itemsTec = new UISelectItems();
+        itemsTec.setValue(tec);
+        this.comboTecnicos.getChildren().add(itemsTec);
+
+    }
+    
+
+
+//    private Solicitud[] solicitudes;
+//    private Mantenimiento[] mantenimientos;
+//    private Tecnico[] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
+//    private Equiposimple[] eqs = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
+//    private Bitacoraestados[] bitacoras;
+    private Tecnico tecnicoElegido=null;
+    private Estadoequipo estadoElegido=null;
+    private Solicitud solicitudElegida=null;
+    private Mantenimiento mantenimientoElegido=null;
+    private Bitacoraestados bitacoraElegida=null;
+    private Equiposimple eqSimpleElegido=null;
+
+
+//    private ArrayList soc;
+//    private ArrayList man;
+//    private ArrayList tec;
+//    private ArrayList bit;
+//    private ArrayList eeq;
+//    private ArrayList equipoSimple;
+
+
+    
 
     /**
      * <p>Construct a new Page bean instance.</p>
      */
     public jrequestAdmin() {
+        llenarLista();
+        llenarCombo();
+        
     }
 
     /**
@@ -997,18 +610,11 @@ public class jrequestAdmin extends AbstractPageBean {
      */
     @Override
     public void init() {
-        this.popUpBitacora.setVisible(false);
         this.popUpBitacora.setRendered(false);
-        this.popUpMensajes.setVisible(false);
         this.popUpMensajes.setRendered(false);
-        this.popUpAgregarTec .setVisible(false);
-        this.popUpAgregarTec.setRendered(false);
-        this.popUpModBitacora .setVisible(false);
         this.popUpModBitacora.setRendered(false);
-
+        
         // Perform initializations inherited from our superclass
-        this.llenarLista();
-        this.llenarCombo();
         super.init();
         // Perform application initialization that must complete
         // *before* managed components are initialized
@@ -1070,12 +676,19 @@ public class jrequestAdmin extends AbstractPageBean {
         //Solicitud s = (Solicitud) this.listaSol.getValue();
         
         String tmp=(String)this.listaSol.getValue();
+        if(tmp!=null){
+        System.out.println("TODO BIEN--> "+ tmp);
         Integer id=Integer.parseInt(tmp);
+        System.out.println("TODO BIEN--> "+ id);
         Solicitud s=new BeanBaseJRequest().getEntityManager().find(Solicitud.class, id);
 
         this.solicitudElegida=s;
 
+        System.out.println("TODO BIEN--> "+ solicitudElegida.getIdsolicitud());
+
         Usuario u = new BeanBaseJHardmin().getUsuario(s.getIdusuario().getIdusuario());
+
+        System.out.println("TODO BIEN--> "+ u.getIdusuario());
 
         this.lblNombre.setValue(s.getDescripcion());
         this.lblPersona.setValue(u.getNombre());
@@ -1084,6 +697,7 @@ public class jrequestAdmin extends AbstractPageBean {
 
         System.out.println(solicitudElegida.getDescripcion());
 
+        }
     }
 
     public String btnProceder_action() {
@@ -1138,12 +752,18 @@ public class jrequestAdmin extends AbstractPageBean {
 
     public void comboTecnicos_processValueChange(ValueChangeEvent vce) {
         String tmp=(String)this.comboTecnicos.getValue();
+        if (tmp!=null){
+        System.out.println("TODO BIEN--> "+ tmp);
         Integer id=Integer.parseInt(tmp);
+        System.out.println("TODO BIEN--> "+ id);
         Tecnico e=new BeanBaseJRequest().getEntityManager().find(Tecnico.class, id);
 
         this.tecnicoElegido=e;
 
+        System.out.println("TODO BIEN--> "+ tecnicoElegido.getIdtecnico());
+
         System.out.println(e.getNombres());
+    }
     }
 
     public String btnOK_action() {
@@ -1157,8 +777,6 @@ public class jrequestAdmin extends AbstractPageBean {
     }
 
     public void tabJrequestAdmin_processTabChange(TabChangeEvent tce) {
-
-        
     }
 
     public void listaMantenimientos_processValueChange(ValueChangeEvent vce) {
@@ -1246,100 +864,100 @@ public class jrequestAdmin extends AbstractPageBean {
         return null;
     }
 
-    public String btnAgregarTec_action() {
-            this.popUpAgregarTec.setRendered(true);
-            System.out.println("RENDERICE");
-            this.popUpAgregarTec.setVisible(true);
-            System.out.println("PUSE VISIBLE");
-            this.popUpAgregarTec.setModal(true);
-            System.out.println("SOLO EL ES MODIFICABLE");
-        
-        return null;
-    }
+//    public String btnAgregarTec_action() {
+//            this.popUpAgregarTec.setRendered(true);
+//            System.out.println("RENDERICE");
+//            this.popUpAgregarTec.setVisible(true);
+//            System.out.println("PUSE VISIBLE");
+//            this.popUpAgregarTec.setModal(true);
+//            System.out.println("SOLO EL ES MODIFICABLE");
+//
+//        return null;
+//    }
 
-    public void listaTecnicos_processValueChange(ValueChangeEvent vce) {
+//    public void listaTecnicos_processValueChange(ValueChangeEvent vce) {
+//
+//        String tmp=(String)this.listaTecnicos.getValue();
+//        Integer id=Integer.parseInt(tmp);
+//        Tecnico T=new BeanBaseJRequest().getEntityManager().find(Tecnico.class, id);
+//
+//        this.tecElegidoLista=T;
+//
+//        this.lblNombreTec.setValue(T.getNombres()+" "+T.getApellidos());
+//
+//
+//    }
 
-        String tmp=(String)this.listaTecnicos.getValue();
-        Integer id=Integer.parseInt(tmp);
-        Tecnico T=new BeanBaseJRequest().getEntityManager().find(Tecnico.class, id);
-
-        this.tecElegidoLista=T;
-
-        this.lblNombreTec.setValue(T.getNombres()+" "+T.getApellidos());
-
-
-    }
-
-    public String btnEliminarTec_action() {
-        if(tecElegidoLista!=null){
-            new BeanBaseJRequest().eliminarTecnico(this.tecElegidoLista);
-
-            this.lblMensajes.setValue("Técnico eliminado con éxito");
-            this.popUpMensajes.setRendered(true);
-            System.out.println("RENDERICE");
-            this.popUpMensajes.setVisible(true);
-            System.out.println("PUSE VISIBLE");
-            this.popUpMensajes.setModal(true);
-            System.out.println("SOLO EL ES MODIFICABLE");
-
-
-        }
-        else{
-            System.out.println("TECNICO NULL");
-            this.lblMensajes.setValue("Seleccione un Tecnico de la Lista");
-            this.popUpMensajes.setRendered(true);
-            System.out.println("RENDERICE");
-            this.popUpMensajes.setVisible(true);
-            System.out.println("PUSE VISIBLE");
-            this.popUpMensajes.setModal(true);
-            System.out.println("SOLO EL ES MODIFICABLE");
-        }
-
-        return null;
-    }
-
-    public String btnCerrarTec_action() {
-        this.popUpAgregarTec.setRendered(false);
-        System.out.println("RENDERICE");
-        this.popUpAgregarTec.setVisible(false);
-        System.out.println("PUSE VISIBLE");
-        this.popUpAgregarTec.setModal(false);
-        System.out.println("SOLO EL ES MODIFICABLE");
-        return null;
-    }
-
-    public String btnOkTec_action() {
-
-        Tecnico t = new Tecnico();
-        t.setNombres(this.txtNomTec.getValue().toString());
-        t.setApellidos(this.txtApeTec.getValue().toString());
-        t.setCargo("Tecnico");
-
-        new BeanBaseJRequest().registrarTecnico(t);
-
-        this.popUpAgregarTec.setRendered(false);
-        System.out.println("RENDERICE");
-        this.popUpAgregarTec.setVisible(false);
-        System.out.println("PUSE VISIBLE");
-        this.popUpAgregarTec.setModal(false);
-        System.out.println("SOLO EL ES MODIFICABLE");
-
-        this.lblMensajes.setValue("Técnico agregado con éxito");
-        this.popUpMensajes.setRendered(true);
-        System.out.println("RENDERICE");
-        this.popUpMensajes.setVisible(true);
-        System.out.println("PUSE VISIBLE");
-        this.popUpMensajes.setModal(true);
-        System.out.println("SOLO EL ES MODIFICABLE");
-
-        
-        
-        return null;
-    }
-
-    public String btnLimpiar_action() {
-        return null;
-    }
+//    public String btnEliminarTec_action() {
+//        if(tecElegidoLista!=null){
+//            new BeanBaseJRequest().eliminarTecnico(this.tecElegidoLista);
+//
+//            this.lblMensajes.setValue("Técnico eliminado con éxito");
+//            this.popUpMensajes.setRendered(true);
+//            System.out.println("RENDERICE");
+//            this.popUpMensajes.setVisible(true);
+//            System.out.println("PUSE VISIBLE");
+//            this.popUpMensajes.setModal(true);
+//            System.out.println("SOLO EL ES MODIFICABLE");
+//
+//
+//        }
+//        else{
+//            System.out.println("TECNICO NULL");
+//            this.lblMensajes.setValue("Seleccione un Tecnico de la Lista");
+//            this.popUpMensajes.setRendered(true);
+//            System.out.println("RENDERICE");
+//            this.popUpMensajes.setVisible(true);
+//            System.out.println("PUSE VISIBLE");
+//            this.popUpMensajes.setModal(true);
+//            System.out.println("SOLO EL ES MODIFICABLE");
+//        }
+//
+//        return null;
+//    }
+//
+//    public String btnCerrarTec_action() {
+//        this.popUpAgregarTec.setRendered(false);
+//        System.out.println("RENDERICE");
+//        this.popUpAgregarTec.setVisible(false);
+//        System.out.println("PUSE VISIBLE");
+//        this.popUpAgregarTec.setModal(false);
+//        System.out.println("SOLO EL ES MODIFICABLE");
+//        return null;
+//    }
+//
+//    public String btnOkTec_action() {
+//
+//        Tecnico t = new Tecnico();
+//        t.setNombres(this.txtNomTec.getValue().toString());
+//        t.setApellidos(this.txtApeTec.getValue().toString());
+//        t.setCargo("Tecnico");
+//
+//        new BeanBaseJRequest().registrarTecnico(t);
+//
+//        this.popUpAgregarTec.setRendered(false);
+//        System.out.println("RENDERICE");
+//        this.popUpAgregarTec.setVisible(false);
+//        System.out.println("PUSE VISIBLE");
+//        this.popUpAgregarTec.setModal(false);
+//        System.out.println("SOLO EL ES MODIFICABLE");
+//
+//        this.lblMensajes.setValue("Técnico agregado con éxito");
+//        this.popUpMensajes.setRendered(true);
+//        System.out.println("RENDERICE");
+//        this.popUpMensajes.setVisible(true);
+//        System.out.println("PUSE VISIBLE");
+//        this.popUpMensajes.setModal(true);
+//        System.out.println("SOLO EL ES MODIFICABLE");
+//
+//
+//
+//        return null;
+//    }
+//
+//    public String btnLimpiar_action() {
+//        return null;
+//    }
 
     public void txtEqSimples_processValueChange(ValueChangeEvent vce) {
 
@@ -1348,9 +966,9 @@ public class jrequestAdmin extends AbstractPageBean {
 
     private void llenarListaBitacoras(Equiposimple e){
         //LISTA DE BITACORAS
-        bitacoras = new edu.ues.jhard.beans.BeanBaseJRequest().getBitacoraEstadosByIdEquipoSimple(e);
+        Bitacoraestados [] bitacoras = new edu.ues.jhard.beans.BeanBaseJRequest().getBitacoraEstadosByIdEquipoSimple(e);
 
-        bit= new ArrayList();
+        ArrayList bit= new ArrayList();
 
         for(int i=0;i<bitacoras.length;i++){
 
@@ -1388,6 +1006,7 @@ public class jrequestAdmin extends AbstractPageBean {
     public void listaBitacoras_processValueChange(ValueChangeEvent vce) {
 
         String tmp=(String)this.listaBitacoras.getValue();
+        if(tmp!=null){
         Integer id=Integer.parseInt(tmp);
         Bitacoraestados be=new BeanBaseJRequest().getEntityManager().find(Bitacoraestados.class, id);
 
@@ -1402,7 +1021,7 @@ public class jrequestAdmin extends AbstractPageBean {
         this.popUpModBitacora.setModal(true);
         System.out.println("SOLO EL ES MODIFICABLE");
 
-
+        }
     }
 
     public String btnCancelarModBitacora_action() {
@@ -1435,6 +1054,8 @@ public class jrequestAdmin extends AbstractPageBean {
         System.out.println("PUSE VISIBLE");
         this.popUpMensajes.setModal(true);
         System.out.println("SOLO EL ES MODIFICABLE");
+        limpiarListaBitacoras();
+
         llenarListaBitacoras(eqSimpleElegido);
 
         return null;
@@ -1445,8 +1066,199 @@ public class jrequestAdmin extends AbstractPageBean {
         return "case2";
     }
 
-    public void comboEstado_processValueChange(ValueChangeEvent vce) {
-    }
+//    public void comboEstado_processValueChange(ValueChangeEvent vce) {
+//    }
+//
+//
+//    public void listaEqSimple_processValueChange(ValueChangeEvent vce) {
+//        String tmp=(String)this.listaEqS.getValue();
+//        if(tmp!=null){
+//        Integer id=Integer.parseInt(tmp);
+//        Equiposimple e=new BeanBaseJRequest().getEntityManager().find(Equiposimple.class, id);
+//
+//        this.eqSimpleElegidoAdmin=e;
+//
+//        System.out.println("ENTRA O Q PUTAS-->"+eqSimpleElegidoAdmin.getDescripcion());
+//
+//        }
+//    }
+
+//    private int opcionElegida=0;
+//    private Estadoequipo estadoElegidoEQ;
+//    private Equiposimple eqSimpleElegidoAdmin;
+//
+//
+//    public String btnAceptarEQ_action() {
+//        if (opcionElegida==1){
+//            Equiposimple eq = new Equiposimple();
+//
+//            eq.setDescripcion((String)this.txtNomEQ.getValue());
+//
+//            eq.setPropietario((String)this.txtPropietarioEQ.getValue());
+//
+//            String tmp=(String)this.comboEstadosEQ.getValue();
+//            if(tmp!=null){
+//
+//                Integer id=Integer.parseInt(tmp);
+//                Estadoequipo e=new BeanBaseJRequest().getEntityManager().find(Estadoequipo.class, id);
+//                this.estadoElegidoEQ= e;
+//
+//                eq.setIdestado(estadoElegidoEQ);
+//
+//                new BeanBaseJRequest().registrarEquipoSimple(eq);
+//
+//                this.popUpEqSimple.setRendered(false);
+//                System.out.println("RENDERICE");
+//                this.popUpEqSimple.setVisible(false);
+//                System.out.println("PUSE VISIBLE");
+//                this.popUpEqSimple.setModal(false);
+//                System.out.println("SOLO EL ES MODIFICABLE");
+//
+//
+//                this.lblMensajes.setValue("Equipo Simple Agregado con éxito");
+//                this.popUpMensajes.setRendered(true);
+//                System.out.println("RENDERICE");
+//                this.popUpMensajes.setVisible(true);
+//                System.out.println("PUSE VISIBLE");
+//                this.popUpMensajes.setModal(true);
+//                System.out.println("SOLO EL ES MODIFICABLE");
+//
+//         }
+//        }
+//        if(opcionElegida==2){
+//
+//
+//
+//
+//                new BeanBaseJRequest().modificarEquipoSImple(eqSimpleElegidoAdmin);
+//
+//                this.popUpEqSimple.setRendered(false);
+//                System.out.println("RENDERICE");
+//                this.popUpEqSimple.setVisible(false);
+//                System.out.println("PUSE VISIBLE");
+//                this.popUpEqSimple.setModal(false);
+//                System.out.println("SOLO EL ES MODIFICABLE");
+//
+//
+//                this.lblMensajes.setValue("Equipo Simple Modificado con éxito");
+//                this.popUpMensajes.setRendered(true);
+//                System.out.println("RENDERICE");
+//                this.popUpMensajes.setVisible(true);
+//                System.out.println("PUSE VISIBLE");
+//                this.popUpMensajes.setModal(true);
+//                System.out.println("SOLO EL ES MODIFICABLE");
+//
+//
+//        }
+//
+//        this.txtNomEQ.setValue("");
+//        this.txtPropietarioEQ.setValue("");
+//        this.llenarLista();
+//        this.opcionElegida=0;
+////        this.eqSimpleElegidoAdmin=null;
+////        this.estadoElegidoEQ=null;
+//        return null;
+//    }
+//
+//    public String btnCancelarEQ_action() {
+//        this.popUpEqSimple.setRendered(false);
+//        System.out.println("RENDERICE");
+//        this.popUpEqSimple.setVisible(false);
+//        System.out.println("PUSE VISIBLE");
+//        this.popUpEqSimple.setModal(false);
+//        System.out.println("SOLO EL ES MODIFICABLE");
+//        return null;
+//    }
+//
+//
+//
+//    public void listaEqS_processValueChange(ValueChangeEvent vce) {
+//        String tmp=(String)this.listaEqS.getValue();
+//        System.out.println("tmp-->"+tmp);
+//        if(tmp!=null){
+//            Integer id=Integer.parseInt(tmp);
+//            System.out.println("id-->"+id);
+//            Equiposimple e=new BeanBaseJRequest().getEntityManager().find(Equiposimple.class, id);
+//
+//            this.eqSimpleElegidoAdmin=e;
+//
+//            System.out.println("eqSimpleElegidoAdmin-->"+eqSimpleElegidoAdmin.getDescripcion());
+//
+//        }
+//    }
+//
+//    public String btnEliminarEqS_action() {
+//        System.out.println("ENTRA A BORRAR");
+//        if(eqSimpleElegidoAdmin!=null){
+//            this.opcionElegida=3;
+//            System.out.println("SE METE A ELIMINAR...");
+//            new BeanBaseJRequest().eliminarEquipoSimple(eqSimpleElegidoAdmin);
+//
+//            this.lblMensajes.setValue("Equipo Simple eliminado con éxito");
+//            this.popUpMensajes.setRendered(true);
+//            System.out.println("RENDERICE");
+//            this.popUpMensajes.setVisible(true);
+//            System.out.println("PUSE VISIBLE");
+//            this.popUpMensajes.setModal(true);
+//            System.out.println("SOLO EL ES MODIFICABLE");
+//
+//
+//        }
+//        else{
+//            this.lblMensajes.setValue("Seleccione primero un Equipo Simple");
+//            this.popUpMensajes.setRendered(true);
+//            System.out.println("RENDERICE");
+//            this.popUpMensajes.setVisible(true);
+//            System.out.println("PUSE VISIBLE");
+//            this.popUpMensajes.setModal(true);
+//            System.out.println("SOLO EL ES MODIFICABLE");
+//
+//        }
+//        return null;
+//    }
+//
+//    public String btnModEqS_action() {
+//        if(eqSimpleElegidoAdmin!=null){
+//
+//            this.txtNomEQ.setValue(this.eqSimpleElegidoAdmin.getDescripcion());
+//            this.txtPropietarioEQ.setValue(this.eqSimpleElegidoAdmin.getPropietario());
+//
+//            this.opcionElegida=2;
+//            System.out.println("SE METE A MODIFICAR");
+//            this.popUpEqSimple.setRendered(true);
+//            System.out.println("RENDERICE");
+//            this.popUpEqSimple.setVisible(true);
+//            System.out.println("PUSE VISIBLE");
+//            this.popUpEqSimple.setModal(true);
+//            System.out.println("SOLO EL ES MODIFICABLE");
+//
+//        }
+//        else{
+//            this.lblMensajes.setValue("Seleccione primero un Equipo Simple");
+//            this.popUpMensajes.setRendered(true);
+//            System.out.println("RENDERICE");
+//            this.popUpMensajes.setVisible(true);
+//            System.out.println("PUSE VISIBLE");
+//            this.popUpMensajes.setModal(true);
+//            System.out.println("SOLO EL ES MODIFICABLE");
+//
+//        }
+//        return null;
+//    }
+//
+//    public String btnAgregarEqS_action() {
+//        this.opcionElegida=1;
+//
+//        this.popUpEqSimple.setRendered(true);
+//        System.out.println("RENDERICE");
+//        this.popUpEqSimple.setVisible(true);
+//        System.out.println("PUSE VISIBLE");
+//        this.popUpEqSimple.setModal(true);
+//        System.out.println("SOLO EL ES MODIFICABLE");
+//
+//        return null;
+//    }
+
 
     
 }

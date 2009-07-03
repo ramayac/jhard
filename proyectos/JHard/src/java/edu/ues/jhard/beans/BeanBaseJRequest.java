@@ -178,6 +178,39 @@ public class BeanBaseJRequest extends BeanBase{
 
     }
 
+    public void modificarEquipoSImple(Equiposimple e){
+
+         EntityManager em = this.getEntityManager();
+         Equiposimple EQ= em.find(Equiposimple.class, e.getIdEquipoSimple());
+
+         System.out.println(e.getIdEquipoSimple());
+         System.out.println(e.getDescripcion());
+         System.out.println(e.getPropietario());
+         System.out.println(e.getIdestado().getIdestado());
+
+         EQ.setDescripcion(e.getDescripcion());
+         EQ.setIdestado(e.getIdestado());
+         EQ.setPropietario(e.getPropietario());
+
+         System.out.println(EQ.getIdEquipoSimple());
+         System.out.println(EQ.getDescripcion());
+         System.out.println(EQ.getPropietario());
+         System.out.println(EQ.getIdestado().getIdestado());
+
+         em.getTransaction().begin();
+         em.persist(EQ);
+         em.getTransaction().commit();
+     }
+
+    public void eliminarEquipoSimple(Equiposimple e){
+
+         EntityManager em = this.getEntityManager();
+         Equiposimple EQ= em.find(Equiposimple.class, e.getIdEquipoSimple());
+         em.getTransaction().begin();
+         em.remove(EQ);
+         em.getTransaction().commit();
+     }
+
 
 //REGLAS DE NEGOCIO
     public Equiposimple[] getEquipoSimpleByPropietario(String propietario) {

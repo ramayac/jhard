@@ -38,8 +38,8 @@ public class LoginManagerTest {
     @Before
     public void setUp() {
         this.lMgr = LoginManager.getInstance();
-        this.usuarioReal = new LoggedUser(0, "hugol", "localhost");
-        this.usuarioFalso = new LoggedUser(-1, "nomUsuarioFalso", "localhost");
+        this.usuarioReal = new LoggedUser(0, "hugol", null, "localhost");
+        this.usuarioFalso = new LoggedUser(-1, "nomUsuarioFalso", null, "localhost");
     }
 
     @After
