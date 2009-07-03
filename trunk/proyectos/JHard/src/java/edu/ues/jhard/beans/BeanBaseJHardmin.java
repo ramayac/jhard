@@ -36,11 +36,13 @@ public class BeanBaseJHardmin extends BeanBase {
     private ActionMessage msg;
     private Boolean popUpAddUserVisible;
     private Usuario newUser;
-    private String newUserPwdConfirm;
-    private Boolean addUserPwdNoMatch;
-    private SelectItem rolSelected;
+    private String newUserPwdConfirm;    
+    private String rolSelected;
     private SelectItemGroup roleItemList;
     private int userListSize;
+    private Boolean popUpConfirmDelUserVisible;
+    private String popUpConfirmDelUserMessage;
+    private Usuario editDelUser;
 
     public BeanBaseJHardmin(){
         this.loginFail = false;
@@ -50,9 +52,11 @@ public class BeanBaseJHardmin extends BeanBase {
         this.userList = this.getEntityManager().createNamedQuery("Usuario.findAll").getResultList();
         this.msg = new ActionMessage();
         this.setPopUpAddUserVisible(false);
+        this.setPopUpConfirmDelUserVisible(false);
+        this.setPopUpConfirmDelUserMessage("");
         this.newUser = new Usuario();
-        this.setAddUserPwdNoMatch(false);
         this.initSelectItems();
+        this.editDelUser = new Usuario();
     }
 
     public Usuario getUsuario(String userName, String userPwd){
@@ -295,32 +299,37 @@ public class BeanBaseJHardmin extends BeanBase {
      * @param popUpAddUserVisible the popUpAddUserVisible to set
      */
     public void setPopUpAddUserVisible(Boolean popUpAddUserVisible) {
-        this.popUpAddUserVisible = popUpAddUserVisible;
+        this.popUpAddUserVisible = popUpAddUserVisible;        
     }
 
     public String showPopupAddUser(){
         this.setPopUpAddUserVisible(true);
+        this.newUser = new Usuario();
+        this.newUser.setNombre("");
+        this.newUser.setClave("");
+        this.setNewUserPwdConfirm("");
         return "success!";
     }
 
     public String commitAddUser(){
         this.setPopUpAddUserVisible(false);
         if(!this.newUser.getClave().equalsIgnoreCase(this.newUserPwdConfirm)){            
-            this.addUserPwdNoMatch = true;
+            this.msg.setText("Las claves no coinciden");
+            this.msg.setVisible(true);
             return "fail";
         }
         
-        //String idSelectedRol = this.rolSelected.getValue().toString();
+        String idSelectedRol = this.rolSelected;
         EntityManager em = this.getEntityManager();
-        Rol r = (Rol)em.createQuery("SELECT r FROM Rol r WHERE r.idrol=" + "1").getSingleResult();
+        Rol r = (Rol)em.createQuery("SELECT r FROM Rol r WHERE r.idrol=" + idSelectedRol).getSingleResult();
         em.getTransaction().begin();
         this.newUser.setIdrol(r);
         this.newUser.setClave(LoginManager.getInstance().encrypt(this.newUser.getClave()));
         em.persist(this.newUser);
         em.getTransaction().commit();
 
-        this.newUser.setNombre("");
-        this.newUser.setClave("");
+        this.msg.setText("Usuario " + this.newUser.getNombre()  + "agregado exitosamente");
+        this.msg.setVisible(true);                
         this.popUpAddUserVisible = false;
         this.userList = em.createNamedQuery("Usuario.findAll").getResultList();
         return "Done.";
@@ -360,33 +369,19 @@ public class BeanBaseJHardmin extends BeanBase {
      */
     public void setNewUserPwdConfirm(String newUserPwdConfirm) {
         this.newUserPwdConfirm = newUserPwdConfirm;
-    }
-
-    /**
-     * @return the addUserPwdNoMatch
-     */
-    public Boolean getAddUserPwdNoMatch() {
-        return addUserPwdNoMatch;
-    }
-
-    /**
-     * @param addUserPwdNoMatch the addUserPwdNoMatch to set
-     */
-    public void setAddUserPwdNoMatch(Boolean addUserPwdNoMatch) {
-        this.addUserPwdNoMatch = addUserPwdNoMatch;
-    }
+    }    
 
     /**
      * @return the rolSelected
      */
-    public SelectItem getRolSelected() {
+    public String getRolSelected() {
         return rolSelected;
     }
 
     /**
      * @param rolSelected the rolSelected to set
      */
-    public void setRolSelected(SelectItem rolSelected) {
+    public void setRolSelected(String rolSelected) {
         this.rolSelected = rolSelected;
     }
 
@@ -415,5 +410,85 @@ public class BeanBaseJHardmin extends BeanBase {
 
     public int getUserListSize(){
         return this.userList.size();
+    }
+
+   public String editUsuario(){
+       String idUsuario = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idUsuario");
+       System.out.println("idUsuario: " + idUsuario);
+       return "done";
+   }   
+
+   public String delUsuario(){
+       EntityManager em = this.getEntityManager();       
+       this.editDelUser = (Usuario)em.createQuery("SELECT u FROM Usuario u WHERE u.idusuario = " + this.editDelUser.getIdusuario().toString()).getSingleResult();
+       em.getTransaction().begin();
+       em.remove(this.editDelUser);
+       em.getTransaction().commit();
+
+       this.setPopUpConfirmDelUserVisible(false);
+       this.msg.setText("Usuario " + this.editDelUser.getNombre() + " eliminado exitosamente");
+       this.msg.setVisible(true);
+       this.userList = em.createNamedQuery("Usuario.findAll").getResultList();
+       return "done";
+   }
+
+   public String showPopupConfirmDeleteUser(){
+       this.setPopUpConfirmDelUserVisible(true);
+       String idUsuario = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idUsuario");
+       System.out.println("idUsuario: " + idUsuario);
+       for(Usuario u: this.userList){
+           if(u.getIdusuario().toString().equalsIgnoreCase(idUsuario)){
+               this.editDelUser = u;
+           }
+       }
+       this.setPopUpConfirmDelUserMessage("Esta seguro que desea eliminar al usuario " + this.editDelUser.getNombre() + "?");
+       return "done";
+   }
+
+   public String hidePopupConfirmDeleteUser(){
+       this.setPopUpConfirmDelUserVisible(false);
+       return "done";
+   }
+
+    /**
+     * @return the popUpConfirmDelUserVisible
+     */
+    public Boolean getPopUpConfirmDelUserVisible() {
+        return popUpConfirmDelUserVisible;
+    }
+
+    /**
+     * @param popUpConfirmDelUserVisible the popUpConfirmDelUserVisible to set
+     */
+    public void setPopUpConfirmDelUserVisible(Boolean popUpConfirmDelUserVisible) {
+        this.popUpConfirmDelUserVisible = popUpConfirmDelUserVisible;
+    }
+
+    /**
+     * @return the popUpConfirmDelUserMessage
+     */
+    public String getPopUpConfirmDelUserMessage() {
+        return popUpConfirmDelUserMessage;
+    }
+
+    /**
+     * @param popUpConfirmDelUserMessage the popUpConfirmDelUserMessage to set
+     */
+    public void setPopUpConfirmDelUserMessage(String popUpConfirmDelUserMessage) {
+        this.popUpConfirmDelUserMessage = popUpConfirmDelUserMessage;
+    }
+
+    /**
+     * @return the editDelUser
+     */
+    public Usuario getEditDelUser() {
+        return editDelUser;
+    }
+
+    /**
+     * @param editDelUser the editDelUser to set
+     */
+    public void setEditDelUser(Usuario editDelUser) {
+        this.editDelUser = editDelUser;
     }
 }

@@ -106,10 +106,10 @@
                                             <h:outputText value="Usuarios" />
                                         </f:facet>
                                         <ice:panelGroup>
-                                                <ice:outputFormat id="lblLeyendaPaginacion" value="Mostrando solo 5 registros por página. Total de registros: {0}" style="margin: 10px 10px 0px">
+                                                <ice:outputFormat id="lblLeyendaPaginacion" value="Mostrando solo 10 registros por página. Total de registros: {0}" style="margin: 10px 10px 0px">
                                                     <f:param value="#{JHardminInstance.userListSize}" />
                                                 </ice:outputFormat>
-                                                <ice:dataTable id="tblListaUsuarios" rows="5" title="Lista de Usuarios del Sistema" value="#{JHardminInstance.userList}" var="user" style="margin-top: 0px; margin-bottom: 0px;">
+                                                <ice:dataTable id="tblListaUsuarios" rows="10" title="Lista de Usuarios del Sistema" value="#{JHardminInstance.userList}" var="user" style="margin-top: 0px; margin-bottom: 0px;">
                                                     <ice:column>
                                                         <f:facet name="header">
                                                             <ice:outputText value="Nombre" />
@@ -123,13 +123,17 @@
                                                         <ice:outputText value="#{user.idrol.nombre}" />
                                                     </ice:column>
                                                     <ice:column>
-                                                        <ice:commandLink value="Editar" />
+                                                        <ice:commandLink value="Editar" action="#{JHardminInstance.editUsuario}">
+                                                            <f:param name="idUsuario" value="#{user.idusuario}" />
+                                                        </ice:commandLink>
                                                     </ice:column>
                                                     <ice:column>
-                                                        <ice:commandLink value="Eliminar" />
+                                                        <ice:commandLink value="Eliminar" action="#{JHardminInstance.showPopupConfirmDeleteUser}" >
+                                                            <f:param name="idUsuario" value="#{user.idusuario}" />
+                                                        </ice:commandLink>
                                                     </ice:column>
                                                 </ice:dataTable>                                                
-                                                <ice:dataPaginator id="pgrListaUsuarios1" for="tblListaUsuarios" paginator="true" style="margin: 0px 10px 10px">
+                                                <ice:dataPaginator id="pgrListaUsuarios1" for="tblListaUsuarios" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px">
                                                 <f:facet name="first">
                                                     <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-first.gif" style="border:none;" title="First Page"/>
                                                 </f:facet>
@@ -165,16 +169,31 @@
                                                             </p>
                                                             <p>
                                                                 <ice:outputLabel id="lblRoleList" for="cmdRoleList" value="Rol: " />
-                                                                <ice:selectOneListbox id="cmbRoleList" size="1">
+                                                                <ice:selectOneListbox id="cmbRoleList" size="1" value="#{JHardminInstance.rolSelected}" >
                                                                     <f:selectItems value="#{JHardminInstance.roleItemList}" />
                                                                 </ice:selectOneListbox>
                                                             </p>
                                                             <ice:commandButton id="cmdCommitAddUser" action="#{JHardminInstance.commitAddUser}" value="Agregar" />
-                                                            <ice:commandButton id="cmdCancelAddUser" action="#{JHardminInstance.cancelAddUser}" value="Cancelar" />
-                                                            <ice:outputText id="lblPwdNoMatch" value="Las claves no coinciden" rendered="#{JHardminInstance.addUserPwdNoMatch}" styleClass="fail" />
+                                                            <ice:commandButton id="cmdCancelAddUser" action="#{JHardminInstance.cancelAddUser}" value="Cancelar" />                                                            
                                                         </ice:panelGroup>                                                    
                                                 </f:facet>
                                             </ice:panelPopup>
+                                                            <ice:panelPopup id="popUpConfirmDelUser" modal="true" draggable="true" rendered="#{JHardminInstance.popUpConfirmDelUserVisible}">
+                                                            <f:facet name="header">
+                                                                <ice:outputText value="Confirmación" />
+                                                            </f:facet>
+                                                            <f:facet name="body">
+                                                            <ice:panelGroup styleClass="frmElementList">
+                                                                <p>
+                                                                    <ice:outputFormat value="#{JHardminInstance.popUpConfirmDelUserMessage}" />
+                                                                </p>
+                                                                <p>
+                                                                    <ice:commandButton value="Si" action="#{JHardminInstance.delUsuario}" />
+                                                                    <ice:commandButton value="No" action="#{JHardminInstance.hidePopupConfirmDeleteUser}" />
+                                                                </p>
+                                                            </ice:panelGroup>
+                                                            </f:facet>
+                                                            </ice:panelPopup>
                                         </ice:panelGroup>
                                     </ice:panelCollapsible>
                                 </ice:panelGroup>
