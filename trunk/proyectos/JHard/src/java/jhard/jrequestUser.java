@@ -7,20 +7,21 @@
 package jhard;
 
 import com.icesoft.faces.component.ext.HtmlCommandButton;
-import com.icesoft.faces.component.ext.HtmlOutputLabel;
-import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
 
+import com.icesoft.faces.component.jsfcl.data.PopupBean;
+import com.icesoft.faces.component.panelpopup.PanelPopup;
 import com.sun.data.provider.impl.ObjectArrayDataProvider;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 
 
-import edu.ues.jhard.beans.BeanBaseJRequest;
+import edu.ues.jhard.beans.BeanBaseJHardmin;
+import edu.ues.jhard.jhardmin.LoggedUser;
+import edu.ues.jhard.jhardmin.LoginManager;
 import edu.ues.jhard.jpa.Tecnico;
-import java.util.ArrayList;
+import edu.ues.jhard.jpa.Usuario;
 import javax.faces.FacesException;
-import javax.faces.event.ValueChangeEvent;
 
 
 /**
@@ -83,10 +84,6 @@ public class jrequestUser extends AbstractPageBean {
     public void setBtnBuscar(HtmlCommandButton hcb) {
         this.btnBuscar = hcb;
     }
-
-    // </editor-fold>
-
-
     private Tecnico[] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
     private Tecnico tecnicoElegido=tecnicos[0];
 
@@ -116,11 +113,71 @@ public class jrequestUser extends AbstractPageBean {
     public void setBtnSolicitud(HtmlCommandButton hcb) {
         this.btnSolicitud = hcb;
     }
+    private PopupBean panelPopup1Bean = new PopupBean();
+
+    public PopupBean getPanelPopup1Bean() {
+        return panelPopup1Bean;
+    }
+
+    public void setPanelPopup1Bean(PopupBean pb) {
+        this.panelPopup1Bean = pb;
+    }
+    private PanelPopup popUpRegister = new PanelPopup();
+
+    public PanelPopup getPopUpRegister() {
+        return popUpRegister;
+    }
+
+    public void setPopUpRegister(PanelPopup pp) {
+        this.popUpRegister = pp;
+    }
+    private HtmlCommandButton btnOk = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnOk() {
+        return btnOk;
+    }
+
+    public void setBtnOk(HtmlCommandButton hcb) {
+        this.btnOk = hcb;
+    }
+
+    // </editor-fold>
+
+
+
+
+
+    private LoggedUser lu;
+    private Usuario U;
+
+    public LoggedUser getLu() {
+        return lu;
+    }
+
+    public void setLu(LoggedUser lu) {
+        this.lu = lu;
+    }
+
+    public Usuario getU(){
+        return U;
+    }
+
+    public void setU(Usuario u){
+        this.U=u;
+    }
+
+
+
+    public  BeanBaseJHardmin getJHardminInstance() {
+        return (BeanBaseJHardmin) getBean("JHardminInstance");
+    }
 
     /**
      * <p>Construct a new Page bean instance.</p>
      */
     public jrequestUser() {
+        
+
     }
 
     /**
@@ -137,6 +194,7 @@ public class jrequestUser extends AbstractPageBean {
      */
     @Override
     public void init() {
+        this.popUpRegister.setRendered(false);
         // Perform initializations inherited from our superclass
         super.init();
         // Perform application initialization that must complete
@@ -238,9 +296,30 @@ public class jrequestUser extends AbstractPageBean {
     }
 
     public String btnSolicitud_action() {
-        //return null means stay on the same page
-        return "case1";
+        String navigation="";
+        lu= getJHardminInstance().getCurrentUser();
+
+        if(lu==null){
+            navigation=null;
+            this.popUpRegister.setRendered(true);
+            this.popUpRegister.setVisible(true);
+            this.popUpRegister.setModal(true);
+        }
+        else
+            navigation="case1";
+
+
+        return navigation;
     }
+
+    public String btnOk_action() {
+        this.popUpRegister.setRendered(false);
+            this.popUpRegister.setVisible(false);
+            this.popUpRegister.setModal(false);
+        return null;
+    }
+
+    
 
 
 

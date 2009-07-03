@@ -330,8 +330,8 @@ public class jrequestUserSolicitud extends AbstractPageBean {
     }
 
 
-    private LoggedUser lu = getJHardminInstance().getCurrentUser();
-    private Usuario U = LoginManager.getInstance().getUsuario(lu);
+    private LoggedUser lu;
+    private Usuario U;
 
     public LoggedUser getLu() {
         return lu;
@@ -376,9 +376,7 @@ public class jrequestUserSolicitud extends AbstractPageBean {
     public jrequestUserSolicitud() {
 
         lu= getJHardminInstance().getCurrentUser();
-        //System.out.println("NOMBRE DEL USUARIO LOGGEADO" + lu.getUserName());
-
-
+        
         U = LoginManager.getInstance().getUsuario(lu);
 
         //System.out.println(U.getNombre());
@@ -569,7 +567,7 @@ public class jrequestUserSolicitud extends AbstractPageBean {
 
         eq.setDescripcion((String)this.txtNombreEq.getValue());
 
-        Usuario u = new BeanBaseJHardmin().getUsuario(5);
+        //Usuario u = new BeanBaseJHardmin().getUsuario(5);
 
         eq.setPropietario((String)this.txtPropietario.getValue());
 

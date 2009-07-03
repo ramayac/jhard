@@ -3,8 +3,9 @@
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
         <Node id="jrequestAdmin.jsp" x="2400" y="300" zoom="true"/>
-        <Node id="paginaMuestra.html" x="2150" y="1200" zoom="true"/>
-        <Node id="Index.jsp" x="1900" y="600" zoom="false"/>
+        <Node id="Index.jsp" x="1953" y="584" zoom="false"/>
+        <Node id="JRequestAdministracion.jsp" x="150" y="300" zoom="true"/>
+        <Node id="jcanon.jsp" x="400" y="150" zoom="true"/>
         <Node id="jrequestUser.jsp" x="650" y="900" zoom="true"/>
         <Node id="jwikiUser.jsp" x="150" y="150" zoom="false"/>
         <Node id="jrequestUserSolicitud.jsp" x="150" y="2100" zoom="true"/>

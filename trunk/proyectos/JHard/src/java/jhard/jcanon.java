@@ -1,24 +1,14 @@
 /*
- * Page1.java
+ * jcanon.java
  *
- * Created on 25-may-2009, 23:02:55
+ * Created on 29-jun-2009, 1:15:11
  * Copyright Hugol
  */
 package jhard;
 
-import com.icesoft.faces.component.ext.HtmlCommandButton;
-import com.icesoft.faces.component.ext.HtmlInputSecret;
-import com.icesoft.faces.component.ext.HtmlInputText;
-import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
-import edu.ues.jhard.beans.BeanBaseJHardmin;
-import edu.ues.jhard.jhardmin.LoggedUser;
-import edu.ues.jhard.jhardmin.LoginManager;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.FacesException;
-import javax.faces.context.FacesContext;
+
 
 /**
  * <p>Page bean that corresponds to a similarly named JSP page.  This
@@ -27,7 +17,7 @@ import javax.faces.context.FacesContext;
  * lifecycle methods and event handlers where you may add behavior
  * to respond to incoming events.</p>
  */
-public class Index extends AbstractPageBean {
+public class jcanon extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
     private int __placeholder;
 
@@ -38,49 +28,13 @@ public class Index extends AbstractPageBean {
      */
     private void _init() throws Exception {
     }
-    private HtmlInputText txtUser = new HtmlInputText();
-
-    public HtmlInputText getTxtUser() {
-        return txtUser;
-    }
-
-    public void setTxtUser(HtmlInputText hit) {
-        this.txtUser = hit;
-    }
-    private HtmlInputSecret txtPass = new HtmlInputSecret();
-
-    public HtmlInputSecret getTxtPass() {
-        return txtPass;
-    }
-
-    public void setTxtPass(HtmlInputSecret his) {
-        this.txtPass = his;
-    }
-    private HtmlCommandButton btnLogin = new HtmlCommandButton();
-
-    public HtmlCommandButton getBtnLogin() {
-        return btnLogin;
-    }
-
-    public void setBtnLogin(HtmlCommandButton hcb) {
-        this.btnLogin = hcb;
-    }
-    private HtmlOutputLabel txtUserLogin = new HtmlOutputLabel();
-
-    public HtmlOutputLabel getTxtUserLogin() {
-        return txtUserLogin;
-    }
-
-    public void setTxtUserLogin(HtmlOutputLabel hol) {
-        this.txtUserLogin = hol;
-    }
 
     // </editor-fold>
 
     /**
      * <p>Construct a new Page bean instance.</p>
      */
-    public Index() {
+    public jcanon() {
     }
 
     /**
@@ -95,6 +49,7 @@ public class Index extends AbstractPageBean {
      * values submitted with this request.  Instead, they represent the
      * property values that were saved for this view when it was rendered.</p>
      */
+    @Override
     public void init() {
         // Perform initializations inherited from our superclass
         super.init();
@@ -108,7 +63,7 @@ public class Index extends AbstractPageBean {
         try {
             _init();
         } catch (Exception e) {
-            log("Page1 Initialization Failure", e);
+            log("jcanon Initialization Failure", e);
             throw e instanceof FacesException ? (FacesException) e: new FacesException(e);
         }
         
@@ -125,6 +80,7 @@ public class Index extends AbstractPageBean {
      * is processing a form submit.  Customize this method to allocate
      * resources that will be required in your event handlers.</p>
      */
+    @Override
     public void preprocess() {
     }
 
@@ -136,6 +92,7 @@ public class Index extends AbstractPageBean {
      * this method to allocate resources that will be required for rendering
      * this page.</p>
      */
+    @Override
     public void prerender() {
     }
 
@@ -147,33 +104,36 @@ public class Index extends AbstractPageBean {
      * <code>preprocess()</code>, or <code>prerender()</code> methods (or
      * acquired during execution of an event handler).</p>
      */
+    @Override
     public void destroy() {
     }
 
-    public String btnLogin_action() {
-
-        String nomUser = (String) this.txtUser.getValue();
-        String nomPass = (String) this.txtPass.getValue();
-        System.out.println(nomUser);
-        System.out.println(nomPass);
-
-        LoginManager lmgr = LoginManager.getInstance();
-        Integer uid = lmgr.Login(nomUser, nomPass, "localhost");
-        if(uid != -1){
-        //if (bb.getUsuario(nomUser, nomPass)!=null){
-            //this.txtUserLogin.setValue(bb.getUsuario(nomUser, nomPass).getNombre());
-            LoggedUser user = lmgr.getUser(uid);
-            this.txtUserLogin.setValue("Bienvenido "+user.getUserName());
-
-        }
-        else{
-            this.txtUserLogin.setValue("Usuario Incorrecto");
-        }
-
-
-        return null;
+    /**
+     * <p>Return a reference to the scoped data bean.</p>
+     *
+     * @return reference to the scoped data bean
+     */
+    protected SessionBean1 getSessionBean1() {
+        return (SessionBean1) getBean("SessionBean1");
     }
 
-    
+    /**
+     * <p>Return a reference to the scoped data bean.</p>
+     *
+     * @return reference to the scoped data bean
+     */
+    protected RequestBean1 getRequestBean1() {
+        return (RequestBean1) getBean("RequestBean1");
+    }
+
+    /**
+     * <p>Return a reference to the scoped data bean.</p>
+     *
+     * @return reference to the scoped data bean
+     */
+    protected ApplicationBean1 getApplicationBean1() {
+        return (ApplicationBean1) getBean("ApplicationBean1");
+    }
+
 }
 

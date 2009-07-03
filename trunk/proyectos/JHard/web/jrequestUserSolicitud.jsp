@@ -19,12 +19,6 @@
                 <script src="js/js/jquery.js" type="text/javascript"></script>
                 <script src="js/js/jquery-ui.js" type="text/javascript"></script>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-                <script type="text/javascript">
-                    $.ui.dialog.defaults.bgiframe = true;
-                    $(function() {
-                        $("#divalerta").dialog();
-                    });
-                </script>
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <!--start header -->
@@ -47,7 +41,7 @@
                                 <a href="#">Wiki y Cursos</a>
                             </li>
                             <li class="last">
-                                <a href="#">Cañones</a>
+                                <a href="jcanon.iface">Cañones</a>
                             </li>
                         </ul>
                     </div>
@@ -91,6 +85,10 @@
                                             </ice:panelGrid>
                                         </f:facet>
                                     </ice:panelPopup>
+                                    <ice:outputLabel id="labelError" style="font-size: 14px; font-weight: bold" value="Debe de permanecer con sesión activa para realizar una petición de Soporte técnico" rendered="#{JHardminInstance.currentUser == null}"></ice:outputLabel>
+
+                                    <ice:panelGroup id="grupoSolicitud" rendered="#{JHardminInstance.currentUser != null}">
+
                                     <ice:outputLabel id="lblNombre" value="Nombre del Usuario que hace la solicitud"/>
                                     <br/>
                                     <ice:outputLabel binding="#{jrequestUserSolicitud.lblUsuario}" id="lblUsuario" style="font-size: 14px; font-weight: bold"/>
@@ -122,6 +120,7 @@
                                     <br/>
                                     <br/>
                                     <br/>
+                                    </ice:panelGroup>
                                     <ice:panelPopup autoCentre="true" binding="#{jrequestUserSolicitud.panelPopup2}" draggable="true" id="panelPopup2"
                                         modal="true" rendered="#{jrequestUserSolicitud.panelPopup2Bean.showDraggablePanel}" style="height: 130px; width: 261px" visible="#{jrequestUserSolicitud.panelPopup2Bean.showModalPanel}">
                                         <f:facet name="header">
@@ -181,30 +180,32 @@
                                 </ice:form>
                             </li>
                             <li>
-                                <h2>Otros Vinculos</h2>
-                                <ul>
-                                    <li>
-                                        <a href="#">Nec metus sed donec</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Magna lacus bibendum mauris</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Velit semper nisi molestie</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Eget tempor eget nonummy</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Nec metus sed donec</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Magna lacus bibendum mauris</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Velit semper nisi molestie</a>
-                                    </li>
-                                </ul>
+                                <ice:form id="frmCommonTasks">
+                                <h2>Tareas Comunes</h2>
+                                    <ul>
+                                        <li>
+                                            <ice:commandLink value="Cambiar clave de acceso" action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}"  />
+                                        </li>
+                                        <li>
+                                            <ice:commandLink value="Administrar Solicitudes de JRequest" action="#{Redireccion.jrequestAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"  />
+                                        </li>
+                                        <li>
+                                            <ice:commandLink value="Tareas Administrativas de JRequest" action="#{Redireccion.jrequestAdministracion}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"></ice:commandLink>
+                                        </li>
+                                        <li>
+                                            <ice:commandLink value="Emitir Solicitud de Soporte Técnico" action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
+                                        </li>
+                                        <li>
+                                            <a href="#">Otras Opciones</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Otras Opciones</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Otras Opciones</a>
+                                        </li>
+                                    </ul>
+                                </ice:form>
                             </li>
                         </ul>
                     </div>

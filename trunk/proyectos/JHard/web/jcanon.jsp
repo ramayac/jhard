@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-    Document   : Page1
-    Created on : 25-may-2009, 23:02:54
-    Author     : Hugol
+    Document   : jcanon
+    Created on : 29-jun-2009, 1:15:10
+    Author     : Hugol 
 -->
-<jsp:root version="2.0" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ice="http://www.icesoft.com/icefaces/component" xmlns:jsp="http://java.sun.com/JSP/Page">
+<jsp:root version="2.1" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:ice="http://www.icesoft.com/icefaces/component">
     <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"/>
     <f:view>
-        <html id="outputHtml1">
-            <head id="outputHead1">
-                <!--ice:outputStyle href="./resources/stylesheet.css" id="outputStyle1"/-->                
+            <html id="outputHtml1">
+             <head id="outputHead1">
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
                 <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
-                <title>.:: JHard ::.</title>
+                <title>.:: JCanon ::.</title>
                 <meta content="" name="keywords"/>
                 <meta content="" name="description"/>
+
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+
+                <!--Scheduler-->
+                <script src="js/dhtmlxscheduler.js" type="text/javascript" charset="utf-8"></script>
+                <link rel="stylesheet" href="js/dhtmlxscheduler.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+
+                <script type="text/javascript" charset="utf-8">
+                    function init() {
+
+                    scheduler.config.xml_date="%Y-%m-%d %H:%i";
+                    scheduler.init('scheduler_here',null,"week");
+                    scheduler.load("events.xml");
+
+                    }
+                </script>
+
             </head>
-            <body id="outputBody1" style="-rave-layout: grid">
+            <body id="outputBody1" style="-rave-layout: grid" onload="init();">
                 <!--start header -->
                 <div id="header">
                     <div id="menu">
@@ -55,11 +70,24 @@
                     <!-- start content -->
                     <div id="content">
                         <div class="post">
-                            <h2 class="title">Página Principal</h2>
-                            <div class="entry">
-                                
+                            <h2 class="title">Reserva de Equipo Multimedia</h2>
+                            <ice:panelGroup styleClass="entry" style="margin:0px;" id="grupo1">
+                                <p></p>
+                                <div id="scheduler_here" class="dhx_cal_container" style='position: absolute; width:50%; height:75%;'>
+                                    <div class="dhx_cal_navline">
+                                        <div class="dhx_cal_prev_button"></div>
+                                        <div class="dhx_cal_next_button"></div>
+                                        <div class="dhx_cal_today_button"></div>
+                                        <div class="dhx_cal_date"></div>
+                                        <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+                                        <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+                                        <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+                                    </div>
+                                    <div class="dhx_cal_header"></div>
+                                    <div class="dhx_cal_data"></div>
+                                </div>
+                                </ice:panelGroup>
 
-                            </div>
                         </div>
                     </div>
                     <!-- end content -->
@@ -106,25 +134,25 @@
                                     <h2>Tareas Comunes</h2>
                                     <ul>
                                         <li>
-                                            <ice:commandLink value="Cambiar clave de acceso" action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
+                                            <ice:commandLink value="Cambiar clave de acceso" action="chpwd" rendered="#{JHardminInstance.currentUser != null}"  />
                                         </li>
                                         <li>
-                                            <ice:commandLink value="Administrar Solicitudes de JRequest" action="#{Redireccion.jrequestAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"  />
+                                            <a href="#">Administrar usuarios</a>
                                         </li>
                                         <li>
-                                            <ice:commandLink value="Tareas Administrativas de JRequest" action="#{Redireccion.jrequestAdministracion}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"></ice:commandLink>
+                                            <a href="#">Velit semper nisi molestie</a>
                                         </li>
                                         <li>
-                                            <ice:commandLink value="Emitir Solicitud de Soporte Técnico" action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
+                                            <a href="#">Eget tempor eget nonummy</a>
                                         </li>
                                         <li>
-                                            <a href="#">Otras Opciones</a>
+                                            <a href="#">Nec metus sed donec</a>
                                         </li>
                                         <li>
-                                            <a href="#">Otras Opciones</a>
+                                            <a href="#">Magna lacus bibendum mauris</a>
                                         </li>
                                         <li>
-                                            <a href="#">Otras Opciones</a>
+                                            <a href="#">Velit semper nisi molestie</a>
                                         </li>
                                     </ul>
                                 </ice:form>

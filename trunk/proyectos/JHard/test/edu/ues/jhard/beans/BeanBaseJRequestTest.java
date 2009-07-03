@@ -234,15 +234,15 @@ public class BeanBaseJRequestTest {
      * Test of getEstadoEquipoByID method, of class BeanBaseJRequest.
      */
     //@Test
-    public void testGetEstadoEquipoByID() {
-        System.out.println("getEstadoEquipoByID");
-        BeanBaseJRequest instance = new BeanBaseJRequest();
-        Estadoequipo expResult = null;
-        Estadoequipo result = instance.getEstadoEquipoByID();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    public void testGetEstadoEquipoByID() {
+//        System.out.println("getEstadoEquipoByID");
+//        BeanBaseJRequest instance = new BeanBaseJRequest();
+//        Estadoequipo expResult = null;
+//        Estadoequipo result = instance.getEstadoEquipoByID();
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
 
     /**
      * Test of getSolicitudByFecha method, of class BeanBaseJRequest.
