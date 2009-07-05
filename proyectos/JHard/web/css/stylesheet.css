@@ -2678,3 +2678,11 @@ h3{
 .fail{
     color: #AF4C4C;
 }
+
+.rowOver{
+    background-color: #E5F3FE;
+}
+
+.rowSelected{
+    background-color: #C4E5FF;
+}
