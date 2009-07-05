@@ -123,15 +123,15 @@
                                                         <ice:outputText value="#{user.idrol.nombre}" />
                                                     </ice:column>
                                                     <ice:column>
-                                                        <ice:commandLink value="Editar" action="#{JHardminInstance.editUsuario}">
+                                                        <ice:commandLink value="Editar" action="#{JHardminInstance.showPopupEditUsuario}" rendered="#{JHardminInstance.currentUser.uid != user.idusuario}">
                                                             <f:param name="idUsuario" value="#{user.idusuario}" />
                                                         </ice:commandLink>
                                                     </ice:column>
                                                     <ice:column>
-                                                        <ice:commandLink value="Eliminar" action="#{JHardminInstance.showPopupConfirmDeleteUser}" >
+                                                        <ice:commandLink value="Eliminar" action="#{JHardminInstance.showPopupConfirmDeleteUser}" rendered="#{JHardminInstance.currentUser.uid != user.idusuario}" >
                                                             <f:param name="idUsuario" value="#{user.idusuario}" />
                                                         </ice:commandLink>
-                                                    </ice:column>
+                                                    </ice:column>                                                    
                                                 </ice:dataTable>                                                
                                                 <ice:dataPaginator id="pgrListaUsuarios1" for="tblListaUsuarios" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px">
                                                 <f:facet name="first">
@@ -176,6 +176,37 @@
                                                             <ice:commandButton id="cmdCommitAddUser" action="#{JHardminInstance.commitAddUser}" value="Agregar" />
                                                             <ice:commandButton id="cmdCancelAddUser" action="#{JHardminInstance.cancelAddUser}" value="Cancelar" />                                                            
                                                         </ice:panelGroup>                                                    
+                                                </f:facet>
+                                            </ice:panelPopup>
+                                            <ice:panelPopup id="popUpEditUser" modal="true" draggable="true" rendered="#{JHardminInstance.popUpEditUserVisible}">
+                                                <f:facet name="header">
+                                                    <h:outputFormat value="Editar usuario {0}" styleClass="popupHeader">
+                                                        <f:param value="#{JHardminInstance.editDelUser.nombre}" />
+                                                    </h:outputFormat>
+                                                </f:facet>
+                                                <f:facet name="body">
+                                                        <ice:panelGroup styleClass="frmElementList">
+                                                            <p>
+                                                                <ice:outputLabel id="lblEditUserName" for="txtEditUserName" value="Nombre: " />
+                                                                <ice:inputText id="txtEditUserName" value="#{JHardminInstance.editDelUser.nombre}" />
+                                                            </p>
+                                                            <p>
+                                                                <ice:outputLabel id="lblEditUserPwd" for="txtEditUserPwd" value="Clave: " />
+                                                                <ice:inputSecret id="txtEditUserPwd" value="#{JHardminInstance.editDelUser.clave}" />
+                                                            </p>
+                                                            <p>
+                                                                <ice:outputLabel id="lblEditUserPwdConfirm" for="txtEditUserPwdConfirm" value="Repita la nueva clave: " />
+                                                                <ice:inputSecret id="txtEditUserPwdConfirm" value="#{JHardminInstance.newUserPwdConfirm}" />
+                                                            </p>
+                                                            <p>
+                                                                <ice:outputLabel id="lblRoleList2" for="cmdRoleList2" value="Rol: " />
+                                                                <ice:selectOneListbox id="cmbRoleList2" size="1" value="#{JHardminInstance.rolSelected}" >
+                                                                    <f:selectItems value="#{JHardminInstance.roleItemList}" />
+                                                                </ice:selectOneListbox>
+                                                            </p>
+                                                            <ice:commandButton id="cmdCommitEditUser" action="#{JHardminInstance.editUsuario}" value="Agregar" />
+                                                            <ice:commandButton id="cmdCancelEditUser" action="#{JHardminInstance.closePopupEditUsuario}" value="Cancelar" />
+                                                        </ice:panelGroup>
                                                 </f:facet>
                                             </ice:panelPopup>
                                                             <ice:panelPopup id="popUpConfirmDelUser" modal="true" draggable="true" rendered="#{JHardminInstance.popUpConfirmDelUserVisible}">
