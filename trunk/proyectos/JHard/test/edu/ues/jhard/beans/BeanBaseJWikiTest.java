@@ -1,22 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package edu.ues.jhard.beans;
 
+import edu.ues.jhard.jpa.Comentarios;
 import edu.ues.jhard.jpa.Entrada;
+import edu.ues.jhard.jpa.Tag;
+import java.util.Collection;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import static org.junit.Assert.*;
 
 /**
  *
- * @author Hugol
+ * @author Ramayac
  */
 public class BeanBaseJWikiTest {
 
@@ -39,9 +36,6 @@ public class BeanBaseJWikiTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of getReserva method, of class BeanBaseJCanon.
-     */
     @Test
     public void testGetEntrada() {
         System.out.println("getEntrada");
@@ -49,27 +43,53 @@ public class BeanBaseJWikiTest {
         Entrada expResult = null;
         Entrada result = instance.getEntrada(-1);
         assertEquals(expResult, result);
-        //fail("The test case is a prototype.");
         System.out.println("Exito en la prueba!");
     }
 
-    /**
-     *
-     */
     @Test
     public void testNEntradas() {
-        int n = 5;
-        System.out.println("getNEntradas");
+        int n = 3;
+        //System.out.println("testNEntradas");
         BeanBaseJWiki instance = new BeanBaseJWiki();
         Entrada[] resultado = new Entrada[n];
         resultado = instance.getUltimasNEntradas(n);
         if(resultado.length==n)
-            assertNotNull(resultado); //OBVIO que no sera null...
+            assertNotNull(resultado[0]); //por lo menos, que la primera NO sea null
         else
-            fail("resultado menor que el esperado");
-        
+            fail("resultado menor que el esperado ("+n+")");
     }
 
+    @Test
+    public void testComentariosDeEntrada() {
+        int n = 1;
+        //System.out.println("testComentariosDeEntrada");
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        Entrada resultado = instance.getEntrada(n);
+        Collection<Comentarios> comentarios = resultado.getComentariosCollection();
+        System.out.println("Comentarios asociados con la Entrada: " + resultado.getTitulo());
+        for (Comentarios c : comentarios) {
+            System.out.println(c.getComentario());
+        }
+        //comentarios.toArray(new Comentarios[0]); <--ridiculo, esto seria el colmo...
+        assertTrue(comentarios.size()>0);
+    }
+    
+    @Test
+    public void testEtiquetasDeEntrada() {
+        int n = 5;
+        System.out.println("getEtiquetasDeEntrada");
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        Entrada entrada = instance.getEntrada(n);
+        Tag[] resultado = new Tag[0];
+        resultado = instance.getEtiquetas(entrada);
+        System.out.println("Tags asociados con la Entrada: " + entrada.getTitulo());
+        for (Tag t : resultado) {
+            System.out.println(t.getDescripcion());
+        }
+        assertNotNull(resultado);
+    }
+
+    
 //    /**
 //     * Test of registrarReserva method, of class BeanBaseJCanon.
 //     */
