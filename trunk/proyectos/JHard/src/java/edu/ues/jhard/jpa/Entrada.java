@@ -64,7 +64,7 @@ public class Entrada implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "identrada")
     private Collection<TagEntrada> tagEntradaCollection;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
-    @ManyToOne(optional = true)
+    //@ManyToOne(optional = true)
     //@Column(name = "idusuario", nullable = false)
     private Usuario idusuario;
 
