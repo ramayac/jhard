@@ -2686,3 +2686,7 @@ h3{
 .rowSelected{
     background-color: #C4E5FF;
 }
+
+.selectedNodetrue{
+    font-weight: bold;
+}

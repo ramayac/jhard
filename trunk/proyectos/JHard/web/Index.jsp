@@ -34,7 +34,7 @@
                                 <a href="#">Grupos de Laboratorio</a>
                             </li>
                             <li>
-                                <a href="#">Inventario</a>
+                                <a href="jinvent.jspx">Inventario</a>
                             </li>
                             <li>
                                 <a href="#">Wiki y Cursos</a>

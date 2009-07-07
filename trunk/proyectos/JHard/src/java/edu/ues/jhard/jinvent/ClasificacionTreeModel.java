@@ -5,6 +5,9 @@
 
 package edu.ues.jhard.jinvent;
 
+import edu.ues.jhard.jpa.Clasificacion;
+import java.util.Enumeration;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -38,8 +41,25 @@ public class ClasificacionTreeModel {
         this.modelo = modelo;
     }
 
-    public void generarNodosModelo(){
-        //DefaultMutableTreeNode nodoRaiz = new DefaultMutableTreeNode(currentUserObject);
+    private void generarNodosModelo(){
+        Clasificacion cl = (Clasificacion)this.em.createQuery("SELECT c FROM Clasificacion c WHERE c.idsuperior IS NULL").getSingleResult();
+        DefaultMutableTreeNode nodo = this.agregarNodo(null, cl);
+        this.modelo = new DefaultTreeModel(nodo);
+        this.currentUserObject = (ClasificacionUserObject)nodo.getUserObject();
+        this.generarNodosHijos(nodo);
+    }
+
+    private DefaultMutableTreeNode agregarNodo(DefaultMutableTreeNode nodoPadre, Clasificacion cl){
+        DefaultMutableTreeNode nodo = new DefaultMutableTreeNode();
+        ClasificacionUserObject clUsrObj = new ClasificacionUserObject(nodo);
+        nodo.setUserObject(clUsrObj);
+        clUsrObj.setClasificacion(cl);
+        clUsrObj.setText(cl.getNombre());
+        clUsrObj.setLeaf(false);
+        clUsrObj.setExpanded(true);
+        if(nodoPadre != null)
+            nodoPadre.add(nodo);
+        return nodo;
     }
 
     /**
@@ -56,5 +76,31 @@ public class ClasificacionTreeModel {
         this.currentUserObject = currentUserObject;
     }
 
+    public void generarNodosHijos(DefaultMutableTreeNode nodo){
+        Clasificacion cl = ((ClasificacionUserObject)nodo.getUserObject()).getClasificacion();
+        try{
+            List<Clasificacion> hijas = (List<Clasificacion>)this.em.createQuery("SELECT c FROM Clasificacion c WHERE c.idsuperior = " + cl.getIdclasificacion().toString()).getResultList();
+            for(Clasificacion hija: hijas){
+                DefaultMutableTreeNode nodoHijo = this.agregarNodo(nodo, hija);
+                generarNodosHijos(nodoHijo);                
+            }            
+        }
+        catch(Exception ex){
+            //pass
+        }
+    }
 
+    public DefaultMutableTreeNode seleccionarNodo(String idClasificacion){
+        DefaultMutableTreeNode nodoRaiz = (DefaultMutableTreeNode)this.modelo.getRoot();
+        Enumeration nodos = nodoRaiz.depthFirstEnumeration();
+        while(nodos.hasMoreElements()){
+            DefaultMutableTreeNode nodo = (DefaultMutableTreeNode)nodos.nextElement();
+            Clasificacion cl = ((ClasificacionUserObject)nodo.getUserObject()).getClasificacion();
+            if(cl.getIdclasificacion().toString().equalsIgnoreCase(idClasificacion)){
+                this.setCurrentUserObject((ClasificacionUserObject)nodo.getUserObject());
+                return nodo;
+            }
+        }
+        return null;
+    }
 }

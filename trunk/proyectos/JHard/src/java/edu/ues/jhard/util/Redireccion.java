@@ -50,4 +50,13 @@ public class Redireccion {
         return "";
     }
 
+    public String jinvent(){
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("jinvent.jspx");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return "";
+    }
+
 }
