@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Document   : jinvent
+    Created on : 07-05-2009, 10:32:23 PM
+    Author     : robertux
+-->
+<jsp:root version="2.0" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ice="http://www.icesoft.com/icefaces/component" xmlns:jsp="http://java.sun.com/JSP/Page">
+
+    <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"/>
+   <f:view>
+        <html id="outputHtml1">
+            <head id="outputHead1">
+                <!--ice:outputStyle href="./resources/stylesheet.css" id="outputStyle1"/-->
+                <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
+                <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
+                <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+                <title>.:: JHard ::.</title>
+                <meta content="" name="keywords"/>
+                <meta content="" name="description"/>
+                <link href="css/default.css" rel="stylesheet" type="text/css"/>
+                <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+            </head>
+            <body id="outputBody1" style="-rave-layout: grid">
+                <!--start header -->
+                <div id="header">
+                    <div id="menu">
+                        <ul>
+                            <li>
+                                <a href="Index.iface">Principal</a>
+                            </li>
+                            <li>
+                                <a href="jrequestUser.iface">Mantenimientos</a>
+                            </li>
+                            <li>
+                                <a href="#">Grupos de Laboratorio</a>
+                            </li>
+                            <li class="current_page_item">
+                                <a href="#">Inventario</a>
+                            </li>
+                            <li>
+                                <a href="#">Wiki y Cursos</a>
+                            </li>
+                            <li class="last">
+                                <a href="jcanon.iface">Cañones</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="logo">
+                    <h1>Laboratorio de Hardware</h1>
+                    <h2>Universidad de El Salvador, Facultad Multidisciplinaria de Occidente</h2>
+                </div>
+                <!-- end header -->
+                <!-- start page -->
+                <div id="page">
+                    <!-- start content -->
+                    <div id="content">
+                        <div class="post">
+                            <ice:form id="frmJInvent">
+                            <h2 class="title">Administración del Inventario</h2>
+                                <ice:panelGroup styleClass="entry" rendered="#{JHardminInstance.currentUser != null}">
+                                    <ice:panelCollapsible expanded="true" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Equipos del inventario" />
+                                        </f:facet>
+                                        <ice:panelGroup id="divEquiposInventario" styleClass="frmElementList">
+                                            <ice:panelDivider id="divTreeClasificaciones" orientation="vertical" style="width: 100%">
+                                                <f:facet name="first">
+                                                    <ice:panelGroup>
+                                                    <ice:tree id="treeClasificaciones" value="#{JInventInstance.clasificaciontm.modelo}" var="nodo" hideRootNode="false" hideNavigation="false" imageDir="./xmlhttp/css/xp/css-images/">
+                                                        <ice:treeNode>
+                                                            <f:facet name="icon">
+                                                                <ice:panelGroup style="display: inline" >
+                                                                    <ice:graphicImage value="/xmlhttp/css/xp/css-images/#{nodo.userObject.icon}"/>
+                                                                </ice:panelGroup>
+                                                            </f:facet>
+                                                            <f:facet name="content">
+                                                                <ice:panelGroup style="display: inline" >
+                                                                    <ice:commandLink actionListener="#{JInventInstance.clasificacionSelected}">
+                                                                        <f:param name="clId" value="#{nodo.userObject.clasificacion.idclasificacion}" />
+                                                                        <ice:outputText value="#{nodo.userObject.text}" styleClass="selectedNode#{nodo.userObject eq JInventInstance.clasificaciontm.currentUserObject}" />
+                                                                    </ice:commandLink>
+                                                                </ice:panelGroup>
+                                                            </f:facet>
+                                                        </ice:treeNode>
+                                                    </ice:tree>
+                                                </ice:panelGroup>
+                                                </f:facet>
+                                                <f:facet name="second">
+                                                    <ice:panelGroup>
+                                                        <h3>Equipos</h3>
+                                                        <ice:dataTable id="tblListaEquipos" rows="10" value="#{JInventInstance.currentClasificacion.equipoCollection}" var="equipo" >
+                                                            <ice:column>
+                                                                <f:facet name="header">
+                                                                    <ice:outputText value="Nombre" />
+                                                                </f:facet>
+                                                                <ice:outputText value="#{equipo.nombre}" />
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <f:facet name="header">
+                                                                    <ice:outputText value="Modelo" />
+                                                                </f:facet>
+                                                                <ice:outputText value="#{equipo.modelo}" />
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <f:facet name="header">
+                                                                    <ice:outputText value="Marca" />
+                                                                </f:facet>
+                                                                <ice:outputText value="#{equipo.idmarca.nombre}" />
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <f:facet name="header">
+                                                                    <ice:outputText value="Existencias"/>
+                                                                </f:facet>
+                                                                <ice:outputText value="0" />
+                                                            </ice:column>
+                                                        </ice:dataTable>
+                                                        <h3>Software</h3>
+                                                        <ice:dataTable id="tblListaSoftware" rows="10" value="#{JInventInstance.currentClasificacion.softwareCollection}" var="software" >
+                                                            <ice:column>
+                                                                <f:facet name="header">
+                                                                    <ice:outputText value="Nombre" />
+                                                                </f:facet>
+                                                                <ice:outputText value="#{software.nombre}" />
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <f:facet name="header">
+                                                                    <ice:outputText value="Version" />
+                                                                </f:facet>
+                                                                <ice:outputText value="#{software.version}" />
+                                                            </ice:column>
+                                                        </ice:dataTable>
+                                                        <h3>Accesorios</h3>
+                                                        
+                                                        <h3>Piezas</h3>
+                                                    </ice:panelGroup>
+                                                </f:facet>
+                                            </ice:panelDivider>
+                                        </ice:panelGroup>
+                                    </ice:panelCollapsible>
+                                    <ice:panelCollapsible rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Equipos simples" />
+                                        </f:facet>
+                                        <ice:panelGroup id="divEquiposSimples" styleClass="frmElementList">
+                                                
+                                        </ice:panelGroup>
+                                    </ice:panelCollapsible>                                    
+                                    <ice:panelCollapsible rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Adquisiciones" />
+                                        </f:facet>
+                                        <ice:panelGroup id="divAdquisiciones" styleClass="frmElementList">
+
+                                        </ice:panelGroup>
+                                    </ice:panelCollapsible>
+                                </ice:panelGroup>
+                            </ice:form>
+                        </div>
+                    </div>
+                    <!-- end content -->
+                    <!-- start sidebar -->
+                    <div id="sidebar">
+                        <ul>
+                            <li id="search">
+                                <h2>Búsqueda Wiki</h2>
+                                <form action="" method="get">
+                                    <fieldset>
+                                        <input class="inputTexto" name="s" type="text" value=""/>
+                                        <input class="inputBoton" type="submit" value="Buscar"/>
+                                    </fieldset>
+                                </form>
+                            </li>
+                            <li>
+                                <h2>
+                                    <ice:outputLabel id="txtUserLogin" value="Sesión"/>
+                                </h2>
+                                <ice:form id="frmLogin" rendered="#{JHardminInstance.currentUser == null}">
+                                    <ice:outputText id="lblLoginFail" styleClass="errorText" rendered="#{JHardminInstance.loginFail}" value="Datos incorrectos"/>
+                                    <p>
+                                        <ice:outputLabel id="lblUser" value="Usuario:"/>
+                                        <ice:inputText id="txtUser" style="width: 120px" value="#{JHardminInstance.inputUsrName}" required="true" requiredMessage="El nombre de usuario es requerido"/>
+                                        <h:message for="txtUser" styleClass="errorText" />
+                                    </p>
+                                    <p>
+                                        <ice:outputLabel id="lblPass" value="Clave:"/>
+                                        <ice:inputSecret id="txtPass" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}" required="true" requiredMessage="La clave de acceso es requerida" />
+                                        <h:message for="txtPass" styleClass="errorText" />
+                                    </p>
+                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" value="Login" styleClass="btnAccion"/>
+                                </ice:form>
+                                <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
+                                    <p>
+                                        <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
+                                        <ice:outputLabel id="lblNomUsuario" styleClass="formValue" value="#{JHardminInstance.currentUser.userName}"/>
+                                    </p>
+                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>
+                                </ice:form>
+                            </li>
+                            <li>
+                                <ice:form id="frmCommonTasks">
+                                <h2>Tareas Comunes</h2>
+                                <ul>
+                                    <li>
+                                        <ice:commandLink value="Cambiar clave de acceso" action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}"  />
+                                    </li>
+                                    <li>
+                                        <ice:commandLink value="Administrar Solicitudes de JRequest" action="#{Redireccion.jrequestAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"  />
+                                    </li>
+                                    <li>
+                                        <ice:commandLink value="Tareas Administrativas de JRequest" action="#{Redireccion.jrequestAdministracion}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"></ice:commandLink>
+                                    </li>
+                                    <li>
+                                        <ice:commandLink value="Emitir Solicitud de Soporte Técnico" action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
+                                    </li>
+                                    <li>
+                                        <a href="#">Otras Opciones</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Otras Opciones</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Otras Opciones</a>
+                                    </li>
+                                </ul>
+                                </ice:form>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- end sidebar -->
+                    <div style="clear: both;"></div>
+                </div>
+                <!-- end page -->
+                <!-- start footer -->
+                <div id="footer">
+                    <div id="footer-wrap">
+                        <p id="legal" style="line-height: 13px">Universidad de El Salvador Facultad Multidisciplinaria de Occidente <br/>
+	Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/>
+                            <a href="#">Créditos</a> - <a href="http://www.uesocc.edu.sv">Pagina Principal de la UES FMOcc</a>
+                        </p>
+                    </div>
+                </div>
+                <!-- end footer -->
+            </body>
+        </html>
+    </f:view>
+
+</jsp:root>

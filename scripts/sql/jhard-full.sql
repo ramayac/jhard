@@ -305,7 +305,7 @@ CREATE TABLE  `jhard`.`clasificacion` (
 
 /*!40000 ALTER TABLE `clasificacion` DISABLE KEYS */;
 LOCK TABLES `clasificacion` WRITE;
-INSERT INTO `jhard`.`clasificacion` VALUES  (1,'PC','PC',1);
+INSERT INTO `clasificacion` VALUES (0,'General','Nodo raiz de las clasificaciones',NULL),(1,'Hardware','Hardware',0),(2,'Software','Software',0),(3,'Equipos','Equipos',1),(4,'Perifericos','Perifericos',1),(5,'Accesorios','Accesorios',1),(6,'Desktops','Desktops',3),(7,'Laptops','Laptops',3),(8,'Sistemas Operativos','Sistemas Operativos',2),(9,'Utilerias','Utilerias',2),(10,'Piezas','Piezas',1);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `clasificacion` ENABLE KEYS */;
 

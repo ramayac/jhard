@@ -46,6 +46,11 @@
         <managed-bean-class>jhard.jrequestAdmin</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>JInventInstance</managed-bean-name>
+        <managed-bean-class>edu.ues.jhard.beans.BeanBaseJInvent</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
     <navigation-rule>
         <from-view-id>/jrequestAdmin.jsp</from-view-id>
         <navigation-case>

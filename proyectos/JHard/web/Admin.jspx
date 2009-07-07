@@ -34,7 +34,7 @@
                                 <a href="#">Grupos de Laboratorio</a>
                             </li>
                             <li>
-                                <a href="#">Inventario</a>
+                                <a href="jinvent.jspx">Inventario</a>
                             </li>
                             <li>
                                 <a href="#">Wiki y Cursos</a>
@@ -188,7 +188,7 @@
                                                         <ice:panelGroup styleClass="frmElementList">
                                                             <p>
                                                                 <ice:outputLabel id="lblEditUserName" for="txtEditUserName" value="Nombre: " />
-                                                                <ice:inputText id="txtEditUserName" value="#{JHardminInstance.editDelUser.nombre}" />
+                                                                <ice:outputLabel id="txtEditUserName" value="#{JHardminInstance.editDelUser.nombre}" />
                                                             </p>
                                                             <p>
                                                                 <ice:outputLabel id="lblEditUserPwd" for="txtEditUserPwd" value="Clave: " />
