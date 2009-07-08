@@ -5,7 +5,9 @@
 
 package edu.ues.jhard.beans;
 
+import edu.ues.jhard.jpa.Clasificacion;
 import edu.ues.jhard.jpa.Estadoreserva;
+import edu.ues.jhard.jpa.Existencia;
 import edu.ues.jhard.jpa.Reserva;
 import edu.ues.jhard.jpa.Responsable;
 import edu.ues.jhard.jpa.Solicitante;
@@ -44,7 +46,7 @@ public class BeanBaseJCanonTest {
     /**
      * Test of getReserva method, of class BeanBaseJCanon.
      */
-    @Test
+    //@Test
     public void testGetReserva() {
         System.out.println("getReserva");
         BeanBaseJCanon instance = new BeanBaseJCanon();
@@ -58,7 +60,7 @@ public class BeanBaseJCanonTest {
     /**
      * Test of registrarReserva method, of class BeanBaseJCanon.
      */
-    @Test
+    //@Test
     public void testRegistrarReserva() {
         System.out.println("registrarReserva");
         Reserva r = null;
@@ -71,7 +73,7 @@ public class BeanBaseJCanonTest {
     /**
      * Test of getEstadoReserva method, of class BeanBaseJCanon.
      */
-    @Test
+    //@Test
     public void testGetEstadoReserva() {
         System.out.println("getEstadoReserva");
         BeanBaseJCanon instance = new BeanBaseJCanon();
@@ -85,7 +87,7 @@ public class BeanBaseJCanonTest {
     /**
      * Test of registrarEstadoReserva method, of class BeanBaseJCanon.
      */
-    @Test
+    //@Test
     public void testRegistrarEstadoReserva() {
         System.out.println("registrarEstadoReserva");
         Estadoreserva er = null;
@@ -98,7 +100,7 @@ public class BeanBaseJCanonTest {
     /**
      * Test of getResponsable method, of class BeanBaseJCanon.
      */
-    @Test
+    //@Test
     public void testGetResponsable() {
         System.out.println("getResponsable");
         BeanBaseJCanon instance = new BeanBaseJCanon();
@@ -112,7 +114,7 @@ public class BeanBaseJCanonTest {
     /**
      * Test of registrarResponsable method, of class BeanBaseJCanon.
      */
-    @Test
+    //@Test
     public void testRegistrarResponsable() {
         System.out.println("registrarResponsable");
         Responsable r = null;
@@ -125,7 +127,7 @@ public class BeanBaseJCanonTest {
     /**
      * Test of getSolicitante method, of class BeanBaseJCanon.
      */
-    @Test
+    //@Test
     public void testGetSolicitante() {
         System.out.println("getSolicitante");
         BeanBaseJCanon instance = new BeanBaseJCanon();
@@ -139,7 +141,7 @@ public class BeanBaseJCanonTest {
     /**
      * Test of registrarSolicitante method, of class BeanBaseJCanon.
      */
-    @Test
+    //@Test
     public void testRegistrarSolicitante() {
         System.out.println("registrarSolicitante");
         Solicitante s = null;
@@ -147,6 +149,21 @@ public class BeanBaseJCanonTest {
         instance.registrarSolicitante(s);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+    }
+
+    @Test
+    public void testObtenerEquipoMultimedia(){
+        System.out.println("obtenerEquipoMultimedia");
+
+        BeanBaseJCanon instance = new BeanBaseJCanon();
+
+        Existencia [] e = instance.getEquipoMultimedia(2);
+
+        assertNotNull(e);
+
+        System.out.println(e[0].getIdhardware().getNombre());
+
+        System.out.println("Se obtienen los equipos que se pueden prestar");
     }
 
 }

@@ -28,7 +28,12 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "reserva", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r"), @NamedQuery(name = "Reserva.findByIdreserva", query = "SELECT r FROM Reserva r WHERE r.idreserva = :idreserva"), @NamedQuery(name = "Reserva.findByFechareserva", query = "SELECT r FROM Reserva r WHERE r.fechareserva = :fechareserva"), @NamedQuery(name = "Reserva.findByFechahorainicioprestamo", query = "SELECT r FROM Reserva r WHERE r.fechahorainicioprestamo = :fechahorainicioprestamo"), @NamedQuery(name = "Reserva.findByFechahorafinprestamo", query = "SELECT r FROM Reserva r WHERE r.fechahorafinprestamo = :fechahorafinprestamo")})
+@NamedQueries({@NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r"), 
+               @NamedQuery(name = "Reserva.findByIdreserva", query = "SELECT r FROM Reserva r WHERE r.idreserva = :idreserva"),
+               @NamedQuery(name = "Reserva.findByFechareserva", query = "SELECT r FROM Reserva r WHERE r.fechareserva = :fechareserva"),
+               @NamedQuery(name = "Reserva.findByFechahorainicioprestamo", query = "SELECT r FROM Reserva r WHERE r.fechahorainicioprestamo = :fechahorainicioprestamo"),
+               @NamedQuery(name = "Reserva.findByFechahorafinprestamo", query = "SELECT r FROM Reserva r WHERE r.fechahorafinprestamo = :fechahorafinprestamo")})
+
 public class Reserva implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,15 +66,12 @@ public class Reserva implements Serializable {
     @JoinColumn(name = "idubicacion", referencedColumnName = "idubicacion", nullable = false)
     @ManyToOne(optional = false)
     private Ubicacion idubicacion;
-    @JoinColumn(name = "idsolicitante", referencedColumnName = "idsolicitante", nullable = false)
-    @ManyToOne(optional = false)
-    private Solicitante idsolicitante;
-    @JoinColumn(name = "idresponsable", referencedColumnName = "idresponsable", nullable = false)
-    @ManyToOne(optional = false)
-    private Responsable idresponsable;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario idusuario;
+    @JoinColumn(name = "iddocente", referencedColumnName = "iddocente", nullable = false)
+    @ManyToOne(optional = false)
+    private Docente iddocente;
 
     public Reserva() {
     }
@@ -150,28 +152,20 @@ public class Reserva implements Serializable {
         this.idubicacion = idubicacion;
     }
 
-    public Solicitante getIdsolicitante() {
-        return idsolicitante;
-    }
-
-    public void setIdsolicitante(Solicitante idsolicitante) {
-        this.idsolicitante = idsolicitante;
-    }
-
-    public Responsable getIdresponsable() {
-        return idresponsable;
-    }
-
-    public void setIdresponsable(Responsable idresponsable) {
-        this.idresponsable = idresponsable;
-    }
-
     public Usuario getIdusuario() {
         return idusuario;
     }
 
     public void setIdusuario(Usuario idusuario) {
         this.idusuario = idusuario;
+    }
+
+    public Docente getIddocente() {
+        return iddocente;
+    }
+
+    public void setIddocente(Docente iddocente) {
+        this.iddocente= iddocente;
     }
 
     @Override

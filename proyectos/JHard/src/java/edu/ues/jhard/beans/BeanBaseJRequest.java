@@ -157,6 +157,15 @@ public class BeanBaseJRequest extends BeanBase{
 
     }
 
+     public void eliminarSolicitud(Solicitud s){
+
+         EntityManager em = this.getEntityManager();
+         Solicitud S= em.find(Solicitud.class, s.getIdsolicitud());
+         em.getTransaction().begin();
+         em.remove(S);
+         em.getTransaction().commit();
+     }
+
     public Equiposimple[] getEquipoSimple() {
         EntityManager em=this.getEntityManager();
 

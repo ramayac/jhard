@@ -351,10 +351,6 @@ public class jrequestUserSolicitud extends AbstractPageBean {
 
 
 
-//    public JHardminInstance getJHardminInstance() {
-//        return (JHardminInstance) getBean("JHardminInstance");
-//    }
-
     public  BeanBaseJHardmin getJHardminInstance() {
         return (BeanBaseJHardmin) getBean("JHardminInstance");
     }
@@ -378,8 +374,6 @@ public class jrequestUserSolicitud extends AbstractPageBean {
         lu= getJHardminInstance().getCurrentUser();
         
         U = LoginManager.getInstance().getUsuario(lu);
-
-        //System.out.println(U.getNombre());
 
         this.lblUsuario.setValue((String)U.getNombre());
 

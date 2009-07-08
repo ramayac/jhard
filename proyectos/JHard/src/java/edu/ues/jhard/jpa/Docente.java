@@ -27,7 +27,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "docente", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Docente.findAll", query = "SELECT d FROM Docente d"), @NamedQuery(name = "Docente.findByIddocente", query = "SELECT d FROM Docente d WHERE d.iddocente = :iddocente"), @NamedQuery(name = "Docente.findByApellidos", query = "SELECT d FROM Docente d WHERE d.apellidos = :apellidos"), @NamedQuery(name = "Docente.findByNombres", query = "SELECT d FROM Docente d WHERE d.nombres = :nombres"), @NamedQuery(name = "Docente.findByVisible", query = "SELECT d FROM Docente d WHERE d.visible = :visible")})
+@NamedQueries({@NamedQuery(name = "Docente.findAll", query = "SELECT d FROM Docente d"), 
+               @NamedQuery(name = "Docente.findByIddocente", query = "SELECT d FROM Docente d WHERE d.iddocente = :iddocente"),
+               @NamedQuery(name = "Docente.findByIdUsuario", query = "SELECT d FROM Docente d WHERE d.idusuario.idusuario = :idusuario"),
+               @NamedQuery(name = "Docente.findByApellidos", query = "SELECT d FROM Docente d WHERE d.apellidos = :apellidos"),
+               @NamedQuery(name = "Docente.findByNombres", query = "SELECT d FROM Docente d WHERE d.nombres = :nombres"), @NamedQuery(name = "Docente.findByVisible", query = "SELECT d FROM Docente d WHERE d.visible = :visible")})
 public class Docente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
