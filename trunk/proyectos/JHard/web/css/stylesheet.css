@@ -2690,3 +2690,15 @@ h3{
 .selectedNodetrue{
     font-weight: bold;
 }
+
+.actionLink{
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 0.95em;
+    position: absolute;
+    right: 0px;
+    padding: 2px;
+}
+
+.tituloSeccion{
+    position: relative;    
+}
