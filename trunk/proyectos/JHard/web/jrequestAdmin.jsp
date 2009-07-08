@@ -148,6 +148,7 @@
                                                             style="height: 360px; width: 252px" value="" valueChangeListener="#{jrequestAdmin.listaSol_processValueChange}">
                                                             <f:selectItems id="fakeSolicitud" value="#{jrequestAdmin.fakeSol}"/>
                                                         </ice:selectOneListbox>
+                                                        <ice:commandButton action="#{jrequestAdmin.btnEliminarSolicitud_action}" id="btnEliminarSolicitud" value="Eliminar Solicitud"/>
                                                     </ice:panelGroup>
                                                 </f:facet>
                                                 <f:facet name="second">
@@ -253,19 +254,21 @@
                             </li>
                             <li>
                                 <ice:form id="frmCommonTasks">
-                                <h2>Tareas Comunes</h2>
+                                    <h2>Tareas Comunes</h2>
                                     <ul>
                                         <li>
-                                            <ice:commandLink value="Cambiar clave de acceso" action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}"  />
+                                            <ice:commandLink action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}" value="Cambiar clave de acceso"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink value="Administrar Solicitudes de JRequest" action="#{Redireccion.jrequestAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"  />
+                                            <ice:commandLink action="#{Redireccion.jrequestAdmin}"
+                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Solicitudes de JRequest"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink value="Tareas Administrativas de JRequest" action="#{Redireccion.jrequestAdministracion}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"></ice:commandLink>
+                                            <ice:commandLink action="#{Redireccion.jrequestAdministracion}"
+                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Tareas Administrativas de JRequest"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink value="Emitir Solicitud de Soporte Técnico" action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
+                                            <ice:commandLink action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}" value="Emitir Solicitud de Soporte Técnico"/>
                                         </li>
                                         <li>
                                             <a href="#">Otras Opciones</a>

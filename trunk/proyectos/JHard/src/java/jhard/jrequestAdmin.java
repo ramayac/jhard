@@ -1066,6 +1066,34 @@ public class jrequestAdmin extends AbstractPageBean {
         return "case2";
     }
 
+    public String btnEliminarSolicitud_action() {
+        if(this.solicitudElegida==null){
+
+            System.out.println("SOLICITUD NULL");
+            this.lblMensajes.setValue("Seleccione una Solicitud de Mantenimiento");
+            this.popUpMensajes.setRendered(true);
+            System.out.println("RENDERICE");
+            this.popUpMensajes.setVisible(true);
+            System.out.println("PUSE VISIBLE");
+            this.popUpMensajes.setModal(true);
+            System.out.println("SOLO EL ES MODIFICABLE");
+
+        }
+        else{
+            new BeanBaseJRequest().eliminarSolicitud(solicitudElegida);
+
+            this.lblMensajes.setValue("Solicitud Eliminada con éxito");
+            this.popUpMensajes.setRendered(true);
+            System.out.println("RENDERICE");
+            this.popUpMensajes.setVisible(true);
+            System.out.println("PUSE VISIBLE");
+            this.popUpMensajes.setModal(true);
+            System.out.println("SOLO EL ES MODIFICABLE");
+            llenarLista();
+        }
+        return null;
+    }
+
 //    public void comboEstado_processValueChange(ValueChangeEvent vce) {
 //    }
 //

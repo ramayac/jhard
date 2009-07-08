@@ -57,46 +57,21 @@ public class BeanBaseJCanon extends BeanBase {
     }
 
 
-     public Responsable[] getResponsable() {
-        EntityManager em=this.getEntityManager();
+     public Existencia [] getEquipoMultimedia(Integer clasificacionEquipo){
 
-        Query q=em.createNamedQuery("Responsable.findAll");
+         EntityManager em = this.getEntityManager();
 
-        Responsable[] r=(Responsable[])q.getResultList().toArray(new Responsable[0]);
+         Query q = em.createNamedQuery("Existencia.findEquipoMultimedia");
 
-        for(int i=0;i<r.length;i++)
-            em.refresh(r[i]);
-        return r;
-    }
+         q.setParameter("idclasificacion", clasificacionEquipo);
 
-     public void registrarResponsable(Responsable r) {
-        EntityManager em=this.getEntityManager();
-        em.getTransaction().begin();
-        em.persist(r);
-        em.getTransaction().commit();
+         Existencia[] e = (Existencia[])q.getResultList().toArray(new Existencia[0]);
 
-    }
-
-
-      public Solicitante[] getSolicitante() {
-        EntityManager em=this.getEntityManager();
-
-        Query q=em.createNamedQuery("Solicitante.findAll");
-
-        Solicitante[] s=(Solicitante[])q.getResultList().toArray(new Solicitante[0]);
-
-        for(int i=0;i<s.length;i++)
-            em.refresh(s[i]);
-        return s;
-    }
-
-     public void registrarSolicitante(Solicitante s) {
-        EntityManager em=this.getEntityManager();
-        em.getTransaction().begin();
-        em.persist(s);
-        em.getTransaction().commit();
-
-    }
+         for (int i = 0; i < e.length; i++) {
+             em.refresh(e[i]);
+         }
+         return e;
+     }
 
 
 

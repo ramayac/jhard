@@ -4,37 +4,42 @@
     Created on : 29-jun-2009, 1:15:10
     Author     : Hugol 
 -->
-<jsp:root version="2.1" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:ice="http://www.icesoft.com/icefaces/component">
+<jsp:root version="2.1" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ice="http://www.icesoft.com/icefaces/component" xmlns:jsp="http://java.sun.com/JSP/Page">
     <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"/>
     <f:view>
-            <html id="outputHtml1">
-             <head id="outputHead1">
+        <html id="outputHtml1">
+            <head id="outputHead1">
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
                 <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
                 <title>.:: JCanon ::.</title>
                 <meta content="" name="keywords"/>
                 <meta content="" name="description"/>
-
-                <link href="css/default.css" rel="stylesheet" type="text/css"/>
+                <link href="css/defaultJCanon.css" rel="stylesheet" type="text/css"/>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-
                 <!--Scheduler-->
-                <script src="js/dhtmlxscheduler.js" type="text/javascript" charset="utf-8"></script>
-                <link rel="stylesheet" href="js/dhtmlxscheduler.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
-
-                <script type="text/javascript" charset="utf-8">
+                <script charset="utf-8" src="js/dhtmlxscheduler.js" type="text/javascript"></script>
+                <link charset="utf-8" href="js/dhtmlxscheduler.css" media="screen" rel="stylesheet" title="no title" type="text/css"/>
+                <script charset="utf-8" type="text/javascript">
                     function init() {
 
                     scheduler.config.xml_date="%Y-%m-%d %H:%i";
                     scheduler.init('scheduler_here',null,"week");
-                    scheduler.load("events.xml");
+                    scheduler.load("/JHard/reservas");
 
                     }
-                </script>
 
+                    function doLoad(){
+                        setTimeout( "refresh()", 1*1000 );
+
+                    }
+
+                    function refresh(){
+                        location.reload(true);
+                    }
+                </script>
             </head>
-            <body id="outputBody1" style="-rave-layout: grid" onload="init();">
+            <body id="outputBody1" onload="init();" style="-rave-layout: grid">
                 <!--start header -->
                 <div id="header">
                     <div id="menu">
@@ -71,23 +76,119 @@
                     <div id="content">
                         <div class="post">
                             <h2 class="title">Reserva de Equipo Multimedia</h2>
-                            <ice:panelGroup styleClass="entry" style="margin:0px;" id="grupo1">
-                                <p></p>
-                                <div id="scheduler_here" class="dhx_cal_container" style='position: absolute; width:50%; height:75%;'>
-                                    <div class="dhx_cal_navline">
-                                        <div class="dhx_cal_prev_button"></div>
-                                        <div class="dhx_cal_next_button"></div>
-                                        <div class="dhx_cal_today_button"></div>
-                                        <div class="dhx_cal_date"></div>
-                                        <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
-                                        <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
-                                        <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
-                                    </div>
-                                    <div class="dhx_cal_header"></div>
-                                    <div class="dhx_cal_data"></div>
-                                </div>
+                            <ice:form id="jCanon">
+                                <ice:panelGroup id="grupo1" style="margin:0px;" styleClass="entry">
+                                    <ice:panelGroup id="grupoReservaScheduler" style="height: 450px; width: 800px" visible="true">
+                                        <div class="dhx_cal_container" id="scheduler_here" style="position: absolute; width:71%; height:74%;">
+                                            <div class="dhx_cal_navline">
+                                                <div class="dhx_cal_prev_button"></div>
+                                                <div class="dhx_cal_next_button"></div>
+                                                <div class="dhx_cal_today_button"></div>
+                                                <div class="dhx_cal_date"></div>
+                                                <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+                                                <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+                                                <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+                                            </div>
+                                            <div class="dhx_cal_header"></div>
+                                            <div class="dhx_cal_data"></div>
+                                        </div>
+                                    </ice:panelGroup>
+                                    <ice:panelCollapsible expanded="true" id="panelReservas" rendered="#{JHardminInstance.currentUser != null}" style="width: 600px">
+                                        <f:facet name="header">
+                                            <ice:panelGroup id="panelGroup1">
+                                                <ice:outputText id="lblTitulo2" value="Realizar una nueva reserva"/>
+                                            </ice:panelGroup>
+                                        </f:facet>
+                                        <ice:panelGroup id="grupoReserva" style="height: 750px">
+                                            <p>
+                                                <ice:outputLabel id="lblTextUser" style="font-weight:bold; font-size:14px; " value="Solicitante"/>
+                                                <br/>
+                                                <ice:outputLabel binding="#{jcanon.lblUser}" id="lblUser" style="font-weight:bold; "/>
+                                            </p>
+                                            <p>
+                                                <ice:outputLabel id="outputLabel2" style="font-weight:bold; font-size:14px; " value="Responsable"/>
+                                            </p>
+                                            <p>
+                                                <ice:outputLabel id="lblSolicitanteNombre" value="Nombres:   "/>
+                                                <ice:inputText binding="#{jcanon.txtSolicitante}" id="txtSolicitante"/>
+                                            </p>
+                                            <p>
+                                                <ice:outputLabel id="lblSolicitanteApellido" value="Apellidos:  "/>
+                                                <ice:inputText binding="#{jcanon.txtSolicitanteApellidos}" id="txtSolicitanteApellidos"/>
+                                            </p>
+                                            <p>
+                                                <table border="1" id="tabla">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Cañones</th>
+                                                            <th>Laptops</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Reservar Cañon   <ice:selectBooleanCheckbox binding="#{jcanon.checkCan}" id="checkCan"
+                                                                    partialSubmit="true" value="#{jcanon.fakeCan.selectedBoolean}" valueChangeListener="#{jcanon.checkCan_processValueChange}"/>
+                                                            </td>
+                                                            <td>Reservar Laptop  <ice:selectBooleanCheckbox binding="#{jcanon.checkLaptop}" id="checkLaptop"
+                                                                    partialSubmit="true" value="#{jcanon.fakeLaptop.selectedBoolean}" valueChangeListener="#{jcanon.checkLaptop_processValueChange}"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <ice:selectOneMenu binding="#{jcanon.comboCan}" id="comboCan" partialSubmit="true">
+                                                                    <f:selectItems id="selectOneMenu1selectItems" value="#{jcanon.fakeCCan}"/>
+                                                                </ice:selectOneMenu>
+                                                            </td>
+                                                            <td>
+                                                                <ice:selectOneMenu binding="#{jcanon.comboLaptop}" id="comboLaptop" partialSubmit="true">
+                                                                    <f:selectItems id="selectOneMenu2selectItems" value="#{jcanon.fakeCLaptop}"/>
+                                                                </ice:selectOneMenu>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </p>
+                                            <p>
+                                                <ice:outputLabel id="lblFecha" style="font-weight:bold; font-size:14px; " value="Seleccione una fecha"/>
+                                                <br/>
+                                                <ice:selectInputDate binding="#{jcanon.selectFecha}" id="selectFecha" style="height: 188px; width: 190px" value="#{jcanon.fecha.date1}"/>
+                                            </p>
+                                            <p>
+                                                <ice:outputLabel id="lblHora1" value="Hora Inicio"/>
+                                                <ice:selectOneMenu binding="#{jcanon.horaInicio}" id="horaInicio" partialSubmit="true" valueChangeListener="#{jcanon.horaInicio_processValueChange}">
+                                                    <f:selectItems id="selectOneMenu1selectItems1" value="#{jcanon.fakeHoraInicio}"/>
+                                                </ice:selectOneMenu>
+                                                <ice:outputLabel id="lblHora2" value="Hora Finalización"/>
+                                                <ice:selectOneMenu binding="#{jcanon.horaFin}" id="horaFin" partialSubmit="true">
+                                                    <f:selectItems id="selectOneMenu2selectItems1" value="#{jcanon.fakeHoraFin}"/>
+                                                </ice:selectOneMenu>
+                                            </p>
+                                            <p>
+                                                <ice:outputLabel id="outputLabel1" value="Docente Responsable"/>
+                                                <ice:selectOneMenu binding="#{jcanon.comboDocente}" id="comboDocente" partialSubmit="true" valueChangeListener="#{jcanon.comboDocente_processValueChange}">
+                                                    <f:selectItems id="selectOneMenu1selectItems2" value="#{jcanon.fakeDocente}"/>
+                                                </ice:selectOneMenu>
+                                            </p>
+                                            <ice:commandButton action="#{jcanon.btnCrearReserva_action}" binding="#{jcanon.btnCrearReserva}"
+                                                id="btnCrearReserva" value="Crear Reserva"/>
+                                        </ice:panelGroup>
+                                    </ice:panelCollapsible>
+                                    <ice:panelCollapsible expanded="true" id="panelAdmin" rendered="#{JHardminInstance.currentUser != null}" style="width: 600px">
+                                        <f:facet name="header">
+                                            <ice:panelGroup id="panelGroup3">
+                                                <ice:outputText id="lblTitulo3" value="Administración"/>
+                                            </ice:panelGroup>
+                                        </f:facet>
+                                        <ice:panelGroup id="grupoAdmin" style="height: 100px">
+                                            <ice:outputLabel id="lblAdmin" value="Panel Administrativo"/>
+                                            <ice:commandButton binding="#{jcanon.btnAgregarMultimedia}" id="btnAgregarMultimedia" value="Agregar Equipo Multimedia"/>
+                                            <ice:commandButton binding="#{jcanon.btnVerReservas}" id="btnVerReservas" value="Ver Reservas"/>
+                                        </ice:panelGroup>
+                                    </ice:panelCollapsible>
+                                    <ice:outputLabel id="labelError" rendered="#{JHardminInstance.currentUser == null}"
+                                        style="font-size: 14px; font-weight: bold" value="Debe de permanecer con sesión activa para realizar una reserva de Equipo Multimedia"/>
                                 </ice:panelGroup>
-
+                            </ice:form>
                         </div>
                     </div>
                     <!-- end content -->
@@ -119,7 +220,7 @@
                                         <ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}"/>
                                         <h:message for="txtPass" styleClass="errorText"/>
                                     </p>
-                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" styleClass="btnAccion" value="Login"/>
+                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" onclick="doLoad();" styleClass="btnAccion" value="Login"/>
                                 </ice:form>
                                 <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
                                     <p>
@@ -134,19 +235,18 @@
                                     <h2>Tareas Comunes</h2>
                                     <ul>
                                         <li>
-                                            <ice:commandLink value="Cambiar clave de acceso" action="chpwd" rendered="#{JHardminInstance.currentUser != null}"  />
+                                            <ice:commandLink action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}" value="Cambiar clave de acceso"/>
                                         </li>
                                         <li>
-                                            <a href="#">Administrar usuarios</a>
+                                            <ice:commandLink action="#{Redireccion.jrequestAdmin}"
+                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Solicitudes de JRequest"/>
                                         </li>
                                         <li>
-                                            <a href="#">Velit semper nisi molestie</a>
+                                            <ice:commandLink action="#{Redireccion.jrequestAdministracion}"
+                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Tareas Administrativas de JRequest"/>
                                         </li>
                                         <li>
-                                            <a href="#">Eget tempor eget nonummy</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Nec metus sed donec</a>
+                                            <ice:commandLink action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}" value="Emitir Solicitud de Soporte Técnico"/>
                                         </li>
                                         <li>
                                             <a href="#">Magna lacus bibendum mauris</a>
