@@ -61,12 +61,12 @@
                                 <ice:panelGroup styleClass="entry" rendered="#{JHardminInstance.currentUser != null}">
                                     <ice:panelCollapsible expanded="true" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" >
                                         <f:facet name="header">
-                                            <h:outputText value="Equipos del inventario" />
+                                            <h:outputText value="Elementos del inventario" />
                                         </f:facet>
                                         <ice:panelGroup id="divEquiposInventario" styleClass="frmElementList">
-                                            <ice:panelDivider id="divTreeClasificaciones" orientation="vertical" style="width: 100%">
+                                            <ice:panelDivider id="divTreeClasificaciones" orientation="vertical" style="width: 100%; height: 500px">
                                                 <f:facet name="first">
-                                                    <ice:panelGroup>
+                                                    <ice:panelGroup style="width: 100%;">
                                                     <ice:tree id="treeClasificaciones" value="#{JInventInstance.clasificaciontm.modelo}" var="nodo" hideRootNode="false" hideNavigation="false" imageDir="./xmlhttp/css/xp/css-images/">
                                                         <ice:treeNode>
                                                             <f:facet name="icon">
@@ -87,9 +87,9 @@
                                                 </ice:panelGroup>
                                                 </f:facet>
                                                 <f:facet name="second">
-                                                    <ice:panelGroup>
-                                                        <h3>Equipos</h3>
-                                                        <ice:dataTable id="tblListaEquipos" rows="10" value="#{JInventInstance.currentClasificacion.equipoCollection}" var="equipo" >
+                                                    <ice:panelGroup style="width: 100%;">
+                                                        <h3 class="tituloSeccion">Equipos <ice:commandLink value="Agregar" action="#{JInventInstance.showPopupAgregarEquipo}" styleClass="actionLink" /></h3>
+                                                        <ice:dataTable id="tblListaEquipos" rows="10" value="#{JInventInstance.currentClasificacion.equipoCollection}" var="equipo" style="margin-bottom: 0px;" >
                                                             <ice:column>
                                                                 <f:facet name="header">
                                                                     <ice:outputText value="Nombre" />
@@ -114,9 +114,33 @@
                                                                 </f:facet>
                                                                 <ice:outputText value="0" />
                                                             </ice:column>
+                                                            <ice:column>
+                                                                <ice:commandLink value="Editar" action="#{JInventInstance.showPopupEditarEquipo}">
+                                                                    <f:param name="idequipo" value="#{equipo.idequipo}" />
+                                                                </ice:commandLink>
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <ice:commandLink value="Eliminar" action="#{JInventInstance.showPopupConfirmEliminarEquipo}">
+                                                                    <f:param name="idequipo" value="#{equipo.idequipo}" />
+                                                                </ice:commandLink>
+                                                            </ice:column>
                                                         </ice:dataTable>
-                                                        <h3>Software</h3>
-                                                        <ice:dataTable id="tblListaSoftware" rows="10" value="#{JInventInstance.currentClasificacion.softwareCollection}" var="software" >
+                                                        <ice:dataPaginator id="pgrListaEquipos" for="tblListaEquipos" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px">
+                                                            <f:facet name="first">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-first.gif" style="border:none;" title="First Page"/>
+                                                            </f:facet>
+                                                            <f:facet name="previous">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/>
+                                                            </f:facet>
+                                                            <f:facet name="next">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-next.gif" style="border:none;" title="Next Page"/>
+                                                            </f:facet>
+                                                            <f:facet name="last">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-last.gif" style="border:none;" title="Last Page"/>
+                                                            </f:facet>
+                                                        </ice:dataPaginator>
+                                                        <h3 class="tituloSeccion">Software <ice:commandLink value="Agregar" action="#{JInventInstance.showPopupAgregarSoftware}" styleClass="actionLink"  /></h3>
+                                                        <ice:dataTable id="tblListaSoftware" rows="10" value="#{JInventInstance.currentClasificacion.softwareCollection}" var="software" style="margin-bottom: 0px;" >
                                                             <ice:column>
                                                                 <f:facet name="header">
                                                                     <ice:outputText value="Nombre" />
@@ -129,10 +153,121 @@
                                                                 </f:facet>
                                                                 <ice:outputText value="#{software.version}" />
                                                             </ice:column>
+                                                            <ice:column>
+                                                                <ice:commandLink value="Editar" action="#{JInventInstance.showPopupEditarSoftware}">
+                                                                    <f:param name="idsoftware" value="#{software.idsoftware}" />
+                                                                </ice:commandLink>
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <ice:commandLink value="Eliminar" action="#{JInventInstance.showPopupConfirmEliminarSoftware}">
+                                                                    <f:param name="idsoftware" value="#{software.idsoftware}" />
+                                                                </ice:commandLink>
+                                                            </ice:column>
                                                         </ice:dataTable>
-                                                        <h3>Accesorios</h3>
-                                                        
-                                                        <h3>Piezas</h3>
+                                                        <ice:dataPaginator id="pgrListaSoftware" for="tblListaSoftware" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px">
+                                                            <f:facet name="first">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-first.gif" style="border:none;" title="First Page"/>
+                                                            </f:facet>
+                                                            <f:facet name="previous">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/>
+                                                            </f:facet>
+                                                            <f:facet name="next">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-next.gif" style="border:none;" title="Next Page"/>
+                                                            </f:facet>
+                                                            <f:facet name="last">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-last.gif" style="border:none;" title="Last Page"/>
+                                                            </f:facet>
+                                                        </ice:dataPaginator>
+                                                        <h3 class="tituloSeccion">Accesorios <ice:commandLink value="Agregar" action="#{JInventInstance.showPopupAgregarAccesorio}" styleClass="actionLink" /> </h3>
+                                                        <ice:dataTable id="tblListaAccesorios" rows="5" value="#{JInventInstance.currentClasificacion.accesorioCollection}" var="accesorio" style="margin-bottom: 0px;" >
+                                                            <ice:column>
+                                                                <f:facet name="header">
+                                                                    <ice:outputText value="Nombre" />
+                                                                </f:facet>
+                                                                <ice:outputText value="#{accesorio.nombre}" />
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <f:facet name="header">
+                                                                    <ice:outputText value="Marca" />
+                                                                </f:facet>
+                                                                <ice:outputText value="#{accesorio.idmarca.nombre}" />
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <f:facet name="header">
+                                                                    <ice:outputText value="Modelo" />
+                                                                </f:facet>
+                                                                <ice:outputText value="#{accesorio.modelo}" />
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <ice:commandLink value="Editar" action="#{JInventInstance.showPopupEditarAccesorio}">
+                                                                    <f:param name="idaccesorio" value="#{accesorio.idaccesorio}" />
+                                                                </ice:commandLink>
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <ice:commandLink value="Eliminar" action="#{JInventInstance.showPopupConfirmEliminarAccesorio}">
+                                                                    <f:param name="idaccesorio" value="#{accesorio.idaccesorio}" />
+                                                                </ice:commandLink>
+                                                            </ice:column>
+                                                        </ice:dataTable>
+                                                        <ice:dataPaginator id="pgrListaAccesorios" for="tblListaAccesorios" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px">
+                                                            <f:facet name="first">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-first.gif" style="border:none;" title="First Page"/>
+                                                            </f:facet>
+                                                            <f:facet name="previous">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/>
+                                                            </f:facet>
+                                                            <f:facet name="next">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-next.gif" style="border:none;" title="Next Page"/>
+                                                            </f:facet>
+                                                            <f:facet name="last">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-last.gif" style="border:none;" title="Last Page"/>
+                                                            </f:facet>
+                                                        </ice:dataPaginator>
+                                                        <h3 class="tituloSeccion">Piezas <ice:commandLink value="Agregar" action="#{JInventInstance.showPopupAgregarPieza}" styleClass="actionLink" /> </h3>
+                                                        <ice:dataTable id="tblListaPiezas" rows="5" value="#{JInventInstance.currentClasificacion.piezaCollection}" var="pieza" style="margin-bottom: 0px;" >
+                                                            <ice:column>
+                                                                <f:facet name="header">
+                                                                    <ice:outputText value="Nombre" />
+                                                                </f:facet>
+                                                                <ice:outputText value="#{pieza.nombre}" />
+                                                            </ice:column>
+                                                            <ice:column>
+                                                            <f:facet name="header">
+                                                                <ice:outputText value="Marca" />
+                                                            </f:facet>
+                                                            <ice:outputText value="#{pieza.idmarca.nombre}" />
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <f:facet name="header">
+                                                                    <ice:outputText value="Modelo" />
+                                                                </f:facet>
+                                                                <ice:outputText value="#{pieza.modelo}" />
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <ice:commandLink value="Editar" action="#{JInventInstance.showPopupEditarPieza}">
+                                                                    <f:param name="idpieza" value="#{pieza.idpieza}" />
+                                                                </ice:commandLink>
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <ice:commandLink value="Eliminar" action="#{JInventInstance.showPopupConfirmEliminarPieza}">
+                                                                    <f:param name="idpieza" value="#{pieza.idpieza}" />
+                                                                </ice:commandLink>
+                                                            </ice:column>
+                                                            <ice:dataPaginator id="pgrListaPiezas" for="tblListaPiezas" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px">
+                                                            <f:facet name="first">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-first.gif" style="border:none;" title="First Page"/>
+                                                            </f:facet>
+                                                            <f:facet name="previous">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/>
+                                                            </f:facet>
+                                                            <f:facet name="next">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-next.gif" style="border:none;" title="Next Page"/>
+                                                            </f:facet>
+                                                            <f:facet name="last">
+                                                                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-last.gif" style="border:none;" title="Last Page"/>
+                                                            </f:facet>
+                                                        </ice:dataPaginator>
+                                                        </ice:dataTable>
                                                     </ice:panelGroup>
                                                 </f:facet>
                                             </ice:panelDivider>
