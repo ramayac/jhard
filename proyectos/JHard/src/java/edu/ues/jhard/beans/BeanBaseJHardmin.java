@@ -289,7 +289,7 @@ public class BeanBaseJHardmin extends BeanBase {
     public void setUserList(List<Usuario> userList) {
         this.userList = userList;
     }
-
+    
     /**
      * @return the popUpAddUserVisible
      */
