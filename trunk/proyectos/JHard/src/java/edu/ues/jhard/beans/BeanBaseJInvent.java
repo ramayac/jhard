@@ -273,15 +273,113 @@ public class BeanBaseJInvent extends BeanBase {
         return "done";
     }
 
+    public String delEquipo(){                
+        String idEquipo = this.crdEquipo.getCurrentId();
+        EntityManager emgr = this.getEntityManager();
+        Equipo eq = (Equipo)emgr.createQuery("SELECT e FROM Equipo e WHERE e.idequipo=" + idEquipo).getSingleResult();
+        emgr.getTransaction().begin();
+        emgr.remove(eq);
+        emgr.getTransaction().commit();
+        this.crdEquipo.hidePopupDel();
+        this.getCurrentClasificacion().getEquipoCollection().remove(eq);
+        this.msg.setText("Equipo " + eq.getNombre() + " eliminado satisfactoriamente.");
+        this.msg.setVisible(true);
+        return "done";
+    }
+
     public String addSoftware(){
+        this.currentSoftware.setIdclasificacion(this.getCurrentClasificacion());
+        this.getCurrentClasificacion().getSoftwareCollection().add(this.currentSoftware);
+        EntityManager emgr = this.getEntityManager();
+        emgr.getTransaction().begin();
+        emgr.persist(this.currentSoftware);
+        emgr.getTransaction().commit();
+        this.crdSoftware.hidePopupAdd();
+        this.msg.setText("Nuevo software " + this.currentSoftware.getNombre() + " agregado exitosamente");
+        this.msg.setVisible(true);
+        this.currentSoftware = new Software();
+        return "done";
+    }
+
+    public String delSoftware(){
+        String idSoftware = this.crdSoftware.getCurrentId();
+        EntityManager emgr = this.getEntityManager();
+        Software soft = (Software)emgr.createQuery("SELECT s FROM Software s WHERE s.idsoftware=" + idSoftware).getSingleResult();
+        emgr.getTransaction().begin();
+        emgr.remove(soft);
+        emgr.getTransaction().commit();
+        this.crdSoftware.hidePopupDel();
+        this.getCurrentClasificacion().getSoftwareCollection().remove(soft);
+        this.msg.setText("Software " + soft.getNombre() + " eliminado satisfactoriamente.");
+        this.msg.setVisible(true);
         return "done";
     }
 
     public String addAccesorio(){
+        for(Marca m: this.listaMarcas){
+            if(m.getIdmarca().toString().equalsIgnoreCase(this.marcaSelected)){
+                this.currentAccesorio.setIdmarca(m);
+                this.currentAccesorio.setIdclasificacion(this.getCurrentClasificacion());
+                this.getCurrentClasificacion().getAccesorioCollection().add(this.currentAccesorio);
+                EntityManager emgr = this.getEntityManager();
+                emgr.getTransaction().begin();
+                emgr.persist(this.currentAccesorio);
+                emgr.getTransaction().commit();
+                this.crdAccesorio.hidePopupAdd();
+                this.msg.setText("Nuevo accesorio " + this.currentAccesorio.getNombre() + " agregado exitosamente");
+                this.msg.setVisible(true);
+                this.currentAccesorio = new Accesorio();
+                break;
+            }
+        }
+        return "done";
+    }
+    
+    public String delAccesorio(){
+        String idAccesorio = this.crdAccesorio.getCurrentId();
+        EntityManager emgr = this.getEntityManager();
+        Accesorio acc = (Accesorio)emgr.createQuery("SELECT a FROM Accesorio a WHERE a.idaccesorio=" + idAccesorio).getSingleResult();
+        emgr.getTransaction().begin();
+        emgr.remove(acc);
+        emgr.getTransaction().commit();
+        this.crdAccesorio.hidePopupDel();
+        this.getCurrentClasificacion().getAccesorioCollection().remove(acc);
+        this.msg.setText("Accesorio " + acc.getNombre() + " eliminado satisfactoriamente.");
+        this.msg.setVisible(true);
         return "done";
     }
 
     public String addPieza(){
+        for(Marca m: this.listaMarcas){
+            if(m.getIdmarca().toString().equalsIgnoreCase(this.marcaSelected)){
+                this.currentPieza.setIdmarca(m);
+                this.currentPieza.setIdclasificacion(this.getCurrentClasificacion());
+                this.getCurrentClasificacion().getPiezaCollection().add(this.currentPieza);
+                EntityManager emgr = this.getEntityManager();
+                emgr.getTransaction().begin();
+                emgr.persist(this.currentPieza);
+                emgr.getTransaction().commit();
+                this.crdPieza.hidePopupAdd();
+                this.msg.setText("Nueva pieza " + this.currentPieza.getNombre() + " agregada exitosamente");
+                this.msg.setVisible(true);
+                this.currentPieza = new Pieza();
+                break;
+            }
+        }
+        return "done";
+    }
+
+    public String delPieza(){
+        String idPieza = this.crdPieza.getCurrentId();
+        EntityManager emgr = this.getEntityManager();
+        Pieza pz = (Pieza)emgr.createQuery("SELECT p FROM Pieza p WHERE p.idpieza=" + idPieza).getSingleResult();
+        emgr.getTransaction().begin();
+        emgr.remove(pz);
+        emgr.getTransaction().commit();
+        this.crdPieza.hidePopupDel();
+        this.getCurrentClasificacion().getPiezaCollection().remove(pz);
+        this.msg.setText("Pieza " + pz.getNombre() + " eliminada satisfactoriamente.");
+        this.msg.setVisible(true);
         return "done";
     }
 
