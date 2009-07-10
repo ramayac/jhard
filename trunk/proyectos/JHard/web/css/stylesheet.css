@@ -2649,7 +2649,7 @@ Disabled classes for the calendar controls
 
 .btnAccion{
     position: relative;
-    left: 120px;
+    left: 100px;
 }
 
 .formValue{
@@ -2700,5 +2700,28 @@ h3{
 }
 
 .tituloSeccion{
-    position: relative;    
+    position: relative;
+}
+
+.actionSection{
+    margin-top: 20px;
+    padding: 5px;
+    background-color: #E0E0E0;
+}
+
+.actionSection input, .btnAccion{
+    margin: 2px;
+    border: 1px solid #6F6F6F;
+    cursor: pointer;
+    padding: 2px 20px;
+}
+
+.btnAccion:hover{
+    color: #BC3E28;
+    border: 1px solid #BC3E28;
+}
+
+.actionSection input:hover{
+    color: #BC3E28;
+    border: 1px solid #BC3E28;
 }

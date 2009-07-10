@@ -166,4 +166,8 @@ public class Equipo implements Serializable {
         return "edu.ues.jhard.jpa.Equipo[idequipo=" + idequipo + "]";
     }
 
+    public int getExistenciaSize(){
+        return this.getExistenciaCollection().size();
+    }
+
 }
