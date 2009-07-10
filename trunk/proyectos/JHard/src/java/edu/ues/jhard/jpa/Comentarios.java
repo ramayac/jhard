@@ -28,7 +28,7 @@ import javax.persistence.TemporalType;
 @NamedQueries({@NamedQuery(name = "Comentarios.findAll", query = "SELECT c FROM Comentarios c"),
 @NamedQuery(name = "Comentarios.findByIdcoment", query = "SELECT c FROM Comentarios c WHERE c.idcoment = :idcoment"), 
 @NamedQuery(name = "Comentarios.findByIdEntrada", query = "SELECT c FROM Comentarios c WHERE c.identrada = :identrada"),
-@NamedQuery(name = "Comentarios.findByComentario", query = "SELECT c FROM Comentarios c WHERE c.comentario = :comentario"),
+/*@NamedQuery(name = "Comentarios.findByComentario", query = "SELECT c FROM Comentarios c WHERE c.comentario = :comentario"),*/
 @NamedQuery(name = "Comentarios.findByFechahorara", query = "SELECT c FROM Comentarios c WHERE c.fechahorara = :fechahorara")})
 public class Comentarios implements Serializable {
     private static final long serialVersionUID = 1L;

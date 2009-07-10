@@ -5,8 +5,14 @@ import java.util.Collection;
 import javax.persistence.*;
 
 /**
- *
  * @author Rodrigo
+ * Notas personales:
+ * - Only use EntityManager method persist on a new entity.
+ * - Only Refresh para obtener los ultimos datos de la BD
+ * - remove to delete an entity from the database.
+ * - method flush to send updates to the database within a transaction before the transaction is committed. (unicamente en el mismo contexto)
+ * - Por que diablos usan arrays? :S
+ * - Nueva logica a partir del 10 de Julio, mejor uso del EM context.
  */
 public class BeanBaseJWiki extends BeanBase {
 
@@ -27,7 +33,7 @@ public class BeanBaseJWiki extends BeanBase {
     }
 
     /**
-     * Metodo para obtener una entrada especifica
+     * Metodo para obtener una entrada por su ID
      * @param identrada id de la entada que se desea
      * @return
      */
@@ -35,24 +41,49 @@ public class BeanBaseJWiki extends BeanBase {
         EntityManager em = this.getEntityManager();
         Query q = em.createNamedQuery("Entrada.findByIdentrada");
         q.setParameter("identrada", identrada);
-        Entrada[] e = (Entrada[]) q.getResultList().toArray(new Entrada[0]);
-        if (e.length != 1) return null;
-        em.refresh(e[0]); //se supone que solo es una.
-        return e[0];
+        Entrada e = (Entrada)q.getSingleResult();
+        return e;
     }
 
-//    public Tag[] getEtiquetasEntrada(Entrada e) {
-//        EntityManager em = this.getEntityManager();
-//        Query q = em.createNamedQuery("TagEntrada.findByIdentrada");
-//        q.setParameter("identrada", e.getIdentrada());
-//        TagEntrada[] te = (TagEntrada[]) q.getResultList().toArray(new TagEntrada[0]);
-//        Tag[] t = new Tag[te.length];
-//        for (int i = 0; i < te.length; i++) {
-//            em.refresh(te);
-//            t[i] = te[i].getIdtag();
-//        }
-//        return t;
-//    }
+    /**
+     * Metodo para obtener un objeto entrada en el contexto del EM, si no lo encuentra, le hace query.
+     * @param entrada
+     * @return
+     */
+    public Entrada getEntrada(Entrada entrada){
+        EntityManager em = this.getEntityManager();
+        Entrada e = (Entrada)em.find(Entrada.class, entrada.getIdentrada());
+        if(e==null) return getEntrada(entrada.getIdentrada()); //genial :)
+        return e;
+    }
+
+    /**
+     * Metodo para añadir un objeto entrada
+     * @param entrada
+     */
+    public void addEntrada(Entrada entrada){
+        EntityManager em = this.getEntityManager();
+        em.persist(entrada);
+    }
+
+    /**
+     * Metodo para eliminar una Entrada por su ID
+     * @param identrada
+     */
+    public void deleteEntrada(int identrada) {
+        EntityManager em = this.getEntityManager();
+        Entrada e = (Entrada)em.find(Entrada.class, identrada);
+        em.remove(e);
+    }
+
+    /**
+     * Metodo para eliminar un objeto Entrada
+     * @param entrada
+     */
+    public void deleteEntrada(Entrada entrada){
+        EntityManager em = this.getEntityManager();
+        em.remove(entrada);
+    }
 
      /**
      * Metodo para obtener todos los ULTIMOS Tags asociados con el ID de una Entrada
@@ -63,19 +94,8 @@ public class BeanBaseJWiki extends BeanBase {
         EntityManager em = this.getEntityManager();
         Query q = em.createNamedQuery("Entrada.findByIdentrada");
         q.setParameter("identrada", entrada.getIdentrada());
-
-        Entrada[] e = (Entrada[]) q.getResultList().toArray(new Entrada[0]);
-        if(e.length!=1) return null;
-
-        em.refresh(e);
-
-        Tag[] tt = new Tag[0];
-        TagEntrada[] te = (TagEntrada[]) e[0].getTagEntradaCollection().toArray(new TagEntrada[0]);
-        for (int i = 0; i < te.length; i++) {
-            tt[i] = te[i].getIdtag();
-        }
-
-        return tt;
+        Entrada e = (Entrada) q.getSingleResult();
+        return getEtiquetas(e);
     }
 
     /**
@@ -83,9 +103,9 @@ public class BeanBaseJWiki extends BeanBase {
      * @param e
      * @return
      */
-    public Tag[] getEtiquetas(Entrada e) {
-        //if() return null; //alguna validacion?
-        TagEntrada[] te = (TagEntrada[]) e.getTagEntradaCollection().toArray(new TagEntrada[0]);
+    public Tag[] getEtiquetas(Entrada entrada) {
+        //alguna validacion?
+        TagEntrada[] te = (TagEntrada[]) entrada.getTagEntradaCollection().toArray(new TagEntrada[0]);
         if(te.length <= 0) return null;
         Tag[] tt = new Tag[te.length];
         for (int i = 0; i < te.length; i++) {
@@ -93,7 +113,6 @@ public class BeanBaseJWiki extends BeanBase {
         }
         return tt;
     }
-
     /**
      * Metodo para obtener los comentarios de un objeto Entrada, sin consultar a la BD
      * @param e
@@ -114,105 +133,51 @@ public class BeanBaseJWiki extends BeanBase {
         Query q = em.createNamedQuery("Comentarios.findByIdEntrada");
         q.setParameter("identrada", entrada.getIdentrada());
 
-        //List<Comentarios> lc = q.getResultList();
-        //Comentarios[] c = (Comentarios[]) q.getResultList().toArray(new Comentarios[0]);
-        //Comentarios[] c = (Comentarios[]) lc.toArray(new Comentarios[0]);
+        Comentarios[] c = (Comentarios[]) q.getResultList().toArray(new Comentarios[0]);
+
+        Collection<Comentarios> cc = null;
+        for (int i = 0; i < c.length; i++) cc.add(c[i]);
+
+        entrada.setComentariosCollection(cc);
+        return c;
+    }
+
+    /**
+     * Metodo para agregar un comentario a un objeto entrada
+     * @param e
+     * @param c
+     * @return
+     */
+    public Entrada addComentario(Entrada entrada, Comentarios comentario){
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Comentarios.findByIdEntrada");
+        q.setParameter("identrada", entrada.getIdentrada());
 
         Comentarios[] c = (Comentarios[]) q.getResultList().toArray(new Comentarios[0]);
         Collection<Comentarios> cc = null;
 
-        for (int i = 0; i < c.length; i++) {
-            cc.add(c[i]);
-        }
+        for (int i = 0; i < c.length; i++) cc.add(c[i]);
 
         entrada.setComentariosCollection(cc);
-        em.refresh(entrada);
-        return c;
+        em.flush();
+        return entrada;
     }
+    
     /**
-     * Metodo para obtener las ultimas N entradas en jhard.entradas.
-     * @param N
+     * Metodo para agregar un comentario a un objeto entrada
+     * @param e
+     * @param c
      * @return
      */
-//    public Entrada[] getUltimasNEntradas(int N){
-//        EntityManager em=this.getEntityManager();
-//        Query q = em.createNamedQuery("Entrada.findLastN");
-//        q.setParameter("numero", new Integer(N).toString());
-//
-//        Entrada[] e = (Entrada[]) q.getResultList().toArray(new Entrada[N]);
-//        for (Entrada entrada : e)
-//            em.refresh(entrada);
-//
-//        return e;
-//    }
+    public Comentarios[] addComentarioEntrada(Entrada entrada, Comentarios comentario){
+        EntityManager em = this.getEntityManager();
+        Entrada e = (Entrada)em.find(Entrada.class, entrada.getIdentrada());
+        Collection<Comentarios> colcom = e.getComentariosCollection();
+        colcom.add(comentario);
+        e.setComentariosCollection(colcom);
+        entrada = e;
+        em.flush(); //flush to bd.
+        return getComentarios(entrada);
+    }
 
-//     public void registrarReserva(Reserva r) {
-//        EntityManager em=this.getEntityManager();
-//        em.getTransaction().begin();
-//        em.persist(r);
-//        em.getTransaction().commit();
-//
-//    }
-//
-//
-//     public Estadoreserva[] getEstadoReserva() {
-//        EntityManager em=this.getEntityManager();
-//
-//        Query q=em.createNamedQuery("Estadoreserva.findAll");
-//
-//        Estadoreserva[] er=(Estadoreserva[])q.getResultList().toArray(new Estadoreserva[0]);
-//
-//        for(int i=0;i<er.length;i++)
-//            em.refresh(er[i]);
-//        return er;
-//    }
-//
-//     public void registrarEstadoReserva(Estadoreserva er) {
-//        EntityManager em=this.getEntityManager();
-//        em.getTransaction().begin();
-//        em.persist(er);
-//        em.getTransaction().commit();
-//
-//    }
-//
-//    public Responsable[] getResponsable() {
-//        EntityManager em=this.getEntityManager();
-//
-//        Query q=em.createNamedQuery("Responsable.findAll");
-//
-//        Responsable[] r=(Responsable[])q.getResultList().toArray(new Responsable[0]);
-//
-//        for(int i=0;i<r.length;i++)
-//            em.refresh(r[i]);
-//        return r;
-//    }
-//
-//     public void registrarResponsable(Responsable r) {
-//        EntityManager em=this.getEntityManager();
-//        em.getTransaction().begin();
-//        em.persist(r);
-//        em.getTransaction().commit();
-//
-//    }
-//
-//
-//      public Solicitante[] getSolicitante() {
-//        EntityManager em=this.getEntityManager();
-//
-//        Query q=em.createNamedQuery("Solicitante.findAll");
-//
-//        Solicitante[] s=(Solicitante[])q.getResultList().toArray(new Solicitante[0]);
-//
-//        for(int i=0;i<s.length;i++)
-//            em.refresh(s[i]);
-//        return s;
-//    }
-//
-//     public void registrarSolicitante(Solicitante s) {
-//        EntityManager em=this.getEntityManager();
-//        em.getTransaction().begin();
-//        em.persist(s);
-//        em.getTransaction().commit();
-//
-//    }
 }
