@@ -85,7 +85,7 @@
                                                 <ice:outputLabel id="lblClaveNuevaConfirm" value="Repita la nueva clave: " />
                                                 <ice:inputSecret id="txtClaveNuevaConfirm" value="#{JHardminInstance.inputChNewPwdConfirm}" />
                                             </p>
-                                            <p>
+                                            <p class="actionSection">
                                                 <ice:commandButton value="Cambiar clave" styleClass="btnAccion" action="#{JHardminInstance.changePassword}" />
                                             </p>
                                             <ice:panelPopup styleClass="panelPopup" draggable="true" modal="true" rendered="#{JHardminInstance.msg.visible}" visible="#{JHardminInstance.msg.visible}" clientOnly="true" >
@@ -95,7 +95,7 @@
                                                 <f:facet name="body">
                                                     <ice:panelGroup>
                                                         <p><ice:outputText value="#{JHardminInstance.msg.text}" styleClass="#{JHardminInstance.msg.type}" /></p>
-                                                        <div align="center"><ice:commandButton action="#{JHardminInstance.closePopup}" id="btnCerrar" value="OK" /></div>
+                                                        <p class="actionSection"><ice:commandButton action="#{JHardminInstance.closePopup}" id="btnCerrar" value="OK" /></p>
                                                     </ice:panelGroup>
                                                 </f:facet>
                                             </ice:panelPopup>
@@ -148,7 +148,7 @@
                                                 </f:facet>
                                             </ice:dataPaginator>
                                             
-                                            <ice:commandButton id="addUser" value="Agregar usuario" action="#{JHardminInstance.showPopupAddUser}" style="margin: 0px 10px 5px;" />
+                                            <p class="actionSection"><ice:commandButton id="addUser" value="Agregar usuario" action="#{JHardminInstance.showPopupAddUser}" /></p>
                                             <ice:panelPopup id="popUpAddUser" modal="true" draggable="true" rendered="#{JHardminInstance.popUpAddUserVisible}">
                                                 <f:facet name="header">
                                                     <h:outputText value="Agregar nuevo usuario" styleClass="popupHeader" />
@@ -173,8 +173,10 @@
                                                                     <f:selectItems value="#{JHardminInstance.roleItemList}" />
                                                                 </ice:selectOneListbox>
                                                             </p>
-                                                            <ice:commandButton id="cmdCommitAddUser" action="#{JHardminInstance.commitAddUser}" value="Agregar" />
-                                                            <ice:commandButton id="cmdCancelAddUser" action="#{JHardminInstance.cancelAddUser}" value="Cancelar" />                                                            
+                                                            <p class="actionSection">
+                                                                <ice:commandButton id="cmdCommitAddUser" action="#{JHardminInstance.commitAddUser}" value="Agregar" />
+                                                               <ice:commandButton id="cmdCancelAddUser" action="#{JHardminInstance.cancelAddUser}" value="Cancelar" />
+                                                            </p>
                                                         </ice:panelGroup>                                                    
                                                 </f:facet>
                                             </ice:panelPopup>
@@ -204,8 +206,10 @@
                                                                     <f:selectItems value="#{JHardminInstance.roleItemList}" />
                                                                 </ice:selectOneListbox>
                                                             </p>
-                                                            <ice:commandButton id="cmdCommitEditUser" action="#{JHardminInstance.editUsuario}" value="Agregar" />
-                                                            <ice:commandButton id="cmdCancelEditUser" action="#{JHardminInstance.closePopupEditUsuario}" value="Cancelar" />
+                                                            <p class="actionSection">
+                                                                <ice:commandButton id="cmdCommitEditUser" action="#{JHardminInstance.editUsuario}" value="Agregar" />
+                                                                <ice:commandButton id="cmdCancelEditUser" action="#{JHardminInstance.closePopupEditUsuario}" value="Cancelar" />
+                                                            </p>
                                                         </ice:panelGroup>
                                                 </f:facet>
                                             </ice:panelPopup>
@@ -218,7 +222,7 @@
                                                                 <p>
                                                                     <ice:outputFormat value="#{JHardminInstance.popUpConfirmDelUserMessage}" />
                                                                 </p>
-                                                                <p>
+                                                                <p class="actionSection">
                                                                     <ice:commandButton value="Si" action="#{JHardminInstance.delUsuario}" />
                                                                     <ice:commandButton value="No" action="#{JHardminInstance.hidePopupConfirmDeleteUser}" />
                                                                 </p>
