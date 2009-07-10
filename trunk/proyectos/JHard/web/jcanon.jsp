@@ -34,6 +34,10 @@
 
                     }
 
+                    function loadAgain(){
+                        scheduler.load("/JHard/reservas");
+                    }
+
                     function refresh(){
                         location.reload(true);
                     }
@@ -92,6 +96,21 @@
                                             <div class="dhx_cal_header"></div>
                                             <div class="dhx_cal_data"></div>
                                         </div>
+                                        <ice:panelPopup autoCentre="true" binding="#{jcanon.panelMensajes}" draggable="true" id="panelMensajes" modal="true"
+                                            rendered="#{jcanon.panelPopup1Bean.showDraggablePanel}"
+                                            style="height: 141px; left: 264px; top: 144px; position: absolute; width: 333px" visible="#{jcanon.panelPopup1Bean.showModalPanel}">
+                                            <f:facet name="header">
+                                                <ice:panelGrid id="panelGrid1" style="display:block;width:180px;height:20px;">
+                                                    <ice:outputText id="lblTitMensajes" value="JCanon"/>
+                                                </ice:panelGrid>
+                                            </f:facet>
+                                            <f:facet name="body">
+                                                <ice:panelGrid id="panelGrid2" style="display: block; height: 80px" width="278">
+                                                    <ice:outputText binding="#{jcanon.lblMensajes}" id="lblMensajes" value="body text"/>
+                                                    <ice:commandButton action="#{jcanon.btnOk_action}" binding="#{jcanon.btnOk}" onclick="loadAgain();" id="btnOk" value="Ok"/>
+                                                </ice:panelGrid>
+                                            </f:facet>
+                                        </ice:panelPopup>
                                     </ice:panelGroup>
                                     <ice:panelCollapsible expanded="true" id="panelReservas" rendered="#{JHardminInstance.currentUser != null}" style="width: 600px">
                                         <f:facet name="header">
@@ -173,20 +192,27 @@
                                                 id="btnCrearReserva" value="Crear Reserva"/>
                                         </ice:panelGroup>
                                     </ice:panelCollapsible>
-                                    <ice:panelCollapsible expanded="true" id="panelAdmin" rendered="#{JHardminInstance.currentUser != null}" style="width: 600px">
+                                    <ice:panelCollapsible expanded="true" id="panelAdmin" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" style="width: 600px">
                                         <f:facet name="header">
                                             <ice:panelGroup id="panelGroup3">
                                                 <ice:outputText id="lblTitulo3" value="Administración"/>
                                             </ice:panelGroup>
                                         </f:facet>
-                                        <ice:panelGroup id="grupoAdmin" style="height: 100px">
-                                            <ice:outputLabel id="lblAdmin" value="Panel Administrativo"/>
-                                            <ice:commandButton binding="#{jcanon.btnAgregarMultimedia}" id="btnAgregarMultimedia" value="Agregar Equipo Multimedia"/>
-                                            <ice:commandButton binding="#{jcanon.btnVerReservas}" id="btnVerReservas" value="Ver Reservas"/>
+                                        <ice:panelGroup id="grupoAdmin" style="height: 160px">
+                                            <ice:outputLabel id="lblAdmin" value="Panel Administrativo" style="font-weight:bold; font-size:14px;"/>
+                                            <br/>
+                                            <br/>
+                                            <p>
+                                                <ice:commandButton binding="#{jcanon.btnAgregarMultimedia}" id="btnAgregarMultimedia" value="Agregar Equipo Multimedia"/>
+                                            </p><p>
+                                                <ice:commandButton binding="#{jcanon.btnVerReservas}" id="btnVerReservas" value="Administrar Reservas de Equipo"/>
+                                            </p><p>
+                                                <ice:commandButton binding="#{jcanon.btnVerSoloReservas}" id="btnVerSoloReservas" value="Visualizar Reservas de Equipo"/>
+                                            </p>
                                         </ice:panelGroup>
                                     </ice:panelCollapsible>
                                     <ice:outputLabel id="labelError" rendered="#{JHardminInstance.currentUser == null}"
-                                        style="font-size: 14px; font-weight: bold" value="Debe de permanecer con sesión activa para realizar una reserva de Equipo Multimedia"/>
+                                        style="font-size: 14px; font-weight: bold" value="Debe permanecer con sesión activa para realizar una reserva de Equipo Multimedia"/>
                                 </ice:panelGroup>
                             </ice:form>
                         </div>
@@ -249,7 +275,7 @@
                                             <ice:commandLink action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}" value="Emitir Solicitud de Soporte Técnico"/>
                                         </li>
                                         <li>
-                                            <a href="#">Magna lacus bibendum mauris</a>
+                                            <ice:commandLink action="#{Redireccion.jcanonAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Reserva de Equipo Multimedia"/>
                                         </li>
                                         <li>
                                             <a href="#">Velit semper nisi molestie</a>

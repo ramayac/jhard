@@ -118,7 +118,7 @@
                                             <ice:commandLink value="Emitir Solicitud de Soporte Técnico" action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
                                         </li>
                                         <li>
-                                            <a href="#">Otras Opciones</a>
+                                            <ice:commandLink action="#{Redireccion.jcanonAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Reserva de Equipo Multimedia"/>
                                         </li>
                                         <li>
                                             <a href="#">Otras Opciones</a>

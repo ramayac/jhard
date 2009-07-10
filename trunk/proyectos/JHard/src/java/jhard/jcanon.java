@@ -9,11 +9,14 @@ package jhard;
 import com.icesoft.faces.component.ext.HtmlCommandButton;
 import com.icesoft.faces.component.ext.HtmlInputText;
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
+import com.icesoft.faces.component.ext.HtmlOutputText;
 import com.icesoft.faces.component.ext.HtmlSelectBooleanCheckbox;
 import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
+import com.icesoft.faces.component.jsfcl.data.PopupBean;
 import com.icesoft.faces.component.jsfcl.data.SelectInputDateBean;
+import com.icesoft.faces.component.panelpopup.PanelPopup;
 import com.icesoft.faces.component.selectinputdate.SelectInputDate;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJCanon;
@@ -238,6 +241,15 @@ public class jcanon extends AbstractPageBean {
     public void setBtnVerReservas(HtmlCommandButton hcb) {
         this.btnVerReservas = hcb;
     }
+    private HtmlCommandButton btnVerSoloReservas = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnVerSoloReservas() {
+        return btnVerSoloReservas;
+    }
+
+    public void setBtnVerSoloReservas(HtmlCommandButton hcb) {
+        this.btnVerSoloReservas = hcb;
+    }
     private HtmlInputText txtSolicitante = new HtmlInputText();
 
     public HtmlInputText getTxtSolicitante() {
@@ -282,6 +294,42 @@ public class jcanon extends AbstractPageBean {
     public void setTxtSolicitanteApellidos(HtmlInputText hit) {
         this.txtSolicitanteApellidos = hit;
     }
+    private PopupBean panelPopup1Bean = new PopupBean();
+
+    public PopupBean getPanelPopup1Bean() {
+        return panelPopup1Bean;
+    }
+
+    public void setPanelPopup1Bean(PopupBean pb) {
+        this.panelPopup1Bean = pb;
+    }
+    private HtmlOutputText lblMensajes = new HtmlOutputText();
+
+    public HtmlOutputText getLblMensajes() {
+        return lblMensajes;
+    }
+
+    public void setLblMensajes(HtmlOutputText hot) {
+        this.lblMensajes = hot;
+    }
+    private PanelPopup panelMensajes = new PanelPopup();
+
+    public PanelPopup getPanelMensajes() {
+        return panelMensajes;
+    }
+
+    public void setPanelMensajes(PanelPopup pp) {
+        this.panelMensajes = pp;
+    }
+    private HtmlCommandButton btnOk = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnOk() {
+        return btnOk;
+    }
+
+    public void setBtnOk(HtmlCommandButton hcb) {
+        this.btnOk = hcb;
+    }
 
 
     /**
@@ -301,13 +349,6 @@ public class jcanon extends AbstractPageBean {
             this.lblUser.setValue((String)U.getNombre());
 
             switch(U.getIdrol().getIdrol()){
-            case 1:
-
-                this.txtSolicitante.setValue((String)U.getNombre());
-                this.txtSolicitante.setDisabled(true);
-                this.txtSolicitanteApellidos.setDisabled(true);
-                LlenarComboDocentes();
-                break;
             case 3:
                 Ing = new BeanBaseManLab().getDocenteByUsuario(U.getIdusuario());
                 this.txtSolicitante.setValue((String)Ing.getNombres());
@@ -316,8 +357,10 @@ public class jcanon extends AbstractPageBean {
                 this.txtSolicitanteApellidos.setDisabled(true);
                 this.comboDocente.setDisabled(true);
                 break;
-
             default:
+                this.txtSolicitante.setValue((String)U.getNombre());
+                this.txtSolicitante.setDisabled(true);
+                this.txtSolicitanteApellidos.setDisabled(true);
                 LlenarComboDocentes();
                 break;
 
@@ -325,11 +368,6 @@ public class jcanon extends AbstractPageBean {
         }
         else
             this.lblUser.setValue("Invitado");
-
-
-        
-
-
     }
 
     /**
@@ -346,6 +384,8 @@ public class jcanon extends AbstractPageBean {
      */
     @Override
     public void init() {
+        this.panelMensajes.setRendered(false);
+        this.panelMensajes.setVisible(false);
         // Perform initializations inherited from our superclass
         super.init();
         // Perform application initialization that must complete
@@ -524,7 +564,7 @@ public class jcanon extends AbstractPageBean {
         this.horaFin.getChildren().clear();
 
         if(inicioFin==1){
-            hours = new String []  {"6:45","8:05","9:25","10:55","12:15","13:35","15:55","17:15","18:35"};
+            hours = new String []  {"6:45","7:35","8:25","9:15","10:05","10:55","11:45","12:35","1:00","1:50","2:40","3:30","4:20","5:10","6:00","6:50","7:40","8:30"};
 
             ArrayList h = new ArrayList();
 
@@ -575,6 +615,7 @@ public class jcanon extends AbstractPageBean {
 
     public void horaInicio_processValueChange(ValueChangeEvent vce) {
         this.horaSeleccionada=this.horaInicio.getValue().toString();
+
         LlenarHora(2);
     }
 
@@ -637,7 +678,7 @@ public class jcanon extends AbstractPageBean {
 
                 reservaCanon.setFechahorafinprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),fechaI.getDate(),hourF,minuteF,secondF));
 
-                reservaCanon.setDescripcion("Prestamo de "+this.canonElegido.getIdhardware().getNombre() +" "+this.canonElegido.getIdhardware().getIdmarca().getNombre()+this.canonElegido.getIdhardware().getModelo());
+                reservaCanon.setDescripcion("Prestamo de "+this.canonElegido.getIdhardware().getNombre() +" "+this.canonElegido.getIdhardware().getIdmarca().getNombre()+"  "+this.canonElegido.getIdhardware().getModelo());
                 reservaCanon.setIdequipoexistente(canonElegido);
                 reservaCanon.setIdubicacion(canonElegido.getIdubicacion());
                 reservaCanon.setIdusuario(U);
@@ -646,7 +687,10 @@ public class jcanon extends AbstractPageBean {
 
                 instance.registrarReserva(reservaCanon);
 
-                System.out.println("Reserva de Cañon hecha con éxito");
+                this.lblMensajes.setValue("Reserva de Cañon hecha con éxito");
+                this.panelMensajes.setRendered(true);
+                this.panelMensajes.setVisible(true);
+                this.panelMensajes.setModal(true);
 
             }
 
@@ -664,12 +708,12 @@ public class jcanon extends AbstractPageBean {
 
                 instance.registrarReserva(reservaLaptop);
 
-                System.out.println("Reserva de Laptop hecha con éxito");
+                this.lblMensajes.setValue("Reserva de Laptop hecha con éxito");
+                this.panelMensajes.setRendered(true);
+                this.panelMensajes.setVisible(true);
+                this.panelMensajes.setModal(true);
 
             }
-
-
-
         return null;
     }
 
@@ -679,6 +723,13 @@ public class jcanon extends AbstractPageBean {
             Integer id=Integer.parseInt(tmp);
             Ing=new BeanBaseJCanon().getEntityManager().find(Docente.class, id);
        }
+    }
+
+    public String btnOk_action() {
+        this.panelMensajes.setRendered(false);
+        this.panelMensajes.setVisible(false);
+        this.panelMensajes.setModal(false);
+        return null;
     }
 }
 

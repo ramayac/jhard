@@ -5,6 +5,8 @@
 
 package edu.ues.jhard.servlets;
 
+import edu.ues.jhard.beans.BeanBaseJCanon;
+import edu.ues.jhard.jpa.Reserva;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -29,9 +31,21 @@ public class reservas extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/xml");
         PrintWriter out = response.getWriter();
+
+        BeanBaseJCanon instance = new BeanBaseJCanon();
+        Reserva [] reservas = instance.getReservaByEstado(1);
+
         try {
-            out.println("<?xml version='1.0' encoding='UTF-8'?><data><event id='2'><start_date><![CDATA[2009-07-10 10:00:00]]></start_date><end_date><![CDATA[2009-07-10 14:00:00]]></end_date><text><![CDATA[Celebracion para Lula]]></text></event></data>");
-            
+            out.print("<?xml version='1.0' encoding='UTF-8'?><data>");
+            for (int i = 0; i < reservas.length; i++) {
+                out.print("<event id='"+reservas[i].getIdreserva()+"'>");
+                out.print("<start_date><![CDATA["+(reservas[i].getFechahorainicioprestamo().getYear()+1900)+"-"+(reservas[i].getFechahorainicioprestamo().getMonth()+1)+"-"+reservas[i].getFechahorainicioprestamo().getDate()+" "+reservas[i].getFechahorainicioprestamo().getHours()+":"+reservas[i].getFechahorainicioprestamo().getMinutes()+":"+reservas[i].getFechahorainicioprestamo().getSeconds()+"]]></start_date>");
+                out.print("<end_date><![CDATA["+(reservas[i].getFechahorafinprestamo().getYear()+1900)+"-"+(reservas[i].getFechahorafinprestamo().getMonth()+1)+"-"+reservas[i].getFechahorafinprestamo().getDate()+" "+reservas[i].getFechahorafinprestamo().getHours()+":"+reservas[i].getFechahorafinprestamo().getMinutes()+":"+reservas[i].getFechahorafinprestamo().getSeconds()+"]]></end_date>");
+                out.print("<text><![CDATA["+reservas[i].getDescripcion()+"]]></text>");
+                out.print("<details><![CDATA[Docente encargado: "+reservas[i].getIddocente().getNombres()+" "+reservas[i].getIddocente().getApellidos()+"]]></details>");
+                out.print("</event>");
+            }
+            out.print("</data>");
         } finally {
             out.flush();
             out.close();
