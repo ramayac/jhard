@@ -10,7 +10,7 @@
         <html id="outputHtml1">
             <head id="outputHead1">
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
-                <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
+                <ice:outputStyle href="./xmlhttp/css/rime/rime.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
                 <title>.:: JRequest ::.</title>
                 <meta content="" name="keywords"/>
@@ -23,10 +23,10 @@
                 <div id="header">
                     <div id="menu">
                         <ul>
-                            <li class="current_page_item">
+                            <li>
                                 <a href="Index.iface">Principal</a>
                             </li>
-                            <li>
+                            <li class="current_page_item">
                                 <a href="jrequestUser.iface">Mantenimientos</a>
                             </li>
                             <li>
@@ -66,15 +66,16 @@
                                                 </ice:panelGroup>
                                             </f:facet>
                                             <ice:panelGroup id="panelGroup13" style="height: 350px">
-                                                <p>
+                                                <p><h3 styleClass="tituloSeccion">
                                                     <ice:outputLabel id="outputLabel2" value="Ingrese palabras clave para realizar una búsqueda de soluciones"/>
+                                                    </h3>
                                                 </p>
                                                 <p>
                                                     <ice:inputTextarea id="txtProblemas" style="width: 300px"/>
                                                 </p>
                                                 <p>
                                                     <ice:commandButton action="#{jrequestUser.btnBuscar_action}" binding="#{jrequestUser.btnBuscar}"
-                                                        id="btnBuscar" value="Buscar"/>
+                                                        id="btnBuscar" styleClass="btnAccion2" value="Buscar"/>
                                                 </p>
                                                 <p>
                                                     <ice:dataTable id="tblListaPost" rows="5" style="" title="Lista de Posts" value="" var="">
@@ -93,16 +94,16 @@
                                                     </ice:dataTable>
                                                     <ice:dataPaginator for="tblListaPost" id="pgrListaPosts" paginator="true" style="">
                                                         <f:facet name="first">
-                                                            <ice:graphicImage style="border:none;" title="Primera" url="./xmlhttp/css/xp/css-images/arrow-first.gif"/>
+                                                            <ice:graphicImage style="border:none;" title="Primera" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
                                                         </f:facet>
                                                         <f:facet name="previous">
-                                                            <ice:graphicImage style="border:none;" title="Previa" url="./xmlhttp/css/xp/css-images/arrow-previous.gif"/>
+                                                            <ice:graphicImage style="border:none;" title="Previa" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/>
                                                         </f:facet>
                                                         <f:facet name="next">
-                                                            <ice:graphicImage style="border:none;" title="Siguiente" url="./xmlhttp/css/xp/css-images/arrow-next.gif"/>
+                                                            <ice:graphicImage style="border:none;" title="Siguiente" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/>
                                                         </f:facet>
                                                         <f:facet name="last">
-                                                            <ice:graphicImage style="border:none;" title="Última" url="./xmlhttp/css/xp/css-images/arrow-last.gif"/>
+                                                            <ice:graphicImage style="border:none;" title="Última" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
                                                         </f:facet>
                                                     </ice:dataPaginator>
                                                 </p>
@@ -117,7 +118,7 @@
                                             <ice:panelGrid id="panelGrid2" style="height: 72px">
                                                 <ice:outputLabel id="lblSolicitud" value="En cambio, si desea enviar una solicitud de Mantenimiento, pulse el siguiente botón"/>
                                                 <ice:commandButton action="#{jrequestUser.btnSolicitud_action}" binding="#{jrequestUser.btnSolicitud}"
-                                                    id="btnSolicitud" value="Enviar Solicitud"/>
+                                                    id="btnSolicitud" styleClass="btnAccion2" value="Enviar Solicitud"/>
                                             </ice:panelGrid>
                                         </ice:panelCollapsible>
                                     </ice:panelGroup>
@@ -168,14 +169,14 @@
                                         <ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}"/>
                                         <h:message for="txtPass" styleClass="errorText"/>
                                     </p>
-                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" styleClass="btnAccion" value="Login"/>
+                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" styleClass="btnAccion2" value="Login"/>
                                 </ice:form>
                                 <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
                                     <p>
                                         <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
                                         <ice:outputLabel id="lblNomUsuario" styleClass="formValue" value="#{JHardminInstance.currentUser.userName}"/>
                                     </p>
-                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>
+                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion2" value="Logout"/>
                                 </ice:form>
                             </li>
                             <li>

@@ -10,7 +10,7 @@
         <html id="outputHtml1">
             <head id="outputHead1">
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
-                <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
+                <ice:outputStyle href="./xmlhttp/css/rime/rime.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
                 <title>.:: JRequest ::.</title>
                 <meta content="" name="keywords"/>
@@ -25,10 +25,10 @@
                 <div id="header">
                     <div id="menu">
                         <ul>
-                            <li class="current_page_item">
+                            <li>
                                 <a href="Index.iface">Principal</a>
                             </li>
-                            <li>
+                            <li class="current_page_item">
                                 <a href="jrequestUser.iface">Mantenimientos</a>
                             </li>
                             <li>
@@ -58,7 +58,6 @@
                         <div class="post">
                             <h2 class="title">Solicitud de Mantenimiento de Hardware y Software</h2>
                             <div class="entry" style="height: 507px">
-                                <p class="text">Ingrese su solicitud:</p>
                                 <ice:form id="form1" style="height: 200px">
                                     <ice:panelPopup autoCentre="true" binding="#{jrequestUserSolicitud.panelPopup1}" draggable="true" id="panelPopup1"
                                         modal="true" rendered="#{jrequestUserSolicitud.panelPopup1Bean.showDraggablePanel}"
@@ -86,41 +85,44 @@
                                         </f:facet>
                                     </ice:panelPopup>
                                     <ice:outputLabel id="labelError" style="font-size: 14px; font-weight: bold" value="Debe de permanecer con sesión activa para realizar una petición de Soporte técnico" rendered="#{JHardminInstance.currentUser == null}"></ice:outputLabel>
+                                    <ice:panelCollapsible id="colap" style="width:576" expanded="true">
+                                <f:facet name="header">
+                                    <ice:outputText value="Ingrese una nueva solicitud"/>
+                                </f:facet>
+                                    <ice:panelGroup id="grupoSolicitud" rendered="#{JHardminInstance.currentUser != null}" style="height:400px;">
 
-                                    <ice:panelGroup id="grupoSolicitud" rendered="#{JHardminInstance.currentUser != null}">
-
-                                    <ice:outputLabel id="lblNombre" value="Nombre del Usuario que hace la solicitud"/>
-                                    <br/>
+                                    <h3 styleClass="tituloSeccion"><ice:outputLabel id="lblNombre" value="Usuario que realiza la petición"/>
+                                    </h3><br/>
                                     <ice:outputLabel binding="#{jrequestUserSolicitud.lblUsuario}" id="lblUsuario" style="font-size: 14px; font-weight: bold"/>
                                     <br/>
                                     <br/>
                                     <br/>
-                                    <br/>
-                                    <ice:outputLabel id="lbldescripcion" value="Descripción"/>
-                                    <br/>
-                                    <br/>
+                                    <h3 styleClass="tituloSeccion"><ice:outputLabel id="lbldescripcion" value="Descripción"/>
+                                    </h3>><br/>
                                     <ice:inputTextarea binding="#{jrequestUserSolicitud.txtDescripcion}" id="txtDescripcion" style="height: 72px; width: 286px"/>
                                     <br/>
                                     <br/>
                                     <br/>
-                                    <ice:outputLabel id="lblEqSimple" value="Nombre Equipo"/>
-                                    <br/>
+                                    <h3 styleClass="tituloSeccion"><ice:outputLabel id="lblEqSimple" value="Nombre Equipo"/>
+                                    </h3><br/>
                                     <br/>
                                     <ice:selectOneMenu binding="#{jrequestUserSolicitud.comboEqSimple}" id="comboEqSimple" partialSubmit="true"
                                         style="width: 286px" valueChangeListener="#{jrequestUserSolicitud.comboEqSimple_processValueChange}">
                                         <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUserSolicitud.arrayEqSimple.options['idEquipoSimple,descripcion']}"/>
                                     </ice:selectOneMenu>
                                     <ice:commandButton action="#{jrequestUserSolicitud.btnAgregarEqSimple_action}"
-                                        binding="#{jrequestUserSolicitud.btnAgregarEqSimple}" id="btnAgregarEqSimple" value="Agregar Equipo"/>
+                                    binding="#{jrequestUserSolicitud.btnAgregarEqSimple}" styleClass="btnAccion2" id="btnAgregarEqSimple" value="Agregar Equipo"/>
                                     <br/>
                                     <br/>
                                     <br/>
                                     <ice:commandButton action="#{jrequestUserSolicitud.btnEnviar_action}" binding="#{jrequestUserSolicitud.btnEnviar}"
-                                        id="btnEnviar" value="Enviar"/>
+                                    id="btnEnviar" styleClass="btnAccion2" value="Enviar"/>
                                     <br/>
                                     <br/>
                                     <br/>
                                     </ice:panelGroup>
+                                </ice:panelCollapsible>
+                                    
                                     <ice:panelPopup autoCentre="true" binding="#{jrequestUserSolicitud.panelPopup2}" draggable="true" id="panelPopup2"
                                         modal="true" rendered="#{jrequestUserSolicitud.panelPopup2Bean.showDraggablePanel}" style="height: 130px; width: 261px" visible="#{jrequestUserSolicitud.panelPopup2Bean.showModalPanel}">
                                         <f:facet name="header">

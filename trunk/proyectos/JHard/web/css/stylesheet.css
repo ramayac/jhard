@@ -2725,3 +2725,15 @@ h3{
     color: #BC3E28;
     border: 1px solid #BC3E28;
 }
+
+.btnAccion2{
+    margin: 2px;
+    border: 1px solid #6F6F6F;
+    cursor: pointer;
+    padding: 2px 20px;
+}
+
+.btnAccion2:hover{
+    color: #BC3E28;
+    border: 1px solid #BC3E28;
+}

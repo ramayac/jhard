@@ -11,7 +11,7 @@
             <head id="outputHead1">
                 <!--ice:outputStyle href="./resources/stylesheet.css" id="outputStyle1"/-->                
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
-                <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
+                <ice:outputStyle href="./xmlhttp/css/rime/rime.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
                 <title>.:: JHard ::.</title>
                 <meta content="" name="keywords"/>
@@ -121,10 +121,7 @@
                                             <ice:commandLink action="#{Redireccion.jcanonAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Reserva de Equipo Multimedia"/>
                                         </li>
                                         <li>
-                                            <a href="#">Otras Opciones</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Otras Opciones</a>
+                                            <ice:commandLink action="" rendered="#{JHardminInstance.currentUser == null}" value="Solo para usuarios registrados"/>
                                         </li>
                                     </ul>
                                 </ice:form>

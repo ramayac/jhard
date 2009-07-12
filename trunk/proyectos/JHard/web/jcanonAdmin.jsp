@@ -10,7 +10,7 @@
         <html id="outputHtml1">
             <head id="outputHead1">
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
-                <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
+                <ice:outputStyle href="./xmlhttp/css/rime/rime.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
                 <title>.:: JCanon ::.</title>
                 <meta content="" name="keywords"/>
@@ -23,7 +23,7 @@
                 <div id="header">
                     <div id="menu">
                         <ul>
-                            <li class="current_page_item">
+                            <li>
                                 <a href="Index.iface">Principal</a>
                             </li>
                             <li>
@@ -33,13 +33,13 @@
                                 <a href="#">Grupos de Laboratorio</a>
                             </li>
                             <li>
-                                <a href="#">Inventario</a>
+                                <a href="jinvent.jspx">Inventario</a>
                             </li>
                             <li>
                                 <a href="#">Wiki y Cursos</a>
                             </li>
-                            <li class="last">
-                                <a href="#">Cañones</a>
+                            <li class="current_page_item last">
+                                <a href="jcanon.iface">Cañones</a>
                             </li>
                         </ul>
                     </div>
@@ -58,13 +58,13 @@
                             <div class="entry">
                                 <ice:form id="form1">
                                     <ice:panelGroup id="grupoJCanonAdmin" style="width: 100%; ">
-                                        <ice:panelCollapsible expanded="true" id="panelCollapsible1" style="width: 576px">
+                                        <ice:panelCollapsible expanded="true" id="panelCollapsible1" style="width: 576px; margin-top:0px; margin-bottom:0px;">
                                             <f:facet name="header">
                                                 <ice:panelGroup id="panelGroup1" styleClass="">
                                                     <ice:outputText id="outputText1" value="Reservas de Equipo Multimedia"/>
                                                 </ice:panelGroup>
                                             </f:facet>
-                                            <ice:panelGroup id="grupoContenido" style="height: 500px">
+                                            <ice:panelGroup id="grupoContenido" style="height: 1000px; margin-top:0px; margin-bottom:0px;">
                                                 <ice:dataTable id="tblListaReservas" rows="10" style="margin-top: 0px; margin-bottom: 0px;"
                                                     title="Lista de Reservas Pendientes" value="#{jcanonAdmin.listaReservasPendientes}" var="reserva">
                                                     <ice:column>
@@ -75,7 +75,7 @@
                                                     </ice:column>
                                                     <ice:column>
                                                         <f:facet name="header">
-                                                            <ice:outputText value="Equipo reservador"/>
+                                                            <ice:outputText value="Equipo reservado"/>
                                                         </f:facet>
                                                         <ice:outputText value="#{reserva.idequipoexistente.idhardware.nombre}"/>
                                                     </ice:column>
@@ -83,13 +83,13 @@
                                                         <f:facet name="header">
                                                             <ice:outputText value="Responsable"/>
                                                         </f:facet>
-                                                        <ice:outputText value="#{reserva.iddocente.apellidos}"/>
+                                                        <ice:outputText value="#{reserva.iddocente.nombres} #{reserva.iddocente.apellidos}"/>
                                                     </ice:column>
                                                     <ice:column>
                                                         <f:facet name="header">
                                                             <ice:outputText value="Fecha de la reserva"/>
                                                         </f:facet>
-                                                        <ice:outputText value="#{(reserva.fechahorainicioprestamo)}"/>
+                                                        <ice:outputText value="#{reserva.fechahorainicioprestamo}"/>
                                                     </ice:column>
                                                     <ice:column>
                                                         <f:facet name="header">
@@ -110,7 +110,7 @@
                                                         <ice:outputText value="#{reserva.idestado.nombre}"/>
                                                     </ice:column>
                                                     <ice:column>
-                                                        <ice:commandLink action="" value="Posponer reserva">
+                                                        <ice:commandLink action="#{jcanonAdmin.posponerReserva}" value="Posponer reserva">
                                                             <f:param name="idReserva" value="#{reserva.idreserva}"/>
                                                         </ice:commandLink>
                                                     </ice:column>
@@ -119,24 +119,29 @@
                                                             <f:param name="idReserva" value="#{reserva.idreserva}"/>
                                                         </ice:commandLink>
                                                     </ice:column>
+                                                    <ice:column>
+                                                        <ice:commandLink action="#{jcanonAdmin.Eliminar}" value="Eliminar">
+                                                            <f:param name="idReserva" value="#{reserva.idreserva}"/>
+                                                        </ice:commandLink>
+                                                    </ice:column>
                                                 </ice:dataTable>
                                                 <ice:dataPaginator for="tblListaReservas" id="pgrListaReservas" paginator="true" paginatorMaxPages="4" style="margin: 0px 10px 10px">
                                                     <f:facet name="first">
-                                                        <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/xp/css-images/arrow-first.gif"/>
+                                                        <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
                                                     </f:facet>
                                                     <f:facet name="previous">
-                                                        <ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/xp/css-images/arrow-previous.gif"/>
+                                                        <ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/>
                                                     </f:facet>
                                                     <f:facet name="next">
-                                                        <ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/xp/css-images/arrow-next.gif"/>
+                                                        <ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/>
                                                     </f:facet>
                                                     <f:facet name="last">
-                                                        <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/xp/css-images/arrow-last.gif"/>
+                                                        <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
                                                     </f:facet>
                                                 </ice:dataPaginator>
                                                 <ice:panelPopup autoCentre="true" binding="#{jcanonAdmin.panelModEstado}" draggable="true" id="panelModEstado"
                                                     modal="true" rendered="#{jcanonAdmin.panelPopup1Bean.showDraggablePanel}"
-                                                    style="height: 189px; left: 336px; top: 408px; position: absolute; width: 405px" visible="#{jcanonAdmin.panelPopup1Bean.showModalPanel}">
+                                                    style="height: 189px; left: 336px; top: 984px; position: absolute; width: 405px" visible="#{jcanonAdmin.panelPopup1Bean.showModalPanel}">
                                                     <f:facet name="header">
                                                         <ice:panelGrid id="panelGrid1" style="display:block;width:180px;height:20px;">
                                                             <ice:outputText id="outputText2" value="JCanon"/>
@@ -166,7 +171,7 @@
                                                 </ice:panelPopup>
                                                 <ice:panelPopup autoCentre="true" binding="#{jcanonAdmin.panelMensajes}" draggable="true" id="panelMensajes"
                                                     modal="true" rendered="#{jcanonAdmin.panelPopup2Bean.showDraggablePanel}"
-                                                    style="height: 141px; left: 312px; top: 240px; position: absolute; width: 285px" visible="#{jcanonAdmin.panelPopup2Bean.showModalPanel}">
+                                                    style="height: 141px; left: 336px; top: 816px; position: absolute; width: 285px" visible="#{jcanonAdmin.panelPopup2Bean.showModalPanel}">
                                                     <f:facet name="header">
                                                         <ice:panelGrid id="panelGrid3" style="display:block;width:180px;height:20px;">
                                                             <ice:outputText id="outputText4" value="JCanon"/>
@@ -175,11 +180,58 @@
                                                     <f:facet name="body">
                                                         <ice:panelGroup id="grupoMensajes" style="display: block; height: 86px; width: 230px">
                                                             <ice:outputText binding="#{jcanonAdmin.lblMensajes}" id="lblMensajes" value="Mensajes AQUI"/>
-                                                            <ice:panelGrid columns="2" id="panelGrid4" style="display:block;width:180px;height:30px;">
+                                                            <ice:panelGrid columns="2" id="panelGrid4" style="display: block; height: 79px; width: 180px">
                                                                 <ice:commandButton action="#{jcanonAdmin.btnAceptarMensajes_action}"
                                                                     binding="#{jcanonAdmin.btnAceptarMensajes}" id="btnAceptarMensajes" value="Aceptar"/>
                                                                 <ice:commandButton binding="#{jcanonAdmin.btnCancelarMensajes}" id="btnCancelarMensajes" value="Cancelar"/>
                                                             </ice:panelGrid>
+                                                        </ice:panelGroup>
+                                                    </f:facet>
+                                                </ice:panelPopup>
+                                                <ice:panelPopup autoCentre="true" binding="#{jcanonAdmin.panelPosponer}" draggable="true" id="panelPosponer"
+                                                    modal="true" rendered="#{jcanonAdmin.panelPopup1Bean1.showDraggablePanel}"
+                                                    style="height: 403px; width: 405px" visible="#{jcanonAdmin.panelPopup1Bean1.showModalPanel}">
+                                                    <f:facet name="header">
+                                                        <ice:panelGrid id="panelGrid2" style="display:block;width:180px;height:20px;">
+                                                            <ice:outputText id="outputText3" value="JCanon"/>
+                                                        </ice:panelGrid>
+                                                    </f:facet>
+                                                    <f:facet name="body">
+                                                        <ice:panelGroup id="panelGrid5" style="display: block; height: 134px">
+                                                            <ice:outputText binding="#{jcanonAdmin.lblTextMod}" id="lblTextMod" value="Reserva a modificar"/>
+                                                            <br/>
+                                                            <br/>
+                                                            <ice:selectInputDate binding="#{jcanonAdmin.fechaMod}" id="fechaMod"
+                                                                style="height:180px; width: 190px" value="#{jcanonAdmin.selectInputDate1Bean.date1}"/>
+                                                            <br/>
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>
+                                                                        <ice:outputLabel id="lblHoraInicio" value="Nueva Hora de Inicio"/>
+                                                                    </td>
+                                                                    <td>
+                                                                        <ice:selectOneMenu binding="#{jcanonAdmin.horaInicioMod}" id="horaInicioMod"
+                                                                            partialSubmit="true" valueChangeListener="#{jcanonAdmin.horaInicioMod_processValueChange}">
+                                                                            <f:selectItems id="selectOneMenu1selectItems" value="#{jcanonAdmin.horaInicioFake}"/>
+                                                                        </ice:selectOneMenu>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <ice:outputLabel id="lblHoraFin" value="Nueva Hora de Finalización"/>
+                                                                    </td>
+                                                                    <td>
+                                                                        <ice:selectOneMenu binding="#{jcanonAdmin.horaFinMod}" id="horaFinMod" partialSubmit="true">
+                                                                            <f:selectItems id="selectOneMenu2selectItems" value="#{jcanonAdmin.horaFinFake}"/>
+                                                                        </ice:selectOneMenu>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            <br/>
+                                                            <ice:commandButton action="#{jcanonAdmin.btnAceptarMod_action}"
+                                                                binding="#{jcanonAdmin.btnAceptarMod}" id="btnAceptarMod" value="Aceptar"/>
+                                                            <ice:commandButton action="#{jcanonAdmin.btnCancelarMod_action}"
+                                                                binding="#{jcanonAdmin.btnCancelarMod}" id="btnCancelarMod" value="Cancelar"/>
                                                         </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
@@ -219,14 +271,14 @@
                                         <ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}"/>
                                         <h:message for="txtPass" styleClass="errorText"/>
                                     </p>
-                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" styleClass="btnAccion" value="Login"/>
+                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" styleClass="btnAccion2" value="Login"/>
                                 </ice:form>
                                 <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
                                     <p>
                                         <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
                                         <ice:outputLabel id="lblNomUsuario" styleClass="formValue" value="#{JHardminInstance.currentUser.userName}"/>
                                     </p>
-                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>
+                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion2" value="Logout"/>
                                 </ice:form>
                             </li>
                             <li>
@@ -248,13 +300,14 @@
                                             <ice:commandLink action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}" value="Emitir Solicitud de Soporte Técnico"/>
                                         </li>
                                         <li>
-                                            <a href="#">Otras Opciones</a>
+                                            <ice:commandLink action="" rendered="#{JHardminInstance.currentUser == null}" value="Solo para usuarios registrados"/>
                                         </li>
                                         <li>
-                                            <a href="#">Otras Opciones</a>
+                                            <ice:commandLink action="#{Redireccion.jrequestAdmin}"
+                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Solicitudes de JRequest"/>
                                         </li>
                                         <li>
-                                            <a href="#">Otras Opciones</a>
+                                            <ice:commandLink action="#{Redireccion.jcanon}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Ver calendario de reservas"/>
                                         </li>
                                     </ul>
                                 </ice:form>

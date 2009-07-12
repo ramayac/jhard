@@ -36,7 +36,7 @@ public class reservas extends HttpServlet {
         Reserva [] reservas = instance.getReservaByEstado(1);
 
         try {
-            out.print("<?xml version='1.0' encoding='UTF-8'?><data>");
+            out.print("<?xml version='1.0' encoding='ISO-8859-1'?><data>");
             for (int i = 0; i < reservas.length; i++) {
                 out.print("<event id='"+reservas[i].getIdreserva()+"'>");
                 out.print("<start_date><![CDATA["+(reservas[i].getFechahorainicioprestamo().getYear()+1900)+"-"+(reservas[i].getFechahorainicioprestamo().getMonth()+1)+"-"+reservas[i].getFechahorainicioprestamo().getDate()+" "+reservas[i].getFechahorainicioprestamo().getHours()+":"+reservas[i].getFechahorainicioprestamo().getMinutes()+":"+reservas[i].getFechahorainicioprestamo().getSeconds()+"]]></start_date>");

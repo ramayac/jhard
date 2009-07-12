@@ -34,6 +34,8 @@ import javax.persistence.TemporalType;
                @NamedQuery(name = "Reserva.findByFechahorainicioprestamo", query = "SELECT r FROM Reserva r WHERE r.fechahorainicioprestamo = :fechahorainicioprestamo"),
                @NamedQuery(name = "Reserva.findByEstadoReserva", query = "SELECT r FROM Reserva r WHERE r.idestado.idestadoreserva = :idestadoreserva"),
                @NamedQuery(name = "Reserva.findPendientes", query = "SELECT r FROM Reserva r WHERE r.idestado.idestadoreserva = 1"),
+               @NamedQuery(name = "Reserva.findEnUso", query = "SELECT r FROM Reserva r WHERE r.idestado.idestadoreserva = 2"),
+               @NamedQuery(name = "Reserva.findMismaHora", query = "SELECT COUNT(r) FROM Reserva r WHERE r.fechahorainicioprestamo = :fechahorainicioprestamo"),
                @NamedQuery(name = "Reserva.findByFechahorafinprestamo", query = "SELECT r FROM Reserva r WHERE r.fechahorafinprestamo = :fechahorafinprestamo")})
 
 public class Reserva implements Serializable {
