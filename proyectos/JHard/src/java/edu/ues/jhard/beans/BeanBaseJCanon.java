@@ -6,6 +6,7 @@
 package edu.ues.jhard.beans;
 
 import edu.ues.jhard.jpa.*;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 
@@ -103,6 +104,35 @@ public class BeanBaseJCanon extends BeanBase {
 
     }
 
+     public String getReservasDeUnaMismaHoraFecha(Date r){
+         String count;
+
+         EntityManager em = this.getEntityManager();
+
+         Query q = em.createNamedQuery("Reserva.findMismaHora");
+
+         q.setParameter("fechahorainicioprestamo", r);
+
+         count = q.getSingleResult().toString();
+
+         return count;
+     }
+
+
+
+     public String getNumeroEquipoMultimedia(Integer clasificacionEquipo){
+         String count="";
+
+         EntityManager em = this.getEntityManager();
+
+         Query q = em.createNamedQuery("Existencia.contarEquipos");
+
+         q.setParameter("idclasificacion", clasificacionEquipo);
+
+         count = q.getSingleResult().toString();
+
+         return count;
+     }
 
      public Existencia [] getEquipoMultimedia(Integer clasificacionEquipo){
 
@@ -120,12 +150,17 @@ public class BeanBaseJCanon extends BeanBase {
          return e;
      }
 
-     public List<Reserva> getReservasPendientes(){
+     public List<Reserva> getReservasPendientesEnUso(){
+
+         List<Reserva> listaReservasPendientesEnUso;
 
          EntityManager em = this.getEntityManager();
 
-         return em.createNamedQuery("Reserva.findPendientes").getResultList();
-
+         listaReservasPendientesEnUso =  em.createNamedQuery("Reserva.findEnUso").getResultList();
+         
+         listaReservasPendientesEnUso.addAll(em.createNamedQuery("Reserva.findPendientes").getResultList());
+        
+         return listaReservasPendientesEnUso;
      }
 
       public List<Reserva> getReservas(){
@@ -135,7 +170,4 @@ public class BeanBaseJCanon extends BeanBase {
          return em.createNamedQuery("Reserva.findAll").getResultList();
 
      }
-
-
-
 }

@@ -30,6 +30,7 @@ import javax.persistence.Table;
 @NamedQueries({@NamedQuery(name = "Existencia.findAll", query = "SELECT e FROM Existencia e"),
                @NamedQuery(name = "Existencia.findByIdexistencia", query = "SELECT e FROM Existencia e WHERE e.idexistencia = :idexistencia"),
                @NamedQuery(name = "Existencia.findEquipoMultimedia", query = "SELECT e FROM Existencia e LEFT JOIN e.idhardware eq WHERE eq.idclasificacion.idclasificacion=:idclasificacion"),
+               @NamedQuery(name = "Existencia.contarEquipos", query = "SELECT COUNT(e) FROM Existencia e LEFT JOIN e.idhardware eq WHERE eq.idclasificacion.idclasificacion=:idclasificacion"),
                @NamedQuery(name = "Existencia.findByCodigo", query = "SELECT e FROM Existencia e WHERE e.codigo = :codigo")})
 public class Existencia implements Serializable {
     private static final long serialVersionUID = 1L;

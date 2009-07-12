@@ -59,6 +59,15 @@ public class Redireccion {
         return "";
     }
 
+    public String jcanon(){
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("jcanon.iface");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return "";
+    }
+
     public String jcanonAdmin(){
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("jcanonAdmin.iface");

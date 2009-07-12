@@ -9,19 +9,26 @@ package jhard;
 import com.icesoft.faces.component.ext.HtmlCommandButton;
 import com.icesoft.faces.component.ext.HtmlOutputText;
 import com.icesoft.faces.component.ext.HtmlSelectBooleanCheckbox;
+import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
 import com.icesoft.faces.component.jsfcl.data.DefaultTableDataModel;
 import com.icesoft.faces.component.jsfcl.data.PopupBean;
+import com.icesoft.faces.component.jsfcl.data.SelectInputDateBean;
 import com.icesoft.faces.component.panelpopup.PanelPopup;
+import com.icesoft.faces.component.selectinputdate.SelectInputDate;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJCanon;
 import edu.ues.jhard.jpa.Estadoreserva;
 import edu.ues.jhard.jpa.Reserva;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.FacesException;
+import javax.faces.component.UISelectItems;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
 
 
 /**
@@ -41,6 +48,8 @@ public class jcanonAdmin extends AbstractPageBean {
      * here is subject to being replaced.</p>
      */
     private void _init() throws Exception {
+        horaInicioFake.setItems(new String[]{});
+        horaFinFake.setItems(new String[]{});
     }
     private DefaultTableDataModel listaReservas = new DefaultTableDataModel();
 
@@ -187,9 +196,6 @@ public class jcanonAdmin extends AbstractPageBean {
     public void setBtnCancelarMensajes(HtmlCommandButton hcb) {
         this.btnCancelarMensajes = hcb;
     }
-    // </editor-fold>
-
-    private List<Reserva> listaReservasPendientes;
     private PanelPopup panelMensajes = new PanelPopup();
 
     public PanelPopup getPanelMensajes() {
@@ -199,33 +205,118 @@ public class jcanonAdmin extends AbstractPageBean {
     public void setPanelMensajes(PanelPopup pp) {
         this.panelMensajes = pp;
     }
-    private DefaultSelectedData selectManyCheckbox1Bean = new DefaultSelectedData();
+    private PopupBean panelPopup1Bean1 = new PopupBean();
 
-    public DefaultSelectedData getSelectManyCheckbox1Bean() {
-        return selectManyCheckbox1Bean;
+    public PopupBean getPanelPopup1Bean1() {
+        return panelPopup1Bean1;
     }
 
-    public void setSelectManyCheckbox1Bean(DefaultSelectedData dsd) {
-        this.selectManyCheckbox1Bean = dsd;
+    public void setPanelPopup1Bean1(PopupBean pb) {
+        this.panelPopup1Bean1 = pb;
     }
-    private DefaultSelectionItems selectManyCheckbox1DefaultItems = new DefaultSelectionItems();
+    private SelectInputDateBean selectInputDate1Bean = new SelectInputDateBean();
 
-    public DefaultSelectionItems getSelectManyCheckbox1DefaultItems() {
-        return selectManyCheckbox1DefaultItems;
-    }
-
-    public void setSelectManyCheckbox1DefaultItems(DefaultSelectionItems dsi) {
-        this.selectManyCheckbox1DefaultItems = dsi;
+    public SelectInputDateBean getSelectInputDate1Bean() {
+        return selectInputDate1Bean;
     }
 
+    public void setSelectInputDate1Bean(SelectInputDateBean sidb) {
+        this.selectInputDate1Bean = sidb;
+    }
+    private DefaultSelectionItems horaInicioFake = new DefaultSelectionItems();
 
-    /**
+    public DefaultSelectionItems getHoraInicioFake() {
+        return horaInicioFake;
+    }
+
+    public void setHoraInicioFake(DefaultSelectionItems dsi) {
+        this.horaInicioFake = dsi;
+    }
+    private DefaultSelectionItems horaFinFake = new DefaultSelectionItems();
+
+    public DefaultSelectionItems getHoraFinFake() {
+        return horaFinFake;
+    }
+
+    public void setHoraFinFake(DefaultSelectionItems dsi) {
+        this.horaFinFake = dsi;
+    }
+    private PanelPopup panelPosponer = new PanelPopup();
+
+    public PanelPopup getPanelPosponer() {
+        return panelPosponer;
+    }
+
+    public void setPanelPosponer(PanelPopup pp) {
+        this.panelPosponer = pp;
+    }
+    private HtmlOutputText lblTextMod = new HtmlOutputText();
+
+    public HtmlOutputText getLblTextMod() {
+        return lblTextMod;
+    }
+
+    public void setLblTextMod(HtmlOutputText hot) {
+        this.lblTextMod = hot;
+    }
+    private SelectInputDate fechaMod = new SelectInputDate();
+
+    public SelectInputDate getFechaMod() {
+        return fechaMod;
+    }
+
+    public void setFechaMod(SelectInputDate sid) {
+        this.fechaMod = sid;
+    }
+    private HtmlSelectOneMenu horaInicioMod = new HtmlSelectOneMenu();
+
+    public HtmlSelectOneMenu getHoraInicioMod() {
+        return horaInicioMod;
+    }
+
+    public void setHoraInicioMod(HtmlSelectOneMenu hsom) {
+        this.horaInicioMod = hsom;
+    }
+    private HtmlSelectOneMenu horaFinMod = new HtmlSelectOneMenu();
+
+    public HtmlSelectOneMenu getHoraFinMod() {
+        return horaFinMod;
+    }
+
+    public void setHoraFinMod(HtmlSelectOneMenu hsom) {
+        this.horaFinMod = hsom;
+    }
+    private HtmlCommandButton btnAceptarMod = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnAceptarMod() {
+        return btnAceptarMod;
+    }
+
+    public void setBtnAceptarMod(HtmlCommandButton hcb) {
+        this.btnAceptarMod = hcb;
+    }
+    private HtmlCommandButton btnCancelarMod = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnCancelarMod() {
+        return btnCancelarMod;
+    }
+
+    public void setBtnCancelarMod(HtmlCommandButton hcb) {
+        this.btnCancelarMod = hcb;
+    }
+    // </editor-fold>
+
+    private List<Reserva> listaReservasPendientes;
+        /**
      * <p>Construct a new Page bean instance.</p>
      */
     public jcanonAdmin() {
-        listaReservasPendientes=new BeanBaseJCanon().getReservas();
+        listaReservasPendientes=new BeanBaseJCanon().getReservasPendientesEnUso();
         this.panelMensajes.setRendered(false);
         this.panelModEstado.setRendered(false);
+        this.panelPosponer.setRendered(false);
+
+        this.horaFinMod.setDisabled(true);
     }
 
     /**
@@ -319,7 +410,13 @@ public class jcanonAdmin extends AbstractPageBean {
         String idUsuario = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idReserva");
         System.out.println(idUsuario);
         Integer id = Integer.parseInt(idUsuario);
+
+        this.checkDespachada.setSelected(false);
+        this.checkPendiente.setSelected(false);
+        this.checkUso.setSelected(false);
+
         reservaMod = new BeanBaseJCanon().getEntityManager().find(Reserva.class, id);
+
         switch(reservaMod.getIdestado().getIdestadoreserva()){
             case 1:
                 System.out.println("Pendiente");
@@ -374,7 +471,8 @@ public class jcanonAdmin extends AbstractPageBean {
 
         reservaMod.setIdestado(er);
         instance.modificarEstadoReserva(reservaMod);
-
+        listaReservasPendientes=new BeanBaseJCanon().getReservasPendientesEnUso();
+        
         this.panelModEstado.setRendered(false);
         this.panelModEstado.setVisible(false);
         this.panelModEstado.setModal(false);
@@ -422,5 +520,151 @@ public class jcanonAdmin extends AbstractPageBean {
         return null;
     }
 
-}
 
+    private String [] hours;
+    private String horaSeleccionada="6:45";
+
+    public String posponerReserva(){
+        String idUsuario = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idReserva");
+        System.out.println(idUsuario);
+        Integer id = Integer.parseInt(idUsuario);
+        reservaMod = new BeanBaseJCanon().getEntityManager().find(Reserva.class, id);
+
+        LlenarHora(1);
+
+        this.lblTextMod.setValue("Cambie fecha y hora para: "+this.reservaMod.getDescripcion());
+
+
+        this.fechaMod.setValue(this.reservaMod.getFechahorainicioprestamo());
+        
+        this.panelPosponer.setRendered(true);
+        this.panelPosponer.setVisible(true);
+        this.panelPosponer.setModal(true);
+
+
+        return "";
+    }
+
+    public void LlenarHora(int inicioFin){
+        this.horaFinMod.getChildren().clear();
+        
+         String [] horas=null;
+
+        if(inicioFin==1){
+            hours = new String []  {"6:45","7:35","8:25","9:15","10:05","10:55","11:45","12:35","13:00","13:50","14:40","15:30","16:20","17:10","18:00","18:50","19:40","20:30"};
+
+            ArrayList h = new ArrayList();
+
+            for(int i=0;i<hours.length;i++){
+
+                String label = hours[i];
+                h.add(new SelectItem(hours[i],label));
+            }
+
+            UISelectItems itemsHI = new UISelectItems();
+            itemsHI.setValue(h);
+            this.horaInicioMod.getChildren().add(itemsHI);
+
+        }
+        if (inicioFin==2){
+            System.out.println("Tamaño  "+ this.hours.length);
+            for (int i = 0; i < this.hours.length; i++) {
+
+                if(horaSeleccionada.equals(this.hours[i])){
+
+                    System.out.println("Tamaño del otro vector  "+ (this.hours.length-i));
+
+                    horas = new String[this.hours.length-i-1];
+
+                    ArrayList hf = new ArrayList();
+
+                    for (int j = 0; j < (this.hours.length-i-1); j++) {
+
+                        System.out.println("Mete la hora  "+ this.hours[j+i+1]);
+                        horas[j]=this.hours[j+i+1];
+
+                        String label = horas[j];
+                        hf.add(new SelectItem(horas[j],label));
+
+                    }
+
+                    this.horaFinMod.setDisabled(false);
+                    UISelectItems itemsHF = new UISelectItems();
+                    itemsHF.setValue(hf);
+                    this.horaFinMod.getChildren().add(itemsHF);
+
+                    continue;
+                }
+            }
+        }
+    }
+
+    public String btnAceptarMod_action() {
+        
+        Date fechaI = (Date)this.fechaMod.getValue();
+        String [] tiempoI = this.horaInicioMod.getValue().toString().split("\\:");
+        int hourI = Integer.parseInt(tiempoI[0]);
+        int minuteI = Integer.parseInt(tiempoI[1]);
+        int secondI = 00;
+
+        reservaMod.setFechahorainicioprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),(fechaI.getDate()+1),hourI,minuteI,secondI));
+
+
+        String [] tiempoF = this.horaFinMod.getValue().toString().split("\\:");
+        int hourF = Integer.parseInt(tiempoF[0]);
+        int minuteF = Integer.parseInt(tiempoF[1]);
+        int secondF = 00;
+
+        reservaMod.setFechahorafinprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),(fechaI.getDate()+1),hourF,minuteF,secondF));
+        
+        new BeanBaseJCanon().modificarEstadoReserva(reservaMod);
+        listaReservasPendientes=new BeanBaseJCanon().getReservasPendientesEnUso();
+        
+        this.panelPosponer.setRendered(false);
+        this.panelPosponer.setVisible(false);
+        this.panelPosponer.setModal(false);
+
+        this.lblMensajes.setValue("Reserva modificada con éxito");
+
+        this.panelMensajes.setRendered(true);
+        this.panelMensajes.setVisible(true);
+        this.panelMensajes.setModal(true);
+
+        return null;
+    }
+
+    public String btnCancelarMod_action() {
+
+        this.panelPosponer.setRendered(false);
+        this.panelPosponer.setVisible(false);
+        this.panelPosponer.setModal(false);
+
+        return null;
+    }
+
+
+    public String Eliminar(){
+        String idUsuario = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idReserva");
+        System.out.println(idUsuario);
+        Integer id = Integer.parseInt(idUsuario);
+        reservaMod = new BeanBaseJCanon().getEntityManager().find(Reserva.class, id);
+
+        new BeanBaseJCanon().eliminarReserva(reservaMod);
+        listaReservasPendientes=new BeanBaseJCanon().getReservasPendientesEnUso();
+
+        this.lblMensajes.setValue("Reserva eliminada con éxito");
+        
+        this.panelMensajes.setRendered(true);
+        this.panelMensajes.setVisible(true);
+        this.panelMensajes.setModal(true);
+
+        return "";
+    }
+
+    public void horaInicioMod_processValueChange(ValueChangeEvent vce) {
+        this.horaSeleccionada=this.horaInicioMod.getValue().toString();
+
+        LlenarHora(2);
+    }
+
+}

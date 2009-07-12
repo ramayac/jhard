@@ -10,7 +10,7 @@
         <html id="outputHtml1">
             <head id="outputHead1">
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
-                <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
+                <ice:outputStyle href="./xmlhttp/css/rime/rime.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
                 <title>.:: JRequest ::.</title>
                 <meta content="" name="keywords"/>
@@ -23,10 +23,10 @@
                 <div id="header">
                     <div id="menu">
                         <ul>
-                            <li class="current_page_item">
+                            <li>
                                 <a href="Index.iface">Principal</a>
                             </li>
-                            <li>
+                            <li class="current_page_item">
                                 <a href="jrequestAdmin.iface">Mantenimientos</a>
                             </li>
                             <li>
@@ -91,9 +91,9 @@
                                                                 <f:selectItems id="fakeComboEstado" value="#{jrequestAdmin.fakeComboEstado1}"/>
                                                             </ice:selectOneMenu>
                                                             <ice:commandButton action="#{jrequestAdmin.btnAceptarFinalizado_action}"
-                                                                binding="#{jrequestAdmin.btnAceptarFinalizado}" id="btnAceptarFinalizado" value="OK"/>
-                                                            <ice:commandButton action="#{jrequestAdmin.btnCerrar_action}" binding="#{jrequestAdmin.btnCerrar}"
-                                                                id="btnCerrar" value="Cerrar"/>
+                                                                binding="#{jrequestAdmin.btnAceptarFinalizado}" id="btnAceptarFinalizado" styleClass="btnAccion2" value="OK"/>
+                                                            <ice:commandButton action="#{jrequestAdmin.btnCerrar_action}"  binding="#{jrequestAdmin.btnCerrar}"
+                                                                id="btnCerrar" styleClass="btnAccion2" value="Cerrar"/>
                                                         </ice:panelGrid>
                                                     </f:facet>
                                                 </ice:panelPopup>
@@ -129,9 +129,9 @@
                                                             <ice:outputText id="outputText3" style="width: 310px" value="Para actualizar esta bitácora, modifique en el cuadro de texto inferior"/>
                                                             <ice:inputTextarea binding="#{jrequestAdmin.txtModBitacora}" id="txtModBitacora" style="height: 119px; width: 287px"/>
                                                             <ice:commandButton action="#{jrequestAdmin.btnAceptarModBitacora_action}"
-                                                                binding="#{jrequestAdmin.btnAceptarModBitacora}" id="btnAceptarModBitacora" value="Aceptar"/>
+                                                                binding="#{jrequestAdmin.btnAceptarModBitacora}" id="btnAceptarModBitacora" styleClass="btnAccion2" value="Aceptar"/>
                                                             <ice:commandButton action="#{jrequestAdmin.btnCancelarModBitacora_action}"
-                                                                binding="#{jrequestAdmin.btnCancelarModBitacora}" id="btnCancelarModBitacora" value="Cerrar"/>
+                                                                binding="#{jrequestAdmin.btnCancelarModBitacora}" id="btnCancelarModBitacora" styleClass="btnAccion2" value="Cerrar"/>
                                                         </ice:panelGrid>
                                                     </f:facet>
                                                 </ice:panelPopup>
@@ -154,19 +154,22 @@
                                                 <f:facet name="second">
                                                     <ice:panelGroup id="grupo2" style="position: inherit; width: 100%; ">
                                                         <p>
-                                                            <ice:outputLabel id="outputLabel2" style="font-weight: bold; width: 190px" value="NOMBRE PERSONA ENCARGADA"/>
+                                                            <h3 styleClass="tituloSeccion"><ice:outputLabel id="outputLabel2" style="font-weight: bold; width: 190px" value="NOMBRE PERSONA ENCARGADA"/>
+                                                            </h3>
                                                         </p>
                                                         <p>
                                                             <ice:outputLabel binding="#{jrequestAdmin.lblPersona}" id="lblPersona" style="" value="PERSONA"/>
                                                         </p>
                                                         <p>
-                                                            <ice:outputLabel id="outputLabel1" style="font-weight: bold; width: 144px" value="NOMBRE SOLICITUD"/>
+                                                            <h3 styleClass="tituloSeccion"><ice:outputLabel id="outputLabel1" style="font-weight: bold; width: 144px" value="NOMBRE SOLICITUD"/>
+                                                            </h3>
                                                         </p>
                                                         <p>
                                                             <ice:outputLabel binding="#{jrequestAdmin.lblNombre}" id="lblNombre" style="" value="NOMBRE"/>
                                                         </p>
                                                         <p>
-                                                            <ice:outputLabel id="outputLabel3" style="font-weight: bold; " value="PRIORIDAD"/>
+                                                            <h3 styleClass="tituloSeccion"><ice:outputLabel id="outputLabel3" style="font-weight: bold; " value="PRIORIDAD"/>
+                                                            </h3>
                                                         </p>
                                                         <p>
                                                             <ice:selectOneMenu binding="#{jrequestAdmin.comboPrioridad}" id="comboPrioridad"
@@ -175,8 +178,8 @@
                                                             </ice:selectOneMenu>
                                                         </p>
                                                         <p>
-                                                            <ice:outputLabel id="outputLabel5" style="font-weight: bold; width: 144px" value="TÉCNICO A ASIGNAR"/>
-                                                        </p>
+                                                            <h3 styleClass="tituloSeccion"><ice:outputLabel id="outputLabel5" style="font-weight: bold; width: 144px" value="TÉCNICO A ASIGNAR"/>
+                                                        </h3></p>
                                                         <p>
                                                             <ice:selectOneMenu binding="#{jrequestAdmin.comboTecnicos}" id="comboTecnicos" partialSubmit="true"
                                                                 style="width: 192px" value="" valueChangeListener="#{jrequestAdmin.comboTecnicos_processValueChange}">
@@ -184,11 +187,11 @@
                                                             </ice:selectOneMenu>
                                                         </p>
                                                         <p>
-                                                            <ice:commandButton action="#{jrequestAdmin.btnProceder_action}" id="btnProceder" style="" value="Proceder a Mantenimiento"/>
+                                                            <ice:commandButton action="#{jrequestAdmin.btnProceder_action}" id="btnProceder" styleClass="btnAccion2" value="Proceder a Mantenimiento"/>
                                                         </p>
                                                         <p>
                                                             <ice:commandButton action="#{jrequestAdmin.btnSolicitudAdmin_action}"
-                                                                binding="#{jrequestAdmin.btnSolicitudAdmin}" id="btnSolicitudAdmin" style="width: 168px" value="Realizar una Solicitud"/>
+                                                                binding="#{jrequestAdmin.btnSolicitudAdmin}" id="btnSolicitudAdmin" style="width: 168px" styleClass="btnAccion2" value="Realizar una Solicitud"/>
                                                         </p>
                                                     </ice:panelGroup>
                                                 </f:facet>
@@ -204,7 +207,7 @@
                                         <f:facet name="body">
                                             <ice:panelGrid id="panelGrid2" style="display:block;width:180px;height:80px;">
                                                 <ice:outputText binding="#{jrequestAdmin.lblMensajes}" id="lblMensajes" value="Texto de Mensajes"/>
-                                                <ice:commandButton action="#{jrequestAdmin.btnOK_action}" binding="#{jrequestAdmin.btnOK}" id="btnOK" value="OK"/>
+                                                <ice:commandButton action="#{jrequestAdmin.btnOK_action}" binding="#{jrequestAdmin.btnOK}" id="btnOK" styleClass="btnAccion2" value="OK"/>
                                             </ice:panelGrid>
                                         </f:facet>
                                     </ice:panelPopup>
@@ -242,14 +245,14 @@
                                         <ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}"/>
                                         <h:message for="txtPass" styleClass="errorText"/>
                                     </p>
-                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" styleClass="btnAccion" value="Login"/>
+                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" styleClass="btnAccion2" value="Login"/>
                                 </ice:form>
                                 <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
                                     <p>
                                         <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
                                         <ice:outputLabel id="lblNomUsuario" styleClass="formValue" value="#{JHardminInstance.currentUser.userName}"/>
                                     </p>
-                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>
+                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion2" value="Logout"/>
                                 </ice:form>
                             </li>
                             <li>

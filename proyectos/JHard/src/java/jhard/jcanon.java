@@ -250,50 +250,7 @@ public class jcanon extends AbstractPageBean {
     public void setBtnVerSoloReservas(HtmlCommandButton hcb) {
         this.btnVerSoloReservas = hcb;
     }
-    private HtmlInputText txtSolicitante = new HtmlInputText();
-
-    public HtmlInputText getTxtSolicitante() {
-        return txtSolicitante;
-    }
-
-    public void setTxtSolicitante(HtmlInputText hit) {
-        this.txtSolicitante = hit;
-    }
-
-    // </editor-fold>
-
-
-    private LoggedUser lu;
-    private Usuario U;
-
-    public LoggedUser getLu() {
-        return lu;
-    }
-
-    public void setLu(LoggedUser lu) {
-        this.lu = lu;
-    }
-
-    public Usuario getU(){
-        return U;
-    }
-
-    public void setU(Usuario u){
-        this.U=u;
-    }
-
-    public  BeanBaseJHardmin getJHardminInstance() {
-        return (BeanBaseJHardmin) getBean("JHardminInstance");
-    }
-    private HtmlInputText txtSolicitanteApellidos = new HtmlInputText();
-
-    public HtmlInputText getTxtSolicitanteApellidos() {
-        return txtSolicitanteApellidos;
-    }
-
-    public void setTxtSolicitanteApellidos(HtmlInputText hit) {
-        this.txtSolicitanteApellidos = hit;
-    }
+    
     private PopupBean panelPopup1Bean = new PopupBean();
 
     public PopupBean getPanelPopup1Bean() {
@@ -331,7 +288,32 @@ public class jcanon extends AbstractPageBean {
         this.btnOk = hcb;
     }
 
+    // </editor-fold>
 
+
+    private LoggedUser lu;
+    private Usuario U;
+
+    public LoggedUser getLu() {
+        return lu;
+    }
+
+    public void setLu(LoggedUser lu) {
+        this.lu = lu;
+    }
+
+    public Usuario getU(){
+        return U;
+    }
+
+    public void setU(Usuario u){
+        this.U=u;
+    }
+
+    public  BeanBaseJHardmin getJHardminInstance() {
+        return (BeanBaseJHardmin) getBean("JHardminInstance");
+    }
+    
     /**
      * <p>Construct a new Page bean instance.</p>
      */
@@ -351,16 +333,9 @@ public class jcanon extends AbstractPageBean {
             switch(U.getIdrol().getIdrol()){
             case 3:
                 Ing = new BeanBaseManLab().getDocenteByUsuario(U.getIdusuario());
-                this.txtSolicitante.setValue((String)Ing.getNombres());
-                this.txtSolicitanteApellidos.setValue((String)Ing.getApellidos());
-                this.txtSolicitante.setDisabled(true);
-                this.txtSolicitanteApellidos.setDisabled(true);
                 this.comboDocente.setDisabled(true);
                 break;
             default:
-                this.txtSolicitante.setValue((String)U.getNombre());
-                this.txtSolicitante.setDisabled(true);
-                this.txtSolicitanteApellidos.setDisabled(true);
                 LlenarComboDocentes();
                 break;
 
@@ -513,7 +488,6 @@ public class jcanon extends AbstractPageBean {
         UISelectItems itemsEx = new UISelectItems();
         itemsEx.setValue(ex);
         this.comboCan.getChildren().add(itemsEx);
-
     }
 
     public void LlenarComboLaptop(){
@@ -533,7 +507,6 @@ public class jcanon extends AbstractPageBean {
         UISelectItems itemsEx = new UISelectItems();
         itemsEx.setValue(ex);
         this.comboLaptop.getChildren().add(itemsEx);
-
     }
 
     public void LlenarComboDocentes(){
@@ -564,7 +537,7 @@ public class jcanon extends AbstractPageBean {
         this.horaFin.getChildren().clear();
 
         if(inicioFin==1){
-            hours = new String []  {"6:45","7:35","8:25","9:15","10:05","10:55","11:45","12:35","1:00","1:50","2:40","3:30","4:20","5:10","6:00","6:50","7:40","8:30"};
+            hours = new String []  {"6:45","7:35","8:25","9:15","10:05","10:55","11:45","12:35","13:00","13:50","14:40","15:30","16:20","17:10","18:00","18:50","19:40","20:30"};
 
             ArrayList h = new ArrayList();
 
@@ -621,43 +594,21 @@ public class jcanon extends AbstractPageBean {
 
     public String btnCrearReserva_action() {
 
-//            switch(U.getIdrol().getIdrol()){
-//            case 1:
-//                    s.setNombres(U.getNombre());
-//                    s.setApellidos("");
-//                    s.setTipodocumento("DUI");
-//                    s.setValordocumento("DUI");
-//                    s.setVisible(1);
-//
-//
-//                    break;
-//            case 3:
-//                s.setNombres(this.txtSolicitante.getValue().toString());
-//                s.setApellidos(this.txtSolicitanteApellidos.getValue().toString());
-//                s.setTipodocumento("No Necesita");
-//                s.setValordocumento("No Necesita");
-//                s.setVisible(1);
-//
-//                break;
-//
-//            default:
-//
-//                break;
-//
-//            }
-//            r.setNombres(Ing.getNombres());
-//            r.setApellidos(Ing.getApellidos());
-//            r.setTipodocumento("No Necesita");
-//            r.setValordocumento("No Necesita");
-//            r.setVisible(1);
-
             BeanBaseJCanon instance = new BeanBaseJCanon();
-           
+
             Estadoreserva er = new BeanBaseJCanon().getEntityManager().find(Estadoreserva.class, 1);
             Calendar c = Calendar.getInstance();
 
             if(this.checkCan.isSelected()){
                 Reserva reservaCanon = new Reserva();
+
+                String tmp=(String)this.comboCan.getValue();
+                if(tmp!=null){
+                    System.out.println("TODO BIEN--> "+ tmp);
+                    Integer id=Integer.parseInt(tmp);
+                    System.out.println("TODO BIEN--> "+ id);
+                    canonElegido=new BeanBaseJCanon().getEntityManager().find(Existencia.class, id);
+                }
 
 
                 reservaCanon.setFechareserva(new Date((c.get(Calendar.YEAR))-1900, c.get(Calendar.MONTH), c.get(Calendar.DATE)));
@@ -668,52 +619,101 @@ public class jcanon extends AbstractPageBean {
                 int minuteI = Integer.parseInt(tiempoI[1]);
                 int secondI = 00;
 
-                reservaCanon.setFechahorainicioprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),fechaI.getDate(),hourI,minuteI,secondI));
 
+                reservaCanon.setFechahorainicioprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),(fechaI.getDate()+1),hourI,minuteI,secondI));
 
-                String [] tiempoF = this.horaFin.getValue().toString().split("\\:");
-                int hourF = Integer.parseInt(tiempoF[0]);
-                int minuteF = Integer.parseInt(tiempoF[1]);
-                int secondF = 00;
+                int reservas = Integer.parseInt(instance.getReservasDeUnaMismaHoraFecha(reservaCanon.getFechahorainicioprestamo()));
+                int equipos = Integer.parseInt(instance.getNumeroEquipoMultimedia(canonElegido.getIdhardware().getIdclasificacion().getIdclasificacion()));
+                
+                if(reservas>=equipos){
+                    this.lblMensajes.setValue("No se puede realizar la reserva. Equipo multimedia insuficiente");
+                    this.panelMensajes.setRendered(true);
+                    this.panelMensajes.setVisible(true);
+                    this.panelMensajes.setModal(true);
 
-                reservaCanon.setFechahorafinprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),fechaI.getDate(),hourF,minuteF,secondF));
+                }else{
+                    System.out.println("RESERVAS--> "+ reservas);
+                    System.out.println("EQUIPO--> " + equipos);
+                    String [] tiempoF = this.horaFin.getValue().toString().split("\\:");
+                    int hourF = Integer.parseInt(tiempoF[0]);
+                    int minuteF = Integer.parseInt(tiempoF[1]);
+                    int secondF = 00;
 
-                reservaCanon.setDescripcion("Prestamo de "+this.canonElegido.getIdhardware().getNombre() +" "+this.canonElegido.getIdhardware().getIdmarca().getNombre()+"  "+this.canonElegido.getIdhardware().getModelo());
-                reservaCanon.setIdequipoexistente(canonElegido);
-                reservaCanon.setIdubicacion(canonElegido.getIdubicacion());
-                reservaCanon.setIdusuario(U);
-                reservaCanon.setIdestado(er);
-                reservaCanon.setIddocente(Ing);
+                    reservaCanon.setFechahorafinprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),(fechaI.getDate()+1),hourF,minuteF,secondF));
 
-                instance.registrarReserva(reservaCanon);
+                    reservaCanon.setDescripcion("Prestamo de "+this.canonElegido.getIdhardware().getNombre() +" "+this.canonElegido.getIdhardware().getIdmarca().getNombre()+"  "+this.canonElegido.getIdhardware().getModelo());
+                    reservaCanon.setIdequipoexistente(canonElegido);
+                    reservaCanon.setIdubicacion(canonElegido.getIdubicacion());
+                    reservaCanon.setIdusuario(U);
+                    reservaCanon.setIdestado(er);
+                    reservaCanon.setIddocente(Ing);
 
-                this.lblMensajes.setValue("Reserva de Cañon hecha con éxito");
-                this.panelMensajes.setRendered(true);
-                this.panelMensajes.setVisible(true);
-                this.panelMensajes.setModal(true);
+                    instance.registrarReserva(reservaCanon);
+
+                    this.lblMensajes.setValue("Reserva hecha con éxito");
+                    this.panelMensajes.setRendered(true);
+                    this.panelMensajes.setVisible(true);
+                    this.panelMensajes.setModal(true);
+                }
 
             }
 
             if(this.checkLaptop.isSelected()){
                 Reserva reservaLaptop = new Reserva();
+
+                String tmp=(String)this.comboLaptop.getValue();
+                if(tmp!=null){
+                    System.out.println("TODO BIEN--> "+ tmp);
+                    Integer id=Integer.parseInt(tmp);
+                    System.out.println("TODO BIEN--> "+ id);
+                    laptopElegida=new BeanBaseJCanon().getEntityManager().find(Existencia.class, id);
+                }
+                //FALTA LA VALIDACION PARA LAS LAPTOPS!!!!
                 reservaLaptop.setFechareserva(new Date((c.get(Calendar.YEAR))-1900, c.get(Calendar.MONTH), c.get(Calendar.DATE)));
-                reservaLaptop.setFechahorainicioprestamo((Date)this.selectFecha.getValue());
-                reservaLaptop.setFechahorafinprestamo((Date)this.selectFecha.getValue());
-                reservaLaptop.setDescripcion("Prestamo de "+this.canonElegido.getIdhardware().getNombre() +" "+this.canonElegido.getIdhardware().getIdmarca().getNombre()+this.canonElegido.getIdhardware().getModelo());
-                reservaLaptop.setIdequipoexistente(canonElegido);
-                reservaLaptop.setIdubicacion(canonElegido.getIdubicacion());
-                reservaLaptop.setIdusuario(U);
-                reservaLaptop.setIdestado(er);
-                reservaLaptop.setIddocente(Ing);
+                
+                Date fechaI = (Date)this.selectFecha.getValue();
+                String [] tiempoI = this.horaInicio.getValue().toString().split("\\:");
+                int hourI = Integer.parseInt(tiempoI[0]);
+                int minuteI = Integer.parseInt(tiempoI[1]);
+                int secondI = 00;
 
-                instance.registrarReserva(reservaLaptop);
+                reservaLaptop.setFechahorainicioprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),(fechaI.getDate()+1),hourI,minuteI,secondI));
 
-                this.lblMensajes.setValue("Reserva de Laptop hecha con éxito");
-                this.panelMensajes.setRendered(true);
-                this.panelMensajes.setVisible(true);
-                this.panelMensajes.setModal(true);
+                int reservas = Integer.parseInt(instance.getReservasDeUnaMismaHoraFecha(reservaLaptop.getFechahorainicioprestamo()));
+                int equipos = Integer.parseInt(instance.getNumeroEquipoMultimedia(laptopElegida.getIdhardware().getIdclasificacion().getIdclasificacion()));
 
+                if(reservas>=equipos){
+                    this.lblMensajes.setValue("No se puede realizar la reserva. Equipo multimedia insuficiente");
+                    this.panelMensajes.setRendered(true);
+                    this.panelMensajes.setVisible(true);
+                    this.panelMensajes.setModal(true);
+
+                }else{
+                    String [] tiempoF = this.horaFin.getValue().toString().split("\\:");
+                    int hourF = Integer.parseInt(tiempoF[0]);
+                    int minuteF = Integer.parseInt(tiempoF[1]);
+                    int secondF = 00;
+
+                    reservaLaptop.setFechahorafinprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),(fechaI.getDate()+1),hourF,minuteF,secondF));
+
+                    reservaLaptop.setDescripcion("Prestamo de "+this.laptopElegida.getIdhardware().getNombre() +" "+this.laptopElegida.getIdhardware().getIdmarca().getNombre()+" "+this.laptopElegida.getIdhardware().getModelo());
+                    reservaLaptop.setIdequipoexistente(laptopElegida);
+                    reservaLaptop.setIdubicacion(laptopElegida.getIdubicacion());
+                    reservaLaptop.setIdusuario(U);
+                    reservaLaptop.setIdestado(er);
+                    reservaLaptop.setIddocente(Ing);
+
+                    instance.registrarReserva(reservaLaptop);
+
+                    this.lblMensajes.setValue("Reserva hecha con éxito");
+                    this.panelMensajes.setRendered(true);
+                    this.panelMensajes.setVisible(true);
+                    this.panelMensajes.setModal(true);
+
+                }
+                
             }
+
         return null;
     }
 

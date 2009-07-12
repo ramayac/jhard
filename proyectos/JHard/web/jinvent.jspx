@@ -12,7 +12,7 @@
             <head id="outputHead1">
                 <!--ice:outputStyle href="./resources/stylesheet.css" id="outputStyle1"/-->
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
-                <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
+                <ice:outputStyle href="./xmlhttp/css/rime/rime.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
                 <title>.:: JHard ::.</title>
                 <meta content="" name="keywords"/>
@@ -70,11 +70,11 @@
                                             <ice:panelDivider id="divTreeClasificaciones" orientation="vertical" style="width: 100%; height: 500px" dividerPosition="38">
                                                 <f:facet name="first">
                                                     <ice:panelGroup >
-                                                    <ice:tree id="treeClasificaciones" value="#{JInventInstance.clasificaciontm.modelo}" var="nodo" hideRootNode="false" hideNavigation="false" imageDir="./xmlhttp/css/xp/css-images/">
+                                                    <ice:tree id="treeClasificaciones" value="#{JInventInstance.clasificaciontm.modelo}" var="nodo" hideRootNode="false" hideNavigation="false" imageDir="./xmlhttp/css/rime/css-images/">
                                                         <ice:treeNode>
                                                             <f:facet name="icon">
                                                                 <ice:panelGroup style="display: inline" >
-                                                                    <ice:graphicImage value="/xmlhttp/css/xp/css-images/#{nodo.userObject.icon}"/>
+                                                                    <ice:graphicImage value="/xmlhttp/css/rime/css-images/#{nodo.userObject.icon}"/>
                                                                 </ice:panelGroup>
                                                             </f:facet>
                                                             <f:facet name="content">
@@ -126,10 +126,10 @@
                                                             </ice:column>
                                                         </ice:dataTable>
                                                         <ice:dataPaginator id="pgrListaEquipos" for="tblListaEquipos" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.sizeListaEquipos > 5}">
-                                                            <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
-                                                            <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
-                                                            <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
-                                                            <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
+                                                            <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
+                                                            <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
+                                                            <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
+                                                            <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
                                                         </ice:dataPaginator>
                                                         <ice:panelPopup id="pupAgregarEquipo" modal="true" draggable="true" rendered="#{JInventInstance.crdEquipo.popupAddVisible}">
                                                             <f:facet name="header"><ice:outputText value="Agregar nuevo equipo" /></f:facet>
@@ -233,10 +233,10 @@
                                                             </ice:column>
                                                         </ice:dataTable>
                                                         <ice:dataPaginator id="pgrListaSoftware" for="tblListaSoftware" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.sizeListaSoftware > 5}">
-                                                            <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
-                                                            <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
-                                                            <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
-                                                            <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
+                                                            <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
+                                                            <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
+                                                            <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
+                                                            <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
                                                         </ice:dataPaginator>
                                                         <ice:panelPopup id="pupAgregarSoftware" modal="true" draggable="true" rendered="#{JInventInstance.crdSoftware.popupAddVisible}">
                                                             <f:facet name="header"><ice:outputText value="Agregar nuevo software" /></f:facet>
@@ -340,10 +340,10 @@
                                                             </ice:column>
                                                         </ice:dataTable>
                                                         <ice:dataPaginator id="pgrListaAccesorios" for="tblListaAccesorios" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.sizeListaAccesorios > 3}">
-                                                            <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
-                                                            <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
-                                                            <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
-                                                            <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
+                                                            <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
+                                                            <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
+                                                            <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
+                                                            <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
                                                         </ice:dataPaginator>
                                                         <ice:panelPopup id="pupAgregarAccesorio" modal="true" draggable="true" rendered="#{JInventInstance.crdAccesorio.popupAddVisible}" >
                                                             <f:facet name="header"><ice:outputText value="Agregar nuevo accesorio" /></f:facet>
@@ -445,10 +445,10 @@
                                                             </ice:column>                                                            
                                                         </ice:dataTable>
                                                         <ice:dataPaginator id="pgrListaPiezas" for="tblListaPiezas" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.sizeListaPiezas > 3}">
-                                                            <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
-                                                            <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
-                                                            <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
-                                                            <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
+                                                            <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
+                                                            <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
+                                                            <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
+                                                            <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
                                                         </ice:dataPaginator>
                                                         <ice:panelPopup id="pupAgregarPieza" modal="true" draggable="true" rendered="#{JInventInstance.crdPieza.popupAddVisible}">
                                                             <f:facet name="header"><ice:outputText value="Agregar nueva pieza" /></f:facet>

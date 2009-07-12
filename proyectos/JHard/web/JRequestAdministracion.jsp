@@ -10,7 +10,7 @@
         <html id="outputHtml1">
             <head id="outputHead1">
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
-                <ice:outputStyle href="./xmlhttp/css/xp/xp.css" id="outputStyle2"/>
+                <ice:outputStyle href="./xmlhttp/css/rime/rime.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
                 <title>.:: JRequest ::.</title>
                 <meta content="" name="keywords"/>
@@ -23,10 +23,10 @@
                 <div id="header">
                     <div id="menu">
                         <ul>
-                            <li class="current_page_item">
+                            <li>
                                 <a href="Index.iface">Principal</a>
                             </li>
-                            <li>
+                            <li class="current_page_item">
                                 <a href="jrequestUser.iface">Mantenimientos</a>
                             </li>
                             <li>
@@ -67,7 +67,8 @@
                                             </f:facet>
                                             <ice:panelGroup id="grupoEqs" style="height: 350px">
                                                 <p>
-                                                    <ice:outputLabel id="tituloMod" style="font-size: 12px; font-weight: bold; width: 444px" value="Agregue, elimine o modifique Equipos Simples. "/>
+                                                    <h3 styleClass="tituloSeccion"><ice:outputLabel id="tituloMod" style="font-size: 12px; font-weight: bold; width: 444px" value="Agregue, elimine o modifique Equipos Simples. "/>
+                                                    </h3>
                                                 </p>
                                                 <p>
                                                     <ice:selectOneListbox binding="#{JRequestAdministracion.listaEqS}" id="listaEqS" partialSubmit="true"
@@ -95,12 +96,14 @@
                                                 </ice:panelGroup>
                                             </f:facet>
                                             <ice:panelGrid id="grupoTec" style="height: 410px">
-                                                <ice:outputText id="lbtTec" style="font-size: 12px; font-weight: bold;" value="Agregue o elimine Técnicos"/>
+                                                <h3 styleClass="tituloSeccion"><ice:outputText id="lbtTec" style="font-size: 12px; font-weight: bold;" value="Agregue o elimine Técnicos"/>
+                                                </h3>
                                                 <ice:selectOneListbox binding="#{JRequestAdministracion.listaTecnicos}" id="listaTecnicos" partialSubmit="true"
                                                     size="10" valueChangeListener="#{JRequestAdministracion.listaTecnicos_processValueChange}">
                                                     <f:selectItems id="selectOneListbox1selectItems" value="#{JRequestAdministracion.fakeTec}"/>
                                                 </ice:selectOneListbox>
-                                                <ice:outputLabel id="outputLabel10" style="font-size: 16px; font-weight: bold; width: 142px" value="Nombre Completo"/>
+                                                <h3 styleClass="tituloSeccion"><ice:outputLabel id="outputLabel10" style="font-size: 16px; font-weight: bold; width: 142px" value="Nombre Completo"/>
+                                                </h3>
                                                 <ice:outputLabel binding="#{JRequestAdministracion.lblNombreTec}" id="lblNombreTec" style="width: 214px" value="Nombre del tecnico"/>
                                                 <ice:commandButton action="#{JRequestAdministracion.btnAgregarTec_action}" id="btnAgregarTec"
                                                     style="width: 168px" value="Agregar Nuevo Técnico"/>
@@ -201,14 +204,14 @@
                                         <ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}"/>
                                         <h:message for="txtPass" styleClass="errorText"/>
                                     </p>
-                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" styleClass="btnAccion" value="Login"/>
+                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" styleClass="btnAccion2" value="Login"/>
                                 </ice:form>
                                 <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
                                     <p>
                                         <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
                                         <ice:outputLabel id="lblNomUsuario" styleClass="formValue" value="#{JHardminInstance.currentUser.userName}"/>
                                     </p>
-                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>
+                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion2" value="Logout"/>
                                 </ice:form>
                             </li>
                             <li>
