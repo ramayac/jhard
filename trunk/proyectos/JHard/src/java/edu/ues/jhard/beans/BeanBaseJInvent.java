@@ -88,6 +88,22 @@ public class BeanBaseJInvent extends BeanBase {
         return this.getClasificaciontm().getCurrentUserObject().getClasificacion();
     }
 
+    public int getCurrentClasificacionEquipoCollectionSize(){
+        return this.getCurrentClasificacion().getEquipoCollection().size();
+    }
+
+    public int getCurrentClasificacionSoftwareCollectionSize(){
+        return this.getCurrentClasificacion().getSoftwareCollection().size();
+    }
+
+    public int getCurrentClasificacionAccesorioCollectionSize(){
+        return this.getCurrentClasificacion().getAccesorioCollection().size();
+    }
+
+    public int getCurrentClasificacionPiezaCollectionSize(){
+        return this.getCurrentClasificacion().getPiezaCollection().size();
+    }
+
     public int getSizeListaEquipos(){
         return this.getCurrentClasificacion().getEquipoCollection().size();
     }
@@ -266,10 +282,49 @@ public class BeanBaseJInvent extends BeanBase {
                 this.msg.setText("Nuevo equipo " + this.currentEquipo.getNombre() + " agregado exitosamente.");
                 this.msg.setVisible(true);
                 this.currentEquipo = new Equipo();
+                this.actualizarNodoClasificacion();
                 break;
             }
         }
         this.crdEquipo.hidePopupAdd();
+        return "done";
+    }
+
+    public String cancelAddEditEquipo(){
+        this.currentEquipo = new Equipo();
+        this.crdEquipo.hidePopupAdd();
+        this.crdEquipo.hidePopupEdit();
+        return "done";
+    }
+
+    public String editEquipo(){
+        String idEquipo = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
+        this.crdEquipo.setCurrentId(idEquipo);
+        EntityManager emgr = this.getEntityManager();
+        this.currentEquipo = (Equipo)emgr.createQuery("SELECT e FROM Equipo e WHERE e.idequipo=" + idEquipo).getSingleResult();
+        this.crdEquipo.showPopupEdit();
+        return "done";
+    }
+
+    public String commitEditEquipo(){
+        EntityManager emgr = this.getEntityManager();
+        Marca mrk = (Marca)emgr.createQuery("SELECT m FROM Marca m WHERE m.idmarca=" + this.marcaSelected).getSingleResult();
+        this.currentEquipo.setIdmarca(mrk);
+        emgr.getTransaction().begin();
+        emgr.merge(this.currentEquipo);
+        emgr.getTransaction().commit();
+        this.crdEquipo.hidePopupEdit();
+        for(Equipo eq: this.getCurrentClasificacion().getEquipoCollection()){            
+            if(eq.getIdequipo() == this.currentEquipo.getIdequipo()){                
+                eq.setNombre(this.currentEquipo.getNombre());
+                eq.setIdmarca(mrk);
+                eq.setModelo(this.currentEquipo.getModelo());
+                break;
+            }
+        }
+        this.msg.setText("Equipo modificado satisfactoriamente");
+        this.msg.setVisible(true);
+        this.currentEquipo = new Equipo();
         return "done";
     }
 
@@ -284,6 +339,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.getCurrentClasificacion().getEquipoCollection().remove(eq);
         this.msg.setText("Equipo " + eq.getNombre() + " eliminado satisfactoriamente.");
         this.msg.setVisible(true);
+        this.actualizarNodoClasificacion();
         return "done";
     }
 
@@ -296,6 +352,44 @@ public class BeanBaseJInvent extends BeanBase {
         emgr.getTransaction().commit();
         this.crdSoftware.hidePopupAdd();
         this.msg.setText("Nuevo software " + this.currentSoftware.getNombre() + " agregado exitosamente");
+        this.msg.setVisible(true);
+        this.currentSoftware = new Software();
+        this.actualizarNodoClasificacion();
+        return "done";
+    }
+
+    public String cancelAddEditSoftware(){
+        this.currentSoftware = new Software();
+        this.crdSoftware.hidePopupAdd();
+        this.crdSoftware.hidePopupEdit();
+        return "done";
+    }
+
+    public String editSoftware(){
+        String idSoftware = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");        
+        Software soft = (Software)this.getEntityManager().createQuery("SELECT s FROM Software s WHERE s.idsoftware=" + idSoftware).getSingleResult();
+        this.currentSoftware = soft;
+        this.crdSoftware.setCurrentId(idSoftware);
+        this.crdSoftware.showPopupEdit();
+        return "done";
+    }
+
+    public String commitEditSoftware(){
+        EntityManager emgr = this.getEntityManager();
+        emgr.getTransaction().begin();
+        emgr.merge(this.currentSoftware);
+        emgr.getTransaction().commit();
+        this.crdSoftware.hidePopupEdit();
+        for(Software soft: this.getCurrentClasificacion().getSoftwareCollection()){
+            if(soft.getIdsoftware() == this.currentSoftware.getIdsoftware()){
+                soft.setNombre(this.currentSoftware.getNombre());
+                soft.setVersion(this.currentSoftware.getVersion());
+                soft.setCodigolicencia(this.currentSoftware.getCodigolicencia());
+                soft.setCantidadlicencias(this.currentSoftware.getCantidadlicencias());
+                break;
+            }
+        }
+        this.msg.setText("Software modificado satisfactoriamente");
         this.msg.setVisible(true);
         this.currentSoftware = new Software();
         return "done";
@@ -312,6 +406,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.getCurrentClasificacion().getSoftwareCollection().remove(soft);
         this.msg.setText("Software " + soft.getNombre() + " eliminado satisfactoriamente.");
         this.msg.setVisible(true);
+        this.actualizarNodoClasificacion();
         return "done";
     }
 
@@ -329,9 +424,48 @@ public class BeanBaseJInvent extends BeanBase {
                 this.msg.setText("Nuevo accesorio " + this.currentAccesorio.getNombre() + " agregado exitosamente");
                 this.msg.setVisible(true);
                 this.currentAccesorio = new Accesorio();
+                this.actualizarNodoClasificacion();
                 break;
             }
         }
+        return "done";
+    }
+
+    public String cancelAddEditAccesorio(){
+        this.currentAccesorio = new Accesorio();
+        this.crdAccesorio.hidePopupAdd();
+        this.crdAccesorio.hidePopupEdit();
+        return "done";
+    }
+
+    public String editAccesorio(){
+        String idAccesorio = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
+        Accesorio acc = (Accesorio)this.getEntityManager().createQuery("SELECT a FROM Accesorio a WHERE a.idaccesorio=" + idAccesorio).getSingleResult();
+        this.crdAccesorio.setCurrentId(idAccesorio);
+        this.setCurrentAccesorio(acc);
+        this.crdAccesorio.showPopupEdit();
+        return "done";
+    }
+
+    public String commitEditAccesorio(){
+        EntityManager emgr = this.getEntityManager();
+        Marca mrk = (Marca)emgr.createQuery("SELECT m FROM Marca m WHERE m.idmarca=" + this.marcaSelected).getSingleResult();
+        this.currentAccesorio.setIdmarca(mrk);
+        emgr.getTransaction().begin();
+        emgr.merge(this.currentAccesorio);
+        emgr.getTransaction().commit();
+        this.crdAccesorio.hidePopupEdit();
+        for(Accesorio acc: this.getCurrentClasificacion().getAccesorioCollection()){
+            if(acc.getIdaccesorio() == this.currentAccesorio.getIdaccesorio()){
+                acc.setNombre(this.currentAccesorio.getNombre());
+                acc.setIdmarca(mrk);
+                acc.setModelo(this.currentAccesorio.getModelo());
+                break;
+            }
+        }
+        this.msg.setText("Accesorio modificado satisfactoriamente");
+        this.msg.setVisible(true);
+        this.currentAccesorio = new Accesorio();
         return "done";
     }
     
@@ -346,6 +480,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.getCurrentClasificacion().getAccesorioCollection().remove(acc);
         this.msg.setText("Accesorio " + acc.getNombre() + " eliminado satisfactoriamente.");
         this.msg.setVisible(true);
+        this.actualizarNodoClasificacion();
         return "done";
     }
 
@@ -363,9 +498,46 @@ public class BeanBaseJInvent extends BeanBase {
                 this.msg.setText("Nueva pieza " + this.currentPieza.getNombre() + " agregada exitosamente");
                 this.msg.setVisible(true);
                 this.currentPieza = new Pieza();
+                this.actualizarNodoClasificacion();
                 break;
             }
         }
+        return "done";
+    }
+
+    public String cancelAddEditPieza(){
+        this.currentPieza = new Pieza();
+        this.crdPieza.hidePopupAdd();
+        this.crdPieza.hidePopupEdit();
+        return "done";
+    }
+
+    public String editPieza(){
+        String idPieza = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
+        Pieza pz = (Pieza)this.getEntityManager().createQuery("SELECT p FROM Pieza p WHERE p.idpieza=" + idPieza).getSingleResult();
+        this.setCurrentPieza(pz);
+        this.crdPieza.setCurrentId(idPieza);
+        this.crdPieza.showPopupEdit();
+        return "done";
+    }
+
+    public String commitEditPieza(){
+        EntityManager emgr = this.getEntityManager();
+        Marca mrk = (Marca)emgr.createQuery("SELECT m FROM Marca m WHERE m.idmarca=" + this.marcaSelected).getSingleResult();
+        this.currentPieza.setIdmarca(mrk);
+        emgr.getTransaction().begin();
+        emgr.merge(this.currentPieza);
+        emgr.getTransaction().commit();
+        this.crdPieza.hidePopupEdit();
+        for(Pieza pz: this.getCurrentClasificacion().getPiezaCollection()){
+            if(pz.getIdpieza() == this.currentPieza.getIdpieza()){
+                pz.setNombre(this.currentPieza.getNombre());
+                pz.setIdmarca(mrk);
+                pz.setModelo(this.currentPieza.getModelo());
+            }
+        }
+        this.msg.setText("Pieza modificada satisfactoriamente");
+        this.msg.setVisible(true);        
         return "done";
     }
 
@@ -380,6 +552,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.getCurrentClasificacion().getPiezaCollection().remove(pz);
         this.msg.setText("Pieza " + pz.getNombre() + " eliminada satisfactoriamente.");
         this.msg.setVisible(true);
+        this.actualizarNodoClasificacion();
         return "done";
     }
 
@@ -395,5 +568,10 @@ public class BeanBaseJInvent extends BeanBase {
      */
     public void setMsg(ActionMessage msg) {
         this.msg = msg;
+    }
+
+    public void actualizarNodoClasificacion(){
+        Clasificacion cl = this.getCurrentClasificacion();
+        this.clasificaciontm.getCurrentUserObject().setText(cl.getNombre() + " (" + (cl.getEquipoCollection().size() + cl.getSoftwareCollection().size() + cl.getAccesorioCollection().size() + cl.getPiezaCollection().size()) +  ")");
     }
 }

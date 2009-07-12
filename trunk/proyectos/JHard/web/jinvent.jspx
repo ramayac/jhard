@@ -91,7 +91,12 @@
                                                 </f:facet>
                                                 <f:facet name="second">
                                                     <ice:panelGroup>
-                                                        <h3 class="tituloSeccion">Equipos <ice:commandLink value="Agregar" action="#{JInventInstance.crdEquipo.showPopupAdd}" styleClass="actionLink" /></h3>
+                                                        <h3 class="tituloSeccion">
+                                                            <ice:outputFormat value="Equipos (Total: {0})">
+                                                                <f:param value="#{JInventInstance.currentClasificacionEquipoCollectionSize}"/>
+                                                            </ice:outputFormat>
+                                                            <ice:commandLink value="Agregar" action="#{JInventInstance.crdEquipo.showPopupAdd}" styleClass="actionLink" />
+                                                        </h3>
                                                         <ice:dataTable id="tblListaEquipos" rows="5" value="#{JInventInstance.currentClasificacion.equipoCollection}" var="equipo" style="margin-bottom: 0px;" >
                                                             <ice:column>
                                                                 <f:facet name="header"><ice:outputText value="Nombre" /></f:facet>
@@ -110,7 +115,7 @@
                                                                 <ice:outputText value="#{equipo.existenciaSize}" />
                                                             </ice:column>
                                                             <ice:column>
-                                                                <ice:commandLink value="Editar" action="#{JInventInstance.crdEquipo.showPopupEdit}">
+                                                                <ice:commandLink value="Editar" action="#{JInventInstance.editEquipo}">
                                                                     <f:param name="currentId" value="#{equipo.idequipo}" />
                                                                 </ice:commandLink>
                                                             </ice:column>
@@ -150,7 +155,36 @@
                                                                     </p>
                                                                     <p class="actionSection">
                                                                         <ice:commandButton id="cmdConfirmAgregarEquipo" value="Agregar" action="#{JInventInstance.addEquipo}" />
-                                                                        <ice:commandButton id="cmdCancelAgregarEquipo" value="Cancelar" action="#{JInventInstance.crdEquipo.hidePopupAdd}" />
+                                                                        <ice:commandButton id="cmdCancelAgregarEquipo" value="Cancelar" action="#{JInventInstance.cancelAddEditEquipo}" />
+                                                                    </p>
+                                                                </ice:panelGroup>
+                                                            </f:facet>
+                                                        </ice:panelPopup>
+                                                        <ice:panelPopup id="pupEditarEquipo" draggable="true" modal="true" rendered="#{JInventInstance.crdEquipo.popupEditVisible}">
+                                                            <f:facet name="header">
+                                                                <ice:outputFormat value="Editar equipo {0}">
+                                                                    <f:param value="#{JInventInstance.currentEquipo.nombre}" />
+                                                                </ice:outputFormat>
+                                                            </f:facet>
+                                                            <f:facet name="body">
+                                                                <ice:panelGroup styleClass="frmElementList">
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblNombreEquipoEdit" for="txtNombreEquipoEdit" value="Nombre:" />
+                                                                        <ice:inputText id="txtNombreEquipoEdit" value="#{JInventInstance.currentEquipo.nombre}" />
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblMarcaEquipoEdit" for="cmbMarcaEquipoEdit" value="Marca:" />
+                                                                        <ice:selectOneListbox id="cmbMarcaEquipoEdit" size="1" value="#{JInventInstance.marcaSelected}">
+                                                                            <f:selectItems value="#{JInventInstance.listaItemsMarcas}" />
+                                                                        </ice:selectOneListbox>
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblModeloEquipoEdit" for="txtModeloEquipoEdit" value="Modelo:" />
+                                                                        <ice:inputText id="txtModeloEquipoEdit" value="#{JInventInstance.currentEquipo.modelo}" />
+                                                                    </p>
+                                                                    <p class="actionSection">
+                                                                        <ice:commandButton id="commitEditarEquipo" value="Guardar Cambios" action="#{JInventInstance.commitEditEquipo}" />
+                                                                        <ice:commandButton id="cancelEditarEquipo" value="Cancelar" action="#{JInventInstance.cancelAddEditEquipo}" />
                                                                     </p>
                                                                 </ice:panelGroup>
                                                             </f:facet>
@@ -164,7 +198,12 @@
                                                                 </ice:panelGroup>
                                                             </f:facet>
                                                         </ice:panelPopup>
-                                                        <h3 class="tituloSeccion" style="margin-top: 20px;">Software <ice:commandLink value="Agregar" action="#{JInventInstance.crdSoftware.showPopupAdd}" styleClass="actionLink"  /></h3>
+                                                        <h3 class="tituloSeccion" style="margin-top: 20px;">
+                                                            <ice:outputFormat value="Software (Total: {0})">
+                                                                <f:param value="#{JInventInstance.currentClasificacionSoftwareCollectionSize}"/>
+                                                            </ice:outputFormat>
+                                                            <ice:commandLink value="Agregar" action="#{JInventInstance.crdSoftware.showPopupAdd}" styleClass="actionLink"  />
+                                                        </h3>
                                                         <ice:dataTable id="tblListaSoftware" rows="5" value="#{JInventInstance.currentClasificacion.softwareCollection}" var="software" style="margin-bottom: 0px;" >
                                                             <ice:column>
                                                                 <f:facet name="header"><ice:outputText value="Nombre" /></f:facet>
@@ -183,7 +222,7 @@
                                                                 <ice:outputText value="#{software.cantidadlicencias}" />
                                                             </ice:column>
                                                             <ice:column>
-                                                                <ice:commandLink value="Editar" action="#{JInventInstance.crdSoftware.showPopupEdit}">
+                                                                <ice:commandLink value="Editar" action="#{JInventInstance.editSoftware}">
                                                                     <f:param name="currentId" value="#{software.idsoftware}" />
                                                                 </ice:commandLink>
                                                             </ice:column>
@@ -209,7 +248,7 @@
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblVersion" for="txtVersion" value="Version:" />
-                                                                        <ice:inputText id="txtVersion" value="#{JInventInstance.currentSoftware.version}" />
+                                                                        <ice:inputText id="txtVersion" value="#{JInventInstance.currentSoftware.version}" maxlength="15" />
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblCodigoLicencia" for="txtCodigoLicencia" value="Codigo de licencia:" />
@@ -225,7 +264,38 @@
                                                                     </p>
                                                                     <p class="actionSection">
                                                                         <ice:commandButton id="cmdCommitAgregarSoftware" value="Agregar" action="#{JInventInstance.addSoftware}" />
-                                                                        <ice:commandButton id="cmdCancelAgregarSoftware" value="Cancelar" action="#{JInventInstance.crdSoftware.hidePopupAdd}" />
+                                                                        <ice:commandButton id="cmdCancelAgregarSoftware" value="Cancelar" action="#{JInventInstance.cancelAddEditSoftware}" />
+                                                                    </p>
+                                                                </ice:panelGroup>
+                                                            </f:facet>
+                                                        </ice:panelPopup>
+                                                        <ice:panelPopup id="pupEditarSoftware" draggable="true" modal="true" rendered="#{JInventInstance.crdSoftware.popupEditVisible}">
+                                                            <f:facet name="header">
+                                                                <ice:outputFormat value="Editando software {0}">
+                                                                    <f:param value="#{JInventInstance.currentSoftware.nombre}"/>
+                                                                </ice:outputFormat>
+                                                            </f:facet>
+                                                            <f:facet name="body">
+                                                                <ice:panelGroup styleClass="frmElementList">
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblNombreSoftwareEdit" for="txtNombreSoftwareEdit" value="Nombre:" />
+                                                                        <ice:inputText id="txtNombreSoftwareEdit" value="#{JInventInstance.currentSoftware.nombre}" />
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblVersionSoftwareEdit" for="txtVersionSoftwareEdit" value="Version:" />
+                                                                        <ice:inputText id="txtVersionSoftwareEdit" value="#{JInventInstance.currentSoftware.version}" maxlength="15" />
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblCodigoLicenciaEdit" for="txtCodigoLicenciaEdit" value="Codigo de Licencia:" />
+                                                                        <ice:inputText id="txtCodigoLicenciaEdit" value="#{JInventInstance.currentSoftware.codigolicencia}" />
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblCantidadLicenciasEdit" for="txtCantidadLicenciasEdit" value="Cantidad de Licencias:" />
+                                                                        <ice:inputText id="txtCantidadLicenciasEdit" value="#{JInventInstance.currentSoftware.cantidadlicencias}" maxlength="3" onkeydown="return valNumbers(event);" />
+                                                                    </p>
+                                                                    <p class="actionSection">
+                                                                        <ice:commandButton id="commitEditarSoftware" value="Guardar cambios" action="#{JInventInstance.commitEditSoftware}" />
+                                                                        <ice:commandButton id="cancelEditarSoftware" value="Cancelar" action="#{JInventInstance.cancelAddEditSoftware}" />
                                                                     </p>
                                                                 </ice:panelGroup>
                                                             </f:facet>
@@ -235,11 +305,16 @@
                                                             <f:facet name="body">
                                                                     <ice:panelGroup>
                                                                         <p><ice:outputText value="Esta seguro que desea eliminar el software seleccionado?" /></p>
-                                                                        <p class="actionSection"><ice:commandButton value="Si" /><ice:commandButton value="No" action="#{JInventInstance.crdSoftware.hidePopupDel}" /></p>
+                                                                        <p class="actionSection"><ice:commandButton value="Si" action="#{JInventInstance.delSoftware}" /><ice:commandButton value="No" action="#{JInventInstance.crdSoftware.hidePopupDel}" /></p>
                                                                 </ice:panelGroup>
                                                             </f:facet>
                                                         </ice:panelPopup>
-                                                        <h3 class="tituloSeccion" style="margin-top: 20px;">Accesorios <ice:commandLink value="Agregar" action="#{JInventInstance.crdAccesorio.showPopupAdd}" styleClass="actionLink" /> </h3>
+                                                        <h3 class="tituloSeccion" style="margin-top: 20px;">
+                                                            <ice:outputFormat value="Accesorios (Total: {0})">
+                                                                <f:param value="#{JInventInstance.currentClasificacionAccesorioCollectionSize}"/>
+                                                            </ice:outputFormat>
+                                                            <ice:commandLink value="Agregar" action="#{JInventInstance.crdAccesorio.showPopupAdd}" styleClass="actionLink" />
+                                                        </h3>
                                                         <ice:dataTable id="tblListaAccesorios" rows="3" value="#{JInventInstance.currentClasificacion.accesorioCollection}" var="accesorio" style="margin-bottom: 0px;" >
                                                             <ice:column>
                                                                 <f:facet name="header"><ice:outputText value="Nombre" /></f:facet>
@@ -254,12 +329,12 @@
                                                                 <ice:outputText value="#{accesorio.modelo}" />
                                                             </ice:column>
                                                             <ice:column>
-                                                                <ice:commandLink value="Editar" action="#{JInventInstance.crdSoftware.showPopupEdit}">
+                                                                <ice:commandLink value="Editar" action="#{JInventInstance.editAccesorio}">
                                                                     <f:param name="currentId" value="#{accesorio.idaccesorio}" />
                                                                 </ice:commandLink>
                                                             </ice:column>
                                                             <ice:column>
-                                                                <ice:commandLink value="Eliminar" action="#{JInventInstance.crdSoftware.showPopupDel}">
+                                                                <ice:commandLink value="Eliminar" action="#{JInventInstance.crdAccesorio.showPopupDel}">
                                                                     <f:param name="currentId" value="#{accesorio.idaccesorio}" />
                                                                 </ice:commandLink>
                                                             </ice:column>
@@ -294,10 +369,39 @@
                                                                 </p>
                                                                 <p class="actionSection">
                                                                     <ice:commandButton id="commitAgregarAccesorio" value="Agregar" action="#{JInventInstance.addAccesorio}" />
-                                                                    <ice:commandButton id="cancelAgregarAccesorio" value="Cancelar" action="#{JInventInstance.crdAccesorio.hidePopupAdd}" />
+                                                                    <ice:commandButton id="cancelAgregarAccesorio" value="Cancelar" action="#{JInventInstance.cancelAddEditAccesorio}" />
                                                                 </p>
                                                             </ice:panelGroup>
                                                         </f:facet>
+                                                        </ice:panelPopup>
+                                                        <ice:panelPopup id="pupEditarAccesorio" draggable="true" modal="true" rendered="#{JInventInstance.crdAccesorio.popupEditVisible}" >
+                                                            <f:facet name="header">
+                                                                <ice:outputFormat value="Editando accesirio {0}">
+                                                                    <f:param value="#{JInventInstance.currentAccesorio.nombre}" />
+                                                                </ice:outputFormat>
+                                                            </f:facet>
+                                                            <f:facet name="body">
+                                                                <ice:panelGroup styleClass="frmElementList">
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblNombreAccesorioEdit" for="txtNombreAccesorioEdit" value="Nombre:" />
+                                                                        <ice:inputText id="txtNombreAccesorioEdit" value="#{JInventInstance.currentAccesorio.nombre}" />
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblMarcaAccesorioEdit" for="cmbMarcaModeloEdit" value="Marca:" />
+                                                                        <ice:selectOneListbox id="cmbMarcaModeloEdit" value="#{JInventInstance.marcaSelected}" size="1" >
+                                                                            <f:selectItems value="#{JInventInstance.listaItemsMarcas}" />
+                                                                        </ice:selectOneListbox>
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblModeloAccesorioEdit" for="txtModeloAccesorioedit" value="Modelo:" />
+                                                                        <ice:inputText id="txtModeloAccesorioEdit" value="#{JInventInstance.currentAccesorio.modelo}" />
+                                                                    </p>
+                                                                    <p class="actionSection">
+                                                                        <ice:commandButton id="cmdCommitEditarAccesorio" value="Guardar cambios" action="#{JInventInstance.commitEditAccesorio}" />
+                                                                        <ice:commandButton id="cmdCancelEditarAccesorio" value="Cancelar" action="#{JInventInstance.cancelAddEditAccesorio}" />
+                                                                    </p>
+                                                                </ice:panelGroup>
+                                                            </f:facet>
                                                         </ice:panelPopup>
                                                         <ice:panelPopup id="pupConfirmEliminarAccesorio" modal="true" draggable="true" rendered="#{JInventInstance.crdAccesorio.popupDelVisible}" >
                                                         <f:facet name="header">
@@ -306,11 +410,16 @@
                                                         <f:facet name="body">
                                                             <ice:panelGroup>
                                                                 <p><ice:outputText value="Esta seguro que desea eliminar el accesorio seleccionado?" /></p>
-                                                                <p class="actionSection"><ice:commandButton value="Si" /><ice:commandButton value="No" action="#{JInventInstance.crdAccesorio.hidePopupDel}" /></p>
+                                                                <p class="actionSection"><ice:commandButton value="Si" action="#{JInventInstance.delAccesorio}" /><ice:commandButton value="No" action="#{JInventInstance.crdAccesorio.hidePopupDel}" /></p>
                                                             </ice:panelGroup>
                                                         </f:facet>
                                                         </ice:panelPopup>
-                                                        <h3 class="tituloSeccion" style="margin-top: 20px;">Piezas <ice:commandLink value="Agregar" action="#{JInventInstance.crdPieza.showPopupAdd}" styleClass="actionLink" /> </h3>
+                                                        <h3 class="tituloSeccion" style="margin-top: 20px;">
+                                                            <ice:outputFormat value="Piezas (Total: {0})">
+                                                                <f:param value="#{JInventInstance.currentClasificacionPiezaCollectionSize}"/>
+                                                            </ice:outputFormat>
+                                                            <ice:commandLink value="Agregar" action="#{JInventInstance.crdPieza.showPopupAdd}" styleClass="actionLink" />
+                                                        </h3>
                                                         <ice:dataTable id="tblListaPiezas" rows="3" value="#{JInventInstance.currentClasificacion.piezaCollection}" var="pieza" style="margin-bottom: 0px;" >
                                                             <ice:column>
                                                                 <f:facet name="header"><ice:outputText value="Nombre" /></f:facet>
@@ -325,7 +434,7 @@
                                                                 <ice:outputText value="#{pieza.modelo}" />
                                                             </ice:column>
                                                             <ice:column>
-                                                                <ice:commandLink value="Editar" action="#{JInventInstance.crdPieza.showPopupEdit}">
+                                                                <ice:commandLink value="Editar" action="#{JInventInstance.editPieza}">
                                                                     <f:param name="currentId" value="#{pieza.idpieza}" />
                                                                 </ice:commandLink>
                                                             </ice:column>
@@ -365,9 +474,38 @@
                                                                 </p>
                                                                 <p class="ActionSection">
                                                                     <ice:commandButton id="cmdCommitAgregarPieza" value="Agregar" action="#{JInventInstance.addPieza}" />
-                                                                    <ice:commandButton id="cmdCancelAgregarPieza" value="Cancelar" action="#{JInventInstance.crdPieza.hidePopupAdd}" />
+                                                                    <ice:commandButton id="cmdCancelAgregarPieza" value="Cancelar" action="#{JInventInstance.cancelAddEditPieza}" />
                                                                 </p>
                                                             </ice:panelGroup>
+                                                            </f:facet>
+                                                        </ice:panelPopup>
+                                                        <ice:panelPopup id="pupModificarPieza" draggable="true" modal="true" rendered="#{JInventInstance.crdPieza.popupEditVisible}">
+                                                            <f:facet name="header">
+                                                                <ice:outputFormat value="Editando pieza {0}">
+                                                                    <f:param value="#{JInventInstance.currentPieza.nombre}" />
+                                                                </ice:outputFormat>
+                                                            </f:facet>
+                                                            <f:facet name="body">
+                                                                <ice:panelGroup styleClass="frmElementList">
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblNombrePiezaEdit" for="txtNombrePiezaEdit" value="Nombre:" />
+                                                                        <ice:inputText id="txtNombrePiezaEdit" value="#{JInventInstance.currentPieza.nombre}" />
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblMarcaPiezaEdit" for="cmbMarcaPiezaEdit" value="Marca:" />
+                                                                        <ice:selectOneListbox id="cmbMarcaPiezaEdit" value="#{JInventInstance.marcaSelected}" size="1">
+                                                                            <f:selectItems value="#{JInventInstance.listaItemsMarcas}" />
+                                                                        </ice:selectOneListbox>
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblModeloPiezaEdit" for="txtModeloPiezaEdit" value="Modelo:" />
+                                                                        <ice:inputText id="txtModeloPiezaEdit" value="#{JInventInstance.currentPieza.modelo}" />
+                                                                    </p>
+                                                                    <p class="actionSection">
+                                                                        <ice:commandButton id="cmdCommitEditarPieza" value="Guardar cambios" action="#{JInventInstance.commitEditPieza}" />
+                                                                        <ice:commandButton id="cmdCancelarEditarPieza" value="Cancelar" action="#{JInventInstance.cancelAddEditPieza}" />
+                                                                    </p>
+                                                                </ice:panelGroup>
                                                             </f:facet>
                                                         </ice:panelPopup>
                                                         <ice:panelPopup id="pupConfirmEliminarPieza" modal="true" draggable="true" rendered="#{JInventInstance.crdPieza.popupDelVisible}">
@@ -377,7 +515,7 @@
                                                         <f:facet name="body">
                                                             <ice:panelGroup>
                                                                 <p><ice:outputText value="Esta seguro que desea eliminar la pieza seleccionada?" /></p>
-                                                                <p class="actionSection"><ice:commandButton value="Si" /><ice:commandButton value="No" action="#{JInventInstance.crdPieza.hidePopupDel}" /></p>
+                                                                <p class="actionSection"><ice:commandButton value="Si" action="#{JInventInstance.delPieza}" /><ice:commandButton value="No" action="#{JInventInstance.crdPieza.hidePopupDel}" /></p>
                                                             </ice:panelGroup>
                                                         </f:facet>
                                                         </ice:panelPopup>

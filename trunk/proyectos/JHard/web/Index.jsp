@@ -80,7 +80,7 @@
                                     <ice:outputLabel id="txtUserLogin" value="Sesión"/>
                                 </h2>
                                 <ice:form id="frmLogin" rendered="#{JHardminInstance.currentUser == null}">
-                                    <ice:outputText id="lblLoginFail" rendered="#{JHardminInstance.loginFail}" styleClass="errorText" value="Datos incorrectos"/>
+                                    <ice:outputText id="lblLoginFail" rendered="#{JHardminInstance.loginFail}" styleClass="errorText" value="Datos incorrectos" effect="Highlight" />
                                     <p>
                                         <ice:outputLabel id="lblUser" value="Usuario:"/>
                                         <ice:inputText id="txtUser" required="true" requiredMessage="El nombre de usuario es requerido" style="width: 120px" value="#{JHardminInstance.inputUsrName}"/>
