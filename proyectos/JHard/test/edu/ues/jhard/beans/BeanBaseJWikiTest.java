@@ -3,6 +3,8 @@ package edu.ues.jhard.beans;
 import edu.ues.jhard.jpa.Comentarios;
 import edu.ues.jhard.jpa.Entrada;
 import edu.ues.jhard.jpa.Tag;
+import edu.ues.jhard.jpa.Usuario;
+import java.sql.Date;
 import java.util.Collection;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -89,99 +91,67 @@ public class BeanBaseJWikiTest {
         assertNotNull(resultado);
     }
 
+    @Test
+    public void testRegistrarTag() {
+        System.out.println("testRegistrarTag");
+        Tag tag = new Tag(9999, "Tag9999");
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        if(!instance.createTag(tag)) fail("fallo en REGISTRAR TAG");
+    }
+
+    @Test
+    public void testRegistrarEntrada() {
+        System.out.println("testRegistrarEntrada");
+        BeanBaseJHardmin hardmin = new BeanBaseJHardmin();
+        Usuario usuario = hardmin.getUsuario(1);
+        Entrada entrada = new Entrada(9999, "La entrada 9999", "nain, nine, nueve, 9, iiiiiiii, etc etc etc", new Date(2009, 9, 9), usuario);
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        if(!instance.createEntrada(entrada)) fail("fallo en REGISTRAR ENTRADA");
+    }
+
+    @Test
+    public void testRegistrarComentario() {
+        System.out.println("testRegistrarComentario");
+        Comentarios comentario = new Comentarios(9999, "Oh!!! esta es el comentario para la entrada 9999!!!", new Date(2009, 9, 9));
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        if(!instance.createComentario(9999, comentario)) fail("fallo en REGISTRAR COMENTARIO");
+    }
+
+//    @Test
+//    public void testAsociarTag() {
+//        System.out.println("testAsociarTag");
+//        BeanBaseJWiki instance = new BeanBaseJWiki();
+//        if(!instance.) fail("fallo en REGISTRAR COMENTARIO");
+//    }
+   
+    @Test
+    public void testEliminarTag() {
+        System.out.println("testEliminarTag");
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        instance.deleteTag(9999);
+        Tag t = instance.getEtiqueta(9999);
+        if(!(t==null)) fail("fallo en ELIMINAR TAG");
+    }
     
-//    /**
-//     * Test of registrarReserva method, of class BeanBaseJCanon.
-//     */
-//    @Test
-//    public void testRegistrarReserva() {
-//        System.out.println("registrarReserva");
-//        Reserva r = null;
-//        BeanBaseJCanon instance = new BeanBaseJCanon();
-//        instance.registrarReserva(r);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of getEstadoReserva method, of class BeanBaseJCanon.
-//     */
-//    @Test
-//    public void testGetEstadoReserva() {
-//        System.out.println("getEstadoReserva");
-//        BeanBaseJCanon instance = new BeanBaseJCanon();
-//        Estadoreserva[] expResult = null;
-//        Estadoreserva[] result = instance.getEstadoReserva();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of registrarEstadoReserva method, of class BeanBaseJCanon.
-//     */
-//    @Test
-//    public void testRegistrarEstadoReserva() {
-//        System.out.println("registrarEstadoReserva");
-//        Estadoreserva er = null;
-//        BeanBaseJCanon instance = new BeanBaseJCanon();
-//        instance.registrarEstadoReserva(er);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of getResponsable method, of class BeanBaseJCanon.
-//     */
-//    @Test
-//    public void testGetResponsable() {
-//        System.out.println("getResponsable");
-//        BeanBaseJCanon instance = new BeanBaseJCanon();
-//        Responsable[] expResult = null;
-//        Responsable[] result = instance.getResponsable();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of registrarResponsable method, of class BeanBaseJCanon.
-//     */
-//    @Test
-//    public void testRegistrarResponsable() {
-//        System.out.println("registrarResponsable");
-//        Responsable r = null;
-//        BeanBaseJCanon instance = new BeanBaseJCanon();
-//        instance.registrarResponsable(r);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of getSolicitante method, of class BeanBaseJCanon.
-//     */
-//    @Test
-//    public void testGetSolicitante() {
-//        System.out.println("getSolicitante");
-//        BeanBaseJCanon instance = new BeanBaseJCanon();
-//        Solicitante[] expResult = null;
-//        Solicitante[] result = instance.getSolicitante();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of registrarSolicitante method, of class BeanBaseJCanon.
-//     */
-//    @Test
-//    public void testRegistrarSolicitante() {
-//        System.out.println("registrarSolicitante");
-//        Solicitante s = null;
-//        BeanBaseJCanon instance = new BeanBaseJCanon();
-//        instance.registrarSolicitante(s);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    public void testEliminarComentario() {
+        System.out.println("testEliminarComentario");
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        Entrada entrada = instance.getEntrada(9999);
+        if(entrada==null) fail("fallo en ELIMINAR COMENTARIO (no hay entradas con comentarios)");
+        Comentarios[] com = instance.getComentarios(entrada);
+        instance.deleteComentario(com[0]);
+        Comentarios c = instance.getComentario(com[0].getIdcoment());
+        if(!(c==null)) fail("fallo en ELIMINAR COMENTARIO (encontre un comentario que tendria que estar eliminado)");
+    }
+    
+    @Test
+    public void testEliminarEntrada() {
+        System.out.println("testEliminarEntrada");
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        instance.deleteEntrada(9999);
+        Entrada entrada = instance.getEntrada(9999);
+        if(!(entrada==null)) fail("fallo en ELIMINAR ENTRADA");
+    }
 
 }
