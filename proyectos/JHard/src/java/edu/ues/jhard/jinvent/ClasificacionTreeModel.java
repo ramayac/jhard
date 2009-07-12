@@ -54,7 +54,7 @@ public class ClasificacionTreeModel {
         ClasificacionUserObject clUsrObj = new ClasificacionUserObject(nodo);
         nodo.setUserObject(clUsrObj);
         clUsrObj.setClasificacion(cl);
-        clUsrObj.setText(cl.getNombre());
+        clUsrObj.setText(cl.getNombre() + " (" + (cl.getEquipoCollection().size() + cl.getSoftwareCollection().size() + cl.getAccesorioCollection().size() + cl.getPiezaCollection().size()) + ")");
         clUsrObj.setLeaf(false);
         clUsrObj.setExpanded(true);
         if(nodoPadre != null)
