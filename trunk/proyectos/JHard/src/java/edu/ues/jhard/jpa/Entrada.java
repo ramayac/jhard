@@ -75,11 +75,12 @@ public class Entrada implements Serializable {
         this.identrada = identrada;
     }
 
-    public Entrada(Integer identrada, String titulo, String descripcion, Date fechahora) {
+    public Entrada(Integer identrada, String titulo, String descripcion, Date fechahora, Usuario usuario) {
         this.identrada = identrada;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechahora = fechahora;
+        this.idusuario = usuario;
     }
 
     public Integer getIdentrada() {
