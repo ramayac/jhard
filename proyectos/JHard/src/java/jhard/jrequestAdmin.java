@@ -459,15 +459,11 @@ public class jrequestAdmin extends AbstractPageBean {
         limpiarListas();
 
 
-        //LISTA DE SOLICITUDES ORDENADAS POR PRIORIDAD
-
+        //LISTA DE SOLICITUDES 
         //Array que se metera en la selectonelistbox
         ArrayList soc=new ArrayList();
-
         //Para comparar cuales solicitudes ya tienen mantenimientos relacionados
         Mantenimiento [] mantenimientos = new edu.ues.jhard.beans.BeanBaseJRequest().getMantenimiento();
-
-        //Consulta de solicitudes por prioridad ALTA
         Solicitud [] solicitudes = new edu.ues.jhard.beans.BeanBaseJRequest().getSolicitud();
 
         //contador
@@ -475,28 +471,21 @@ public class jrequestAdmin extends AbstractPageBean {
 
         //Bucle para meter las solicitudes en el ArrayList
         for(int i=0;i<solicitudes.length;i++){
-
             cont=0;
-
             //Comparo y cuento si ya existe un mantenimiento que contenga el ID de la solicitud,
             //si ya existe, aumento el contador y dicha solicitud ya no se debe de mostrar
-
             for(int j=0;j<mantenimientos.length;j++){
                 //System.out.println(mantenimientos[j].getIdsolicitud().getIdsolicitud()+"  "+solicitudes[i].getIdsolicitud());
                 if (mantenimientos[j].getIdsolicitud().getIdsolicitud().equals(solicitudes[i].getIdsolicitud())){
-//                    System.out.println("ENTRO!!!");
                     cont++;
-//                    System.out.println(cont);
                 }
             }
 
             if(cont==0){
-//                System.out.println("SI ESTO NO ES CERO NO DEBE DE ENTRAR..."+cont);
                 Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
                 String label = u.getNombre()+" - "+solicitudes[i].getDescripcion();
                 soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
             }
-
         }
 
         //Creo una UISelecItems
@@ -514,78 +503,67 @@ public class jrequestAdmin extends AbstractPageBean {
 
         //Creo e instancio el ArrayList que contendrá el selectlistonebox
         ArrayList man= new ArrayList();
-
-
         for(int i=0;i<mantenimientos.length;i++){
-
             Equiposimple eq = new BeanBaseJRequest().getEquipoSimpleByID(mantenimientos[i].getIdequiposimple().getIdEquipoSimple());
-
             String label = eq.getDescripcion() +" - "+ mantenimientos[i].getDescripcion();
-
             man.add(new SelectItem(mantenimientos[i].getIdmantenimiento(), label));
         }
 
         UISelectItems itemsMan = new UISelectItems();
         itemsMan.setValue(man);
-
         this.listaMantenimientos.getChildren().add(itemsMan);
-
-
-        
     }
+
 
     private void limpiarListas(){
         this.listaSol.getChildren().clear();
         this.listaMantenimientos.getChildren().clear();
-     
     }
 
 
     private void llenarCombo(){
-
-        
         //COMBO DE TECNICOS
-
         Tecnico [] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
-
         ArrayList tec = new ArrayList();
-
         for(int i=0;i<tecnicos.length;i++){
-
             String label = tecnicos[i].getNombres()+" "+tecnicos[i].getApellidos();
             tec.add(new SelectItem(tecnicos[i].getIdtecnico(),label));
         }
-
         UISelectItems itemsTec = new UISelectItems();
         itemsTec.setValue(tec);
         this.comboTecnicos.getChildren().add(itemsTec);
 
+
+        //SELECTINPUT DE EQUIPOS SIMPLES
+        Equiposimple [] eqsimple = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
+        ArrayList eqs = new ArrayList();
+        for(int i=0;i<eqsimple.length;i++){
+            String label = eqsimple[i].getPropietario()+" "+eqsimple[i].getPropietario();
+            eqs.add(new SelectItem(eqsimple[i].getIdEquipoSimple(),label));
+        }
+        UISelectItems itemsEq = new UISelectItems();
+        itemsEq.setValue(eqs);
+        this.txtEqSimples.getChildren().add(itemsTec);
+
+
+        //SELECTINPUT DE ESTADOS DE EQUIPOS
+        Estadoequipo [] estado = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
+        ArrayList eeq = new ArrayList();
+        for(int i=0;i<estado.length;i++){
+            String label = estado[i].getNombre();
+            eqs.add(new SelectItem(estado[i].getIdestado(),label));
+        }
+        UISelectItems itemsEstad = new UISelectItems();
+        itemsEstad.setValue(eeq);
+        this.comboEstado.getChildren().add(itemsTec);
     }
     
-
-
-//    private Solicitud[] solicitudes;
-//    private Mantenimiento[] mantenimientos;
-//    private Tecnico[] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
-//    private Equiposimple[] eqs = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
-//    private Bitacoraestados[] bitacoras;
     private Tecnico tecnicoElegido=null;
     private Estadoequipo estadoElegido=null;
     private Solicitud solicitudElegida=null;
     private Mantenimiento mantenimientoElegido=null;
     private Bitacoraestados bitacoraElegida=null;
     private Equiposimple eqSimpleElegido=null;
-
-
-//    private ArrayList soc;
-//    private ArrayList man;
-//    private ArrayList tec;
-//    private ArrayList bit;
-//    private ArrayList eeq;
-//    private ArrayList equipoSimple;
-
-
-    
 
     /**
      * <p>Construct a new Page bean instance.</p>
@@ -967,21 +945,14 @@ public class jrequestAdmin extends AbstractPageBean {
     private void llenarListaBitacoras(Equiposimple e){
         //LISTA DE BITACORAS
         Bitacoraestados [] bitacoras = new edu.ues.jhard.beans.BeanBaseJRequest().getBitacoraEstadosByIdEquipoSimple(e);
-
         ArrayList bit= new ArrayList();
-
         for(int i=0;i<bitacoras.length;i++){
-
             String label = bitacoras[i].getDescripcion()  +" - "+ bitacoras[i].getFecha().toString();
-
             bit.add(new SelectItem(bitacoras[i].getIdbitacora(), label));
         }
-
         UISelectItems itemsBit = new UISelectItems();
         itemsBit.setValue(bit);
-
         this.listaBitacoras.getChildren().add(itemsBit);
-
     }
 
     private void limpiarListaBitacoras(){
