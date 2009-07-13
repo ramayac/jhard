@@ -69,11 +69,11 @@
                                         <ice:panelGroup id="divEquiposInventario" styleClass="frmElementList">
                                             <ice:panelDivider id="divTreeClasificaciones" orientation="vertical" style="width: 100%; height: 500px" dividerPosition="38">
                                                 <f:facet name="first">
-                                                    <ice:panelGroup >
+                                                    <ice:panelGroup >                                                    
                                                     <ice:tree id="treeClasificaciones" value="#{JInventInstance.clasificaciontm.modelo}" var="nodo" hideRootNode="false" hideNavigation="false" imageDir="./xmlhttp/css/rime/css-images/">
                                                         <ice:treeNode>
                                                             <f:facet name="icon">
-                                                                <ice:panelGroup style="display: inline" >
+                                                                <ice:panelGroup style="display: inline">
                                                                     <ice:graphicImage value="/xmlhttp/css/rime/css-images/#{nodo.userObject.icon}"/>
                                                                 </ice:panelGroup>
                                                             </f:facet>
@@ -87,10 +87,70 @@
                                                             </f:facet>
                                                         </ice:treeNode>
                                                     </ice:tree>
+                                                    <h3 class="tituloSeccion" style="margin-top: 30px;">Acciones de categorias</h3>
+                                                    <ice:panelGroup styleClass="frmElementList">
+                                                        <ul class="listaAcciones">                                                            
+                                                        <li><ice:commandLink id="cmdAgregarSubclasificacion" value="Agregar subclasificacion" action="#{JInventInstance.crdClasificacion.showPopupAdd}" /></li>
+                                                        <li><ice:commandLink id="cmdEditarClasificacion" value="Editar clasificacion seleccionada" action="#{JInventInstance.crdClasificacion.showPopupEdit}" /></li>
+                                                        <li><ice:commandLink id="cmdEliminarClasificacion" value="Eliminar clasificacion seleccionada" action="#{JInventInstance.crdClasificacion.showPopupDel}" /></li>
+                                                        </ul>
+                                                        <ice:panelPopup id="pupAddClasificacion" draggable="true" modal="true" rendered="#{JInventInstance.crdClasificacion.popupAddVisible}">
+                                                            <f:facet name="header"><ice:outputText value="Agregar subclasificacion" /></f:facet>
+                                                            <f:facet name="body">
+                                                                <ice:panelGroup styleClass="frmElementList">
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblNombreClasificacion" for="txtNombreClasificacion" value="Nombre:" />
+                                                                        <ice:inputText id="txtNombreClasificacion" value="" />
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblDescripcionClasificacion" for="txtDescripcionClasificacion" value="Descripcion:" />
+                                                                        <ice:inputText id="txtDescripcionClasificacion" value="" />
+                                                                    </p>
+                                                                    <p class="actionSection">
+                                                                        <ice:commandButton id="cmdCommitAgregarClasificacion" value="Agregar" action="#{JInventInstance.addClasificaicon}" />
+                                                                        <ice:commandButton id="cmdCancelAgregarClasificacion" value="Cancelar" action="#{JInventInstance.crdClasificacion.hidePopupAdd}" />
+                                                                    </p>
+                                                                </ice:panelGroup>
+                                                            </f:facet>
+                                                        </ice:panelPopup>
+                                                        <ice:panelPopup id="pupEditarClasificacion" draggable="true" modal="true" rendered="#{JInventInstance.crdClasificacion.popupEditVisible}">
+                                                            <f:facet name="header"><ice:outputText value="Editar clasificacion" /></f:facet>
+                                                                <f:facet name="body">
+                                                                    <ice:panelGroup styleClass="frmElementList">
+                                                                        <p>
+                                                                            <ice:outputLabel id="lblNombreClasificacionEdit" for="txtNombreClasificacionEdit" value="Nombre:" />
+                                                                            <ice:inputText id="txtNombreClasificacionEdit" value="#{JInventInstance.currentClasificacion.nombre}" />
+                                                                        </p>
+                                                                        <p>
+                                                                            <ice:outputLabel id="lblDescripcionClasificacionEdit" for="txtDescripcionClasificacionEdit" value="Descripcion:" />
+                                                                            <ice:inputText id="txtDescripcionClasificacionEdit" value="#{JInventInstance.currentClasificacion.descripcion}" />
+                                                                        </p>
+                                                                        <p class="actionSection">
+                                                                            <ice:commandButton id="cmdCommitEditarClasificacion" value="Guardar cambios" action="#{JInventInstance.editClasificacion}" />
+                                                                            <ice:commandButton id="cmdCancelEditarClasificaicon" value="Cancelar" action="#{JInventInstance.crdClasificacion.hidePopupEdit}" />
+                                                                        </p>
+                                                                    </ice:panelGroup>
+                                                                </f:facet>
+                                                        </ice:panelPopup>
+                                                        <ice:panelPopup id="pupEliminarClasificacion" draggable="true" modal="true" rendered="#{JInventInstance.crdClasificacion.popupDelVisible}" >
+                                                            <f:facet name="header"><ice:outputText value="Confirmacion" /></f:facet>
+                                                            <f:facet name="body">
+                                                                <ice:panelGroup styleClass="frmElementList">
+                                                                    <p>
+                                                                        <ice:outputText value="Esta seguro que desea eliminar la clasificacion seleccionada?" />
+                                                                    </p>
+                                                                    <p class="actionSection">
+                                                                        <ice:commandButton id="cmdCommitEliminarClasificacion" value="Si" action="#{JInventInstance.delClasificacion}" />
+                                                                        <ice:commandButton id="cmdCancelEliminarClasificacion" value="No" action="#{JInventInstance.crdClasificacion.hidePopupDel}" />
+                                                                    </p>
+                                                                </ice:panelGroup>
+                                                            </f:facet>
+                                                        </ice:panelPopup>
+                                                    </ice:panelGroup>
                                                 </ice:panelGroup>
                                                 </f:facet>
-                                                <f:facet name="second">
-                                                    <ice:panelGroup>
+                                                <f:facet name="second">                                                    
+                                                    <ice:panelGroup>                                                        
                                                         <h3 class="tituloSeccion">
                                                             <ice:outputFormat value="Equipos (Total: {0})">
                                                                 <f:param value="#{JInventInstance.currentClasificacionEquipoCollectionSize}"/>
@@ -589,7 +649,7 @@
                                         <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
                                         <ice:outputLabel id="lblNomUsuario" styleClass="formValue" value="#{JHardminInstance.currentUser.userName}"/>
                                     </p>
-                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>
+                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>                                    
                                 </ice:form>
                             </li>
                             <li>
