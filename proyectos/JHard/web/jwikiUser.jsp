@@ -58,7 +58,19 @@
                             <div class="entry">
                                 <p class="text">En este sitio encontrará una serie de articulos, relacionados a la solucion de problemas comunes de informática.</p>
                             </div>
-                            <ice:form id="contenido"/>
+                            <ice:form id="formEntrada" rendered="#{jwikiUser.entrada != null}">
+                                <h3 styleClass="tituloSeccion">
+                                    <ice:outputLabel binding="#{jwikiUser.entrada.titulo}" id="lblTitulo" style="font-weight:bold; "/>
+                                </h3>
+                                <br/>
+                                <ice:outputText binding="#{jwikiUser.entrada.descripcion}" id="lblDescripcion"/>
+                                <br/>
+                            </ice:form>
+                             <ice:form id="formEntrada" rendered="#{jwikiUser.entrada == null}">
+                                <h3 styleClass="tituloSeccion">
+                                    <ice:outputLabel id="lblMensaje" style="font-weight:bold;" value="No hay entradas que mostrar" />
+                                </h3>
+                            </ice:form>
                         </div>
                     </div>
                     <!-- end content -->
@@ -69,9 +81,31 @@
                                 <h2>Búsqueda Wiki</h2>
                             </li>
                             <li>
-                                <h2>Usuarios</h2>
-                AQUI VA EL LOGIN
-	</li>
+                                <h2>
+                                    <ice:outputLabel id="txtUserLogin" value="Sesión"/>
+                                </h2>
+                                <ice:form id="frmLogin" rendered="#{JHardminInstance.currentUser == null}">
+                                    <ice:outputText id="lblLoginFail" rendered="#{JHardminInstance.loginFail}" styleClass="errorText" value="Datos incorrectos"/>
+                                    <p>
+                                        <ice:outputLabel id="lblUser" value="Usuario:"/>
+                                        <ice:inputText id="txtUser" required="true" requiredMessage="El nombre de usuario es requerido" style="width: 120px" value="#{JHardminInstance.inputUsrName}"/>
+                                        <h:message for="txtUser" styleClass="errorText"/>
+                                    </p>
+                                    <p>
+                                        <ice:outputLabel id="lblPass" value="Clave:"/>
+                                        <ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}"/>
+                                        <h:message for="txtPass" styleClass="errorText"/>
+                                    </p>
+                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" onclick="doLoad();" styleClass="btnAccion2" value="Login"/>
+                                </ice:form>
+                                <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
+                                    <p>
+                                        <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
+                                        <ice:outputLabel id="lblNomUsuario" styleClass="formValue" value="#{JHardminInstance.currentUser.userName}"/>
+                                    </p>
+                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion2" value="Logout"/>
+                                </ice:form>
+                            </li>
                             <li>
                                 <h2>Otros Vinculos</h2>
                                 <ul>
