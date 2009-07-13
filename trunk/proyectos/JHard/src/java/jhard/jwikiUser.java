@@ -8,6 +8,7 @@ package jhard;
 
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
+import com.icesoft.faces.component.jsfcl.data.BorderLayoutBean;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
 
@@ -15,8 +16,14 @@ import com.sun.data.provider.impl.ObjectArrayDataProvider;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 
 
+import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.beans.BeanBaseJRequest;
+import edu.ues.jhard.jhardmin.LoggedUser;
+import edu.ues.jhard.jhardmin.LoginManager;
+import edu.ues.jhard.jpa.Entrada;
 import edu.ues.jhard.jpa.Tecnico;
+import edu.ues.jhard.jpa.Usuario;
+import java.util.Date;
 import java.util.ArrayList;
 import javax.faces.FacesException;
 import javax.faces.event.ValueChangeEvent;
@@ -33,6 +40,16 @@ public class jwikiUser extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
     private int __placeholder;
 
+    private HtmlOutputLabel lblUser = new HtmlOutputLabel();
+
+    public HtmlOutputLabel getLblUser() {
+        return lblUser;
+    }
+
+    public void setLblUser(HtmlOutputLabel hol) {
+        this.lblUser = hol;
+    }
+
     /**
      * <p>Automatically managed component initialization.  <strong>WARNING:</strong>
      * This method is automatically generated, so any user-specified code inserted
@@ -43,11 +60,53 @@ public class jwikiUser extends AbstractPageBean {
 
     // </editor-fold>
 
+    private LoggedUser lu;
+    private Usuario U;
+
+    public LoggedUser getLu() {
+        return lu;
+    }
+
+    public void setLu(LoggedUser lu) {
+        this.lu = lu;
+    }
+
+    public Usuario getU(){
+        return U;
+    }
+
+    public void setU(Usuario u){
+        this.U=u;
+    }
+
+    public  BeanBaseJHardmin getJHardminInstance() {
+        return (BeanBaseJHardmin) getBean("JHardminInstance");
+    }
 
     /**
      * <p>Construct a new Page bean instance.</p>
      */
     public jwikiUser() {
+
+        lu= getJHardminInstance().getCurrentUser();
+
+//        if(lu!=null){
+//            U = LoginManager.getInstance().getUsuario(lu);
+//
+//            this.lblUser.setValue((String)U.getNombre());
+//
+//            switch(U.getIdrol().getIdrol()){
+//            case 3:
+//                Ing = new BeanBaseManLab().getDocenteByUsuario(U.getIdusuario());
+//                this.comboDocente.setDisabled(true);
+//                break;
+//            default:
+//                LlenarComboDocentes();
+//                break;
+//            }
+//        }
+//        else
+//            this.lblUser.setValue("Invitado");
     }
 
     /**
@@ -147,5 +206,12 @@ public class jwikiUser extends AbstractPageBean {
     protected ApplicationBean1 getApplicationBean1() {
         return (ApplicationBean1) getBean("ApplicationBean1");
     }
+
+    private Entrada entrada;
+
+    public Entrada getEntrada() {
+        return entrada;
+    }
+
 }
 
