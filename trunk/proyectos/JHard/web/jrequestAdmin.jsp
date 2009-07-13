@@ -59,7 +59,7 @@
                                 <p class="text">Administración de Solicitudes de Mantenimiento UES-FMOcc</p>
                                 <ice:form id="form1" style="">
                                     <ice:panelTabSet height="600" id="tabJrequestAdmin" selectedIndex="2"
-                                        tabChangeListener="#{jrequestAdmin.tabJrequestAdmin_processTabChange}" tabPlacement="Bottom" width="552">
+                                        tabChangeListener="#{jrequestAdmin.tabJrequestAdmin_processTabChange}" tabPlacement="Bottom" width="600">
                                         <ice:panelTab id="tabMantenimientos" label="Mantenimientos">
                                             <ice:panelGroup id="panelGroup2" style="height: 504px; position: inherit; width: 100%; ">
                                                 <p>
@@ -91,8 +91,9 @@
                                                                 <f:selectItems id="fakeComboEstado" value="#{jrequestAdmin.fakeComboEstado1}"/>
                                                             </ice:selectOneMenu>
                                                             <ice:commandButton action="#{jrequestAdmin.btnAceptarFinalizado_action}"
-                                                                binding="#{jrequestAdmin.btnAceptarFinalizado}" id="btnAceptarFinalizado" styleClass="btnAccion2" value="OK"/>
-                                                            <ice:commandButton action="#{jrequestAdmin.btnCerrar_action}"  binding="#{jrequestAdmin.btnCerrar}"
+                                                                binding="#{jrequestAdmin.btnAceptarFinalizado}" id="btnAceptarFinalizado"
+                                                                styleClass="btnAccion2" value="OK"/>
+                                                            <ice:commandButton action="#{jrequestAdmin.btnCerrar_action}" binding="#{jrequestAdmin.btnCerrar}"
                                                                 id="btnCerrar" styleClass="btnAccion2" value="Cerrar"/>
                                                         </ice:panelGrid>
                                                     </f:facet>
@@ -129,9 +130,11 @@
                                                             <ice:outputText id="outputText3" style="width: 310px" value="Para actualizar esta bitácora, modifique en el cuadro de texto inferior"/>
                                                             <ice:inputTextarea binding="#{jrequestAdmin.txtModBitacora}" id="txtModBitacora" style="height: 119px; width: 287px"/>
                                                             <ice:commandButton action="#{jrequestAdmin.btnAceptarModBitacora_action}"
-                                                                binding="#{jrequestAdmin.btnAceptarModBitacora}" id="btnAceptarModBitacora" styleClass="btnAccion2" value="Aceptar"/>
+                                                                binding="#{jrequestAdmin.btnAceptarModBitacora}" id="btnAceptarModBitacora"
+                                                                styleClass="btnAccion2" value="Aceptar"/>
                                                             <ice:commandButton action="#{jrequestAdmin.btnCancelarModBitacora_action}"
-                                                                binding="#{jrequestAdmin.btnCancelarModBitacora}" id="btnCancelarModBitacora" styleClass="btnAccion2" value="Cerrar"/>
+                                                                binding="#{jrequestAdmin.btnCancelarModBitacora}" id="btnCancelarModBitacora"
+                                                                styleClass="btnAccion2" value="Cerrar"/>
                                                         </ice:panelGrid>
                                                     </f:facet>
                                                 </ice:panelPopup>
@@ -154,21 +157,24 @@
                                                 <f:facet name="second">
                                                     <ice:panelGroup id="grupo2" style="position: inherit; width: 100%; ">
                                                         <p>
-                                                            <h3 styleClass="tituloSeccion"><ice:outputLabel id="outputLabel2" style="font-weight: bold; width: 190px" value="NOMBRE PERSONA ENCARGADA"/>
+                                                            <h3 styleClass="tituloSeccion">
+                                                                <ice:outputLabel id="outputLabel2" style="font-weight: bold; width: 190px" value="NOMBRE PERSONA ENCARGADA"/>
                                                             </h3>
                                                         </p>
                                                         <p>
                                                             <ice:outputLabel binding="#{jrequestAdmin.lblPersona}" id="lblPersona" style="" value="PERSONA"/>
                                                         </p>
                                                         <p>
-                                                            <h3 styleClass="tituloSeccion"><ice:outputLabel id="outputLabel1" style="font-weight: bold; width: 144px" value="NOMBRE SOLICITUD"/>
+                                                            <h3 styleClass="tituloSeccion">
+                                                                <ice:outputLabel id="outputLabel1" style="font-weight: bold; width: 144px" value="NOMBRE SOLICITUD"/>
                                                             </h3>
                                                         </p>
                                                         <p>
                                                             <ice:outputLabel binding="#{jrequestAdmin.lblNombre}" id="lblNombre" style="" value="NOMBRE"/>
                                                         </p>
                                                         <p>
-                                                            <h3 styleClass="tituloSeccion"><ice:outputLabel id="outputLabel3" style="font-weight: bold; " value="PRIORIDAD"/>
+                                                            <h3 styleClass="tituloSeccion">
+                                                                <ice:outputLabel id="outputLabel3" style="font-weight: bold; " value="PRIORIDAD"/>
                                                             </h3>
                                                         </p>
                                                         <p>
@@ -178,8 +184,10 @@
                                                             </ice:selectOneMenu>
                                                         </p>
                                                         <p>
-                                                            <h3 styleClass="tituloSeccion"><ice:outputLabel id="outputLabel5" style="font-weight: bold; width: 144px" value="TÉCNICO A ASIGNAR"/>
-                                                        </h3></p>
+                                                            <h3 styleClass="tituloSeccion">
+                                                                <ice:outputLabel id="outputLabel5" style="font-weight: bold; width: 144px" value="TÉCNICO A ASIGNAR"/>
+                                                            </h3>
+                                                        </p>
                                                         <p>
                                                             <ice:selectOneMenu binding="#{jrequestAdmin.comboTecnicos}" id="comboTecnicos" partialSubmit="true"
                                                                 style="width: 192px" value="" valueChangeListener="#{jrequestAdmin.comboTecnicos_processValueChange}">
@@ -187,11 +195,13 @@
                                                             </ice:selectOneMenu>
                                                         </p>
                                                         <p>
-                                                            <ice:commandButton action="#{jrequestAdmin.btnProceder_action}" id="btnProceder" styleClass="btnAccion2" value="Proceder a Mantenimiento"/>
+                                                            <ice:commandButton action="#{jrequestAdmin.btnProceder_action}" id="btnProceder"
+                                                                styleClass="btnAccion2" value="Proceder a Mantenimiento"/>
                                                         </p>
                                                         <p>
                                                             <ice:commandButton action="#{jrequestAdmin.btnSolicitudAdmin_action}"
-                                                                binding="#{jrequestAdmin.btnSolicitudAdmin}" id="btnSolicitudAdmin" style="width: 168px" styleClass="btnAccion2" value="Realizar una Solicitud"/>
+                                                                binding="#{jrequestAdmin.btnSolicitudAdmin}" id="btnSolicitudAdmin" style="width: 168px"
+                                                                styleClass="btnAccion2" value="Realizar una Solicitud"/>
                                                         </p>
                                                     </ice:panelGroup>
                                                 </f:facet>
@@ -207,7 +217,8 @@
                                         <f:facet name="body">
                                             <ice:panelGrid id="panelGrid2" style="display:block;width:180px;height:80px;">
                                                 <ice:outputText binding="#{jrequestAdmin.lblMensajes}" id="lblMensajes" value="Texto de Mensajes"/>
-                                                <ice:commandButton action="#{jrequestAdmin.btnOK_action}" binding="#{jrequestAdmin.btnOK}" id="btnOK" styleClass="btnAccion2" value="OK"/>
+                                                <ice:commandButton action="#{jrequestAdmin.btnOK_action}" binding="#{jrequestAdmin.btnOK}" id="btnOK"
+                                                    styleClass="btnAccion2" value="OK"/>
                                             </ice:panelGrid>
                                         </f:facet>
                                     </ice:panelPopup>

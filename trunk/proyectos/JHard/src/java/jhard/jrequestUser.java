@@ -41,40 +41,9 @@ public class jrequestUser extends AbstractPageBean {
      * here is subject to being replaced.</p>
      */
     private void _init() throws Exception {
-        
-    arrayTecnico.setArray((java.lang.Object[]) getValue("#{jrequestUser.tecnicos}"));
     }
 
-
-    private ObjectArrayDataProvider arrayTecnico = new ObjectArrayDataProvider();
-
-    public ObjectArrayDataProvider getArrayTecnico() {
-        return arrayTecnico;
-    }
-
-    public void setArrayTecnido(ObjectArrayDataProvider oadt) {
-        this.arrayTecnico = oadt;
-    }
-
-
-    private DefaultSelectedData selectOneMenu1Bean = new DefaultSelectedData();
-
-    public DefaultSelectedData getSelectOneMenu1Bean() {
-        return selectOneMenu1Bean;
-    }
-
-    public void setSelectOneMenu1Bean(DefaultSelectedData dsd) {
-        this.selectOneMenu1Bean = dsd;
-    }
-    private DefaultSelectionItems selectOneMenu1DefaultItems = new DefaultSelectionItems();
-
-    public DefaultSelectionItems getSelectOneMenu1DefaultItems() {
-        return selectOneMenu1DefaultItems;
-    }
-
-    public void setSelectOneMenu1DefaultItems(DefaultSelectionItems dsi) {
-        this.selectOneMenu1DefaultItems = dsi;
-    }
+    
     private HtmlCommandButton btnBuscar = new HtmlCommandButton();
 
     public HtmlCommandButton getBtnBuscar() {
@@ -83,26 +52,6 @@ public class jrequestUser extends AbstractPageBean {
 
     public void setBtnBuscar(HtmlCommandButton hcb) {
         this.btnBuscar = hcb;
-    }
-    private Tecnico[] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
-    private Tecnico tecnicoElegido=tecnicos[0];
-
-
-
-    public Tecnico getTecnicoElegido(){
-        return tecnicoElegido;
-    }
-
-    public void setTecnicoElegido(Tecnico tec){
-        this.tecnicoElegido=tec;
-    }
-
-    public Tecnico[] getTecnicos(){
-        return tecnicos;
-    }
-
-    public void setTecnicos(Tecnico[] tec){
-        this.tecnicos=tec;
     }
     private HtmlCommandButton btnSolicitud = new HtmlCommandButton();
 
