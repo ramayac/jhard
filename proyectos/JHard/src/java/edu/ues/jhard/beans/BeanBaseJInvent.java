@@ -40,6 +40,7 @@ public class BeanBaseJInvent extends BeanBase {
     private CrudManager crdSoftware;
     private CrudManager crdPieza;
     private CrudManager crdAccesorio;
+    private CrudManager crdClasificacion;
     private List<Marca> listaMarcas;
     private SelectItemGroup listaItemsMarcas;
     private String marcaSelected;
@@ -55,6 +56,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.crdSoftware = new CrudManager();
         this.crdAccesorio = new CrudManager();
         this.crdPieza = new CrudManager();
+        this.crdClasificacion = new CrudManager();
         this.msg = new ActionMessage();
         this.listaMarcas = this.getEntityManager().createNamedQuery("Marca.findAll").getResultList();
         this.initItemsMarcas();
@@ -556,6 +558,18 @@ public class BeanBaseJInvent extends BeanBase {
         return "done";
     }
 
+    public String addClasificaicon(){
+        return "done";
+    }
+
+    public String editClasificacion(){
+        return "done";
+    }
+
+    public String delClasificacion(){
+        return "done";
+    }
+
     /**
      * @return the msg
      */
@@ -573,5 +587,19 @@ public class BeanBaseJInvent extends BeanBase {
     public void actualizarNodoClasificacion(){
         Clasificacion cl = this.getCurrentClasificacion();
         this.clasificaciontm.getCurrentUserObject().setText(cl.getNombre() + " (" + (cl.getEquipoCollection().size() + cl.getSoftwareCollection().size() + cl.getAccesorioCollection().size() + cl.getPiezaCollection().size()) +  ")");
+    }
+
+    /**
+     * @return the crdClasificacion
+     */
+    public CrudManager getCrdClasificacion() {
+        return crdClasificacion;
+    }
+
+    /**
+     * @param crdClasificacion the crdClasificacion to set
+     */
+    public void setCrdClasificacion(CrudManager crdClasificacion) {
+        this.crdClasificacion = crdClasificacion;
     }
 }

@@ -1480,7 +1480,7 @@ fieldset {
     padding-right: 10px;
     padding-top: 3px;
     padding-bottom: 3px;
-    color: #333333; /* Must be >1.01em to avoid layout artifacts on Macs */
+    color: #333333; /* Must be 1.01em to avoid layout artifacts on Macs */
     font-size: 1.1em;
     margin: 0px;
     border-right: 1px solid #FFFFFF;
@@ -2664,7 +2664,7 @@ Disabled classes for the calendar controls
 
 .frmElementList label{
     float: left;
-    width: 120px;
+    width: 150px;
 }
 
 h3{
@@ -2724,6 +2724,15 @@ h3{
 .actionSection input:hover{
     color: #BC3E28;
     border: 1px solid #BC3E28;
+}
+
+.listaAcciones{
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    padding-left: 15px;
+    margin-top: 15px;
+    line-height: 22px;
 }
 
 .btnAccion2{
