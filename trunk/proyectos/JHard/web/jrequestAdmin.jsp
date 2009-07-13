@@ -101,7 +101,7 @@
                                             </ice:panelGroup>
                                         </ice:panelTab>
                                         <ice:panelTab id="tabBitacoras" label="Bitacoras" style="width: 565px">
-                                            <ice:panelGroup id="panelGroup4" style="position: inherit; width: 576px">
+                                            <ice:panelGroup id="panelGroup4" style="position: inherit; width: 560px">
                                                 <p>
                                                     <ice:outputLabel id="outputLabel11" style="font-weight:bold; font-size:14px;" value="Seleccione un equipo simple para visualizar y/o modificar su bitácora"/>
                                                 </p>

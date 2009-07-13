@@ -291,6 +291,7 @@ public class jcanon extends AbstractPageBean {
     // </editor-fold>
 
 
+    private boolean renderer;
     private LoggedUser lu;
     private Usuario U;
 
@@ -359,8 +360,12 @@ public class jcanon extends AbstractPageBean {
      */
     @Override
     public void init() {
-        this.panelMensajes.setRendered(false);
-        this.panelMensajes.setVisible(false);
+//        this.panelMensajes.setRendered(false);
+//        this.panelPopup1Bean.setShowDraggablePanel(false);
+//        this.panelMensajes.setVisible(false);
+
+        this.renderer=false;
+
         // Perform initializations inherited from our superclass
         super.init();
         // Perform application initialization that must complete
@@ -627,9 +632,7 @@ public class jcanon extends AbstractPageBean {
                 
                 if(reservas>=equipos){
                     this.lblMensajes.setValue("No se puede realizar la reserva. Equipo multimedia insuficiente");
-                    this.panelMensajes.setRendered(true);
-                    this.panelMensajes.setVisible(true);
-                    this.panelMensajes.setModal(true);
+                    this.renderer=true;
 
                 }else{
                     System.out.println("RESERVAS--> "+ reservas);
@@ -651,9 +654,7 @@ public class jcanon extends AbstractPageBean {
                     instance.registrarReserva(reservaCanon);
 
                     this.lblMensajes.setValue("Reserva hecha con éxito");
-                    this.panelMensajes.setRendered(true);
-                    this.panelMensajes.setVisible(true);
-                    this.panelMensajes.setModal(true);
+                    this.renderer=true;
                 }
 
             }
@@ -684,9 +685,7 @@ public class jcanon extends AbstractPageBean {
 
                 if(reservas>=equipos){
                     this.lblMensajes.setValue("No se puede realizar la reserva. Equipo multimedia insuficiente");
-                    this.panelMensajes.setRendered(true);
-                    this.panelMensajes.setVisible(true);
-                    this.panelMensajes.setModal(true);
+                    this.renderer=true;
 
                 }else{
                     String [] tiempoF = this.horaFin.getValue().toString().split("\\:");
@@ -706,9 +705,7 @@ public class jcanon extends AbstractPageBean {
                     instance.registrarReserva(reservaLaptop);
 
                     this.lblMensajes.setValue("Reserva hecha con éxito");
-                    this.panelMensajes.setRendered(true);
-                    this.panelMensajes.setVisible(true);
-                    this.panelMensajes.setModal(true);
+                    this.renderer=true;
 
                 }
                 
@@ -726,10 +723,22 @@ public class jcanon extends AbstractPageBean {
     }
 
     public String btnOk_action() {
-        this.panelMensajes.setRendered(false);
-        this.panelMensajes.setVisible(false);
-        this.panelMensajes.setModal(false);
+        this.renderer=false;
         return null;
+    }
+
+    /**
+     * @return the renderer
+     */
+    public boolean isRenderer() {
+        return renderer;
+    }
+
+    /**
+     * @param renderer the renderer to set
+     */
+    public void setRenderer(boolean renderer) {
+        this.renderer = renderer;
     }
 }
 

@@ -123,7 +123,7 @@
                                         </ice:panelCollapsible>
                                     </ice:panelGroup>
                                     <ice:panelPopup autoCentre="true" binding="#{jrequestUser.popUpRegister}" draggable="true" id="popUpRegister" modal="true"
-                                        rendered="#{jrequestUser.panelPopup1Bean.showDraggablePanel}" style="height: 46; width: 381px" visible="#{jrequestUser.panelPopup1Bean.showModalPanel}">
+                                        rendered="#{jrequestUser.renderer}" style="height: 46; width: 381px" visible="#{jrequestUser.panelPopup1Bean.showModalPanel}">
                                         <f:facet name="header">
                                             <ice:panelGrid id="panelGrid1" style="display: block; height: 20px" width="360">
                                                 <ice:outputText id="lblTit" value="Usted no es un usuario registrado"/>
