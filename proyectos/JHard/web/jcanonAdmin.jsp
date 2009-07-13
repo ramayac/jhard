@@ -89,19 +89,19 @@
                                                         <f:facet name="header">
                                                             <ice:outputText value="Fecha de la reserva"/>
                                                         </f:facet>
-                                                        <ice:outputText value="#{reserva.fechahorainicioprestamo}"/>
+                                                        <ice:outputText value="#{reserva.fechaReserva}"/>
                                                     </ice:column>
                                                     <ice:column>
                                                         <f:facet name="header">
                                                             <ice:outputText value="Hora Inicio"/>
                                                         </f:facet>
-                                                        <ice:outputText value="#{reserva.fechahorainicioprestamo}"/>
+                                                        <ice:outputText value="#{reserva.horaInicio}"/>
                                                     </ice:column>
                                                     <ice:column>
                                                         <f:facet name="header">
                                                             <ice:outputText value="Hora Fin"/>
                                                         </f:facet>
-                                                        <ice:outputText value="#{reserva.fechahorafinprestamo}"/>
+                                                        <ice:outputText value="#{reserva.horaFinal}"/>
                                                     </ice:column>
                                                     <ice:column>
                                                         <f:facet name="header">

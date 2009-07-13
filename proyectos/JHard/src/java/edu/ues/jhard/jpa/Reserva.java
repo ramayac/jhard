@@ -197,4 +197,18 @@ public class Reserva implements Serializable {
         return "edu.ues.jhard.jpa.Reserva[idreserva=" + idreserva + "]";
     }
 
+    public String getfechaReserva(){
+
+        return String.valueOf(this.fechahorainicioprestamo.getDate())+"-"+String.valueOf(this.fechahorainicioprestamo.getMonth()+1)+"-"+String.valueOf(this.fechahorainicioprestamo.getYear()+1900);
+    }
+
+    public String gethoraInicio(){
+        
+        return String.valueOf(this.fechahorainicioprestamo.getHours())+":"+String.valueOf(this.fechahorainicioprestamo.getMinutes());
+    }
+
+    public String gethoraFinal(){
+
+        return String.valueOf(this.fechahorafinprestamo.getHours())+":"+String.valueOf(this.fechahorafinprestamo.getMinutes());
+    }
 }

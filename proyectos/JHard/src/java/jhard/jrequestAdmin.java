@@ -538,12 +538,12 @@ public class jrequestAdmin extends AbstractPageBean {
         Equiposimple [] eqsimple = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
         ArrayList eqs = new ArrayList();
         for(int i=0;i<eqsimple.length;i++){
-            String label = eqsimple[i].getPropietario()+" "+eqsimple[i].getPropietario();
+            String label = eqsimple[i].getPropietario()+" "+eqsimple[i].getDescripcion();
             eqs.add(new SelectItem(eqsimple[i].getIdEquipoSimple(),label));
         }
         UISelectItems itemsEq = new UISelectItems();
         itemsEq.setValue(eqs);
-        this.txtEqSimples.getChildren().add(itemsTec);
+        this.txtEqSimples.getChildren().add(itemsEq);
 
 
         //SELECTINPUT DE ESTADOS DE EQUIPOS
@@ -551,11 +551,11 @@ public class jrequestAdmin extends AbstractPageBean {
         ArrayList eeq = new ArrayList();
         for(int i=0;i<estado.length;i++){
             String label = estado[i].getNombre();
-            eqs.add(new SelectItem(estado[i].getIdestado(),label));
+            eeq.add(new SelectItem(estado[i].getIdestado(),label));
         }
         UISelectItems itemsEstad = new UISelectItems();
         itemsEstad.setValue(eeq);
-        this.comboEstado.getChildren().add(itemsTec);
+        this.comboEstado.getChildren().add(itemsEstad);
     }
     
     private Tecnico tecnicoElegido=null;

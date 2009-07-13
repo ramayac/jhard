@@ -7,19 +7,14 @@
 package jhard;
 
 import com.icesoft.faces.component.ext.HtmlCommandButton;
-import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
-import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
 
 import com.icesoft.faces.component.jsfcl.data.PopupBean;
 import com.icesoft.faces.component.panelpopup.PanelPopup;
-import com.sun.data.provider.impl.ObjectArrayDataProvider;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 
 
 import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.jhardmin.LoggedUser;
-import edu.ues.jhard.jhardmin.LoginManager;
-import edu.ues.jhard.jpa.Tecnico;
 import edu.ues.jhard.jpa.Usuario;
 import javax.faces.FacesException;
 
@@ -95,7 +90,20 @@ public class jrequestUser extends AbstractPageBean {
 
 
 
+    private boolean renderer;
+    /**
+     * @return the renderer
+     */
+    public boolean isRenderer() {
+        return renderer;
+    }
 
+    /**
+     * @param renderer the renderer to set
+     */
+    public void setRenderer(boolean renderer) {
+        this.renderer = renderer;
+    }
     private LoggedUser lu;
     private Usuario U;
 
@@ -143,7 +151,8 @@ public class jrequestUser extends AbstractPageBean {
      */
     @Override
     public void init() {
-        this.popUpRegister.setRendered(false);
+        //this.popUpRegister.setRendered(false);
+        this.renderer=false;
         // Perform initializations inherited from our superclass
         super.init();
         // Perform application initialization that must complete
@@ -250,9 +259,7 @@ public class jrequestUser extends AbstractPageBean {
 
         if(lu==null){
             navigation=null;
-            this.popUpRegister.setRendered(true);
-            this.popUpRegister.setVisible(true);
-            this.popUpRegister.setModal(true);
+            this.renderer=true;
         }
         else
             navigation="case1";
@@ -262,16 +269,9 @@ public class jrequestUser extends AbstractPageBean {
     }
 
     public String btnOk_action() {
-        this.popUpRegister.setRendered(false);
-            this.popUpRegister.setVisible(false);
-            this.popUpRegister.setModal(false);
+        this.renderer=false;
         return null;
     }
-
-    
-
-
-
 
 }
 

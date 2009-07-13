@@ -98,7 +98,7 @@
                                     <br/>
                                     <br/>
                                     <h3 styleClass="tituloSeccion"><ice:outputLabel id="lbldescripcion" value="Descripción"/>
-                                    </h3>><br/>
+                                    </h3><br/>
                                     <ice:inputTextarea binding="#{jrequestUserSolicitud.txtDescripcion}" id="txtDescripcion" style="height: 72px; width: 286px"/>
                                     <br/>
                                     <br/>

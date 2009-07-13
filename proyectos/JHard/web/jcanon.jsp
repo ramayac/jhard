@@ -99,7 +99,7 @@
                                             <div class="dhx_cal_data"></div>
                                         </div>
                                         <ice:panelPopup autoCentre="true" binding="#{jcanon.panelMensajes}" draggable="true" id="panelMensajes" modal="true"
-                                            rendered="#{jcanon.panelPopup1Bean.showDraggablePanel}"
+                                            rendered="#{jcanon.renderer}"
                                             style="height: 141px; left: 264px; top: 144px; position: absolute; width: 333px" visible="#{jcanon.panelPopup1Bean.showModalPanel}">
                                             <f:facet name="header">
                                                 <ice:panelGrid id="panelGrid1" style="display:block;width:180px;height:20px;">
