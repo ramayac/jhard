@@ -5,6 +5,7 @@
 
 package edu.ues.jhard.beans;
 
+import com.icesoft.faces.component.tree.TreeNode;
 import edu.ues.jhard.jinvent.ClasificacionTreeModel;
 import edu.ues.jhard.jinvent.ClasificacionUserObject;
 import edu.ues.jhard.jinvent.CrudManager;
@@ -35,6 +36,7 @@ public class BeanBaseJInvent extends BeanBase {
     private Equipo currentEquipo;
     private Software currentSoftware;
     private Accesorio currentAccesorio;
+    private Clasificacion nuevaClasificacion;
     private Pieza currentPieza;
     private CrudManager crdEquipo;
     private CrudManager crdSoftware;
@@ -52,6 +54,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.currentSoftware = new Software();
         this.currentAccesorio = new Accesorio();
         this.currentPieza = new Pieza();
+        this.nuevaClasificacion = new Clasificacion();
         this.crdEquipo = new CrudManager();
         this.crdSoftware = new CrudManager();
         this.crdAccesorio = new CrudManager();
@@ -559,14 +562,82 @@ public class BeanBaseJInvent extends BeanBase {
     }
 
     public String addClasificaicon(){
+        EntityManager emgr = this.getEntityManager();
+        this.nuevaClasificacion.setIdsuperior(this.getCurrentClasificacion().getIdclasificacion());
+        emgr.getTransaction().begin();
+        emgr.persist(this.nuevaClasificacion);
+        emgr.getTransaction().commit();
+        this.crdClasificacion.hidePopupAdd();
+
+        DefaultMutableTreeNode currentNodo = this.clasificaciontm.seleccionarNodo(this.getCurrentClasificacion().getIdclasificacion().toString());
+        this.clasificaciontm.agregarNodo(currentNodo, nuevaClasificacion);
+
+        this.msg.setText("Nueva clasificación agregada satisfactoriamente");
+        this.msg.setVisible(true);
+        this.nuevaClasificacion = new Clasificacion();
         return "done";
     }
 
     public String editClasificacion(){
+        EntityManager emgr = this.getEntityManager();
+        emgr.getTransaction().begin();
+        emgr.merge(this.getCurrentClasificacion());
+        emgr.getTransaction().commit();
+        this.crdClasificacion.hidePopupEdit();
+        Clasificacion current = this.getCurrentClasificacion();
+        this.clasificaciontm.getCurrentUserObject().setText(current.getNombre() + "(" + (current.getEquipoCollection().size() + current.getAccesorioCollection().size() + current.getPiezaCollection().size() + current.getSoftwareCollection().size()) + ")");
+
+        this.msg.setText("Clasificación modificada exitosamente");
+        this.msg.setVisible(true);
         return "done";
     }
 
     public String delClasificacion(){
+        EntityManager emgr = this.getEntityManager();
+        DefaultMutableTreeNode currentNodo = this.clasificaciontm.seleccionarNodo(this.getCurrentClasificacion().getIdclasificacion().toString());
+        Clasificacion clRemover = (Clasificacion)emgr.createQuery("SELECT c FROM Clasificacion c WHERE c.idclasificacion=" + this.getCurrentClasificacion().getIdclasificacion()).getSingleResult();
+        if(!currentNodo.isLeaf()){
+            this.crdClasificacion.hidePopupDel();
+            this.msg.setText("Solamente se pueden eliminar las clasificaciones que no posean hijas");
+            this.msg.setVisible(true);
+            return "fail";
+        }
+
+        DefaultMutableTreeNode nodoPadre = this.clasificaciontm.seleccionarNodo(((ClasificacionUserObject)((DefaultMutableTreeNode)currentNodo.getParent()).getUserObject()).getClasificacion().getIdclasificacion().toString());
+        Clasificacion clPadre = ((ClasificacionUserObject)nodoPadre.getUserObject()).getClasificacion();
+
+        for(Equipo eq: clRemover.getEquipoCollection())
+            eq.setIdclasificacion(clPadre);
+        clPadre.getEquipoCollection().addAll(clRemover.getEquipoCollection());
+        clRemover.getEquipoCollection().clear();
+
+        for(Software sw: clRemover.getSoftwareCollection())
+            sw.setIdclasificacion(clPadre);
+        clPadre.getSoftwareCollection().addAll(clRemover.getSoftwareCollection());
+        clRemover.getSoftwareCollection().clear();
+
+        for(Accesorio ac: clRemover.getAccesorioCollection())
+            ac.setIdclasificacion(clPadre);
+        clPadre.getAccesorioCollection().addAll(clRemover.getAccesorioCollection());
+        clRemover.getAccesorioCollection().clear();
+
+        for(Pieza pz: clRemover.getPiezaCollection())
+            pz.setIdclasificacion(clPadre);
+        clPadre.getPiezaCollection().addAll(clRemover.getPiezaCollection());
+        clRemover.getPiezaCollection().clear();
+
+        emgr.getTransaction().begin();
+        emgr.remove(clRemover);
+        emgr.merge(clPadre);
+        emgr.getTransaction().commit();
+        this.crdClasificacion.hidePopupDel();
+
+        Clasificacion current = this.getCurrentClasificacion();
+        this.clasificaciontm.getCurrentUserObject().setText(current.getNombre() + "(" + (current.getEquipoCollection().size() + current.getAccesorioCollection().size() + current.getPiezaCollection().size() + current.getSoftwareCollection().size()) + ")");
+
+        nodoPadre.remove(currentNodo);
+        this.msg.setText("Clasificación eliminada satisfactoriamente. Los items asociados a esta clasificación fueron trasladados a la clasificación padre");
+        this.msg.setVisible(true);
         return "done";
     }
 
@@ -601,5 +672,16 @@ public class BeanBaseJInvent extends BeanBase {
      */
     public void setCrdClasificacion(CrudManager crdClasificacion) {
         this.crdClasificacion = crdClasificacion;
+    }
+
+    public Clasificacion getNuevaClasificacion(){
+        return this.nuevaClasificacion;
+    }
+
+    /**
+     * @param currentClasificacion the currentClasificacion to set
+     */
+    public void setNuevaClasificacion(Clasificacion currentClasificacion) {
+        this.nuevaClasificacion = currentClasificacion;
     }
 }

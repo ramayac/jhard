@@ -41,7 +41,7 @@ public class ClasificacionTreeModel {
         this.modelo = modelo;
     }
 
-    private void generarNodosModelo(){
+    public void generarNodosModelo(){
         Clasificacion cl = (Clasificacion)this.em.createQuery("SELECT c FROM Clasificacion c WHERE c.idsuperior IS NULL").getSingleResult();
         DefaultMutableTreeNode nodo = this.agregarNodo(null, cl);
         this.modelo = new DefaultTreeModel(nodo);
@@ -49,7 +49,7 @@ public class ClasificacionTreeModel {
         this.generarNodosHijos(nodo);
     }
 
-    private DefaultMutableTreeNode agregarNodo(DefaultMutableTreeNode nodoPadre, Clasificacion cl){
+    public DefaultMutableTreeNode agregarNodo(DefaultMutableTreeNode nodoPadre, Clasificacion cl){
         DefaultMutableTreeNode nodo = new DefaultMutableTreeNode();
         ClasificacionUserObject clUsrObj = new ClasificacionUserObject(nodo);
         nodo.setUserObject(clUsrObj);

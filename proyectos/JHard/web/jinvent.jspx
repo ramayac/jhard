@@ -100,11 +100,11 @@
                                                                 <ice:panelGroup styleClass="frmElementList">
                                                                     <p>
                                                                         <ice:outputLabel id="lblNombreClasificacion" for="txtNombreClasificacion" value="Nombre:" />
-                                                                        <ice:inputText id="txtNombreClasificacion" value="" />
+                                                                        <ice:inputText id="txtNombreClasificacion" value="#{JInventInstance.nuevaClasificacion.nombre}" />
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblDescripcionClasificacion" for="txtDescripcionClasificacion" value="Descripcion:" />
-                                                                        <ice:inputText id="txtDescripcionClasificacion" value="" />
+                                                                        <ice:inputText id="txtDescripcionClasificacion" value="#{JInventInstance.nuevaClasificacion.descripcion}" />
                                                                     </p>
                                                                     <p class="actionSection">
                                                                         <ice:commandButton id="cmdCommitAgregarClasificacion" value="Agregar" action="#{JInventInstance.addClasificaicon}" />
