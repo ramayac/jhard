@@ -11,6 +11,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import static org.junit.Assert.*;
 
 /**
@@ -97,6 +98,16 @@ public class BeanBaseJWikiTest {
         Tag tag = new Tag(9999, "Tag9999");
         BeanBaseJWiki instance = new BeanBaseJWiki();
         if(!instance.createTag(tag)) fail("fallo en REGISTRAR TAG");
+    }
+
+    @Test
+    public void testSearchEntradaPorTag() {
+        System.out.println("testSearchEntradaPorTag");
+        //Tag tag = new Tag(9999, "Tag9999");
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        Entrada e = instance.searchEntradaPorEtiqueta("wiki");
+        assertNotNull(e);
+        System.out.println("Titulo de la entrada: " + e.getTitulo());
     }
 
     @Test
