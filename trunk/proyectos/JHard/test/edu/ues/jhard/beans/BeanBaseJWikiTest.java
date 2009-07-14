@@ -79,7 +79,7 @@ public class BeanBaseJWikiTest {
     
     @Test
     public void testEtiquetasDeEntrada() {
-        int n = 5;
+        int n = 1;
         System.out.println("getEtiquetasDeEntrada");
         BeanBaseJWiki instance = new BeanBaseJWiki();
         Entrada entrada = instance.getEntrada(n);
@@ -95,7 +95,7 @@ public class BeanBaseJWikiTest {
     @Test
     public void testRegistrarTag() {
         System.out.println("testRegistrarTag");
-        Tag tag = new Tag(9999, "Tag9999");
+        Tag tag = new Tag(0, "Tag9999");
         BeanBaseJWiki instance = new BeanBaseJWiki();
         if(!instance.createTag(tag)) fail("fallo en REGISTRAR TAG");
     }
@@ -103,11 +103,22 @@ public class BeanBaseJWikiTest {
     @Test
     public void testSearchEntradaPorTag() {
         System.out.println("testSearchEntradaPorTag");
-        //Tag tag = new Tag(9999, "Tag9999");
         BeanBaseJWiki instance = new BeanBaseJWiki();
-        Entrada e = instance.searchEntradaPorEtiqueta("wiki");
+        Entrada e = instance.searchEntradaPorEtiqueta("wiki"); //se busca por esta descripcion
         assertNotNull(e);
         System.out.println("Titulo de la entrada: " + e.getTitulo());
+    }
+
+    @Test
+    public void testSearchEntradaPorTags() {
+        System.out.println("testSearchEntradaPorTags");
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        String[] etiquetas = {"portada", "wiki"};
+        Entrada[] entradas = instance.searchEntradaPorEtiquetas(etiquetas);
+        for (Entrada entrada : entradas) {
+            assertNotNull(entrada);
+            System.out.println("Titulo de la entrada: " + entrada.getTitulo());
+        }
     }
 
     @Test
@@ -139,8 +150,8 @@ public class BeanBaseJWikiTest {
     public void testEliminarTag() {
         System.out.println("testEliminarTag");
         BeanBaseJWiki instance = new BeanBaseJWiki();
-        instance.deleteTag(9999);
-        Tag t = instance.getEtiqueta(9999);
+        instance.deleteTag(0);
+        Tag t = instance.getEtiqueta(0);
         if(!(t==null)) fail("fallo en ELIMINAR TAG");
     }
     

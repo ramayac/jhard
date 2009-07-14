@@ -37,6 +37,38 @@ public class BeanBaseJWiki extends BeanBase {
         return e;
     }
 
+        /**
+     * Metodo para obtener un objeto entrada por una etiqueta, se asume que la entrada es nueva, asi que se hace
+     * un em.persist sobre la misma.
+     */
+    public Entrada[] searchEntradaPorEtiquetas(String[] etiquetas){
+        EntityManager em = this.getEntityManager();
+
+        String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE";
+
+        for (int i = 0; i < etiquetas.length; i++) {
+            sql += "( t.descripcion LIKE ?"+i+" )";
+            if((i+1)<etiquetas.length) sql += " OR ";
+        }
+
+        sql += " AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada ";
+
+        Query q = em.createNativeQuery(sql, Entrada.class);
+
+        for (int i = 0; i < etiquetas.length; i++) {
+            String etiqueta = etiquetas[i];
+            q.setParameter(i, etiqueta);
+        }
+
+        Entrada[] entradas = (Entrada[])q.getResultList().toArray(new Entrada[0]);
+        em.getTransaction().begin();
+        for (Entrada entrada : entradas) {
+            em.persist(entrada);
+        }
+        em.getTransaction().commit();
+        return entradas;
+    }
+
     /**
      * Metodo para obtener las ultimas N entradas en jhard.entradas.
      * @return numero Numero de entradas que se desean
