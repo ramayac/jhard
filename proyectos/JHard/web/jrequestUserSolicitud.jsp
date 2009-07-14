@@ -60,8 +60,7 @@
                             <div class="entry" style="height: 507px">
                                 <ice:form id="form1" style="height: 200px">
                                     <ice:panelPopup autoCentre="true" binding="#{jrequestUserSolicitud.panelPopup1}" draggable="true" id="panelPopup1"
-                                        modal="true" rendered="#{jrequestUserSolicitud.panelPopup1Bean.showDraggablePanel}"
-                                        style="height: 261px; left: 576px; top: 288px; position: absolute; width: 261px" visible="#{jrequestUserSolicitud.panelPopup1Bean.showModalPanel}">
+                                        modal="true" style="height: 261px; left: 576px; top: 288px; position: absolute; width: 261px;visibility: hidden;visibility: hidden;">
                                         <f:facet name="header">
                                             <ice:panelGrid id="panelGrid1" style="display:block;width:180px;height:20px;">
                                                 <ice:outputText id="outputText1" value="Agregar Nuevo Equipo"/>
@@ -75,7 +74,7 @@
                                                 <ice:inputText binding="#{jrequestUserSolicitud.txtPropietario}" id="txtPropietario"/>
                                                 <ice:outputLabel id="lblEstadoEq" value="Estado del Equipo"/>
                                                 <ice:selectOneMenu binding="#{jrequestUserSolicitud.comboEstados}" id="comboEstados" partialSubmit="true">
-                                                    <f:selectItems id="selectOneMenu1selectItems1" value="#{jrequestUserSolicitud.arrayEstados.options['idestado,nombre']}"/>
+                                                    <f:selectItems id="selectOneMenu1selectItems1" value="#{jrequestUserSolicitud.comboEstadosDefaultItems}"/>
                                                 </ice:selectOneMenu>
                                                 <ice:commandButton action="#{jrequestUserSolicitud.btnAgregar_action}"
                                                     binding="#{jrequestUserSolicitud.btnAgregar}" id="btnAgregar" value="Agregar"/>
@@ -84,47 +83,52 @@
                                             </ice:panelGrid>
                                         </f:facet>
                                     </ice:panelPopup>
-                                    <ice:outputLabel id="labelError" style="font-size: 14px; font-weight: bold" value="Debe de permanecer con sesión activa para realizar una petición de Soporte técnico" rendered="#{JHardminInstance.currentUser == null}"></ice:outputLabel>
-                                    <ice:panelCollapsible id="colap" style="width:576" expanded="true">
-                                <f:facet name="header">
-                                    <ice:outputText value="Ingrese una nueva solicitud"/>
-                                </f:facet>
-                                    <ice:panelGroup id="grupoSolicitud" rendered="#{JHardminInstance.currentUser != null}" style="height:400px;">
-
-                                    <h3 styleClass="tituloSeccion"><ice:outputLabel id="lblNombre" value="Usuario que realiza la petición"/>
-                                    </h3><br/>
-                                    <ice:outputLabel binding="#{jrequestUserSolicitud.lblUsuario}" id="lblUsuario" style="font-size: 14px; font-weight: bold"/>
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <h3 styleClass="tituloSeccion"><ice:outputLabel id="lbldescripcion" value="Descripción"/>
-                                    </h3><br/>
-                                    <ice:inputTextarea binding="#{jrequestUserSolicitud.txtDescripcion}" id="txtDescripcion" style="height: 72px; width: 286px"/>
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <h3 styleClass="tituloSeccion"><ice:outputLabel id="lblEqSimple" value="Nombre Equipo"/>
-                                    </h3><br/>
-                                    <br/>
-                                    <ice:selectOneMenu binding="#{jrequestUserSolicitud.comboEqSimple}" id="comboEqSimple" partialSubmit="true"
-                                        style="width: 286px" valueChangeListener="#{jrequestUserSolicitud.comboEqSimple_processValueChange}">
-                                        <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUserSolicitud.arrayEqSimple.options['idEquipoSimple,descripcion']}"/>
-                                    </ice:selectOneMenu>
-                                    <ice:commandButton action="#{jrequestUserSolicitud.btnAgregarEqSimple_action}"
-                                    binding="#{jrequestUserSolicitud.btnAgregarEqSimple}" styleClass="btnAccion2" id="btnAgregarEqSimple" value="Agregar Equipo"/>
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <ice:commandButton action="#{jrequestUserSolicitud.btnEnviar_action}" binding="#{jrequestUserSolicitud.btnEnviar}"
-                                    id="btnEnviar" styleClass="btnAccion2" value="Enviar"/>
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    </ice:panelGroup>
-                                </ice:panelCollapsible>
-                                    
+                                    <ice:outputLabel id="labelError" rendered="#{JHardminInstance.currentUser == null}"
+                                        style="font-size: 14px; font-weight: bold" value="Debe de permanecer con sesión activa para realizar una petición de Soporte técnico"/>
+                                    <ice:panelCollapsible expanded="true" id="colap" style="width:576">
+                                        <f:facet name="header">
+                                            <ice:outputText value="Ingrese una nueva solicitud"/>
+                                        </f:facet>
+                                        <ice:panelGroup id="grupoSolicitud" rendered="#{JHardminInstance.currentUser != null}" style="height:400px;">
+                                            <h3 styleClass="tituloSeccion">
+                                                <ice:outputLabel id="lblNombre" value="Usuario que realiza la petición"/>
+                                            </h3>
+                                            <br/>
+                                            <ice:outputLabel binding="#{jrequestUserSolicitud.lblUsuario}" id="lblUsuario" style="font-size: 14px; font-weight: bold"/>
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <h3 styleClass="tituloSeccion">
+                                                <ice:outputLabel id="lbldescripcion" value="Descripción"/>
+                                            </h3>
+                                            <br/>
+                                            <ice:inputTextarea binding="#{jrequestUserSolicitud.txtDescripcion}" id="txtDescripcion" style="height: 72px; width: 286px"/>
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <h3 styleClass="tituloSeccion">
+                                                <ice:outputLabel id="lblEqSimple" value="Nombre Equipo"/>
+                                            </h3>
+                                            <br/>
+                                            <br/>
+                                            <ice:selectOneMenu binding="#{jrequestUserSolicitud.comboEqSimple}" id="comboEqSimple" partialSubmit="true"
+                                                style="width: 286px" valueChangeListener="#{jrequestUserSolicitud.comboEqSimple_processValueChange}">
+                                                <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUserSolicitud.comboEqSimpleDefaultItems}"/>
+                                            </ice:selectOneMenu>
+                                            <ice:commandButton action="#{jrequestUserSolicitud.btnAgregarEqSimple_action}"
+                                                binding="#{jrequestUserSolicitud.btnAgregarEqSimple}" id="btnAgregarEqSimple" styleClass="btnAccion2" value="Agregar Equipo"/>
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <ice:commandButton action="#{jrequestUserSolicitud.btnEnviar_action}" binding="#{jrequestUserSolicitud.btnEnviar}"
+                                                id="btnEnviar" styleClass="btnAccion2" value="Enviar"/>
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                        </ice:panelGroup>
+                                    </ice:panelCollapsible>
                                     <ice:panelPopup autoCentre="true" binding="#{jrequestUserSolicitud.panelPopup2}" draggable="true" id="panelPopup2"
-                                        modal="true" rendered="#{jrequestUserSolicitud.panelPopup2Bean.showDraggablePanel}" style="height: 130px; width: 261px" visible="#{jrequestUserSolicitud.panelPopup2Bean.showModalPanel}">
+                                        modal="true" style="height: 130px; width: 261px;visibility: hidden;visibility: hidden;">
                                         <f:facet name="header">
                                             <ice:panelGrid id="panelGrid3" style="display:block;width:180px;height:20px;">
                                                 <ice:outputText id="outputText2" value="JRequest"/>
@@ -183,19 +187,21 @@
                             </li>
                             <li>
                                 <ice:form id="frmCommonTasks">
-                                <h2>Tareas Comunes</h2>
+                                    <h2>Tareas Comunes</h2>
                                     <ul>
                                         <li>
-                                            <ice:commandLink value="Cambiar clave de acceso" action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}"  />
+                                            <ice:commandLink action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}" value="Cambiar clave de acceso"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink value="Administrar Solicitudes de JRequest" action="#{Redireccion.jrequestAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"  />
+                                            <ice:commandLink action="#{Redireccion.jrequestAdmin}"
+                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Solicitudes de JRequest"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink value="Tareas Administrativas de JRequest" action="#{Redireccion.jrequestAdministracion}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"></ice:commandLink>
+                                            <ice:commandLink action="#{Redireccion.jrequestAdministracion}"
+                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Tareas Administrativas de JRequest"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink value="Emitir Solicitud de Soporte Técnico" action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
+                                            <ice:commandLink action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}" value="Emitir Solicitud de Soporte Técnico"/>
                                         </li>
                                         <li>
                                             <a href="#">Otras Opciones</a>

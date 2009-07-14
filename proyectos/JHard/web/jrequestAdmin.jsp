@@ -58,12 +58,12 @@
                             <div class="entry">
                                 <p class="text">Administración de Solicitudes de Mantenimiento UES-FMOcc</p>
                                 <ice:form id="form1" style="">
-                                    <ice:panelTabSet height="600" id="tabJrequestAdmin" selectedIndex="2"
-                                        tabChangeListener="#{jrequestAdmin.tabJrequestAdmin_processTabChange}" tabPlacement="Bottom" width="600">
+                                    <ice:panelTabSet id="tabJrequestAdmin" selectedIndex="2"
+                                        tabChangeListener="#{jrequestAdmin.tabJrequestAdmin_processTabChange}" tabPlacement="Bottom" width="576">
                                         <ice:panelTab id="tabMantenimientos" label="Mantenimientos">
-                                            <ice:panelGroup id="panelGroup2" style="height: 504px; position: inherit; width: 100%; ">
+                                            <ice:panelGroup id="panelGroup2" style="position: inherit; width: 100%; ">
                                                 <p>
-                                                    <ice:outputLabel id="outputLabel4" style="width: 406px" value="Seleccione un Trabajo de mantenimiento, e indique si ya ha finalizado"/>
+                                                    <ice:outputLabel id="outputLabel4" style="" value="Seleccione un Trabajo de mantenimiento, e indique si ya ha finalizado"/>
                                                     <p></p>
                                                 </p>
                                                 <p>
@@ -100,8 +100,8 @@
                                                 </ice:panelPopup>
                                             </ice:panelGroup>
                                         </ice:panelTab>
-                                        <ice:panelTab id="tabBitacoras" label="Bitacoras" style="width: 565px">
-                                            <ice:panelGroup id="panelGroup4" style="position: inherit; width: 560px">
+                                        <ice:panelTab id="tabBitacoras" label="Bitacoras" style="width: 576px">
+                                            <ice:panelGroup id="panelGroup4" style="position: inherit; ">
                                                 <p>
                                                     <ice:outputLabel id="outputLabel11" style="font-weight:bold; font-size:14px;" value="Seleccione un equipo simple para visualizar y/o modificar su bitácora"/>
                                                 </p>
@@ -141,24 +141,26 @@
                                             </ice:panelGroup>
                                         </ice:panelTab>
                                         <ice:panelTab id="tabSolicitud" label="Solicitudes" style="">
-                                            <ice:panelGroup id="grupo1" style="position: inherit; width: 100%; ">
-                                                <ice:outputLabel id="outputLabel6" style="font-size: 15px; font-weight: bold; width: 550px" value="Seleccione una solicitud de la lista de la derecha y asígnela a Mantenimiento"/>
+                                            <ice:panelGroup id="grupo1" style="position: inherit; ">
+                                                <ice:outputLabel id="outputLabel6" style="font-size: 15px; font-weight: bold; " value="Seleccione una solicitud de la lista de la derecha y asígnela a Mantenimiento"/>
+                                                <br/>
                                             </ice:panelGroup>
-                                            <ice:panelDivider id="divisor1" orientation="vertical" style="height: 500px; position: inherit; width: 100%">
+                                            <ice:panelDivider dividerPosition="61" id="divisor1" orientation="vertical" style="height: 500px; position: inherit; width: 100%">
                                                 <f:facet name="first">
                                                     <ice:panelGroup id="panelGroup1" style=" position: inherit; width: 100%; ">
                                                         <ice:selectOneListbox binding="#{jrequestAdmin.listaSol}" id="listaSol" partialSubmit="true" size="2"
-                                                            style="height: 360px; width: 252px" value="" valueChangeListener="#{jrequestAdmin.listaSol_processValueChange}">
+                                                            style="height: 75%; width: 98%;" value="" valueChangeListener="#{jrequestAdmin.listaSol_processValueChange}">
                                                             <f:selectItems id="fakeSolicitud" value="#{jrequestAdmin.fakeSol}"/>
                                                         </ice:selectOneListbox>
-                                                        <ice:commandButton action="#{jrequestAdmin.btnEliminarSolicitud_action}" id="btnEliminarSolicitud" value="Eliminar Solicitud"/>
+                                                        <ice:commandButton action="#{jrequestAdmin.btnEliminarSolicitud_action}" id="btnEliminarSolicitud"
+                                                            styleClass="btnAccion2" value="Eliminar Solicitud"/>
                                                     </ice:panelGroup>
                                                 </f:facet>
                                                 <f:facet name="second">
                                                     <ice:panelGroup id="grupo2" style="position: inherit; width: 100%; ">
                                                         <p>
                                                             <h3 styleClass="tituloSeccion">
-                                                                <ice:outputLabel id="outputLabel2" style="font-weight: bold; width: 190px" value="NOMBRE PERSONA ENCARGADA"/>
+                                                                <ice:outputLabel id="outputLabel2" style="" value="Persona encargada"/>
                                                             </h3>
                                                         </p>
                                                         <p>
@@ -166,7 +168,7 @@
                                                         </p>
                                                         <p>
                                                             <h3 styleClass="tituloSeccion">
-                                                                <ice:outputLabel id="outputLabel1" style="font-weight: bold; width: 144px" value="NOMBRE SOLICITUD"/>
+                                                                <ice:outputLabel id="outputLabel1" style="" value="Nombre de la solicitud"/>
                                                             </h3>
                                                         </p>
                                                         <p>
@@ -174,7 +176,7 @@
                                                         </p>
                                                         <p>
                                                             <h3 styleClass="tituloSeccion">
-                                                                <ice:outputLabel id="outputLabel3" style="font-weight: bold; " value="PRIORIDAD"/>
+                                                                <ice:outputLabel id="outputLabel3" style="" value="Prioridad"/>
                                                             </h3>
                                                         </p>
                                                         <p>
@@ -185,7 +187,7 @@
                                                         </p>
                                                         <p>
                                                             <h3 styleClass="tituloSeccion">
-                                                                <ice:outputLabel id="outputLabel5" style="font-weight: bold; width: 144px" value="TÉCNICO A ASIGNAR"/>
+                                                                <ice:outputLabel id="outputLabel5" style="" value="Técnico a asignar"/>
                                                             </h3>
                                                         </p>
                                                         <p>
@@ -200,7 +202,7 @@
                                                         </p>
                                                         <p>
                                                             <ice:commandButton action="#{jrequestAdmin.btnSolicitudAdmin_action}"
-                                                                binding="#{jrequestAdmin.btnSolicitudAdmin}" id="btnSolicitudAdmin" style="width: 168px"
+                                                                binding="#{jrequestAdmin.btnSolicitudAdmin}" id="btnSolicitudAdmin" style="width: 200px"
                                                                 styleClass="btnAccion2" value="Realizar una Solicitud"/>
                                                         </p>
                                                     </ice:panelGroup>

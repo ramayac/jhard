@@ -415,6 +415,7 @@ public class JRequestAdministracion extends AbstractPageBean {
 
 
     }
+    private String efecto="";
 
     public void listaTecnicos_processValueChange(ValueChangeEvent vce) {
         String tmp=(String)this.listaTecnicos.getValue();
@@ -426,6 +427,8 @@ public class JRequestAdministracion extends AbstractPageBean {
 
         this.lblNombreTec.setValue(T.getNombres()+" "+T.getApellidos());
 
+        setEfecto("highlight");
+        System.out.println(getEfecto());
         System.out.println("eqSimpleElegidoAdmin-->"+TecnicoElegido.getNombres());
         }
     }
@@ -700,6 +703,20 @@ public class JRequestAdministracion extends AbstractPageBean {
 
 
         return null;
+    }
+
+    /**
+     * @return the efecto
+     */
+    public String getEfecto() {
+        return efecto;
+    }
+
+    /**
+     * @param efecto the efecto to set
+     */
+    public void setEfecto(String efecto) {
+        this.efecto = efecto;
     }
 
 }
