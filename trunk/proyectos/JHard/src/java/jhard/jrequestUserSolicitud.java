@@ -28,8 +28,11 @@ import edu.ues.jhard.jpa.Solicitud;
 import edu.ues.jhard.jpa.Usuario;
 import java.util.Calendar;
 import java.sql.Date;
+import java.util.ArrayList;
 import javax.faces.FacesException;
+import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
 
 
 /**
@@ -50,37 +53,8 @@ public class jrequestUserSolicitud extends AbstractPageBean {
      * here is subject to being replaced.</p>
      */
     private void _init() throws Exception {
-
-    arrayEqSimple.setArray((java.lang.Object[]) getValue("#{jrequestUserSolicitud.EQS}"));
-    arrayEstados.setArray((java.lang.Object[]) getValue("#{jrequestUserSolicitud.estadoequipo}"));
-
-//    lu= getJHardminInstance().getCurrentUser();
-//    //System.out.println("NOMBRE DEL USUARIO LOGGEADO" + lu.getUserName());
-//
-//
-//    U = LoginManager.getInstance().getUsuario(lu);
-//
-//    //System.out.println(U.getNombre());
-
-//    this.lblUsuario.setValue((String)U.getNombre());
-//
-//    if(U==null){
-//        this.lblUsuario.setValue("Favor Logeese como usuario");
-//    }
-//    else{
-//        this.lblUsuario.setValue(U.getNombre());
-//    }
-
-    }
-
-    private ObjectArrayDataProvider arrayEqSimple = new ObjectArrayDataProvider();
-
-    public ObjectArrayDataProvider getArrayEqSimple() {
-        return arrayEqSimple;
-    }
-
-    public void setArrayEqSimple(ObjectArrayDataProvider oadp) {
-        this.arrayEqSimple = oadp;
+        comboEqSimpleDefaultItems.setItems(new String[]{});
+        comboEstadosDefaultItems.setItems(new String[]{});
     }
     private HtmlInputTextarea txtDescripcion = new HtmlInputTextarea();
 
@@ -120,31 +94,7 @@ public class jrequestUserSolicitud extends AbstractPageBean {
         this.btnAgregarEqSimple = hcb;
     }
 
-    // </editor-fold>
 
-
-    private  Equiposimple[] EQS = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
-
-    private Equiposimple eqElegido = null;
-
-    private Usuario user=null;
-
-
-     public Equiposimple getEQSElegido(){
-        return eqElegido;
-    }
-
-    public void setEQSElegido(Equiposimple eqs){
-        this.eqElegido=eqs;
-    }
-
-    public Equiposimple[] getEQS(){
-        return EQS;
-    }
-
-    public void setEQS(Equiposimple[] tec){
-        this.EQS=tec;
-    }
     private HtmlOutputLabel lblEstadoSolicitud = new HtmlOutputLabel();
 
     public HtmlOutputLabel getLblEstadoSolicitud() {
@@ -153,99 +103,6 @@ public class jrequestUserSolicitud extends AbstractPageBean {
 
     public void setLblEstadoSolicitud(HtmlOutputLabel hol) {
         this.lblEstadoSolicitud = hol;
-    }
-    private PopupBean panelPopup1Bean = new PopupBean();
-
-    public PopupBean getPanelPopup1Bean() {
-        return panelPopup1Bean;
-    }
-
-    public void setPanelPopup1Bean(PopupBean pb) {
-        this.panelPopup1Bean = pb;
-    }
-    private DefaultSelectedData defaultSelectedData1 = new DefaultSelectedData();
-
-    public DefaultSelectedData getDefaultSelectedData1() {
-        return defaultSelectedData1;
-    }
-
-    public void setDefaultSelectedData1(DefaultSelectedData dsd) {
-        this.defaultSelectedData1 = dsd;
-    }
-    private DefaultSelectionItems selectOneMenu1DefaultItems1 = new DefaultSelectionItems();
-
-    public DefaultSelectionItems getSelectOneMenu1DefaultItems1() {
-        return selectOneMenu1DefaultItems1;
-    }
-
-    public void setSelectOneMenu1DefaultItems1(DefaultSelectionItems dsi) {
-        this.selectOneMenu1DefaultItems1 = dsi;
-    }
-    private DefaultSelectItemsArray selectOneMenu1DefaultItems2 = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getSelectOneMenu1DefaultItems2() {
-        return selectOneMenu1DefaultItems2;
-    }
-
-    public void setSelectOneMenu1DefaultItems2(DefaultSelectItemsArray dsia) {
-        this.selectOneMenu1DefaultItems2 = dsia;
-    }
-    private DefaultSelectItemsArray selectOneMenu1DefaultItems3 = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getSelectOneMenu1DefaultItems3() {
-        return selectOneMenu1DefaultItems3;
-    }
-
-    public void setSelectOneMenu1DefaultItems3(DefaultSelectItemsArray dsia) {
-        this.selectOneMenu1DefaultItems3 = dsia;
-    }
-    private DefaultSelectedData selectOneMenu1Bean = new DefaultSelectedData();
-
-    public DefaultSelectedData getSelectOneMenu1Bean() {
-        return selectOneMenu1Bean;
-    }
-
-    public void setSelectOneMenu1Bean(DefaultSelectedData dsd) {
-        this.selectOneMenu1Bean = dsd;
-    }
-    private DefaultSelectionItems selectOneMenu1DefaultItems = new DefaultSelectionItems();
-
-    public DefaultSelectionItems getSelectOneMenu1DefaultItems() {
-        return selectOneMenu1DefaultItems;
-    }
-
-    public void setSelectOneMenu1DefaultItems(DefaultSelectionItems dsi) {
-        this.selectOneMenu1DefaultItems = dsi;
-    }
-    private ObjectArrayDataProvider arrayEstados = new ObjectArrayDataProvider();
-
-    public ObjectArrayDataProvider getArrayEstados() {
-        return arrayEstados;
-    }
-
-    public void setArrayEstados(ObjectArrayDataProvider oadp) {
-        this.arrayEstados = oadp;
-    }
-
-
-    private Estadoequipo[] estados = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
-    private Estadoequipo estadoElegido=estados[0];
-
-
-    public Estadoequipo getEstadoElegido(){
-        return estadoElegido;
-    }
-
-    public void setEstadoElegido(Estadoequipo ee){
-        this.estadoElegido=ee;
-    }
-
-    public Estadoequipo[] getEstadoequipo(){
-        return estados;
-    }
-
-    public void setEstadoequipo(Estadoequipo[] ee){
-        this.estados=ee;
     }
     private HtmlInputText txtNombreEq = new HtmlInputText();
 
@@ -301,15 +158,6 @@ public class jrequestUserSolicitud extends AbstractPageBean {
     public void setTxtPropietario(HtmlInputText hit) {
         this.txtPropietario = hit;
     }
-    private PopupBean panelPopup2Bean = new PopupBean();
-
-    public PopupBean getPanelPopup2Bean() {
-        return panelPopup2Bean;
-    }
-
-    public void setPanelPopup2Bean(PopupBean pb) {
-        this.panelPopup2Bean = pb;
-    }
     private PanelPopup panelPopup2 = new PanelPopup();
 
     public PanelPopup getPanelPopup2() {
@@ -329,7 +177,67 @@ public class jrequestUserSolicitud extends AbstractPageBean {
         this.btnAceptar = hcb;
     }
 
+    // </editor-fold>
 
+
+
+public void LimpiarCombos(){
+    
+    this.comboEqSimple.getChildren().clear();
+    this.comboEstados.getChildren().clear();
+}
+
+public void LlenarCombos(){
+
+        LimpiarCombos();
+         //COMBO DE EQUIPOS SIMPLES
+        Equiposimple [] eqsimple = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
+        eqElegido= eqsimple[0];
+        ArrayList eqs = new ArrayList();
+        for(int i=0;i<eqsimple.length;i++){
+            String label = eqsimple[i].getPropietario()+" - "+eqsimple[i].getDescripcion();
+            eqs.add(new SelectItem(eqsimple[i].getIdEquipoSimple(),label));
+        }
+        UISelectItems itemsEq = new UISelectItems();
+        itemsEq.setValue(eqs);
+        this.comboEqSimple.getChildren().add(itemsEq);
+
+
+        //SELECTINPUT DE ESTADOS DE EQUIPOS
+        Estadoequipo[] estados = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
+        estadoElegido= estados[0];
+        ArrayList eeq = new ArrayList();
+        for(int i=0;i<estados.length;i++){
+            String label = estados[i].getNombre();
+            eeq.add(new SelectItem(estados[i].getIdestado(),label));
+        }
+        UISelectItems itemsEstad = new UISelectItems();
+        itemsEstad.setValue(eeq);
+        this.comboEstados.getChildren().add(itemsEstad);
+    }
+
+
+    private Equiposimple eqElegido;
+
+
+     public Equiposimple getEQSElegido(){
+        return eqElegido;
+    }
+
+    public void setEQSElegido(Equiposimple eqs){
+        this.eqElegido=eqs;
+    }
+
+    private Estadoequipo estadoElegido;
+
+
+    public Estadoequipo getEstadoElegido(){
+        return estadoElegido;
+    }
+
+    public void setEstadoElegido(Estadoequipo ee){
+        this.estadoElegido=ee;
+    }
     private LoggedUser lu;
     private Usuario U;
 
@@ -364,6 +272,24 @@ public class jrequestUserSolicitud extends AbstractPageBean {
     public void setLblUsuario(HtmlOutputLabel hol) {
         this.lblUsuario = hol;
     }
+    private DefaultSelectItemsArray comboEqSimpleDefaultItems = new DefaultSelectItemsArray();
+
+    public DefaultSelectItemsArray getComboEqSimpleDefaultItems() {
+        return comboEqSimpleDefaultItems;
+    }
+
+    public void setComboEqSimpleDefaultItems(DefaultSelectItemsArray dsia) {
+        this.comboEqSimpleDefaultItems = dsia;
+    }
+    private DefaultSelectItemsArray comboEstadosDefaultItems = new DefaultSelectItemsArray();
+
+    public DefaultSelectItemsArray getComboEstadosDefaultItems() {
+        return comboEstadosDefaultItems;
+    }
+
+    public void setComboEstadosDefaultItems(DefaultSelectItemsArray dsia) {
+        this.comboEstadosDefaultItems = dsia;
+    }
 
     /**
      * <p>Construct a new Page bean instance.</p>
@@ -384,9 +310,7 @@ public class jrequestUserSolicitud extends AbstractPageBean {
         else{
             this.lblUsuario.setValue(U.getNombre());
         }
-
-
-              
+        LlenarCombos();
     }
 
     /**
@@ -574,10 +498,7 @@ public class jrequestUserSolicitud extends AbstractPageBean {
 
         new BeanBaseJRequest().registrarEquipoSimple(eq);
 
-        this.EQS = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
-        this.eqElegido=this.EQS[this.EQS.length-1];
-
-        arrayEqSimple.setArray((java.lang.Object[]) getValue("#{jrequestUserSolicitud.EQS}"));
+        LlenarCombos();
 
         this.comboEqSimple.setValue(this.eqElegido);
         this.panelPopup1.setVisible(false);

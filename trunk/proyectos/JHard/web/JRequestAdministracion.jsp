@@ -67,7 +67,7 @@
                                             </f:facet>
                                             <ice:panelGroup id="grupoEqs" style="height: 350px">
                                                 <p>
-                                                    <h3 styleClass="tituloSeccion"><ice:outputLabel id="tituloMod" style="font-size: 12px; font-weight: bold; width: 444px" value="Agregue, elimine o modifique Equipos Simples. "/>
+                                                    <h3 styleClass="tituloSeccion"><ice:outputLabel id="tituloMod"  value="Agregue, elimine o modifique Equipos Simples. "/>
                                                     </h3>
                                                 </p>
                                                 <p>
@@ -78,13 +78,13 @@
                                                 </p>
                                                 <p>
                                                     <ice:commandButton action="#{JRequestAdministracion.btnAgregarEqS_action}" id="btnAgregarEqS"
-                                                        style="width: 150px" value="Agregar Equipo Simple"/>
+                                                    style="width: 150px" styleClass="btnAccion2" value="Agregar Equipo Simple"/>
                                                 </p>
                                                 <p>
-                                                    <ice:commandButton action="#{JRequestAdministracion.btnModEqS_action}" id="btnModEqS" style="width: 150px" value="Modificar Equipo Simple"/>
+                                                    <ice:commandButton action="#{JRequestAdministracion.btnModEqS_action}" styleClass="btnAccion2" id="btnModEqS" style="width: 150px" value="Modificar Equipo Simple"/>
                                                 </p>
                                                 <p>
-                                                    <ice:commandButton action="#{JRequestAdministracion.btnEliminarEqS_action}" id="btnEliminarEqS"
+                                                    <ice:commandButton action="#{JRequestAdministracion.btnEliminarEqS_action}" styleClass="btnAccion2" id="btnEliminarEqS"
                                                         style="width: 150px" value="Eliminar Equipo Simple"/>
                                                 </p>
                                             </ice:panelGroup>
@@ -96,18 +96,23 @@
                                                 </ice:panelGroup>
                                             </f:facet>
                                             <ice:panelGrid id="grupoTec" style="height: 410px">
-                                                <h3 styleClass="tituloSeccion"><ice:outputText id="lbtTec" style="font-size: 12px; font-weight: bold;" value="Agregue o elimine Técnicos"/>
-                                                </h3>
+                                                <p>
+                                                    <h3 styleClass="tituloSeccion">
+                                                        <ice:outputText id="lbtTec3232" value="Agregue o elimine Técnicos"/>
+                                                    </h3>
+                                                </p>
                                                 <ice:selectOneListbox binding="#{JRequestAdministracion.listaTecnicos}" id="listaTecnicos" partialSubmit="true"
                                                     size="10" valueChangeListener="#{JRequestAdministracion.listaTecnicos_processValueChange}">
                                                     <f:selectItems id="selectOneListbox1selectItems" value="#{JRequestAdministracion.fakeTec}"/>
                                                 </ice:selectOneListbox>
-                                                <h3 styleClass="tituloSeccion"><ice:outputLabel id="outputLabel10" style="font-size: 16px; font-weight: bold; width: 142px" value="Nombre Completo"/>
+                                                <p><h3 styleClass="tituloSeccion"><ice:outputLabel id="outputLabel10" style="" value="Nombre Completo"/>
+                                                <br/>
                                                 </h3>
-                                                <ice:outputLabel binding="#{JRequestAdministracion.lblNombreTec}" id="lblNombreTec" style="width: 214px" value="Nombre del tecnico"/>
-                                                <ice:commandButton action="#{JRequestAdministracion.btnAgregarTec_action}" id="btnAgregarTec"
+                                                <ice:outputLabel binding="#{JRequestAdministracion.lblNombreTec}" effect="#{jcanon.efecto}" id="lblNombreTec" style="font-size:12px;" value="Nombre del tecnico"/>
+                                                </p>
+                                                <ice:commandButton action="#{JRequestAdministracion.btnAgregarTec_action}" styleClass="btnAccion2" id="btnAgregarTec"
                                                     style="width: 168px" value="Agregar Nuevo Técnico"/>
-                                                <ice:commandButton action="#{JRequestAdministracion.btnEliminarTec_action}" id="btnEliminarTec"
+                                                <ice:commandButton action="#{JRequestAdministracion.btnEliminarTec_action}" styleClass="btnAccion2" id="btnEliminarTec"
                                                     style="width: 168px" value="Eliminar Técnico"/>
                                             </ice:panelGrid>
                                         </ice:panelCollapsible>
@@ -231,15 +236,6 @@
                                         </li>
                                         <li>
                                             <ice:commandLink action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}" value="Emitir Solicitud de Soporte Técnico"/>
-                                        </li>
-                                        <li>
-                                            <a href="#">Otras Opciones</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Otras Opciones</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Otras Opciones</a>
                                         </li>
                                     </ul>
                                 </ice:form>

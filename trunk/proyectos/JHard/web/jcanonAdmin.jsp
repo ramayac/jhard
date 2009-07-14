@@ -17,6 +17,18 @@
                 <meta content="" name="description"/>
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+                <script charset="utf-8" type="text/javascript">
+                   var win=null;
+                   function calendar(mypage,myname,w,h,scroll,pos)
+                   {
+                        if(pos=="random"){LeftPosition=(screen.width)?Math.floor(Math.random()*(screen.width-w)):100;TopPosition=(screen.height)?Math.floor(Math.random()*((screen.height-h)-75)):100;}
+                        if(pos=="center"){LeftPosition=(screen.width)?(screen.width-w)/2:100;TopPosition=(screen.height)?(screen.height-h)/2:100;}
+                        else if((pos!="center") || pos==null){LeftPosition=0;TopPosition=20}
+                        settings='width='+w+',height='+h+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=no';
+                        win=window.open(mypage,myname,settings);
+                   }
+                </script>
+
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <!--start header -->
@@ -64,7 +76,7 @@
                                                     <ice:outputText id="outputText1" value="Reservas de Equipo Multimedia"/>
                                                 </ice:panelGroup>
                                             </f:facet>
-                                            <ice:panelGroup id="grupoContenido" style="height: 1000px; margin-top:0px; margin-bottom:0px;">
+                                            <ice:panelGroup id="grupoContenido" style=" margin-top:0px; margin-bottom:0px;">
                                                 <ice:dataTable id="tblListaReservas" rows="10" style="margin-top: 0px; margin-bottom: 0px;"
                                                     title="Lista de Reservas Pendientes" value="#{jcanonAdmin.listaReservasPendientes}" var="reserva">
                                                     <ice:column>
@@ -197,7 +209,7 @@
                                                         </ice:panelGrid>
                                                     </f:facet>
                                                     <f:facet name="body">
-                                                        <ice:panelGroup id="panelGrid5" style="display: block; height: 134px">
+                                                        <ice:panelGroup id="panelGrid5" style="display: block; height: 326px">
                                                             <ice:outputText binding="#{jcanonAdmin.lblTextMod}" id="lblTextMod" value="Reserva a modificar"/>
                                                             <br/>
                                                             <br/>
@@ -307,7 +319,10 @@
                                                 rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Solicitudes de JRequest"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink action="#{Redireccion.jcanon}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Ver calendario de reservas"/>
+                                            <ice:commandLink rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" onclick="calendar('scheduler.html','mywin','800','600','no','center');" value="Ver calendario de reservas "/>
+                                        </li>
+                                        <li>
+                                            <ice:commandLink action="#{Redireccion.jcanon}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Ir a página principal de JCanon"/>
                                         </li>
                                     </ul>
                                 </ice:form>

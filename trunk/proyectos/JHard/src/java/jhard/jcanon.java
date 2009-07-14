@@ -60,6 +60,8 @@ public class jcanon extends AbstractPageBean {
         fakeDocente.setItems(new String[]{});
         fakeHoraFin.setItems(new String[]{});
         fakeHoraInicio.setItems(new String[]{});
+        selectOneMenu1DefaultItems.setItems(new String[]{});
+        selectOneMenu2DefaultItems.setItems(new String[]{});
     }
     private DefaultSelectedData fakeCan = new DefaultSelectedData();
 
@@ -287,7 +289,114 @@ public class jcanon extends AbstractPageBean {
     public void setBtnOk(HtmlCommandButton hcb) {
         this.btnOk = hcb;
     }
+private PopupBean panelPopup1Bean1 = new PopupBean();
 
+    public PopupBean getPanelPopup1Bean1() {
+        return panelPopup1Bean1;
+    }
+
+    public void setPanelPopup1Bean1(PopupBean pb) {
+        this.panelPopup1Bean1 = pb;
+    }
+    private DefaultSelectedData selectOneMenu1Bean = new DefaultSelectedData();
+
+    public DefaultSelectedData getSelectOneMenu1Bean() {
+        return selectOneMenu1Bean;
+    }
+
+    public void setSelectOneMenu1Bean(DefaultSelectedData dsd) {
+        this.selectOneMenu1Bean = dsd;
+    }
+    private DefaultSelectionItems selectOneMenu1DefaultItems = new DefaultSelectionItems();
+
+    public DefaultSelectionItems getSelectOneMenu1DefaultItems() {
+        return selectOneMenu1DefaultItems;
+    }
+
+    public void setSelectOneMenu1DefaultItems(DefaultSelectionItems dsi) {
+        this.selectOneMenu1DefaultItems = dsi;
+    }
+    private DefaultSelectedData selectOneMenu2Bean = new DefaultSelectedData();
+
+    public DefaultSelectedData getSelectOneMenu2Bean() {
+        return selectOneMenu2Bean;
+    }
+
+    public void setSelectOneMenu2Bean(DefaultSelectedData dsd) {
+        this.selectOneMenu2Bean = dsd;
+    }
+    private DefaultSelectionItems selectOneMenu2DefaultItems = new DefaultSelectionItems();
+
+    public DefaultSelectionItems getSelectOneMenu2DefaultItems() {
+        return selectOneMenu2DefaultItems;
+    }
+
+    public void setSelectOneMenu2DefaultItems(DefaultSelectionItems dsi) {
+        this.selectOneMenu2DefaultItems = dsi;
+    }
+    private PanelPopup panelAddMultimedia = new PanelPopup();
+
+    public PanelPopup getPanelAddMultimedia() {
+        return panelAddMultimedia;
+    }
+
+    public void setPanelAddMultimedia(PanelPopup pp) {
+        this.panelAddMultimedia = pp;
+    }
+    private HtmlSelectOneMenu comboEqAdd = new HtmlSelectOneMenu();
+
+    public HtmlSelectOneMenu getComboEqAdd() {
+        return comboEqAdd;
+    }
+
+    public void setComboEqAdd(HtmlSelectOneMenu hsom) {
+        this.comboEqAdd = hsom;
+    }
+    private HtmlSelectOneMenu comboTipoEq = new HtmlSelectOneMenu();
+
+    public HtmlSelectOneMenu getComboTipoEq() {
+        return comboTipoEq;
+    }
+
+    public void setComboTipoEq(HtmlSelectOneMenu hsom) {
+        this.comboTipoEq = hsom;
+    }
+    private HtmlCommandButton btnAddEQ = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnAddEQ() {
+        return btnAddEQ;
+    }
+
+    public void setBtnAddEQ(HtmlCommandButton hcb) {
+        this.btnAddEQ = hcb;
+    }
+    private HtmlInputText txtCodigoExistencia = new HtmlInputText();
+
+    public HtmlInputText getTxtCodigoExistencia() {
+        return txtCodigoExistencia;
+    }
+
+    public void setTxtCodigoExistencia(HtmlInputText hit) {
+        this.txtCodigoExistencia = hit;
+    }
+    private HtmlCommandButton btnAceptarAdd = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnAceptarAdd() {
+        return btnAceptarAdd;
+    }
+
+    public void setBtnAceptarAdd(HtmlCommandButton hcb) {
+        this.btnAceptarAdd = hcb;
+    }
+    private HtmlCommandButton btnCancelarAdd = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnCancelarAdd() {
+        return btnCancelarAdd;
+    }
+
+    public void setBtnCancelarAdd(HtmlCommandButton hcb) {
+        this.btnCancelarAdd = hcb;
+    }
     // </editor-fold>
 
 
@@ -314,7 +423,7 @@ public class jcanon extends AbstractPageBean {
     public  BeanBaseJHardmin getJHardminInstance() {
         return (BeanBaseJHardmin) getBean("JHardminInstance");
     }
-    
+
     /**
      * <p>Construct a new Page bean instance.</p>
      */
@@ -339,7 +448,6 @@ public class jcanon extends AbstractPageBean {
             default:
                 LlenarComboDocentes();
                 break;
-
             }
         }
         else
@@ -365,6 +473,7 @@ public class jcanon extends AbstractPageBean {
 //        this.panelMensajes.setVisible(false);
 
         this.renderer=false;
+        this.panelAddMultimedia.setRendered(false);
 
         // Perform initializations inherited from our superclass
         super.init();
@@ -740,5 +849,20 @@ public class jcanon extends AbstractPageBean {
     public void setRenderer(boolean renderer) {
         this.renderer = renderer;
     }
+
+    public String addMultimedia(){
+        this.panelAddMultimedia.setRendered(true);
+        this.panelAddMultimedia.setVisible(true);
+        return "";
+    }
+
+    public String btnCancelarAdd_action() {
+        this.panelAddMultimedia.setRendered(false);
+        this.panelAddMultimedia.setVisible(false);
+
+        return null;
+    }
+
+
 }
 
