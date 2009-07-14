@@ -109,7 +109,7 @@
                                             <div class="dhx_cal_data"></div>
                                         </div>
                                         <ice:panelPopup autoCentre="true" binding="#{jcanon.panelMensajes}" draggable="true" id="panelMensajes" modal="true"
-                                            rendered="#{jcanon.renderer}" style="height: 141px; left: 264px; top: 144px; position: absolute; width: 333px" visible="#{jcanon.panelPopup1Bean.showModalPanel}">
+                                            rendered="#{jcanon.renderer}" style="height: 141px; left: 264px; top: 144px; position: absolute; width: 333px;visibility: hidden;visibility: hidden;">
                                             <f:facet name="header">
                                                 <ice:panelGrid id="panelGrid1" style="display:block;width:180px;height:20px;">
                                                     <ice:outputText id="lblTitMensajes" value="JCanon"/>
@@ -122,32 +122,76 @@
                                                 </ice:panelGrid>
                                             </f:facet>
                                         </ice:panelPopup>
-                                        <ice:panelPopup autoCentre="true" binding="#{jcanon.panelAddMultimedia}" draggable="true" id="panelAddMultimedia"
-                                            modal="true" rendered="#{jcanon.panelPopup1Bean1.showDraggablePanel}"
-                                            style="height: 334px; left: 264px; top: 240px; position: absolute; width: 334px" visible="#{jcanon.panelPopup1Bean1.showModalPanel}">
+                                        <ice:panelPopup visible="#{jcanon.visibleMultimedia}" autoCentre="true" binding="#{jcanon.panelAddMultimedia}" draggable="true" id="panelAddMultimedia"
+                                            modal="true" rendered="#{jcanon.rendererMultimedia}" style="height: 334px; left: 264px; top: 240px; position: absolute; width: 334px;visibility: hidden;visibility: hidden;">
                                             <f:facet name="header">
                                                 <ice:panelGrid id="panelGrid3" style="display:block;width:180px;height:20px;">
                                                     <ice:outputText id="outputText1" value="JCanon"/>
                                                 </ice:panelGrid>
                                             </f:facet>
                                             <f:facet name="body">
-                                                <ice:panelGrid id="panelGrid4" style="display: block; height: 278px" width="278">
+                                                <ice:panelGroup id="panelGrid4" style="display: block; height: 278px">
                                                     <ice:outputText id="outputText2" value="Tipo de Equipo a agregar"/>
-                                                    <ice:selectOneMenu binding="#{jcanon.comboEqAdd}" id="comboEqAdd" partialSubmit="true" value="#{jcanon.selectOneMenu1Bean.selectedObject}">
+                                                    <br/>
+                                                    <br/>
+                                                    <ice:selectOneMenu binding="#{jcanon.comboEqAdd}" id="comboEqAdd" partialSubmit="true" valueChangeListener="#{jcanon.comboEqAdd_processValueChange}">
                                                         <f:selectItems id="selectOneMenu1selectItems3" value="#{jcanon.selectOneMenu1DefaultItems}"/>
                                                     </ice:selectOneMenu>
+                                                    <br/>
+                                                    <br/>
+                                                    <br/>
                                                     <ice:outputLabel id="outputLabel2" value="Tipo de Equipo"/>
-                                                    <ice:selectOneMenu binding="#{jcanon.comboTipoEq}" id="comboTipoEq" partialSubmit="true" value="#{jcanon.selectOneMenu2Bean.selectedObject}">
+                                                    <br/>
+                                                    <br/>
+                                                    <ice:selectOneMenu binding="#{jcanon.comboTipoEq}" id="comboTipoEq" partialSubmit="true">
                                                         <f:selectItems id="selectOneMenu2selectItems2" value="#{jcanon.selectOneMenu2DefaultItems}"/>
                                                     </ice:selectOneMenu>
-                                                    <ice:commandButton binding="#{jcanon.btnAddEQ}" id="btnAddEQ" value="Agregar Equipo"/>
-                                                    <ice:inputText binding="#{jcanon.txtCodigoExistencia}" id="txtCodigoExistencia"/>
+                                                    <ice:commandButton binding="#{jcanon.btnAddEQ}" styleClass="btnAccion2" id="btnAddEQ" action="#{jcanon.mostrarAddEq}" value="Agregar Equipo"/>
+                                                    <br/>
+                                                    <br/>
+                                                    <br/>
                                                     <ice:outputLabel id="outputLabel3" value="Código del equipo"/>
-                                                    <ice:commandButton binding="#{jcanon.btnAceptarAdd}" id="btnAceptarAdd" value="Aceptar"/>
-                                                    <ice:commandButton action="#{jcanon.btnCancelarAdd_action}" binding="#{jcanon.btnCancelarAdd}"
+                                                    <br/>
+                                                    <br/>
+                                                    <ice:inputText binding="#{jcanon.txtCodigoExistencia}" id="txtCodigoExistencia"/>
+                                                    <br/>
+                                                    <br/>
+                                                    <br/>
+                                                    <ice:commandButton action="#{jcanon.btnAceptarAdd_action}" styleClass="btnAccion2" onclick="doLoad();" binding="#{jcanon.btnAceptarAdd}"
+                                                        id="btnAceptarAdd" value="Aceptar"/>
+                                                    <ice:commandButton action="#{jcanon.btnCancelarAdd_action}" styleClass="btnAccion2" onclick="doLoad();" binding="#{jcanon.btnCancelarAdd}"
                                                         id="btnCancelarAdd" value="Cancelar"/>
-                                                </ice:panelGrid>
+                                                </ice:panelGroup>
                                             </f:facet>
+                                        </ice:panelPopup>
+                                        <ice:panelPopup id="pupAgregarEquipo" modal="true" autoCentre="true" draggable="true" rendered="#{jcanon.rendererAddEq}">
+                                            <f:facet name="header"><ice:outputText value="Agregar nuevo equipo" /></f:facet>
+                                            <f:facet name="body">
+                                                <ice:panelGroup styleClass="frmElementList" >
+                                                    <p>
+                                                        <ice:outputLabel id="lblNombreEquipo" for="txtNombreEquipo" value="Nombre:" />
+                                                        <ice:inputText id="txtNombreEquipo" value="#{JInventInstance.currentEquipo.nombre}" />
+                                                    </p>
+                                                    <p>
+                                                        <ice:outputLabel id="lblMarcaEquipo" for="cmbMarcaEquipo" value="Marca:" />
+                                                        <ice:selectOneListbox id="cmbMarcaEquipo" size="1" value="#{JInventInstance.marcaSelected}">
+                                                            <f:selectItems value="#{JInventInstance.listaItemsMarcas}" />
+                                                         </ice:selectOneListbox>
+                                                    </p>
+                                                    <p>
+                                                        <ice:outputLabel id="lmlModelo" for="txtModelo" value="Modelo:" />
+                                                        <ice:inputText id="txtModelo" value="#{JInventInstance.currentEquipo.modelo}" />
+                                                    </p>
+                                                    <p>
+                                                        <ice:outputLabel id="lblClasificacionEquipo" for="lblValorClasificaiconEquipo" value="Clasificacion:" />
+                                                        <ice:outputText id="lblValorClasificacionEquipo" value="#{JInventInstance.currentClasificacion.nombre}" style="font-weight: bold;" />
+                                                    </p>
+                                                    <p class="actionSection">
+                                                        <ice:commandButton id="cmdConfirmAgregarEquipo" value="Agregar" action="#{jcanon.addEqJInvent}" />
+                                                        <ice:commandButton id="cmdCancelAgregarEquipo" value="Cancelar" action="#{jcanon.cancelEqJInvent}" />
+                                                    </p>
+                                                </ice:panelGroup>
+                                             </f:facet>
                                         </ice:panelPopup>
                                     </ice:panelGroup>
                                     <ice:panelCollapsible expanded="true" id="panelReservas" rendered="#{JHardminInstance.currentUser != null}" style="width: 600px">
@@ -322,7 +366,8 @@
                                             <ice:commandLink action="#{Redireccion.jcanonAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Reserva de Equipo Multimedia"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" onclick="calendar('scheduler.html','mywin','800','600','no','center');" value="Ver calendario de reservas "/>
+                                            <ice:commandLink onclick="calendar('scheduler.html','mywin','800','600','no','center');"
+                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Ver calendario de reservas "/>
                                         </li>
                                         <li>
                                             <ice:commandLink action="" rendered="#{JHardminInstance.currentUser == null}" value="Solo para usuarios registrados"/>

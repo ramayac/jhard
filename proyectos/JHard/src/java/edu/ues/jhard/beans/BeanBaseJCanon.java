@@ -33,6 +33,28 @@ public class BeanBaseJCanon extends BeanBase {
         return r;
     }
 
+
+    public Equipo[] getEquipoClasificado(int idclasificacion) {
+        EntityManager em=this.getEntityManager();
+
+        Query q=em.createNamedQuery("Equipo.findByClasificacion");
+        
+        q.setParameter("idclasificacion", idclasificacion);
+
+        Equipo[] e=(Equipo[])q.getResultList().toArray(new Equipo[0]);
+
+        for(int i=0;i<e.length;i++)
+            em.refresh(e[i]);
+        return e;
+    }
+
+    public void registrarExistencia(Existencia e) {
+        EntityManager em=this.getEntityManager();
+        em.getTransaction().begin();
+        em.persist(e);
+        em.getTransaction().commit();
+
+    }
     public void modificarEstadoReserva(Reserva r){
 
          EntityManager em = this.getEntityManager();
