@@ -14,20 +14,24 @@ import com.icesoft.faces.component.ext.HtmlSelectBooleanCheckbox;
 import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
-import com.icesoft.faces.component.jsfcl.data.PopupBean;
 import com.icesoft.faces.component.jsfcl.data.SelectInputDateBean;
 import com.icesoft.faces.component.panelpopup.PanelPopup;
 import com.icesoft.faces.component.selectinputdate.SelectInputDate;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJCanon;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
+import edu.ues.jhard.beans.BeanBaseJInvent;
 import edu.ues.jhard.beans.BeanBaseManLab;
 import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jhardmin.LoginManager;
+import edu.ues.jhard.jpa.Adquisicion;
 import edu.ues.jhard.jpa.Docente;
+import edu.ues.jhard.jpa.Equipo;
+import edu.ues.jhard.jpa.Estadoequipo;
 import edu.ues.jhard.jpa.Estadoreserva;
 import edu.ues.jhard.jpa.Existencia;
 import edu.ues.jhard.jpa.Reserva;
+import edu.ues.jhard.jpa.Ubicacion;
 import edu.ues.jhard.jpa.Usuario;
 import java.util.Date;
 import java.util.ArrayList;
@@ -60,7 +64,7 @@ public class jcanon extends AbstractPageBean {
         fakeDocente.setItems(new String[]{});
         fakeHoraFin.setItems(new String[]{});
         fakeHoraInicio.setItems(new String[]{});
-        selectOneMenu1DefaultItems.setItems(new String[]{});
+        selectOneMenu1DefaultItems.setItems(new String[]{"Cañon","Laptop"});
         selectOneMenu2DefaultItems.setItems(new String[]{});
     }
     private DefaultSelectedData fakeCan = new DefaultSelectedData();
@@ -252,16 +256,6 @@ public class jcanon extends AbstractPageBean {
     public void setBtnVerSoloReservas(HtmlCommandButton hcb) {
         this.btnVerSoloReservas = hcb;
     }
-    
-    private PopupBean panelPopup1Bean = new PopupBean();
-
-    public PopupBean getPanelPopup1Bean() {
-        return panelPopup1Bean;
-    }
-
-    public void setPanelPopup1Bean(PopupBean pb) {
-        this.panelPopup1Bean = pb;
-    }
     private HtmlOutputText lblMensajes = new HtmlOutputText();
 
     public HtmlOutputText getLblMensajes() {
@@ -289,24 +283,6 @@ public class jcanon extends AbstractPageBean {
     public void setBtnOk(HtmlCommandButton hcb) {
         this.btnOk = hcb;
     }
-private PopupBean panelPopup1Bean1 = new PopupBean();
-
-    public PopupBean getPanelPopup1Bean1() {
-        return panelPopup1Bean1;
-    }
-
-    public void setPanelPopup1Bean1(PopupBean pb) {
-        this.panelPopup1Bean1 = pb;
-    }
-    private DefaultSelectedData selectOneMenu1Bean = new DefaultSelectedData();
-
-    public DefaultSelectedData getSelectOneMenu1Bean() {
-        return selectOneMenu1Bean;
-    }
-
-    public void setSelectOneMenu1Bean(DefaultSelectedData dsd) {
-        this.selectOneMenu1Bean = dsd;
-    }
     private DefaultSelectionItems selectOneMenu1DefaultItems = new DefaultSelectionItems();
 
     public DefaultSelectionItems getSelectOneMenu1DefaultItems() {
@@ -315,15 +291,6 @@ private PopupBean panelPopup1Bean1 = new PopupBean();
 
     public void setSelectOneMenu1DefaultItems(DefaultSelectionItems dsi) {
         this.selectOneMenu1DefaultItems = dsi;
-    }
-    private DefaultSelectedData selectOneMenu2Bean = new DefaultSelectedData();
-
-    public DefaultSelectedData getSelectOneMenu2Bean() {
-        return selectOneMenu2Bean;
-    }
-
-    public void setSelectOneMenu2Bean(DefaultSelectedData dsd) {
-        this.selectOneMenu2Bean = dsd;
     }
     private DefaultSelectionItems selectOneMenu2DefaultItems = new DefaultSelectionItems();
 
@@ -401,6 +368,9 @@ private PopupBean panelPopup1Bean1 = new PopupBean();
 
 
     private boolean renderer;
+    private boolean rendererMultimedia;
+    private boolean rendererAddEq;
+    private boolean visibleMultimedia;
     private LoggedUser lu;
     private Usuario U;
 
@@ -424,6 +394,11 @@ private PopupBean panelPopup1Bean1 = new PopupBean();
         return (BeanBaseJHardmin) getBean("JHardminInstance");
     }
 
+    public  BeanBaseJInvent getJInventInstance() {
+        return (BeanBaseJInvent) getBean("JInventInstance");
+    }
+
+    private String ElementoElegido;
     /**
      * <p>Construct a new Page bean instance.</p>
      */
@@ -432,6 +407,9 @@ private PopupBean panelPopup1Bean1 = new PopupBean();
         this.comboLaptop.setDisabled(true);
         this.horaFin.setDisabled(true);
         this.LlenarHora(1);
+
+        this.ElementoElegido="Cañon";
+        LlenarComboTipoEquipo(2);
 
         lu= getJHardminInstance().getCurrentUser();
 
@@ -473,7 +451,7 @@ private PopupBean panelPopup1Bean1 = new PopupBean();
 //        this.panelMensajes.setVisible(false);
 
         this.renderer=false;
-        this.panelAddMultimedia.setRendered(false);
+        this.rendererMultimedia=false;
 
         // Perform initializations inherited from our superclass
         super.init();
@@ -585,7 +563,7 @@ private PopupBean panelPopup1Bean1 = new PopupBean();
     }
 
     public void LlenarComboCanon(){
-        //Llenar Combo de Estados de equipos para la Administracion
+        //Llenar Combo de existencias
 
         Existencia [] existencias = new edu.ues.jhard.beans.BeanBaseJCanon().getEquipoMultimedia(2);
 
@@ -851,18 +829,149 @@ private PopupBean panelPopup1Bean1 = new PopupBean();
     }
 
     public String addMultimedia(){
-        this.panelAddMultimedia.setRendered(true);
-        this.panelAddMultimedia.setVisible(true);
+
+        this.rendererMultimedia=true;
+        this.visibleMultimedia=true;
         return "";
     }
 
     public String btnCancelarAdd_action() {
-        this.panelAddMultimedia.setRendered(false);
-        this.panelAddMultimedia.setVisible(false);
+
+        this.rendererMultimedia=false;
+        this.visibleMultimedia=false;
+        return null;
+    }
+
+    public void LlenarComboTipoEquipo(int tipo){
+        this.comboTipoEq.getChildren().clear();
+        
+        Equipo []equipos;
+        if(tipo==2){
+            equipos = new edu.ues.jhard.beans.BeanBaseJCanon().getEquipoClasificado(2);
+        }
+        else{
+            equipos = new edu.ues.jhard.beans.BeanBaseJCanon().getEquipoClasificado(3);
+        }
+
+        ArrayList eq = new ArrayList();
+
+        for(int i=0;i<equipos.length;i++){
+
+            String label = equipos[i].getNombre()+"  "+equipos[i].getModelo();
+            eq.add(new SelectItem(equipos[i].getIdequipo(),label));
+        }
+
+        UISelectItems itemsEq = new UISelectItems();
+        itemsEq.setValue(eq);
+        this.comboTipoEq.getChildren().add(itemsEq);
+    }
+
+    public void comboEqAdd_processValueChange(ValueChangeEvent vce) {
+        if(this.comboEqAdd.getValue().equals("Cañon")){
+            LlenarComboTipoEquipo(2);
+        }
+        else{
+            LlenarComboTipoEquipo(3);
+        }
+    }
+
+    public String btnAceptarAdd_action() {
+        Existencia e = new Existencia();
+        Equipo eq = new Equipo();
+        BeanBaseJCanon instance = new BeanBaseJCanon();
+        Ubicacion u = instance.getEntityManager().find(Ubicacion.class, 1);
+        Adquisicion a = instance.getEntityManager().find(Adquisicion.class, 1);
+        Estadoequipo ee = instance.getEntityManager().find(Estadoequipo.class, 1);
+
+         String tmp=(String)this.comboTipoEq.getValue();
+         if(tmp!=null){
+            System.out.println("TODO BIEN--> "+ tmp);
+            Integer id=Integer.parseInt(tmp);
+            System.out.println("TODO BIEN--> "+ id);
+            eq = instance.getEntityManager().find(Equipo.class, id);
+         }
+        e.setCodigo(this.txtCodigoExistencia.getValue().toString());
+        e.setIdadquisicion(a);
+        e.setIdestado(ee);
+        e.setIdhardware(eq);
+        e.setIdubicacion(u);
+
+        instance.registrarExistencia(e);
+
+
+        this.rendererMultimedia=false;
+        this.visibleMultimedia=false;
+        this.lblMensajes.setValue("Reserva hecha con éxito");
+        this.renderer=true;
 
         return null;
     }
 
+    /**
+     * @return the rendererMultimedia
+     */
+    public boolean isRendererMultimedia() {
+        return rendererMultimedia;
+    }
 
+    /**
+     * @param rendererMultimedia the rendererMultimedia to set
+     */
+    public void setRendererMultimedia(boolean rendererMultimedia) {
+        this.rendererMultimedia = rendererMultimedia;
+    }
+
+    /**
+     * @return the rendererAddEq
+     */
+    public boolean isRendererAddEq() {
+        return rendererAddEq;
+    }
+
+    /**
+     * @param rendererAddEq the rendererAddEq to set
+     */
+    public void setRendererAddEq(boolean rendererAddEq) {
+        this.rendererAddEq = rendererAddEq;
+    }
+
+    /**
+     * @return the visibleMultimedia
+     */
+    public boolean isVisibleMultimedia() {
+        return visibleMultimedia;
+    }
+
+    /**
+     * @param visibleMultimedia the visibleMultimedia to set
+     */
+    public void setVisibleMultimedia(boolean visibleMultimedia) {
+        this.visibleMultimedia = visibleMultimedia;
+    }
+
+    public String addEqJInvent(){
+
+        this.getJInventInstance().addEquipo();
+        this.LlenarComboTipoEquipo(2);
+        this.rendererAddEq=false;
+
+        this.rendererMultimedia=true;
+
+
+        return "";
+    }
+    public String cancelEqJInvent(){
+        this.rendererAddEq=false;
+
+        this.rendererMultimedia=true;
+        return"";
+    }
+
+    public String mostrarAddEq(){
+        System.out.println("ENTRA A MOSTRAR EL POPUP?");
+        this.rendererMultimedia=false;
+        this.rendererAddEq=true;
+        return "";
+    }
 }
 
