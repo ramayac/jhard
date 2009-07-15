@@ -363,29 +363,29 @@ public class BeanBaseJWiki extends BeanBase {
      * @param comentario
      * @return
      */
-//    public boolean createTagEntrada(Entrada e, Collection<Tag> etiquetas){
-//        try {
-//            EntityManager em = this.getEntityManager();
-//            Entrada entrada = em.find(Entrada.class, e.getIdentrada());
-//            Set<TagEntrada> te = new HashSet();
-//
-//            for (Tag t : etiquetas) {
-//                TagEntrada aux = new TagEntrada();
-//                aux.setIdentrada(entrada);
-//                aux.setIdtag(t);
-//                te.add(aux);
-//            }
-//
-//            entrada.setTagEntradaCollection(te);
-//
-//            em.getTransaction().begin();
-//
-//            em.getTransaction().commit();
-//        } catch (Exception e) {
-//            return false;
-//        }
-//        return true;
-//    }
+    public boolean createTagEntrada(Entrada e, Collection<Tag> etiquetas){
+        try {
+            EntityManager em = this.getEntityManager();
+            Entrada entrada = em.find(Entrada.class, e.getIdentrada());
+            Set<TagEntrada> te = new HashSet();
+
+            for (Tag t : etiquetas) {
+                TagEntrada aux = new TagEntrada();
+                aux.setIdentrada(entrada);
+                aux.setIdtag(t);
+                te.add(aux);
+            }
+
+            entrada.setTagEntradaCollection(te);
+
+            em.getTransaction().begin();
+            em.refresh(entrada);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Metodo para eliminar una Entrada por su ID
@@ -465,6 +465,19 @@ public class BeanBaseJWiki extends BeanBase {
             if(te.getIdtag().getIdtag() == tag.getIdtag()) em.remove(te);
         }
         
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para refrescar
+     * @param entrada
+     */
+    public void updateEntrada(Entrada entrada){
+        EntityManager em = this.getEntityManager();
+        Entrada e = em.find(Entrada.class, entrada.getIdentrada());
+        e = entrada;
+        em.getTransaction().begin();
+        em.merge(e);
         em.getTransaction().commit();
     }
     
