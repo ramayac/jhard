@@ -64,6 +64,12 @@ public class Existencia implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idequipoexistente")
     private Collection<Reserva> reservaCollection;
 
+    @OneToMany(mappedBy = "idexistencia")
+    private Collection<Accesorio> accesorioCollection;
+
+    @OneToMany(mappedBy = "idexistencia")
+    private Collection<Pieza> piezaCollection;
+
     public Existencia() {
     }
 
@@ -162,6 +168,22 @@ public class Existencia implements Serializable {
 
     public void setReservaCollection(Collection<Reserva> reservaCollection) {
         this.reservaCollection = reservaCollection;
+    }
+
+    public Collection<Accesorio> getAccesorioCollection() {
+        return accesorioCollection;
+    }
+
+    public void setAccesorioCollection(Collection<Accesorio> accesorioCollection) {
+        this.accesorioCollection = accesorioCollection;
+    }
+
+    public Collection<Pieza> getPiezaCollection() {
+        return piezaCollection;
+    }
+
+    public void setPiezaCollection(Collection<Pieza> piezaCollection) {
+        this.piezaCollection = piezaCollection;
     }
 
     @Override

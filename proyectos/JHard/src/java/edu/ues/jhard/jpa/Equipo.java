@@ -46,8 +46,7 @@ public class Equipo implements Serializable {
     @Basic(optional = false)
     @Column(name = "modelo", nullable = false, length = 15)
     private String modelo;
-    @OneToMany(mappedBy = "idequipo")
-    private Collection<Accesorio> accesorioCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idhardware")
     private Collection<Existencia> existenciaCollection;
     @JoinColumn(name = "idmarca", referencedColumnName = "idmarca", nullable = false)
@@ -56,8 +55,7 @@ public class Equipo implements Serializable {
     @JoinColumn(name = "idclasificacion", referencedColumnName = "idclasificacion", nullable = false)
     @ManyToOne(optional = false)
     private Clasificacion idclasificacion;
-    @OneToMany(mappedBy = "idequipo")
-    private Collection<Pieza> piezaCollection;
+    
     @OneToMany(mappedBy = "idhardware")
     private Collection<Atributohardware> atributohardwareCollection;
 
@@ -96,15 +94,7 @@ public class Equipo implements Serializable {
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
-    }
-
-    public Collection<Accesorio> getAccesorioCollection() {
-        return accesorioCollection;
-    }
-
-    public void setAccesorioCollection(Collection<Accesorio> accesorioCollection) {
-        this.accesorioCollection = accesorioCollection;
-    }
+    }    
 
     public Collection<Existencia> getExistenciaCollection() {
         return existenciaCollection;
@@ -129,15 +119,7 @@ public class Equipo implements Serializable {
     public void setIdclasificacion(Clasificacion idclasificacion) {
         this.idclasificacion = idclasificacion;
     }
-
-    public Collection<Pieza> getPiezaCollection() {
-        return piezaCollection;
-    }
-
-    public void setPiezaCollection(Collection<Pieza> piezaCollection) {
-        this.piezaCollection = piezaCollection;
-    }
-
+    
     public Collection<Atributohardware> getAtributohardwareCollection() {
         return atributohardwareCollection;
     }

@@ -413,3 +413,11 @@ html>body #footer {
 .popupHeader{
     padding: 4px 5px;
 }
+
+.clasificacionEditable-true{
+    color: #292D6F;
+}
+
+.busqueda{
+    color: #1B6F1D;
+}

@@ -62,7 +62,7 @@
                                 <ice:panelGroup styleClass="entry" rendered="#{JHardminInstance.currentUser != null}">
                                     <ice:panelCollapsible expanded="true" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" >
                                         <f:facet name="header">
-                                            <h:outputFormat value="Elementos del inventario en la categoria {0}">
+                                            <h:outputFormat value="Elementos del inventario en la clasificación {0}">
                                                 <f:param value="#{JInventInstance.currentClasificacion.nombre}" />
                                             </h:outputFormat>
                                         </f:facet>
@@ -81,18 +81,18 @@
                                                                 <ice:panelGroup style="display: inline" >
                                                                     <ice:commandLink actionListener="#{JInventInstance.clasificacionSelected}">
                                                                         <f:param name="clId" value="#{nodo.userObject.clasificacion.idclasificacion}" />
-                                                                        <ice:outputText value="#{nodo.userObject.text}" styleClass="selectedNode#{nodo.userObject eq JInventInstance.clasificaciontm.currentUserObject}" />
+                                                                        <ice:outputText value="#{nodo.userObject.text}" styleClass="selectedNode#{nodo.userObject eq JInventInstance.clasificaciontm.currentUserObject} clasificacionEditable-#{nodo.userObject.clasificacion.idclasificacion > 16}" />
                                                                     </ice:commandLink>
                                                                 </ice:panelGroup>
                                                             </f:facet>
-                                                        </ice:treeNode>
+                                                        </ice:treeNode>                                                        
                                                     </ice:tree>
-                                                    <h3 class="tituloSeccion" style="margin-top: 30px;">Acciones de categorias</h3>
+                                                    <h3 class="tituloSeccion" style="margin-top: 30px;">Acciones de las clasificaciones</h3>
                                                     <ice:panelGroup styleClass="frmElementList">
                                                         <ul class="listaAcciones">                                                            
                                                         <li><ice:commandLink id="cmdAgregarSubclasificacion" value="Agregar subclasificacion" action="#{JInventInstance.crdClasificacion.showPopupAdd}" /></li>
-                                                        <li><ice:commandLink id="cmdEditarClasificacion" value="Editar clasificacion seleccionada" action="#{JInventInstance.crdClasificacion.showPopupEdit}" /></li>
-                                                        <li><ice:commandLink id="cmdEliminarClasificacion" value="Eliminar clasificacion seleccionada" action="#{JInventInstance.crdClasificacion.showPopupDel}" /></li>
+                                                        <li><ice:commandLink id="cmdEditarClasificacion" value="Editar clasificacion seleccionada" action="#{JInventInstance.beforeShowPopupEditClasificacion}" /></li>
+                                                        <li><ice:commandLink id="cmdEliminarClasificacion" value="Eliminar clasificacion seleccionada" action="#{JInventInstance.beforeShowPopupDelClasificacion}" /></li>
                                                         </ul>
                                                         <ice:panelPopup id="pupAddClasificacion" draggable="true" modal="true" rendered="#{JInventInstance.crdClasificacion.popupAddVisible}">
                                                             <f:facet name="header"><ice:outputText value="Agregar subclasificacion" /></f:facet>
