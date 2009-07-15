@@ -578,7 +578,18 @@ public class BeanBaseJInvent extends BeanBase {
         return "done";
     }
 
-    public String editClasificacion(){
+    public String beforeShowPopupEditClasificacion(){
+        if(!this.getCurrentClasificacionIsEditable()){
+            this.crdClasificacion.hidePopupEdit();
+            this.msg.setText("No se puede editar esta clasificación. Solamente se pueden editar las clasificaciones de color azul.");
+            this.msg.setVisible(true);
+            return "fail";
+        }
+        this.crdClasificacion.showPopupEdit();
+        return "done";
+    }
+
+    public String editClasificacion(){        
         EntityManager emgr = this.getEntityManager();
         emgr.getTransaction().begin();
         emgr.merge(this.getCurrentClasificacion());
@@ -592,7 +603,17 @@ public class BeanBaseJInvent extends BeanBase {
         return "done";
     }
 
-    public String delClasificacion(){
+    public String beforeShowPopupDelClasificacion(){
+        if(!this.getCurrentClasificacionIsEditable()){
+            this.msg.setText("No se puede eliminar esta clasificación. Solamente se pueden eliminar las clasificaciones de color azul.");
+            this.msg.setVisible(true);
+            return "fail";
+        }
+        this.crdClasificacion.showPopupDel();
+        return "done";
+    }
+
+    public String delClasificacion(){        
         EntityManager emgr = this.getEntityManager();
         DefaultMutableTreeNode currentNodo = this.clasificaciontm.seleccionarNodo(this.getCurrentClasificacion().getIdclasificacion().toString());
         Clasificacion clRemover = (Clasificacion)emgr.createQuery("SELECT c FROM Clasificacion c WHERE c.idclasificacion=" + this.getCurrentClasificacion().getIdclasificacion()).getSingleResult();
@@ -683,5 +704,9 @@ public class BeanBaseJInvent extends BeanBase {
      */
     public void setNuevaClasificacion(Clasificacion currentClasificacion) {
         this.nuevaClasificacion = currentClasificacion;
+    }
+
+    public boolean getCurrentClasificacionIsEditable(){
+        return this.getCurrentClasificacion().getIdclasificacion() > 16;
     }
 }
