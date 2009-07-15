@@ -11,11 +11,7 @@ import com.icesoft.faces.component.ext.HtmlInputText;
 import com.icesoft.faces.component.ext.HtmlInputTextarea;
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
-import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
-import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
-import com.icesoft.faces.component.jsfcl.data.PopupBean;
 import com.icesoft.faces.component.panelpopup.PanelPopup;
-import com.sun.data.provider.impl.ObjectArrayDataProvider;
 import com.sun.rave.faces.data.DefaultSelectItemsArray;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
@@ -53,8 +49,8 @@ public class jrequestUserSolicitud extends AbstractPageBean {
      * here is subject to being replaced.</p>
      */
     private void _init() throws Exception {
-        comboEqSimpleDefaultItems.setItems(new String[]{});
-        comboEstadosDefaultItems.setItems(new String[]{});
+        comboEqSimpleDefaultItems.setItems(null);
+        comboEstadosDefaultItems.setItems(null);
     }
     private HtmlInputTextarea txtDescripcion = new HtmlInputTextarea();
 
@@ -257,6 +253,8 @@ public void LlenarCombos(){
         this.U=u;
     }
 
+    private boolean renderPop1;
+    private boolean renderPop2;
 
 
     public  BeanBaseJHardmin getJHardminInstance() {
@@ -296,6 +294,8 @@ public void LlenarCombos(){
      */
 
     public jrequestUserSolicitud() {
+        comboEqSimpleDefaultItems.clear();
+        comboEstadosDefaultItems.clear();
 
         lu= getJHardminInstance().getCurrentUser();
         
@@ -327,10 +327,11 @@ public void LlenarCombos(){
      */
     @Override
     public void init() {
-        this.panelPopup1.setVisible(false);
-        this.panelPopup1.setRendered(false);
-        this.panelPopup2.setVisible(false);
-        this.panelPopup2.setRendered(false);
+        comboEqSimpleDefaultItems.clear();
+        comboEstadosDefaultItems.clear();
+
+        this.renderPop1=false;
+        this.renderPop2=false;
         this.lblUsuario.setValue(U.getNombre());
         // Perform initializations inherited from our superclass
         super.init();
@@ -418,12 +419,7 @@ public void LlenarCombos(){
 
     public String btnAgregarEqSimple_action() {
 
-        this.panelPopup1.setRendered(true);
-        System.out.println("RENDERICE");
-        this.panelPopup1.setVisible(true);
-        System.out.println("PUSE VISIBLE");
-        this.panelPopup1.setModal(true);
-        System.out.println("SOLO EL ES MODIFICABLE");
+        this.renderPop1=true;
         return null;
     }
 
@@ -461,9 +457,7 @@ public void LlenarCombos(){
         System.out.println("REGISTRA LA SOLICITUD");
         
         this.lblEstadoSolicitud.setValue("Solicitud enviada con éxito. Nuestros técnicos se encargarán de resolverla a la brevedad posible");
-        this.panelPopup2.setVisible(true);
-        this.panelPopup2.setRendered(true);
-        this.panelPopup2.setModal(true);
+        this.renderPop2=true;
 
         return null;
     }
@@ -474,9 +468,7 @@ public void LlenarCombos(){
     }
 
     public String btnCerrar_action() {
-        this.panelPopup1.setVisible(false);
-        this.panelPopup1.setRendered(false);
-        this.panelPopup1.setModal(false);
+        this.renderPop1=false;
         return null;
     }
 
@@ -501,18 +493,42 @@ public void LlenarCombos(){
         LlenarCombos();
 
         this.comboEqSimple.setValue(this.eqElegido);
-        this.panelPopup1.setVisible(false);
-        this.panelPopup1.setRendered(false);
-        this.panelPopup1.setModal(false);
+        this.renderPop1=false;
 
         return null;
     }
 
     public String btnAceptar_action() {
-        this.panelPopup2.setVisible(false);
-        this.panelPopup2.setRendered(false);
-        this.panelPopup2.setModal(false);
+        this.renderPop2=false;
         return null;
+    }
+
+    /**
+     * @return the renderPop1
+     */
+    public boolean isRenderPop1() {
+        return renderPop1;
+    }
+
+    /**
+     * @param renderPop1 the renderPop1 to set
+     */
+    public void setRenderPop1(boolean renderPop1) {
+        this.renderPop1 = renderPop1;
+    }
+
+    /**
+     * @return the renderPop2
+     */
+    public boolean isRenderPop2() {
+        return renderPop2;
+    }
+
+    /**
+     * @param renderPop2 the renderPop2 to set
+     */
+    public void setRenderPop2(boolean renderPop2) {
+        this.renderPop2 = renderPop2;
     }
 
 }

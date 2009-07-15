@@ -59,7 +59,7 @@
                             <h2 class="title">Solicitud de Mantenimiento de Hardware y Software</h2>
                             <div class="entry" style="height: 507px">
                                 <ice:form id="form1" style="height: 200px">
-                                    <ice:panelPopup autoCentre="true" binding="#{jrequestUserSolicitud.panelPopup1}" draggable="true" id="panelPopup1"
+                                    <ice:panelPopup autoCentre="true" binding="#{jrequestUserSolicitud.panelPopup1}" rendered="#{jrequestUserSolicitud.renderPop1}" draggable="true" id="panelPopup1"
                                         modal="true" style="height: 261px; left: 576px; top: 288px; position: absolute; width: 261px;visibility: hidden;visibility: hidden;">
                                         <f:facet name="header">
                                             <ice:panelGrid id="panelGrid1" style="display:block;width:180px;height:20px;">
@@ -127,7 +127,7 @@
                                             <br/>
                                         </ice:panelGroup>
                                     </ice:panelCollapsible>
-                                    <ice:panelPopup autoCentre="true" binding="#{jrequestUserSolicitud.panelPopup2}" draggable="true" id="panelPopup2"
+                                    <ice:panelPopup autoCentre="true" binding="#{jrequestUserSolicitud.panelPopup2}" rendered="#{jrequestUserSolicitud.renderPop2}" draggable="true" id="panelPopup2"
                                         modal="true" style="height: 130px; width: 261px;visibility: hidden;visibility: hidden;">
                                         <f:facet name="header">
                                             <ice:panelGrid id="panelGrid3" style="display:block;width:180px;height:20px;">

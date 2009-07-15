@@ -32,13 +32,13 @@ CREATE TABLE `accesorio` (
   `idmarca` int(11) NOT NULL COMMENT 'Referencia a la marca del accesorio',
   `modelo` varchar(15) NOT NULL COMMENT 'Modelo del accesorio',
   `idclasificacion` int(11) NOT NULL COMMENT 'Referencia a la clasificacion en la que se encuentra este accesorio',
-  `idequipo` int(11) default NULL COMMENT 'Referencia al equipo al que se encuentra conectado este accesorio, en caso de estar conectado a uno',
+  `idexistencia` int(11) default NULL,
   PRIMARY KEY  (`idaccesorio`),
   KEY `fkidmarca_accesorio` (`idmarca`),
   KEY `fkidclasificacion_accesorio` (`idclasificacion`),
-  KEY `fkidequipo_accesorio` (`idequipo`),
+  KEY `fkidexistencia_accesorio` (`idexistencia`),
+  CONSTRAINT `fkidexistencia_accesorio` FOREIGN KEY (`idexistencia`) REFERENCES `existencia` (`idexistencia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidclasificacion_accesorio` FOREIGN KEY (`idclasificacion`) REFERENCES `clasificacion` (`idclasificacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fkidequipo_accesorio` FOREIGN KEY (`idequipo`) REFERENCES `equipo` (`idequipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidmarca_accesorio` FOREIGN KEY (`idmarca`) REFERENCES `marca` (`idmarca`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -48,32 +48,6 @@ CREATE TABLE `accesorio` (
 
 /*!40000 ALTER TABLE `accesorio` DISABLE KEYS */;
 /*!40000 ALTER TABLE `accesorio` ENABLE KEYS */;
-
-
---
--- Definition of table `administrador`
---
-
-DROP TABLE IF EXISTS `administrador`;
-CREATE TABLE `administrador` (
-  `idadministrador` int(11) NOT NULL COMMENT 'Id correlativo unico de cada administrador',
-  `clave` varchar(45) NOT NULL COMMENT 'Clave del administrador',
-  `idusuario` int(11) NOT NULL COMMENT 'referencia al usuario relacionado con este admnistrador',
-  PRIMARY KEY  (`idadministrador`),
-  KEY `fkidusuario_administrador` (`idusuario`),
-  CONSTRAINT `fkidusuario_administrador` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `administrador`
---
-
-/*!40000 ALTER TABLE `administrador` DISABLE KEYS */;
-INSERT INTO `administrador` (`idadministrador`,`clave`,`idusuario`) VALUES 
- (1,'21232F297A57A5A743894A0E4A801FC3',1),
- (2,'21232F297A57A5A743894A0E4A801FC3',2),
- (3,'CD82BE786DA71D1DD4EA68C0908AF6E6',9);
-/*!40000 ALTER TABLE `administrador` ENABLE KEYS */;
 
 
 --
@@ -161,6 +135,26 @@ INSERT INTO `atributohardware` (`idatributohardware`,`nombre`,`valor`,`unidadmed
  (1,'Reservable','1','null',3,NULL,NULL),
  (2,'Reservable','1','null',5,NULL,NULL);
 /*!40000 ALTER TABLE `atributohardware` ENABLE KEYS */;
+
+
+--
+-- Definition of table `autorizacion`
+--
+
+DROP TABLE IF EXISTS `autorizacion`;
+CREATE TABLE `autorizacion` (
+  `idautorizacion` int(10) unsigned NOT NULL auto_increment,
+  `codigo` varchar(10) default NULL,
+  `cantmaxima` int(10) unsigned default NULL,
+  PRIMARY KEY  (`idautorizacion`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `autorizacion`
+--
+
+/*!40000 ALTER TABLE `autorizacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `autorizacion` ENABLE KEYS */;
 
 
 --
@@ -293,7 +287,7 @@ CREATE TABLE `clasificacion` (
   `descripcion` text COMMENT 'Descripcion de la clasificacion',
   `idsuperior` int(11) default NULL COMMENT 'Referencia a la clasificacion padre. Si este campo es nulo, indica que esta es una clasificacion raiz',
   PRIMARY KEY  (`idclasificacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `clasificacion`
@@ -315,8 +309,7 @@ INSERT INTO `clasificacion` (`idclasificacion`,`nombre`,`descripcion`,`idsuperio
  (13,'Desktops','Desktops',4),
  (14,'Laptops','Laptops',4),
  (15,'Impresoras','Impresoras',5),
- (16,'Proyectores','Proyectores',5);
- 
+ (16,'Cañones','Proyectores',5);
 /*!40000 ALTER TABLE `clasificacion` ENABLE KEYS */;
 
 
@@ -460,8 +453,8 @@ CREATE TABLE `equipo` (
 
 /*!40000 ALTER TABLE `equipo` DISABLE KEYS */;
 INSERT INTO `equipo` (`idequipo`,`idmarca`,`nombre`,`modelo`,`idclasificacion`) VALUES 
- (1,9,'PC','PC',4),
- (2,1,'DellPC','Vostro',4),
+ (1,9,'PC','PC',13),
+ (2,1,'DellPC','Vostro',13),
  (3,12,'Cañon','Epson',16),
  (4,3,'Laptop','Satellite',14),
  (5,12,'Cañon','ProView',16),
@@ -891,13 +884,13 @@ CREATE TABLE `pieza` (
   `idmarca` int(11) NOT NULL COMMENT 'Referencia a la marca de la pieza',
   `modelo` varchar(15) NOT NULL COMMENT 'Modelo de la pieza',
   `idclasificacion` int(11) NOT NULL COMMENT 'Referencia a la clasificacion en la que se encuentra la pieza',
-  `idequipo` int(11) default NULL COMMENT 'Referencia al equipo donde se encuentra instalada la pieza (en caso de estar instalada en uno)',
+  `idexistencia` int(11) default NULL,
   PRIMARY KEY  (`idpieza`),
   KEY `fkidclasificacion_pieza` (`idclasificacion`),
-  KEY `fkidequipo_pieza` (`idequipo`),
   KEY `fkidmarca_pieza` (`idmarca`),
+  KEY `fkidexistencia_pieza` (`idexistencia`),
+  CONSTRAINT `fkidexistencia_pieza` FOREIGN KEY (`idexistencia`) REFERENCES `existencia` (`idexistencia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidclasificacion_pieza` FOREIGN KEY (`idclasificacion`) REFERENCES `clasificacion` (`idclasificacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fkidequipo_pieza` FOREIGN KEY (`idequipo`) REFERENCES `equipo` (`idequipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidmarca_pieza` FOREIGN KEY (`idmarca`) REFERENCES `marca` (`idmarca`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
@@ -906,9 +899,9 @@ CREATE TABLE `pieza` (
 --
 
 /*!40000 ALTER TABLE `pieza` DISABLE KEYS */;
-INSERT INTO `pieza` (`idpieza`,`nombre`,`idmarca`,`modelo`,`idclasificacion`,`idequipo`) VALUES 
- (1,'memoria RAM',10,'kingston',6,1),
- (2,'disco duro',11,'seagate',6,1);
+INSERT INTO `pieza` (`idpieza`,`nombre`,`idmarca`,`modelo`,`idclasificacion`,`idexistencia`) VALUES 
+ (1,'memoria RAM',10,'kingston',6,NULL),
+ (2,'disco duro',11,'seagate',6,NULL);
 /*!40000 ALTER TABLE `pieza` ENABLE KEYS */;
 
 
@@ -1176,8 +1169,11 @@ CREATE TABLE `usuario` (
   `nombre` varchar(25) NOT NULL COMMENT 'Nombre del usuario',
   `clave` varchar(35) NOT NULL COMMENT 'Clave de acceso del usuario',
   `idrol` int(11) default NULL COMMENT 'Referencia al rol que juega este usuario dentro del sistema, el cual define los modulos y acciones a las que tiene acceso',
+  `idautorizacion` int(10) unsigned default NULL,
   PRIMARY KEY  (`idusuario`),
   KEY `fkidrol_usuario` (`idrol`),
+  KEY `fkidautorizacion_usuario` (`idautorizacion`),
+  CONSTRAINT `fkidautorizacion_usuario` FOREIGN KEY (`idautorizacion`) REFERENCES `autorizacion` (`idautorizacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidrol_usuario` FOREIGN KEY (`idrol`) REFERENCES `rol` (`idrol`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
@@ -1186,19 +1182,19 @@ CREATE TABLE `usuario` (
 --
 
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` (`idusuario`,`nombre`,`clave`,`idrol`) VALUES 
- (1,'LuisBarrera','21232F297A57A5A743894A0E4A801FC3',1),
- (2,'Madrid','21232F297A57A5A743894A0E4A801FC3',1),
- (3,'Claudia','9003D1DF22EB4D3820015070385194C8',2),
- (4,'Stanley','9003D1DF22EB4D3820015070385194C8',3),
- (5,'Carmencita','9003D1DF22EB4D3820015070385194C8',2),
- (6,'Gabriel','9003D1DF22EB4D3820015070385194C8',4),
- (7,'Rebekita','9003D1DF22EB4D3820015070385194C8',5),
- (8,'fredy','9003D1DF22EB4D3820015070385194C8',6),
- (9,'hugol','CD82BE786DA71D1DD4EA68C0908AF6E6',1),
- (10,'Karlita','9003D1DF22EB4D3820015070385194C8',2),
- (11,'rosario','9003D1DF22EB4D3820015070385194C8',3),
- (12,'robertux','3858F62230AC3C915F300C664312C63F',1);
+INSERT INTO `usuario` (`idusuario`,`nombre`,`clave`,`idrol`,`idautorizacion`) VALUES 
+ (1,'LuisBarrera','21232F297A57A5A743894A0E4A801FC3',1,NULL),
+ (2,'Madrid','21232F297A57A5A743894A0E4A801FC3',1,NULL),
+ (3,'Claudia','9003D1DF22EB4D3820015070385194C8',2,NULL),
+ (4,'Stanley','9003D1DF22EB4D3820015070385194C8',3,NULL),
+ (5,'Carmencita','9003D1DF22EB4D3820015070385194C8',2,NULL),
+ (6,'Gabriel','9003D1DF22EB4D3820015070385194C8',4,NULL),
+ (7,'Rebekita','9003D1DF22EB4D3820015070385194C8',5,NULL),
+ (8,'fredy','9003D1DF22EB4D3820015070385194C8',6,NULL),
+ (9,'hugol','CD82BE786DA71D1DD4EA68C0908AF6E6',1,NULL),
+ (10,'Karlita','9003D1DF22EB4D3820015070385194C8',2,NULL),
+ (11,'rosario','9003D1DF22EB4D3820015070385194C8',3,NULL),
+ (12,'robertux','3858F62230AC3C915F300C664312C63F',1,NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
 
