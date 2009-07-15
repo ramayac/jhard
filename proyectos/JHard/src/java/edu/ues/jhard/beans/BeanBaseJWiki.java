@@ -20,7 +20,7 @@ public class BeanBaseJWiki extends BeanBase {
      * Metodo para obtener un objeto entrada por una etiqueta, se asume que la entrada es nueva, asi que se hace
      * un em.persist sobre la misma.
      */
-    public Entrada searchEntradaPorEtiqueta(String etiqueta){
+    public Entrada[] searchEntradaPorEtiqueta(String etiqueta){
         EntityManager em = this.getEntityManager();
         //SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t
         //WHERE(t.descripcion LIKE 'wiki') AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada;
@@ -30,14 +30,17 @@ public class BeanBaseJWiki extends BeanBase {
         Query q = em.createNativeQuery(sql, Entrada.class);
         q.setParameter(1, etiqueta);
 
-        Entrada e = (Entrada)q.getSingleResult();
+        //TODO: Esto puede retornar más de una entrada.... hay que cambiarlo
+        Entrada[] e = (Entrada [])q.getResultList().toArray(new Entrada[0]);
         em.getTransaction().begin();
-        em.persist(e);
+        for (Entrada entrada : e) {
+            em.persist(entrada);
+        }
         em.getTransaction().commit();
         return e;
     }
 
-        /**
+    /**
      * Metodo para obtener un objeto entrada por una etiqueta, se asume que la entrada es nueva, asi que se hace
      * un em.persist sobre la misma.
      */
@@ -61,6 +64,39 @@ public class BeanBaseJWiki extends BeanBase {
         }
 
         Entrada[] entradas = (Entrada[])q.getResultList().toArray(new Entrada[0]);
+        em.getTransaction().begin();
+        for (Entrada entrada : entradas) {
+            em.persist(entrada);
+        }
+        em.getTransaction().commit();
+        return entradas;
+    }
+
+    /**
+     * Metodo para obtener una collection de Entradas por sus etiquetas asociadas
+     * un em.persist sobre la misma.
+     */
+    public Collection<Entrada> searchEntradaPorEtiquetas(Collection<Tag> etiquetas){
+        EntityManager em = this.getEntityManager();
+
+        String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE";
+
+        for (int i = 0; i < etiquetas.size(); i++) {
+            sql += "( t.descripcion LIKE ?"+i+" )";
+            if((i+1)<etiquetas.size()) sql += " OR ";
+        }
+
+        sql += " AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada ";
+
+        Query q = em.createNativeQuery(sql, Entrada.class);
+
+        int i = 0;
+        for (Tag tag : etiquetas) {
+            q.setParameter(i, tag.getDescripcion());
+            i++;
+        }
+
+        Collection<Entrada> entradas = (Collection<Entrada>)q.getResultList();
         em.getTransaction().begin();
         for (Entrada entrada : entradas) {
             em.persist(entrada);
@@ -156,6 +192,22 @@ public class BeanBaseJWiki extends BeanBase {
     public Tag getEtiqueta(Integer idetiqueta) {
         EntityManager em = this.getEntityManager();
         Tag t = em.find(Tag.class, idetiqueta);
+        return t;
+    }
+
+    /**
+     * Metodo para obtener una etiqueta (por su descripcion)
+     * @param entrada
+     * @return
+     */
+    public Tag getEtiqueta(String descripcion) {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Tag.findByDescripcion");
+        q.setParameter("descripcion", descripcion);
+        Tag t = (Tag) q.getSingleResult();
+        em.getTransaction().begin();
+        em.persist(t);
+        em.getTransaction().commit();
         return t;
     }
 

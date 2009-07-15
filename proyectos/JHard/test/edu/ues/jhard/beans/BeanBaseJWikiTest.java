@@ -5,13 +5,16 @@ import edu.ues.jhard.jpa.Entrada;
 import edu.ues.jhard.jpa.Tag;
 import edu.ues.jhard.jpa.Usuario;
 import java.sql.Date;
+import java.util.AbstractCollection;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import static org.junit.Assert.*;
 
 /**
@@ -104,21 +107,23 @@ public class BeanBaseJWikiTest {
     public void testSearchEntradaPorTag() {
         System.out.println("testSearchEntradaPorTag");
         BeanBaseJWiki instance = new BeanBaseJWiki();
-        Entrada e = instance.searchEntradaPorEtiqueta("wiki"); //se busca por esta descripcion
-        assertNotNull(e);
-        System.out.println("Titulo de la entrada: " + e.getTitulo());
+        Entrada[] e = instance.searchEntradaPorEtiqueta("latin"); //se busca por esta descripcion
+        assertTrue(e.length>0);
+        //System.out.println("Titulo de la entrada: " + e.getTitulo());
     }
 
     @Test
-    public void testSearchEntradaPorTags() {
-        System.out.println("testSearchEntradaPorTags");
+    public void testSearchEntradaPorTagsSegundaForma() {
+        System.out.println("testSearchEntradaPorTagsSegundaForma");
         BeanBaseJWiki instance = new BeanBaseJWiki();
-        String[] etiquetas = {"portada", "wiki"};
+        String[] etiquetas = {"latin", "uno"};
+        Set<Tag> coletiquetas = new HashSet();
+        coletiquetas.add(instance.getEtiqueta("latin"));
+        coletiquetas.add(instance.getEtiqueta("uno"));
+
+        Collection<Entrada> colentradas = instance.searchEntradaPorEtiquetas(coletiquetas);
         Entrada[] entradas = instance.searchEntradaPorEtiquetas(etiquetas);
-        for (Entrada entrada : entradas) {
-            assertNotNull(entrada);
-            System.out.println("Titulo de la entrada: " + entrada.getTitulo());
-        }
+        if(colentradas.size() != entradas.length) fail("fallo en la cantidad de datos obtenidos, no concuerdan.");
     }
 
     @Test
