@@ -45,9 +45,6 @@ public class Software implements Serializable {
     private String codigolicencia;
     @Column(name = "cantidadlicencias")
     private Integer cantidadlicencias;
-    @JoinColumn(name = "idadquisicion", referencedColumnName = "idadquisicion")
-    @ManyToOne
-    private Adquisicion idadquisicion;
     @JoinColumn(name = "idclasificacion", referencedColumnName = "idclasificacion", nullable = false)
     @ManyToOne(optional = false)
     private Clasificacion idclasificacion;
@@ -105,14 +102,6 @@ public class Software implements Serializable {
 
     public void setCantidadlicencias(Integer cantidadlicencias) {
         this.cantidadlicencias = cantidadlicencias;
-    }
-
-    public Adquisicion getIdadquisicion() {
-        return idadquisicion;
-    }
-
-    public void setIdadquisicion(Adquisicion idadquisicion) {
-        this.idadquisicion = idadquisicion;
     }
 
     public Clasificacion getIdclasificacion() {

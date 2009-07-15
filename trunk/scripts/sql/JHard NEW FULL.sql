@@ -51,33 +51,6 @@ CREATE TABLE `accesorio` (
 
 
 --
--- Definition of table `adquisicion`
---
-
-DROP TABLE IF EXISTS `adquisicion`;
-CREATE TABLE `adquisicion` (
-  `idadquisicion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de la adquisicion',
-  `fecha` date NOT NULL COMMENT 'Fecha en la que se adquirio el equipo o software',
-  `precio` double NOT NULL COMMENT 'Precio de compra del equipo o software (dejar a cero si fue una donacion)',
-  `descripcion` text COMMENT 'Detalles de la adquisicion',
-  `proveedor` varchar(100) default NULL COMMENT 'Nombre del proveedor o tienda donde se compro el equipo o software (en caso de haber sido comprado)',
-  PRIMARY KEY  (`idadquisicion`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `adquisicion`
---
-
-/*!40000 ALTER TABLE `adquisicion` DISABLE KEYS */;
-INSERT INTO `adquisicion` (`idadquisicion`,`fecha`,`precio`,`descripcion`,`proveedor`) VALUES 
- (1,'2002-01-09',200,'Computadora Clon','Medicomp'),
- (2,'2009-03-04',400,'Dell Vostro','Dell'),
- (3,'2002-01-03',50,'Licencia Microsoft Windows','Microsoft'),
- (4,'2002-01-03',200,'Cañon Epson','Tecnoservice');
-/*!40000 ALTER TABLE `adquisicion` ENABLE KEYS */;
-
-
---
 -- Definition of table `asistencia`
 --
 
@@ -607,14 +580,11 @@ CREATE TABLE `existencia` (
   `idhardware` int(11) NOT NULL COMMENT 'Referencia al hardware al cual pertenece esta existencia',
   `idubicacion` int(11) NOT NULL COMMENT 'Referencia a la ubicacion donde se encuentra localizada esta existencia',
   `idestado` int(11) NOT NULL COMMENT 'Referencia al estado en el que se encuentra esta existencia',
-  `idadquisicion` int(11) default NULL COMMENT 'Referencia a los datos de la adquisicion (compra) de esta existencia',
   `codigo` varchar(45) NOT NULL COMMENT 'Codigo con el cual clasificar esta existencia en el inventario',
   PRIMARY KEY  (`idexistencia`),
   KEY `fkidhardware_existencia` (`idhardware`),
   KEY `fkidubicacion_existencia` (`idubicacion`),
   KEY `fkidestado_existencia` (`idestado`),
-  KEY `fkidadquisicion_existencia` (`idadquisicion`),
-  CONSTRAINT `fkidadquisicion_existencia` FOREIGN KEY (`idadquisicion`) REFERENCES `adquisicion` (`idadquisicion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidestado_existencia` FOREIGN KEY (`idestado`) REFERENCES `estadoequipo` (`idestado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidhardware_existencia` FOREIGN KEY (`idhardware`) REFERENCES `equipo` (`idequipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidubicacion_existencia` FOREIGN KEY (`idubicacion`) REFERENCES `ubicacion` (`idubicacion`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -625,20 +595,20 @@ CREATE TABLE `existencia` (
 --
 
 /*!40000 ALTER TABLE `existencia` DISABLE KEYS */;
-INSERT INTO `existencia` (`idexistencia`,`idhardware`,`idubicacion`,`idestado`,`idadquisicion`,`codigo`) VALUES 
- (1,1,1,1,1,'codigo de barras'),
- (2,1,1,1,1,'codigo de barras'),
- (3,1,1,1,1,'codigo de barras'),
- (4,2,1,1,1,'codigo de barras'),
- (5,2,1,1,1,'codigo de barras'),
- (6,3,1,2,4,'codigo de barras'),
- (7,3,1,2,4,'codigo de barras'),
- (8,4,1,1,2,'codigo de barras'),
- (9,4,1,1,2,'codigo de barras'),
- (10,5,1,2,4,'codigo de barras'),
- (11,5,1,2,4,'codigo de barras'),
- (12,6,1,1,4,'codigo de barras'),
- (13,6,1,1,4,'codigo de barras');
+INSERT INTO `existencia` (`idexistencia`,`idhardware`,`idubicacion`,`idestado`,`codigo`) VALUES 
+ (1,1,1,1,'codigo de barras'),
+ (2,1,1,1,'codigo de barras'),
+ (3,1,1,1,'codigo de barras'),
+ (4,2,1,1,'codigo de barras'),
+ (5,2,1,1,'codigo de barras'),
+ (6,3,1,2,'codigo de barras'),
+ (7,3,1,2,'codigo de barras'),
+ (8,4,1,1,'codigo de barras'),
+ (9,4,1,1,'codigo de barras'),
+ (10,5,1,2,'codigo de barras'),
+ (11,5,1,2,'codigo de barras'),
+ (12,6,1,1,'codigo de barras'),
+ (13,6,1,1,'codigo de barras');
 /*!40000 ALTER TABLE `existencia` ENABLE KEYS */;
 
 
@@ -1001,14 +971,11 @@ CREATE TABLE `software` (
   `idsoftware` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada software',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del software',
   `version` varchar(15) NOT NULL COMMENT 'Version del software',
-  `idadquisicion` int(11) default NULL COMMENT 'Referencia a los datos de adquisicion del software (en caso de poseerlos)',
   `codigolicencia` varchar(45) default NULL COMMENT 'codigo de la licencia del software (en caso de poseer alguno)',
   `cantidadlicencias` int(11) default NULL COMMENT 'Cantidad de licencias disponibles para instalar (en caso de poseer licencias)',
   `idclasificacion` int(11) NOT NULL COMMENT 'Referencia a la clasificacion que posee este software',
   PRIMARY KEY  (`idsoftware`),
-  KEY `fkidadquisicion_software` (`idadquisicion`),
   KEY `fkidclasificacion_software` (`idclasificacion`),
-  CONSTRAINT `fkidadquisicion_software` FOREIGN KEY (`idadquisicion`) REFERENCES `adquisicion` (`idadquisicion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidclasificacion_software` FOREIGN KEY (`idclasificacion`) REFERENCES `clasificacion` (`idclasificacion`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
@@ -1017,8 +984,8 @@ CREATE TABLE `software` (
 --
 
 /*!40000 ALTER TABLE `software` DISABLE KEYS */;
-INSERT INTO `software` (`idsoftware`,`nombre`,`version`,`idadquisicion`,`codigolicencia`,`cantidadlicencias`,`idclasificacion`) VALUES 
- (1,'Microsoft Windows XP','Service Pack 2',3,'JGOL-JGFL-KGJK.KJGF-O3JW-OLB3',20,9);
+INSERT INTO `software` (`idsoftware`,`nombre`,`version`,`codigolicencia`,`cantidadlicencias`,`idclasificacion`) VALUES 
+ (1,'Microsoft Windows XP','Service Pack 2','JGOL-JGFL-KGJK.KJGF-O3JW-OLB3',20,9);
 /*!40000 ALTER TABLE `software` ENABLE KEYS */;
 
 
