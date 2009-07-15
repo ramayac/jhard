@@ -403,9 +403,22 @@ public class jcanon extends AbstractPageBean {
      * <p>Construct a new Page bean instance.</p>
      */
     public jcanon() {
+        fakeCLaptop.clear();
+        fakeCCan.clear();
+        fakeDocente.clear();
+        fakeHoraFin.clear();
+        fakeHoraInicio.clear();
+        selectOneMenu2DefaultItems.clear();
+        selectOneMenu1DefaultItems.clear();
+        selectOneMenu1DefaultItems.setItems(new String[]{"Cañon","Laptop"});
+
+
         this.comboCan.setDisabled(true);
         this.comboLaptop.setDisabled(true);
         this.horaFin.setDisabled(true);
+
+
+
         this.LlenarHora(1);
 
         this.ElementoElegido="Cañon";
@@ -565,7 +578,7 @@ public class jcanon extends AbstractPageBean {
     public void LlenarComboCanon(){
         //Llenar Combo de existencias
 
-        Existencia [] existencias = new edu.ues.jhard.beans.BeanBaseJCanon().getEquipoMultimedia(2);
+        Existencia [] existencias = new edu.ues.jhard.beans.BeanBaseJCanon().getEquipoMultimedia(16);
 
         canonElegido = existencias[0];
 
@@ -584,7 +597,7 @@ public class jcanon extends AbstractPageBean {
 
     public void LlenarComboLaptop(){
 
-        Existencia [] existencias = new edu.ues.jhard.beans.BeanBaseJCanon().getEquipoMultimedia(3);
+        Existencia [] existencias = new edu.ues.jhard.beans.BeanBaseJCanon().getEquipoMultimedia(14);
 
         laptopElegida = existencias[0];
 
@@ -847,10 +860,10 @@ public class jcanon extends AbstractPageBean {
         
         Equipo []equipos;
         if(tipo==2){
-            equipos = new edu.ues.jhard.beans.BeanBaseJCanon().getEquipoClasificado(2);
+            equipos = new edu.ues.jhard.beans.BeanBaseJCanon().getEquipoClasificado(16);
         }
         else{
-            equipos = new edu.ues.jhard.beans.BeanBaseJCanon().getEquipoClasificado(3);
+            equipos = new edu.ues.jhard.beans.BeanBaseJCanon().getEquipoClasificado(14);
         }
 
         ArrayList eq = new ArrayList();

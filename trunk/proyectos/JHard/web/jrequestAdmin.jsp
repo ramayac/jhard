@@ -73,7 +73,7 @@
                                                     </ice:selectOneListbox>
                                                 </p>
                                                 <ice:panelPopup autoCentre="true" binding="#{jrequestAdmin.popUpBitacora}" draggable="true" id="popUpBitacora"
-                                                    modal="true" style="display: block; height: 309px; left: 288px; top: 552px; position: absolute; width: 381px;visibility: hidden;visibility: hidden;">
+                                                modal="true" rendered="#{jrequestAdmin.renderMantenimientos}" style="display: block; height: 309px; left: 288px; top: 552px; position: absolute; width: 381px;visibility: hidden;visibility: hidden;">
                                                     <f:facet name="header">
                                                         <ice:panelGrid id="panelGrid3" style="display:block;width:180px;height:20px;">
                                                             <ice:outputText id="lblTituloMan" value="Mantenimientos JRequest"/>
@@ -119,7 +119,7 @@
                                                     </ice:selectOneListbox>
                                                 </p>
                                                 <ice:panelPopup autoCentre="true" binding="#{jrequestAdmin.popUpModBitacora}" draggable="true"
-                                                    id="popUpModBitacora" modal="true" style="display: block; height: 261px; left: 264px; top: 552px; position: absolute; width: 381px;visibility: hidden;visibility: hidden;">
+                                                id="popUpModBitacora" rendered="#{jrequestAdmin.renderBitacoras}" modal="true" style="display: block; height: 261px; left: 264px; top: 552px; position: absolute; width: 381px;visibility: hidden;visibility: hidden;">
                                                     <f:facet name="header">
                                                         <ice:panelGrid id="panelGrid7" style="display:block;width:180px;height:20px;">
                                                             <ice:outputText id="outputText2" value="Bitácora de Equipos"/>
@@ -210,7 +210,7 @@
                                             </ice:panelDivider>
                                         </ice:panelTab>
                                     </ice:panelTabSet>
-                                    <ice:panelPopup autoCentre="true" binding="#{jrequestAdmin.popUpMensajes}" draggable="true" id="popUpMensajes" modal="true" style="display: block; width: 214px;visibility: hidden;visibility: hidden;">
+                                    <ice:panelPopup autoCentre="true" rendered="#{jrequestAdmin.render}" binding="#{jrequestAdmin.popUpMensajes}" draggable="true" id="popUpMensajes" modal="true" style="display: block; width: 214px;visibility: hidden;visibility: hidden;">
                                         <f:facet name="header">
                                             <ice:panelGrid id="panelGrid1" style="display:block;width:180px;height:20px;">
                                                 <ice:outputText id="lblJText" value="JRequest"/>

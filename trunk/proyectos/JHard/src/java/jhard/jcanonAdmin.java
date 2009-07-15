@@ -311,6 +311,8 @@ public class jcanonAdmin extends AbstractPageBean {
      * <p>Construct a new Page bean instance.</p>
      */
     public jcanonAdmin() {
+        horaInicioFake.clear();
+        horaFinFake.clear();
         listaReservasPendientes=new BeanBaseJCanon().getReservasPendientesEnUso();
         this.panelMensajes.setRendered(false);
         this.panelModEstado.setRendered(false);

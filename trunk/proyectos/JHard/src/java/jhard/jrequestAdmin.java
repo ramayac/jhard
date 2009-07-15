@@ -564,11 +564,25 @@ public class jrequestAdmin extends AbstractPageBean {
     private Mantenimiento mantenimientoElegido=null;
     private Bitacoraestados bitacoraElegida=null;
     private Equiposimple eqSimpleElegido=null;
+    private boolean render;
 
     /**
      * <p>Construct a new Page bean instance.</p>
      */
+
+    private boolean renderBitacoras;
+    private boolean renderMantenimientos;
+
     public jrequestAdmin() {
+        fakeSol.clear();
+        fakeMan.clear();
+        fakeBit.clear();
+
+        fakeComboEstado1.clear();
+        fakeComboTecnico1.clear();
+        fakeComboPrioridad.clear();
+        fakeComboPrioridad.setItems(new String[]{"Alta", "Media", "Baja"});
+
         llenarLista();
         llenarCombo();
         
@@ -588,10 +602,10 @@ public class jrequestAdmin extends AbstractPageBean {
      */
     @Override
     public void init() {
-        this.popUpBitacora.setRendered(false);
-        this.popUpMensajes.setRendered(false);
-        this.popUpModBitacora.setRendered(false);
-        
+        this.render=false;
+
+        this.renderBitacoras=false;
+        this.renderMantenimientos=false;
         // Perform initializations inherited from our superclass
         super.init();
         // Perform application initialization that must complete
@@ -684,12 +698,7 @@ public class jrequestAdmin extends AbstractPageBean {
 
             System.out.println("SOLICITUD NULL");
             this.lblMensajes.setValue("Seleccione una Solicitud de Mantenimiento");
-            this.popUpMensajes.setRendered(true);
-            System.out.println("RENDERICE");
-            this.popUpMensajes.setVisible(true);
-            System.out.println("PUSE VISIBLE");
-            this.popUpMensajes.setModal(true);
-            System.out.println("SOLO EL ES MODIFICABLE");
+            this.render=true;
 
         }
         else{
@@ -715,12 +724,7 @@ public class jrequestAdmin extends AbstractPageBean {
             new BeanBaseJRequest().registrarMantenimiento(m);
 
             this.lblMensajes.setValue("Solicitud procesada con éxito. Los técnicos se encargarán de satisfacerla");
-            this.popUpMensajes.setRendered(true);
-            System.out.println("RENDERICE");
-            this.popUpMensajes.setVisible(true);
-            System.out.println("PUSE VISIBLE");
-            this.popUpMensajes.setModal(true);
-            System.out.println("SOLO EL ES MODIFICABLE");
+            this.render=true;
 
         }
         
@@ -745,9 +749,7 @@ public class jrequestAdmin extends AbstractPageBean {
     }
 
     public String btnOK_action() {
-        this.popUpMensajes.setVisible(false);
-        this.popUpMensajes.setRendered(false);
-        this.popUpMensajes.setModal(false);
+        this.render=false;
 
         llenarLista();
         
@@ -767,12 +769,7 @@ public class jrequestAdmin extends AbstractPageBean {
         Equiposimple eq= new BeanBaseJRequest().getEquipoSimpleByID(this.mantenimientoElegido.getIdequiposimple().getIdEquipoSimple());
 
         this.lblMantenimiento.setValue("¿Finalizado el Mantenimiento de " +this.mantenimientoElegido.getDescripcion() +" al Equipo "+ eq.getDescripcion() +" ?");
-        this.popUpBitacora.setRendered(true);
-        System.out.println("RENDERICE");
-        this.popUpBitacora.setVisible(true);
-        System.out.println("PUSE VISIBLE");
-        this.popUpBitacora.setModal(true);
-        System.out.println("SOLO EL ES MODIFICABLE");
+        this.renderMantenimientos=true;
 
 
     }
@@ -804,20 +801,11 @@ public class jrequestAdmin extends AbstractPageBean {
             
             new BeanBaseJRequest().registrarBitacoraEstados(be);
 
-            this.popUpBitacora.setRendered(false);
-            System.out.println("RENDERICE");
-            this.popUpBitacora.setVisible(false);
-            System.out.println("PUSE VISIBLE");
-            this.popUpBitacora.setModal(false);
-            System.out.println("SOLO EL ES MODIFICABLE");
+
+            this.renderMantenimientos=false;
 
             this.lblMensajes.setValue("Mantenimiento realizado con éxito. Se ha ingresado a la bitácora del equipo");
-            this.popUpMensajes.setRendered(true);
-            System.out.println("RENDERICE");
-            this.popUpMensajes.setVisible(true);
-            System.out.println("PUSE VISIBLE");
-            this.popUpMensajes.setModal(true);
-            System.out.println("SOLO EL ES MODIFICABLE");
+            this.render=true;
 
         }
         if(!this.checkFIn.isSelected()){
@@ -832,12 +820,8 @@ public class jrequestAdmin extends AbstractPageBean {
 
     public String btnCerrar_action() {
 
-        this.popUpBitacora.setRendered(false);
-        System.out.println("RENDERICE");
-        this.popUpBitacora.setVisible(false);
-        System.out.println("PUSE VISIBLE");
-        this.popUpBitacora.setModal(false);
-        System.out.println("SOLO EL ES MODIFICABLE");
+
+        this.renderMantenimientos=false;
 
         return null;
     }
@@ -985,23 +969,15 @@ public class jrequestAdmin extends AbstractPageBean {
         
         this.txtModBitacora.setValue(this.bitacoraElegida.getDescripcion());
 
-        this.popUpModBitacora.setRendered(true);
-        System.out.println("RENDERICE");
-        this.popUpModBitacora.setVisible(true);
-        System.out.println("PUSE VISIBLE");
-        this.popUpModBitacora.setModal(true);
-        System.out.println("SOLO EL ES MODIFICABLE");
+        this.renderBitacoras=true;
+
 
         }
     }
 
     public String btnCancelarModBitacora_action() {
-        this.popUpModBitacora.setRendered(false);
-        System.out.println("RENDERICE");
-        this.popUpModBitacora.setVisible(false);
-        System.out.println("PUSE VISIBLE");
-        this.popUpModBitacora.setModal(false);
-        System.out.println("SOLO EL ES MODIFICABLE");
+        this.renderBitacoras=false;
+
         return null;
     }
 
@@ -1011,20 +987,11 @@ public class jrequestAdmin extends AbstractPageBean {
         
         new BeanBaseJRequest().modificarBitacoraEstados(bitacoraElegida);
 
-        this.popUpModBitacora.setRendered(false);
-        System.out.println("RENDERICE");
-        this.popUpModBitacora.setVisible(false);
-        System.out.println("PUSE VISIBLE");
-        this.popUpModBitacora.setModal(false);
-        System.out.println("SOLO EL ES MODIFICABLE");
+        this.renderBitacoras=false;
+        
 
         this.lblMensajes.setValue("Bitácora modificada con éxito");
-        this.popUpMensajes.setRendered(true);
-        System.out.println("RENDERICE");
-        this.popUpMensajes.setVisible(true);
-        System.out.println("PUSE VISIBLE");
-        this.popUpMensajes.setModal(true);
-        System.out.println("SOLO EL ES MODIFICABLE");
+        this.render=true;
         limpiarListaBitacoras();
 
         llenarListaBitacoras(eqSimpleElegido);
@@ -1042,11 +1009,7 @@ public class jrequestAdmin extends AbstractPageBean {
 
             System.out.println("SOLICITUD NULL");
             this.lblMensajes.setValue("Seleccione una Solicitud de Mantenimiento");
-            this.popUpMensajes.setRendered(true);
-            System.out.println("RENDERICE");
-            this.popUpMensajes.setVisible(true);
-            System.out.println("PUSE VISIBLE");
-            this.popUpMensajes.setModal(true);
+            this.render=true;
             System.out.println("SOLO EL ES MODIFICABLE");
 
         }
@@ -1054,15 +1017,53 @@ public class jrequestAdmin extends AbstractPageBean {
             new BeanBaseJRequest().eliminarSolicitud(solicitudElegida);
 
             this.lblMensajes.setValue("Solicitud Eliminada con éxito");
-            this.popUpMensajes.setRendered(true);
-            System.out.println("RENDERICE");
-            this.popUpMensajes.setVisible(true);
-            System.out.println("PUSE VISIBLE");
-            this.popUpMensajes.setModal(true);
+            this.render=true;
             System.out.println("SOLO EL ES MODIFICABLE");
             llenarLista();
         }
         return null;
+    }
+
+    /**
+     * @return the render
+     */
+    public boolean isRender() {
+        return render;
+    }
+
+    /**
+     * @param render the render to set
+     */
+    public void setRender(boolean render) {
+        this.render = render;
+    }
+
+    /**
+     * @return the renderBitacoras
+     */
+    public boolean isRenderBitacoras() {
+        return renderBitacoras;
+    }
+
+    /**
+     * @param renderBitacoras the renderBitacoras to set
+     */
+    public void setRenderBitacoras(boolean renderBitacoras) {
+        this.renderBitacoras = renderBitacoras;
+    }
+
+    /**
+     * @return the renderMantenimientos
+     */
+    public boolean isRenderMantenimientos() {
+        return renderMantenimientos;
+    }
+
+    /**
+     * @param renderMantenimientos the renderMantenimientos to set
+     */
+    public void setRenderMantenimientos(boolean renderMantenimientos) {
+        this.renderMantenimientos = renderMantenimientos;
     }
 
 //    public void comboEstado_processValueChange(ValueChangeEvent vce) {
