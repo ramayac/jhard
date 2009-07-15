@@ -301,19 +301,22 @@ CREATE TABLE `clasificacion` (
 
 /*!40000 ALTER TABLE `clasificacion` DISABLE KEYS */;
 INSERT INTO `clasificacion` (`idclasificacion`,`nombre`,`descripcion`,`idsuperior`) VALUES 
- (1,'PC','PC',5),
- (2,'Cañon','Cañones de proyección',5),
- (3,'Laptop','Computadoras Portátiles',7),
- (4,'General','Nodo raiz de las clasificaciones',NULL),
- (5,'Hardware','Hardware',4),
- (6,'Software','Software',4),
- (7,'Equipos','Equipos',5),
- (8,'Perifericos','Perifericos',5),
- (9,'Accesorios','Accesorios',5),
- (10,'Desktops','Desktops',7),
- (12,'Sistemas Operativos','Sistemas Operativos',6),
- (13,'Utilerias','Utilerias',6),
- (14,'Piezas','Piezas',5);
+ (1,'General','Clasificacion general',NULL),
+ (2,'Hardware','Hardware',1),
+ (3,'Software','Software',1),
+ (4,'Equipos','Equipos',2),
+ (5,'Accesorios','Accesorios',2),
+ (6,'Piezas','Piezas',2),
+ (7,'Herramientas de mantenimiento','Herramientas de mantenimiento',2),
+ (8,'Dispositivos de red','Dispositivos de red',2),
+ (9,'Sistemas operativos','Sistemas operativos',3),
+ (10,'Utilerías','Utilerías',3),
+ (12,'Herramientas didácticas','Herramientas didácticas',3),
+ (13,'Desktops','Desktops',4),
+ (14,'Laptops','Laptops',4),
+ (15,'Impresoras','Impresoras',5),
+ (16,'Proyectores','Proyectores',5);
+ 
 /*!40000 ALTER TABLE `clasificacion` ENABLE KEYS */;
 
 
@@ -457,12 +460,12 @@ CREATE TABLE `equipo` (
 
 /*!40000 ALTER TABLE `equipo` DISABLE KEYS */;
 INSERT INTO `equipo` (`idequipo`,`idmarca`,`nombre`,`modelo`,`idclasificacion`) VALUES 
- (1,9,'PC','PC',1),
- (2,1,'DellPC','Vostro',1),
- (3,12,'Cañon','Epson',2),
- (4,3,'Laptop','Satellite',3),
- (5,12,'Cañon','ProView',2),
- (6,2,'Laptop','VGN',3);
+ (1,9,'PC','PC',4),
+ (2,1,'DellPC','Vostro',4),
+ (3,12,'Cañon','Epson',16),
+ (4,3,'Laptop','Satellite',14),
+ (5,12,'Cañon','ProView',16),
+ (6,2,'Laptop','VGN',14);
 /*!40000 ALTER TABLE `equipo` ENABLE KEYS */;
 
 
@@ -904,8 +907,8 @@ CREATE TABLE `pieza` (
 
 /*!40000 ALTER TABLE `pieza` DISABLE KEYS */;
 INSERT INTO `pieza` (`idpieza`,`nombre`,`idmarca`,`modelo`,`idclasificacion`,`idequipo`) VALUES 
- (1,'memoria RAM',10,'kingston',1,1),
- (2,'disco duro',11,'seagate',1,1);
+ (1,'memoria RAM',10,'kingston',6,1),
+ (2,'disco duro',11,'seagate',6,1);
 /*!40000 ALTER TABLE `pieza` ENABLE KEYS */;
 
 
@@ -1022,7 +1025,7 @@ CREATE TABLE `software` (
 
 /*!40000 ALTER TABLE `software` DISABLE KEYS */;
 INSERT INTO `software` (`idsoftware`,`nombre`,`version`,`idadquisicion`,`codigolicencia`,`cantidadlicencias`,`idclasificacion`) VALUES 
- (1,'Microsoft Windows XP','Service Pack 2',3,'JGOL-JGFL-KGJK.KJGF-O3JW-OLB3',20,1);
+ (1,'Microsoft Windows XP','Service Pack 2',3,'JGOL-JGFL-KGJK.KJGF-O3JW-OLB3',20,9);
 /*!40000 ALTER TABLE `software` ENABLE KEYS */;
 
 
