@@ -114,17 +114,29 @@ public class BeanBaseJWikiTest {
 
     @Test
     public void testSearchEntradaPorTagsSegundaForma() {
+        String latin = "latin";
+        String wiki = "wiki";
         System.out.println("testSearchEntradaPorTagsSegundaForma");
         BeanBaseJWiki instance = new BeanBaseJWiki();
-        String[] etiquetas = {"latin", "uno"};
-        Set<Tag> coletiquetas = new HashSet();
-        coletiquetas.add(instance.getEtiqueta("latin"));
-        coletiquetas.add(instance.getEtiqueta("uno"));
+        String[] etiquetas = {latin, wiki};
+        Set<Tag> coletiquetas = new HashSet(); //puede ser un SET, MAP, etc... media vez el tata sea collection, no problemo!
+        coletiquetas.add(instance.getEtiqueta(latin));
+        coletiquetas.add(instance.getEtiqueta(wiki));
 
         Collection<Entrada> colentradas = instance.searchEntradaPorEtiquetas(coletiquetas);
         Entrada[] entradas = instance.searchEntradaPorEtiquetas(etiquetas);
         if(colentradas.size() != entradas.length) fail("fallo en la cantidad de datos obtenidos, no concuerdan.");
     }
+
+    @Test
+    public void testSearchEntradaPorTitulo() {
+        String criteria = "ulo 4";
+        System.out.println("testSearchEntradaPorTitulo");
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        Entrada[] e = instance.searchEntradaPorTitulo(criteria);
+        assertNotNull(e);
+    }
+
 
     @Test
     public void testRegistrarEntrada() {
