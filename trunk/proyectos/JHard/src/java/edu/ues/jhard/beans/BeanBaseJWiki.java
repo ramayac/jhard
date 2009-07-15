@@ -469,7 +469,7 @@ public class BeanBaseJWiki extends BeanBase {
     }
 
     /**
-     * Metodo para refrescar
+     * Metodo para actualizar los valores de una entrada.
      * @param entrada
      */
     public void updateEntrada(Entrada entrada){
