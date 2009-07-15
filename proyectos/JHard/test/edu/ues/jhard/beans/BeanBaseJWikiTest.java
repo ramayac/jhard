@@ -157,21 +157,24 @@ public class BeanBaseJWikiTest {
         if(!instance.createComentario(9999, comentario)) fail("fallo en REGISTRAR COMENTARIO");
     }
 
-//    @Test
-//    public void testRegistrarTagEntrada() {
-//        Integer idtag = 777;
-//        Integer identrada = 9999;
-//        //System.out.println("testAsociarTag");
-//        BeanBaseJWiki instance = new BeanBaseJWiki();
-//        Tag tag = new Tag(idtag, "Tag777");
-//        if(!instance.createTag(tag)) fail("fallo en REGISTRAR TAG");
-//        Tag tt = instance.getEtiqueta(idtag);
-//        Entrada e = instance.getEntrada(identrada);
-//        TagEntrada te = new TagEntrada(identrada, tt, e);
-//        //instance.crea
-//
-//        //if(!instance.) fail("fallo en REGISTRAR COMENTARIO");
-//    }
+    @Test
+    public void testRegistrarTagEntrada() {
+        Integer idtag = 777;
+        Integer identrada = 9999;
+        //System.out.println("");
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        Tag tag = new Tag(idtag, "TagTest");
+        //if(!instance.createTag(tag)) fail("fallo en REGISTRAR TAG");
+        //Tag tt = instance.getEtiqueta(idtag);
+        Entrada e = instance.getEntrada(identrada);
+        TagEntrada te = new TagEntrada(identrada, tag, e);
+        e.getTagEntradaCollection().add(te);
+
+        instance.updateEntrada(e);
+
+        //Tag[] t = instance.getEtiquetas(e);
+        //if(!instance.) fail("fallo en REGISTRAR COMENTARIO");
+    }
    
     @Test
     public void testEliminarTag() {
