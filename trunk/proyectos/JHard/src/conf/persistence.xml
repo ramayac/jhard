@@ -41,6 +41,7 @@
     <class>edu.ues.jhard.jpa.Tecnico</class>
     <class>edu.ues.jhard.jpa.Ubicacion</class>
     <class>edu.ues.jhard.jpa.Usuario</class>
+    <class>edu.ues.jhard.jpa.Autorizacion</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="toplink.jdbc.user" value="jharduser"/>

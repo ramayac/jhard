@@ -43,12 +43,12 @@ public class Pieza implements Serializable {
     @JoinColumn(name = "idclasificacion", referencedColumnName = "idclasificacion", nullable = false)
     @ManyToOne(optional = false)
     private Clasificacion idclasificacion;
-    @JoinColumn(name = "idequipo", referencedColumnName = "idequipo")
-    @ManyToOne
-    private Equipo idequipo;
     @JoinColumn(name = "idmarca", referencedColumnName = "idmarca", nullable = false)
     @ManyToOne(optional = false)
     private Marca idmarca;
+    @JoinColumn(name = "idexistencia", referencedColumnName = "idexistencia")
+    @ManyToOne
+    private Existencia idexistencia;
     @OneToMany(mappedBy = "idpieza")
     private Collection<Atributohardware> atributohardwareCollection;
 
@@ -97,20 +97,20 @@ public class Pieza implements Serializable {
         this.idclasificacion = idclasificacion;
     }
 
-    public Equipo getIdequipo() {
-        return idequipo;
-    }
-
-    public void setIdequipo(Equipo idequipo) {
-        this.idequipo = idequipo;
-    }
-
     public Marca getIdmarca() {
         return idmarca;
     }
 
     public void setIdmarca(Marca idmarca) {
         this.idmarca = idmarca;
+    }
+
+    public Existencia getIdexistencia() {
+        return idexistencia;
+    }
+
+    public void setIdexistencia(Existencia idexistencia) {
+        this.idexistencia = idexistencia;
     }
 
     public Collection<Atributohardware> getAtributohardwareCollection() {
