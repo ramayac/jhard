@@ -49,6 +49,9 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "idrol", referencedColumnName = "idrol")
     @ManyToOne
     private Rol idrol;
+    @JoinColumn(name = "idautorizacion", referencedColumnName = "idautorizacion")
+    @ManyToOne
+    private Autorizacion idautorizacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
     private Collection<Administrador> administradorCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
@@ -115,6 +118,14 @@ public class Usuario implements Serializable {
 
     public void setIdrol(Rol idrol) {
         this.idrol = idrol;
+    }
+
+    public Autorizacion getIdautorizacion() {
+        return idautorizacion;
+    }
+
+    public void setIdautorizacion(Autorizacion idautorizacion) {
+        this.idautorizacion = idautorizacion;
     }
 
     public Collection<Administrador> getAdministradorCollection() {

@@ -46,9 +46,9 @@ public class Accesorio implements Serializable {
     @JoinColumn(name = "idclasificacion", referencedColumnName = "idclasificacion", nullable = false)
     @ManyToOne(optional = false)
     private Clasificacion idclasificacion;
-    @JoinColumn(name = "idequipo", referencedColumnName = "idequipo")
+    @JoinColumn(name = "idexistencia", referencedColumnName = "idexistencia")
     @ManyToOne
-    private Equipo idequipo;
+    private Existencia idexistencia;
     @OneToMany(mappedBy = "idaccesorio")
     private Collection<Atributohardware> atributohardwareCollection;
 
@@ -105,12 +105,12 @@ public class Accesorio implements Serializable {
         this.idclasificacion = idclasificacion;
     }
 
-    public Equipo getIdequipo() {
-        return idequipo;
+    public Existencia getIdexistencia() {
+        return idexistencia;
     }
 
-    public void setIdequipo(Equipo idequipo) {
-        this.idequipo = idequipo;
+    public void setIdexistencia(Existencia idexistencia) {
+        this.idexistencia = idexistencia;
     }
 
     public Collection<Atributohardware> getAtributohardwareCollection() {
