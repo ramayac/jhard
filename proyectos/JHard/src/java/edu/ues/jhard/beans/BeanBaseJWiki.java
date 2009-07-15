@@ -25,13 +25,14 @@ public class BeanBaseJWiki extends BeanBase {
         //SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t
         //WHERE(t.descripcion LIKE 'wiki') AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada;
         String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE" +
-                "(t.descripcion LIKE ?1 ) AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada";
+                "(t.descripcion LIKE ?1 ) AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada ORDER BY e.fechahora DESC";
 
         Query q = em.createNativeQuery(sql, Entrada.class);
         q.setParameter(1, etiqueta);
 
         //TODO: Esto puede retornar más de una entrada.... hay que cambiarlo
         Entrada[] e = (Entrada [])q.getResultList().toArray(new Entrada[0]);
+
         em.getTransaction().begin();
         for (Entrada entrada : e) {
             em.persist(entrada);
@@ -54,7 +55,7 @@ public class BeanBaseJWiki extends BeanBase {
             if((i+1)<etiquetas.length) sql += " OR ";
         }
 
-        sql += " AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada ";
+        sql += " AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada ORDER BY e.fechahora DESC";
 
         Query q = em.createNativeQuery(sql, Entrada.class);
 
@@ -70,6 +71,28 @@ public class BeanBaseJWiki extends BeanBase {
         }
         em.getTransaction().commit();
         return entradas;
+    }
+
+    /**
+     * Metodo para obtener uno o varios objetos Entrada que coincidan con el titulo que tengan
+     */
+    public Entrada[] searchEntradaPorTitulo(String titulo){
+        EntityManager em = this.getEntityManager();
+        String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario " +
+                "FROM entrada e WHERE e.titulo LIKE ?0 ORDER BY e.fechahora DESC";
+
+        titulo = "%"+titulo+"%";
+        Query q = em.createNativeQuery(sql, Entrada.class);
+        q.setParameter(0, titulo);
+
+        Entrada[] e = (Entrada [])q.getResultList().toArray(new Entrada[0]);
+
+        em.getTransaction().begin();
+        for (Entrada entrada : e) {
+            em.persist(entrada);
+        }
+        em.getTransaction().commit();
+        return e;
     }
 
     /**
