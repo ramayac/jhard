@@ -2,6 +2,9 @@ package edu.ues.jhard.beans;
 
 import edu.ues.jhard.jpa.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -352,6 +355,37 @@ public class BeanBaseJWiki extends BeanBase {
         }
         return true;
     }
+
+    /**
+     * TODO: do this crap at home...
+     * Metodo para agregar etiquetas (una o varias) a una entrada.
+     * @param identrada
+     * @param comentario
+     * @return
+     */
+//    public boolean createTagEntrada(Entrada e, Collection<Tag> etiquetas){
+//        try {
+//            EntityManager em = this.getEntityManager();
+//            Entrada entrada = em.find(Entrada.class, e.getIdentrada());
+//            Set<TagEntrada> te = new HashSet();
+//
+//            for (Tag t : etiquetas) {
+//                TagEntrada aux = new TagEntrada();
+//                aux.setIdentrada(entrada);
+//                aux.setIdtag(t);
+//                te.add(aux);
+//            }
+//
+//            entrada.setTagEntradaCollection(te);
+//
+//            em.getTransaction().begin();
+//
+//            em.getTransaction().commit();
+//        } catch (Exception e) {
+//            return false;
+//        }
+//        return true;
+//    }
 
     /**
      * Metodo para eliminar una Entrada por su ID

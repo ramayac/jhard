@@ -51,6 +51,12 @@ public class TagEntrada implements Serializable {
         this.idtagentrada = idtagentrada;
     }
 
+    public TagEntrada(Integer idtagentrada, Tag tag, Entrada entrada) {
+        this.idtagentrada = idtagentrada;
+        this.idtag = tag;
+        this.identrada = entrada;
+    }
+
     public Integer getIdtagentrada() {
         return idtagentrada;
     }
