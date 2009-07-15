@@ -55,9 +55,6 @@ public class Existencia implements Serializable {
     @JoinColumn(name = "idestado", referencedColumnName = "idestado", nullable = false)
     @ManyToOne(optional = false)
     private Estadoequipo idestado;
-    @JoinColumn(name = "idadquisicion", referencedColumnName = "idadquisicion")
-    @ManyToOne
-    private Adquisicion idadquisicion;
     @OneToMany(mappedBy = "idequipoexistente")
     private Collection<Solicitud> solicitudCollection;
     @OneToMany(mappedBy = "idequipoexistente")
@@ -133,14 +130,6 @@ public class Existencia implements Serializable {
 
     public void setIdestado(Estadoequipo idestado) {
         this.idestado = idestado;
-    }
-
-    public Adquisicion getIdadquisicion() {
-        return idadquisicion;
-    }
-
-    public void setIdadquisicion(Adquisicion idadquisicion) {
-        this.idadquisicion = idadquisicion;
     }
 
     public Collection<Solicitud> getSolicitudCollection() {

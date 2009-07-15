@@ -24,7 +24,6 @@ import edu.ues.jhard.beans.BeanBaseJInvent;
 import edu.ues.jhard.beans.BeanBaseManLab;
 import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jhardmin.LoginManager;
-import edu.ues.jhard.jpa.Adquisicion;
 import edu.ues.jhard.jpa.Docente;
 import edu.ues.jhard.jpa.Equipo;
 import edu.ues.jhard.jpa.Estadoequipo;
@@ -893,7 +892,7 @@ public class jcanon extends AbstractPageBean {
         Equipo eq = new Equipo();
         BeanBaseJCanon instance = new BeanBaseJCanon();
         Ubicacion u = instance.getEntityManager().find(Ubicacion.class, 1);
-        Adquisicion a = instance.getEntityManager().find(Adquisicion.class, 1);
+        //Adquisicion a = instance.getEntityManager().find(Adquisicion.class, 1);
         Estadoequipo ee = instance.getEntityManager().find(Estadoequipo.class, 1);
 
          String tmp=(String)this.comboTipoEq.getValue();
@@ -904,7 +903,7 @@ public class jcanon extends AbstractPageBean {
             eq = instance.getEntityManager().find(Equipo.class, id);
          }
         e.setCodigo(this.txtCodigoExistencia.getValue().toString());
-        e.setIdadquisicion(a);
+        //e.setIdadquisicion(a);
         e.setIdestado(ee);
         e.setIdhardware(eq);
         e.setIdubicacion(u);

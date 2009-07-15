@@ -4,7 +4,6 @@
     <provider>oracle.toplink.essentials.PersistenceProvider</provider>
     <class>edu.ues.jhard.jpa.Accesorio</class>
     <class>edu.ues.jhard.jpa.Administrador</class>
-    <class>edu.ues.jhard.jpa.Adquisicion</class>
     <class>edu.ues.jhard.jpa.Asistencia</class>
     <class>edu.ues.jhard.jpa.Atributohardware</class>
     <class>edu.ues.jhard.jpa.Bitacoracambiosusuario</class>
