@@ -29,7 +29,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "TagEntrada.findByIdentrada", 
         query = "SELECT t FROM TagEntrada t WHERE t.identrada = :identrada"),
     @NamedQuery(name = "TagEntrada.findByIdtag", 
-        query = "SELECT t FROM TagEntrada t WHERE t.identrada = :idtag")
+        query = "SELECT t FROM TagEntrada t WHERE t.idtag = :idtag"),
+    @NamedQuery(name = "TagEntrada.findByIdentradaAndIdtag",
+        query = "SELECT t FROM TagEntrada t WHERE t.identrada = :identrada AND  t.idtag = :idtag")
 })
 public class TagEntrada implements Serializable {
     private static final long serialVersionUID = 1L;

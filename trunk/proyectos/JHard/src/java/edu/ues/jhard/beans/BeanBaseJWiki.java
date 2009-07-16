@@ -20,7 +20,7 @@ import javax.persistence.*;
 public class BeanBaseJWiki extends BeanBase {
 
     /**
-     * Metodo para obtener un objeto entrada por una etiqueta, se asume que la entrada es nueva, asi que se hace
+     * Metodo para obtener uno o varios objeto entrada por UNA etiqueta, se asume que la entrada es nueva, asi que se hace
      * un em.persist sobre la misma.
      */
     public Entrada[] searchEntradaPorEtiqueta(String etiqueta){
@@ -33,7 +33,6 @@ public class BeanBaseJWiki extends BeanBase {
         Query q = em.createNativeQuery(sql, Entrada.class);
         q.setParameter(1, etiqueta);
 
-        //TODO: Esto puede retornar más de una entrada.... hay que cambiarlo
         Entrada[] e = (Entrada [])q.getResultList().toArray(new Entrada[0]);
 
         em.getTransaction().begin();
@@ -45,19 +44,18 @@ public class BeanBaseJWiki extends BeanBase {
     }
 
     /**
-     * Metodo para obtener un objeto entrada por una etiqueta, se asume que la entrada es nueva, asi que se hace
+     * Metodo para obtener uno o varios objeto entrada por un array de etiquetas, se asume que la entrada es nueva, asi que se hace
      * un em.persist sobre la misma.
      */
     public Entrada[] searchEntradaPorEtiquetas(String[] etiquetas){
         EntityManager em = this.getEntityManager();
 
+        /*SQL ADHOC*/
         String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE";
-
         for (int i = 0; i < etiquetas.length; i++) {
             sql += "( t.descripcion LIKE ?"+i+" )";
             if((i+1)<etiquetas.length) sql += " OR ";
         }
-
         sql += " AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada ORDER BY e.fechahora DESC";
 
         Query q = em.createNativeQuery(sql, Entrada.class);
@@ -68,6 +66,7 @@ public class BeanBaseJWiki extends BeanBase {
         }
 
         Entrada[] entradas = (Entrada[])q.getResultList().toArray(new Entrada[0]);
+
         em.getTransaction().begin();
         for (Entrada entrada : entradas) {
             em.persist(entrada);
@@ -77,16 +76,17 @@ public class BeanBaseJWiki extends BeanBase {
     }
 
     /**
-     * Metodo para obtener uno o varios objetos Entrada que coincidan con el titulo que tengan
+     * Metodo para obtener uno o varios objetos Entrada que coincidan con el criterio de busqueda.
+     * Este metodo busca sobre el campo titulo de las entradas.
      */
-    public Entrada[] searchEntradaPorTitulo(String titulo){
+    public Entrada[] searchEntradaPorTitulo(String criterio){
         EntityManager em = this.getEntityManager();
         String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario " +
                 "FROM entrada e WHERE e.titulo LIKE ?0 ORDER BY e.fechahora DESC";
 
-        titulo = "%"+titulo+"%";
+        criterio = "%"+criterio+"%";
         Query q = em.createNativeQuery(sql, Entrada.class);
-        q.setParameter(0, titulo);
+        q.setParameter(0, criterio);
 
         Entrada[] e = (Entrada [])q.getResultList().toArray(new Entrada[0]);
 
@@ -99,19 +99,16 @@ public class BeanBaseJWiki extends BeanBase {
     }
 
     /**
-     * Metodo para obtener una collection de Entradas por sus etiquetas asociadas
-     * un em.persist sobre la misma.
+     * Metodo para obtener una collection de Entradas de acuerdo a una collection de Etiquetas asociadas
      */
     public Collection<Entrada> searchEntradaPorEtiquetas(Collection<Tag> etiquetas){
         EntityManager em = this.getEntityManager();
 
         String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE";
-
         for (int i = 0; i < etiquetas.size(); i++) {
             sql += "( t.descripcion LIKE ?"+i+" )";
             if((i+1)<etiquetas.size()) sql += " OR ";
         }
-
         sql += " AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada ";
 
         Query q = em.createNativeQuery(sql, Entrada.class);
@@ -123,6 +120,7 @@ public class BeanBaseJWiki extends BeanBase {
         }
 
         Collection<Entrada> entradas = (Collection<Entrada>)q.getResultList();
+
         em.getTransaction().begin();
         for (Entrada entrada : entradas) {
             em.persist(entrada);
@@ -130,6 +128,32 @@ public class BeanBaseJWiki extends BeanBase {
         em.getTransaction().commit();
         return entradas;
     }
+
+
+    /**
+     * busca un objeto TagEntrada por su entrada y etiqueta asociada.
+     * @param tag
+     */
+    public TagEntrada searchTagEntrada(Entrada entrada, Tag tag){
+        try{
+            EntityManager em = this.getEntityManager();
+
+            Query q = em.createNamedQuery("TagEntrada.findByIdentradaAndIdtag");
+            q.setParameter("identrada", entrada);
+            q.setParameter("idtag", tag);
+
+            TagEntrada tagentrada = (TagEntrada) q.getSingleResult();
+
+            em.getTransaction().begin();
+            em.persist(tagentrada);
+            em.getTransaction().commit();
+
+            return tagentrada;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
 
     /**
      * Metodo para obtener las ultimas N entradas en jhard.entradas.
@@ -172,19 +196,8 @@ public class BeanBaseJWiki extends BeanBase {
         return e;
     }
 
-    /**
-     * Metodo para obtener un objeto entrada en el contexto del EM, si no lo encuentra, le hace query.
-     * @param entrada
-     * @return
-     */
-    public Entrada getEntrada(Entrada entrada){
-        EntityManager em = this.getEntityManager();
-        Entrada e = (Entrada)em.find(Entrada.class, entrada.getIdentrada());
-        return e;
-    }
-
      /**
-     * Metodo para obtener todos los ULTIMOS Tags asociados con el ID de una Entrada
+     * Metodo para obtener todos las Etiquetas asociados con el ID de una Entrada
      * @param idEntrada
      * @return
      */
@@ -303,8 +316,8 @@ public class BeanBaseJWiki extends BeanBase {
             colcom.add(comentario);
             e.setComentariosCollection(colcom);
             em.getTransaction().begin();
-            //em.merge(colcom);
-            em.persist(comentario);
+            em.merge(e);
+            //em.persist(comentario);
             em.getTransaction().commit();
         } catch (Exception e) {
             return false;
@@ -329,8 +342,8 @@ public class BeanBaseJWiki extends BeanBase {
             colcom.add(comentario);
             e.setComentariosCollection(colcom);
             em.getTransaction().begin();
-            //em.merge(comentario);
-            em.persist(comentario);
+            em.merge(e);
+            //em.persist(comentario);
             em.getTransaction().commit();
         } catch (Exception e) {
             return false;
@@ -339,7 +352,7 @@ public class BeanBaseJWiki extends BeanBase {
     }
 
     /**
-     * Metodo para agregar etiquetas
+     * Metodo para agregar un objeto etiqueta
      * @param identrada
      * @param comentario
      * @return
@@ -357,7 +370,6 @@ public class BeanBaseJWiki extends BeanBase {
     }
 
     /**
-     * TODO: do this crap at home...
      * Metodo para agregar etiquetas (una o varias) a una entrada.
      * @param identrada
      * @param comentario
@@ -379,7 +391,7 @@ public class BeanBaseJWiki extends BeanBase {
             entrada.setTagEntradaCollection(te);
 
             em.getTransaction().begin();
-            em.refresh(entrada);
+            em.merge(entrada);
             em.getTransaction().commit();
         } catch (Exception ex) {
             return false;
@@ -415,32 +427,20 @@ public class BeanBaseJWiki extends BeanBase {
      * @param entrada
      * @param comentario
      */
-    public void deleteComentario(Entrada entrada, Comentarios comentario){
-        EntityManager em = this.getEntityManager();
-        Comentarios c = (Comentarios)em.find(Comentarios.class, comentario.getIdcoment());
-        Collection<Comentarios> colcom = entrada.getComentariosCollection();
-        colcom.remove(c);
-        entrada.setComentariosCollection(colcom);
-        em.getTransaction().begin();
-        em.remove(c);
-        em.getTransaction().commit();
-    }
-
-    /**
-     * Elimina un comentario por su ID
-     * @param identrada
-     * @param comentario
-     */
     public void deleteComentario(Comentarios comentario){
         EntityManager em = this.getEntityManager();
         Comentarios c = (Comentarios)em.find(Comentarios.class, comentario.getIdcoment());
+        //entrada.getComentariosCollection().remove(c);
+        //Collection<Comentarios> colcom = entrada.getComentariosCollection();
+        //colcom.remove(c);
+       // entrada.setComentariosCollection(colcom);
         em.getTransaction().begin();
         em.remove(c);
         em.getTransaction().commit();
     }
 
     /**
-     * Elimina un TAG indiscriminadamente por su ID de la BD
+     * Elimina un TAG indiscriminadamente por su ID
      * @param tag
      */
     public void deleteTag(Integer idtag){
@@ -452,24 +452,28 @@ public class BeanBaseJWiki extends BeanBase {
     }
 
     /**
-     * Elimina un TAG indiscriminadamente por su ID de la BD
+     * Elimina la REFERENCIA de un Tag asociado con una entrada
      * @param tag
      */
     public void deleteTagEntrada(Entrada entrada, Tag tag){
         EntityManager em = this.getEntityManager();
-        Entrada e = (Entrada)em.find(Entrada.class, entrada.getIdentrada());
-        Collection<TagEntrada> tagent = e.getTagEntradaCollection();
+
+        Query q = em.createNamedQuery("TagEntrada.findByIdentradaAndIdtag");
+        q.setParameter("identrada", entrada);
+        q.setParameter("idtag", tag);
+
+        TagEntrada tagentrada = (TagEntrada) q.getSingleResult();
 
         em.getTransaction().begin();
-        for (TagEntrada te : tagent) {
-            if(te.getIdtag().getIdtag() == tag.getIdtag()) em.remove(te);
-        }
-        
+        em.remove(tagentrada);
+        //em.refresh(entrada);
         em.getTransaction().commit();
     }
 
+    /*-----------------------------------------------*/
+
     /**
-     * Metodo para actualizar los valores de una entrada.
+     * Metodo para actualizar un objeto entrada
      * @param entrada
      */
     public void updateEntrada(Entrada entrada){
@@ -480,5 +484,44 @@ public class BeanBaseJWiki extends BeanBase {
         em.merge(e);
         em.getTransaction().commit();
     }
-    
+
+    /**
+     * Metodo para añadirle un comentario a una entrada
+     * @param entrada
+     */
+    public void updateComentarioEntrada(Entrada entrada, Comentarios comentario){
+        EntityManager em = this.getEntityManager();
+        Entrada e = em.find(Entrada.class, entrada.getIdentrada());
+        e.getComentariosCollection().add(comentario);
+        em.getTransaction().begin();
+        em.merge(e);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para añadirle una etiqueta a una entrada
+     * @param entrada
+     */
+    public void updateTagEntradaEntrada(Entrada entrada, TagEntrada tagentrada){
+        EntityManager em = this.getEntityManager();
+        Entrada e = em.find(Entrada.class, entrada.getIdentrada());
+        e.getTagEntradaCollection().add(tagentrada);
+        em.getTransaction().begin();
+        em.merge(e);
+        em.getTransaction().commit();
+    }
+
+//    /**
+//     * Metodo para añadirle una lista de etiquetas a una entrada
+//     * @param entrada
+//     */
+//    public void updateTagsEntrada(Entrada entrada, Collection<Tag> etiquetas){
+//        EntityManager em = this.getEntityManager();
+//        Entrada e = em.find(Entrada.class, entrada.getIdentrada());
+//        e.getTagEntradaCollection().
+//        e.getTagEntradaCollection().add(tagentrada);
+//        em.getTransaction().begin();
+//        em.merge(e);
+//        em.getTransaction().commit();
+//    }
 }
