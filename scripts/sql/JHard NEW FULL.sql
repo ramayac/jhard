@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.0.51b-community-nt
+-- Server version	5.0.83-community-nt
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -48,6 +48,59 @@ CREATE TABLE `accesorio` (
 
 /*!40000 ALTER TABLE `accesorio` DISABLE KEYS */;
 /*!40000 ALTER TABLE `accesorio` ENABLE KEYS */;
+
+
+--
+-- Definition of table `administrador`
+--
+
+DROP TABLE IF EXISTS `administrador`;
+CREATE TABLE `administrador` (
+  `idadministrador` int(11) NOT NULL COMMENT 'Id correlativo unico de cada administrador',
+  `clave` varchar(45) NOT NULL COMMENT 'Clave del administrador',
+  `idusuario` int(11) NOT NULL COMMENT 'referencia al usuario relacionado con este admnistrador',
+  PRIMARY KEY  (`idadministrador`),
+  KEY `fkidusuario_administrador` (`idusuario`),
+  CONSTRAINT `fkidusuario_administrador` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `administrador`
+--
+
+/*!40000 ALTER TABLE `administrador` DISABLE KEYS */;
+INSERT INTO `administrador` (`idadministrador`,`clave`,`idusuario`) VALUES 
+ (1,'21232F297A57A5A743894A0E4A801FC3',1),
+ (2,'21232F297A57A5A743894A0E4A801FC3',2),
+ (3,'CD82BE786DA71D1DD4EA68C0908AF6E6',9);
+/*!40000 ALTER TABLE `administrador` ENABLE KEYS */;
+
+
+--
+-- Definition of table `adquisicion`
+--
+
+DROP TABLE IF EXISTS `adquisicion`;
+CREATE TABLE `adquisicion` (
+  `idadquisicion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de la adquisicion',
+  `fecha` date NOT NULL COMMENT 'Fecha en la que se adquirio el equipo o software',
+  `precio` double NOT NULL COMMENT 'Precio de compra del equipo o software (dejar a cero si fue una donacion)',
+  `descripcion` text COMMENT 'Detalles de la adquisicion',
+  `proveedor` varchar(100) default NULL COMMENT 'Nombre del proveedor o tienda donde se compro el equipo o software (en caso de haber sido comprado)',
+  PRIMARY KEY  (`idadquisicion`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `adquisicion`
+--
+
+/*!40000 ALTER TABLE `adquisicion` DISABLE KEYS */;
+INSERT INTO `adquisicion` (`idadquisicion`,`fecha`,`precio`,`descripcion`,`proveedor`) VALUES 
+ (1,'2002-01-09',200,'Computadora Clon','Medicomp'),
+ (2,'2009-03-04',400,'Dell Vostro','Dell'),
+ (3,'2002-01-03',50,'Licencia Microsoft Windows','Microsoft'),
+ (4,'2002-01-03',200,'Cañon Epson','Tecnoservice');
+/*!40000 ALTER TABLE `adquisicion` ENABLE KEYS */;
 
 
 --
@@ -306,6 +359,8 @@ CREATE TABLE `comentarios` (
 --
 
 /*!40000 ALTER TABLE `comentarios` DISABLE KEYS */;
+INSERT INTO `comentarios` (`idcoment`,`comentario`,`fechahorara`,`identrada`) VALUES 
+ (1,'Lorem ipsum EST!','2009-06-06 00:00:00',1);
 /*!40000 ALTER TABLE `comentarios` ENABLE KEYS */;
 
 
@@ -1052,6 +1107,17 @@ CREATE TABLE `tag` (
 --
 
 /*!40000 ALTER TABLE `tag` DISABLE KEYS */;
+INSERT INTO `tag` (`idtag`,`descripcion`) VALUES 
+ (1,'portada'),
+ (2,'wiki'),
+ (3,'hardware'),
+ (4,'software'),
+ (5,'red'),
+ (6,'ip'),
+ (7,'linux'),
+ (8,'impresora'),
+ (9,'latin'),
+ (10,'lorem');
 /*!40000 ALTER TABLE `tag` ENABLE KEYS */;
 
 
@@ -1076,6 +1142,14 @@ CREATE TABLE `tag_entrada` (
 --
 
 /*!40000 ALTER TABLE `tag_entrada` DISABLE KEYS */;
+INSERT INTO `tag_entrada` (`idtagentrada`,`idtag`,`identrada`) VALUES 
+ (1,1,1),
+ (2,2,2),
+ (3,9,3),
+ (4,10,1),
+ (5,10,2),
+ (6,10,3),
+ (7,10,4);
 /*!40000 ALTER TABLE `tag_entrada` ENABLE KEYS */;
 
 
