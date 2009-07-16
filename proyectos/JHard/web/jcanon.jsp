@@ -144,7 +144,7 @@
                                                     <br/>
                                                     <br/>
                                                     <ice:selectOneMenu binding="#{jcanon.comboTipoEq}" id="comboTipoEq" partialSubmit="true">
-                                                        <f:selectItems id="selectOneMenu2selectItems2" value="#{jcanon.selectOneMenu2DefaultItems}"/>
+                                                        <f:selectItems id="selectOneMenu2selectItems2" value="#{jcanon.equ}"/>
                                                     </ice:selectOneMenu>
                                                     <ice:commandButton binding="#{jcanon.btnAddEQ}" styleClass="btnAccion2" id="btnAddEQ" action="#{jcanon.mostrarAddEq}" value="Agregar Equipo"/>
                                                     <br/>
@@ -232,12 +232,12 @@
                                                         <tr>
                                                             <td>
                                                                 <ice:selectOneMenu binding="#{jcanon.comboCan}" id="comboCan" partialSubmit="true">
-                                                                    <f:selectItems id="selectOneMenu1selectItems" value="#{jcanon.fakeCCan}"/>
+                                                                    <f:selectItems id="selectOneMenu1selectItems" value="#{jcanon.exc}"/>
                                                                 </ice:selectOneMenu>
                                                             </td>
                                                             <td>
                                                                 <ice:selectOneMenu binding="#{jcanon.comboLaptop}" id="comboLaptop" partialSubmit="true">
-                                                                    <f:selectItems id="selectOneMenu2selectItems" value="#{jcanon.fakeCLaptop}"/>
+                                                                    <f:selectItems id="selectOneMenu2selectItems" value="#{jcanon.exl}"/>
                                                                 </ice:selectOneMenu>
                                                             </td>
                                                         </tr>
@@ -270,7 +270,7 @@
                                                     <ice:outputLabel id="outputLabel1" value="Docente Responsable"/>
                                                 </h3>
                                                 <ice:selectOneMenu binding="#{jcanon.comboDocente}" id="comboDocente" partialSubmit="true" valueChangeListener="#{jcanon.comboDocente_processValueChange}">
-                                                    <f:selectItems id="selectOneMenu1selectItems2" value="#{jcanon.fakeDocente}"/>
+                                                    <f:selectItems id="selectOneMenu1selectItems2" value="#{jcanon.in}"/>
                                                 </ice:selectOneMenu>
                                             </p>
                                             <ice:commandButton action="#{jcanon.btnCrearReserva_action}" binding="#{jcanon.btnCrearReserva}"

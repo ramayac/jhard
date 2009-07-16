@@ -34,6 +34,7 @@ import edu.ues.jhard.jpa.Estadoequipo;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
@@ -59,35 +60,35 @@ public class jrequestAdmin extends AbstractPageBean {
 
 
     private void _init() throws Exception {
-        fakeSol.setItems(new String[]{});
-        fakeMan.setItems(new String[]{});
-        fakeBit.setItems(new String[]{});
+//        fakeSol.setItems(new String[]{});
+//        fakeMan.setItems(new String[]{});
+//        fakeBit.setItems(new String[]{});
 
-        fakeComboPrioridad.setItems(new String[]{"Alta", "Media", "Baja"});
-        fakeComboEstado1.setItems(new String[]{});
-        fakeComboTecnico1.setItems(new String[]{});
+//        fakeComboPrioridad.setItems(new String[]{"Alta", "Media", "Baja"});
+//        fakeComboEstado1.setItems(new String[]{});
+//        fakeComboTecnico1.setItems(new String[]{});
 
 
     }
 
-    private DefaultSelectItemsArray fakeComboEstado1 = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getFakeComboEstado1() {
-        return fakeComboEstado1;
-    }
-
-    public void setFakeComboEstado1(DefaultSelectItemsArray dsia) {
-        this.fakeComboEstado1 = dsia;
-    }
-    private DefaultSelectItemsArray fakeComboTecnico1 = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getFakeComboTecnico1() {
-        return fakeComboTecnico1;
-    }
-
-    public void setFakeComboTecnico1(DefaultSelectItemsArray dsia) {
-        this.fakeComboTecnico1 = dsia;
-    }
+//    private DefaultSelectItemsArray fakeComboEstado1 = new DefaultSelectItemsArray();
+//
+//    public DefaultSelectItemsArray getFakeComboEstado1() {
+//        return fakeComboEstado1;
+//    }
+//
+//    public void setFakeComboEstado1(DefaultSelectItemsArray dsia) {
+//        this.fakeComboEstado1 = dsia;
+//    }
+//    private DefaultSelectItemsArray fakeComboTecnico1 = new DefaultSelectItemsArray();
+//
+//    public DefaultSelectItemsArray getFakeComboTecnico1() {
+//        return fakeComboTecnico1;
+//    }
+//
+//    public void setFakeComboTecnico1(DefaultSelectItemsArray dsia) {
+//        this.fakeComboTecnico1 = dsia;
+//    }
     private HtmlOutputLabel lblNombre = new HtmlOutputLabel();
 
     public HtmlOutputLabel getLblNombre() {
@@ -286,33 +287,33 @@ public class jrequestAdmin extends AbstractPageBean {
     public void setPopUpAgregarTec(PanelPopup pp) {
         this.popUpAgregarTec = pp;
     }
-    private DefaultSelectItemsArray fakeSol = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getFakeSol() {
-        return fakeSol;
-    }
-
-    public void setFakeSol(DefaultSelectItemsArray dsia) {
-        this.fakeSol = dsia;
-    }
-    private DefaultSelectItemsArray fakeMan = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getFakeMan() {
-        return fakeMan;
-    }
-
-    public void setFakeMan(DefaultSelectItemsArray dsia) {
-        this.fakeMan = dsia;
-    }
-    private DefaultSelectionItems fakeBit = new DefaultSelectionItems();
-
-    public DefaultSelectionItems getFakeBit() {
-        return fakeBit;
-    }
-
-    public void setFakeBit(DefaultSelectionItems dsi) {
-        this.fakeBit = dsi;
-    }
+//    private DefaultSelectItemsArray fakeSol = new DefaultSelectItemsArray();
+//
+//    public DefaultSelectItemsArray getFakeSol() {
+//        return fakeSol;
+//    }
+//
+//    public void setFakeSol(DefaultSelectItemsArray dsia) {
+//        this.fakeSol = dsia;
+//    }
+//    private DefaultSelectItemsArray fakeMan = new DefaultSelectItemsArray();
+//
+//    public DefaultSelectItemsArray getFakeMan() {
+//        return fakeMan;
+//    }
+//
+//    public void setFakeMan(DefaultSelectItemsArray dsia) {
+//        this.fakeMan = dsia;
+//    }
+//    private DefaultSelectionItems fakeBit = new DefaultSelectionItems();
+//
+//    public DefaultSelectionItems getFakeBit() {
+//        return fakeBit;
+//    }
+//
+//    public void setFakeBit(DefaultSelectionItems dsi) {
+//        this.fakeBit = dsi;
+//    }
     private HtmlSelectOneListbox listaBitacoras = new HtmlSelectOneListbox();
 
     public HtmlSelectOneListbox getListaBitacoras() {
@@ -450,7 +451,8 @@ public class jrequestAdmin extends AbstractPageBean {
 //    }
     // </editor-fold>
 
-
+private List soc=new ArrayList();
+private List man= new ArrayList();
 
     //ESTE METODO DEBE DE IR EN EL NEGOCIO
     public void llenarLista(){
@@ -461,7 +463,6 @@ public class jrequestAdmin extends AbstractPageBean {
 
         //LISTA DE SOLICITUDES 
         //Array que se metera en la selectonelistbox
-        ArrayList soc=new ArrayList();
         //Para comparar cuales solicitudes ya tienen mantenimientos relacionados
         Mantenimiento [] mantenimientos = new edu.ues.jhard.beans.BeanBaseJRequest().getMantenimiento();
         Solicitud [] solicitudes = new edu.ues.jhard.beans.BeanBaseJRequest().getSolicitud();
@@ -484,16 +485,16 @@ public class jrequestAdmin extends AbstractPageBean {
             if(cont==0){
                 Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
                 String label = u.getNombre()+" - "+solicitudes[i].getDescripcion();
-                soc.add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
+                getSoc().add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
             }
         }
 
-        //Creo una UISelecItems
-        UISelectItems items = new UISelectItems();
-        //Le añado como valor el ArrayList
-        items.setValue(soc);
-        //Le meto las UISelectItems como hijos de la selectonelistbox
-        this.listaSol.getChildren().add(items);
+//        //Creo una UISelecItems
+//        UISelectItems items = new UISelectItems();
+//        //Le añado como valor el ArrayList
+//        items.setValue(soc);
+//        //Le meto las UISelectItems como hijos de la selectonelistbox
+//        this.listaSol.getChildren().add(items);
 
 
         //LISTA DE MANTENIMIENTOS
@@ -502,60 +503,59 @@ public class jrequestAdmin extends AbstractPageBean {
         mantenimientos = new edu.ues.jhard.beans.BeanBaseJRequest().getMantenimientoByEstado("Pendiente");
 
         //Creo e instancio el ArrayList que contendrá el selectlistonebox
-        ArrayList man= new ArrayList();
         for(int i=0;i<mantenimientos.length;i++){
             Equiposimple eq = new BeanBaseJRequest().getEquipoSimpleByID(mantenimientos[i].getIdequiposimple().getIdEquipoSimple());
             String label = eq.getDescripcion() +" - "+ mantenimientos[i].getDescripcion();
-            man.add(new SelectItem(mantenimientos[i].getIdmantenimiento(), label));
+            getMan().add(new SelectItem(mantenimientos[i].getIdmantenimiento(), label));
         }
 
-        UISelectItems itemsMan = new UISelectItems();
-        itemsMan.setValue(man);
-        this.listaMantenimientos.getChildren().add(itemsMan);
+//        UISelectItems itemsMan = new UISelectItems();
+//        itemsMan.setValue(man);
+//        this.listaMantenimientos.getChildren().add(itemsMan);
     }
 
 
     private void limpiarListas(){
-        this.listaSol.getChildren().clear();
-        this.listaMantenimientos.getChildren().clear();
+        this.soc.clear();
+        this.man.clear();
     }
 
+private List tec = new ArrayList();
+private List eqs = new ArrayList();
+private List eeq = new ArrayList();
 
     private void llenarCombo(){
         //COMBO DE TECNICOS
         Tecnico [] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
-        ArrayList tec = new ArrayList();
         for(int i=0;i<tecnicos.length;i++){
             String label = tecnicos[i].getNombres()+" "+tecnicos[i].getApellidos();
-            tec.add(new SelectItem(tecnicos[i].getIdtecnico(),label));
+            getTec().add(new SelectItem(tecnicos[i].getIdtecnico(),label));
         }
-        UISelectItems itemsTec = new UISelectItems();
-        itemsTec.setValue(tec);
-        this.comboTecnicos.getChildren().add(itemsTec);
+//        UISelectItems itemsTec = new UISelectItems();
+//        itemsTec.setValue(getTec());
+//        this.comboTecnicos.getChildren().add(itemsTec);
 
 
         //SELECTINPUT DE EQUIPOS SIMPLES
         Equiposimple [] eqsimple = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
-        ArrayList eqs = new ArrayList();
         for(int i=0;i<eqsimple.length;i++){
             String label = eqsimple[i].getPropietario()+" "+eqsimple[i].getDescripcion();
-            eqs.add(new SelectItem(eqsimple[i].getIdEquipoSimple(),label));
+            getEqs().add(new SelectItem(eqsimple[i].getIdEquipoSimple(),label));
         }
-        UISelectItems itemsEq = new UISelectItems();
-        itemsEq.setValue(eqs);
-        this.txtEqSimples.getChildren().add(itemsEq);
+//        UISelectItems itemsEq = new UISelectItems();
+//        itemsEq.setValue(getEqs());
+//        this.txtEqSimples.getChildren().add(itemsEq);
 
 
-        //SELECTINPUT DE ESTADOS DE EQUIPOS
+        //COMBO DE ESTADOS DE EQUIPOS
         Estadoequipo [] estado = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
-        ArrayList eeq = new ArrayList();
         for(int i=0;i<estado.length;i++){
             String label = estado[i].getNombre();
-            eeq.add(new SelectItem(estado[i].getIdestado(),label));
+            getEeq().add(new SelectItem(estado[i].getIdestado(),label));
         }
-        UISelectItems itemsEstad = new UISelectItems();
-        itemsEstad.setValue(eeq);
-        this.comboEstado.getChildren().add(itemsEstad);
+//        UISelectItems itemsEstad = new UISelectItems();
+//        itemsEstad.setValue(getEeq());
+//        this.comboEstado.getChildren().add(itemsEstad);
     }
     
     private Tecnico tecnicoElegido=null;
@@ -574,12 +574,12 @@ public class jrequestAdmin extends AbstractPageBean {
     private boolean renderMantenimientos;
 
     public jrequestAdmin() {
-        fakeSol.clear();
-        fakeMan.clear();
-        fakeBit.clear();
-
-        fakeComboEstado1.clear();
-        fakeComboTecnico1.clear();
+//        fakeSol.clear();
+//        fakeMan.clear();
+//        fakeBit.clear();
+//
+//        fakeComboEstado1.clear();
+//        fakeComboTecnico1.clear();
         fakeComboPrioridad.clear();
         fakeComboPrioridad.setItems(new String[]{"Alta", "Media", "Baja"});
 
@@ -603,7 +603,6 @@ public class jrequestAdmin extends AbstractPageBean {
     @Override
     public void init() {
         this.render=false;
-
         this.renderBitacoras=false;
         this.renderMantenimientos=false;
         // Perform initializations inherited from our superclass
@@ -757,6 +756,9 @@ public class jrequestAdmin extends AbstractPageBean {
     }
 
     public void tabJrequestAdmin_processTabChange(TabChangeEvent tce) {
+        limpiarListaBitacoras();
+        this.renderMantenimientos=false;
+        this.renderBitacoras=false;
     }
 
     public void listaMantenimientos_processValueChange(ValueChangeEvent vce) {
@@ -803,6 +805,8 @@ public class jrequestAdmin extends AbstractPageBean {
 
 
             this.renderMantenimientos=false;
+            this.checkFIn.setSelected(false);
+            this.txtDescripcion.setValue("");
 
             this.lblMensajes.setValue("Mantenimiento realizado con éxito. Se ha ingresado a la bitácora del equipo");
             this.render=true;
@@ -815,12 +819,12 @@ public class jrequestAdmin extends AbstractPageBean {
             this.lblMantenimiento.setValue("La descripción del mantenimiento no debe quedar en blanco");
         }
 
-        return null;
+        return "";
     }
 
     public String btnCerrar_action() {
-
-
+        this.checkFIn.setSelected(false);
+        this.txtDescripcion.setValue("");
         this.renderMantenimientos=false;
 
         return null;
@@ -926,21 +930,22 @@ public class jrequestAdmin extends AbstractPageBean {
         
     }
 
+private List bit= new ArrayList();
+
     private void llenarListaBitacoras(Equiposimple e){
         //LISTA DE BITACORAS
         Bitacoraestados [] bitacoras = new edu.ues.jhard.beans.BeanBaseJRequest().getBitacoraEstadosByIdEquipoSimple(e);
-        ArrayList bit= new ArrayList();
         for(int i=0;i<bitacoras.length;i++){
             String label = bitacoras[i].getDescripcion()  +" - "+ bitacoras[i].getFecha().toString();
-            bit.add(new SelectItem(bitacoras[i].getIdbitacora(), label));
+            getBit().add(new SelectItem(bitacoras[i].getIdbitacora(), label));
         }
-        UISelectItems itemsBit = new UISelectItems();
-        itemsBit.setValue(bit);
-        this.listaBitacoras.getChildren().add(itemsBit);
+//        UISelectItems itemsBit = new UISelectItems();
+//        itemsBit.setValue(bit);
+//        this.listaBitacoras.getChildren().add(itemsBit);
     }
 
     private void limpiarListaBitacoras(){
-        this.listaBitacoras.getChildren().clear();
+        this.bit.clear();
     }
 
     public String txtEqSimples_action() {
@@ -977,7 +982,7 @@ public class jrequestAdmin extends AbstractPageBean {
 
     public String btnCancelarModBitacora_action() {
         this.renderBitacoras=false;
-
+        this.txtModBitacora.setValue("");
         return null;
     }
 
@@ -988,7 +993,7 @@ public class jrequestAdmin extends AbstractPageBean {
         new BeanBaseJRequest().modificarBitacoraEstados(bitacoraElegida);
 
         this.renderBitacoras=false;
-        
+        this.txtModBitacora.setValue("");
 
         this.lblMensajes.setValue("Bitácora modificada con éxito");
         this.render=true;
@@ -996,7 +1001,7 @@ public class jrequestAdmin extends AbstractPageBean {
 
         llenarListaBitacoras(eqSimpleElegido);
 
-        return null;
+        return "";
     }
 
     public String btnSolicitudAdmin_action() {
@@ -1064,6 +1069,48 @@ public class jrequestAdmin extends AbstractPageBean {
      */
     public void setRenderMantenimientos(boolean renderMantenimientos) {
         this.renderMantenimientos = renderMantenimientos;
+    }
+
+    /**
+     * @return the tec
+     */
+    public List getTec() {
+        return tec;
+    }
+
+    /**
+     * @return the eqs
+     */
+    public List getEqs() {
+        return eqs;
+    }
+
+    /**
+     * @return the eeq
+     */
+    public List getEeq() {
+        return eeq;
+    }
+
+    /**
+     * @return the soc
+     */
+    public List getSoc() {
+        return soc;
+    }
+
+    /**
+     * @return the man
+     */
+    public List getMan() {
+        return man;
+    }
+
+    /**
+     * @return the bit
+     */
+    public List getBit() {
+        return bit;
     }
 
 //    public void comboEstado_processValueChange(ValueChangeEvent vce) {

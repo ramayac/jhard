@@ -69,7 +69,7 @@
                                                 <p>
                                                     <ice:selectOneListbox binding="#{jrequestAdmin.listaMantenimientos}" id="listaMantenimientos"
                                                         partialSubmit="true" size="2" style="height: 360px; width: 500px" valueChangeListener="#{jrequestAdmin.listaMantenimientos_processValueChange}">
-                                                        <f:selectItems id="fakeMantenimiento" value="#{jrequestAdmin.fakeMan}"/>
+                                                        <f:selectItems id="fakeMantenimiento" value="#{jrequestAdmin.man}"/>
                                                     </ice:selectOneListbox>
                                                 </p>
                                                 <ice:panelPopup autoCentre="true" binding="#{jrequestAdmin.popUpBitacora}" draggable="true" id="popUpBitacora"
@@ -88,7 +88,7 @@
                                                             <ice:inputTextarea binding="#{jrequestAdmin.txtDescripcion}" id="txtDescripcion"/>
                                                             <ice:outputLabel id="outputLabel12" value="Nuevo Estado del Equipo"/>
                                                             <ice:selectOneMenu binding="#{jrequestAdmin.comboEstado}" id="comboEstado" partialSubmit="true">
-                                                                <f:selectItems id="fakeComboEstado" value="#{jrequestAdmin.fakeComboEstado1}"/>
+                                                                <f:selectItems id="fakeComboEstado" value="#{jrequestAdmin.eeq}"/>
                                                             </ice:selectOneMenu>
                                                             <ice:commandButton action="#{jrequestAdmin.btnAceptarFinalizado_action}"
                                                                 binding="#{jrequestAdmin.btnAceptarFinalizado}" id="btnAceptarFinalizado"
@@ -109,13 +109,13 @@
                                                     <ice:selectInputText action="#{jrequestAdmin.txtEqSimples_action}" binding="#{jrequestAdmin.txtEqSimples}"
                                                         id="txtEqSimples" rows="50" style=""
                                                         valueChangeListener="#{jrequestAdmin.txtEqSimples_processValueChange}" visible="true" width="300">
-                                                        <f:selectItems id="selectInputText1selectedItems"/>
+                                                            <f:selectItems id="selectInputText1selectedItems" value="#{jrequestAdmin.eqs}"/>
                                                     </ice:selectInputText>
                                                 </p>
                                                 <p>
                                                     <ice:selectOneListbox binding="#{jrequestAdmin.listaBitacoras}" id="listaBitacoras" partialSubmit="true"
                                                         size="2" style="height: 350px; width: 500px" valueChangeListener="#{jrequestAdmin.listaBitacoras_processValueChange}">
-                                                        <f:selectItems id="fakeBitacora" value="#{jrequestAdmin.fakeBit}"/>
+                                                        <f:selectItems id="fakeBitacora" value="#{jrequestAdmin.bit}"/>
                                                     </ice:selectOneListbox>
                                                 </p>
                                                 <ice:panelPopup autoCentre="true" binding="#{jrequestAdmin.popUpModBitacora}" draggable="true"
@@ -150,7 +150,7 @@
                                                     <ice:panelGroup id="panelGroup1" style=" position: inherit; width: 100%; ">
                                                         <ice:selectOneListbox binding="#{jrequestAdmin.listaSol}" id="listaSol" partialSubmit="true" size="2"
                                                             style="height: 75%; width: 98%;" value="" valueChangeListener="#{jrequestAdmin.listaSol_processValueChange}">
-                                                            <f:selectItems id="fakeSolicitud" value="#{jrequestAdmin.fakeSol}"/>
+                                                            <f:selectItems id="fakeSolicitud" value="#{jrequestAdmin.soc}"/>
                                                         </ice:selectOneListbox>
                                                         <ice:commandButton action="#{jrequestAdmin.btnEliminarSolicitud_action}" id="btnEliminarSolicitud"
                                                             styleClass="btnAccion2" value="Eliminar Solicitud"/>
@@ -193,7 +193,7 @@
                                                         <p>
                                                             <ice:selectOneMenu binding="#{jrequestAdmin.comboTecnicos}" id="comboTecnicos" partialSubmit="true"
                                                                 style="width: 192px" value="" valueChangeListener="#{jrequestAdmin.comboTecnicos_processValueChange}">
-                                                                <f:selectItems id="fakeComboTecnico" value="#{jrequestAdmin.fakeComboTecnico1}"/>
+                                                                <f:selectItems id="fakeComboTecnico" value="#{jrequestAdmin.tec}"/>
                                                             </ice:selectOneMenu>
                                                         </p>
                                                         <p>

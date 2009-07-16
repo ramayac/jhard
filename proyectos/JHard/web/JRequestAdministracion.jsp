@@ -73,7 +73,7 @@
                                                 <p>
                                                     <ice:selectOneListbox binding="#{JRequestAdministracion.listaEqS}" id="listaEqS" partialSubmit="true"
                                                         size="10" valueChangeListener="#{JRequestAdministracion.listaEqS_processValueChange}">
-                                                            <f:selectItems id="selectOneListbox1selectItems1" value="#{JRequestAdministracion.fakeEqs}"/>
+                                                            <f:selectItems id="selectOneListbox1selectItems1" value="#{JRequestAdministracion.equipoSimple}"/>
                                                     </ice:selectOneListbox>
                                                 </p>
                                                 <p>
@@ -103,7 +103,7 @@
                                                 </p>
                                                 <ice:selectOneListbox binding="#{JRequestAdministracion.listaTecnicos}" id="listaTecnicos" partialSubmit="true"
                                                     size="10" valueChangeListener="#{JRequestAdministracion.listaTecnicos_processValueChange}">
-                                                        <f:selectItems id="selectOneListbox1selectItems" value="#{JRequestAdministracion.fakeTec}"/>
+                                                        <f:selectItems id="selectOneListbox1selectItems" value="#{JRequestAdministracion.tec}"/>
                                                 </ice:selectOneListbox>
                                                 <p><h3 styleClass="tituloSeccion"><ice:outputLabel id="outputLabel10" style="" value="Nombre Completo"/>
                                                 <br/>
@@ -132,7 +132,7 @@
                                                 <ice:inputText binding="#{JRequestAdministracion.txtPropietarioEQ}" id="txtPropietarioEQ"/>
                                                 <ice:outputLabel id="lblEstadoEQ" value="Estado del Equipo"/>
                                                 <ice:selectOneMenu binding="#{JRequestAdministracion.comboEstadosEQ}" id="comboEstadosEQ" partialSubmit="true">
-                                                    <f:selectItems id="selectOneMenu1selectItems" value="#{JRequestAdministracion.fakeEstadoEQ}"/>
+                                                    <f:selectItems id="selectOneMenu1selectItems" value="#{JRequestAdministracion.eeq}"/>
                                                 </ice:selectOneMenu>
                                                 <ice:commandButton action="#{JRequestAdministracion.btnAceptarEQ_action}"
                                                     binding="#{JRequestAdministracion.btnAceptarEQ}" id="btnAceptarEQ" value="Aceptar"/>

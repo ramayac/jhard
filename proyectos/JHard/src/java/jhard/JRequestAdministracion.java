@@ -21,11 +21,11 @@ import edu.ues.jhard.jpa.Equiposimple;
 import edu.ues.jhard.jpa.Estadoequipo;
 import edu.ues.jhard.jpa.Tecnico;
 import java.util.ArrayList;
+import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-import javax.faces.model.SelectItemGroup;
 
 
 /**
@@ -45,21 +45,19 @@ public class JRequestAdministracion extends AbstractPageBean {
      * here is subject to being replaced.</p>
      */
     private void _init() throws Exception {
-        fakeTec.setItems(null);
-        fakeEqs.setItems(null);
-        fakeEstadoEQ.setItems(null);
-
-        
+        //fakeTec.setItems(new String[]{});
+        //fakeEqs.setItems(new String[]{});
+        //fakeEstadoEQ.setItems(new String[]{});
     }
-    private DefaultSelectionItems fakeTec = new DefaultSelectionItems();
+    //private DefaultSelectionItems fakeTec = new DefaultSelectionItems();
 
-    public DefaultSelectionItems getFakeTec() {
-        return fakeTec;
-    }
+//    public DefaultSelectionItems getFakeTec() {
+//        return fakeTec;
+//    }
 
-    public void setFakeTec(DefaultSelectionItems dsi) {
-        this.fakeTec = dsi;
-    }
+//    public void setFakeTec(DefaultSelectionItems dsi) {
+//        this.fakeTec = dsi;
+//    }
     private HtmlSelectOneListbox listaTecnicos = new HtmlSelectOneListbox();
 
     public HtmlSelectOneListbox getListaTecnicos() {
@@ -69,15 +67,15 @@ public class JRequestAdministracion extends AbstractPageBean {
     public void setListaTecnicos(HtmlSelectOneListbox hsol) {
         this.listaTecnicos = hsol;
     }
-    private DefaultSelectionItems fakeEqs = new DefaultSelectionItems();
+//    private DefaultSelectionItems fakeEqs = new DefaultSelectionItems();
+//
+//    public DefaultSelectionItems getFakeEqs() {
+//        return fakeEqs;
+//    }
 
-    public DefaultSelectionItems getFakeEqs() {
-        return fakeEqs;
-    }
-
-    public void setFakeEqs(DefaultSelectionItems dsi) {
-        this.fakeEqs = dsi;
-    }
+//    public void setFakeEqs(DefaultSelectionItems dsi) {
+//        this.fakeEqs = dsi;
+//    }
     private HtmlSelectOneListbox listaEqS = new HtmlSelectOneListbox();
 
     public HtmlSelectOneListbox getListaEqS() {
@@ -87,15 +85,15 @@ public class JRequestAdministracion extends AbstractPageBean {
     public void setListaEqS(HtmlSelectOneListbox hsol) {
         this.listaEqS = hsol;
     }
-    private DefaultSelectionItems fakeEstadoEQ = new DefaultSelectionItems();
-
-    public DefaultSelectionItems getFakeEstadoEQ() {
-        return fakeEstadoEQ;
-    }
-
-    public void setFakeEstadoEQ(DefaultSelectionItems dsi) {
-        this.fakeEstadoEQ = dsi;
-    }
+//    private DefaultSelectionItems fakeEstadoEQ = new DefaultSelectionItems();
+//
+//    public DefaultSelectionItems getFakeEstadoEQ() {
+//        return fakeEstadoEQ;
+//    }
+//
+//    public void setFakeEstadoEQ(DefaultSelectionItems dsi) {
+//        this.fakeEstadoEQ = dsi;
+//    }
     private HtmlSelectOneMenu comboEstadosEQ = new HtmlSelectOneMenu();
 
     public HtmlSelectOneMenu getComboEstadosEQ() {
@@ -243,25 +241,16 @@ public class JRequestAdministracion extends AbstractPageBean {
 
     // </editor-fold>
 
-
-    private SelectItemGroup listaItemsEquipos;
-    private SelectItemGroup listaItemsTecnicos;
     /**
      * <p>Construct a new Page bean instance.</p>
      */
     public JRequestAdministracion() {
         limpiarListasCombos();
-        
-        
-        fakeTec.clear();
-        fakeEqs.clear();
-        fakeEstadoEQ.clear();
-
         llenarListasCombos();
-
         this.popUpEqSimple.setRendered(false);
         this.popUpAgregarTec.setRendered(false);
         this.popUpMensajes.setRendered(false);
+
 
     }
 
@@ -368,48 +357,63 @@ public class JRequestAdministracion extends AbstractPageBean {
    private Equiposimple EquipoElegido;
    private Estadoequipo estadoElegido;
 
+
+   private List tec=new ArrayList();
+   private List equipoSimple=new ArrayList();
+   private List eeq=new ArrayList();
+
+    public List getEeq() {
+        return eeq;
+    }
+
+    public List getEquipoSimple() {
+        return equipoSimple;
+    }
+
+    public List getTec() {
+        return tec;
+    }
+   
    private void llenarListasCombos(){
+        //Llenar lista de Tecnicos para su Administracion
 
-       //Llenar lista de Tecnicos para su Administracion
+        Tecnico [] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
 
-       //this.setListaItemsTecnicos(new SelectItemGroup());
-       Tecnico [] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
-       TecnicoElegido = tecnicos[0];
-       //SelectItem[] itemsT = new SelectItem[tecnicos.length];
-        ArrayList tec = new ArrayList();
+        TecnicoElegido = tecnicos[0];
 
-       for(int i=0;i<tecnicos.length;i++){
+        //ArrayList tec = new ArrayList();
+
+        for(int i=0;i<tecnicos.length;i++){
 
             String label = tecnicos[i].getNombres()+" "+tecnicos[i].getApellidos();
-            tec.add(new SelectItem(tecnicos[i].getIdtecnico(), label));
-       }
-       //this.getListaItemsTecnicos().setSelectItems(itemsT);
+            //tec.add(new SelectItem(tecnicos[i].getIdtecnico(),label));
+            tec.add(new SelectItem(tecnicos[i].getIdtecnico(),label));
+        }
 
-        //System.out.println(this.listaItemsEquipos.getSelectItems()[0]);
-        UISelectItems itemsTec = new UISelectItems();
-        itemsTec.setValue(tec);
-        this.listaTecnicos.getChildren().add(itemsTec);
+//        UISelectItems itemsTec = new UISelectItems();
+//        itemsTec.setValue(tec);
+//        this.listaTecnicos.getChildren().add(itemsTec);
 
 
         //Llenar lista de Equipos simples para su Administracion
 
-        //this.setListaItemsEquipos(new SelectItemGroup());
-        Equiposimple [] eqs = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
-        EquipoElegido = eqs[0];
-        //SelectItem[] itemsE = new SelectItem[eqs.length];
 
-        ArrayList equipoSimple = new ArrayList();
+        Equiposimple [] eqs = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
+
+        EquipoElegido = eqs[0];
+
+        //ArrayList equipoSimple = new ArrayList();
 
         for(int i=0;i<eqs.length;i++){
 
             String label = eqs[i].getDescripcion();
-            equipoSimple.add(new SelectItem(eqs[i].getIdEquipoSimple(), label));
+            //equipoSimple.add(new SelectItem(eqs[i].getIdEquipoSimple(),label));
+            equipoSimple.add(new SelectItem(eqs[i].getIdEquipoSimple(),label));
         }
-        //this.getListaItemsTecnicos().setSelectItems(itemsT);
-        
-        UISelectItems itemsEQ = new UISelectItems();
-        itemsEQ.setValue(equipoSimple);
-        this.listaEqS.getChildren().add(itemsEQ);
+
+        //UISelectItems itemsEQ = new UISelectItems();
+        //itemsEQ.setValue(equipoSimple);
+        //this.listaEqS.getChildren().add(itemsEQ);
 
 
         //Llenar Combo de Estados de equipos para la Administracion
@@ -418,7 +422,7 @@ public class JRequestAdministracion extends AbstractPageBean {
 
         estadoElegido = estados[0];
 
-        ArrayList eeq = new ArrayList();
+        //ArrayList eeq = new ArrayList();
 
         for(int i=0;i<estados.length;i++){
 
@@ -426,12 +430,12 @@ public class JRequestAdministracion extends AbstractPageBean {
             eeq.add(new SelectItem(estados[i].getIdestado(),label));
         }
 
-        UISelectItems itemsEeq = new UISelectItems();
-        itemsEeq.setValue(eeq);
-        this.comboEstadosEQ.getChildren().add(itemsEeq);
+        //UISelectItems itemsEeq = new UISelectItems();
+        //itemsEeq.setValue(eeq);
+        //this.comboEstadosEQ.getChildren().add(itemsEeq);
+
 
     }
-
     private String efecto="";
 
     public void listaTecnicos_processValueChange(ValueChangeEvent vce) {
@@ -708,9 +712,12 @@ public class JRequestAdministracion extends AbstractPageBean {
 
     private void limpiarListasCombos(){
         System.out.println("ME METO A LIMPIAR");
-        this.listaTecnicos.getChildren().clear();
-        this.listaEqS.getChildren().clear();
-        this.comboEstadosEQ.getChildren().clear();
+        this.eeq.clear();
+        this.equipoSimple.clear();
+        this.tec.clear();
+//        this.listaTecnicos.getChildren().clear();
+//        this.listaEqS.getChildren().clear();
+//        this.comboEstadosEQ.getChildren().clear();
         this.lblNombreTec.setValue("");
     }
 
@@ -735,34 +742,6 @@ public class JRequestAdministracion extends AbstractPageBean {
      */
     public void setEfecto(String efecto) {
         this.efecto = efecto;
-    }
-
-    /**
-     * @return the listaItemsEquipos
-     */
-    public SelectItemGroup getListaItemsEquipos() {
-        return listaItemsEquipos;
-    }
-
-    /**
-     * @param listaItemsEquipos the listaItemsEquipos to set
-     */
-    public void setListaItemsEquipos(SelectItemGroup listaItemsEquipos) {
-        this.listaItemsEquipos = listaItemsEquipos;
-    }
-
-    /**
-     * @return the listaItemsTecnicos
-     */
-    public SelectItemGroup getListaItemsTecnicos() {
-        return listaItemsTecnicos;
-    }
-
-    /**
-     * @param listaItemsTecnicos the listaItemsTecnicos to set
-     */
-    public void setListaItemsTecnicos(SelectItemGroup listaItemsTecnicos) {
-        this.listaItemsTecnicos = listaItemsTecnicos;
     }
 
 }
