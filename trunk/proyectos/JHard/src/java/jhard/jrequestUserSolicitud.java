@@ -25,6 +25,7 @@ import edu.ues.jhard.jpa.Usuario;
 import java.util.Calendar;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
@@ -49,8 +50,8 @@ public class jrequestUserSolicitud extends AbstractPageBean {
      * here is subject to being replaced.</p>
      */
     private void _init() throws Exception {
-        comboEqSimpleDefaultItems.setItems(null);
-        comboEstadosDefaultItems.setItems(null);
+//        comboEqSimpleDefaultItems.setItems(null);
+//        comboEstadosDefaultItems.setItems(null);
     }
     private HtmlInputTextarea txtDescripcion = new HtmlInputTextarea();
 
@@ -179,9 +180,11 @@ public class jrequestUserSolicitud extends AbstractPageBean {
 
 public void LimpiarCombos(){
     
-    this.comboEqSimple.getChildren().clear();
-    this.comboEstados.getChildren().clear();
+    this.eqs.clear();
+    this.eeq.clear();
 }
+private List eqs = new ArrayList();
+private List eeq = new ArrayList();
 
 public void LlenarCombos(){
 
@@ -189,26 +192,24 @@ public void LlenarCombos(){
          //COMBO DE EQUIPOS SIMPLES
         Equiposimple [] eqsimple = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
         eqElegido= eqsimple[0];
-        ArrayList eqs = new ArrayList();
         for(int i=0;i<eqsimple.length;i++){
             String label = eqsimple[i].getPropietario()+" - "+eqsimple[i].getDescripcion();
-            eqs.add(new SelectItem(eqsimple[i].getIdEquipoSimple(),label));
+            getEqs().add(new SelectItem(eqsimple[i].getIdEquipoSimple(),label));
         }
-        UISelectItems itemsEq = new UISelectItems();
-        itemsEq.setValue(eqs);
-        this.comboEqSimple.getChildren().add(itemsEq);
+//        UISelectItems itemsEq = new UISelectItems();
+//        itemsEq.setValue(eqs);
+//        this.comboEqSimple.getChildren().add(itemsEq);
 
 
         //SELECTINPUT DE ESTADOS DE EQUIPOS
         Estadoequipo[] estados = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
         estadoElegido= estados[0];
-        ArrayList eeq = new ArrayList();
         for(int i=0;i<estados.length;i++){
             String label = estados[i].getNombre();
-            eeq.add(new SelectItem(estados[i].getIdestado(),label));
+            getEeq().add(new SelectItem(estados[i].getIdestado(),label));
         }
         UISelectItems itemsEstad = new UISelectItems();
-        itemsEstad.setValue(eeq);
+        itemsEstad.setValue(getEeq());
         this.comboEstados.getChildren().add(itemsEstad);
     }
 
@@ -270,32 +271,32 @@ public void LlenarCombos(){
     public void setLblUsuario(HtmlOutputLabel hol) {
         this.lblUsuario = hol;
     }
-    private DefaultSelectItemsArray comboEqSimpleDefaultItems = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getComboEqSimpleDefaultItems() {
-        return comboEqSimpleDefaultItems;
-    }
-
-    public void setComboEqSimpleDefaultItems(DefaultSelectItemsArray dsia) {
-        this.comboEqSimpleDefaultItems = dsia;
-    }
-    private DefaultSelectItemsArray comboEstadosDefaultItems = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getComboEstadosDefaultItems() {
-        return comboEstadosDefaultItems;
-    }
-
-    public void setComboEstadosDefaultItems(DefaultSelectItemsArray dsia) {
-        this.comboEstadosDefaultItems = dsia;
-    }
+//    private DefaultSelectItemsArray comboEqSimpleDefaultItems = new DefaultSelectItemsArray();
+//
+//    public DefaultSelectItemsArray getComboEqSimpleDefaultItems() {
+//        return comboEqSimpleDefaultItems;
+//    }
+//
+//    public void setComboEqSimpleDefaultItems(DefaultSelectItemsArray dsia) {
+//        this.comboEqSimpleDefaultItems = dsia;
+//    }
+//    private DefaultSelectItemsArray comboEstadosDefaultItems = new DefaultSelectItemsArray();
+//
+//    public DefaultSelectItemsArray getComboEstadosDefaultItems() {
+//        return comboEstadosDefaultItems;
+//    }
+//
+//    public void setComboEstadosDefaultItems(DefaultSelectItemsArray dsia) {
+//        this.comboEstadosDefaultItems = dsia;
+//    }
 
     /**
      * <p>Construct a new Page bean instance.</p>
      */
 
     public jrequestUserSolicitud() {
-        comboEqSimpleDefaultItems.clear();
-        comboEstadosDefaultItems.clear();
+//        comboEqSimpleDefaultItems.clear();
+//        comboEstadosDefaultItems.clear();
 
         lu= getJHardminInstance().getCurrentUser();
         
@@ -327,8 +328,8 @@ public void LlenarCombos(){
      */
     @Override
     public void init() {
-        comboEqSimpleDefaultItems.clear();
-        comboEstadosDefaultItems.clear();
+//        comboEqSimpleDefaultItems.clear();
+//        comboEstadosDefaultItems.clear();
 
         this.renderPop1=false;
         this.renderPop2=false;
@@ -529,6 +530,20 @@ public void LlenarCombos(){
      */
     public void setRenderPop2(boolean renderPop2) {
         this.renderPop2 = renderPop2;
+    }
+
+    /**
+     * @return the eqs
+     */
+    public List getEqs() {
+        return eqs;
+    }
+
+    /**
+     * @return the eeq
+     */
+    public List getEeq() {
+        return eeq;
     }
 
 }

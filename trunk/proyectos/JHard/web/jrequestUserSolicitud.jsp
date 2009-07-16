@@ -74,7 +74,7 @@
                                                 <ice:inputText binding="#{jrequestUserSolicitud.txtPropietario}" id="txtPropietario"/>
                                                 <ice:outputLabel id="lblEstadoEq" value="Estado del Equipo"/>
                                                 <ice:selectOneMenu binding="#{jrequestUserSolicitud.comboEstados}" id="comboEstados" partialSubmit="true">
-                                                    <f:selectItems id="selectOneMenu1selectItems1" value="#{jrequestUserSolicitud.comboEstadosDefaultItems}"/>
+                                                    <f:selectItems id="selectOneMenu1selectItems1" value="#{jrequestUserSolicitud.eeq}"/>
                                                 </ice:selectOneMenu>
                                                 <ice:commandButton action="#{jrequestUserSolicitud.btnAgregar_action}"
                                                     binding="#{jrequestUserSolicitud.btnAgregar}" id="btnAgregar" value="Agregar"/>
@@ -113,7 +113,7 @@
                                             <br/>
                                             <ice:selectOneMenu binding="#{jrequestUserSolicitud.comboEqSimple}" id="comboEqSimple" partialSubmit="true"
                                                 style="width: 286px" valueChangeListener="#{jrequestUserSolicitud.comboEqSimple_processValueChange}">
-                                                <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUserSolicitud.comboEqSimpleDefaultItems}"/>
+                                                <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUserSolicitud.eqs}"/>
                                             </ice:selectOneMenu>
                                             <ice:commandButton action="#{jrequestUserSolicitud.btnAgregarEqSimple_action}"
                                                 binding="#{jrequestUserSolicitud.btnAgregarEqSimple}" id="btnAgregarEqSimple" styleClass="btnAccion2" value="Agregar Equipo"/>

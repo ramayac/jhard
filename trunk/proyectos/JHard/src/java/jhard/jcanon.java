@@ -35,6 +35,7 @@ import edu.ues.jhard.jpa.Usuario;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
@@ -58,13 +59,13 @@ public class jcanon extends AbstractPageBean {
      * here is subject to being replaced.</p>
      */
     private void _init() throws Exception {
-        fakeCLaptop.setItems(new String[]{});
-        fakeCCan.setItems(new String[]{});
-        fakeDocente.setItems(new String[]{});
-        fakeHoraFin.setItems(new String[]{});
-        fakeHoraInicio.setItems(new String[]{});
+//        fakeCLaptop.setItems(new String[]{});
+//        fakeCCan.setItems(new String[]{});
+//        fakeDocente.setItems(new String[]{});
+//        fakeHoraFin.setItems(new String[]{});
+//        fakeHoraInicio.setItems(new String[]{});
         selectOneMenu1DefaultItems.setItems(new String[]{"Cañon","Laptop"});
-        selectOneMenu2DefaultItems.setItems(new String[]{});
+//        selectOneMenu2DefaultItems.setItems(new String[]{});
     }
     private DefaultSelectedData fakeCan = new DefaultSelectedData();
 
@@ -84,24 +85,24 @@ public class jcanon extends AbstractPageBean {
     public void setFakeLaptop(DefaultSelectedData dsd) {
         this.fakeLaptop = dsd;
     }
-    private DefaultSelectionItems fakeCCan = new DefaultSelectionItems();
-
-    public DefaultSelectionItems getFakeCCan() {
-        return fakeCCan;
-    }
-
-    public void setFakeCCan(DefaultSelectionItems dsi) {
-        this.fakeCCan = dsi;
-    }
-    private DefaultSelectionItems fakeCLaptop = new DefaultSelectionItems();
-
-    public DefaultSelectionItems getFakeCLaptop() {
-        return fakeCLaptop;
-    }
-
-    public void setFakeCLaptop(DefaultSelectionItems dsi) {
-        this.fakeCLaptop = dsi;
-    }
+//    private DefaultSelectionItems fakeCCan = new DefaultSelectionItems();
+//
+//    public DefaultSelectionItems getFakeCCan() {
+//        return fakeCCan;
+//    }
+//
+//    public void setFakeCCan(DefaultSelectionItems dsi) {
+//        this.fakeCCan = dsi;
+//    }
+//    private DefaultSelectionItems fakeCLaptop = new DefaultSelectionItems();
+//
+//    public DefaultSelectionItems getFakeCLaptop() {
+//        return fakeCLaptop;
+//    }
+//
+//    public void setFakeCLaptop(DefaultSelectionItems dsi) {
+//        this.fakeCLaptop = dsi;
+//    }
     private SelectInputDateBean fecha = new SelectInputDateBean();
 
     public SelectInputDateBean getFecha() {
@@ -129,15 +130,15 @@ public class jcanon extends AbstractPageBean {
     public void setFakeHoraFin(DefaultSelectionItems dsi) {
         this.fakeHoraFin = dsi;
     }
-    private DefaultSelectionItems fakeDocente = new DefaultSelectionItems();
-
-    public DefaultSelectionItems getFakeDocente() {
-        return fakeDocente;
-    }
-
-    public void setFakeDocente(DefaultSelectionItems dsi) {
-        this.fakeDocente = dsi;
-    }
+//    private DefaultSelectionItems fakeDocente = new DefaultSelectionItems();
+//
+//    public DefaultSelectionItems getFakeDocente() {
+//        return fakeDocente;
+//    }
+//
+//    public void setFakeDocente(DefaultSelectionItems dsi) {
+//        this.fakeDocente = dsi;
+//    }
     private HtmlSelectOneMenu comboCan = new HtmlSelectOneMenu();
 
     public HtmlSelectOneMenu getComboCan() {
@@ -291,15 +292,15 @@ public class jcanon extends AbstractPageBean {
     public void setSelectOneMenu1DefaultItems(DefaultSelectionItems dsi) {
         this.selectOneMenu1DefaultItems = dsi;
     }
-    private DefaultSelectionItems selectOneMenu2DefaultItems = new DefaultSelectionItems();
-
-    public DefaultSelectionItems getSelectOneMenu2DefaultItems() {
-        return selectOneMenu2DefaultItems;
-    }
-
-    public void setSelectOneMenu2DefaultItems(DefaultSelectionItems dsi) {
-        this.selectOneMenu2DefaultItems = dsi;
-    }
+//    private DefaultSelectionItems selectOneMenu2DefaultItems = new DefaultSelectionItems();
+//
+//    public DefaultSelectionItems getSelectOneMenu2DefaultItems() {
+//        return selectOneMenu2DefaultItems;
+//    }
+//
+//    public void setSelectOneMenu2DefaultItems(DefaultSelectionItems dsi) {
+//        this.selectOneMenu2DefaultItems = dsi;
+//    }
     private PanelPopup panelAddMultimedia = new PanelPopup();
 
     public PanelPopup getPanelAddMultimedia() {
@@ -402,12 +403,12 @@ public class jcanon extends AbstractPageBean {
      * <p>Construct a new Page bean instance.</p>
      */
     public jcanon() {
-        fakeCLaptop.clear();
-        fakeCCan.clear();
-        fakeDocente.clear();
+//        fakeCLaptop.clear();
+//        fakeCCan.clear();
+//        fakeDocente.clear();
         fakeHoraFin.clear();
         fakeHoraInicio.clear();
-        selectOneMenu2DefaultItems.clear();
+//        selectOneMenu2DefaultItems.clear();
         selectOneMenu1DefaultItems.clear();
         selectOneMenu1DefaultItems.setItems(new String[]{"Cañon","Laptop"});
 
@@ -574,6 +575,8 @@ public class jcanon extends AbstractPageBean {
         LlenarComboLaptop();
     }
 
+private List exc = new ArrayList();
+
     public void LlenarComboCanon(){
         //Llenar Combo de existencias
 
@@ -581,18 +584,19 @@ public class jcanon extends AbstractPageBean {
 
         canonElegido = existencias[0];
 
-        ArrayList ex = new ArrayList();
 
         for(int i=0;i<existencias.length;i++){
 
             String label = existencias[i].getIdhardware().getNombre() +"  "+existencias[i].getIdhardware().getModelo();
-            ex.add(new SelectItem(existencias[i].getIdexistencia(),label));
+            getExc().add(new SelectItem(existencias[i].getIdexistencia(),label));
         }
 
-        UISelectItems itemsEx = new UISelectItems();
-        itemsEx.setValue(ex);
-        this.comboCan.getChildren().add(itemsEx);
+//        UISelectItems itemsEx = new UISelectItems();
+//        itemsEx.setValue(ex);
+//        this.comboCan.getChildren().add(itemsEx);
     }
+
+private List exl = new ArrayList();
 
     public void LlenarComboLaptop(){
 
@@ -600,18 +604,19 @@ public class jcanon extends AbstractPageBean {
 
         laptopElegida = existencias[0];
 
-        ArrayList ex = new ArrayList();
 
         for(int i=0;i<existencias.length;i++){
 
             String label = existencias[i].getIdhardware().getNombre() +"  "+existencias[i].getIdhardware().getModelo();
-            ex.add(new SelectItem(existencias[i].getIdexistencia(),label));
+            getExl().add(new SelectItem(existencias[i].getIdexistencia(),label));
         }
 
-        UISelectItems itemsEx = new UISelectItems();
-        itemsEx.setValue(ex);
-        this.comboLaptop.getChildren().add(itemsEx);
+//        UISelectItems itemsEx = new UISelectItems();
+//        itemsEx.setValue(ex);
+//        this.comboLaptop.getChildren().add(itemsEx);
     }
+
+private List in = new ArrayList();
 
     public void LlenarComboDocentes(){
 
@@ -619,17 +624,15 @@ public class jcanon extends AbstractPageBean {
 
         Ing = docentes[0];
 
-        ArrayList in = new ArrayList();
-
         for(int i=0;i<docentes.length;i++){
 
             String label = docentes[i].getNombres()+"  "+docentes[i].getApellidos();
-            in.add(new SelectItem(docentes[i].getIddocente(),label));
+            getIn().add(new SelectItem(docentes[i].getIddocente(),label));
         }
 
-        UISelectItems itemsDoc = new UISelectItems();
-        itemsDoc.setValue(in);
-        this.comboDocente.getChildren().add(itemsDoc);
+//        UISelectItems itemsDoc = new UISelectItems();
+//        itemsDoc.setValue(in);
+//        this.comboDocente.getChildren().add(itemsDoc);
 
     }
 //    fakeHoraFin.setItems(new String[]{});
@@ -854,8 +857,10 @@ public class jcanon extends AbstractPageBean {
         return null;
     }
 
+private List equ = new ArrayList();
+
     public void LlenarComboTipoEquipo(int tipo){
-        this.comboTipoEq.getChildren().clear();
+        this.equ.clear();
         
         Equipo []equipos;
         if(tipo==2){
@@ -865,17 +870,16 @@ public class jcanon extends AbstractPageBean {
             equipos = new edu.ues.jhard.beans.BeanBaseJCanon().getEquipoClasificado(14);
         }
 
-        ArrayList eq = new ArrayList();
 
         for(int i=0;i<equipos.length;i++){
 
             String label = equipos[i].getNombre()+"  "+equipos[i].getModelo();
-            eq.add(new SelectItem(equipos[i].getIdequipo(),label));
+            getEqu().add(new SelectItem(equipos[i].getIdequipo(),label));
         }
 
-        UISelectItems itemsEq = new UISelectItems();
-        itemsEq.setValue(eq);
-        this.comboTipoEq.getChildren().add(itemsEq);
+//        UISelectItems itemsEq = new UISelectItems();
+//        itemsEq.setValue(eq);
+//        this.comboTipoEq.getChildren().add(itemsEq);
     }
 
     public void comboEqAdd_processValueChange(ValueChangeEvent vce) {
@@ -984,6 +988,34 @@ public class jcanon extends AbstractPageBean {
         this.rendererMultimedia=false;
         this.rendererAddEq=true;
         return "";
+    }
+
+    /**
+     * @return the exc
+     */
+    public List getExc() {
+        return exc;
+    }
+
+    /**
+     * @return the exl
+     */
+    public List getExl() {
+        return exl;
+    }
+
+    /**
+     * @return the in
+     */
+    public List getIn() {
+        return in;
+    }
+
+    /**
+     * @return the eq
+     */
+    public List getEqu() {
+        return equ;
     }
 }
 
