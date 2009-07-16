@@ -43,19 +43,26 @@ public class BeanBaseJWikiTest {
     public void tearDown() {
     }
 
+    /**
+     * Obtenemos una entrada de la BD
+     */
     @Test
     public void testGetEntrada() {
         System.out.println("getEntrada");
         BeanBaseJWiki instance = new BeanBaseJWiki();
-        Entrada expResult = null;
-        Entrada result = instance.getEntrada(-1);
-        assertEquals(expResult, result);
+        //Entrada expResult = null;
+        Entrada result = instance.getEntrada(1);
+        assertNotNull(result);
+        //assertEquals(expResult, result);
         System.out.println("Exito en la prueba!");
     }
 
+    /**
+     * Obtejemos N entradas de la BD
+     */
     @Test
     public void testNEntradas() {
-        int n = 3;
+        int n = 2;
         //System.out.println("testNEntradas");
         BeanBaseJWiki instance = new BeanBaseJWiki();
         Entrada[] resultado = new Entrada[n];
@@ -66,27 +73,32 @@ public class BeanBaseJWikiTest {
             fail("resultado menor que el esperado ("+n+")");
     }
 
+    /**
+     * Obtenemos los comentarios asociados a una entrada
+     */
     @Test
     public void testComentariosDeEntrada() {
-        int n = 1;
+        int identrada = 1;
         //System.out.println("testComentariosDeEntrada");
         BeanBaseJWiki instance = new BeanBaseJWiki();
-        Entrada resultado = instance.getEntrada(n);
+        Entrada resultado = instance.getEntrada(identrada);
         Collection<Comentarios> comentarios = resultado.getComentariosCollection();
         System.out.println("Comentarios asociados con la Entrada: " + resultado.getTitulo());
         for (Comentarios c : comentarios) {
             System.out.println(c.getComentario());
         }
-        //comentarios.toArray(new Comentarios[0]); <--ridiculo, esto seria el colmo...
         assertTrue(comentarios.size()>0);
     }
-    
+
+    /**
+     * Obtiene las etiquetas asociadas a una entrada
+     */
     @Test
     public void testEtiquetasDeEntrada() {
-        int n = 1;
+        int identrada = 1;
         //System.out.println("getEtiquetasDeEntrada");
         BeanBaseJWiki instance = new BeanBaseJWiki();
-        Entrada entrada = instance.getEntrada(n);
+        Entrada entrada = instance.getEntrada(identrada);
         Tag[] resultado = new Tag[0];
         resultado = instance.getEtiquetas(entrada);
         System.out.println("Tags asociados con la Entrada: " + entrada.getTitulo());
@@ -96,6 +108,9 @@ public class BeanBaseJWikiTest {
         assertNotNull(resultado);
     }
 
+    /**
+     * Agregamos un Tag a la BD
+     */
     @Test
     public void testRegistrarTag() {
         //System.out.println("testRegistrarTag");
@@ -104,31 +119,43 @@ public class BeanBaseJWikiTest {
         if(!instance.createTag(tag)) fail("fallo en REGISTRAR TAG");
     }
 
+    /**
+     * Buscamos entradas asociadas a un tag
+     */
     @Test
     public void testSearchEntradaPorTag() {
+        String tag1 = "latin";
         //System.out.println("testSearchEntradaPorTag");
         BeanBaseJWiki instance = new BeanBaseJWiki();
-        Entrada[] e = instance.searchEntradaPorEtiqueta("latin"); //se busca por esta descripcion
+        Entrada[] e = instance.searchEntradaPorEtiqueta(tag1); //se busca por esta descripcion
         assertTrue(e.length>0);
         //System.out.println("Titulo de la entrada: " + e.getTitulo());
     }
 
+    /**
+     * Buscamos entradas asociadas a N tags
+     */
     @Test
     public void testSearchEntradaPorTagsSegundaForma() {
-        String latin = "latin";
-        String wiki = "wiki";
+        String tag1 = "latin";
+        String tag2 = "wiki";
         //System.out.println("testSearchEntradaPorTagsSegundaForma");
         BeanBaseJWiki instance = new BeanBaseJWiki();
-        String[] etiquetas = {latin, wiki};
+        String[] etiquetas = {tag1, tag2};
         Set<Tag> coletiquetas = new HashSet(); //puede ser un SET, MAP, etc... media vez el tata sea collection, no problemo!
-        coletiquetas.add(instance.getEtiqueta(latin));
-        coletiquetas.add(instance.getEtiqueta(wiki));
+        coletiquetas.add(instance.getEtiqueta(tag1));
+        coletiquetas.add(instance.getEtiqueta(tag2));
 
+        //Buscamos de dos formas distintas, para ver si obtenemos los mismos resultados ;)
         Collection<Entrada> colentradas = instance.searchEntradaPorEtiquetas(coletiquetas);
         Entrada[] entradas = instance.searchEntradaPorEtiquetas(etiquetas);
+
         if(colentradas.size() != entradas.length) fail("fallo en la cantidad de datos obtenidos, no concuerdan.");
     }
 
+    /**
+     * Busqueda por titulo de entrada
+     */
     @Test
     public void testSearchEntradaPorTitulo() {
         String criteria = "ulo 4";
@@ -139,6 +166,9 @@ public class BeanBaseJWikiTest {
     }
 
 
+    /**
+     * Agregamos una Entrada a la BD
+     */
     @Test
     public void testRegistrarEntrada() {
         //System.out.println("testRegistrarEntrada");
@@ -149,6 +179,9 @@ public class BeanBaseJWikiTest {
         if(!instance.createEntrada(entrada)) fail("fallo en REGISTRAR ENTRADA");
     }
 
+    /**
+     * Agregamos un comentario a la BD
+     */
     @Test
     public void testRegistrarComentario() {
         //System.out.println("testRegistrarComentario");
@@ -157,25 +190,49 @@ public class BeanBaseJWikiTest {
         if(!instance.createComentario(9999, comentario)) fail("fallo en REGISTRAR COMENTARIO");
     }
 
+    /**
+     * Agrega el "vinculo" entra una etiqueta y una entrada
+     * agregando un nuevo TAG al vuelo, on the fly... tengo sueño.
+     * this is a tricky one.
+     */
     @Test
     public void testRegistrarTagEntrada() {
         Integer idtag = 777;
         Integer identrada = 9999;
         //System.out.println("");
         BeanBaseJWiki instance = new BeanBaseJWiki();
-        Tag tag = new Tag(idtag, "TagTest");
-        //if(!instance.createTag(tag)) fail("fallo en REGISTRAR TAG");
-        //Tag tt = instance.getEtiqueta(idtag);
-        Entrada e = instance.getEntrada(identrada);
-        TagEntrada te = new TagEntrada(identrada, tag, e);
-        e.getTagEntradaCollection().add(te);
+        Tag tag = new Tag(idtag, "TagTest"); //nuevo tag agregado "al vuelo"
+        Entrada e = instance.getEntrada(identrada); //obtenemos la entrada vieja
+        TagEntrada te = new TagEntrada(identrada, tag, e); //creamos el vinculo
+        e.getTagEntradaCollection().add(te); //agregamos el vinculo al objeto
 
         instance.updateEntrada(e);
 
-        //Tag[] t = instance.getEtiquetas(e);
-        //if(!instance.) fail("fallo en REGISTRAR COMENTARIO");
+        TagEntrada teclone = instance.searchTagEntrada(e, tag);
+        assertEquals(teclone, te);
     }
-   
+
+    /**
+     * Elimina el "vinculo" entra una etiqueta y una entrada
+     */
+    @Test
+    public void testEliminarTagEntrada() {
+        Integer idtag = 777;
+        Integer identrada = 9999;
+        //System.out.println("");
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        Entrada e = instance.getEntrada(identrada); //obtenemos la entrada vieja
+        Tag t = instance.getEtiqueta(idtag); //obtenemos la etiqueta vieja
+        TagEntrada te = instance.searchTagEntrada(e, t); //obtenemos la TagEntrada
+        //borramos la TagEntrada
+        instance.deleteTagEntrada(e, t);
+        TagEntrada tenull = instance.searchTagEntrada(e, t); //se supone que seria null
+        assertNotSame(tenull, te);
+    }
+
+    /**
+     * Elimina una etiqueta
+     */
     @Test
     public void testEliminarTag() {
         //System.out.println("testEliminarTag");
@@ -184,7 +241,10 @@ public class BeanBaseJWikiTest {
         Tag t = instance.getEtiqueta(0);
         if(!(t==null)) fail("fallo en ELIMINAR TAG");
     }
-    
+
+    /**
+     * Elimina un comentario
+     */
     @Test
     public void testEliminarComentario() {
         //System.out.println("testEliminarComentario");
@@ -196,7 +256,10 @@ public class BeanBaseJWikiTest {
         Comentarios c = instance.getComentario(com[0].getIdcoment());
         if(!(c==null)) fail("fallo en ELIMINAR COMENTARIO (encontre un comentario que tendria que estar eliminado)");
     }
-    
+
+    /**
+     * Elimina una entrada
+     */
     @Test
     public void testEliminarEntrada() {
         //System.out.println("testEliminarEntrada");
