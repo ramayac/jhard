@@ -32,8 +32,10 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.FacesException;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -252,7 +254,7 @@ public class jwikiUser extends AbstractPageBean {
      * @param varias
      */
     public Boolean getSoloUna() {
-        return this.soloUna && this.entradaActual != null ;
+        return this.soloUna;
     }
 
     /**
@@ -290,6 +292,20 @@ public class jwikiUser extends AbstractPageBean {
      */
     public Entrada getEntradaActual() {
         return this.entradaActual;
+    }
+
+        /**
+     * Metodo para obtener una entrada por su ID
+     * @param identrada id de la entada que se desea
+     * @return
+     */
+    public String elegirEntradaActual() {
+        String idSeleccionado = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idSeleccionado");
+        Integer id = new Integer(idSeleccionado);
+        System.out.println(idSeleccionado);
+        this.entradaActual = this.jwikiInstance.getEntrada(id.intValue());
+        this.setSoloUna(true);
+        return "exito";
     }
 
     /**

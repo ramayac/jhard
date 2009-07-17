@@ -62,17 +62,20 @@
                             <ice:form id="formEntrada">
                                 <ice:panelGroup id="panelVistaUnica" rendered="#{jwikiUser.soloUna}">
                                     <h3 styleClass="tituloSeccion">
-                                        <ice:outputLabel value="#{jwikiUser.entradaActual.titulo}" id="lblTitulo" style="font-weight:bold; "/>
+                                        <ice:outputLabel value="#{jwikiUser.entradaActual.titulo}" id="lblTituloUnico" style="font-weight:bold; "/>
                                     </h3>
                                     <br/>
-                                    <ice:outputText value="#{jwikiUser.entradaActual.descripcion}" id="lblDescripcion"/>
+                                    <ice:outputText value="#{jwikiUser.entradaActual.descripcion}" id="lblDescripcionUnico"/>
                                     <br/>
                                 </ice:panelGroup>
                                 <ice:panelGroup id="panelVistaMultiple" rendered="#{!jwikiUser.soloUna}">
                                     <ice:dataTable id="tablaEntradas" rows="5" value="#{jwikiUser.listaEntradas}" var="indiceEntrada">
                                         <ice:column id="columnaEntradas">
                                             <h3 styleClass="tituloSeccion">
-                                                <ice:outputLabel value="#{indiceEntrada.titulo}" id="lblTitulo" style="font-weight:bold; "/>
+                                                <ice:commandLink action="#{jwikiUser.elegirEntradaActual}">
+                                                    <ice:outputLabel value="#{indiceEntrada.titulo}" id="lblTitulo" style="font-weight:bold; "/>
+                                                    <f:param name="idSeleccionado" value="#{indiceEntrada.identrada}"/>
+                                                </ice:commandLink>
                                             </h3>
                                             <br/>
                                             <ice:outputText value="#{indiceEntrada.descripcion}" id="lblDescripcion"/>
