@@ -12,9 +12,12 @@ import edu.ues.jhard.jinvent.CrudManager;
 import edu.ues.jhard.jpa.Accesorio;
 import edu.ues.jhard.jpa.Clasificacion;
 import edu.ues.jhard.jpa.Equipo;
+import edu.ues.jhard.jpa.Estadoequipo;
+import edu.ues.jhard.jpa.Existencia;
 import edu.ues.jhard.jpa.Marca;
 import edu.ues.jhard.jpa.Pieza;
 import edu.ues.jhard.jpa.Software;
+import edu.ues.jhard.jpa.Ubicacion;
 import edu.ues.jhard.util.ActionMessage;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,7 @@ public class BeanBaseJInvent extends BeanBase {
 
     private ClasificacionTreeModel clasificaciontm;
     private Equipo currentEquipo;
+    private Existencia currentExistencia;
     private Software currentSoftware;
     private Accesorio currentAccesorio;
     private Clasificacion nuevaClasificacion;
@@ -43,9 +47,16 @@ public class BeanBaseJInvent extends BeanBase {
     private CrudManager crdPieza;
     private CrudManager crdAccesorio;
     private CrudManager crdClasificacion;
+    private CrudManager crdExistencia;
     private List<Marca> listaMarcas;
+    private List<Equipo> listaTodosEquipos;
+    private List<Estadoequipo> listaEstados;
+    private List<Ubicacion> listaUbicaciones;
     private SelectItemGroup listaItemsMarcas;
     private String marcaSelected;
+    private String estadoSelected;
+    private String equipoSelected;
+    private String ubicacionSelected;
     private ActionMessage msg;
 
     public BeanBaseJInvent(){
@@ -55,13 +66,18 @@ public class BeanBaseJInvent extends BeanBase {
         this.currentAccesorio = new Accesorio();
         this.currentPieza = new Pieza();
         this.nuevaClasificacion = new Clasificacion();
+        this.currentExistencia = new Existencia();
         this.crdEquipo = new CrudManager();
         this.crdSoftware = new CrudManager();
         this.crdAccesorio = new CrudManager();
         this.crdPieza = new CrudManager();
         this.crdClasificacion = new CrudManager();
+        this.crdExistencia = new CrudManager();
         this.msg = new ActionMessage();
+        this.listaEstados = this.getEntityManager().createNamedQuery("Estadoequipo.findAll").getResultList();
         this.listaMarcas = this.getEntityManager().createNamedQuery("Marca.findAll").getResultList();
+        this.listaTodosEquipos = this.getEntityManager().createNamedQuery("Equipo.findAll").getResultList();
+        this.listaUbicaciones = this.getEntityManager().createNamedQuery("Ubicacion.findAll").getResultList();
         this.initItemsMarcas();
     }
 
@@ -93,8 +109,8 @@ public class BeanBaseJInvent extends BeanBase {
         return this.getClasificaciontm().getCurrentUserObject().getClasificacion();
     }
 
-    public int getCurrentClasificacionEquipoCollectionSize(){
-        return this.getCurrentClasificacion().getEquipoCollection().size();
+    public int getCurrentClasificacionExistenciaCollectionSize(){
+        return this.getCurrentClasificacion().getExistenciaCollection().size();
     }
 
     public int getCurrentClasificacionSoftwareCollectionSize(){
@@ -708,5 +724,103 @@ public class BeanBaseJInvent extends BeanBase {
 
     public boolean getCurrentClasificacionIsEditable(){
         return this.getCurrentClasificacion().getIdclasificacion() > 16;
+    }
+
+    /**
+     * @return the currentExistencia
+     */
+    public Existencia getCurrentExistencia() {
+        return currentExistencia;
+    }
+
+    /**
+     * @param currentExistencia the currentExistencia to set
+     */
+    public void setCurrentExistencia(Existencia currentExistencia) {
+        this.currentExistencia = currentExistencia;
+    }
+
+    /**
+     * @return the crdExistencia
+     */
+    public CrudManager getCrdExistencia() {
+        return crdExistencia;
+    }
+
+    /**
+     * @param crdExistencia the crdExistencia to set
+     */
+    public void setCrdExistencia(CrudManager crdExistencia) {
+        this.crdExistencia = crdExistencia;
+    }
+
+    /**
+     * @return the listaTodosEquipos
+     */
+    public List<Equipo> getListaTodosEquipos() {
+        return listaTodosEquipos;
+    }
+
+    /**
+     * @param listaTodosEquipos the listaTodosEquipos to set
+     */
+    public void setListaTodosEquipos(List<Equipo> listaTodosEquipos) {
+        this.listaTodosEquipos = listaTodosEquipos;
+    }
+
+    /**
+     * @return the estadoSelected
+     */
+    public String getEstadoSelected() {
+        return estadoSelected;
+    }
+
+    /**
+     * @param estadoSelected the estadoSelected to set
+     */
+    public void setEstadoSelected(String estadoSelected) {
+        this.estadoSelected = estadoSelected;
+    }
+
+    /**
+     * @return the equipoSelected
+     */
+    public String getEquipoSelected() {
+        return equipoSelected;
+    }
+
+    /**
+     * @param equipoSelected the equipoSelected to set
+     */
+    public void setEquipoSelected(String equipoSelected) {
+        this.equipoSelected = equipoSelected;
+    }
+
+    /**
+     * @return the ubicacionSelected
+     */
+    public String getUbicacionSelected() {
+        return ubicacionSelected;
+    }
+
+    /**
+     * @param ubicacionSelected the ubicacionSelected to set
+     */
+    public void setUbicacionSelected(String ubicacionSelected) {
+        this.ubicacionSelected = ubicacionSelected;
+    }
+
+    /**
+     * @return the listaUbicaciones
+     */
+    public List<Ubicacion> getListaUbicaciones() {
+        return listaUbicaciones;
+    }
+
+    /**
+     * @param listaUbicaciones the listaUbicaciones to set
+     */
+    public void setListaUbicaciones(List<Ubicacion> listaUbicaciones) {
+        this.listaUbicaciones = listaUbicaciones;
     }
 }

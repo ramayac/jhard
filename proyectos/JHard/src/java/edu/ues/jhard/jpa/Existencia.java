@@ -211,4 +211,14 @@ public class Existencia implements Serializable {
         return "edu.ues.jhard.jpa.Existencia[idexistencia=" + idexistencia + "]";
     }
 
+    public String getImagenEstado(){
+        String imgEstado = "";
+        if(this.getIdestado().getIdestado() == 1)
+            return "imgEstable.png";
+        if(this.getIdestado().getIdestado() == 2)
+            return "imgEnReparacion.png";
+        if(this.getIdestado().getIdestado() == 3)
+            return "imgFallido.png";
+        return imgEstado;
+    }
 }
