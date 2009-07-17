@@ -20,55 +20,6 @@ import javax.persistence.*;
  */
 public class BeanBaseJWiki extends BeanBase {
 
-    private Entrada entradaActual = new Entrada();
-    private List<Entrada> listaEntradas = new ArrayList<Entrada>();
-    private Boolean soloUna = new Boolean(false);
-    private Integer indice = new Integer(0);
-
-    public List<Entrada> getListaEntradas() {
-        return listaEntradas;
-    }
-
-    public void setListaEntradas(List<Entrada> listaEntradas) {
-        this.listaEntradas = listaEntradas;
-    }
-
-    /**
-     * Metodo para saber si se ve una o varias Entradas
-     * @param varias
-     */
-    public Boolean getSoloUna() {
-        return soloUna;
-    }
-
-    /**
-     * Metodo para establecer si se ve una o varias Entradas
-     * @param varias
-     */
-    public void setSoloUna(Boolean varias) {
-        this.soloUna = varias;
-    }
-
-    /**
-     * Obtiene la siguienteEntrada
-     * @return
-     */
-    public String siguienteEntrada(){
-        if(this.indice>this.listaEntradas.size()) this.indice++;
-        this.entradaActual = this.listaEntradas.get(this.indice);
-        return "exito";
-    }
-
-    /**
-     * Obtiene la entrada anterior
-     * @return
-     */
-    public String anteriorEntrada(){
-        if(this.indice!=0) this.indice--;
-        this.entradaActual = this.listaEntradas.get(this.indice);
-        return "exito";
-    }
-
     /**
      * Metodo para obtener uno o varios objeto entrada por UNA etiqueta, se asume que la entrada es nueva, asi que se hace
      * un em.persist sobre la misma.
@@ -218,11 +169,11 @@ public class BeanBaseJWiki extends BeanBase {
 
         List<Entrada> e = q.getResultList();
 
-        em.getTransaction().begin();
-        for (Entrada entrada : e) {
-            em.persist(entrada);
-        }
-        em.getTransaction().commit();
+//        em.getTransaction().begin();
+//        for (Entrada entrada : e) {
+//            em.persist(entrada);
+//        }
+//        em.getTransaction().commit();
         return e;
     }
 
@@ -240,21 +191,12 @@ public class BeanBaseJWiki extends BeanBase {
         q.setMaxResults(numero);
         List<Entrada> e = q.getResultList();
 
-        em.getTransaction().begin();
-        for (Entrada entrada : e) {
-            em.persist(entrada);
-        }
-        em.getTransaction().commit();
+//        em.getTransaction().begin();
+//        for (Entrada entrada : e) {
+//            em.persist(entrada);
+//        }
+//        em.getTransaction().commit();
         return e;
-    }
-
-        /**
-     * Metodo para obtener una entrada por su ID
-     * @param identrada id de la entada que se desea
-     * @return
-     */
-    public Entrada getEntrada() {
-        return this.entradaActual;
     }
 
     /**
@@ -266,22 +208,6 @@ public class BeanBaseJWiki extends BeanBase {
         EntityManager em = this.getEntityManager();
         Entrada e = em.find(Entrada.class, identrada);
         return e;
-    }
-
-   /**
-     * Metodo para obtener todos las Etiquetas asociados con el ID de una Entrada
-     * @param idEntrada
-     * @return
-     */
-    public List<Tag> getEtiquetasEntrada() {
-        EntityManager em = this.getEntityManager();
-        Entrada e = em.find(Entrada.class, this.entradaActual.getIdentrada());
-        List<TagEntrada> te = (List<TagEntrada>)e.getTagEntradaCollection();
-        List<Tag> tag = new ArrayList<Tag>();
-        for (TagEntrada tagEntrada : te) {
-            tag.add(tagEntrada.getIdtag());
-        }
-        return tag;
     }
 
      /**
@@ -335,9 +261,9 @@ public class BeanBaseJWiki extends BeanBase {
         Query q = em.createNamedQuery("Tag.findByDescripcion");
         q.setParameter("descripcion", descripcion);
         Tag t = (Tag) q.getSingleResult();
-        em.getTransaction().begin();
-        em.persist(t);
-        em.getTransaction().commit();
+//        em.getTransaction().begin();
+//        em.persist(t);
+//        em.getTransaction().commit();
         return t;
     }
 
@@ -350,17 +276,6 @@ public class BeanBaseJWiki extends BeanBase {
         List<Comentarios> c = (List<Comentarios>)e.getComentariosCollection();
         return c;
     }
-
-        /**
-     * Metodo para obtener los comentarios de un objeto Entrada, sin consultar a la BD
-     * @param e
-     * @return
-     */
-    public List<Comentarios> getComentarios() {
-        List<Comentarios> c = (List<Comentarios>)this.entradaActual.getComentariosCollection();
-        return c;
-    }
-
 
     /**
      * Metodo para obtener un comentario por su ID
@@ -587,18 +502,6 @@ public class BeanBaseJWiki extends BeanBase {
     }
 
     /**
-     * Metodo para agregar un comentario a una entradaActual
-     * @param entrada
-     */
-    public void addComentario(Comentarios comentario){
-        EntityManager em = this.getEntityManager();
-        this.entradaActual.getComentariosCollection().add(comentario);
-        em.getTransaction().begin();
-        em.merge(this.entradaActual); //a merge, I hope.
-        em.getTransaction().commit();
-    }
-
-    /**
      * Metodo para añadirle un comentario a una entrada
      * @param entrada
      */
@@ -608,18 +511,6 @@ public class BeanBaseJWiki extends BeanBase {
         e.getComentariosCollection().add(comentario);
         em.getTransaction().begin();
         em.merge(e);
-        em.getTransaction().commit();
-    }
-
-    /**
-     * Metodo para añadirle una etiqueta a la entradaActual
-     * @param entrada
-     */
-    public void addTagEntrada(TagEntrada tagentrada){
-        EntityManager em = this.getEntityManager();
-        this.entradaActual.getTagEntradaCollection().add(tagentrada);
-        em.getTransaction().begin();
-        em.merge(this.entradaActual);
         em.getTransaction().commit();
     }
 
@@ -647,6 +538,30 @@ public class BeanBaseJWiki extends BeanBase {
 //        e.getTagEntradaCollection().add(tagentrada);
 //        em.getTransaction().begin();
 //        em.merge(e);
+//        em.getTransaction().commit();
+//    }
+
+    /**
+     * Metodo para añadirle una etiqueta a la entradaActual
+     * @param entrada
+     */
+//    public void addTagEntrada(TagEntrada tagentrada){
+//        EntityManager em = this.getEntityManager();
+//        this.entradaActual.getTagEntradaCollection().add(tagentrada);
+//        em.getTransaction().begin();
+//        em.merge(this.entradaActual);
+//        em.getTransaction().commit();
+//    }
+
+        /**
+     * Metodo para agregar un comentario a una entradaActual
+     * @param entrada
+     */
+//    public void addComentario(Comentarios comentario){
+//        EntityManager em = this.getEntityManager();
+//        this.entradaActual.getComentariosCollection().add(comentario);
+//        em.getTransaction().begin();
+//        em.merge(this.entradaActual); //a merge, I hope.
 //        em.getTransaction().commit();
 //    }
 }

@@ -12,21 +12,28 @@ import com.icesoft.faces.component.jsfcl.data.BorderLayoutBean;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
 
+import com.icesoft.faces.component.jsfcl.data.DefaultTableDataModel;
 import com.sun.data.provider.impl.ObjectArrayDataProvider;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 
 
 import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.beans.BeanBaseJRequest;
+import edu.ues.jhard.beans.BeanBaseJWiki;
 import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jhardmin.LoginManager;
+import edu.ues.jhard.jpa.Comentarios;
 import edu.ues.jhard.jpa.Entrada;
+import edu.ues.jhard.jpa.Tag;
+import edu.ues.jhard.jpa.TagEntrada;
 import edu.ues.jhard.jpa.Tecnico;
 import edu.ues.jhard.jpa.Usuario;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.event.ValueChangeEvent;
+import javax.persistence.EntityManager;
 
 
 /**
@@ -83,13 +90,33 @@ public class jwikiUser extends AbstractPageBean {
         return (BeanBaseJHardmin) getBean("JHardminInstance");
     }
 
+    private BeanBaseJWiki jwikiInstance = new BeanBaseJWiki(); //sera mejor como jWikiInstance en el faces-config? revisar el rednimiento.
+
+    public  BeanBaseJWiki getJWikiInstance() {
+        //return (BeanBaseJWiki) getBean("JWikiInstance");
+        return this.jwikiInstance;
+    }
+
+//    private DefaultTableDataModel dataTable1Model = new DefaultTableDataModel();
+//
+//    public DefaultTableDataModel getDataTable1Model() {
+//        return dataTable1Model;
+//    }
+//
+//    public void setDataTable1Model(DefaultTableDataModel dtdm) {
+//        this.dataTable1Model = dtdm;
+//    }
+
     /**
      * <p>Construct a new Page bean instance.</p>
      */
     public jwikiUser() {
 
         lu= getJHardminInstance().getCurrentUser();
-
+        
+        this.listaEntradas = this.getJWikiInstance().getAllEntradas();
+        if(this.listaEntradas.size()>0) this.entradaActual = this.listaEntradas.get(0);
+        
 //        if(lu!=null){
 //            U = LoginManager.getInstance().getUsuario(lu);
 //
@@ -207,11 +234,85 @@ public class jwikiUser extends AbstractPageBean {
         return (ApplicationBean1) getBean("ApplicationBean1");
     }
 
-    private Entrada entrada;
+    private Entrada entradaActual = null;
+    private List<Entrada> listaEntradas = new ArrayList<Entrada>();
+    private Boolean soloUna = new Boolean(false);
+    private Integer indice = new Integer(0);
 
-    public Entrada getEntrada() {
-        return entrada;
+    public List<Entrada> getListaEntradas() {
+        return listaEntradas;
     }
 
-}
+    public void setListaEntradas(List<Entrada> listaEntradas) {
+        this.listaEntradas = listaEntradas;
+    }
 
+    /**
+     * Metodo para saber si se ve una o varias Entradas
+     * @param varias
+     */
+    public Boolean getSoloUna() {
+        return this.soloUna && this.entradaActual != null ;
+    }
+
+    /**
+     * Metodo para establecer si se ve una o varias Entradas
+     * @param varias
+     */
+    public void setSoloUna(Boolean varias) {
+        this.soloUna = varias;
+    }
+
+    /**
+     * Obtiene la siguienteEntrada
+     * @return
+     */
+    public String siguienteEntrada(){
+        if(!(this.indice>this.listaEntradas.size())) this.indice++;
+        this.entradaActual = this.listaEntradas.get(this.indice);
+        return "exito";
+    }
+
+    /**
+     * Obtiene la entrada anterior
+     * @return
+     */
+    public String anteriorEntrada(){
+        if(this.indice!=0) this.indice--;
+        this.entradaActual = this.listaEntradas.get(this.indice);
+        return "exito";
+    }
+
+    /**
+     * Metodo para obtener una entrada por su ID
+     * @param identrada id de la entada que se desea
+     * @return
+     */
+    public Entrada getEntradaActual() {
+        return this.entradaActual;
+    }
+
+    /**
+     * Metodo para obtener todos las Etiquetas asociados con el ID de una Entrada
+     * @param idEntrada
+     * @return
+     */
+    public List<Tag> getEtiquetasEntrada() {
+        List<TagEntrada> te = (List<TagEntrada>)this.entradaActual.getTagEntradaCollection();
+        List<Tag> tag = new ArrayList<Tag>();
+        for (TagEntrada tagEntrada : te) {
+            tag.add(tagEntrada.getIdtag());
+        }
+        return tag;
+    }
+
+    /**
+     * Metodo para obtener los comentarios de un objeto Entrada, sin consultar a la BD
+     * @param e
+     * @return
+     */
+    public List<Comentarios> getComentarios() {
+        List<Comentarios> c = (List<Comentarios>)this.entradaActual.getComentariosCollection();
+        return c;
+    }
+}
