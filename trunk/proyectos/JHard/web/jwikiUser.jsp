@@ -56,20 +56,36 @@
                         <div class="post">
                             <h2 class="title">Solucion a problemas comunes de Informatica</h2>
                             <div class="entry">
-                                <p class="text">En este sitio encontrará una serie de articulos, relacionados a la solucion de problemas comunes de informática.</p>
+                                <p class="text">En este sitio encontrará una serie de articulos, relacionados a la solucion de problemas comunes de informática.
+                                </p>
                             </div>
-                            <ice:form id="formEntrada" rendered="#{jwikiUser.entrada != null}">
-                                <h3 styleClass="tituloSeccion">
-                                    <ice:outputLabel binding="#{jwikiUser.entrada.titulo}" id="lblTitulo" style="font-weight:bold; "/>
-                                </h3>
-                                <br/>
-                                <ice:outputText binding="#{jwikiUser.entrada.descripcion}" id="lblDescripcion"/>
-                                <br/>
-                            </ice:form>
-                             <ice:form id="formEntrada" rendered="#{jwikiUser.entrada == null}">
-                                <h3 styleClass="tituloSeccion">
-                                    <ice:outputLabel id="lblMensaje" style="font-weight:bold;" value="No hay entradas que mostrar" />
-                                </h3>
+                            <ice:form id="formEntrada">
+                                <ice:panelGroup id="panelVistaUnica" rendered="#{jwikiUser.soloUna}">
+                                    <h3 styleClass="tituloSeccion">
+                                        <ice:outputLabel value="#{jwikiUser.entradaActual.titulo}" id="lblTitulo" style="font-weight:bold; "/>
+                                    </h3>
+                                    <br/>
+                                    <ice:outputText value="#{jwikiUser.entradaActual.descripcion}" id="lblDescripcion"/>
+                                    <br/>
+                                </ice:panelGroup>
+                                <ice:panelGroup id="panelVistaMultiple" rendered="#{!jwikiUser.soloUna}">
+                                    <ice:dataTable id="tablaEntradas" rows="5" value="#{jwikiUser.listaEntradas}" var="indiceEntrada">
+                                        <ice:column id="columnaEntradas">
+                                            <h3 styleClass="tituloSeccion">
+                                                <ice:outputLabel value="#{indiceEntrada.titulo}" id="lblTitulo" style="font-weight:bold; "/>
+                                            </h3>
+                                            <br/>
+                                            <ice:outputText value="#{indiceEntrada.descripcion}" id="lblDescripcion"/>
+                                            <br/>
+                                        </ice:column>
+                                    </ice:dataTable>
+                                    <ice:dataPaginator id="paginadorEntrada" for="tablaEntradas" paginator="true">
+                                       <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
+                                       <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
+                                       <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
+                                       <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
+                                    </ice:dataPaginator>
+                                </ice:panelGroup>
                             </ice:form>
                         </div>
                     </div>

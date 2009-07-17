@@ -6,11 +6,8 @@ import edu.ues.jhard.jpa.Tag;
 import edu.ues.jhard.jpa.TagEntrada;
 import edu.ues.jhard.jpa.Usuario;
 import java.sql.Date;
-import java.util.AbstractCollection;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -70,6 +67,14 @@ public class BeanBaseJWikiTest {
             assertNotNull(resultado.get(0)); //por lo menos, que la primera NO sea null
         else
             fail("resultado menor que el esperado ("+n+")");
+    }
+
+    @Test
+    public void testgetAllEntradas() {
+        //System.out.println("testNEntradas");
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        List<Entrada> resultado = instance.getAllEntradas();
+        assertNotNull(resultado);
     }
 
     /**
