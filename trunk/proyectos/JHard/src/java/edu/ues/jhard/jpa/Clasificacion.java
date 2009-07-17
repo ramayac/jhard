@@ -6,7 +6,9 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -150,6 +152,14 @@ public class Clasificacion implements Serializable {
     @Override
     public String toString() {
         return "edu.ues.jhard.jpa.Clasificacion[idclasificacion=" + idclasificacion + "]";
+    }
+
+    public List<Existencia> getExistenciaCollection(){
+        List<Existencia> listaExistenciaTodosEquipos = new ArrayList<Existencia>();
+        for(Equipo eq: this.equipoCollection){
+            listaExistenciaTodosEquipos.addAll(eq.getExistenciaCollection());
+        }
+        return listaExistenciaTodosEquipos;
     }
 
 }
