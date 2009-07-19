@@ -420,8 +420,8 @@ public class BeanBaseJHardmin extends BeanBase {
        for(Usuario u: this.userList){
            if(u.getIdusuario().toString().equalsIgnoreCase(idUsuario)){
                this.editDelUser = u;
-               this.setRolSelected(u.getIdrol().getNombre());
-               this.roleItemList.setValue(u.getIdrol().getNombre());
+               this.setRolSelected(u.getIdrol().getIdrol().toString());
+               //this.roleItemList.setValue(u.getIdrol().getNombre());
                break;
            }
        }

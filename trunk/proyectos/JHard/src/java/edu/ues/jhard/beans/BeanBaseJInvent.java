@@ -14,12 +14,17 @@ import edu.ues.jhard.jpa.Clasificacion;
 import edu.ues.jhard.jpa.Equipo;
 import edu.ues.jhard.jpa.Estadoequipo;
 import edu.ues.jhard.jpa.Existencia;
+import edu.ues.jhard.jpa.Instalacion;
 import edu.ues.jhard.jpa.Marca;
 import edu.ues.jhard.jpa.Pieza;
 import edu.ues.jhard.jpa.Software;
 import edu.ues.jhard.jpa.Ubicacion;
 import edu.ues.jhard.util.ActionMessage;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -50,12 +55,23 @@ public class BeanBaseJInvent extends BeanBase {
     private CrudManager crdExistencia;
     private List<Marca> listaMarcas;
     private List<Equipo> listaTodosEquipos;
+    private List<Accesorio> listaTodosAccesorios;
+    private List<Pieza> listaTodasPiezas;
+    private List<Software> listaTodosSoftware;
     private List<Estadoequipo> listaEstados;
     private List<Ubicacion> listaUbicaciones;
     private SelectItemGroup listaItemsMarcas;
+    private SelectItemGroup listaItemsEquipos;
+    private SelectItemGroup listaItemsUbicaciones;
+    private SelectItemGroup listaItemsAccesorios;
+    private SelectItemGroup listaItemsPiezas;
+    private SelectItemGroup listaItemsSoftware;
     private String marcaSelected;
     private String estadoSelected;
     private String equipoSelected;
+    private String accesorioSelected;
+    private String piezaSelected;
+    private String softwareSelected;
     private String ubicacionSelected;
     private ActionMessage msg;
 
@@ -65,8 +81,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.currentSoftware = new Software();
         this.currentAccesorio = new Accesorio();
         this.currentPieza = new Pieza();
-        this.nuevaClasificacion = new Clasificacion();
-        this.currentExistencia = new Existencia();
+        this.nuevaClasificacion = new Clasificacion();        
         this.crdEquipo = new CrudManager();
         this.crdSoftware = new CrudManager();
         this.crdAccesorio = new CrudManager();
@@ -75,10 +90,9 @@ public class BeanBaseJInvent extends BeanBase {
         this.crdExistencia = new CrudManager();
         this.msg = new ActionMessage();
         this.listaEstados = this.getEntityManager().createNamedQuery("Estadoequipo.findAll").getResultList();
-        this.listaMarcas = this.getEntityManager().createNamedQuery("Marca.findAll").getResultList();
-        this.listaTodosEquipos = this.getEntityManager().createNamedQuery("Equipo.findAll").getResultList();
-        this.listaUbicaciones = this.getEntityManager().createNamedQuery("Ubicacion.findAll").getResultList();
-        this.initItemsMarcas();
+        this.listaMarcas = this.getEntityManager().createNamedQuery("Marca.findAll").getResultList();        
+
+        this.initItemsMarcas();        
     }
 
     /**
@@ -253,13 +267,68 @@ public class BeanBaseJInvent extends BeanBase {
         this.crdAccesorio = crdAccesorio;
     }
 
+    private void initItemsAccesorios() {
+        this.setListaItemsAccesorios(new SelectItemGroup());
+        SelectItem[] items = new SelectItem[this.getListaTodosAccesorios().size()];
+        for(int i=0; i<this.getListaTodosAccesorios().size(); i++){
+            items[i] = new SelectItem(this.getListaTodosAccesorios().get(i).getIdaccesorio(), this.getListaTodosAccesorios().get(i).getNombre() + " " + this.getListaTodosAccesorios().get(i).getIdmarca().getNombre() + " " + this.getListaTodosAccesorios().get(i).getModelo());
+        }
+        this.getListaItemsAccesorios().setSelectItems(items);
+        if(this.getListaTodosAccesorios().size() > 0)
+            this.setAccesorioSelected(this.getListaTodosAccesorios().get(0).getIdaccesorio().toString());
+    }
+
+    private void initItemsEquipos() {
+        this.setListaItemsEquipos(new SelectItemGroup());
+        SelectItem[] items = new SelectItem[this.listaTodosEquipos.size()];
+        for(int i=0; i<this.listaTodosEquipos.size(); i++){
+            items[i] = new SelectItem(this.listaTodosEquipos.get(i).getIdequipo(), this.listaTodosEquipos.get(i).getNombre() + " " + this.listaTodosEquipos.get(i).getIdmarca().getNombre() + " " + this.listaTodosEquipos.get(i).getModelo());
+        }
+        this.getListaItemsEquipos().setSelectItems(items);
+        if(this.getListaTodosEquipos().size() > 0)
+            this.setEquipoSelected(this.getListaTodosEquipos().get(0).getIdequipo().toString());
+    }
+
     private void initItemsMarcas() {
         this.setListaItemsMarcas(new SelectItemGroup());
-       SelectItem[] items = new SelectItem[this.listaMarcas.size()];
-       for(int i=0; i<this.listaMarcas.size(); i++){
-           items[i] = new SelectItem(this.listaMarcas.get(i).getIdmarca(), this.listaMarcas.get(i).getNombre());
+       SelectItem[] items = new SelectItem[this.getListaMarcas().size()];
+       for(int i=0; i<this.getListaMarcas().size(); i++){
+           items[i] = new SelectItem(this.getListaMarcas().get(i).getIdmarca(), this.getListaMarcas().get(i).getNombre());
        }
         this.getListaItemsMarcas().setSelectItems(items);
+    }
+
+    private void initItemsPiezas() {
+        this.setListaItemsPiezas(new SelectItemGroup());
+        SelectItem[] items = new SelectItem[this.getListaTodasPiezas().size()];
+        for(int i=0; i<this.getListaTodasPiezas().size(); i++){
+            items[i] = new SelectItem(this.getListaTodasPiezas().get(i).getIdpieza(), this.getListaTodasPiezas().get(i).getNombre() + " " + this.getListaTodasPiezas().get(i).getIdmarca().getNombre() + " " + this.listaTodasPiezas.get(i).getModelo());
+        }
+        this.getListaItemsPiezas().setSelectItems(items);
+        if(this.getListaTodasPiezas().size() > 0)
+            this.setMarcaSelected(this.getListaTodasPiezas().get(0).getIdmarca().toString());
+    }
+
+    private void initItemsSoftware() {
+        this.setListaItemsSoftware(new SelectItemGroup());
+        SelectItem[] items = new SelectItem[this.getListaTodosSoftware().size()];
+        for(int i=0; i<this.getListaTodosSoftware().size(); i++){
+            items[i] = new SelectItem(this.getListaTodosSoftware().get(i).getIdsoftware(), this.getListaTodosSoftware().get(i).getNombre() + " " + this.getListaTodosSoftware().get(i).getVersion());
+        }
+        this.getListaItemsSoftware().setSelectItems(items);
+        if(this.getListaTodosSoftware().size() > 0)
+            this.setSoftwareSelected(this.getListaTodosSoftware().get(0).getIdsoftware().toString());
+    }
+
+    private void initItemsUbicaciones() {
+        this.setListaItemsUbicaciones(new SelectItemGroup());
+        SelectItem[] items = new SelectItem[this.getListaUbicaciones().size()];
+        for(int i=0; i<this.getListaUbicaciones().size(); i++){
+            items[i] = new SelectItem(this.getListaUbicaciones().get(i).getIdubicacion(), this.getListaUbicaciones().get(i).getNombre());
+        }
+        this.getListaItemsUbicaciones().setSelectItems(items);
+        if(this.getListaUbicaciones().size() > 0)
+            this.setUbicacionSelected(this.getListaUbicaciones().get(0).getIdubicacion().toString());
     }
 
     /**
@@ -290,8 +359,8 @@ public class BeanBaseJInvent extends BeanBase {
         this.marcaSelected = marcaSelected;
     }
 
-    public String addEquipo(){
-        for(Marca m: this.listaMarcas){            
+    public String addExistencia(){
+        for(Marca m: this.getListaMarcas()){
             if(m.getIdmarca().toString().equalsIgnoreCase(this.getMarcaSelected())){                
                 this.currentEquipo.setIdmarca(m);
                 this.currentEquipo.setIdclasificacion(this.getCurrentClasificacion());
@@ -311,23 +380,14 @@ public class BeanBaseJInvent extends BeanBase {
         return "done";
     }
 
-    public String cancelAddEditEquipo(){
-        this.currentEquipo = new Equipo();
-        this.crdEquipo.hidePopupAdd();
-        this.crdEquipo.hidePopupEdit();
+    public String cancelAddEditExistencia(){
+        this.currentExistencia = new Existencia();
+        this.crdExistencia.hidePopupAdd();
+        this.crdExistencia.hidePopupEdit();
         return "done";
     }
 
-    public String editEquipo(){
-        String idEquipo = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
-        this.crdEquipo.setCurrentId(idEquipo);
-        EntityManager emgr = this.getEntityManager();
-        this.currentEquipo = (Equipo)emgr.createQuery("SELECT e FROM Equipo e WHERE e.idequipo=" + idEquipo).getSingleResult();
-        this.crdEquipo.showPopupEdit();
-        return "done";
-    }
-
-    public String commitEditEquipo(){
+    public String commitEditExistencia(){
         EntityManager emgr = this.getEntityManager();
         Marca mrk = (Marca)emgr.createQuery("SELECT m FROM Marca m WHERE m.idmarca=" + this.marcaSelected).getSingleResult();
         this.currentEquipo.setIdmarca(mrk);
@@ -349,7 +409,7 @@ public class BeanBaseJInvent extends BeanBase {
         return "done";
     }
 
-    public String delEquipo(){                
+    public String delExistencia(){
         String idEquipo = this.crdEquipo.getCurrentId();
         EntityManager emgr = this.getEntityManager();
         Equipo eq = (Equipo)emgr.createQuery("SELECT e FROM Equipo e WHERE e.idequipo=" + idEquipo).getSingleResult();
@@ -432,7 +492,7 @@ public class BeanBaseJInvent extends BeanBase {
     }
 
     public String addAccesorio(){
-        for(Marca m: this.listaMarcas){
+        for(Marca m: this.getListaMarcas()){
             if(m.getIdmarca().toString().equalsIgnoreCase(this.marcaSelected)){
                 this.currentAccesorio.setIdmarca(m);
                 this.currentAccesorio.setIdclasificacion(this.getCurrentClasificacion());
@@ -506,7 +566,7 @@ public class BeanBaseJInvent extends BeanBase {
     }
 
     public String addPieza(){
-        for(Marca m: this.listaMarcas){
+        for(Marca m: this.getListaMarcas()){
             if(m.getIdmarca().toString().equalsIgnoreCase(this.marcaSelected)){
                 this.currentPieza.setIdmarca(m);
                 this.currentPieza.setIdclasificacion(this.getCurrentClasificacion());
@@ -821,6 +881,288 @@ public class BeanBaseJInvent extends BeanBase {
      * @param listaUbicaciones the listaUbicaciones to set
      */
     public void setListaUbicaciones(List<Ubicacion> listaUbicaciones) {
-        this.listaUbicaciones = listaUbicaciones;
+        this.setListaUbicaciones(listaUbicaciones);
     }
+
+    /**
+     * @return the listaItemsEquipos
+     */
+    public SelectItemGroup getListaItemsEquipos() {
+        return listaItemsEquipos;
+    }
+
+    /**
+     * @param listaItemsEquipos the listaItemsEquipos to set
+     */
+    public void setListaItemsEquipos(SelectItemGroup listaItemsEquipos) {
+        this.listaItemsEquipos = listaItemsEquipos;
+    }
+
+    /**
+     * @return the listaItemsUbicaciones
+     */
+    public SelectItemGroup getListaItemsUbicaciones() {
+        return listaItemsUbicaciones;
+    }
+
+    /**
+     * @param listaItemsUbicaciones the listaItemsUbicaciones to set
+     */
+    public void setListaItemsUbicaciones(SelectItemGroup listaItemsUbicaciones) {
+        this.listaItemsUbicaciones = listaItemsUbicaciones;
+    }
+
+    /**
+     * @return the listaItemsAccesorios
+     */
+    public SelectItemGroup getListaItemsAccesorios() {
+        return listaItemsAccesorios;
+    }
+
+    /**
+     * @param listaItemsAccesorios the listaItemsAccesorios to set
+     */
+    public void setListaItemsAccesorios(SelectItemGroup listaItemsAccesorios) {
+        this.listaItemsAccesorios = listaItemsAccesorios;
+    }
+
+    /**
+     * @return the listaItemsPiezas
+     */
+    public SelectItemGroup getListaItemsPiezas() {
+        return listaItemsPiezas;
+    }
+
+    /**
+     * @param listaItemsPiezas the listaItemsPiezas to set
+     */
+    public void setListaItemsPiezas(SelectItemGroup listaItemsPiezas) {
+        this.listaItemsPiezas = listaItemsPiezas;
+    }
+
+    /**
+     * @return the listaItemsSoftware
+     */
+    public SelectItemGroup getListaItemsSoftware() {
+        return listaItemsSoftware;
+    }
+
+    /**
+     * @param listaItemsSoftware the listaItemsSoftware to set
+     */
+    public void setListaItemsSoftware(SelectItemGroup listaItemsSoftware) {
+        this.listaItemsSoftware = listaItemsSoftware;
+    }
+
+    /**
+     * @return the listaMarcas
+     */
+    public List<Marca> getListaMarcas() {
+        return listaMarcas;
+    }
+
+    /**
+     * @param listaMarcas the listaMarcas to set
+     */
+    public void setListaMarcas(List<Marca> listaMarcas) {
+        this.listaMarcas = listaMarcas;
+    }
+
+    /**
+     * @return the listaTodosAccesorios
+     */
+    public List<Accesorio> getListaTodosAccesorios() {
+        return listaTodosAccesorios;
+    }
+
+    /**
+     * @param listaTodosAccesorios the listaTodosAccesorios to set
+     */
+    public void setListaTodosAccesorios(List<Accesorio> listaTodosAccesorios) {
+        this.listaTodosAccesorios = listaTodosAccesorios;
+    }
+
+    /**
+     * @return the listaTodasPiezas
+     */
+    public List<Pieza> getListaTodasPiezas() {
+        return listaTodasPiezas;
+    }
+
+    /**
+     * @param listaTodasPiezas the listaTodasPiezas to set
+     */
+    public void setListaTodasPiezas(List<Pieza> listaTodasPiezas) {
+        this.listaTodasPiezas = listaTodasPiezas;
+    }
+
+    /**
+     * @return the listaTodosSoftware
+     */
+    public List<Software> getListaTodosSoftware() {
+        return listaTodosSoftware;
+    }
+
+    /**
+     * @param listaTodosSoftware the listaTodosSoftware to set
+     */
+    public void setListaTodosSoftware(List<Software> listaTodosSoftware) {
+        this.listaTodosSoftware = listaTodosSoftware;
+    }
+
+    /**
+     * @return the listaEstados
+     */
+    public List<Estadoequipo> getListaEstados() {
+        return listaEstados;
+    }
+
+    /**
+     * @param listaEstados the listaEstados to set
+     */
+    public void setListaEstados(List<Estadoequipo> listaEstados) {
+        this.listaEstados = listaEstados;
+    }
+
+    /**
+     * @return the accesorioSelected
+     */
+    public String getAccesorioSelected() {
+        return accesorioSelected;
+    }
+
+    /**
+     * @param accesorioSelected the accesorioSelected to set
+     */
+    public void setAccesorioSelected(String accesorioSelected) {
+        this.accesorioSelected = accesorioSelected;
+    }
+
+    /**
+     * @return the piezaSelected
+     */
+    public String getPiezaSelected() {
+        return piezaSelected;
+    }
+
+    /**
+     * @param piezaSelected the piezaSelected to set
+     */
+    public void setPiezaSelected(String piezaSelected) {
+        this.piezaSelected = piezaSelected;
+    }
+
+    /**
+     * @return the softwareSelected
+     */
+    public String getSoftwareSelected() {
+        return softwareSelected;
+    }
+
+    /**
+     * @param softwareSelected the softwareSelected to set
+     */
+    public void setSoftwareSelected(String softwareSelected) {
+        this.softwareSelected = softwareSelected;
+    }
+    
+    public void initItemsCombos(){
+        this.listaTodosEquipos = this.getEntityManager().createNamedQuery("Equipo.findAll").getResultList();
+        this.listaUbicaciones = this.getEntityManager().createNamedQuery("Ubicacion.findAll").getResultList();        
+        this.listaTodosAccesorios = this.getEntityManager().createNamedQuery("Accesorio.findAll").getResultList();
+        this.listaTodasPiezas = this.getEntityManager().createNamedQuery("Pieza.findAll").getResultList();
+        this.listaTodosSoftware = this.getEntityManager().createNamedQuery("Software.findAll").getResultList();
+        
+        this.initItemsEquipos();
+        this.initItemsUbicaciones();
+        this.initItemsPiezas();
+        this.initItemsAccesorios();
+        this.initItemsSoftware();
+    }
+
+    public String beforeAddExistencia(){
+        this.currentExistencia = new Existencia(-1);
+        this.currentExistencia.setAccesorioCollection(new ArrayList<Accesorio>());
+        this.currentExistencia.setInstalacionCollection(new ArrayList<Instalacion>());
+        this.currentExistencia.setPiezaCollection(new ArrayList<Pieza>());
+        this.initItemsCombos();
+        this.crdExistencia.showPopupAdd();
+        return "done";
+    }
+
+    public String editExistencia(){
+        String idExistencia = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
+        this.currentExistencia = (Existencia)this.getEntityManager().createQuery("SELECT e FROM Existencia e WHERE e.idexistencia=" + idExistencia).getSingleResult();
+        this.initItemsCombos();
+        this.crdExistencia.showPopupEdit();
+        return "done";
+    }
+
+    public String agregarInstalacionExistencia(){
+        Software soft = (Software)this.getEntityManager().createQuery("SELECT s FROM Software s WHERE s.idsoftware=" + this.softwareSelected).getSingleResult();        
+        Instalacion inst = new Instalacion();
+        if(this.currentExistencia.getInstalacionCollection().size() > 0)
+            inst.setIdinstalacion(((ArrayList<Instalacion>)this.currentExistencia.getInstalacionCollection()).get(this.currentExistencia.getInstalacionCollection().size()-1).getIdinstalacion() + 1);
+        else
+            inst.setIdinstalacion(1);
+        inst.setIdsoftware(soft);
+        inst.setFechainstalacion(new Date());        
+        inst.setIdequipoexistente(this.currentExistencia);
+        this.currentExistencia.getInstalacionCollection().add(inst);
+        return "done";
+    }
+
+    public String eliminarInstalacionExistencia(){
+        String idInstalacion = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");        
+        Iterator it = this.currentExistencia.getInstalacionCollection().iterator();
+        while(it.hasNext()){
+            Instalacion inst = (Instalacion)it.next();            
+            if(inst.getIdinstalacion().toString().equalsIgnoreCase(idInstalacion)){                
+                this.currentExistencia.getInstalacionCollection().remove(inst);
+                return "removed";
+            }
+        }
+        return "done";
+    }
+
+    public String agregarAccesorioExistencia(){
+        Accesorio acc = (Accesorio)this.getEntityManager().createQuery("SELECT a FROM Accesorio a WHERE a.idaccesorio=" + this.accesorioSelected).getSingleResult();
+        acc.setIdexistencia(this.currentExistencia);
+        this.currentExistencia.getAccesorioCollection().add(acc);
+        return "done";
+    }
+
+    public String eliminarAccesorioExistencia(){
+        String idAccesorio = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
+        Iterator it = this.currentExistencia.getAccesorioCollection().iterator();
+        while(it.hasNext()){
+            Accesorio acc = (Accesorio)it.next();
+            if(acc.getIdaccesorio().toString().equalsIgnoreCase(idAccesorio)){
+                this.currentExistencia.getAccesorioCollection().remove(acc);
+                return "removed";
+            }
+        }
+        return "done";
+    }
+
+    public String agregarPiezaExistencia(){
+        Pieza pz = (Pieza)this.getEntityManager().createQuery("SELECT p FROM Pieza p WHERE p.idpieza=" + this.piezaSelected).getSingleResult();
+        pz.setIdexistencia(this.currentExistencia);
+        this.currentExistencia.getPiezaCollection().add(pz);
+        return "done";
+    }
+
+    public String eliminarPiezaExistencia(){
+        String idPieza = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
+        Iterator it = this.currentExistencia.getPiezaCollection().iterator();
+        while(it.hasNext()){
+            Pieza pz = (Pieza)it.next();
+            if(pz.getIdpieza().toString().equalsIgnoreCase(idPieza)){
+                this.currentExistencia.getPiezaCollection().remove(pz);
+                return "removed";
+            }
+        }
+        return "done";
+    }
+    
 }
