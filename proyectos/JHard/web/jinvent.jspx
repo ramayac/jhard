@@ -152,10 +152,10 @@
                                                 <f:facet name="second">
                                                     <ice:panelGroup>                                                        
                                                         <h3 class="tituloSeccion">
-                                                            <ice:outputFormat value="Equipos (Total: {0})">
+                                                            <ice:outputFormat value="Existencias de Equipos (Total: {0})">
                                                                 <f:param value="#{JInventInstance.currentClasificacionExistenciaCollectionSize}"/>
                                                             </ice:outputFormat>
-                                                            <ice:commandLink value="Agregar" action="#{JInventInstance.crdExistencia.showPopupAdd}" styleClass="actionLink" />
+                                                            <ice:commandLink value="Agregar" action="#{JInventInstance.beforeAddExistencia}" styleClass="actionLink" />
                                                         </h3>
                                                         <ice:dataTable id="tblListaEquipos" rows="5" value="#{JInventInstance.currentClasificacion.existenciaCollection}" var="existencia" style="margin-bottom: 0px;" >
                                                         <ice:column>
@@ -176,7 +176,11 @@
                                                             <ice:column>
                                                                 <f:facet name="header"><ice:outputText value="Modelo" /></f:facet>
                                                                 <ice:outputText value="#{existencia.idhardware.modelo}" />
-                                                            </ice:column>                                                            
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <f:facet name="header"><ice:outputText value="Ubicación" /></f:facet>
+                                                                <ice:outputText value="#{existencia.idubicacion.nombre}" />
+                                                            </ice:column>
                                                             <ice:column>
                                                                 <ice:commandLink value="Editar" action="#{JInventInstance.editExistencia}">
                                                                     <f:param name="currentId" value="#{existencia.idexistencia}" />
@@ -194,18 +198,16 @@
                                                             <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
                                                             <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
                                                         </ice:dataPaginator>
-                                                        <ice:panelPopup id="pupAgregarEquipo" modal="true" draggable="true" rendered="#{JInventInstance.crdExistencia.popupAddVisible}">
-                                                            <f:facet name="header"><ice:outputText value="Agregar nuevo equipo" /></f:facet>
+                                                        <ice:panelPopup id="pupAgregarExistencia" modal="true" draggable="true" rendered="#{JInventInstance.crdExistencia.popupAddVisible}" >
+                                                            <f:facet name="header"><ice:outputText value="Agregar nueva existencia" /></f:facet>
                                                             <f:facet name="body">
-                                                                <ice:panelGroup styleClass="frmElementList" >
-                                                                <ice:panelGroup style="border: 1px solid black;">
-                                                                    <h3>Asociada al equipo:</h3>
-                                                                    <ice:selectOneListbox value="#{JInventInstance.equipoSelected}" size="1">
-                                                                        <f:selectItems value="#{JInventInstance.listaTodosEquipos}" />
-                                                                    </ice:selectOneListbox>
-                                                                    <ice:commandLink value="Nuevo equipo" />
-                                                                    <ice:commandLink value="Editar equipo" />
-                                                                </ice:panelGroup>
+                                                                <ice:panelGroup styleClass="frmElementList" style="background-color: #FCFCFC;">
+                                                                    <p>
+                                                                        <ice:outputLabel value="Asociada al equipo:" for="cmbEquipos" />
+                                                                        <ice:selectOneListbox id="cmbEquipos" value="#{JInventInstance.equipoSelected}" size="1">
+                                                                            <f:selectItems value="#{JInventInstance.listaItemsEquipos}" />
+                                                                        </ice:selectOneListbox>                                                                                                                                                
+                                                                    </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblCodigoExistencia" for="txtCodigoExistencia" value="Código:" />
                                                                         <ice:inputText id="txtCodigoExistencia" value="#{JInventInstance.currentExistencia.codigo}" />
@@ -213,49 +215,87 @@
                                                                     <p>
                                                                         <ice:outputLabel id="lblUbicacionExistencia" for="cmbUbicacionExistencia" value="Ubicación:" />
                                                                         <ice:selectOneListbox id="cmbUbicacionExistencia" size="1" value="#{JInventInstance.ubicacionSelected}">
-                                                                            <f:selectItems value="#{JInventInstance.listaUbicaciones}" />
+                                                                            <f:selectItems value="#{JInventInstance.listaItemsUbicaciones}" />
                                                                         </ice:selectOneListbox>
                                                                     </p>
                                                                     <p>
-                                                                        <ice:outputLabel id="lblSoftwareExistencia" for="tblSoftwareExistencia" value="Software instalado:" />
-                                                                        <ice:dataTable id="tblSoftwareExistencia" value="#{JInventInstance.currentExistencia.instalacionCollection}" var="inst">
-                                                                            <ice:column>
-
-                                                                            </ice:column>
-                                                                        </ice:dataTable>
-                                                                    </p>
-                                                                    <p>
-                                                                        <ice:outputLabel id="lblAccesorioExistencia" for="tblAccesorioExistencia" value="Accesorios:" />
-                                                                        <ice:dataTable id="tblAccesorioExistencia" value="#{JInventInstance.currentExistencia.accesorioCollection}" var="accesorio" >
-                                                                            <ice:column>
-                                                                                <f:facet name="header"><ice:outputText value="Nombre" /></f:facet>
-                                                                                <ice:outputText value="#{accesorio.nombre}" />
-                                                                            </ice:column>
-                                                                            <ice:column>
-                                                                                <f:facet name="header"><ice:outputText value="Marca" /></f:facet>
-                                                                                <ice:outputText value="#{accesorio.idmarca.nombre}" />
-                                                                            </ice:column>
-                                                                            <ice:column>
-                                                                                <f:facet name="header"><ice:outputText value="Modelo" /></f:facet>
-                                                                                <ice:outputText value="#{accesorio.modelo}" />
-                                                                            </ice:column>
-                                                                            <ice:column>
-                                                                                <ice:commandLink value="Eliminar" />
-                                                                            </ice:column>
-                                                                        </ice:dataTable>
-                                                                        <ice:commandLink value="Agregar" />
-                                                                    </p>
-                                                                    <p>
-                                                                        <ice:outputLabel id="lblPiezaExistencia" for="tblPiezaExistencia" value="Piezas:" />
-                                                                        <ice:dataTable id="tblPiezaExistencia" value="#{JInventInstance.currentExistencia.piezaCollection}" var="pieza">
-                                                                            <ice:column>
-                                                                                <f:facet name="header"><ice:outputText value="Nombre" /></f:facet>
-                                                                                <ice:outputText value="#{pieza.nombre}" />
-                                                                            </ice:column>
-                                                                            <ice:column>
-                                                                                <f:facet name="header"><ice:outputText value="Marca" /></f:facet>
-                                                                            </ice:column>
-                                                                        </ice:dataTable>
+                                                                        <ice:panelTabSet style="margin-top: 30px;">
+                                                                        <ice:panelTab id="tabSoftwareExistencia" label="Software instalado">
+                                                                            <ice:dataTable id="tblSoftwareExistencia" value="#{JInventInstance.currentExistencia.instalacionCollection}" var="instalacion">
+                                                                                <ice:column>
+                                                                                    <f:facet name="header"><ice:outputText value="Nombre" /></f:facet>
+                                                                                    <ice:outputText value="#{instalacion.idsoftware.nombre}" />
+                                                                                </ice:column>
+                                                                                <ice:column>
+                                                                                    <f:facet name="header"><ice:outputText value="Versión" /></f:facet>
+                                                                                    <ice:outputText value="#{instalacion.idsoftware.version}" />
+                                                                                </ice:column>
+                                                                                <ice:column>
+                                                                                    <f:facet name="header"><ice:outputText value="Fecha de instalación" /></f:facet>
+                                                                                    <ice:outputText value="#{instalacion.fechainstalacion}" />
+                                                                                </ice:column>
+                                                                                <ice:column>
+                                                                                    <ice:commandLink value="Eliminar" action="#{JInventInstance.eliminarInstalacionExistencia}">
+                                                                                        <f:param name="currentId" value="#{instalacion.idinstalacion}" />
+                                                                                    </ice:commandLink>
+                                                                                </ice:column>
+                                                                            </ice:dataTable>
+                                                                            <ice:selectOneListbox id="cmbListaSoftwareDisponible" size="1" value="#{JInventInstance.softwareSelected}">
+                                                                                <f:selectItems value="#{JInventInstance.listaItemsSoftware}" />
+                                                                            </ice:selectOneListbox>
+                                                                            <ice:commandLink value="Agregar" action="#{JInventInstance.agregarInstalacionExistencia}" />
+                                                                        </ice:panelTab>
+                                                                        <ice:panelTab id="tabAccesorioExistencia" label="Accesorios">
+                                                                            <ice:dataTable id="tblAccesorioExistencia" value="#{JInventInstance.currentExistencia.accesorioCollection}" var="accesorio" >
+                                                                                <ice:column>
+                                                                                    <f:facet name="header"><ice:outputText value="Nombre" /></f:facet>
+                                                                                    <ice:outputText value="#{accesorio.nombre}" />
+                                                                                </ice:column>
+                                                                                <ice:column>
+                                                                                    <f:facet name="header"><ice:outputText value="Marca" /></f:facet>
+                                                                                    <ice:outputText value="#{accesorio.idmarca.nombre}" />
+                                                                                </ice:column>
+                                                                                <ice:column>
+                                                                                    <f:facet name="header"><ice:outputText value="Modelo" /></f:facet>
+                                                                                    <ice:outputText value="#{accesorio.modelo}" />
+                                                                                </ice:column>
+                                                                                <ice:column>
+                                                                                    <ice:commandLink value="Eliminar" action="#{JInventInstance.eliminarAccesorioExistencia}">
+                                                                                        <f:param name="currentId" value="#{accesorio.idaccesorio}" />
+                                                                                    </ice:commandLink>
+                                                                                </ice:column>
+                                                                            </ice:dataTable>
+                                                                            <ice:selectOneListbox id="cmbListaAccesoriosDisponibles" size="1" value="#{JInventInstance.accesorioSelected}">
+                                                                                <f:selectItems value="#{JInventInstance.listaItemsAccesorios}" />
+                                                                            </ice:selectOneListbox>
+                                                                            <ice:commandLink value="Agregar" action="#{JInventInstance.agregarAccesorioExistencia}" />
+                                                                        </ice:panelTab>
+                                                                        <ice:panelTab id="tabPiezaExistencia" label="Piezas">
+                                                                            <ice:dataTable id="tblPiezaExistencia" value="#{JInventInstance.currentExistencia.piezaCollection}" var="pieza">
+                                                                                <ice:column>
+                                                                                    <f:facet name="header"><ice:outputText value="Nombre" /></f:facet>
+                                                                                    <ice:outputText value="#{pieza.nombre}" />
+                                                                                </ice:column>
+                                                                                <ice:column>
+                                                                                    <f:facet name="header"><ice:outputText value="Marca" /></f:facet>
+                                                                                    <ice:outputText value="#{pieza.idmarca.nombre}" />
+                                                                                </ice:column>
+                                                                                <ice:column>
+                                                                                    <f:facet name="header"><ice:outputText value="Modelo" /></f:facet>
+                                                                                    <ice:outputText value="#{pieza.modelo}" />
+                                                                                </ice:column>
+                                                                                <ice:column>
+                                                                                    <ice:commandLink value="Eliminar" action="#{JInventInstance.eliminarPiezaExistencia}">
+                                                                                        <f:param name="currentId" value="#{pieza.idpieza}" />
+                                                                                    </ice:commandLink>
+                                                                                </ice:column>
+                                                                            </ice:dataTable>
+                                                                            <ice:selectOneListbox id="cmbListaPiezasDisponibles" size="1" value="#{JInventInstance.piezaSelected}">
+                                                                                <f:selectItems value="#{JInventInstance.listaItemsPiezas}" />
+                                                                            </ice:selectOneListbox>
+                                                                            <ice:commandLink value="Agregar" action="#{JInventInstance.agregarPiezaExistencia}" />
+                                                                        </ice:panelTab>
+                                                                    </ice:panelTabSet>
                                                                     </p>
                                                                     <p class="actionSection">
                                                                         <ice:commandButton id="cmdConfirmAgregarExistencia" value="Agregar" action="#{JInventInstance.addExistencia}" />

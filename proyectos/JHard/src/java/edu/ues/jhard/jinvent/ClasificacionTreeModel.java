@@ -6,7 +6,9 @@
 package edu.ues.jhard.jinvent;
 
 import edu.ues.jhard.jpa.Clasificacion;
+import edu.ues.jhard.jpa.Equipo;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -54,7 +56,13 @@ public class ClasificacionTreeModel {
         ClasificacionUserObject clUsrObj = new ClasificacionUserObject(nodo);
         nodo.setUserObject(clUsrObj);
         clUsrObj.setClasificacion(cl);
-        clUsrObj.setText(cl.getNombre() + " (" + (cl.getEquipoCollection().size() + cl.getSoftwareCollection().size() + cl.getAccesorioCollection().size() + cl.getPiezaCollection().size()) + ")");
+        int totalExistencias = 0;
+        Iterator it = cl.getEquipoCollection().iterator();
+        while(it.hasNext()){
+            Equipo eq = (Equipo)it.next();
+            totalExistencias += eq.getExistenciaSize();
+        }
+        clUsrObj.setText(cl.getNombre() + " (" + (totalExistencias + cl.getSoftwareCollection().size() + cl.getAccesorioCollection().size() + cl.getPiezaCollection().size()) + ")");
         clUsrObj.setLeaf(false);
         clUsrObj.setExpanded(true);
         if(nodoPadre != null)

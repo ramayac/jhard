@@ -967,7 +967,7 @@ private List equ = new ArrayList();
 
     public String addEqJInvent(){
 
-        this.getJInventInstance().addEquipo();
+        this.getJInventInstance().addExistencia();
         this.LlenarComboTipoEquipo(2);
         this.rendererAddEq=false;
 
