@@ -99,16 +99,36 @@ public class ClasificacionTreeModel {
     }
 
     public DefaultMutableTreeNode seleccionarNodo(String idClasificacion){
+        DefaultMutableTreeNode nodo = this.buscarNodo(idClasificacion);
+        if(nodo != null)
+            this.setCurrentUserObject((ClasificacionUserObject)nodo.getUserObject());
+        return nodo;        
+    }
+
+    public DefaultMutableTreeNode buscarNodo(String idClasificacion){
         DefaultMutableTreeNode nodoRaiz = (DefaultMutableTreeNode)this.modelo.getRoot();
         Enumeration nodos = nodoRaiz.depthFirstEnumeration();
         while(nodos.hasMoreElements()){
             DefaultMutableTreeNode nodo = (DefaultMutableTreeNode)nodos.nextElement();
             Clasificacion cl = ((ClasificacionUserObject)nodo.getUserObject()).getClasificacion();
             if(cl.getIdclasificacion().toString().equalsIgnoreCase(idClasificacion)){
-                this.setCurrentUserObject((ClasificacionUserObject)nodo.getUserObject());
                 return nodo;
             }
         }
         return null;
+    }
+
+    public void actualizarNodo(Clasificacion nuevaCl){
+        DefaultMutableTreeNode nodo = this.buscarNodo(nuevaCl.getIdclasificacion().toString());
+        ClasificacionUserObject clUsrObj = new ClasificacionUserObject(nodo);
+        nodo.setUserObject(clUsrObj);
+        clUsrObj.setClasificacion(nuevaCl);
+        int totalExistencias = 0;
+        Iterator it = nuevaCl.getEquipoCollection().iterator();
+        while(it.hasNext()){
+            Equipo eq = (Equipo)it.next();
+            totalExistencias += eq.getExistenciaSize();
+        }
+        clUsrObj.setText(nuevaCl.getNombre() + " (" + (totalExistencias + nuevaCl.getSoftwareCollection().size() + nuevaCl.getAccesorioCollection().size() + nuevaCl.getPiezaCollection().size()) + ")");
     }
 }

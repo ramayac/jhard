@@ -192,21 +192,21 @@
                                                                 </ice:commandLink>
                                                             </ice:column>
                                                         </ice:dataTable>
-                                                        <ice:dataPaginator id="pgrListaEquipos" for="tblListaEquipos" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.sizeListaEquipos > 5}">
+                                                        <ice:dataPaginator id="pgrListaEquipos" for="tblListaEquipos" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.sizeListaExistencias > 5}">
                                                             <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
                                                             <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
                                                             <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
                                                             <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
                                                         </ice:dataPaginator>
-                                                        <ice:panelPopup id="pupAgregarExistencia" modal="true" draggable="true" rendered="#{JInventInstance.crdExistencia.popupAddVisible}" >
-                                                            <f:facet name="header"><ice:outputText value="Agregar nueva existencia" /></f:facet>
+                                                        <ice:panelPopup id="pupAgregarExistencia" modal="true" draggable="true" rendered="#{JInventInstance.crdExistencia.popupAddVisible or JInventInstance.crdExistencia.popupEditVisible}" >
+                                                            <f:facet name="header"><ice:panelGroup><ice:outputText value="Agregar nueva existencia" rendered="#{!JInventInstance.existenciaEditMode}" /><ice:outputText value="Editar existencia" rendered="#{JInventInstance.existenciaEditMode}" /></ice:panelGroup></f:facet>
                                                             <f:facet name="body">
                                                                 <ice:panelGroup styleClass="frmElementList" style="background-color: #FCFCFC;">
                                                                     <p>
                                                                         <ice:outputLabel value="Asociada al equipo:" for="cmbEquipos" />
                                                                         <ice:selectOneListbox id="cmbEquipos" value="#{JInventInstance.equipoSelected}" size="1">
                                                                             <f:selectItems value="#{JInventInstance.listaItemsEquipos}" />
-                                                                        </ice:selectOneListbox>                                                                                                                                                
+                                                                        </ice:selectOneListbox>
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblCodigoExistencia" for="txtCodigoExistencia" value="Código:" />
@@ -298,13 +298,16 @@
                                                                     </ice:panelTabSet>
                                                                     </p>
                                                                     <p class="actionSection">
-                                                                        <ice:commandButton id="cmdConfirmAgregarExistencia" value="Agregar" action="#{JInventInstance.addExistencia}" />
-                                                                        <ice:commandButton id="cmdCancelAgregarExistencia" value="Cancelar" action="#{JInventInstance.cancelAddEditExistencia}" />
+                                                                        <ice:commandButton id="cmdConfirmAgregarExistencia" value="Agregar" action="#{JInventInstance.addExistencia}" rendered="#{!JInventInstance.existenciaEditMode}" />
+                                                                        <ice:commandButton id="cmdCancelAgregarExistencia" value="Cancelar" action="#{JInventInstance.cancelAddEditExistencia}" rendered="#{!JInventInstance.existenciaEditMode}" />
+
+                                                                        <ice:commandButton id="cmdConfirmEditarExistencia" value="Guardar cambios" action="#{JInventInstance.commitEditExistencia}" rendered="#{JInventInstance.existenciaEditMode}" />
+                                                                        <ice:commandButton id="cmdCancelEditarExistencia" value="Cancelar" action="#{JInventInstance.cancelAddEditExistencia}" rendered="#{JInventInstance.existenciaEditMode}" />
                                                                     </p>
                                                                 </ice:panelGroup>
                                                             </f:facet>
                                                         </ice:panelPopup>
-                                                        <ice:panelPopup id="pupEditarEquipo" draggable="true" modal="true" rendered="#{JInventInstance.crdExistencia.popupEditVisible}">
+                                                        <ice:panelPopup id="pupEditarEquipo" draggable="true" modal="true" rendered="#{JInventInstance.crdEquipo.popupEditVisible}">
                                                             <f:facet name="header">
                                                                 <ice:outputFormat value="Editar equipo {0}">
                                                                     <f:param value="#{JInventInstance.currentEquipo.nombre}" />

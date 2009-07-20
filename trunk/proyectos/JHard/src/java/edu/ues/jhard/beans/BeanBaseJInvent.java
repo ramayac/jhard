@@ -73,6 +73,7 @@ public class BeanBaseJInvent extends BeanBase {
     private String piezaSelected;
     private String softwareSelected;
     private String ubicacionSelected;
+    private boolean existenciaEditMode;
     private ActionMessage msg;
 
     public BeanBaseJInvent(){
@@ -139,8 +140,11 @@ public class BeanBaseJInvent extends BeanBase {
         return this.getCurrentClasificacion().getPiezaCollection().size();
     }
 
-    public int getSizeListaEquipos(){
-        return this.getCurrentClasificacion().getEquipoCollection().size();
+    public int getSizeListaExistencias(){
+        int totalExistencias = 0;
+        for(Equipo eq: this.getCurrentClasificacion().getEquipoCollection())
+            totalExistencias += eq.getExistenciaSize();
+        return totalExistencias;
     }
 
     public int getSizeListaSoftware(){
@@ -360,23 +364,44 @@ public class BeanBaseJInvent extends BeanBase {
     }
 
     public String addExistencia(){
-        for(Marca m: this.getListaMarcas()){
-            if(m.getIdmarca().toString().equalsIgnoreCase(this.getMarcaSelected())){                
-                this.currentEquipo.setIdmarca(m);
-                this.currentEquipo.setIdclasificacion(this.getCurrentClasificacion());
-                this.getCurrentClasificacion().getEquipoCollection().add(this.currentEquipo);
-                EntityManager emgr = this.getEntityManager();
-                emgr.getTransaction().begin();
-                emgr.persist(this.currentEquipo);
-                emgr.getTransaction().commit();
-                this.msg.setText("Nuevo equipo " + this.currentEquipo.getNombre() + " agregado exitosamente.");
-                this.msg.setVisible(true);
-                this.currentEquipo = new Equipo();
-                this.actualizarNodoClasificacion();
+        EntityManager emgr = this.getEntityManager();
+        Equipo eq = (Equipo)emgr.createQuery("SELECT h FROM Equipo h WHERE h.idequipo=" + this.equipoSelected ).getSingleResult();
+        Ubicacion ubc = (Ubicacion)emgr.createQuery("SELECT u FROM Ubicacion u WHERE u.idubicacion=" + this.ubicacionSelected).getSingleResult();
+        eq.getExistenciaCollection().add(this.currentExistencia);
+        ubc.getExistenciaCollection().add(this.currentExistencia);
+        this.currentExistencia.setIdhardware(eq);
+        this.currentExistencia.setIdubicacion(ubc);
+        this.currentExistencia.setIdestado(this.getListaEstados().get(0));
+        this.currentExistencia.setIdexistencia(null);
+        for(Instalacion inst: this.currentExistencia.getInstalacionCollection())
+            inst.setIdinstalacion(null);
+        
+        emgr.getTransaction().begin();
+        emgr.persist(this.currentExistencia);
+        emgr.merge(this.currentExistencia.getIdhardware());
+        for(Accesorio acc: this.currentExistencia.getAccesorioCollection())
+            emgr.merge(acc);
+        
+        for(Instalacion inst: this.currentExistencia.getInstalacionCollection())
+            emgr.persist(inst);        
+        
+        for(Pieza pz: this.currentExistencia.getPiezaCollection())
+            emgr.merge(pz);
+        
+        emgr.getTransaction().commit();
+
+        for(Equipo eqEnClasificacion: this.getCurrentClasificacion().getEquipoCollection()){
+            if(eqEnClasificacion.getIdequipo() == eq.getIdequipo()){
+                eqEnClasificacion.getExistenciaCollection().add(this.currentExistencia);
+                this.actualizarCurrentNodoClasificacion();
                 break;
             }
         }
-        this.crdEquipo.hidePopupAdd();
+        this.clasificaciontm.actualizarNodo(this.currentExistencia.getIdhardware().getIdclasificacion());
+        this.crdExistencia.hidePopupAdd();
+        this.msg.setText("Existencia " + this.currentExistencia.getCodigo() + " agregada exitosamente");
+        this.msg.setVisible(true);
+        this.currentExistencia = null;
         return "done";
     }
 
@@ -389,14 +414,54 @@ public class BeanBaseJInvent extends BeanBase {
 
     public String commitEditExistencia(){
         EntityManager emgr = this.getEntityManager();
+        Equipo eq = (Equipo)emgr.createQuery("SELECT h FROM Equipo h WHERE h.idequipo=" + this.equipoSelected ).getSingleResult();
+        Ubicacion ubc = (Ubicacion)emgr.createQuery("SELECT u FROM Ubicacion u WHERE u.idubicacion=" + this.ubicacionSelected).getSingleResult();
+        eq.getExistenciaCollection().add(this.currentExistencia);
+        ubc.getExistenciaCollection().add(this.currentExistencia);
+        this.currentExistencia.setIdhardware(eq);
+        this.currentExistencia.setIdubicacion(ubc);
+        
+        emgr.getTransaction().begin();
+        emgr.merge(this.currentExistencia);
+        emgr.getTransaction().commit();
+        
+        this.crdExistencia.hidePopupEdit();
+        this.msg.setText("Existencia modificada satisfactoriamente");
+        this.msg.setVisible(true);
+        return "done";
+    }
+
+    public String addEquipo(){
+        for(Marca m: this.getListaMarcas()){
+            if(m.getIdmarca().toString().equalsIgnoreCase(this.getMarcaSelected())){
+                this.currentEquipo.setIdmarca(m);
+                this.currentEquipo.setIdclasificacion(this.getCurrentClasificacion());
+                this.getCurrentClasificacion().getEquipoCollection().add(this.currentEquipo);
+                EntityManager emgr = this.getEntityManager();
+                emgr.getTransaction().begin();
+                emgr.persist(this.currentEquipo);
+                emgr.getTransaction().commit();
+                this.msg.setText("Nuevo equipo " + this.currentEquipo.getNombre() + " agregado exitosamente.");
+                this.msg.setVisible(true);
+                this.currentEquipo = new Equipo();
+                this.actualizarCurrentNodoClasificacion();
+                break;
+            }
+        }
+        this.crdEquipo.hidePopupAdd();
+        return "done";
+    }
+
+    public String commitEditEquipo(){
+        EntityManager emgr = this.getEntityManager();
         Marca mrk = (Marca)emgr.createQuery("SELECT m FROM Marca m WHERE m.idmarca=" + this.marcaSelected).getSingleResult();
         this.currentEquipo.setIdmarca(mrk);
         emgr.getTransaction().begin();
         emgr.merge(this.currentEquipo);
         emgr.getTransaction().commit();
         this.crdEquipo.hidePopupEdit();
-        for(Equipo eq: this.getCurrentClasificacion().getEquipoCollection()){            
-            if(eq.getIdequipo() == this.currentEquipo.getIdequipo()){                
+        for(Equipo eq: this.getCurrentClasificacion().getEquipoCollection()){
+            if(eq.getIdequipo() == this.currentEquipo.getIdequipo()){
                 eq.setNombre(this.currentEquipo.getNombre());
                 eq.setIdmarca(mrk);
                 eq.setModelo(this.currentEquipo.getModelo());
@@ -409,7 +474,7 @@ public class BeanBaseJInvent extends BeanBase {
         return "done";
     }
 
-    public String delExistencia(){
+    public String delEquipo(){
         String idEquipo = this.crdEquipo.getCurrentId();
         EntityManager emgr = this.getEntityManager();
         Equipo eq = (Equipo)emgr.createQuery("SELECT e FROM Equipo e WHERE e.idequipo=" + idEquipo).getSingleResult();
@@ -420,7 +485,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.getCurrentClasificacion().getEquipoCollection().remove(eq);
         this.msg.setText("Equipo " + eq.getNombre() + " eliminado satisfactoriamente.");
         this.msg.setVisible(true);
-        this.actualizarNodoClasificacion();
+        this.actualizarCurrentNodoClasificacion();
         return "done";
     }
 
@@ -435,7 +500,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.msg.setText("Nuevo software " + this.currentSoftware.getNombre() + " agregado exitosamente");
         this.msg.setVisible(true);
         this.currentSoftware = new Software();
-        this.actualizarNodoClasificacion();
+        this.actualizarCurrentNodoClasificacion();
         return "done";
     }
 
@@ -487,7 +552,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.getCurrentClasificacion().getSoftwareCollection().remove(soft);
         this.msg.setText("Software " + soft.getNombre() + " eliminado satisfactoriamente.");
         this.msg.setVisible(true);
-        this.actualizarNodoClasificacion();
+        this.actualizarCurrentNodoClasificacion();
         return "done";
     }
 
@@ -505,7 +570,7 @@ public class BeanBaseJInvent extends BeanBase {
                 this.msg.setText("Nuevo accesorio " + this.currentAccesorio.getNombre() + " agregado exitosamente");
                 this.msg.setVisible(true);
                 this.currentAccesorio = new Accesorio();
-                this.actualizarNodoClasificacion();
+                this.actualizarCurrentNodoClasificacion();
                 break;
             }
         }
@@ -561,7 +626,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.getCurrentClasificacion().getAccesorioCollection().remove(acc);
         this.msg.setText("Accesorio " + acc.getNombre() + " eliminado satisfactoriamente.");
         this.msg.setVisible(true);
-        this.actualizarNodoClasificacion();
+        this.actualizarCurrentNodoClasificacion();
         return "done";
     }
 
@@ -579,7 +644,7 @@ public class BeanBaseJInvent extends BeanBase {
                 this.msg.setText("Nueva pieza " + this.currentPieza.getNombre() + " agregada exitosamente");
                 this.msg.setVisible(true);
                 this.currentPieza = new Pieza();
-                this.actualizarNodoClasificacion();
+                this.actualizarCurrentNodoClasificacion();
                 break;
             }
         }
@@ -633,7 +698,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.getCurrentClasificacion().getPiezaCollection().remove(pz);
         this.msg.setText("Pieza " + pz.getNombre() + " eliminada satisfactoriamente.");
         this.msg.setVisible(true);
-        this.actualizarNodoClasificacion();
+        this.actualizarCurrentNodoClasificacion();
         return "done";
     }
 
@@ -752,7 +817,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.msg = msg;
     }
 
-    public void actualizarNodoClasificacion(){
+    public void actualizarCurrentNodoClasificacion(){
         Clasificacion cl = this.getCurrentClasificacion();
         this.clasificaciontm.getCurrentUserObject().setText(cl.getNombre() + " (" + (cl.getEquipoCollection().size() + cl.getSoftwareCollection().size() + cl.getAccesorioCollection().size() + cl.getPiezaCollection().size()) +  ")");
     }
@@ -1086,6 +1151,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.currentExistencia.setInstalacionCollection(new ArrayList<Instalacion>());
         this.currentExistencia.setPiezaCollection(new ArrayList<Pieza>());
         this.initItemsCombos();
+        this.existenciaEditMode = false;
         this.crdExistencia.showPopupAdd();
         return "done";
     }
@@ -1094,6 +1160,10 @@ public class BeanBaseJInvent extends BeanBase {
         String idExistencia = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
         this.currentExistencia = (Existencia)this.getEntityManager().createQuery("SELECT e FROM Existencia e WHERE e.idexistencia=" + idExistencia).getSingleResult();
         this.initItemsCombos();
+        this.equipoSelected = this.currentExistencia.getIdhardware().getIdequipo().toString();
+        this.ubicacionSelected = this.currentExistencia.getIdubicacion().getIdubicacion().toString();
+        
+        this.existenciaEditMode = true;
         this.crdExistencia.showPopupEdit();
         return "done";
     }
@@ -1163,6 +1233,20 @@ public class BeanBaseJInvent extends BeanBase {
             }
         }
         return "done";
+    }
+
+    /**
+     * @return the existenciaEditMode
+     */
+    public boolean getExistenciaEditMode() {
+        return existenciaEditMode;
+    }
+
+    /**
+     * @param existenciaEditMode the existenciaEditMode to set
+     */
+    public void setExistenciaEditMode(boolean existenciaEditMode) {
+        this.existenciaEditMode = existenciaEditMode;
     }
     
 }
