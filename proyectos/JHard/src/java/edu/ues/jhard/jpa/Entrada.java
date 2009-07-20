@@ -8,6 +8,7 @@ package edu.ues.jhard.jpa;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -119,12 +120,20 @@ public class Entrada implements Serializable {
         return comentariosCollection;
     }
 
+    public List<Comentarios> getComentariosList() {
+        return (List<Comentarios>)comentariosCollection;
+    }
+
     public void setComentariosCollection(Collection<Comentarios> comentariosCollection) {
         this.comentariosCollection = comentariosCollection;
     }
 
     public Collection<TagEntrada> getTagEntradaCollection() {
         return tagEntradaCollection;
+    }
+
+    public List<TagEntrada> getTagEntradaList() {
+        return (List<TagEntrada>)tagEntradaCollection;
     }
 
     public void setTagEntradaCollection(Collection<TagEntrada> tagEntradaCollection) {

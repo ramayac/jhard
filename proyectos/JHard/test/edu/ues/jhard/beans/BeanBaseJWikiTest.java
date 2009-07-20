@@ -187,7 +187,7 @@ public class BeanBaseJWikiTest {
     @Test
     public void testRegistrarComentario() {
         //System.out.println("testRegistrarComentario");
-        Comentarios comentario = new Comentarios(9999, "Oh!!! esta es el comentario para la entrada 9999!!!", new Date(2009, 9, 9));
+        Comentarios comentario = new Comentarios(9999, "Oh!!! esta es el comentario para la entrada 9999!!!", new Date(2009, 9, 9), "TEST", true);
         BeanBaseJWiki instance = new BeanBaseJWiki();
         if(!instance.createComentario(9999, comentario)) fail("fallo en REGISTRAR COMENTARIO");
     }

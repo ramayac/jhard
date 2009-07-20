@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,29 +23,32 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author robertux
+ * @author rodrigo
  */
 @Entity
-@Table(name = "comentarios", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Comentarios.findAll", query = "SELECT c FROM Comentarios c"),
-@NamedQuery(name = "Comentarios.findByIdcoment", query = "SELECT c FROM Comentarios c WHERE c.idcoment = :idcoment"), 
-@NamedQuery(name = "Comentarios.findByIdEntrada", query = "SELECT c FROM Comentarios c WHERE c.identrada = :identrada"),
-/*@NamedQuery(name = "Comentarios.findByComentario", query = "SELECT c FROM Comentarios c WHERE c.comentario = :comentario"),*/
-@NamedQuery(name = "Comentarios.findByFechahorara", query = "SELECT c FROM Comentarios c WHERE c.fechahorara = :fechahorara")})
+@Table(name = "comentarios")
+@NamedQueries({@NamedQuery(name = "Comentarios.findAll", query = "SELECT c FROM Comentarios c"), @NamedQuery(name = "Comentarios.findByIdcoment", query = "SELECT c FROM Comentarios c WHERE c.idcoment = :idcoment"), @NamedQuery(name = "Comentarios.findByComentario", query = "SELECT c FROM Comentarios c WHERE c.comentario = :comentario"), @NamedQuery(name = "Comentarios.findByFechahorara", query = "SELECT c FROM Comentarios c WHERE c.fechahorara = :fechahorara"), @NamedQuery(name = "Comentarios.findByFirma", query = "SELECT c FROM Comentarios c WHERE c.firma = :firma"), @NamedQuery(name = "Comentarios.findByAprobado", query = "SELECT c FROM Comentarios c WHERE c.aprobado = :aprobado")})
 public class Comentarios implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idcoment", nullable = false)
+    @Column(name = "idcoment")
     private Integer idcoment;
     @Basic(optional = false)
-    @Column(name = "comentario", nullable = false, length = 250)
+    @Column(name = "comentario")
     private String comentario;
     @Basic(optional = false)
-    @Column(name = "fechahorara", nullable = false)
+    @Column(name = "fechahorara")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechahorara;
-    @JoinColumn(name = "identrada", referencedColumnName = "identrada", nullable = false)
+    @Basic(optional = false)
+    @Column(name = "firma")
+    private String firma;
+    @Basic(optional = false)
+    @Column(name = "aprobado")
+    private boolean aprobado;
+    @JoinColumn(name = "identrada", referencedColumnName = "identrada")
     @ManyToOne(optional = false)
     private Entrada identrada;
 
@@ -54,10 +59,12 @@ public class Comentarios implements Serializable {
         this.idcoment = idcoment;
     }
 
-    public Comentarios(Integer idcoment, String comentario, Date fechahorara) {
+    public Comentarios(Integer idcoment, String comentario, Date fechahorara, String firma, boolean aprobado) {
         this.idcoment = idcoment;
         this.comentario = comentario;
         this.fechahorara = fechahorara;
+        this.firma = firma;
+        this.aprobado = aprobado;
     }
 
     public Integer getIdcoment() {
@@ -82,6 +89,22 @@ public class Comentarios implements Serializable {
 
     public void setFechahorara(Date fechahorara) {
         this.fechahorara = fechahorara;
+    }
+
+    public String getFirma() {
+        return firma;
+    }
+
+    public void setFirma(String firma) {
+        this.firma = firma;
+    }
+
+    public boolean getAprobado() {
+        return aprobado;
+    }
+
+    public void setAprobado(boolean aprobado) {
+        this.aprobado = aprobado;
     }
 
     public Entrada getIdentrada() {

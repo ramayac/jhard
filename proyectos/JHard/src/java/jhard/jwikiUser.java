@@ -7,34 +7,20 @@
 package jhard;
 
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
-import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
-import com.icesoft.faces.component.jsfcl.data.BorderLayoutBean;
-import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
-import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
-
 import com.icesoft.faces.component.jsfcl.data.DefaultTableDataModel;
-import com.sun.data.provider.impl.ObjectArrayDataProvider;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
-
-
 import edu.ues.jhard.beans.BeanBaseJHardmin;
-import edu.ues.jhard.beans.BeanBaseJRequest;
 import edu.ues.jhard.beans.BeanBaseJWiki;
 import edu.ues.jhard.jhardmin.LoggedUser;
-import edu.ues.jhard.jhardmin.LoginManager;
 import edu.ues.jhard.jpa.Comentarios;
 import edu.ues.jhard.jpa.Entrada;
 import edu.ues.jhard.jpa.Tag;
 import edu.ues.jhard.jpa.TagEntrada;
-import edu.ues.jhard.jpa.Tecnico;
 import edu.ues.jhard.jpa.Usuario;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
-import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -97,6 +83,15 @@ public class jwikiUser extends AbstractPageBean {
     public  BeanBaseJWiki getJWikiInstance() {
         //return (BeanBaseJWiki) getBean("JWikiInstance");
         return this.jwikiInstance;
+    }
+    private DefaultTableDataModel dataTable1Model = new DefaultTableDataModel();
+
+    public DefaultTableDataModel getDataTable1Model() {
+        return dataTable1Model;
+    }
+
+    public void setDataTable1Model(DefaultTableDataModel dtdm) {
+        this.dataTable1Model = dtdm;
     }
 
 //    private DefaultTableDataModel dataTable1Model = new DefaultTableDataModel();
@@ -265,25 +260,25 @@ public class jwikiUser extends AbstractPageBean {
         this.soloUna = varias;
     }
 
-    /**
-     * Obtiene la siguienteEntrada
-     * @return
-     */
-    public String siguienteEntrada(){
-        if(!(this.indice>this.listaEntradas.size())) this.indice++;
-        this.entradaActual = this.listaEntradas.get(this.indice);
-        return "exito";
-    }
-
-    /**
-     * Obtiene la entrada anterior
-     * @return
-     */
-    public String anteriorEntrada(){
-        if(this.indice!=0) this.indice--;
-        this.entradaActual = this.listaEntradas.get(this.indice);
-        return "exito";
-    }
+//    /**
+//     * Obtiene la siguienteEntrada
+//     * @return
+//     */
+//    public String siguienteEntrada(){
+//        if(!(this.indice>this.listaEntradas.size())) this.indice++;
+//        this.entradaActual = this.listaEntradas.get(this.indice);
+//        return "exito";
+//    }
+//
+//    /**
+//     * Obtiene la entrada anterior
+//     * @return
+//     */
+//    public String anteriorEntrada(){
+//        if(this.indice!=0) this.indice--;
+//        this.entradaActual = this.listaEntradas.get(this.indice);
+//        return "exito";
+//    }
 
     /**
      * Metodo para obtener una entrada por su ID
@@ -294,7 +289,7 @@ public class jwikiUser extends AbstractPageBean {
         return this.entradaActual;
     }
 
-        /**
+    /**
      * Metodo para obtener una entrada por su ID
      * @param identrada id de la entada que se desea
      * @return
@@ -302,7 +297,7 @@ public class jwikiUser extends AbstractPageBean {
     public String elegirEntradaActual() {
         String idSeleccionado = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idSeleccionado");
         Integer id = new Integer(idSeleccionado);
-        System.out.println(idSeleccionado);
+        //System.out.println(idSeleccionado);
         this.entradaActual = this.jwikiInstance.getEntrada(id.intValue());
         this.setSoloUna(true);
         return "exito";
@@ -331,4 +326,16 @@ public class jwikiUser extends AbstractPageBean {
         List<Comentarios> c = (List<Comentarios>)this.entradaActual.getComentariosCollection();
         return c;
     }
+
+    public boolean getShowPagComentarios(){
+        if(this.entradaActual.getComentariosCollection().size()>10) return true;
+        return false;
+    }
+
+    public boolean getShowPagEntradas(){
+        if(this.listaEntradas.size()>5) return true;
+        return false;
+    }
+
+    //idComentarioBorrar
 }
