@@ -277,7 +277,7 @@
                                                 id="btnCrearReserva" style="width: 250px" styleClass="btnAccion2" value="Crear Reserva"/>
                                         </ice:panelGroup>
                                     </ice:panelCollapsible>
-                                    <ice:panelCollapsible expanded="true" id="panelAdmin" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" style="width: 600px">
+                                    <ice:panelCollapsible expanded="false" id="panelAdmin" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" style="width: 600px">
                                         <f:facet name="header">
                                             <ice:panelGroup id="panelGroup3">
                                                 <ice:outputText id="lblTitulo3" value="Administración"/>

@@ -37,7 +37,7 @@
                                 <a href="jinvent.jspx">Inventario</a>
                             </li>
                             <li>
-                                <a href="#">Wiki y Cursos</a>
+                                <a href="jprocurUser.iface">Wiki y Cursos</a>
                             </li>
                             <li class="last">
                                 <a href="jcanon.iface">Cañones</a>
