@@ -304,17 +304,43 @@ public class jwikiUser extends AbstractPageBean {
     }
 
     /**
-     * Metodo para obtener todos las Etiquetas asociados con el ID de una Entrada
+     * Metodo para obtener todos las Etiquetas asociados con la EntradaActual
      * @param idEntrada
      * @return
      */
-    public List<Tag> getEtiquetasEntrada() {
+    public List<Tag> getEtiquetas() {
         List<TagEntrada> te = (List<TagEntrada>)this.entradaActual.getTagEntradaCollection();
         List<Tag> tag = new ArrayList<Tag>();
         for (TagEntrada tagEntrada : te) {
             tag.add(tagEntrada.getIdtag());
         }
         return tag;
+    }
+
+    /**
+     * Metodo para obtener todos las Etiquetas como un VIL STRING asociados con la EntradaActual
+     * @param idEntrada
+     * @return
+     */
+    public String getEtiquetasString() {
+        List<TagEntrada> te = (List<TagEntrada>)this.entradaActual.getTagEntradaCollection();
+        String resultado = new String();
+        switch (te.size()){
+            case 0:
+                return "No hay Etiquetas asociadas.";
+            case 1:
+                resultado = te.get(0).getIdtag().getDescripcion() + ".";
+                break;
+            case 2:
+                resultado = te.get(0).getIdtag().getDescripcion() + ", " + te.get(1).getIdtag().getDescripcion() + ".";
+                break;
+            default: //para los > de 2.
+                for (TagEntrada tagEntrada : te)
+                    resultado += tagEntrada.getIdtag().getDescripcion() + ", ";
+                resultado += ".";
+                break;
+        }
+        return resultado;
     }
 
     /**
@@ -338,4 +364,12 @@ public class jwikiUser extends AbstractPageBean {
     }
 
     //idComentarioBorrar
+    
+    /**
+     * Metodo para establecer hacer toggle a la vista de entradas (Unica o Multiple)
+     */
+    public String toggleVista() {
+        this.setSoloUna(false);
+        return "exito.";
+    }
 }

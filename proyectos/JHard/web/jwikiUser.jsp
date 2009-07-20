@@ -4,7 +4,11 @@
     Created on : 06-21-2009, 6:00:43 AM
     Author     : ramayac
 -->
-<jsp:root version="2.1" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ice="http://www.icesoft.com/icefaces/component" xmlns:jsp="http://java.sun.com/JSP/Page">
+<jsp:root version="2.1"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:jsp="http://java.sun.com/JSP/Page">
     <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"/>
     <f:view>
         <html id="outputHtml1">
@@ -68,33 +72,31 @@
                                     <ice:outputText id="lblEntradaDescripcionUnico" value="#{jwikiUser.entradaActual.descripcion}"/>
                                     <br/>
                                     <br/>
-                                    Escrito por: <ice:outputText id="lblEntradaUsuarioUnico"
-                                        value="#{jwikiUser.entradaActual.idusuario.nombre}"/>, en: <ice:outputText id="lblEntradaFechaUnico" value="#{jwikiUser.entradaActual.fechahora}"/>
+                                    Escrito por: <ice:outputText id="lblEntradaUsuarioUnico" value="#{jwikiUser.entradaActual.idusuario.nombre}"/>, en: <ice:outputText id="lblEntradaFechaUnico" value="#{jwikiUser.entradaActual.fechahora}"/>
+                                    <br/>
+                                    <br/>
+                                    <!-- ICEFaces MIERDA!, no deja usar ni UI:Repeat ni c:ForEach, MIERDAAA! :@ -->
+                                    Etiquetas:<br/>
+                                    <ice:outputLabel id="lblEtiquetas" style="font-weight:bold; " value="#{jwikiUser.etiquetasString}"/>
                                     <br/>
                                     <br/>
                                     Comentarios:<br/>
-                                    <ice:dataTable id="tablaEntradaComentarios" rows="10" value="#{jwikiUser.entradaActual.comentariosList}" var="indiceComentario">
+                                    <ice:dataTable id="tablaEntradaComentarios" rows="10" value="#{jwikiUser.entradaActual.comentariosList}" var="indiceComentario" width="100%">
                                         <ice:column id="columnaComentarios">
-                                            <ice:outputText id="lblComent" value="#{indiceComentario.comentario}"/>
-                                            <!-- aqui hay que poner un commandLink para eliminar comentarios -->
+                                            <ice:panelGroup id="pnlComent" rendered="#{indiceComentario.aprobado}">
+                                                <ice:outputText id="lblComent" value="#{indiceComentario.comentario}"/><!-- aqui hay que poner un commandLink para eliminar comentarios -->
+                                            </ice:panelGroup>
                                         </ice:column>
                                     </ice:dataTable>
                                     <div align="center">
                                         <ice:dataPaginator for="tablaEntradaComentarios" id="paginadorComentarios" paginator="true" rendered="#{jwikiUser.showPagComentarios}">
-                                            <f:facet name="first">
-                                                <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
-                                            </f:facet>
-                                            <f:facet name="previous">
-                                                <ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/>
-                                            </f:facet>
-                                            <f:facet name="next">
-                                                <ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/>
-                                            </f:facet>
-                                            <f:facet name="last">
-                                                <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
-                                            </f:facet>
+                                            <f:facet name="first"><ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/></f:facet>
+                                            <f:facet name="previous"><ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/></f:facet>
+                                            <f:facet name="next"><ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/></f:facet>
+                                            <f:facet name="last"><ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/></f:facet>
                                         </ice:dataPaginator>
                                     </div>
+                                    <ice:commandButton action="#{jwikiUser.toggleVista}" id="btnToggle" styleClass="btnAccion2" value="Regresar"/>
                                 </ice:panelGroup>
                                 <ice:panelGroup id="panelVistaMultiple" rendered="#{!jwikiUser.soloUna}">
                                     <ice:dataTable id="tablaEntradas" rows="5" value="#{jwikiUser.listaEntradas}" var="indiceEntrada">
@@ -112,18 +114,10 @@
                                     </ice:dataTable>
                                     <div align="center">
                                         <ice:dataPaginator for="tablaEntradas" id="paginadorEntrada" paginator="true" rendered="#{jwikiUser.showPagEntradas}">
-                                            <f:facet name="first">
-                                                <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
-                                            </f:facet>
-                                            <f:facet name="previous">
-                                                <ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/>
-                                            </f:facet>
-                                            <f:facet name="next">
-                                                <ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/>
-                                            </f:facet>
-                                            <f:facet name="last">
-                                                <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
-                                            </f:facet>
+                                            <f:facet name="first"><ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/></f:facet>
+                                            <f:facet name="previous"><ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/></f:facet>
+                                            <f:facet name="next"><ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/></f:facet>
+                                            <f:facet name="last"><ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/></f:facet>
                                         </ice:dataPaginator>
                                     </div>
                                 </ice:panelGroup>
@@ -199,7 +193,7 @@
                 <div id="footer">
                     <div id="footer-wrap">
                         <p id="legal" style="line-height: 13px">Universidad de El Salvador Facultad Multidisciplinaria de Occidente <br/>
-	Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/>
+                            Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/>
                             <a href="#">Créditos</a> - <a href="http://www.uesocc.edu.sv">Pagina Principal de la UES FMOcc</a>
                         </p>
                     </div>

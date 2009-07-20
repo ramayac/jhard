@@ -32,15 +32,9 @@ import javax.persistence.TemporalType;
 @Table(name = "entrada", catalog = "jhard", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Entrada.findAll", query = "SELECT e FROM Entrada e"),
-    //SELECT * FROM `jhard`.`entrada` ORDER BY 1 DESC LIMIT 5
-    //@NamedQuery(name = "Entrada.findLastFive", query = "SELECT e FROM Entrada e ORDER BY 1 DESC LIMIT 5"),
-    //@NamedQuery(name = "Entrada.findLastN",query = "SELECT e FROM Entrada e ORDER BY 1 DESC LIMIT :numero"),
-    @NamedQuery(name = "Entrada.findByIdentrada",
-        query = "SELECT e FROM Entrada e WHERE e.identrada = :identrada"),
-    //@NamedQuery(name = "Entrada.findByTitulo", query = "SELECT e FROM Entrada e WHERE e.titulo = :titulo"), //what for?
-    @NamedQuery(name = "Entrada.findByFechahora", 
-        query = "SELECT e FROM Entrada e WHERE e.fechahora = :fechahora")
-    //@NamedQuery(name = "Entrada.findByRangoFechahora", query = "SELECT e FROM Entrada e WHERE e.fechahora IN BETWEEN :defecha AND :hastafecha")
+    @NamedQuery(name = "Entrada.findByIdentrada", query = "SELECT e FROM Entrada e WHERE e.identrada = :identrada"),
+    @NamedQuery(name = "Entrada.findByTitulo", query = "SELECT e FROM Entrada e WHERE e.titulo = :titulo"), 
+    @NamedQuery(name = "Entrada.findByFechahora", query = "SELECT e FROM Entrada e WHERE e.fechahora = :fechahora")
 })
 
 public class Entrada implements Serializable {
