@@ -69,8 +69,8 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>jwikiUser</managed-bean-name>
-        <managed-bean-class>jhard.jwikiUser</managed-bean-class>
+        <managed-bean-name>jprocurUser</managed-bean-name>
+        <managed-bean-class>jhard.jprocurUser</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>

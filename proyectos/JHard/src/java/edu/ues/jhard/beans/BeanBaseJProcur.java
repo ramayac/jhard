@@ -18,7 +18,7 @@ import javax.persistence.*;
  * - Por que diablos usan arrays? :S
  * - Nueva logica a partir del 10 de Julio, mejor uso del EM context.
  */
-public class BeanBaseJWiki extends BeanBase {
+public class BeanBaseJProcur extends BeanBase {
 
     /**
      * Metodo para obtener uno o varios objeto entrada por UNA etiqueta, se asume que la entrada es nueva, asi que se hace
