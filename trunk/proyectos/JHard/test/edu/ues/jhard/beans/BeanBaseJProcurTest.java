@@ -20,9 +20,9 @@ import static org.junit.Assert.*;
  *
  * @author Ramayac
  */
-public class BeanBaseJWikiTest {
+public class BeanBaseJProcurTest {
 
-    public BeanBaseJWikiTest() {
+    public BeanBaseJProcurTest() {
     }
 
     @BeforeClass
@@ -47,7 +47,7 @@ public class BeanBaseJWikiTest {
     @Test
     public void testGetEntrada() {
         System.out.println("getEntrada");
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         //Entrada expResult = null;
         Entrada result = instance.getEntrada(1);
         assertNotNull(result);
@@ -62,7 +62,7 @@ public class BeanBaseJWikiTest {
     public void testNEntradas() {
         int n = 2;
         //System.out.println("testNEntradas");
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         List<Entrada> resultado = instance.getUltimasNEntradas(n);
         if(resultado.size()==n)
             assertNotNull(resultado.get(0)); //por lo menos, que la primera NO sea null
@@ -73,7 +73,7 @@ public class BeanBaseJWikiTest {
     @Test
     public void testgetAllEntradas() {
         //System.out.println("testNEntradas");
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         List<Entrada> resultado = instance.getAllEntradas();
         assertNotNull(resultado);
     }
@@ -85,7 +85,7 @@ public class BeanBaseJWikiTest {
     public void testComentariosDeEntrada() {
         int identrada = 1;
         //System.out.println("testComentariosDeEntrada");
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         Entrada resultado = instance.getEntrada(identrada);
         Collection<Comentarios> comentarios = resultado.getComentariosCollection();
         System.out.println("Comentarios asociados con la Entrada: " + resultado.getTitulo());
@@ -102,7 +102,7 @@ public class BeanBaseJWikiTest {
     public void testEtiquetasDeEntrada() {
         int identrada = 1;
         //System.out.println("getEtiquetasDeEntrada");
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         Entrada entrada = instance.getEntrada(identrada);
         Collection<Tag> resultado= instance.getEtiquetas(entrada);
         System.out.println("Tags asociados con la Entrada: " + entrada.getTitulo());
@@ -119,7 +119,7 @@ public class BeanBaseJWikiTest {
     public void testRegistrarTag() {
         //System.out.println("testRegistrarTag");
         Tag tag = new Tag(0, "Tag9999");
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         if(!instance.createTag(tag)) fail("fallo en REGISTRAR TAG");
     }
 
@@ -130,7 +130,7 @@ public class BeanBaseJWikiTest {
     public void testSearchEntradaPorTag() {
         String tag1 = "latin";
         //System.out.println("testSearchEntradaPorTag");
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         List<Entrada> e = instance.searchEntradaPorEtiqueta(tag1); //se busca por esta descripcion
         assertTrue(e.size()>0);
     }
@@ -143,7 +143,7 @@ public class BeanBaseJWikiTest {
 //        String tag1 = "latin";
 //        String tag2 = "wiki";
 //        //System.out.println("testSearchEntradaPorTagsSegundaForma");
-//        BeanBaseJWiki instance = new BeanBaseJWiki();
+//        BeanBaseJProcur instance = new BeanBaseJProcur();
 //        String[] etiquetas = {tag1, tag2};
 //        Set<Tag> coletiquetas = new HashSet(); //puede ser un SET, MAP, etc... media vez el tata sea collection, no problemo!
 //        coletiquetas.add(instance.getEtiqueta(tag1));
@@ -163,7 +163,7 @@ public class BeanBaseJWikiTest {
     public void testSearchEntradaPorTitulo() {
         String criteria = "ulo 4";
         //System.out.println("testSearchEntradaPorTitulo");
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         List<Entrada> e = (List<Entrada>)instance.searchEntradaPorTitulo(criteria);
         assertNotNull(e);
     }
@@ -178,7 +178,7 @@ public class BeanBaseJWikiTest {
         BeanBaseJHardmin hardmin = new BeanBaseJHardmin();
         Usuario usuario = hardmin.getUsuario(1);
         Entrada entrada = new Entrada(9999, "La entrada 9999", "nain, nine, nueve, 9, iiiiiiii, etc etc etc", new Date(2009, 9, 9), usuario);
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         if(!instance.createEntrada(entrada)) fail("fallo en REGISTRAR ENTRADA");
     }
 
@@ -189,7 +189,7 @@ public class BeanBaseJWikiTest {
     public void testRegistrarComentario() {
         //System.out.println("testRegistrarComentario");
         Comentarios comentario = new Comentarios(9999, "Oh!!! esta es el comentario para la entrada 9999!!!", new Date(2009, 9, 9), "TEST", true);
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         if(!instance.createComentario(9999, comentario)) fail("fallo en REGISTRAR COMENTARIO");
     }
 
@@ -203,7 +203,7 @@ public class BeanBaseJWikiTest {
         Integer idtag = 777;
         Integer identrada = 9999;
         //System.out.println("");
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         Tag tag = new Tag(idtag, "TagTest"); //nuevo tag agregado "al vuelo"
         Entrada e = instance.getEntrada(identrada); //obtenemos la entrada vieja
         TagEntrada te = new TagEntrada(identrada, tag, e); //creamos el vinculo
@@ -223,7 +223,7 @@ public class BeanBaseJWikiTest {
         Integer idtag = 777;
         Integer identrada = 9999;
         //System.out.println("");
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         Entrada e = instance.getEntrada(identrada); //obtenemos la entrada vieja
         Tag t = instance.getEtiqueta(idtag); //obtenemos la etiqueta vieja
         TagEntrada te = instance.searchTagEntrada(e, t); //obtenemos la TagEntrada
@@ -239,7 +239,7 @@ public class BeanBaseJWikiTest {
     @Test
     public void testEliminarTag() {
         //System.out.println("testEliminarTag");
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         instance.deleteTag(0);
         Tag t = instance.getEtiqueta(0);
         if(!(t==null)) fail("fallo en ELIMINAR TAG");
@@ -251,7 +251,7 @@ public class BeanBaseJWikiTest {
     @Test
     public void testEliminarComentario() {
         //System.out.println("testEliminarComentario");
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         Entrada entrada = instance.getEntrada(9999);
         if(entrada==null) fail("fallo en ELIMINAR COMENTARIO (no hay entradas con comentarios)");
         List<Comentarios> com = instance.getComentarios(entrada);
@@ -266,7 +266,7 @@ public class BeanBaseJWikiTest {
     @Test
     public void testEliminarEntrada() {
         //System.out.println("testEliminarEntrada");
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         instance.deleteEntrada(9999);
         Entrada entrada = instance.getEntrada(9999);
         if(!(entrada==null)) fail("fallo en ELIMINAR ENTRADA");
@@ -279,7 +279,7 @@ public class BeanBaseJWikiTest {
     public void testMostrarComentarios() {
         System.out.println("//-------testMostrarComentarios-------");
         Integer identrada = new Integer(1);
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         Entrada e = instance.getEntrada(identrada);
         List<Comentarios> listacom = instance.getComentariosEntrada(e);
         if(listacom.size()!=0){
@@ -293,7 +293,7 @@ public class BeanBaseJWikiTest {
      */
     @Test
     public void testMostrarComentariosNOAprobados() {
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         List<Comentarios> listacom = instance.getComentariosNoAprobados();
         if(listacom.size()!=0){
             for (Comentarios c : listacom) System.out.println(c.getComentario() + ", Aprobado: " + c.getAprobado() );
@@ -305,7 +305,7 @@ public class BeanBaseJWikiTest {
      */
     @Test
     public void testMostrarComentariosAprobados() {
-        BeanBaseJWiki instance = new BeanBaseJWiki();
+        BeanBaseJProcur instance = new BeanBaseJProcur();
         List<Comentarios> listacom = instance.getComentariosAprobados();
         if(listacom.size()!=0){
             for (Comentarios c : listacom) System.out.println(c.getComentario() + ", Aprobado: " + c.getAprobado() );

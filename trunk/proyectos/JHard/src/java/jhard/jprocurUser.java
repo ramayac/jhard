@@ -10,7 +10,7 @@ import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.icesoft.faces.component.jsfcl.data.DefaultTableDataModel;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
-import edu.ues.jhard.beans.BeanBaseJWiki;
+import edu.ues.jhard.beans.BeanBaseJProcur;
 import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jpa.Comentarios;
 import edu.ues.jhard.jpa.Entrada;
@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
  * lifecycle methods and event handlers where you may add behavior
  * to respond to incoming events.</p>
  */
-public class jwikiUser extends AbstractPageBean {
+public class jprocurUser extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
     private int __placeholder;
 
@@ -78,11 +78,11 @@ public class jwikiUser extends AbstractPageBean {
         return (BeanBaseJHardmin) getBean("JHardminInstance");
     }
 
-    private BeanBaseJWiki jwikiInstance = new BeanBaseJWiki(); //sera mejor como jWikiInstance en el faces-config? revisar el rednimiento.
+    private BeanBaseJProcur jprocurInstance = new BeanBaseJProcur(); //sera mejor como jWikiInstance en el faces-config? revisar el rednimiento.
 
-    public  BeanBaseJWiki getJWikiInstance() {
-        //return (BeanBaseJWiki) getBean("JWikiInstance");
-        return this.jwikiInstance;
+    public  BeanBaseJProcur getJWikiInstance() {
+        //return (BeanBaseJProcur) getBean("JWikiInstance");
+        return this.jprocurInstance;
     }
     private DefaultTableDataModel dataTable1Model = new DefaultTableDataModel();
 
@@ -107,7 +107,7 @@ public class jwikiUser extends AbstractPageBean {
     /**
      * <p>Construct a new Page bean instance.</p>
      */
-    public jwikiUser() {
+    public jprocurUser() {
 
         lu= getJHardminInstance().getCurrentUser();
         
@@ -298,7 +298,7 @@ public class jwikiUser extends AbstractPageBean {
         String idSeleccionado = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idSeleccionado");
         Integer id = new Integer(idSeleccionado);
         //System.out.println(idSeleccionado);
-        this.entradaActual = this.jwikiInstance.getEntrada(id.intValue());
+        this.entradaActual = this.jprocurInstance.getEntrada(id.intValue());
         this.setSoloUna(true);
         return "exito";
     }
