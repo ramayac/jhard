@@ -15,7 +15,6 @@ import com.icesoft.faces.component.ext.HtmlSelectBooleanCheckbox;
 import com.icesoft.faces.component.ext.HtmlSelectOneListbox;
 import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
-import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
 import com.icesoft.faces.component.jsfcl.data.PopupBean;
 import com.icesoft.faces.component.panelpopup.PanelPopup;
 import com.icesoft.faces.component.paneltabset.TabChangeEvent;
@@ -36,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.faces.FacesException;
-import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
