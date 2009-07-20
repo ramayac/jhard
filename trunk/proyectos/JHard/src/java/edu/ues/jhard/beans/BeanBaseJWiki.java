@@ -168,12 +168,6 @@ public class BeanBaseJWiki extends BeanBase {
         Query q = em.createNativeQuery(sql, Entrada.class);
 
         List<Entrada> e = q.getResultList();
-
-//        em.getTransaction().begin();
-//        for (Entrada entrada : e) {
-//            em.persist(entrada);
-//        }
-//        em.getTransaction().commit();
         return e;
     }
 
@@ -190,12 +184,6 @@ public class BeanBaseJWiki extends BeanBase {
         q.setFirstResult(0);
         q.setMaxResults(numero);
         List<Entrada> e = q.getResultList();
-
-//        em.getTransaction().begin();
-//        for (Entrada entrada : e) {
-//            em.persist(entrada);
-//        }
-//        em.getTransaction().commit();
         return e;
     }
 
@@ -261,9 +249,6 @@ public class BeanBaseJWiki extends BeanBase {
         Query q = em.createNamedQuery("Tag.findByDescripcion");
         q.setParameter("descripcion", descripcion);
         Tag t = (Tag) q.getSingleResult();
-//        em.getTransaction().begin();
-//        em.persist(t);
-//        em.getTransaction().commit();
         return t;
     }
 
@@ -289,6 +274,30 @@ public class BeanBaseJWiki extends BeanBase {
     }
 
     /**
+     * Metodo para obtener la lista de TODOS los comentarios NO aprobados
+     * @param idEntrada
+     * @return
+     */
+    public List<Comentarios> getComentariosNoAprobados() {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Comentarios.findNOAprobado");
+        List<Comentarios> listaCom = q.getResultList();
+        return listaCom;
+    }
+
+    /**
+     * Metodo para obtener la lista de TODOS los comentarios aprobados
+     * @param idEntrada
+     * @return
+     */
+    public List<Comentarios> getComentariosAprobados() {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Comentarios.findAprobado");
+        List<Comentarios> listaCom = q.getResultList();
+        return listaCom;
+    }
+
+    /**
      * Metodo para obtener los comentarios de la BD mediante el id de una Entrada
      * @param idEntrada
      * @return
@@ -296,8 +305,10 @@ public class BeanBaseJWiki extends BeanBase {
     public List<Comentarios> getComentariosEntrada(Entrada entrada) {
         EntityManager em = this.getEntityManager();
         Entrada e = em.find(Entrada.class, entrada.getIdentrada());
-        List<Comentarios> c = (List<Comentarios>)e.getComentariosCollection();
-        return c;
+        Query q = em.createNamedQuery("Comentarios.findAprobadoByIdentrada");
+        q.setParameter("identrada", e);
+        List<Comentarios> listaCom = q.getResultList();
+        return listaCom;
     }
 
     /**
@@ -333,7 +344,6 @@ public class BeanBaseJWiki extends BeanBase {
             e.setComentariosCollection(colcom);
             em.getTransaction().begin();
             em.merge(e);
-            //em.persist(comentario);
             em.getTransaction().commit();
         } catch (Exception e) {
             return false;
@@ -359,7 +369,6 @@ public class BeanBaseJWiki extends BeanBase {
             e.setComentariosCollection(colcom);
             em.getTransaction().begin();
             em.merge(e);
-            //em.persist(comentario);
             em.getTransaction().commit();
         } catch (Exception e) {
             return false;
@@ -446,10 +455,6 @@ public class BeanBaseJWiki extends BeanBase {
     public void deleteComentario(Comentarios comentario){
         EntityManager em = this.getEntityManager();
         Comentarios c = (Comentarios)em.find(Comentarios.class, comentario.getIdcoment());
-        //entrada.getComentariosCollection().remove(c);
-        //Collection<Comentarios> colcom = entrada.getComentariosCollection();
-        //colcom.remove(c);
-       // entrada.setComentariosCollection(colcom);
         em.getTransaction().begin();
         em.remove(c);
         em.getTransaction().commit();
@@ -482,11 +487,8 @@ public class BeanBaseJWiki extends BeanBase {
 
         em.getTransaction().begin();
         em.remove(tagentrada);
-        //em.refresh(entrada);
         em.getTransaction().commit();
     }
-
-    /*-----------------------------------------------*/
 
     /**
      * Metodo para actualizar un objeto entrada
@@ -525,6 +527,33 @@ public class BeanBaseJWiki extends BeanBase {
         em.getTransaction().begin();
         em.merge(e);
         em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para recargar una Entrada por demanda, por su ID
+     * @param entrada
+     */
+    public Entrada recargarEntrada(Integer identrada){
+        EntityManager em = this.getEntityManager();
+        Entrada e = em.find(Entrada.class, identrada);
+        em.getTransaction().begin();
+        em.refresh(e);
+        em.getTransaction().commit();
+        return e;
+    }
+
+    /**
+     * Metodo para recargar una Entrada por demanda
+     * @param entrada
+     */
+    public Entrada recargarEntrada(Entrada entrada){
+        EntityManager em = this.getEntityManager();
+        Entrada e = em.find(Entrada.class, entrada.getIdentrada());
+        e = entrada;
+        em.getTransaction().begin();
+        em.refresh(e);
+        em.getTransaction().commit();
+        return e;
     }
 
 //    /**

@@ -13,6 +13,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import static org.junit.Assert.*;
 
 /**
@@ -269,6 +270,46 @@ public class BeanBaseJWikiTest {
         instance.deleteEntrada(9999);
         Entrada entrada = instance.getEntrada(9999);
         if(!(entrada==null)) fail("fallo en ELIMINAR ENTRADA");
+    }
+
+    /**
+     * Mostrar los comentarios aprobados
+     */
+    @Test
+    public void testMostrarComentarios() {
+        System.out.println("//-------testMostrarComentarios-------");
+        Integer identrada = new Integer(1);
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        Entrada e = instance.getEntrada(identrada);
+        List<Comentarios> listacom = instance.getComentariosEntrada(e);
+        if(listacom.size()!=0){
+            for (Comentarios c : listacom) System.out.println(c.getComentario() + ", Aprobado: " + c.getAprobado() );
+        } else fail("fallo en MOSTRAR COMENTARIOS");
+        System.out.println("--------testMostrarComentarios------//");
+    }
+
+    /**
+     * Mostrar los comentarios NO aprobados
+     */
+    @Test
+    public void testMostrarComentariosNOAprobados() {
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        List<Comentarios> listacom = instance.getComentariosNoAprobados();
+        if(listacom.size()!=0){
+            for (Comentarios c : listacom) System.out.println(c.getComentario() + ", Aprobado: " + c.getAprobado() );
+        } else fail("fallo en MOSTRAR COMENTARIOS NO APROBADOS");
+    }
+
+    /**
+     * Mostrar los comentarios NO aprobados
+     */
+    @Test
+    public void testMostrarComentariosAprobados() {
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        List<Comentarios> listacom = instance.getComentariosAprobados();
+        if(listacom.size()!=0){
+            for (Comentarios c : listacom) System.out.println(c.getComentario() + ", Aprobado: " + c.getAprobado() );
+        } else fail("fallo en MOSTRAR COMENTARIOS APROBADOS");
     }
 
 }
