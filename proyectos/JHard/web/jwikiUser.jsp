@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-    Document   : jprocurUser
+    Document   : jwikiUser
     Created on : 06-21-2009, 6:00:43 AM
     Author     : ramayac
 -->
-<jsp:root version="2.1" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ice="http://www.icesoft.com/icefaces/component" xmlns:jsp="http://java.sun.com/JSP/Page">
+<jsp:root version="2.1"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    xmlns:jsp="http://java.sun.com/JSP/Page">
     <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"/>
     <f:view>
         <html id="outputHtml1">
@@ -23,17 +27,17 @@
                 <div id="header">
                     <div id="menu">
                         <ul>
-                            <li >
+                            <li>
                                 <a href="Index.iface">Principal</a>
                             </li>
                             <li>
-                                <a href="jrequest.iface">Mantenimientos</a>
+                                <a href="jrquest.iface">Mantenimientos</a>
                             </li>
                             <li>
                                 <a href="#">Grupos de Laboratorio</a>
                             </li>
                             <li>
-                                <a href="#">Inventario</a>
+                                <a href="jinvent.jspx">Inventario</a>
                             </li>
                             <li class="current_page_item">
                                 <a href="jprocurUser.iface">Wiki y Cursos</a>
@@ -53,91 +57,72 @@
                 <div id="page">
                     <!-- start content -->
                     <div id="content">
-                        <ice:form id="formEntrada">
-                            <ice:panelGroup id="panelVistaUnica" rendered="#{jprocurUser.soloUna}">
-                                <div class="post">
-                                    <h2>
-                                        <ice:outputLabel id="lblEntradaTituloUnico" style="font-weight:bold; " value="#{jprocurUser.entradaActual.titulo}"/>
-                                    </h2>
+                        <div class="post">
+                            <h2 class="title">Solucion a problemas comunes de Informatica</h2>
+                            <div class="entry">
+                                <p class="text">En este sitio encontrará una serie de articulos, relacionados a la solucion de problemas comunes de informática.
+                                </p>
+                            </div>
+                            <ice:form id="formEntrada">
+                                <ice:panelGroup id="panelVistaUnica" rendered="#{jwikiUser.soloUna}">
+                                    <h3 styleClass="tituloSeccion">
+                                        <ice:outputLabel id="lblEntradaTituloUnico" style="font-weight:bold; " value="#{jwikiUser.entradaActual.titulo}"/>
+                                    </h3>
                                     <br/>
-                                    <ice:outputText id="lblEntradaDescripcionUnico" value="#{jprocurUser.entradaActual.descripcion}"/>
+                                    <ice:outputText id="lblEntradaDescripcionUnico" value="#{jwikiUser.entradaActual.descripcion}"/>
                                     <br/>
                                     <br/>
-                                    Escrito por: <ice:outputText id="lblEntradaUsuarioUnico"
-                                                                 value="#{jprocurUser.entradaActual.idusuario.nombre}"/>, en: <ice:outputText id="lblEntradaFechaUnico" value="#{jprocurUser.entradaActual.fechahora}"/>
-                                </div>
-                                <br/>
-                                <br/>
-                                <!-- ICEFaces MIERDA!, no deja usar ni UI:Repeat ni c:ForEach, MIERDAAA! :@ -->
-                                Etiquetas:<br/>
-                                <ice:outputLabel id="lblEtiquetas" style="font-weight:bold; " value="#{jprocurUser.etiquetasString}"/>
-                                <br/>
-                                <br/>
-                                Comentarios:<br/>
-                                <div class="post">
-                                    <ice:dataTable id="tablaEntradaComentarios" rows="10" value="#{jprocurUser.entradaActual.comentariosList}"
-                                                   var="indiceComentario" width="100%">
+                                    Escrito por: <ice:outputText id="lblEntradaUsuarioUnico" value="#{jwikiUser.entradaActual.idusuario.nombre}"/>, en: <ice:outputText id="lblEntradaFechaUnico" value="#{jwikiUser.entradaActual.fechahora}"/>
+                                    <br/>
+                                    <br/>
+                                    <!-- ICEFaces MIERDA!, no deja usar ni UI:Repeat ni c:ForEach, MIERDAAA! :@ -->
+                                    Etiquetas:<br/>
+                                    <ice:outputLabel id="lblEtiquetas" style="font-weight:bold; " value="#{jwikiUser.etiquetasString}"/>
+                                    <br/>
+                                    <br/>
+                                    Comentarios:<br/>
+                                    <ice:dataTable id="tablaEntradaComentarios" rows="10" value="#{jwikiUser.entradaActual.comentariosList}" var="indiceComentario" width="100%">
                                         <ice:column id="columnaComentarios">
-
                                             <ice:panelGroup id="pnlComent" rendered="#{indiceComentario.aprobado}">
-                                                <ice:outputText id="lblComent" value="#{indiceComentario.comentario}"/>
-                                                <!-- aqui hay que poner un commandLink para eliminar comentarios -->
+                                                <ice:outputText id="lblComent" value="#{indiceComentario.comentario}"/><!-- aqui hay que poner un commandLink para eliminar comentarios -->
                                             </ice:panelGroup>
                                         </ice:column>
                                     </ice:dataTable>
-                                </div>
-                                <div align="center">
-                                    <ice:dataPaginator for="tablaEntradaComentarios" id="paginadorComentarios" paginator="true" rendered="#{jprocurUser.showPagComentarios}">
-                                        <f:facet name="first">
-                                            <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
-                                        </f:facet>
-                                        <f:facet name="previous">
-                                            <ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/>
-                                        </f:facet>
-                                        <f:facet name="next">
-                                            <ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/>
-                                        </f:facet>
-                                        <f:facet name="last">
-                                            <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
-                                        </f:facet>
-                                    </ice:dataPaginator>
-                                </div>
-                                <ice:commandButton action="#{jprocurUser.toggleVista}" id="btnToggle" styleClass="btnAccion2" value="Regresar"/>
-                            </ice:panelGroup>
-                            <ice:panelGroup id="panelVistaMultiple" rendered="#{!jprocurUser.soloUna}">
-                                <ice:dataTable id="tablaEntradas" rows="5" value="#{jprocurUser.listaEntradas}" var="indiceEntrada">
-                                    <ice:column id="columnaEntradas">
-                                        <div class="post">
-                                            <h2>
-                                                <ice:commandLink action="#{jprocurUser.elegirEntradaActual}">
+                                    <div align="center">
+                                        <ice:dataPaginator for="tablaEntradaComentarios" id="paginadorComentarios" paginator="true" rendered="#{jwikiUser.showPagComentarios}">
+                                            <f:facet name="first"><ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/></f:facet>
+                                            <f:facet name="previous"><ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/></f:facet>
+                                            <f:facet name="next"><ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/></f:facet>
+                                            <f:facet name="last"><ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/></f:facet>
+                                        </ice:dataPaginator>
+                                    </div>
+                                    <ice:commandButton action="#{jwikiUser.toggleVista}" id="btnToggle" styleClass="btnAccion2" value="Regresar"/>
+                                </ice:panelGroup>
+                                <ice:panelGroup id="panelVistaMultiple" rendered="#{!jwikiUser.soloUna}">
+                                    <ice:dataTable id="tablaEntradas" rows="5" value="#{jwikiUser.listaEntradas}" var="indiceEntrada">
+                                        <ice:column id="columnaEntradas">
+                                            <h3 styleClass="tituloSeccion">
+                                                <ice:commandLink action="#{jwikiUser.elegirEntradaActual}">
                                                     <ice:outputLabel id="lblTitulo" style="font-weight:bold; " value="#{indiceEntrada.titulo}"/>
                                                     <f:param name="idSeleccionado" value="#{indiceEntrada.identrada}"/>
                                                 </ice:commandLink>
-                                            </h2>
+                                            </h3>
                                             <br/>
                                             <ice:outputText id="lblDescripcion" value="#{indiceEntrada.descripcion}"/>
                                             <br/>
-                                        </div>
-                                    </ice:column>
-                                </ice:dataTable>
-                                <div align="center">
-                                    <ice:dataPaginator for="tablaEntradas" id="paginadorEntrada" paginator="true" rendered="#{jprocurUser.showPagEntradas}">
-                                        <f:facet name="first">
-                                            <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
-                                        </f:facet>
-                                        <f:facet name="previous">
-                                            <ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/>
-                                        </f:facet>
-                                        <f:facet name="next">
-                                            <ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/>
-                                        </f:facet>
-                                        <f:facet name="last">
-                                            <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
-                                        </f:facet>
-                                    </ice:dataPaginator>
-                                </div>
-                            </ice:panelGroup>
-                        </ice:form>
+                                        </ice:column>
+                                    </ice:dataTable>
+                                    <div align="center">
+                                        <ice:dataPaginator for="tablaEntradas" id="paginadorEntrada" paginator="true" rendered="#{jwikiUser.showPagEntradas}">
+                                            <f:facet name="first"><ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/></f:facet>
+                                            <f:facet name="previous"><ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/></f:facet>
+                                            <f:facet name="next"><ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/></f:facet>
+                                            <f:facet name="last"><ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/></f:facet>
+                                        </ice:dataPaginator>
+                                    </div>
+                                </ice:panelGroup>
+                            </ice:form>
+                        </div>
                     </div>
                     <!-- end content -->
                     <!-- start sidebar -->

@@ -771,7 +771,6 @@ private List in = new ArrayList();
                     System.out.println("TODO BIEN--> "+ id);
                     laptopElegida=new BeanBaseJCanon().getEntityManager().find(Existencia.class, id);
                 }
-                //FALTA LA VALIDACION PARA LAS LAPTOPS!!!!
                 reservaLaptop.setFechareserva(new Date((c.get(Calendar.YEAR))-1900, c.get(Calendar.MONTH), c.get(Calendar.DATE)));
                 
                 Date fechaI = (Date)this.selectFecha.getValue();
