@@ -92,5 +92,10 @@
         <managed-bean-name>jcanonAdmin</managed-bean-name>
         <managed-bean-class>jhard.jcanonAdmin</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>    
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>jprocurAdmin</managed-bean-name>
+        <managed-bean-class>jhard.jprocurAdmin</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>
