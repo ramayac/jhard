@@ -312,6 +312,50 @@ public class BeanBaseJProcur extends BeanBase {
     }
 
     /**
+     * Metodo para aprobar un comentario
+     * @param comentario
+     * @return
+     */
+    public Comentarios aprobarComentario(Comentarios comentario){
+        EntityManager em = this.getEntityManager();
+        comentario.setAprobado(true);
+        em.getTransaction().begin();
+        em.merge(comentario);
+        em.getTransaction().commit();
+        return comentario;
+    }
+
+    /**
+     * Metodo para aprobar un comentario por su ID
+     * @param comentario
+     * @return
+     */
+    public Comentarios aprobarComentario(Integer idcomentario){
+        EntityManager em = this.getEntityManager();
+        Comentarios comentario = em.find(Comentarios.class, idcomentario);
+        comentario.setAprobado(true);
+        em.getTransaction().begin();
+        em.merge(comentario);
+        em.getTransaction().commit();
+        return comentario;
+    }
+
+    /**
+     * Metodo para revertir el estado de aprobacion de un comentario
+     * más que todo, este metodo se usa en el Test.
+     * @param comentario
+     * @return
+     */
+    public Comentarios desaprobarComentario(Comentarios comentario){
+        EntityManager em = this.getEntityManager();
+        comentario.setAprobado(false);
+        em.getTransaction().begin();
+        em.merge(comentario);
+        em.getTransaction().commit();
+        return comentario;
+    }
+
+    /**
      * Metodo para añadir un objeto entrada
      * @param entrada
      */
@@ -455,6 +499,19 @@ public class BeanBaseJProcur extends BeanBase {
     public void deleteComentario(Comentarios comentario){
         EntityManager em = this.getEntityManager();
         Comentarios c = (Comentarios)em.find(Comentarios.class, comentario.getIdcoment());
+        em.getTransaction().begin();
+        em.remove(c);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para eliminar un comentario de una entrada por su ID
+     * @param entrada
+     * @param comentario
+     */
+    public void deleteComentario(Integer idcomentario){
+        EntityManager em = this.getEntityManager();
+        Comentarios c = (Comentarios)em.find(Comentarios.class, idcomentario);
         em.getTransaction().begin();
         em.remove(c);
         em.getTransaction().commit();

@@ -167,4 +167,17 @@ public class Entrada implements Serializable {
         return "edu.ues.jhard.jpa.Entrada[identrada=" + identrada + "]";
     }
 
+    public String getFecha(){
+        return String.valueOf(this.fechahora.getDate())+" - "+
+                String.valueOf(this.fechahora.getMonth()+1)+" - "+
+                String.valueOf(this.fechahora.getYear()+1900);
+    }
+
+//    public String gethoraInicio(){
+//        return String.valueOf(this.fechahorainicioprestamo.getHours())+":"+String.valueOf(this.fechahorainicioprestamo.getMinutes());
+//    }
+//
+//    public String gethoraFinal(){
+//        return String.valueOf(this.fechahorafinprestamo.getHours())+":"+String.valueOf(this.fechahorafinprestamo.getMinutes());
+//    }
 }
