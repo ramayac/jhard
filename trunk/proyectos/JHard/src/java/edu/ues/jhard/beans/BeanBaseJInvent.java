@@ -92,8 +92,9 @@ public class BeanBaseJInvent extends BeanBase {
         this.msg = new ActionMessage();
         this.listaEstados = this.getEntityManager().createNamedQuery("Estadoequipo.findAll").getResultList();
         this.listaMarcas = this.getEntityManager().createNamedQuery("Marca.findAll").getResultList();        
-
-        this.initItemsMarcas();        
+        this.listaTodosEquipos = this.getEntityManager().createNamedQuery("Equipo.findAll").getResultList();
+        this.initItemsMarcas();
+        this.listaUbicaciones = this.getEntityManager().createNamedQuery("Ubicacion.findAll").getResultList();
     }
 
     /**
@@ -140,6 +141,10 @@ public class BeanBaseJInvent extends BeanBase {
         return this.getCurrentClasificacion().getPiezaCollection().size();
     }
 
+    public int getSizeListaEquipos(){
+        return this.getListaTodosEquipos().size();
+    }
+
     public int getSizeListaExistencias(){
         int totalExistencias = 0;
         for(Equipo eq: this.getCurrentClasificacion().getEquipoCollection())
@@ -157,6 +162,14 @@ public class BeanBaseJInvent extends BeanBase {
 
     public int getSizeListaPiezas(){
         return this.getCurrentClasificacion().getPiezaCollection().size();
+    }
+
+    public int getSizeListaMarcas(){
+        return this.getListaMarcas().size();
+    }
+
+    public int getSizeListaUbicaciones(){
+        return this.getListaUbicaciones().size();
     }
 
     /**
@@ -431,6 +444,12 @@ public class BeanBaseJInvent extends BeanBase {
         return "done";
     }
 
+    public String beforeAddEquipo(){        
+        this.currentEquipo = new Equipo();
+        this.crdEquipo.showPopupAdd();
+        return "done";
+    }
+
     public String addEquipo(){
         for(Marca m: this.getListaMarcas()){
             if(m.getIdmarca().toString().equalsIgnoreCase(this.getMarcaSelected())){
@@ -449,6 +468,21 @@ public class BeanBaseJInvent extends BeanBase {
             }
         }
         this.crdEquipo.hidePopupAdd();
+        return "done";
+    }
+
+    public String cancelAddEditEquipo(){
+        this.currentEquipo = new Equipo();
+        this.crdEquipo.hidePopupAdd();
+        this.crdEquipo.hidePopupEdit();
+        return "done";
+    }
+
+    public String editEquipo(){
+        String idEquipo = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
+        this.currentEquipo = (Equipo)this.getEntityManager().createQuery("SELECT e FROM Equipo e WHERE e.idequipo=" + idEquipo).getSingleResult();
+        this.setMarcaSelected(this.currentEquipo.getIdmarca().getIdmarca().toString());
+        this.crdEquipo.showPopupEdit();
         return "done";
     }
 
@@ -821,7 +855,11 @@ public class BeanBaseJInvent extends BeanBase {
 
     public void actualizarCurrentNodoClasificacion(){
         Clasificacion cl = this.getCurrentClasificacion();
-        this.clasificaciontm.getCurrentUserObject().setText(cl.getNombre() + " (" + (cl.getEquipoCollection().size() + cl.getSoftwareCollection().size() + cl.getAccesorioCollection().size() + cl.getPiezaCollection().size()) +  ")");
+        int cantExistencias = 0;
+        for(Equipo eq: cl.getEquipoCollection())
+            cantExistencias += eq.getExistenciaSize();
+
+        this.clasificaciontm.getCurrentUserObject().setText(cl.getNombre() + " (" + (cantExistencias + cl.getSoftwareCollection().size() + cl.getAccesorioCollection().size() + cl.getPiezaCollection().size()) +  ")");
     }
 
     /**
