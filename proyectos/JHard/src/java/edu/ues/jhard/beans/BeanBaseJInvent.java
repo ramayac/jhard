@@ -589,6 +589,7 @@ public class BeanBaseJInvent extends BeanBase {
         Accesorio acc = (Accesorio)this.getEntityManager().createQuery("SELECT a FROM Accesorio a WHERE a.idaccesorio=" + idAccesorio).getSingleResult();
         this.crdAccesorio.setCurrentId(idAccesorio);
         this.setCurrentAccesorio(acc);
+        this.setMarcaSelected(acc.getIdmarca().getIdmarca().toString());
         this.crdAccesorio.showPopupEdit();
         return "done";
     }
@@ -663,6 +664,7 @@ public class BeanBaseJInvent extends BeanBase {
         Pieza pz = (Pieza)this.getEntityManager().createQuery("SELECT p FROM Pieza p WHERE p.idpieza=" + idPieza).getSingleResult();
         this.setCurrentPieza(pz);
         this.crdPieza.setCurrentId(idPieza);
+        this.setMarcaSelected(pz.getIdmarca().toString());
         this.crdPieza.showPopupEdit();
         return "done";
     }
@@ -1134,9 +1136,9 @@ public class BeanBaseJInvent extends BeanBase {
     public void initItemsCombos(){
         this.listaTodosEquipos = this.getEntityManager().createNamedQuery("Equipo.findAll").getResultList();
         this.listaUbicaciones = this.getEntityManager().createNamedQuery("Ubicacion.findAll").getResultList();        
-        this.listaTodosAccesorios = this.getEntityManager().createNamedQuery("Accesorio.findAll").getResultList();
-        this.listaTodasPiezas = this.getEntityManager().createNamedQuery("Pieza.findAll").getResultList();
-        this.listaTodosSoftware = this.getEntityManager().createNamedQuery("Software.findAll").getResultList();
+        this.listaTodosAccesorios = this.getEntityManager().createNamedQuery("Accesorio.findAllAvailable").getResultList();
+        this.listaTodasPiezas = this.getEntityManager().createNamedQuery("Pieza.findAllAvailable").getResultList();
+        this.listaTodosSoftware = this.getEntityManager().createNamedQuery("Software.findAllAvailable").getResultList();
         
         this.initItemsEquipos();
         this.initItemsUbicaciones();
@@ -1199,6 +1201,8 @@ public class BeanBaseJInvent extends BeanBase {
         Accesorio acc = (Accesorio)this.getEntityManager().createQuery("SELECT a FROM Accesorio a WHERE a.idaccesorio=" + this.accesorioSelected).getSingleResult();
         acc.setIdexistencia(this.currentExistencia);
         this.currentExistencia.getAccesorioCollection().add(acc);
+        this.listaTodosAccesorios.remove(acc);
+        this.initItemsAccesorios();
         return "done";
     }
 
@@ -1209,6 +1213,8 @@ public class BeanBaseJInvent extends BeanBase {
             Accesorio acc = (Accesorio)it.next();
             if(acc.getIdaccesorio().toString().equalsIgnoreCase(idAccesorio)){
                 this.currentExistencia.getAccesorioCollection().remove(acc);
+                this.listaTodosAccesorios.add(acc);
+                this.initItemsAccesorios();
                 return "removed";
             }
         }
@@ -1219,6 +1225,8 @@ public class BeanBaseJInvent extends BeanBase {
         Pieza pz = (Pieza)this.getEntityManager().createQuery("SELECT p FROM Pieza p WHERE p.idpieza=" + this.piezaSelected).getSingleResult();
         pz.setIdexistencia(this.currentExistencia);
         this.currentExistencia.getPiezaCollection().add(pz);
+        this.listaTodasPiezas.remove(pz);
+        this.initItemsPiezas();
         return "done";
     }
 
@@ -1229,9 +1237,49 @@ public class BeanBaseJInvent extends BeanBase {
             Pieza pz = (Pieza)it.next();
             if(pz.getIdpieza().toString().equalsIgnoreCase(idPieza)){
                 this.currentExistencia.getPiezaCollection().remove(pz);
+                this.listaTodasPiezas.add(pz);
+                this.initItemsPiezas();
                 return "removed";
             }
         }
+        return "done";
+    }
+
+    public String delExistencia(){
+        String idExistencia = this.crdExistencia.getCurrentId();
+        EntityManager emgr = this.getEntityManager();
+        Existencia exst = (Existencia)emgr.createQuery("SELECT e FROM Existencia e WHERE e.idexistencia=" + idExistencia).getSingleResult();
+        emgr.getTransaction().begin();
+
+        for(Accesorio acc: exst.getAccesorioCollection()){
+            acc.setIdexistencia(null);
+            emgr.merge(acc);
+        }
+
+        for(Pieza pz: exst.getPiezaCollection()){
+            pz.setIdexistencia(null);
+            emgr.merge(pz);
+        }
+
+        for(Instalacion inst: exst.getInstalacionCollection()){
+            emgr.remove(inst);
+        }
+
+        exst.getAccesorioCollection().clear();
+        exst.getPiezaCollection().clear();
+        exst.getInstalacionCollection().clear();
+        emgr.remove(exst);
+        emgr.getTransaction().commit();
+
+        this.crdExistencia.hidePopupDel();
+        for(Equipo eq: this.getCurrentClasificacion().getEquipoCollection()){
+            if(eq.getExistenciaCollection().contains(exst)){
+                eq.getExistenciaCollection().remove(exst);
+            }
+        }
+        this.msg.setText("Existencia " + exst.getIdhardware().getNombre() + " - " + exst.getCodigo() + " eliminada satisfactoriamente.");
+        this.msg.setVisible(true);
+        this.actualizarCurrentNodoClasificacion();
         return "done";
     }
 
@@ -1248,5 +1296,12 @@ public class BeanBaseJInvent extends BeanBase {
     public void setExistenciaEditMode(boolean existenciaEditMode) {
         this.existenciaEditMode = existenciaEditMode;
     }
-    
+
+    public int getListaTodosAccesoriosSize(){
+        return this.listaTodosAccesorios.size();
+    }
+
+    public int getListaTodasPiezasSize(){
+        return this.listaTodasPiezas.size();
+    }
 }

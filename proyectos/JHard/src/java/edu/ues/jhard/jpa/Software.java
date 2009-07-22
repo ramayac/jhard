@@ -27,7 +27,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "software", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Software.findAll", query = "SELECT s FROM Software s"), @NamedQuery(name = "Software.findByIdsoftware", query = "SELECT s FROM Software s WHERE s.idsoftware = :idsoftware"), @NamedQuery(name = "Software.findByNombre", query = "SELECT s FROM Software s WHERE s.nombre = :nombre"), @NamedQuery(name = "Software.findByVersion", query = "SELECT s FROM Software s WHERE s.version = :version"), @NamedQuery(name = "Software.findByCodigolicencia", query = "SELECT s FROM Software s WHERE s.codigolicencia = :codigolicencia"), @NamedQuery(name = "Software.findByCantidadlicencias", query = "SELECT s FROM Software s WHERE s.cantidadlicencias = :cantidadlicencias")})
+@NamedQueries({
+    @NamedQuery(name = "Software.findAll", query = "SELECT s FROM Software s"),
+    @NamedQuery(name = "Software.findAllAvailable", query="SELECT s FROM Software s"),
+    @NamedQuery(name = "Software.findByIdsoftware", query = "SELECT s FROM Software s WHERE s.idsoftware = :idsoftware"),
+    @NamedQuery(name = "Software.findByNombre", query = "SELECT s FROM Software s WHERE s.nombre = :nombre"),
+    @NamedQuery(name = "Software.findByVersion", query = "SELECT s FROM Software s WHERE s.version = :version"),
+    @NamedQuery(name = "Software.findByCodigolicencia", query = "SELECT s FROM Software s WHERE s.codigolicencia = :codigolicencia"),
+    @NamedQuery(name = "Software.findByCantidadlicencias", query = "SELECT s FROM Software s WHERE s.cantidadlicencias = :cantidadlicencias")})
 public class Software implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

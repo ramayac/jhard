@@ -265,10 +265,12 @@
                                                                                     </ice:commandLink>
                                                                                 </ice:column>
                                                                             </ice:dataTable>
-                                                                            <ice:selectOneListbox id="cmbListaAccesoriosDisponibles" size="1" value="#{JInventInstance.accesorioSelected}">
-                                                                                <f:selectItems value="#{JInventInstance.listaItemsAccesorios}" />
-                                                                            </ice:selectOneListbox>
-                                                                            <ice:commandLink value="Agregar" action="#{JInventInstance.agregarAccesorioExistencia}" />
+                                                                            <ice:panelGroup rendered="#{JInventInstance.listaTodosAccesoriosSize > 0}">
+                                                                                <ice:selectOneListbox id="cmbListaAccesoriosDisponibles" size="1" value="#{JInventInstance.accesorioSelected}">
+                                                                                    <f:selectItems value="#{JInventInstance.listaItemsAccesorios}" />
+                                                                                </ice:selectOneListbox>
+                                                                                <ice:commandLink value="Agregar" action="#{JInventInstance.agregarAccesorioExistencia}" />
+                                                                            </ice:panelGroup>
                                                                         </ice:panelTab>
                                                                         <ice:panelTab id="tabPiezaExistencia" label="Piezas">
                                                                             <ice:dataTable id="tblPiezaExistencia" value="#{JInventInstance.currentExistencia.piezaCollection}" var="pieza">
@@ -290,10 +292,12 @@
                                                                                     </ice:commandLink>
                                                                                 </ice:column>
                                                                             </ice:dataTable>
-                                                                            <ice:selectOneListbox id="cmbListaPiezasDisponibles" size="1" value="#{JInventInstance.piezaSelected}">
-                                                                                <f:selectItems value="#{JInventInstance.listaItemsPiezas}" />
-                                                                            </ice:selectOneListbox>
-                                                                            <ice:commandLink value="Agregar" action="#{JInventInstance.agregarPiezaExistencia}" />
+                                                                            <ice:panelGroup rendered="#{JInventInstance.listaTodasPiezasSize > 0}">
+                                                                                <ice:selectOneListbox id="cmbListaPiezasDisponibles" size="1" value="#{JInventInstance.piezaSelected}">
+                                                                                    <f:selectItems value="#{JInventInstance.listaItemsPiezas}" />
+                                                                                </ice:selectOneListbox>
+                                                                                <ice:commandLink value="Agregar" action="#{JInventInstance.agregarPiezaExistencia}" />
+                                                                            </ice:panelGroup>
                                                                         </ice:panelTab>
                                                                     </ice:panelTabSet>
                                                                     </p>
@@ -303,6 +307,20 @@
 
                                                                         <ice:commandButton id="cmdConfirmEditarExistencia" value="Guardar cambios" action="#{JInventInstance.commitEditExistencia}" rendered="#{JInventInstance.existenciaEditMode}" />
                                                                         <ice:commandButton id="cmdCancelEditarExistencia" value="Cancelar" action="#{JInventInstance.cancelAddEditExistencia}" rendered="#{JInventInstance.existenciaEditMode}" />
+                                                                    </p>
+                                                                </ice:panelGroup>
+                                                            </f:facet>
+                                                        </ice:panelPopup>
+                                                        <ice:panelPopup id="pupEliminarExistencia" draggable="true" modal="true" rendered="#{JInventInstance.crdExistencia.popupDelVisible}">
+                                                            <f:facet name="header"><ice:outputText value="Confirmación" /></f:facet>
+                                                            <f:facet name="body">
+                                                                <ice:panelGroup styleClass="frmElementList">
+                                                                    <p>
+                                                                        <ice:outputText value="Esta seguro que desea eliminar el elemento seleccionado?" />
+                                                                    </p>
+                                                                    <p class="actionSection">
+                                                                        <ice:commandButton id="cmdConfirmDelExistencia" value="Si" action="#{JInventInstance.delExistencia}" />
+                                                                        <ice:commandButton id="cmdCancelDelExistencia" value="No" action="#{JInventInstance.crdExistencia.hidePopupDel}" />
                                                                     </p>
                                                                 </ice:panelGroup>
                                                             </f:facet>
