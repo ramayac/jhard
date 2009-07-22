@@ -312,7 +312,8 @@ dhtmlDragAndDropObject.prototype.callDrag=function(C){
 		B.dhtmlDragAndDrop.dragNode=dragger.dragNode
 	}
 	dragger.dragNode.style.left=C.clientX+15+(dragger.fx?dragger.fx*(-1):0)+(document.body.scrollLeft||document.documentElement.scrollLeft)+"px";
-	dragger.dragNode.style.top=C.clientY+3+(dragger.fy?dragger.fy*(-1):0)+(document.body.scrollTop||document.documentElement.scrollTop)+"px";
+	//dragger.dragNode.style.top=C.clientY+3+(dragger.fy?dragger.fy*(-1):0)+(document.body.scrollTop||document.documentElement.scrollTop)+"px";
+    dragger.dragNode.style.top=C.clientY+3+(dragger.fy?dragger.fy*(-1):0)+"10%"; // guardalo y probalo
 	if(!C.srcElement){
 		var D=C.target
 	}else{
@@ -2650,6 +2651,7 @@ scheduler._get_lightbox=function(){
 		C[1].innerHTML=B;
 		C[1].style.height=C[1].scrollHeight+"px";
 		F.style.height=C[1].scrollHeight+50+"px";
+        //F.style.height="20%";
 		C[1].style.height=C[1].scrollHeight+"px";
 		this._init_lightbox_events(this);
 		F.style.display="none";

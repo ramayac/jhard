@@ -107,17 +107,19 @@
                                                 </p>
                                                 <p>
                                                     <ice:selectInputText action="#{jrequestAdmin.txtEqSimples_action}" binding="#{jrequestAdmin.txtEqSimples}"
-                                                        id="txtEqSimples" rows="50" style=""
-                                                        valueChangeListener="#{jrequestAdmin.txtEqSimples_processValueChange}" visible="true" width="300">
-                                                            <f:selectItems id="selectInputText1selectedItems" value="#{jrequestAdmin.eqs}"/>
+                                                    id="txtEqSimples" rows="50" style="position:absolute;"
+                                                        valueChangeListener="#{jrequestAdmin.txtEqSimples_processValueChange}" visible="true" width="500">
+                                                            <f:selectItems id="selectInputText1selectedItems"  value="#{jrequestAdmin.eqs}"/>
                                                     </ice:selectInputText>
                                                 </p>
+                                                <br/><br/><br/>
                                                 <p>
                                                     <ice:selectOneListbox binding="#{jrequestAdmin.listaBitacoras}" id="listaBitacoras" partialSubmit="true"
                                                         size="2" style="height: 350px; width: 500px" valueChangeListener="#{jrequestAdmin.listaBitacoras_processValueChange}">
                                                         <f:selectItems id="fakeBitacora" value="#{jrequestAdmin.bit}"/>
                                                     </ice:selectOneListbox>
                                                 </p>
+                                                
                                                 <ice:panelPopup autoCentre="true" binding="#{jrequestAdmin.popUpModBitacora}" draggable="true"
                                                 id="popUpModBitacora" rendered="#{jrequestAdmin.renderBitacoras}" modal="true" style="display: block; height: 261px; left: 264px; top: 552px; position: absolute; width: 381px;visibility: hidden;visibility: hidden;">
                                                     <f:facet name="header">

@@ -1307,7 +1307,7 @@ fieldset {
 }
 
 .iceSelInpTxtList {
-    position: absolute;
+    /*position: absolute;*/
     display: block;
     border-top: 1px solid #ABABAB;
     border-right: 1px solid #666666;

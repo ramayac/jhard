@@ -57,8 +57,8 @@
                     <div id="content">
                         <div class="post">
                             <h2 class="title">Solicitud de Mantenimiento de Hardware y Software</h2>
-                            <div class="entry" style="height: 507px">
-                                <ice:form id="form1" style="height: 200px">
+                            <div class="entry" style="">
+                                <ice:form id="form1" style="">
                                     <ice:panelPopup autoCentre="true" binding="#{jrequestUserSolicitud.panelPopup1}" rendered="#{jrequestUserSolicitud.renderPop1}" draggable="true" id="panelPopup1"
                                         modal="true" style="height: 261px; left: 576px; top: 288px; position: absolute; width: 261px;visibility: hidden;visibility: hidden;">
                                         <f:facet name="header">
@@ -85,11 +85,11 @@
                                     </ice:panelPopup>
                                     <ice:outputLabel id="labelError" rendered="#{JHardminInstance.currentUser == null}"
                                         style="font-size: 14px; font-weight: bold" value="Debe de permanecer con sesión activa para realizar una petición de Soporte técnico"/>
-                                    <ice:panelCollapsible expanded="true" id="colap" style="width:576">
+                                    <ice:panelCollapsible expanded="true" id="colap" style="width:576px">
                                         <f:facet name="header">
                                             <ice:outputText value="Ingrese una nueva solicitud"/>
                                         </f:facet>
-                                        <ice:panelGroup id="grupoSolicitud" rendered="#{JHardminInstance.currentUser != null}" style="height:400px;">
+                                        <ice:panelGroup id="grupoSolicitud" rendered="#{JHardminInstance.currentUser != null}" style="">
                                             <h3 styleClass="tituloSeccion">
                                                 <ice:outputLabel id="lblNombre" value="Usuario que realiza la petición"/>
                                             </h3>
@@ -111,17 +111,17 @@
                                             </h3>
                                             <br/>
                                             <br/>
-                                            <ice:selectOneMenu binding="#{jrequestUserSolicitud.comboEqSimple}" id="comboEqSimple" partialSubmit="true"
-                                                style="width: 286px" valueChangeListener="#{jrequestUserSolicitud.comboEqSimple_processValueChange}">
+                                            <ice:selectInputText binding="#{jrequestUserSolicitud.comboEqSimple}" id="comboEqSimple" partialSubmit="true"
+                                            width="276px" rows="5" valueChangeListener="#{jrequestUserSolicitud.comboEqSimple_processValueChange}">
                                                 <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUserSolicitud.eqs}"/>
-                                            </ice:selectOneMenu>
+                                            </ice:selectInputText>
                                             <ice:commandButton action="#{jrequestUserSolicitud.btnAgregarEqSimple_action}"
                                                 binding="#{jrequestUserSolicitud.btnAgregarEqSimple}" id="btnAgregarEqSimple" styleClass="btnAccion2" value="Agregar Equipo"/>
                                             <br/>
                                             <br/>
                                             <br/>
                                             <ice:commandButton action="#{jrequestUserSolicitud.btnEnviar_action}" binding="#{jrequestUserSolicitud.btnEnviar}"
-                                                id="btnEnviar" styleClass="btnAccion2" value="Enviar"/>
+                                            id="btnEnviar" styleClass="btnAccion2" style="250px;"  value="Enviar"/>
                                             <br/>
                                             <br/>
                                             <br/>

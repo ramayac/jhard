@@ -38,8 +38,11 @@ import java.util.Calendar;
 import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.component.UISelectItems;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletRequest;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 
 /**
@@ -417,8 +420,6 @@ public class jcanon extends AbstractPageBean {
         this.comboLaptop.setDisabled(true);
         this.horaFin.setDisabled(true);
 
-
-
         this.LlenarHora(1);
 
         this.ElementoElegido="Cañon";
@@ -702,7 +703,7 @@ private List in = new ArrayList();
     public String btnCrearReserva_action() {
 
             BeanBaseJCanon instance = new BeanBaseJCanon();
-
+            List<Reserva>  mismoDia;
             Estadoreserva er = new BeanBaseJCanon().getEntityManager().find(Estadoreserva.class, 1);
             Calendar c = Calendar.getInstance();
 
@@ -729,23 +730,38 @@ private List in = new ArrayList();
 
                 reservaCanon.setFechahorainicioprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),(fechaI.getDate()+1),hourI,minuteI,secondI));
 
-                int reservas = Integer.parseInt(instance.getReservasDeUnaMismaHoraFecha(reservaCanon.getFechahorainicioprestamo()));
-                int equipos = Integer.parseInt(instance.getNumeroEquipoMultimedia(canonElegido.getIdhardware().getIdclasificacion().getIdclasificacion()));
+                String [] tiempoF = this.horaFin.getValue().toString().split("\\:");
+                int hourF = Integer.parseInt(tiempoF[0]);
+                int minuteF = Integer.parseInt(tiempoF[1]);
+                int secondF = 00;
+
+                reservaCanon.setFechahorafinprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),(fechaI.getDate()+1),hourF,minuteF,secondF));
+
+
+                mismoDia=instance.getReservasMismoDia((fechaI.getDate()+1), (fechaI.getMonth()+1), (fechaI.getYear()+1900));
                 
+                System.out.println("tamaño lista:---> "+ mismoDia.size());
+                int reservas =0;
+                
+                for (int i=0; i<mismoDia.size();i++) {
+                    
+                    Reserva r = mismoDia.get(i);
+
+                    if(reservaCanon.getFechahorainicioprestamo().getTime()>=r.getFechahorainicioprestamo().getTime() && reservaCanon.getFechahorafinprestamo().getTime()<=r.getFechahorafinprestamo().getTime())
+                    {   reservas++;
+                        System.out.println("ENTRA--> "+ reservas);
+                    }
+                        //reservas += Integer.parseInt(instance.getReservasDeUnaMismaHoraFecha(r.getFechahorainicioprestamo()));
+                }
+
+                int equipos = Integer.parseInt(instance.getNumeroEquipoMultimedia(canonElegido.getIdhardware().getIdclasificacion().getIdclasificacion()));
+
+                System.out.println("RESERVAS--->>>>" + reservas);
                 if(reservas>=equipos){
                     this.lblMensajes.setValue("No se puede realizar la reserva. Equipo multimedia insuficiente");
                     this.renderer=true;
 
                 }else{
-                    System.out.println("RESERVAS--> "+ reservas);
-                    System.out.println("EQUIPO--> " + equipos);
-                    String [] tiempoF = this.horaFin.getValue().toString().split("\\:");
-                    int hourF = Integer.parseInt(tiempoF[0]);
-                    int minuteF = Integer.parseInt(tiempoF[1]);
-                    int secondF = 00;
-
-                    reservaCanon.setFechahorafinprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),(fechaI.getDate()+1),hourF,minuteF,secondF));
-
                     reservaCanon.setDescripcion("Prestamo de "+this.canonElegido.getIdhardware().getNombre() +" "+this.canonElegido.getIdhardware().getIdmarca().getNombre()+"  "+this.canonElegido.getIdhardware().getModelo());
                     reservaCanon.setIdequipoexistente(canonElegido);
                     reservaCanon.setIdubicacion(canonElegido.getIdubicacion());
@@ -781,7 +797,31 @@ private List in = new ArrayList();
 
                 reservaLaptop.setFechahorainicioprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),(fechaI.getDate()+1),hourI,minuteI,secondI));
 
-                int reservas = Integer.parseInt(instance.getReservasDeUnaMismaHoraFecha(reservaLaptop.getFechahorainicioprestamo()));
+                String [] tiempoF = this.horaFin.getValue().toString().split("\\:");
+                int hourF = Integer.parseInt(tiempoF[0]);
+                int minuteF = Integer.parseInt(tiempoF[1]);
+                int secondF = 00;
+
+                reservaLaptop.setFechahorafinprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),(fechaI.getDate()+1),hourF,minuteF,secondF));
+
+                //int reservas = Integer.parseInt(instance.getReservasDeUnaMismaHoraFecha(reservaLaptop.getFechahorainicioprestamo()));
+                mismoDia=null;
+                mismoDia=instance.getReservasMismoDia((fechaI.getDate()+1), (fechaI.getMonth()+1), (fechaI.getYear()+1900));
+
+                System.out.println("tamaño lista:---> "+ mismoDia.size());
+                int reservas =0;
+
+                for (int i=0; i<mismoDia.size();i++) {
+
+                    Reserva r = mismoDia.get(i);
+
+                    if(reservaLaptop.getFechahorainicioprestamo().getTime()>=r.getFechahorainicioprestamo().getTime() && reservaLaptop.getFechahorafinprestamo().getTime()<=r.getFechahorafinprestamo().getTime())
+                    {   reservas++;
+                        System.out.println("ENTRA--> "+ reservas);
+                    }
+                        //reservas += Integer.parseInt(instance.getReservasDeUnaMismaHoraFecha(r.getFechahorainicioprestamo()));
+                }
+
                 int equipos = Integer.parseInt(instance.getNumeroEquipoMultimedia(laptopElegida.getIdhardware().getIdclasificacion().getIdclasificacion()));
 
                 if(reservas>=equipos){
@@ -789,13 +829,6 @@ private List in = new ArrayList();
                     this.renderer=true;
 
                 }else{
-                    String [] tiempoF = this.horaFin.getValue().toString().split("\\:");
-                    int hourF = Integer.parseInt(tiempoF[0]);
-                    int minuteF = Integer.parseInt(tiempoF[1]);
-                    int secondF = 00;
-
-                    reservaLaptop.setFechahorafinprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),(fechaI.getDate()+1),hourF,minuteF,secondF));
-
                     reservaLaptop.setDescripcion("Prestamo de "+this.laptopElegida.getIdhardware().getNombre() +" "+this.laptopElegida.getIdhardware().getIdmarca().getNombre()+" "+this.laptopElegida.getIdhardware().getModelo());
                     reservaLaptop.setIdequipoexistente(laptopElegida);
                     reservaLaptop.setIdubicacion(laptopElegida.getIdubicacion());
@@ -983,9 +1016,12 @@ private List equ = new ArrayList();
     }
 
     public String mostrarAddEq(){
+        
+        setearClasificacion();
         System.out.println("ENTRA A MOSTRAR EL POPUP?");
         this.rendererMultimedia=false;
         this.rendererAddEq=true;
+
         return "";
     }
 
@@ -1016,5 +1052,21 @@ private List equ = new ArrayList();
     public List getEqu() {
         return equ;
     }
+
+
+    public void setearClasificacion(){
+
+        String idClasificacion="";
+        if(this.comboEqAdd.getValue().equals("Cañon")){
+            idClasificacion="16";
+        }else{
+            idClasificacion="14";
+        }
+        System.out.println("la disque clasificacion a mostrar es -->" + idClasificacion);
+        //String idClasificacion = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("clId");
+        getJInventInstance().getClasificaciontm().seleccionarNodo(idClasificacion);
+
+    }
+
 }
 
