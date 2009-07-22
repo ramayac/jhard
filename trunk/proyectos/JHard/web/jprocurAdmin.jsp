@@ -71,18 +71,22 @@
                                         <!-- panel de para EDITAR UNA ENTRADAS -->
                                         <ice:panelGroup id="panelEditarEntrada" rendered="#{jprocurAdmin.editandoEntrada}">
                                         <div class="post">
-                                            Título: <ice:inputText id="itTitulo" value="#{jprocurAdmin.entradaActual.titulo}"/>
+                                            Título: <ice:inputText id="itTitulo" title="Título de la entrada"
+                                            value="#{jprocurAdmin.entradaActual.titulo}"
+                                            partialSubmit="true"/>
                                             <br/>
-                                            <ice:inputRichText id="richDescripcion" value="#{jprocurAdmin.entradaActual.descripcion}"
+                                            <ice:inputRichText id="richDescripcion"
+                                            value="#{jprocurAdmin.entradaActual.descripcion}"
                                             language="es" skin="silver" toolbar="Basic"/>
                                             <br/>
                                             <br/>
-                                            Escrito por: <ice:outputLabel id="lblAutor" style="font-weight:bold; " 
-                                            value="#{jprocurAdmin.entradaActual.idusuario.nombre}"/>, en: <ice:selectInputDate
+                                            Escrito por: <ice:outputLabel id="lblAutor" style="font-weight:bold; " title="Último usuario que guardó la entrada."
+                                            value="#{jprocurAdmin.entradaActual.idusuario.nombre}"/><div align="right"><ice:selectInputDate
                                             id="popupDateTime" renderMonthAsDropdown="true" renderYearAsDropdown="true"
-                                            value="#{jprocurAdmin.entradaActual.fechahora}" title="Fecha y Hora" renderAsPopup="true">
+                                            value="#{jprocurAdmin.entradaActual.fechahora}" title="Fecha y hora de la última modificacion en la entrada." renderAsPopup="true"
+                                            partialSubmit="true">
                                                 <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
-                                            </ice:selectInputDate>
+                                            </ice:selectInputDate></div>
                                             <br/>
                                             <br/>
                                             Etiquetas:<br/>
