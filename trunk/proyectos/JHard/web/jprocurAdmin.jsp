@@ -93,7 +93,7 @@
                                             __aqui un panel con las etiquetas que se pueden poner__
                                             <br/>
                                             <div align="center">
-                                            <ice:commandButton action="#{jprocurAdmin.guardarEntrada}" id="btnGuardar" styleClass="btnAccion2" value="Guardar"/>
+                                            <ice:commandButton action="#{jprocurAdmin.modificarEntrada}" id="btnGuardar" styleClass="btnAccion2" value="Guardar"/>
                                             <ice:commandButton action="#{jprocurAdmin.cancelarGuardarEntrada}" id="btnCancelar" styleClass="btnAccion2" value="Cancelar"/>
                                             </div>
                                         </div>
