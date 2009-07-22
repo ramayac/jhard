@@ -81,7 +81,7 @@ div.icon_save{background-position:-62px 0;}
 
 div.icon_delete, div.icon_cancel{background-position:-42px 0;}
 
-.dhx_cal_light{height:400px;light:300px;background-color:#FFE763;font-family:Tahoma;font-size:8pt;border:1px solid #B7A64B;color:#887A2E;position:absolute;z-index:10001;width:580px;height:300px;}
+.dhx_cal_light{height:400px;light:300px;background-color:#FFE763;font-family:Tahoma;font-size:8pt;border:1px solid #B7A64B;color:#887A2E;position:absolute;z-index:10001;width:580px;height:300px; top: 25%;}
 
 .dhx_mark{position:relative;top:3px;background-image:url('./imgs/controls.gif');background-position:0 -43px;padding-left:10px;}
 

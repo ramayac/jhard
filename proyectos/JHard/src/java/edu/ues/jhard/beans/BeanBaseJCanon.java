@@ -192,4 +192,27 @@ public class BeanBaseJCanon extends BeanBase {
          return em.createNamedQuery("Reserva.findAll").getResultList();
 
      }
+
+      public List<Reserva> getReservasMismoDia(int dia, int mes, int anio){
+
+          List<Reserva> lista;
+
+          EntityManager em = this.getEntityManager();
+
+          String sql = "SELECT idreserva, fechareserva, fechahorainicioprestamo, fechahorafinprestamo, idubicacion, idequipoexistente, idusuario, idestado, descripcion, iddocente FROM reserva WHERE MONTH(fechahorainicioprestamo) = "+mes+" AND DAY(fechahorainicioprestamo)= "+dia+" AND YEAR(fechahorainicioprestamo)= "+anio;
+
+          System.out.println(sql);
+
+          Query q = em.createNativeQuery(sql,Reserva.class);
+
+          lista = q.getResultList();
+//          Reserva[] r = (Reserva[])q.getResultList().toArray(new Reserva[0]);
+//
+//         for (int i = 0; i < r.length; i++) {
+//             em.refresh(r[i]);
+//         }
+
+
+          return lista;
+      }
 }

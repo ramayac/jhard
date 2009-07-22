@@ -12,7 +12,7 @@ import com.icesoft.faces.component.ext.HtmlInputTextarea;
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.panelpopup.PanelPopup;
-import com.sun.rave.faces.data.DefaultSelectItemsArray;
+import com.icesoft.faces.component.selectinputtext.SelectInputText;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.beans.BeanBaseJRequest;
@@ -62,13 +62,13 @@ public class jrequestUserSolicitud extends AbstractPageBean {
     public void setTxtDescripcion(HtmlInputTextarea hit) {
         this.txtDescripcion = hit;
     }
-    private HtmlSelectOneMenu comboEqSimple = new HtmlSelectOneMenu();
+    private SelectInputText comboEqSimple = new SelectInputText();
 
-    public HtmlSelectOneMenu getComboEqSimple() {
+    public SelectInputText getComboEqSimple() {
         return comboEqSimple;
     }
 
-    public void setComboEqSimple(HtmlSelectOneMenu hsom) {
+    public void setComboEqSimple(SelectInputText hsom) {
         this.comboEqSimple = hsom;
     }
     private HtmlCommandButton btnEnviar = new HtmlCommandButton();
@@ -445,8 +445,8 @@ public void LlenarCombos(){
         s.setIdusuario(U);
         System.out.println("COLOCA EL USUARIO");
 
-        String tmp=(String)this.comboEqSimple.getValue();
-        Integer id=Integer.parseInt(tmp);
+        Integer id=(Integer) this.comboEqSimple.getSelectedItem().getValue();
+        //Integer id=Integer.parseInt(tmp);
         System.out.println("AGARRA EL VALOR DEL COMBO");
         Equiposimple e=new BeanBaseJRequest().getEntityManager().find(Equiposimple.class, id);
         System.out.println("BUSCA LA INSTANCIA");

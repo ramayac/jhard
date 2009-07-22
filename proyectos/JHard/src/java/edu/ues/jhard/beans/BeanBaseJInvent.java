@@ -114,11 +114,7 @@ public class BeanBaseJInvent extends BeanBase {
     public void clasificacionSelected(ActionEvent event){
         String idClasificacion = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("clId");
         DefaultMutableTreeNode nodo = this.getClasificaciontm().seleccionarNodo(idClasificacion);
-        /*if(((ClasificacionUserObject)nodo.getUserObject()).isExpanded())
-            ((ClasificacionUserObject)nodo.getUserObject()).setExpanded(false);
-        else
-            ((ClasificacionUserObject)nodo.getUserObject()).setExpanded(true);*/
-
+        
     }
 
     public Clasificacion getCurrentClasificacion(){
