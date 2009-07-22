@@ -13,7 +13,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import static org.junit.Assert.*;
 
 /**
@@ -293,11 +292,13 @@ public class BeanBaseJProcurTest {
      */
     @Test
     public void testMostrarComentariosNOAprobados() {
+        System.out.println("//-------testMostrarComentariosNOAprobados-------");
         BeanBaseJProcur instance = new BeanBaseJProcur();
         List<Comentarios> listacom = instance.getComentariosNoAprobados();
         if(listacom.size()!=0){
             for (Comentarios c : listacom) System.out.println(c.getComentario() + ", Aprobado: " + c.getAprobado() );
         } else fail("fallo en MOSTRAR COMENTARIOS NO APROBADOS");
+        System.out.println("-------testMostrarComentariosNOAprobados-------//");
     }
 
     /**

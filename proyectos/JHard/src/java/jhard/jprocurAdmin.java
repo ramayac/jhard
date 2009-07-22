@@ -8,8 +8,6 @@ package jhard;
 
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.icesoft.faces.component.ext.HtmlOutputText;
-import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
-import com.sun.rave.faces.data.DefaultSelectItemsArray;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.beans.BeanBaseJProcur;
@@ -35,7 +33,9 @@ import javax.servlet.http.HttpServletRequest;
  * to respond to incoming events.</p>
  */
 public class jprocurAdmin extends AbstractPageBean {
-    public static final int MAX_ENTRADAS = 30;
+    static final int MAX_ENTRADAS = 30;
+    static final int MAX_COMENTARIOS = 30;
+    static final String EMPTY_STRING = new String();
     static final int ROL_EDITORCONTENIDO = 4;
     static final int ROL_ADMINISTRADOR = 1;
 
@@ -89,61 +89,6 @@ public class jprocurAdmin extends AbstractPageBean {
     public  BeanBaseJProcur getJProcurInstance() {
         return this.jprocurInstance;
     }
-    private DefaultSelectedData selectOneRadio1DataBean = new DefaultSelectedData();
-
-    public DefaultSelectedData getSelectOneRadio1DataBean() {
-        return selectOneRadio1DataBean;
-    }
-
-    public void setSelectOneRadio1DataBean(DefaultSelectedData dsd) {
-        this.selectOneRadio1DataBean = dsd;
-    }
-    private DefaultSelectItemsArray selectOneRadio1DefaultItems1 = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getSelectOneRadio1DefaultItems1() {
-        return selectOneRadio1DefaultItems1;
-    }
-
-    public void setSelectOneRadio1DefaultItems1(DefaultSelectItemsArray dsia) {
-        this.selectOneRadio1DefaultItems1 = dsia;
-    }
-    private DefaultSelectItemsArray selectOneRadio1DefaultItems = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getSelectOneRadio1DefaultItems() {
-        return selectOneRadio1DefaultItems;
-    }
-
-    public void setSelectOneRadio1DefaultItems(DefaultSelectItemsArray dsia) {
-        this.selectOneRadio1DefaultItems = dsia;
-    }
-    private DefaultSelectedData selectOneMenu1DataBean = new DefaultSelectedData();
-
-    public DefaultSelectedData getSelectOneMenu1DataBean() {
-        return selectOneMenu1DataBean;
-    }
-
-    public void setSelectOneMenu1DataBean(DefaultSelectedData dsd) {
-        this.selectOneMenu1DataBean = dsd;
-    }
-
-    private DefaultSelectItemsArray selectOneMenu1DefaultItems1 = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getSelectOneMenu1DefaultItems1() {
-        return selectOneMenu1DefaultItems1;
-    }
-
-    public void setSelectOneMenu1DefaultItems1(DefaultSelectItemsArray dsia) {
-        this.selectOneMenu1DefaultItems1 = dsia;
-    }
-    private DefaultSelectItemsArray selectOneMenu1DefaultItems = new DefaultSelectItemsArray();
-
-    public DefaultSelectItemsArray getSelectOneMenu1DefaultItems() {
-        return selectOneMenu1DefaultItems;
-    }
-
-    public void setSelectOneMenu1DefaultItems(DefaultSelectItemsArray dsia) {
-        this.selectOneMenu1DefaultItems = dsia;
-    }
 
     /**
      * <p>Construct a new Page bean instance.</p>
@@ -153,7 +98,9 @@ public class jprocurAdmin extends AbstractPageBean {
         lu= getJHardminInstance().getCurrentUser();
         
         this.listaEntradas = this.getJProcurInstance().getAllEntradas();
+        System.out.println("tamaño listaEntradas:" + this.listaEntradas.size());
         this.listaComentarios = this.getJProcurInstance().getComentariosNoAprobados();
+        System.out.println("tamaño listaComentarios:" + this.listaComentarios.size());
         if(this.listaEntradas.size()>0) this.entradaActual = this.listaEntradas.get(0);
         
         if(lu!=null){
@@ -284,7 +231,7 @@ public class jprocurAdmin extends AbstractPageBean {
     public void setListaComentarios(List<Comentarios> listaComentarios) {
         this.listaComentarios = listaComentarios;
     }
-    private Boolean soloUna = new Boolean(false);
+    private Boolean editandoEntrada = new Boolean(false);
 
     public List<Entrada> getListaEntradas() {
         return listaEntradas;
@@ -298,16 +245,16 @@ public class jprocurAdmin extends AbstractPageBean {
      * Metodo para saber si se ve una o varias Entradas
      * @param varias
      */
-    public Boolean getSoloUna() {
-        return this.soloUna;
+    public Boolean getEditandoEntrada() {
+        return this.editandoEntrada;
     }
 
     /**
      * Metodo para establecer si se ve una o varias Entradas
      * @param varias
      */
-    public void setSoloUna(Boolean varias) {
-        this.soloUna = varias;
+    public void setEditandoEntrada(Boolean varias) {
+        this.editandoEntrada = varias;
     }
 
     /**
@@ -328,8 +275,8 @@ public class jprocurAdmin extends AbstractPageBean {
         String idSeleccionado = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idSeleccionado");
         Integer id = new Integer(idSeleccionado);
         this.entradaActual = this.jprocurInstance.getEntrada(id.intValue());
-        this.setSoloUna(true);
-        return "exito";
+        this.setEditandoEntrada(true);
+        return EMPTY_STRING;
     }
 
     /**
@@ -346,11 +293,6 @@ public class jprocurAdmin extends AbstractPageBean {
         return tag;
     }
 
-//    public boolean getShowPagComentarios(){
-//        if(this.entradaActual.getComentariosCollection().size()>10) return true;
-//        return false;
-//    }
-
     public boolean getShowPagEntradas(){
         if(this.listaEntradas.size()>MAX_ENTRADAS) return true;
         return false;
@@ -362,16 +304,29 @@ public class jprocurAdmin extends AbstractPageBean {
         String idEntrada = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idEntrada");
         Integer id = Integer.parseInt(idEntrada);
         if(id>0) this.idEntradaEliminar = id;
-        return "";
+        return EMPTY_STRING;
+    }
+
+    public String AprobarComentario(){
+        this.setPopupComentario(true);
+        this.setAprobarComentario(true);
+        this.setEliminarComentario(false);
+        this.lblMensajesComentarios.setValue("¿Seguro que desea Aprobar el comentario seleccionado?");
+        String idComent = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idComentario");
+        Integer id = Integer.parseInt(idComent);
+        if(id>0) this.idComentario = id;
+        return EMPTY_STRING;
     }
 
     public String EliminarComentario(){
-        this.setPopupAprobarComentario(true);
+        this.setPopupComentario(true);
+        this.setAprobarComentario(false);
+        this.setEliminarComentario(true);
         this.lblMensajesComentarios.setValue("¿Seguro que desea Eliminar el comentario seleccionado?");
         String idComent = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idComentario");
         Integer id = Integer.parseInt(idComent);
         if(id>0) this.idComentario = id;
-        return "";
+        return EMPTY_STRING;
     }
     
    public String btnEliminarEntrada_action(){
@@ -386,10 +341,12 @@ public class jprocurAdmin extends AbstractPageBean {
        } finally {
            this.idEntradaEliminar = -1;
        }
-       return "";
+       return EMPTY_STRING;
     }
 
     public String btnAprobarComentario_action(){
+       this.setAprobarComentario(false);
+       this.setEliminarComentario(false);
        try {
             if(this.idComentario>0){
                 this.jprocurInstance.aprobarComentario(this.idComentario);
@@ -401,10 +358,12 @@ public class jprocurAdmin extends AbstractPageBean {
        } finally {
            this.idComentario = -1;
        }
-       return "";
+       return EMPTY_STRING;
     }
 
     public String btnEliminarComentario_action(){
+       this.setAprobarComentario(false);
+       this.setEliminarComentario(false);
        try {
             if(this.idComentario>0){
                 this.jprocurInstance.deleteComentario(this.idComentario);
@@ -416,7 +375,7 @@ public class jprocurAdmin extends AbstractPageBean {
        } finally {
            this.idComentario = -1;
        }
-       return "";
+       return EMPTY_STRING;
     }
 
     private HtmlOutputText lblMensajesEntrada = new HtmlOutputText();
@@ -439,14 +398,32 @@ public class jprocurAdmin extends AbstractPageBean {
     }
 
     private Boolean popupElimEntrada = new Boolean(false);
-    private Boolean popupAprobarComentario = new Boolean(false);
+    private Boolean popupComentario = new Boolean(false);
+    private Boolean aprobarComentario = new Boolean(false);
+    private Boolean eliminarComentario = new Boolean(true);
 
-    public Boolean getPopupAprobarComentario() {
-        return popupAprobarComentario;
+    public Boolean getEliminarComentario() {
+        return eliminarComentario;
     }
 
-    public void setPopupAprobarComentario(Boolean popupAprobarComentario) {
-        this.popupAprobarComentario = popupAprobarComentario;
+    public void setEliminarComentario(Boolean eliminarComentario) {
+        this.eliminarComentario = eliminarComentario;
+    }
+
+    public Boolean getAprobarComentario() {
+        return aprobarComentario;
+    }
+
+    public void setAprobarComentario(Boolean aprobarComentario) {
+        this.aprobarComentario = aprobarComentario;
+    }
+
+    public Boolean getPopupComentario() {
+        return popupComentario;
+    }
+
+    public void setPopupComentario(Boolean popupComentario) {
+        this.popupComentario = popupComentario;
     }
 
     public Boolean getPopupElimEntrada() {
@@ -464,10 +441,10 @@ public class jprocurAdmin extends AbstractPageBean {
 
     public String btnCancelarMensajes_action() {
         this.setPopupElimEntrada(false);
-        this.setPopupAprobarComentario(false);
+        this.setPopupComentario(false);
         this.idEntradaEliminar = -1;
         this.idComentario = -1;
-        return null;
+        return EMPTY_STRING;
     }
 
     private Integer idEntradaEliminar = new Integer(-1);
@@ -481,8 +458,41 @@ public class jprocurAdmin extends AbstractPageBean {
         this.idComentario = idComentarioAprobar;
     }
 
-    public Boolean getEntradaValida(){
+    public boolean getEntradaValida(){
         return (this.idEntradaEliminar>0);
+    }
+
+    public boolean getComentarioValido(){
+        return (this.idComentario>0);
+    }
+
+    public boolean getShowPagComentarios(){
+        if(this.listaComentarios.size()>MAX_COMENTARIOS) return true;
+        return false;
+    }
+
+    public Boolean getHayEntradas(){
+        if(this.listaEntradas.size()>0) return true;
+        return false;
+    }
+
+    public Boolean getHayComentarios(){
+        if(this.listaComentarios.size()>0) return true;
+        return false;
+    }
+
+    public String EditarEntrada(){
+        String idComent = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idEntrada");
+        Integer id = Integer.parseInt(idComent);
+        this.entradaActual = this.jprocurInstance.getEntrada(id.intValue());
+        this.setEditandoEntrada(true);
+        return EMPTY_STRING;
+    }
+
+    public String cancelarGuardarEntrada() {
+        this.entradaActual = null;
+        this.setEditandoEntrada(false);
+        return EMPTY_STRING;
     }
 
 }
