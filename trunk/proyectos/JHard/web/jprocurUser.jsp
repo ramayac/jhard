@@ -78,10 +78,9 @@
                                     <ice:dataTable id="tablaEntradaComentarios" rows="10" value="#{jprocurUser.entradaActual.comentariosList}"
                                                    var="indiceComentario" width="100%">
                                         <ice:column id="columnaComentarios">
-
                                             <ice:panelGroup id="pnlComent" rendered="#{indiceComentario.aprobado}">
-                                                <ice:outputText id="lblComent" value="#{indiceComentario.comentario}"/>
-                                                <!-- aqui hay que poner un commandLink para eliminar comentarios -->
+                                                <!-- aqui hay que poner un commandLink para eliminar comentarios cuando el usuario sea Administrador o Admin de Contenido-->
+                                                <ice:outputText id="lblComent" value="#{indiceComentario.comentario}"/><div align="right"><ice:outputText id="lblFirma" value="#{indiceComentario.firma}"/></div>
                                             </ice:panelGroup>
                                         </ice:column>
                                     </ice:dataTable>
@@ -144,7 +143,8 @@
                     <div id="sidebar">
                         <ul>
                             <li id="search">
-                                <h2>Búsqueda Wiki</h2>
+                                <h2>Búsqueda</h2>
+                                ...
                             </li>
                             <li>
                                 <h2>

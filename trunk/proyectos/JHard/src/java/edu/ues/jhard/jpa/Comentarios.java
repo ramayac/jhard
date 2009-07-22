@@ -92,11 +92,11 @@ public class Comentarios implements Serializable {
         this.comentario = comentario;
     }
 
-    public Date getFechahorara() {
+    public Date getFechahora() {
         return fechahorara;
     }
 
-    public void setFechahorara(Date fechahorara) {
+    public void setFechahora(Date fechahorara) {
         this.fechahorara = fechahorara;
     }
 

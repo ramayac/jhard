@@ -23,7 +23,7 @@
                     jQuery.noConflict();
                     jQuery(document).ready(function() {
                         var tabla = jQuery("form table.mitablaentradas");
-                        jQuery("#filtroTabla").keyup(function() {
+                        jQuery("#filtroTablaEntrda").keyup(function() {
                             jQuery.uiTableFilter(tabla, this.value );
                         })
                     });
@@ -68,13 +68,42 @@
                             <ice:form id="formEntrada">
                                 <ice:panelTabSet id="panelAdmin" tabPlacement="Top">
                                     <ice:panelTab id="panelEntrada" label="Administrar Entradas">
+                                        <!-- panel de para EDITAR UNA ENTRADAS -->
+                                        <ice:panelGroup id="panelEditarEntrada" rendered="#{jprocurAdmin.editandoEntrada}">
+                                        <div class="post">
+                                            Título: <ice:inputText id="itTitulo" value="#{jprocurAdmin.entradaActual.titulo}"/>
+                                            <br/>
+                                            <ice:inputRichText id="richDescripcion" value="#{jprocurAdmin.entradaActual.descripcion}"
+                                            language="es" skin="silver" toolbar="Basic"/>
+                                            <br/>
+                                            <br/>
+                                            Escrito por: <ice:outputLabel id="lblAutor" style="font-weight:bold; " 
+                                            value="#{jprocurAdmin.entradaActual.idusuario.nombre}"/>, en: <ice:selectInputDate
+                                            id="popupDateTime" renderMonthAsDropdown="true" renderYearAsDropdown="true"
+                                            value="#{jprocurAdmin.entradaActual.fechahora}" title="Fecha y Hora" renderAsPopup="true">
+                                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+                                            </ice:selectInputDate>
+                                            <br/>
+                                            <br/>
+                                            Etiquetas:<br/>
+                                            __aqui un panel con las etiquetas que se pueden poner__
+                                            <br/>
+                                            <div align="center">
+                                            <ice:commandButton action="#{jprocurAdmin.guardarEntrada}" id="btnGuardar" styleClass="btnAccion2" value="Guardar"/>
+                                            <ice:commandButton action="#{jprocurAdmin.cancelarGuardarEntrada}" id="btnCancelar" styleClass="btnAccion2" value="Cancelar"/>
+                                            </div>
+                                        </div>
+                                        </ice:panelGroup>
+                                        <!-- END panel de para EDITAR UNA ENTRADAS -->
                                         <!-- panel de para administrar las ENTRADAS -->
-                                        <ice:panelGroup id="panelVistaMultiple" rendered="#{!jprocurAdmin.soloUna}">
-                                            <div align="right">Filtro: <input id="filtroTabla"/></div>
-                                            <ice:dataTable id="tablaEntradas" rows="30" value="#{jprocurAdmin.listaEntradas}" var="indiceEntrada" styleClass="mitablaentradas">
+                                        <ice:panelGroup id="panelVistaMultipleEntradas" rendered="#{!jprocurAdmin.editandoEntrada}">
+                                            <div align="right">Filtro: <input id="filtroTablaEntrada"/></div>
+                                            <ice:dataTable id="tablaEntradas" rows="30" 
+                                            value="#{jprocurAdmin.listaEntradas}" var="indiceEntrada" styleClass="mitablaentradas"
+                                            rendered="#{jprocurAdmin.hayEntradas}">
                                                 <ice:column>
                                                     <f:facet name="header">
-                                                        <ice:outputText value="Titulo de la Entrada"/>
+                                                        <ice:outputText value="Título de la Entrada"/>
                                                     </f:facet>
                                                     <ice:outputLabel id="lblTitulo" style="font-weight:bold; " value="#{indiceEntrada.titulo}"/>
                                                 </ice:column>
@@ -86,13 +115,13 @@
                                                 </ice:column>
                                                 <ice:column>
                                                     <f:facet name="header">
-                                                        <ice:outputText value="Fecha de Publicación"/>
+                                                        <ice:outputText value="Fecha de publicación"/>
                                                     </f:facet>
                                                     <ice:outputLabel id="lblFecha" style="font-weight:bold; " value="#{indiceEntrada.fecha}"/>
                                                 </ice:column>
                                                 <ice:column>
                                                     <f:facet name="header">
-                                                        <ice:outputText value="Editar Entrada"/>
+                                                        <ice:outputText value="Editar entrada"/>
                                                     </f:facet>
                                                     <ice:commandLink action="#{jprocurAdmin.EditarEntrada}" value="Editar">
                                                         <f:param name="idEntrada" value="#{indiceEntrada.identrada}"/>
@@ -100,7 +129,7 @@
                                                 </ice:column>
                                                 <ice:column>
                                                     <f:facet name="header">
-                                                        <ice:outputText value="Eliminar Entrada"/>
+                                                        <ice:outputText value="Eliminar entrada"/>
                                                     </f:facet>
                                                     <ice:commandLink action="#{jprocurAdmin.EliminarEntrada}" value="Eliminar">
                                                         <f:param name="idEntrada" value="#{indiceEntrada.identrada}"/>
@@ -116,20 +145,71 @@
                                                 </ice:dataPaginator>
                                             </div>
                                         </ice:panelGroup>
-                                        <!-- panel de para administrar las ENTRADAS -->
+                                        <!-- FIN panel de para administrar las ENTRADAS -->
                                     </ice:panelTab>
                                     <ice:panelTab id="panelComentarios" label="Moderar Comentarios">
                                         <!-- panel de para moderar los Comentarios -->
-                                        <ice:panelGroup id="panelGroup2" style=""/>
-                                        <!-- panel de para moderar los Comentarios -->
+                                        <ice:panelGroup id="panelVistaMultipleComentarios">
+                                            <div align="right">Filtro: <input id="filtroTablaComentarios"/></div>
+                                            <ice:dataTable id="tablaComentarios" rows="30" value="#{jprocurAdmin.listaComentarios}" 
+                                            var="indiceComentario" styleClass="mitablacomentarios"
+                                            rendered="#{jprocurAdmin.hayComentarios}">
+                                                <ice:column>
+                                                    <f:facet name="header">
+                                                        <ice:outputText value="Comentario"/>
+                                                    </f:facet>
+                                                    <ice:outputLabel id="lblTitulo" style="font-weight:bold; " value="#{indiceComentario.comentario}"/>
+                                                </ice:column>
+                                                <ice:column>
+                                                    <f:facet name="header">
+                                                        <ice:outputText value="Autor"/>
+                                                    </f:facet>
+                                                    <ice:outputLabel id="lblAutor" style="font-weight:bold; " value="#{indiceComentario.firma}"/>
+                                                </ice:column>
+                                                <ice:column>
+                                                    <f:facet name="header">
+                                                        <ice:outputText value="Fecha de Publicación"/>
+                                                    </f:facet>
+                                                    <ice:outputLabel id="lblFecha" style="font-weight:bold; " value="#{indiceEntrada.fechahorara}"/>
+                                                </ice:column>
+                                                <ice:column>
+                                                    <f:facet name="header">
+                                                        <ice:outputText value="Aprobar comentario"/>
+                                                    </f:facet>
+                                                    <ice:commandLink action="#{jprocurAdmin.AprobarComentario}" value="Aprobar">
+                                                        <f:param name="idComentario" value="#{indiceComentario.idcoment}"/>
+                                                    </ice:commandLink>
+                                                </ice:column>
+                                                <ice:column>
+                                                    <f:facet name="header">
+                                                        <ice:outputText value="Eliminar comentario"/>
+                                                    </f:facet>
+                                                    <ice:commandLink action="#{jprocurAdmin.EliminarComentario}" value="Eliminar">
+                                                        <f:param name="idComentario" value="#{indiceComentario.idcoment}"/>
+                                                    </ice:commandLink>
+                                                </ice:column>
+                                            </ice:dataTable>
+                                            <div align="center">
+                                                <ice:dataPaginator for="tablaComentarios" id="paginadorComentarios" paginator="true" rendered="#{jprocurAdmin.showPagComentarios}">
+                                                    <f:facet name="first"><ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/></f:facet>
+                                                    <f:facet name="previous"><ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/></f:facet>
+                                                    <f:facet name="next"><ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/></f:facet>
+                                                    <f:facet name="last"><ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/></f:facet>
+                                                </ice:dataPaginator>
+                                            </div>
+                                        </ice:panelGroup>
+                                        <!-- FIN panel de para moderar los Comentarios -->
                                     </ice:panelTab>
                                     <ice:panelTab id="panelEtiquetas" label="Administrar Etiquetas">
+                                        <!-- panel de para administrar las Etiquetas -->
                                         <ice:panelGroup id="panelGroup3" style=""/>
+                                        <!-- FIN panel de para administrar las Etiquetas -->
                                     </ice:panelTab>
                                 </ice:panelTabSet>
 
                                 <!-- panel de mensajes para viñeta de Entradas-->
-                                <ice:panelPopup autoCentre="true" id="panelMensajeEntradas" modal="true" rendered="#{jprocurAdmin.popupElimEntrada}">
+                                <ice:panelPopup autoCentre="true" id="panelMensajeEntradas" modal="true"
+                                rendered="#{jprocurAdmin.popupElimEntrada}">
                                 <f:facet name="header">
                                     <ice:panelGrid id="ppEntrada">
                                         <ice:outputText id="otxtTituloEntrada" value="JProcur"/>
@@ -141,7 +221,7 @@
                                         <ice:outputText binding="#{jprocurAdmin.lblMensajesEntrada}" id="lblMensajesEntrada" value="Mensajes AQUI"/><br/><br/>
                                         <div align="center">
                                         <ice:panelGrid columns="2" id="panelBotonesEntrada">
-                                            <ice:commandButton action="#{jprocurAdmin.btnAceptarElimEntr_action}" id="btnAceptarEntrada" value="Aceptar" rendered="#{jprocurAdmin.entradaValida}"/>
+                                            <ice:commandButton action="#{jprocurAdmin.btnAceptarElimEntr_action}" id="btnEliminarEntrada" value="Eliminar" rendered="#{jprocurAdmin.entradaValida}"/>
                                             <ice:commandButton action="#{jprocurAdmin.btnCancelarMensajes_action}" id="btnCancelarEntrada" value="Cancelar" rendered="#{jprocurAdmin.entradaValida}"/>
                                             <ice:commandButton action="#{jprocurAdmin.btnCancelarMensajes_action}" id="btnOKEntrada" value="OK" rendered="#{!jprocurAdmin.entradaValida}"/>
                                         </ice:panelGrid>
@@ -153,7 +233,7 @@
                                 <!-- panel de mensajes -->
 
                                 <!-- panel de mensajes para viñeta de Comentarios-->
-                                <ice:panelPopup autoCentre="true" id="panelMensajeComentarios" modal="true" rendered="false">
+                                <ice:panelPopup autoCentre="true" id="panelMensajeComentarios" modal="true" rendered="#{jprocurAdmin.popupComentario}">
                                 <f:facet name="header">
                                     <ice:panelGrid id="ppComentarios">
                                         <ice:outputText id="otxtTituloComentarios" value="JProcur"/>
@@ -165,9 +245,10 @@
                                         <ice:outputText binding="#{jprocurAdmin.lblMensajesComentarios}" id="lblMensajesComentarios" value="Mensajes AQUI"/><br/><br/>
                                         <div align="center">
                                         <ice:panelGrid columns="2" id="panelBotonesComentarios">
-                                            <ice:commandButton action="#{jprocurAdmin.btnAceptarAprobComent_action}" id="btnAceptarComentarios" value="Aceptar" rendered="#{jprocurAdmin.entradaValida}"/>
-                                            <ice:commandButton action="#{jprocurAdmin.btnCancelarMensajes_action}" id="btnCancelarComentarios" value="Cancelar" rendered="#{jprocurAdmin.entradaValida}"/>
-                                            <ice:commandButton action="#{jprocurAdmin.btnCancelarMensajes_action}" id="btnOKComentarios" value="OK" rendered="#{!jprocurAdmin.entradaValida}"/>
+                                            <ice:commandButton action="#{jprocurAdmin.btnAprobarComentario_action}" id="btnAprobarComentarios" value="Aprobar" rendered="#{jprocurAdmin.aprobarComentario}"/>
+                                            <ice:commandButton action="#{jprocurAdmin.btnEliminarComentario_action}" id="btnEliminarComentarios" value="Eliminar" rendered="#{jprocurAdmin.eliminarComentario}"/>
+                                            <ice:commandButton action="#{jprocurAdmin.btnCancelarMensajes_action}" id="btnCancelarComentarios" value="Cancelar" rendered="#{jprocurAdmin.comentarioValido}"/>
+                                            <ice:commandButton action="#{jprocurAdmin.btnCancelarMensajes_action}" id="btnOKComentarios" value="OK" rendered="#{!jprocurAdmin.comentarioValido}"/>
                                         </ice:panelGrid>
                                         </div>
                                     </ice:panelGroup>
@@ -182,25 +263,14 @@
                     <!-- start sidebar -->
                     <div id="sidebar">
                         <ul>
-                            <li id="search">
-                                <h2>Búsqueda Wiki</h2>
-                            </li>
                             <li>
                                 <h2>
                                     <ice:outputLabel id="txtUserLogin" value="Sesión"/>
                                 </h2>
                                 <ice:form id="frmLogin" rendered="#{JHardminInstance.currentUser == null}">
                                     <ice:outputText id="lblLoginFail" rendered="#{JHardminInstance.loginFail}" styleClass="errorText" value="Datos incorrectos"/>
-                                    <p>
-                                        <ice:outputLabel id="lblUser" value="Usuario:"/>
-                                        <ice:inputText id="txtUser" required="true" requiredMessage="El nombre de usuario es requerido" style="width: 120px" value="#{JHardminInstance.inputUsrName}"/>
-                                        <h:message for="txtUser" styleClass="errorText"/>
-                                    </p>
-                                    <p>
-                                        <ice:outputLabel id="lblPass" value="Clave:"/>
-                                        <ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}"/>
-                                        <h:message for="txtPass" styleClass="errorText"/>
-                                    </p>
+                                    <p><ice:outputLabel id="lblUser" value="Usuario:"/><ice:inputText id="txtUser" required="true" requiredMessage="El nombre de usuario es requerido" style="width: 120px" value="#{JHardminInstance.inputUsrName}"/><h:message for="txtUser" styleClass="errorText"/></p>
+                                    <p><ice:outputLabel id="lblPass" value="Clave:"/><ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}"/><h:message for="txtPass" styleClass="errorText"/></p>
                                     <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" onclick="doLoad();" styleClass="btnAccion2" value="Login"/>
                                 </ice:form>
                                 <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
