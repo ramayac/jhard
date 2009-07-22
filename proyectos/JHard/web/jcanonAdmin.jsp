@@ -76,7 +76,7 @@
                                                     <ice:outputText id="outputText1" value="Reservas de Equipo Multimedia"/>
                                                 </ice:panelGroup>
                                             </f:facet>
-                                            <ice:panelGroup id="grupoContenido" style=" margin-top:0px; margin-bottom:0px;">
+                                            <ice:panelGroup id="grupoContenido" style=" margin-top:0px; margin-bottom:0px; overflow-x: auto;">
                                                 <ice:dataTable id="tblListaReservas" rows="10" style="margin-top: 0px; margin-bottom: 0px;"
                                                     title="Lista de Reservas Pendientes" value="#{jcanonAdmin.listaReservasPendientes}" var="reserva">
                                                     <ice:column>
