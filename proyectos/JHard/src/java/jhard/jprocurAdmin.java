@@ -495,4 +495,10 @@ public class jprocurAdmin extends AbstractPageBean {
         return EMPTY_STRING;
     }
 
+    public String guardarEntrada(){
+        this.jprocurInstance.createEntrada(entradaActual);
+        this.setEditandoEntrada(false);
+        return EMPTY_STRING;
+    }
+
 }
