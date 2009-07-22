@@ -60,7 +60,7 @@
                                         <ice:outputLabel id="lblEntradaTituloUnico" style="font-weight:bold; " value="#{jprocurUser.entradaActual.titulo}"/>
                                     </h2>
                                     <br/>
-                                    <ice:outputText id="lblEntradaDescripcionUnico" value="#{jprocurUser.entradaActual.descripcion}"/>
+                                    <ice:outputLabel id="lblEntradaDescripcionUnico" value="#{jprocurUser.entradaActual.descripcion}"/>
                                     <br/>
                                     <br/>
                                     Escrito por: <ice:outputText id="lblEntradaUsuarioUnico"
@@ -80,7 +80,7 @@
                                         <ice:column id="columnaComentarios">
                                             <ice:panelGroup id="pnlComent" rendered="#{indiceComentario.aprobado}">
                                                 <!-- aqui hay que poner un commandLink para eliminar comentarios cuando el usuario sea Administrador o Admin de Contenido-->
-                                                <ice:outputText id="lblComent" value="#{indiceComentario.comentario}"/><div align="right"><ice:outputText id="lblFirma" value="#{indiceComentario.firma}"/></div>
+                                                <ice:outputLabel id="lblComent" value="#{indiceComentario.comentario}"/><div align="right"><ice:outputText id="lblFirma" value="#{indiceComentario.firma}"/></div>
                                             </ice:panelGroup>
                                         </ice:column>
                                     </ice:dataTable>
@@ -114,7 +114,7 @@
                                                 </ice:commandLink>
                                             </h2>
                                             <br/>
-                                            <ice:outputText id="lblDescripcion" value="#{indiceEntrada.descripcion}"/>
+                                            <ice:outputLabel id="lblDescripcion" value="#{indiceEntrada.descripcion}"/>
                                             <br/>
                                         </div>
                                     </ice:column>
