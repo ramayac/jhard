@@ -512,6 +512,7 @@ public class BeanBaseJProcur extends BeanBase {
     public void deleteComentario(Integer idcomentario){
         EntityManager em = this.getEntityManager();
         Comentarios c = (Comentarios)em.find(Comentarios.class, idcomentario);
+        if(c==null) return;
         em.getTransaction().begin();
         em.remove(c);
         em.getTransaction().commit();
