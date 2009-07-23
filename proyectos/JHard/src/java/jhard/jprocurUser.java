@@ -20,6 +20,7 @@ import edu.ues.jhard.jpa.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,7 @@ public class jprocurUser extends AbstractPageBean {
     static final int MAX_ENTRADAS = 5;
     static final int ROL_EDITORCONTENIDO = 4;
     static final int ROL_ADMINISTRADOR = 1;
-    static final String EMPTY_STRING = new String();
+    static final String EMPTY_STRING = "";
     static final String INVITADO = "Invitado";
 
     private Entrada entradaActual = null;
@@ -46,7 +47,9 @@ public class jprocurUser extends AbstractPageBean {
     private List<Entrada> listaEntradas = new ArrayList<Entrada>();
     private Boolean soloUna = new Boolean(false);
     private Boolean agregandoComentario = new Boolean(false);
-    private Integer indice = new Integer(0);
+    //private Integer indice = new Integer(0);
+
+    private String criteriosBusqueda = EMPTY_STRING;
     
     private int __placeholder;
     private LoggedUser lu;
@@ -138,6 +141,14 @@ public class jprocurUser extends AbstractPageBean {
 //                    break;
 //            }
         } else this.lblUser.setValue(INVITADO);
+    }
+
+    public String getCriteriosBusqueda() {
+        return criteriosBusqueda;
+    }
+
+    public void setCriteriosBusqueda(String criteriosBusqueda) {
+        this.criteriosBusqueda = criteriosBusqueda;
     }
 
     /**
@@ -404,6 +415,12 @@ public class jprocurUser extends AbstractPageBean {
         this.comentarioNuevo = new Comentarios();
         this.agregandoComentario = false;
         return EMPTY_STRING;
+    }
+
+    public String busquedaEntradas(){
+       String[] arr=this.criteriosBusqueda.trim().split(",");
+       this.listaEntradas = this.jprocurInstance.searchListaEntradaPorEtiquetas(arr);
+       return EMPTY_STRING;
     }
 
     public String eliminarComentario(){
