@@ -108,6 +108,33 @@ UNLOCK TABLES;
 
 
 --
+-- Definition of table `jhard`.`articulos`
+--
+
+DROP TABLE IF EXISTS `jhard`.`articulos`;
+CREATE TABLE  `jhard`.`articulos` (
+  `idarticulo` int(10) unsigned NOT NULL auto_increment,
+  `titulo` varchar(50) NOT NULL,
+  `descripcion` text NOT NULL,
+  `fechahora` datetime NOT NULL,
+  `idusuario` int(11) NOT NULL,
+  PRIMARY KEY  (`idarticulo`),
+  KEY `fk_articulo_usuario` (`idusuario`),
+  KEY `idxArtTitulo` (`titulo`),
+  KEY `idxArtFecha` (`fechahora`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Articulos de jwiki';
+
+--
+-- Dumping data for table `jhard`.`articulos`
+--
+
+/*!40000 ALTER TABLE `articulos` DISABLE KEYS */;
+LOCK TABLES `articulos` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `articulos` ENABLE KEYS */;
+
+
+--
 -- Definition of table `jhard`.`asistencia`
 --
 
@@ -360,12 +387,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `jhard`.`comentarios`;
 CREATE TABLE  `jhard`.`comentarios` (
-  `idcoment` int(11) NOT NULL auto_increment,
+  `idcoment` int(11) unsigned NOT NULL auto_increment,
   `comentario` varchar(250) NOT NULL,
   `fechahorara` datetime NOT NULL,
-  `identrada` int(11) NOT NULL,
+  `identrada` int(11) unsigned NOT NULL,
   `firma` varchar(25) NOT NULL,
-  `aprobado` tinyint(1) NOT NULL,
+  `aprobado` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY  (`idcoment`),
   KEY `fk_comentarios_entrada` (`identrada`),
   CONSTRAINT `fk_comentarios_entrada` FOREIGN KEY (`identrada`) REFERENCES `entrada` (`identrada`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -458,15 +485,17 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `jhard`.`entrada`;
 CREATE TABLE  `jhard`.`entrada` (
-  `identrada` int(11) NOT NULL,
+  `identrada` int(11) unsigned NOT NULL auto_increment,
   `titulo` varchar(50) NOT NULL,
   `descripcion` text NOT NULL,
   `fechahora` datetime NOT NULL,
   `idusuario` int(11) NOT NULL,
   PRIMARY KEY  (`identrada`),
   KEY `fk_entrada_usuario` (`idusuario`),
+  KEY `idxEntrTitulo` (`titulo`),
+  KEY `idxEntrFecha` (`fechahora`),
   CONSTRAINT `fk_entrada_usuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `jhard`.`entrada`
@@ -897,8 +926,7 @@ CREATE TABLE  `jhard`.`marca` (
 
 /*!40000 ALTER TABLE `marca` DISABLE KEYS */;
 LOCK TABLES `marca` WRITE;
-INSERT INTO `jhard`.`marca` VALUES  
- (0, 'Generica'),
+INSERT INTO `jhard`.`marca` VALUES  (0,'Generica'),
  (1,'Dell'),
  (2,'Sony'),
  (3,'Toshiba'),
@@ -1196,9 +1224,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `jhard`.`tag`;
 CREATE TABLE  `jhard`.`tag` (
-  `idtag` int(11) NOT NULL auto_increment,
+  `idtag` int(11) unsigned NOT NULL auto_increment,
   `descripcion` varchar(25) NOT NULL,
-  PRIMARY KEY  (`idtag`)
+  PRIMARY KEY  (`idtag`),
+  KEY `idxTagDesc` (`descripcion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=778 DEFAULT CHARSET=latin1;
 
 --
@@ -1207,18 +1236,18 @@ CREATE TABLE  `jhard`.`tag` (
 
 /*!40000 ALTER TABLE `tag` DISABLE KEYS */;
 LOCK TABLES `tag` WRITE;
-INSERT INTO `jhard`.`tag` VALUES  (1,'portada'),
- (2,'wiki'),
- (3,'hardware'),
- (4,'software'),
- (5,'red'),
- (6,'ip'),
- (7,'linux'),
+INSERT INTO `jhard`.`tag` VALUES  (3,'hardware'),
  (8,'impresora'),
+ (6,'ip'),
  (9,'latin'),
+ (7,'linux'),
  (10,'lorem'),
+ (1,'portada'),
+ (5,'red'),
+ (4,'software'),
  (11,'Tag9999'),
- (777,'TagTest');
+ (777,'TagTest'),
+ (2,'wiki');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `tag` ENABLE KEYS */;
 
@@ -1229,15 +1258,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `jhard`.`tag_entrada`;
 CREATE TABLE  `jhard`.`tag_entrada` (
-  `idtagentrada` int(11) NOT NULL auto_increment,
-  `idtag` int(11) NOT NULL,
-  `identrada` int(11) NOT NULL,
+  `idtagentrada` int(11) unsigned NOT NULL auto_increment,
+  `idtag` int(11) unsigned NOT NULL,
+  `identrada` int(11) unsigned NOT NULL,
   PRIMARY KEY  (`idtagentrada`,`identrada`,`idtag`),
   KEY `fk_tag_entrada_tag` (`idtag`),
   KEY `fk_tag_entrada_entrada` (`identrada`),
+  KEY `idxTagEntrada` (`idtag`,`identrada`),
   CONSTRAINT `fk_tag_entrada_entrada` FOREIGN KEY (`identrada`) REFERENCES `entrada` (`identrada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tag_entrada_tag` FOREIGN KEY (`idtag`) REFERENCES `tag` (`idtag`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `jhard`.`tag_entrada`
@@ -1300,9 +1330,8 @@ CREATE TABLE  `jhard`.`ubicacion` (
 
 /*!40000 ALTER TABLE `ubicacion` DISABLE KEYS */;
 LOCK TABLES `ubicacion` WRITE;
-INSERT INTO `jhard`.`ubicacion` VALUES  
-(0, 'Generica'),
-(1,'LABCOM-1');
+INSERT INTO `jhard`.`ubicacion` VALUES  (0,'Generica'),
+ (1,'LABCOM-1');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `ubicacion` ENABLE KEYS */;
 
@@ -1323,7 +1352,7 @@ CREATE TABLE  `jhard`.`usuario` (
   KEY `fkidautorizacion_usuario` (`idautorizacion`),
   CONSTRAINT `fkidautorizacion_usuario` FOREIGN KEY (`idautorizacion`) REFERENCES `autorizacion` (`idautorizacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidrol_usuario` FOREIGN KEY (`idrol`) REFERENCES `rol` (`idrol`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `jhard`.`usuario`
@@ -1342,7 +1371,8 @@ INSERT INTO `jhard`.`usuario` VALUES  (1,'LuisBarrera','21232F297A57A5A743894A0E
  (9,'hugol','CD82BE786DA71D1DD4EA68C0908AF6E6',1,NULL),
  (10,'Karlita','9003D1DF22EB4D3820015070385194C8',2,NULL),
  (11,'rosario','9003D1DF22EB4D3820015070385194C8',3,NULL),
- (12,'robertux','3858F62230AC3C915F300C664312C63F',1,NULL);
+ (12,'robertux','3858F62230AC3C915F300C664312C63F',1,NULL),
+ (13,'ramayac','21232F297A57A5A743894A0E4A801FC3',1,NULL);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
