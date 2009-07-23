@@ -19,7 +19,9 @@ import edu.ues.jhard.jpa.Tag;
 import edu.ues.jhard.jpa.TagEntrada;
 import edu.ues.jhard.jpa.Usuario;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
  * to respond to incoming events.</p>
  */
 public class jprocurAdmin extends AbstractPageBean {
+    public static final String INVITADO = "Invitado";
     static final int MAX_ENTRADAS = 30;
     static final int MAX_COMENTARIOS = 30;
     static final String EMPTY_STRING = new String();
@@ -65,20 +68,27 @@ public class jprocurAdmin extends AbstractPageBean {
     private Usuario U;
 
     public LoggedUser getLu() {
-        return lu;
+        return this.lu;
     }
 
-    public void setLu(LoggedUser lu) {
-        this.lu = lu;
+    //what the fuck?
+//    public void setLu(LoggedUser lu) {
+//        this.lu = lu;
+//    }
+
+    public Usuario getUser(){
+        return this.U;
     }
 
-    public Usuario getU(){
-        return U;
+    public String getCurrentUserName(){
+        if(this.U == null) return INVITADO;
+        return this.U.getNombre();
     }
 
-    public void setU(Usuario u){
-        this.U=u;
-    }
+
+//    public void setU(Usuario u){
+//        this.U=u;
+//    }
 
     public  BeanBaseJHardmin getJHardminInstance() {
         return (BeanBaseJHardmin) getBean("JHardminInstance");
@@ -95,28 +105,24 @@ public class jprocurAdmin extends AbstractPageBean {
      */
     public jprocurAdmin() {
 
-        lu= getJHardminInstance().getCurrentUser();
+        this.lu= getJHardminInstance().getCurrentUser();
         
         this.listaEntradas = this.getJProcurInstance().getAllEntradas();
-        System.out.println("tamaño listaEntradas:" + this.listaEntradas.size());
         this.listaComentarios = this.getJProcurInstance().getComentariosNoAprobados();
-        System.out.println("tamaño listaComentarios:" + this.listaComentarios.size());
         if(this.listaEntradas.size()>0) this.entradaActual = this.listaEntradas.get(0);
         
-        if(lu!=null){
-            U = LoginManager.getInstance().getUsuario(lu);
+        if(this.lu!=null){
+            this.U = LoginManager.getInstance().getUsuario(lu);
+            this.lblUser.setValue(U.getNombre());
 
-            this.lblUser.setValue((String)U.getNombre());
-
-            switch(U.getIdrol().getIdrol()){
+            switch(this.U.getIdrol().getIdrol()){
                 case ROL_ADMINISTRADOR:
                 case ROL_EDITORCONTENIDO:
                 default:
                     break;
                 }
-        }
-        else
-            this.lblUser.setValue("Invitado");
+        }else
+            this.lblUser.setValue(INVITADO);
     }
 
     /**
@@ -220,9 +226,18 @@ public class jprocurAdmin extends AbstractPageBean {
     /*----------------------------------------------------------------------------------*/
 
     private Entrada entradaActual = null;
+    private Entrada entradaNueva = new Entrada();
     private List<Entrada> listaEntradas = new ArrayList<Entrada>();
-    private Comentarios comentarioActual = null;
+    //private Comentarios comentarioActual = null;
     private List<Comentarios> listaComentarios = new ArrayList<Comentarios>();
+
+    public Entrada getEntradaNueva() {
+        return entradaNueva;
+    }
+
+    public void setEntradaNueva(Entrada entradaNueva) {
+        this.entradaNueva = entradaNueva;
+    }
 
     public List<Comentarios> getListaComentarios() {
         return listaComentarios;
@@ -491,14 +506,30 @@ public class jprocurAdmin extends AbstractPageBean {
 
     public String cancelarGuardarEntrada() {
         this.entradaActual = null;
+        this.entradaNueva = new Entrada();
         this.setEditandoEntrada(false);
         return EMPTY_STRING;
     }
 
-    public String guardarEntrada(){
-        this.jprocurInstance.createEntrada(entradaActual);
+    public String modificarEntrada(){
+        this.entradaActual.setIdusuario(this.U);
+        this.jprocurInstance.updateEntrada(this.entradaActual);
+        this.listaEntradas = this.getJProcurInstance().getAllEntradas();
         this.setEditandoEntrada(false);
         return EMPTY_STRING;
+    }
+
+    public String agregarEntrada(){
+        this.entradaNueva.setIdusuario(this.U);
+        this.entradaNueva.setFechahora(new Date());
+        this.jprocurInstance.createEntrada(this.entradaNueva);
+        this.listaEntradas = this.getJProcurInstance().getAllEntradas();
+        this.setEditandoEntrada(false);
+        return EMPTY_STRING;
+    }
+
+    public TimeZone getTimeZone() {
+        return java.util.TimeZone.getDefault();
     }
 
 }
