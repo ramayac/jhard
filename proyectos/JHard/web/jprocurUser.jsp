@@ -75,8 +75,10 @@
                                 <br/>
                                 Comentarios:<br/>
                                 <div class="post">
-                                    <ice:dataTable id="tablaEntradaComentarios" rows="10" value="#{jprocurUser.entradaActual.comentariosList}"
-                                                   var="indiceComentario" width="100%">
+                                    <ice:dataTable id="tablaEntradaComentarios" rows="10"
+                                    value="#{jprocurUser.entradaActual.comentariosList}"
+                                    var="indiceComentario" width="100%"
+                                    rendered="#{jprocurUser.hayComentarios}">
                                         <ice:column id="columnaComentarios">
                                             <ice:panelGroup id="pnlComent" rendered="#{indiceComentario.aprobado}">
                                                 <!-- aqui hay que poner un commandLink para eliminar comentarios cuando el usuario sea Administrador o Admin de Contenido-->
@@ -84,24 +86,31 @@
                                             </ice:panelGroup>
                                         </ice:column>
                                     </ice:dataTable>
+                                    <ice:panelGroup rendered="#{!jprocurUser.hayComentarios}">No hay comentarios para esta entrada.</ice:panelGroup>
                                 </div>
                                 <div align="center">
                                     <ice:dataPaginator for="tablaEntradaComentarios" id="paginadorComentarios" paginator="true" rendered="#{jprocurUser.showPagComentarios}">
-                                        <f:facet name="first">
-                                            <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
-                                        </f:facet>
-                                        <f:facet name="previous">
-                                            <ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/>
-                                        </f:facet>
-                                        <f:facet name="next">
-                                            <ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/>
-                                        </f:facet>
-                                        <f:facet name="last">
-                                            <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
-                                        </f:facet>
+                                        <f:facet name="first"><ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/></f:facet>
+                                        <f:facet name="previous"><ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/></f:facet>
+                                        <f:facet name="next"><ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/></f:facet>
+                                        <f:facet name="last"><ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/></f:facet>
                                     </ice:dataPaginator>
                                 </div>
+                                <br/>
+                                    <ice:panelGroup id="pnlAddComent"
+                                    rendered="#{jprocurUser.agregandoUnComentario}">
+                                        Agrega un comentario a la entrada:<br/><ice:inputTextarea id="itComentario" title="Comentario"
+                                        value="#{jprocurUser.comentarioNuevo.comentario}"
+                                        partialSubmit="true"/><br/>
+                                        Firma: <br/><ice:inputText id="itC" title="Firma"
+                                        value="#{jprocurUser.comentarioNuevo.firma}"
+                                        partialSubmit="true"/>
+                                    </ice:panelGroup>
+                                <br/>
                                 <ice:commandButton action="#{jprocurUser.toggleVista}" id="btnToggle" styleClass="btnAccion2" value="Regresar"/>
+                                <ice:commandButton action="#{jprocurUser.agregandoComentario}"
+                                id="btnAgregarComentario" styleClass="btnAccion2"
+                                value="Comentar" rendered="#{!jprocurUser.agregandoUnComentario}"/>
                             </ice:panelGroup>
                             <ice:panelGroup id="panelVistaMultiple" rendered="#{!jprocurUser.soloUna}">
                                 <ice:dataTable id="tablaEntradas" rows="5" value="#{jprocurUser.listaEntradas}" var="indiceEntrada">
@@ -121,22 +130,15 @@
                                 </ice:dataTable>
                                 <div align="center">
                                     <ice:dataPaginator for="tablaEntradas" id="paginadorEntrada" paginator="true" rendered="#{jprocurUser.showPagEntradas}">
-                                        <f:facet name="first">
-                                            <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
-                                        </f:facet>
-                                        <f:facet name="previous">
-                                            <ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/>
-                                        </f:facet>
-                                        <f:facet name="next">
-                                            <ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/>
-                                        </f:facet>
-                                        <f:facet name="last">
-                                            <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
-                                        </f:facet>
+                                        <f:facet name="first"><ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/></f:facet>
+                                        <f:facet name="previous"><ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/></f:facet>
+                                        <f:facet name="next"><ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/></f:facet>
+                                        <f:facet name="last"><ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/></f:facet>
                                     </ice:dataPaginator>
                                 </div>
                             </ice:panelGroup>
                         </ice:form>
+                        <br/>
                     </div>
                     <!-- end content -->
                     <!-- start sidebar -->
@@ -178,24 +180,6 @@
                                     <li>
                                         <a href="#">Nec metus sed donec</a>
                                     </li>
-                                    <li>
-                                        <a href="#">Magna lacus bibendum mauris</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Velit semper nisi molestie</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Eget tempor eget nonummy</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Nec metus sed donec</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Magna lacus bibendum mauris</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Velit semper nisi molestie</a>
-                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -205,14 +189,7 @@
                 </div>
                 <!-- end page -->
                 <!-- start footer -->
-                <div id="footer">
-                    <div id="footer-wrap">
-                        <p id="legal" style="line-height: 13px">Universidad de El Salvador Facultad Multidisciplinaria de Occidente <br/>
-                            Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/>
-                            <a href="#">Créditos</a> - <a href="http://www.uesocc.edu.sv">Pagina Principal de la UES FMOcc</a>
-                        </p>
-                    </div>
-                </div>
+                <div id="footer"><div id="footer-wrap"><p id="legal" style="line-height: 13px">Universidad de El Salvador Facultad Multidisciplinaria de Occidente <br/> Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/> <a href="#">Créditos</a> - <a href="http://www.uesocc.edu.sv">Pagina Principal de la UES FMOcc</a></p></div></div>
                 <!-- end footer -->
             </body>
         </html>

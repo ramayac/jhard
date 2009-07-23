@@ -7,7 +7,6 @@
 package jhard;
 
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
-import com.icesoft.faces.component.jsfcl.data.DefaultTableDataModel;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.beans.BeanBaseJProcur;
@@ -33,14 +32,26 @@ import javax.servlet.http.HttpServletRequest;
  * to respond to incoming events.</p>
  */
 public class jprocurUser extends AbstractPageBean {
-    public static final int MAX_COMENTARIOS = 10;
-    public static final int MAX_ENTRADAS = 5;
+    static final int NONE = 0;
+    static final int MAX_COMENTARIOS = 10;
+    static final int MAX_ENTRADAS = 5;
     static final int ROL_EDITORCONTENIDO = 4;
     static final int ROL_ADMINISTRADOR = 1;
+    static final String EMPTY_STRING = new String();
 
+    private Entrada entradaActual = null;
+    private Comentarios comentarioNuevo = new Comentarios();
+    private List<Entrada> listaEntradas = new ArrayList<Entrada>();
+    private Boolean soloUna = new Boolean(false);
+    private Boolean agregandoComentario = new Boolean(false);
+    private Integer indice = new Integer(0);
+    
     private int __placeholder;
+    private LoggedUser lu;
+    private Usuario U;
 
     private HtmlOutputLabel lblUser = new HtmlOutputLabel();
+    private BeanBaseJProcur jprocurInstance = new BeanBaseJProcur();
 
     public HtmlOutputLabel getLblUser() {
         return lblUser;
@@ -60,11 +71,12 @@ public class jprocurUser extends AbstractPageBean {
 
     // </editor-fold>
 
-    private LoggedUser lu;
-    private Usuario U;
-
     public LoggedUser getLu() {
         return lu;
+    }
+
+    public Boolean getHayUsuarioLogueado() {
+        return lu==null;
     }
 
     public void setLu(LoggedUser lu) {
@@ -83,26 +95,14 @@ public class jprocurUser extends AbstractPageBean {
         return (BeanBaseJHardmin) getBean("JHardminInstance");
     }
 
-    private BeanBaseJProcur jprocurInstance = new BeanBaseJProcur(); //sera mejor como jWikiInstance en el faces-config? revisar el rednimiento.
-
     public  BeanBaseJProcur getJProcurInstance() {
         return this.jprocurInstance;
-    }
-    private DefaultTableDataModel dataTable1Model = new DefaultTableDataModel();
-
-    public DefaultTableDataModel getDataTable1Model() {
-        return dataTable1Model;
-    }
-
-    public void setDataTable1Model(DefaultTableDataModel dtdm) {
-        this.dataTable1Model = dtdm;
     }
 
     /**
      * <p>Construct a new Page bean instance.</p>
      */
     public jprocurUser() {
-
         lu= getJHardminInstance().getCurrentUser();
         
         this.listaEntradas = this.getJProcurInstance().getAllEntradas();
@@ -118,10 +118,8 @@ public class jprocurUser extends AbstractPageBean {
                 case ROL_EDITORCONTENIDO:
                 default:
                     break;
-                }
-        }
-        else
-            this.lblUser.setValue("Invitado");
+            }
+        } else this.lblUser.setValue("Invitado");
     }
 
     /**
@@ -222,19 +220,20 @@ public class jprocurUser extends AbstractPageBean {
         return (ApplicationBean1) getBean("ApplicationBean1");
     }
 
-    /*----------------------------------------------------------------------------------*/
-
-    private Entrada entradaActual = null;
-    private List<Entrada> listaEntradas = new ArrayList<Entrada>();
-    private Boolean soloUna = new Boolean(false);
-    private Integer indice = new Integer(0);
-
     public List<Entrada> getListaEntradas() {
         return listaEntradas;
     }
 
     public void setListaEntradas(List<Entrada> listaEntradas) {
         this.listaEntradas = listaEntradas;
+    }
+
+    public Comentarios getComentarioNuevo() {
+        return comentarioNuevo;
+    }
+
+    public void setComentarioNuevo(Comentarios comentarioNuevo) {
+        this.comentarioNuevo = comentarioNuevo;
     }
 
     /**
@@ -252,26 +251,6 @@ public class jprocurUser extends AbstractPageBean {
     public void setSoloUna(Boolean varias) {
         this.soloUna = varias;
     }
-
-//    /**
-//     * Obtiene la siguienteEntrada
-//     * @return
-//     */
-//    public String siguienteEntrada(){
-//        if(!(this.indice>this.listaEntradas.size())) this.indice++;
-//        this.entradaActual = this.listaEntradas.get(this.indice);
-//        return "exito";
-//    }
-//
-//    /**
-//     * Obtiene la entrada anterior
-//     * @return
-//     */
-//    public String anteriorEntrada(){
-//        if(this.indice!=0) this.indice--;
-//        this.entradaActual = this.listaEntradas.get(this.indice);
-//        return "exito";
-//    }
 
     /**
      * Metodo para obtener una entrada por su ID
@@ -346,6 +325,16 @@ public class jprocurUser extends AbstractPageBean {
         return c;
     }
 
+    public boolean getHayComentarios(){
+        if(this.entradaActual.getComentariosCollection().size()==NONE) return false;
+        return true;
+    }
+
+    public boolean getHayEntradas(){
+        if(this.listaEntradas.size()==NONE) return false;
+        return true;
+    }
+
     public boolean getShowPagComentarios(){
         if(this.entradaActual.getComentariosCollection().size()>MAX_COMENTARIOS) return true;
         return false;
@@ -356,13 +345,28 @@ public class jprocurUser extends AbstractPageBean {
         return false;
     }
 
-    //idComentarioBorrar
+    public boolean getAgregandoUnComentario(){
+        return this.agregandoComentario;
+    }
+
+    public String agregandoComentario(){
+        this.agregandoComentario = true;
+        return EMPTY_STRING;
+    }
+
+    public String agregarComentario(){
+        this.jprocurInstance.createComentario(entradaActual, comentarioNuevo);
+        this.entradaActual.setComentariosCollection(this.getJProcurInstance().getComentariosNoAprobados());
+        this.agregandoComentario = false;
+        return EMPTY_STRING;
+    }
     
     /**
      * Metodo para establecer hacer toggle a la vista de entradas (Unica o Multiple)
      */
     public String toggleVista() {
         this.setSoloUna(false);
-        return "exito.";
+        this.agregandoComentario = false;
+        return EMPTY_STRING;
     }
 }

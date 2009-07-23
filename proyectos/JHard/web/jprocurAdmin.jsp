@@ -67,7 +67,7 @@
                         <div class="post">
                             <ice:form id="formEntrada">
                                 <ice:panelTabSet id="panelAdmin" tabPlacement="Top">
-                                    <ice:panelTab id="panelEntrada" label="Administrar Entradas">
+                                    <ice:panelTab id="panelEntradas" label="Administrar Entradas">
                                         <!-- panel de para EDITAR UNA ENTRADAS -->
                                         <ice:panelGroup id="panelEditarEntrada" rendered="#{jprocurAdmin.editandoEntrada}">
                                         <div class="post">
@@ -81,12 +81,9 @@
                                             <br/>
                                             <br/>
                                             Escrito por: <ice:outputLabel id="lblAutor" style="font-weight:bold; " title="Último usuario que guardó la entrada."
-                                            value="#{jprocurAdmin.entradaActual.idusuario.nombre}"/><div align="right"><ice:selectInputDate
-                                            id="popupDateTime" renderMonthAsDropdown="true" renderYearAsDropdown="true"
-                                            value="#{jprocurAdmin.entradaActual.fechahora}" title="Fecha y hora de la última modificacion en la entrada." renderAsPopup="true"
-                                            partialSubmit="true">
-                                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
-                                            </ice:selectInputDate></div>
+                                            value="#{jprocurAdmin.entradaActual.idusuario.nombre}"/><div align="right"><ice:outputLabel
+                                            id="lblFechaHora" value="#{jprocurAdmin.entradaActual.fechahora}" title="Fecha y hora de la última modificacion en la entrada."/>
+                                            </div>
                                             <br/>
                                             <br/>
                                             Etiquetas:<br/>
@@ -150,6 +147,34 @@
                                             </div>
                                         </ice:panelGroup>
                                         <!-- FIN panel de para administrar las ENTRADAS -->
+                                    </ice:panelTab>
+                                    <ice:panelTab id="panelEntrada" label="Agregar Entrada">
+                                        <!-- panel de para agregar las Entradas -->
+                                        <ice:panelGroup id="panelAgregarEntrada">
+                                        <div class="post">
+                                            Título: <ice:inputText id="itTitulo2" title="Título de la entrada"
+                                            value="#{jprocurAdmin.entradaNueva.titulo}"
+                                            partialSubmit="true"/>
+                                            <br/>
+                                            <ice:inputRichText id="richDescripcion2"
+                                            value="#{jprocurAdmin.entradaNueva.descripcion}"
+                                            language="es" skin="silver" toolbar="Basic"/>
+                                            <br/>
+                                            <br/>
+                                            Escrito por: <ice:outputLabel id="lblAutor2" style="font-weight:bold; " title=""
+                                            value="#{jprocurAdmin.currentUserName}"/><div align="right"><ice:outputLabel
+                                            id="lblFechaHora2" value="#{jprocurAdmin.entradaActual.fechahora}" title="Fecha y hora de la creacion de la entrada."/></div>
+                                            <br/>
+                                            <br/>
+                                            Etiquetas:<br/>
+                                            __aqui un panel con las etiquetas que se pueden poner__
+                                            <br/><br/>
+                                            <div align="center">
+                                            <ice:commandButton action="#{jprocurAdmin.agregarEntrada}" id="btnGuardar2" styleClass="btnAccion2" value="Guardar"/>
+                                            <ice:commandButton action="#{jprocurAdmin.cancelarGuardarEntrada}" id="btnCancelar2" styleClass="btnAccion2" value="Cancelar"/>
+                                            </div>
+                                        </div>
+                                        </ice:panelGroup>
                                     </ice:panelTab>
                                     <ice:panelTab id="panelComentarios" label="Moderar Comentarios">
                                         <!-- panel de para moderar los Comentarios -->
