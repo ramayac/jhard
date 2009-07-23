@@ -68,7 +68,6 @@
                                 </div>
                                 <br/>
                                 <br/>
-                                <!-- ICEFaces MIERDA!, no deja usar ni UI:Repeat ni c:ForEach, MIERDAAA! :@ -->
                                 Etiquetas:<br/>
                                 <ice:outputLabel id="lblEtiquetas" style="font-weight:bold; " value="#{jprocurUser.etiquetasString}"/>
                                 <br/>
@@ -81,8 +80,12 @@
                                     rendered="#{jprocurUser.hayComentarios}">
                                         <ice:column id="columnaComentarios">
                                             <ice:panelGroup id="pnlComent" rendered="#{indiceComentario.aprobado}">
-                                                <!-- aqui hay que poner un commandLink para eliminar comentarios cuando el usuario sea Administrador o Admin de Contenido-->
-                                                <ice:outputLabel id="lblComent" value="#{indiceComentario.comentario}"/><div align="right"><ice:outputText id="lblFirma" value="#{indiceComentario.firma}"/></div>
+                                                <ice:commandLink action="#{jprocurUser.eliminarComentario}" rendered="#{jprocurUser.permisoBorrarComentario}">
+                                                    <ice:graphicImage style="border:none;" title="Eliminar este comentario" url="/img/img12.gif"/>
+                                                        <f:param name="idSelComent" value="#{indiceComentario.idcoment}"/>
+                                                </ice:commandLink>
+                                                <ice:outputLabel id="lblComent" value="#{indiceComentario.comentario}"/>
+                                                <div align="right"><ice:outputText id="lblFirma" value="#{indiceComentario.firma}"/></div>
                                             </ice:panelGroup>
                                         </ice:column>
                                     </ice:dataTable>
@@ -102,15 +105,22 @@
                                         Agrega un comentario a la entrada:<br/><ice:inputTextarea id="itComentario" title="Comentario"
                                         value="#{jprocurUser.comentarioNuevo.comentario}"
                                         partialSubmit="true"/><br/>
-                                        Firma: <br/><ice:inputText id="itC" title="Firma"
+                                        Firma: <br/>
+                                        <ice:inputText id="itC" title="Firma"
                                         value="#{jprocurUser.comentarioNuevo.firma}"
-                                        partialSubmit="true"/>
+                                        partialSubmit="true" rendered="#{!jprocurUser.hayUsuarioLogueado}"/>
+                                        <ice:outputLabel id="itC2" title="Firma"
+                                        value="#{jprocurUser.currentUserName}"
+                                        rendered="#{jprocurUser.hayUsuarioLogueado}"/>
                                     </ice:panelGroup>
                                 <br/>
                                 <ice:commandButton action="#{jprocurUser.toggleVista}" id="btnToggle" styleClass="btnAccion2" value="Regresar"/>
                                 <ice:commandButton action="#{jprocurUser.agregandoComentario}"
-                                id="btnAgregarComentario" styleClass="btnAccion2"
+                                id="btnAgregandoComentario" styleClass="btnAccion2"
                                 value="Comentar" rendered="#{!jprocurUser.agregandoUnComentario}"/>
+                                <ice:commandButton action="#{jprocurUser.agregarComentario}"
+                                id="btnAgregarComentario" styleClass="btnAccion2"
+                                value="Guardar Comentario" rendered="#{jprocurUser.agregandoUnComentario}"/>
                             </ice:panelGroup>
                             <ice:panelGroup id="panelVistaMultiple" rendered="#{!jprocurUser.soloUna}">
                                 <ice:dataTable id="tablaEntradas" rows="5" value="#{jprocurUser.listaEntradas}" var="indiceEntrada">
@@ -122,6 +132,8 @@
                                                     <f:param name="idSeleccionado" value="#{indiceEntrada.identrada}"/>
                                                 </ice:commandLink>
                                             </h2>
+                                            <br/>
+                                            <div align="right"><small><ice:outputLabel id="lblEntradaFechaMultiple" value="#{indiceEntrada.fechahora}"/></small></div>
                                             <br/>
                                             <ice:outputLabel id="lblDescripcion" value="#{indiceEntrada.descripcion}"/>
                                             <br/>

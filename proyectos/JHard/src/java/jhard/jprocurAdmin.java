@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
  * to respond to incoming events.</p>
  */
 public class jprocurAdmin extends AbstractPageBean {
-    public static final String INVITADO = "Invitado";
+    static final String INVITADO = "Invitado";
     static final int MAX_ENTRADAS = 30;
     static final int MAX_COMENTARIOS = 30;
     static final String EMPTY_STRING = new String();
@@ -81,7 +81,15 @@ public class jprocurAdmin extends AbstractPageBean {
     }
 
     public String getCurrentUserName(){
+        if(this.lu == null) return INVITADO;
         if(this.U == null) return INVITADO;
+        this.lu= getJHardminInstance().getCurrentUser();
+        if(this.lu == null) {
+            this.U = null;
+            return INVITADO;
+        } else {
+            this.U = LoginManager.getInstance().getUsuario(this.lu);
+        }
         return this.U.getNombre();
     }
 

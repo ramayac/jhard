@@ -18,6 +18,7 @@ import edu.ues.jhard.jpa.Tag;
 import edu.ues.jhard.jpa.TagEntrada;
 import edu.ues.jhard.jpa.Usuario;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
@@ -38,6 +39,7 @@ public class jprocurUser extends AbstractPageBean {
     static final int ROL_EDITORCONTENIDO = 4;
     static final int ROL_ADMINISTRADOR = 1;
     static final String EMPTY_STRING = new String();
+    static final String INVITADO = "Invitado";
 
     private Entrada entradaActual = null;
     private Comentarios comentarioNuevo = new Comentarios();
@@ -76,7 +78,7 @@ public class jprocurUser extends AbstractPageBean {
     }
 
     public Boolean getHayUsuarioLogueado() {
-        return lu==null;
+        return lu!=null;
     }
 
     public void setLu(LoggedUser lu) {
@@ -99,6 +101,24 @@ public class jprocurUser extends AbstractPageBean {
         return this.jprocurInstance;
     }
 
+    public String getCurrentUserName(){
+        if(this.lu == null) return INVITADO;
+        if(this.U == null) return INVITADO;
+        this.lu= getJHardminInstance().getCurrentUser();
+        if(this.lu == null) {
+            this.U = null;
+            return INVITADO;
+        } else {
+            this.U = LoginManager.getInstance().getUsuario(this.lu);
+        }
+        return this.U.getNombre();
+    }
+
+    public Integer getRolUsuarioConectado(){
+        if(this.U==null) return -1;
+        return this.U.getIdrol().getIdrol();
+    }
+
     /**
      * <p>Construct a new Page bean instance.</p>
      */
@@ -110,16 +130,14 @@ public class jprocurUser extends AbstractPageBean {
         
         if(lu!=null){
             U = LoginManager.getInstance().getUsuario(lu);
-
             this.lblUser.setValue((String)U.getNombre());
-
-            switch(U.getIdrol().getIdrol()){
-                case ROL_ADMINISTRADOR:
-                case ROL_EDITORCONTENIDO:
-                default:
-                    break;
-            }
-        } else this.lblUser.setValue("Invitado");
+//            switch(U.getIdrol().getIdrol()){
+//                case ROL_ADMINISTRADOR:
+//                case ROL_EDITORCONTENIDO:
+//                default:
+//                    break;
+//            }
+        } else this.lblUser.setValue(INVITADO);
     }
 
     /**
@@ -272,7 +290,7 @@ public class jprocurUser extends AbstractPageBean {
         //System.out.println(idSeleccionado);
         this.entradaActual = this.jprocurInstance.getEntrada(id.intValue());
         this.setSoloUna(true);
-        return "exito";
+        return EMPTY_STRING;
     }
 
     /**
@@ -345,6 +363,19 @@ public class jprocurUser extends AbstractPageBean {
         return false;
     }
 
+    public boolean getPermisoBorrarComentario(){
+        switch(this.getRolUsuarioConectado()){
+            case -1:
+                return false; //no hay informacion de usuario
+            case ROL_ADMINISTRADOR:
+            case ROL_EDITORCONTENIDO:
+                return true; //tengo los permisos para borrar los comentarios POR MI ROL
+            //default:
+                //break;
+        }
+        return false;
+    }
+
     public boolean getAgregandoUnComentario(){
         return this.agregandoComentario;
     }
@@ -355,9 +386,32 @@ public class jprocurUser extends AbstractPageBean {
     }
 
     public String agregarComentario(){
+        this.comentarioNuevo.setFechahora(new Date());
+
+        if(!this.getHayUsuarioLogueado()){
+            if(this.comentarioNuevo.getFirma().isEmpty())
+                this.comentarioNuevo.setFirma(INVITADO);
+            this.comentarioNuevo.setAprobado(false);
+        } else {
+            this.comentarioNuevo.setFirma(this.getCurrentUserName());
+            this.comentarioNuevo.setAprobado(true);
+        }
+
         this.jprocurInstance.createComentario(entradaActual, comentarioNuevo);
-        this.entradaActual.setComentariosCollection(this.getJProcurInstance().getComentariosNoAprobados());
+
+        this.entradaActual = this.jprocurInstance.getEntrada(this.entradaActual.getIdentrada());
+        
+        this.comentarioNuevo = new Comentarios();
         this.agregandoComentario = false;
+        return EMPTY_STRING;
+    }
+
+    public String eliminarComentario(){
+        String idSel = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idSelComent");
+        System.out.println("id comentario: " + idSel);
+        Integer id = new Integer(idSel);
+        this.jprocurInstance.deleteComentario(id);
+        this.entradaActual.setComentariosCollection(this.jprocurInstance.getComentariosEntrada(entradaActual));
         return EMPTY_STRING;
     }
     
