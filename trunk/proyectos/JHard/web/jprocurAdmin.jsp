@@ -310,7 +310,7 @@
                                     <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion2" value="Logout"/>
                                 </ice:form>
                             </li>
-                            <li>
+                            <!--<li>
                                 <h2>Otros Vinculos</h2>
                                 <ul>
                                     <li>
@@ -335,7 +335,7 @@
                                         <a href="#">Velit semper nisi molestie</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>-->
                         </ul>
                     </div>
                     <!-- end sidebar -->

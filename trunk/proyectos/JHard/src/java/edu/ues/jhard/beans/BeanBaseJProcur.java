@@ -36,11 +36,11 @@ public class BeanBaseJProcur extends BeanBase {
 
         List<Entrada> e = q.getResultList();
 
-        em.getTransaction().begin();
-        for (Entrada entrada : e) {
-            em.persist(entrada);
-        }
-        em.getTransaction().commit();
+//        em.getTransaction().begin();
+//        for (Entrada entrada : e) {
+//            em.persist(entrada);
+//        }
+//        em.getTransaction().commit();
         return e;
     }
 
@@ -68,11 +68,43 @@ public class BeanBaseJProcur extends BeanBase {
 
         Entrada[] entradas = (Entrada[])q.getResultList().toArray(new Entrada[0]);
 
-        em.getTransaction().begin();
-        for (Entrada entrada : entradas) {
-            em.persist(entrada);
+//        em.getTransaction().begin();
+//        for (Entrada entrada : entradas) {
+//            em.persist(entrada);
+//        }
+//        em.getTransaction().commit();
+        return entradas;
+    }
+
+    /**
+     * Metodo para obtener uno o varios objeto entrada por un array de etiquetas, se asume que la entrada es nueva, asi que se hace
+     * un em.persist sobre la misma.
+     */
+    public List<Entrada> searchListaEntradaPorEtiquetas(String[] etiquetas){
+        EntityManager em = this.getEntityManager();
+
+        /*SQL ADHOC*/
+        String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE";
+        for (int i = 0; i < etiquetas.length; i++) {
+            sql += "( t.descripcion LIKE ?"+i+" )";
+            if((i+1)<etiquetas.length) sql += " OR ";
         }
-        em.getTransaction().commit();
+        sql += " AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada ORDER BY e.fechahora DESC";
+
+        Query q = em.createNativeQuery(sql, Entrada.class);
+
+        for (int i = 0; i < etiquetas.length; i++) {
+            String etiqueta = etiquetas[i];
+            q.setParameter(i, etiqueta);
+        }
+
+        List<Entrada> entradas = q.getResultList();
+
+//        em.getTransaction().begin();
+//        for (Entrada entrada : entradas) {
+//            em.persist(entrada);
+//        }
+//        em.getTransaction().commit();
         return entradas;
     }
 
@@ -91,11 +123,11 @@ public class BeanBaseJProcur extends BeanBase {
 
         List<Entrada> e = q.getResultList();
 
-        em.getTransaction().begin();
-        for (Entrada entrada : e) {
-            em.persist(entrada);
-        }
-        em.getTransaction().commit();
+//        em.getTransaction().begin();
+//        for (Entrada entrada : e) {
+//            em.persist(entrada);
+//        }
+//        em.getTransaction().commit();
         return e;
     }
 
@@ -122,11 +154,11 @@ public class BeanBaseJProcur extends BeanBase {
 
         List<Entrada> entradas = q.getResultList();
 
-        em.getTransaction().begin();
-        for (Entrada entrada : entradas) {
-            em.persist(entrada);
-        }
-        em.getTransaction().commit();
+//        em.getTransaction().begin();
+//        for (Entrada entrada : entradas) {
+//            em.persist(entrada);
+//        }
+//        em.getTransaction().commit();
         return entradas;
     }
 
@@ -145,9 +177,9 @@ public class BeanBaseJProcur extends BeanBase {
 
             TagEntrada tagentrada = (TagEntrada) q.getSingleResult();
 
-            em.getTransaction().begin();
-            em.persist(tagentrada);
-            em.getTransaction().commit();
+//            em.getTransaction().begin();
+//            em.persist(tagentrada);
+//            em.getTransaction().commit();
 
             return tagentrada;
         }catch (Exception e){

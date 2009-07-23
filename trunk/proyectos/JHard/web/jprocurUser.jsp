@@ -149,6 +149,15 @@
                                     </ice:dataPaginator>
                                 </div>
                             </ice:panelGroup>
+                            <ice:panelGroup rendered="#{!jprocurUser.hayEntradas}">
+                                <div class="post">
+                                <h2>Aviso</h2>
+                                <ul>
+                                    <li>No existen criterios asociados con su búsqueda.</li>
+                                    <li>No hay entradas que mostrar.</li>
+                                </ul>
+                                </div>
+                            </ice:panelGroup>
                         </ice:form>
                         <br/>
                     </div>
@@ -157,8 +166,13 @@
                     <div id="sidebar">
                         <ul>
                             <li id="search">
+                                <ice:form id="formBusqueda">
                                 <h2>Búsqueda</h2>
-                                ...
+                                <ice:inputText id="itBusqueda" title="Búsqueda por etiquetas"
+                                value="#{jprocurUser.criteriosBusqueda}" partialSubmit="true"/><ice:commandButton action="#{jprocurUser.busquedaEntradas}"
+                                id="btnBusquedaEtiquetas" styleClass="btnAccion2"
+                                value="Buscar"/>
+                                </ice:form>
                             </li>
                             <li>
                                 <h2>
