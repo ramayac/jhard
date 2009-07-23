@@ -2,7 +2,7 @@
  * jrequestUser.java
  *
  * Created on 05-29-2009, 10:56:59 AM
- * Copyright hugol
+ * Copyright ramayac
  */
 package jhard;
 
@@ -20,7 +20,6 @@ import edu.ues.jhard.jpa.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.StringTokenizer;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;

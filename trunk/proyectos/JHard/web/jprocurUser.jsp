@@ -54,6 +54,15 @@
                     <!-- start content -->
                     <div id="content">
                         <ice:form id="formEntrada">
+                            <ice:panelGroup rendered="#{!jprocurUser.hayEntradas}">
+                                <div class="post">
+                                <h2>Aviso</h2>
+                                <ul>
+                                    <li>No existen criterios asociados con su búsqueda.</li>
+                                    <li>No hay entradas que mostrar.</li>
+                                </ul>
+                                </div>
+                            </ice:panelGroup>
                             <ice:panelGroup id="panelVistaUnica" rendered="#{jprocurUser.soloUna}">
                                 <div class="post">
                                     <h2>
@@ -147,15 +156,6 @@
                                         <f:facet name="next"><ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/></f:facet>
                                         <f:facet name="last"><ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/></f:facet>
                                     </ice:dataPaginator>
-                                </div>
-                            </ice:panelGroup>
-                            <ice:panelGroup rendered="#{!jprocurUser.hayEntradas}">
-                                <div class="post">
-                                <h2>Aviso</h2>
-                                <ul>
-                                    <li>No existen criterios asociados con su búsqueda.</li>
-                                    <li>No hay entradas que mostrar.</li>
-                                </ul>
                                 </div>
                             </ice:panelGroup>
                         </ice:form>

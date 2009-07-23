@@ -1,22 +1,22 @@
 package edu.ues.jhard.beans;
 
-import edu.ues.jhard.jpa.*;
+import edu.ues.jhard.jpa.Entrada;
+import edu.ues.jhard.jpa.Comentarios;
+import edu.ues.jhard.jpa.TagEntrada;
+import edu.ues.jhard.jpa.Tag;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 
 /**
- * @author Rodrigo
+ * @author ramayac
  * Notas personales:
  * - Only use EntityManager method persist on a new entity.
  * - Only Refresh para obtener los ultimos datos de la BD
  * - remove to delete an entity from the database.
  * - method flush to send updates to the database within a transaction before the transaction is committed. (unicamente en el mismo contexto)
- * - Por que diablos usan arrays? :S
- * - Nueva logica a partir del 10 de Julio, mejor uso del EM context.
  */
 public class BeanBaseJProcur extends BeanBase {
 
