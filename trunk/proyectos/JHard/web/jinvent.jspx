@@ -62,9 +62,11 @@
                                 <ice:panelGroup styleClass="entry" rendered="#{JHardminInstance.currentUser != null}">
                                     <ice:panelCollapsible expanded="true" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" >
                                         <f:facet name="header">
-                                            <h:outputFormat value="Elementos del inventario en la clasificación {0}">
+                                            <ice:panelGroup>
+                                            <h:outputFormat value="Elementos del inventario en la clasificación {0}" style="position: relative; left: 30px;">
                                                 <f:param value="#{JInventInstance.currentClasificacion.nombre}" />
                                             </h:outputFormat>
+                                            </ice:panelGroup>
                                         </f:facet>
                                         <ice:panelGroup id="divEquiposInventario" styleClass="frmElementList">
                                             <ice:panelDivider id="divTreeClasificaciones" orientation="vertical" style="width: 100%; height: 500px" dividerPosition="38">
@@ -150,7 +152,8 @@
                                                 </ice:panelGroup>
                                                 </f:facet>
                                                 <f:facet name="second">
-                                                    <ice:panelGroup>                                                        
+                                                    <ice:panelGroup>
+                                                 
                                                         <h3 class="tituloSeccion">
                                                             <ice:outputFormat value="Existencias de Equipos (Total: {0})">
                                                                 <f:param value="#{JInventInstance.currentClasificacionExistenciaCollectionSize}"/>
@@ -324,7 +327,117 @@
                                                                     </p>
                                                                 </ice:panelGroup>
                                                             </f:facet>
-                                                        </ice:panelPopup>                                                        
+                                                        </ice:panelPopup>
+
+                                                        <h3 class="tituloSeccion">
+                                                           <ice:outputFormat value="Definiciones de Equipos (Total: {0})">
+                                                               <f:param value="#{JInventInstance.sizeListaEquipos}"/>
+                                                            </ice:outputFormat>
+                                                            <ice:commandLink value="Agregar" action="#{JInventInstance.beforeAddEquipo}" styleClass="actionLink" />
+                                                        </h3>
+                                                        <ice:dataTable id="tblListaEquipos" value="#{JInventInstance.currentClasificacion.equipoCollection}" var="equipo" rows="5">
+                                                            <ice:column>
+                                                                <f:facet name="header"><ice:outputText value="Nombre" /></f:facet>
+                                                                <ice:outputText value="#{equipo.nombre}" />
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <f:facet name="header"><ice:outputText value="Marca" /></f:facet>
+                                                                <ice:outputText value="#{equipo.idmarca.nombre}" />
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <f:facet name="header"><ice:outputText value="Modelo" /></f:facet>
+                                                                <ice:outputText value="#{equipo.modelo}" />
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <ice:commandLink value="Editar" action="#{JInventInstance.editEquipo}">
+                                                                    <f:param name="currentId" value="#{equipo.idequipo}" />
+                                                                </ice:commandLink>
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <ice:commandLink value="Eliminar" action="#{JInventInstance.crdEquipo.showPopupDel}">
+                                                                    <f:param name="currentId" value="#{equipo.idequipo}" />
+                                                                </ice:commandLink>
+                                                            </ice:column>
+                                                        </ice:dataTable>
+                                                        <ice:dataPaginator id="pgrListaEquipos" for="tblListaEquipos" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.sizeListaEquipos > 5}">
+                                                            <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
+                                                            <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
+                                                            <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
+                                                            <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
+                                                        </ice:dataPaginator>
+                                                        <ice:panelPopup id="pupAgregarEquipo" modal="true" draggable="true" rendered="#{JInventInstance.crdEquipo.popupAddVisible}">
+                                                            <f:facet name="header"><ice:outputText value="Agregar nuevo equipo" /></f:facet>
+                                                            <f:facet name="body">
+                                                                <ice:panelGroup styleClass="frmElementList">
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblNombreEquipo" for="txtNombreEquipo" value="Nombre:"/>
+                                                                        <ice:inputText id="txtNombreEquipo" value="#{JInventInstance.currentEquipo.nombre}" />
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblMarcaEquipo" for="cmbMarcaEquipo" value="Marca:" />
+                                                                        <ice:selectOneListbox id="cmbMarcaEquipo" value="#{JInventInstance.marcaSelected}" size="1">
+                                                                            <f:selectItems value="#{JInventInstance.listaItemsMarcas}" />
+                                                                        </ice:selectOneListbox>
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblModeloEquipo" for="txtModeloEquipo" value="Modelo:" />
+                                                                        <ice:inputText id="txtModeloEquipo" value="#{JInventInstance.currentEquipo.modelo}" />
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblClasificacionEquipo" for="lblClasficacionEquipoValue" value="Clasificación:" />
+                                                                        <ice:outputLabel id="lblClasificacionEquipoValue" value="#{JInventInstance.currentClasificacion.nombre}" style="font-weight: bold;" />
+                                                                    </p>
+                                                                    <p class="actionSection">
+                                                                        <ice:commandButton id="cmdConfirmAgregarEquipo" value="Agregar" action="#{JInventInstance.addEquipo}" />
+                                                                        <ice:commandButton id="cmdCancelAgregarEquipo" value="Cancelar" action="#{JInventInstance.cancelAddEditEquipo}" />
+                                                                    </p>
+                                                                </ice:panelGroup>
+                                                            </f:facet>
+                                                        </ice:panelPopup>
+                                                        <ice:panelPopup id="pupEditarEquipo" draggable="true" modal="true" rendered="#{JInventInstance.crdEquipo.popupEditVisible}">
+                                                            <f:facet name="header">
+                                                                <ice:outputFormat value="Editar equipo {0}">
+                                                                    <f:param value="#{JInventInstance.currentEquipo.nombre}" />
+                                                                </ice:outputFormat>
+                                                            </f:facet>
+                                                            <f:facet name="body">
+                                                                <ice:panelGroup styleClass="frmElementList">
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblNombreEquipoEdit" for="txtNombreEquipoEdit" value="Nombre:" />
+                                                                        <ice:inputText id="txtNombreEquipoEdit" value="#{JInventInstance.currentEquipo.nombre}" />
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblMarcaEquipoEdit" for="cmbMarcaEquipoEdit" value="Marca:" />
+                                                                        <ice:selectOneListbox id="cmbMarcaEquipoEdit" size="1" value="#{JInventInstance.marcaSelected}">
+                                                                            <f:selectItems value="#{JInventInstance.listaItemsMarcas}" />
+                                                                            <f:selectItem itemLabel="Agregar nueva..." itemValue="-1" />
+                                                                        </ice:selectOneListbox>
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblModeloEquipoEdit" for="txtModeloEquipoEdit" value="Modelo:" />
+                                                                        <ice:inputText id="txtModeloEquipoEdit" value="#{JInventInstance.currentEquipo.modelo}" />
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblClasificacionEquipoEdit" for="lblClasficacionEquipoEditValue" value="Clasificación:" />
+                                                                        <ice:outputLabel id="lblClasificacionEquipoEditValue" value="#{JInventInstance.currentClasificacion.nombre}" style="font-weight: bold;" />
+                                                                    </p>
+                                                                    <p class="actionSection">
+                                                                        <ice:commandButton id="commitEditarEquipo" value="Guardar Cambios" action="#{JInventInstance.commitEditEquipo}" />
+                                                                        <ice:commandButton id="cancelEditarEquipo" value="Cancelar" action="#{JInventInstance.cancelAddEditEquipo}" />
+                                                                    </p>
+                                                                </ice:panelGroup>
+                                                            </f:facet>
+                                                        </ice:panelPopup>
+                                                        <ice:panelPopup id="pupConfirmEliminarEquipo" modal="true" draggable="true" title="Confirmación" rendered="#{JInventInstance.crdEquipo.popupDelVisible}">
+                                                            <f:facet name="header"><ice:outputText value="Confirmación" /></f:facet>
+                                                            <f:facet name="body">
+                                                                <ice:panelGroup>
+                                                                    <p><ice:outputText value="Esta seguro que desea eliminar el equipo seleccionado?" /></p>
+                                                                    <p class="actionSection"><ice:commandButton value="Si" action="#{JInventInstance.delEquipo}"  /><ice:commandButton value="No" action="#{JInventInstance.crdEquipo.hidePopupDel}" /></p>
+                                                                </ice:panelGroup>
+                                                            </f:facet>
+                                                        </ice:panelPopup>
+                                                    
                                                         <h3 class="tituloSeccion" style="margin-top: 20px;">
                                                             <ice:outputFormat value="Software (Total: {0})">
                                                                 <f:param value="#{JInventInstance.currentClasificacionSoftwareCollectionSize}"/>
@@ -651,117 +764,18 @@
                                             </ice:panelDivider>
                                         </ice:panelGroup>
                                     </ice:panelCollapsible>
+
                                     <ice:panelCollapsible rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}">
                                         <f:facet name="header">
-                                            <h:outputText value="Otros Elementos del inventario" />
+                                            <ice:panelGroup><h:outputText value="Otros Elementos del inventario" style="position: relative; left: 30px;" /></ice:panelGroup>
                                         </f:facet>
-                                        <ice:panelGroup id="divOtrosElementos" styleClass="frmElementList">
-                                            <h3 class="tituloSeccion">
-                                               <ice:outputFormat value="Definiciones de Equipos (Total: {0})">
-                                                   <f:param value="#{JInventInstance.sizeListaEquipos}"/>
-                                                </ice:outputFormat>
-                                                <ice:commandLink value="Agregar" action="#{JInventInstance.beforeAddEquipo}" styleClass="actionLink" />
-                                            </h3>
-                                            <ice:dataTable id="tblListaEquipos" value="#{JInventInstance.listaTodosEquipos}" var="equipo" rows="5">
-                                                <ice:column>
-                                                    <f:facet name="header"><ice:outputText value="Nombre" /></f:facet>
-                                                    <ice:outputText value="#{equipo.nombre}" />
-                                                </ice:column>
-                                                <ice:column>
-                                                    <f:facet name="header"><ice:outputText value="Marca" /></f:facet>
-                                                    <ice:outputText value="#{equipo.idmarca.nombre}" />
-                                                </ice:column>
-                                                <ice:column>
-                                                    <f:facet name="header"><ice:outputText value="Modelo" /></f:facet>
-                                                    <ice:outputText value="#{equipo.modelo}" />
-                                                </ice:column>
-                                                <ice:column>
-                                                    <ice:commandLink value="Editar" action="#{JInventInstance.editEquipo}">
-                                                        <f:param name="currentId" value="#{equipo.idequipo}" />
-                                                    </ice:commandLink>
-                                                </ice:column>
-                                                <ice:column>
-                                                    <ice:commandLink value="Eliminar" action="#{JInventInstance.crdEquipo.showPopupDel}">
-                                                        <f:param name="currentId" value="#{equipo.idequipo}" />
-                                                    </ice:commandLink>
-                                                </ice:column>
-                                            </ice:dataTable>
-                                            <ice:dataPaginator id="pgrListaEquipos" for="tblListaEquipos" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.sizeListaEquipos > 3}">
-                                                <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
-                                                <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
-                                                <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
-                                                <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
-                                            </ice:dataPaginator>
-                                            <ice:panelPopup id="pupAgregarEquipo" modal="true" draggable="true" rendered="#{JInventInstance.crdEquipo.popupAddVisible}">
-                                                <f:facet name="header"><ice:outputText value="Agregar nuevo equipo" /></f:facet>
-                                                <f:facet name="body">
-                                                    <ice:panelGroup styleClass="frmElementList">
-                                                        <p>
-                                                            <ice:outputLabel id="lblNombreEquipo" for="txtNombreEquipo" value="Nombre:"/>
-                                                            <ice:inputText id="txtNombreEquipo" value="#{JInventInstance.currentEquipo.nombre}" />
-                                                        </p>
-                                                        <p>
-                                                            <ice:outputLabel id="lblMarcaEquipo" for="cmbMarcaEquipo" value="Marca:" />
-                                                            <ice:selectOneListbox id="cmbMarcaEquipo" value="#{JInventInstance.marcaSelected}" size="1">
-                                                                <f:selectItems value="#{JInventInstance.listaItemsMarcas}" />
-                                                            </ice:selectOneListbox>
-                                                        </p>
-                                                        <p>
-                                                            <ice:outputLabel id="lblModeloEquipo" for="txtModeloEquipo" value="Modelo:" />
-                                                            <ice:inputText id="txtModeloEquipo" value="#{JInventInstance.currentEquipo.modelo}" />
-                                                        </p>
-                                                        <p class="actionSection">
-                                                            <ice:commandButton id="cmdConfirmAgregarEquipo" value="Agregar" action="#{JInventInstance.addEquipo}" />
-                                                            <ice:commandButton id="cmdCancelAgregarEquipo" value="Cancelar" action="#{JInventInstance.cancelAddEditEquipo}" />
-                                                        </p>
-                                                    </ice:panelGroup>
-                                                </f:facet>
-                                            </ice:panelPopup>
-                                            <ice:panelPopup id="pupEditarEquipo" draggable="true" modal="true" rendered="#{JInventInstance.crdEquipo.popupEditVisible}">
-                                                <f:facet name="header">
-                                                    <ice:outputFormat value="Editar equipo {0}">
-                                                        <f:param value="#{JInventInstance.currentEquipo.nombre}" />
-                                                    </ice:outputFormat>
-                                                </f:facet>
-                                                <f:facet name="body">
-                                                    <ice:panelGroup styleClass="frmElementList">
-                                                        <p>
-                                                            <ice:outputLabel id="lblNombreEquipoEdit" for="txtNombreEquipoEdit" value="Nombre:" />
-                                                            <ice:inputText id="txtNombreEquipoEdit" value="#{JInventInstance.currentEquipo.nombre}" />
-                                                        </p>
-                                                        <p>
-                                                            <ice:outputLabel id="lblMarcaEquipoEdit" for="cmbMarcaEquipoEdit" value="Marca:" />
-                                                            <ice:selectOneListbox id="cmbMarcaEquipoEdit" size="1" value="#{JInventInstance.marcaSelected}">
-                                                                <f:selectItems value="#{JInventInstance.listaItemsMarcas}" />
-                                                                <f:selectItem itemLabel="Agregar nueva..." itemValue="-1" />
-                                                            </ice:selectOneListbox>
-                                                        </p>
-                                                        <p>
-                                                            <ice:outputLabel id="lblModeloEquipoEdit" for="txtModeloEquipoEdit" value="Modelo:" />
-                                                            <ice:inputText id="txtModeloEquipoEdit" value="#{JInventInstance.currentEquipo.modelo}" />
-                                                        </p>                                                       
-                                                        <p class="actionSection">
-                                                            <ice:commandButton id="commitEditarEquipo" value="Guardar Cambios" action="#{JInventInstance.commitEditEquipo}" />
-                                                            <ice:commandButton id="cancelEditarEquipo" value="Cancelar" action="#{JInventInstance.cancelAddEditEquipo}" />
-                                                        </p>
-                                                    </ice:panelGroup>
-                                                </f:facet>
-                                            </ice:panelPopup>
-                                            <ice:panelPopup id="pupConfirmEliminarEquipo" modal="true" draggable="true" title="Confirmación" rendered="#{JInventInstance.crdEquipo.popupDelVisible}">
-                                                <f:facet name="header"><ice:outputText value="Confirmación" /></f:facet>
-                                                <f:facet name="body">
-                                                    <ice:panelGroup>
-                                                        <p><ice:outputText value="Esta seguro que desea eliminar el equipo seleccionado?" /></p>
-                                                        <p class="actionSection"><ice:commandButton value="Si" action="#{JInventInstance.delEquipo}"  /><ice:commandButton value="No" action="#{JInventInstance.crdEquipo.hidePopupDel}" /></p>
-                                                    </ice:panelGroup>
-                                                </f:facet>
-                                            </ice:panelPopup>
+                                        <ice:panelGroup id="divOtrosElementos" styleClass="frmElementList">                                            
 
                                             <h3 class="tituloSeccion">
                                                <ice:outputFormat value="Marcas (Total: {0})">
                                                    <f:param value="#{JInventInstance.sizeListaMarcas}"/>
                                                 </ice:outputFormat>
-                                                <ice:commandLink value="Agregar" action="#{JInventInstance.beforeAddMarca}" styleClass="actionLink" />
+                                                <ice:commandLink value="Agregar" action="#{JInventInstance.crdMarcas.showPopupAdd}" styleClass="actionLink" />
                                             </h3>
                                             <ice:dataTable id="tblListaMarcas" value="#{JInventInstance.listaMarcas}" var="marca" rows="5" >
                                                 <ice:column>
@@ -769,28 +783,72 @@
                                                     <ice:outputText value="#{marca.nombre}" />
                                                 </ice:column>
                                                 <ice:column>
-                                                    <ice:commandLink value="Editar" action="#{JInventInstance.editMarca}" >
+                                                    <ice:commandLink value="Editar" action="#{JInventInstance.editMarca}" rendered="#{marca.idmarca != 0}" >
                                                         <f:param name="currentId" value="#{marca.idmarca}" />
                                                     </ice:commandLink>
                                                 </ice:column>
                                                 <ice:column>
-                                                    <ice:commandLink value="Eliminar" action="#{JInventInstance.crdMarca.showPopupDel}" >
+                                                    <ice:commandLink value="Eliminar" action="#{JInventInstance.crdMarcas.showPopupDel}" rendered="#{marca.idmarca != 0}" >
                                                         <f:param name="currentId" value="#{marca.idmarca}" />
                                                     </ice:commandLink>
                                                 </ice:column>
                                             </ice:dataTable>
-                                            <ice:dataPaginator id="pgrListaMarcas" for="tblListaMarcas" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.sizeListaEquipos > 3}">
+                                            <ice:dataPaginator id="pgrListaMarcas" for="tblListaMarcas" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.sizeListaMarcas > 5}">
                                                 <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
                                                 <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
                                                 <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
                                                 <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
                                             </ice:dataPaginator>
+                                            <ice:panelPopup id="pupAgregarMarca" draggable="true" modal="true" rendered="#{JInventInstance.crdMarcas.popupAddVisible}">
+                                                <f:facet name="header"><ice:outputText value="Agregar nueva marca" /></f:facet>
+                                                <f:facet name="body">
+                                                    <ice:panelGroup styleClass="frmElementList">
+                                                        <p>
+                                                            <ice:outputLabel id="lblNombreMarca" for="txtNombreMarca" value="Nombre:" />
+                                                            <ice:inputText id="txtNombreMarca" value="#{JInventInstance.currentMarca.nombre}" />
+                                                        </p>
+                                                        <p class="actionSection">
+                                                            <ice:commandButton id="cmdConfirmAgregarMarca" value="Agregar" action="#{JInventInstance.addMarca}" />
+                                                            <ice:commandButton id="cmdCancelAgregarMarca" value="Cancelar" action="#{JInventInstance.crdMarcas.hidePopupAdd}" />
+                                                        </p>
+                                                    </ice:panelGroup>
+                                                </f:facet>
+                                            </ice:panelPopup>
+                                            <ice:panelPopup id="pupEditarMarca" draggable="true" modal="true" rendered="#{JInventInstance.crdMarcas.popupEditVisible}">
+                                                <f:facet name="header"><ice:outputFormat value="Editar marca {0}"><f:param value="#{JInventInstance.currentMarca.nombre}" /></ice:outputFormat></f:facet>
+                                                <f:facet name="body">
+                                                    <ice:panelGroup styleClass="frmElementList">
+                                                        <p>
+                                                            <ice:outputLabel id="lblNombreMarcaEdit" for="txtNombreMarcaEdit" value="Nombre:" />
+                                                            <ice:inputText id="txtNombreMarcaEdit" value="#{JInventInstance.currentMarca.nombre}" />
+                                                        </p>
+                                                        <p class="actionSection">
+                                                            <ice:commandButton id="cmdConfirmEditarMarca" value="Guardar cambios" action="#{JInventInstance.commitEditMarca}" />
+                                                            <ice:commandButton id="cmdCancelEditarMarca" value="Cancelar" action="#{JInventInstance.crdMarcas.hidePopupEdit}" />
+                                                        </p>
+                                                    </ice:panelGroup>
+                                                </f:facet>
+                                            </ice:panelPopup>
+                                            <ice:panelPopup id="pupDelMarca" draggable="true" modal="true" rendered="#{JInventInstance.crdMarcas.popupDelVisible}">
+                                                <f:facet name="header"><ice:outputText value="Confirmación" /></f:facet>
+                                                <f:facet name="body">
+                                                    <ice:panelGroup styleClass="frmElementList">
+                                                        <p>
+                                                            <ice:outputText value="Esta seguro que desea eliminar la marca seleccionada?" />
+                                                        </p>
+                                                        <p class="actionSection">
+                                                            <ice:commandButton id="cmdConfirmEliminarMarca" value="Si" action="#{JInventInstance.delMarca}" />
+                                                            <ice:commandButton id="cmdCancelEliminarMarca" value="No" action="#{JInventInstance.crdMarcas.hidePopupDel}" />
+                                                        </p>
+                                                    </ice:panelGroup>
+                                                </f:facet>
+                                            </ice:panelPopup>
 
                                             <h3 class="tituloSeccion">
                                                <ice:outputFormat value="Ubicaciones (Total: {0})">
                                                    <f:param value="#{JInventInstance.sizeListaUbicaciones}"/>
                                                 </ice:outputFormat>
-                                                <ice:commandLink value="Agregar" action="#{JInventInstance.beforeAddUbicacion}" styleClass="actionLink" />
+                                                <ice:commandLink value="Agregar" action="#{JInventInstance.crdUbicaciones.showPopupAdd}" styleClass="actionLink" />
                                             </h3>
                                             <ice:dataTable id="tblListaUbicaciones" value="#{JInventInstance.listaUbicaciones}" var="ubicacion" rows="5" >
                                                 <ice:column>
@@ -798,16 +856,66 @@
                                                     <ice:outputText value="#{ubicacion.nombre}" />
                                                 </ice:column>
                                                 <ice:column>
-                                                    <ice:commandLink value="Editar" action="#{JInventInstance.editUbicacion}">
+                                                    <ice:commandLink value="Editar" action="#{JInventInstance.editUbicacion}" rendered="#{ubicacion.idubicacion != 0}">
                                                         <f:param name="currentId" value="#{ubicacion.idubicacion}" />
                                                     </ice:commandLink>
                                                 </ice:column>
                                                 <ice:column>
-                                                    <ice:commandLink value="Eliminar" action="#{JInventInstance.crdUbicacion.showPopupDel}">
+                                                    <ice:commandLink value="Eliminar" action="#{JInventInstance.crdUbicacion.showPopupDel}" rendered="#{ubicacion.idubicacion != 0}">
                                                         <f:param name="currentId" value="#{ubicacion.idubicacion}" />
                                                     </ice:commandLink>
                                                 </ice:column>
                                             </ice:dataTable>
+                                            <ice:dataPaginator id="pgrListaUbicaciones" for="tblListaUbicaciones" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.sizeListaUbicaciones > 5}">
+                                                <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
+                                                <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
+                                                <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
+                                                <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
+                                            </ice:dataPaginator>
+                                            <ice:panelPopup id="pupAgregarUbicacion" draggable="true" modal="true" rendered="#{JInventInstance.crdUbicaciones.popupAddVisible}">
+                                                <f:facet name="header"><ice:outputText value="Agregar ubicación" /></f:facet>
+                                                <f:facet name="body">
+                                                    <ice:panelGroup styleClass="frmElementList">
+                                                        <p>
+                                                            <ice:outputLabel id="lblNombreUbicacion" for="txtNombreUbicacion" value="Nombre:" />
+                                                            <ice:inputText id="txtNombreUbicacion" value="#{JInventInstance.currentUbicacion.nombre}" />
+                                                        </p>
+                                                        <p class="actionSection">
+                                                            <ice:commandButton id="cmdConfirmAgregarUbicacion" value="Agregar" action="#{JInventInstance.addUbicacion}" />
+                                                            <ice:commandButton id="cmdCancelAgregarUbicacion" value="Cancelar" action="#{JInventInstance.crdUbicaciones.hidePopupAdd}" />
+                                                        </p>
+                                                    </ice:panelGroup>
+                                                </f:facet>
+                                            </ice:panelPopup>
+                                            <ice:panelPopup id="pupEditarUbicacion" draggable="true" modal="true" rendered="#{JInventInstance.crdUbicaciones.popupEditVisible}" >
+                                                <f:facet name="header"><ice:outputFormat value="Editar ubicación {0}"><f:param value="#{JInventInstance.currentUbicacion.nombre}" /></ice:outputFormat></f:facet>
+                                                <f:facet name="body">
+                                                    <ice:panelGroup styleClass="frmElementList">
+                                                        <p>
+                                                            <ice:outputLabel id="lblNombreUbicacionEdit" for="txtNombreUbicacionEdit" value="Nombre:" />
+                                                            <ice:outputText id="txtNombreUbicacionEdit" value="#{JInventInstance.currentUbicacion.nombre}" />
+                                                        </p>
+                                                        <p class="actionSection">
+                                                            <ice:commandButton id="cmdConfirmarEditarUbicacion" value="Guardar cambios" action="#{JInventInstance.commitEditUbicacion}" />
+                                                            <ice:commandButton id="cmdCancelarEditarUbicacion" value="Cancelar" action="#{JInventInstance.crdUbicaciones.hidePopupEdit}" />
+                                                        </p>
+                                                    </ice:panelGroup>
+                                                </f:facet>
+                                            </ice:panelPopup>
+                                            <ice:panelPopup id="pupEliminarUbicacion" draggable="true" modal="true" rendered="#{JInventInstance.crdUbicaciones.popupDelVisible}" >
+                                                <f:facet name="header"><ice:outputText value="Confirmación" /></f:facet>
+                                                <f:facet name="body">
+                                                    <ice:panelGroup styleClass="frmElementList">
+                                                        <p>
+                                                            <ice:outputText value="Esta seguro que desea eliminar la ubicación seleccionada?" />
+                                                        </p>
+                                                        <p class="actionSection">
+                                                            <ice:commandButton id="cmdConfirmarEliminarUbicacion" value="Si" action="#{JInventInstance.delUbicacion}" />
+                                                            <ice:commandButton id="cmdCancelarEliminarUbicacion" value="No" action="#{JInventInstance.crdUbicaciones.hidePopupDel}" />
+                                                        </p>
+                                                    </ice:panelGroup>
+                                                </f:facet>
+                                            </ice:panelPopup>
                                         </ice:panelGroup>
                                     </ice:panelCollapsible>
 

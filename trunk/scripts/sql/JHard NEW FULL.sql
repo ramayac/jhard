@@ -897,7 +897,9 @@ CREATE TABLE  `jhard`.`marca` (
 
 /*!40000 ALTER TABLE `marca` DISABLE KEYS */;
 LOCK TABLES `marca` WRITE;
-INSERT INTO `jhard`.`marca` VALUES  (1,'Dell'),
+INSERT INTO `jhard`.`marca` VALUES  
+ (0, 'Generica'),
+ (1,'Dell'),
  (2,'Sony'),
  (3,'Toshiba'),
  (4,'Compaq'),
@@ -1298,7 +1300,9 @@ CREATE TABLE  `jhard`.`ubicacion` (
 
 /*!40000 ALTER TABLE `ubicacion` DISABLE KEYS */;
 LOCK TABLES `ubicacion` WRITE;
-INSERT INTO `jhard`.`ubicacion` VALUES  (1,'LABCOM-1');
+INSERT INTO `jhard`.`ubicacion` VALUES  
+(0, 'Generica'),
+(1,'LABCOM-1');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `ubicacion` ENABLE KEYS */;
 

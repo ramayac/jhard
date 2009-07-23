@@ -60,7 +60,9 @@
                                 <ice:panelGroup styleClass="entry" rendered="#{JHardminInstance.currentUser != null}">
                                     <ice:panelCollapsible expanded="true">
                                         <f:facet name="header">
-                                            <h:outputText value="Mi Cuenta" />
+                                            <ice:panelGroup>
+                                            <h:outputText value="Mi Cuenta" style="position: relative; left: 30px;" />
+                                            </ice:panelGroup>
                                         </f:facet>
                                         <ice:panelGroup id="divChngPwd" styleClass="frmElementList">
                                             <h3>Datos de la cuenta</h3>
@@ -103,7 +105,9 @@
                                     </ice:panelCollapsible>
                                     <ice:panelCollapsible rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}">
                                         <f:facet name="header">
-                                            <h:outputText value="Usuarios" />
+                                            <ice:panelGroup>
+                                            <h:outputText value="Usuarios" style="position: relative; left: 30px;" />
+                                            </ice:panelGroup>
                                         </f:facet>
                                         <ice:panelGroup>
                                                 <ice:outputFormat id="lblLeyendaPaginacion" value="Mostrando solo 10 registros por página. Total de registros: {0}" style="margin: 10px 10px 0px">

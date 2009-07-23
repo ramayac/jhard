@@ -60,7 +60,7 @@ public class ClasificacionTreeModel {
         Iterator it = cl.getEquipoCollection().iterator();
         while(it.hasNext()){
             Equipo eq = (Equipo)it.next();
-            totalExistencias += eq.getExistenciaSize();
+            totalExistencias += eq.getExistenciaSize() + 1;
         }
         clUsrObj.setText(cl.getNombre() + " (" + (totalExistencias + cl.getSoftwareCollection().size() + cl.getAccesorioCollection().size() + cl.getPiezaCollection().size()) + ")");
         clUsrObj.setLeaf(false);
@@ -127,7 +127,7 @@ public class ClasificacionTreeModel {
         Iterator it = nuevaCl.getEquipoCollection().iterator();
         while(it.hasNext()){
             Equipo eq = (Equipo)it.next();
-            totalExistencias += eq.getExistenciaSize();
+            totalExistencias += eq.getExistenciaSize() + 1;
         }
         clUsrObj.setText(nuevaCl.getNombre() + " (" + (totalExistencias + nuevaCl.getSoftwareCollection().size() + nuevaCl.getAccesorioCollection().size() + nuevaCl.getPiezaCollection().size()) + ")");
     }
