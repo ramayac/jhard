@@ -14,9 +14,11 @@ import edu.ues.jhard.jpa.Clasificacion;
 import edu.ues.jhard.jpa.Equipo;
 import edu.ues.jhard.jpa.Estadoequipo;
 import edu.ues.jhard.jpa.Existencia;
+import edu.ues.jhard.jpa.Horario;
 import edu.ues.jhard.jpa.Instalacion;
 import edu.ues.jhard.jpa.Marca;
 import edu.ues.jhard.jpa.Pieza;
+import edu.ues.jhard.jpa.Reserva;
 import edu.ues.jhard.jpa.Software;
 import edu.ues.jhard.jpa.Ubicacion;
 import edu.ues.jhard.util.ActionMessage;
@@ -47,12 +49,16 @@ public class BeanBaseJInvent extends BeanBase {
     private Accesorio currentAccesorio;
     private Clasificacion nuevaClasificacion;
     private Pieza currentPieza;
+    private Marca currentMarca;
+    private Ubicacion currentUbicacion;
     private CrudManager crdEquipo;
     private CrudManager crdSoftware;
     private CrudManager crdPieza;
     private CrudManager crdAccesorio;
     private CrudManager crdClasificacion;
     private CrudManager crdExistencia;
+    private CrudManager crdMarcas;
+    private CrudManager crdUbicaciones;
     private List<Marca> listaMarcas;
     private List<Equipo> listaTodosEquipos;
     private List<Accesorio> listaTodosAccesorios;
@@ -82,13 +88,17 @@ public class BeanBaseJInvent extends BeanBase {
         this.currentSoftware = new Software();
         this.currentAccesorio = new Accesorio();
         this.currentPieza = new Pieza();
-        this.nuevaClasificacion = new Clasificacion();        
+        this.nuevaClasificacion = new Clasificacion();
+        this.currentMarca = new Marca();
+        this.currentUbicacion = new Ubicacion();
         this.crdEquipo = new CrudManager();
         this.crdSoftware = new CrudManager();
         this.crdAccesorio = new CrudManager();
         this.crdPieza = new CrudManager();
         this.crdClasificacion = new CrudManager();
         this.crdExistencia = new CrudManager();
+        this.crdMarcas = new CrudManager();
+        this.crdUbicaciones = new CrudManager();
         this.msg = new ActionMessage();
         this.listaEstados = this.getEntityManager().createNamedQuery("Estadoequipo.findAll").getResultList();
         this.listaMarcas = this.getEntityManager().createNamedQuery("Marca.findAll").getResultList();        
@@ -138,7 +148,7 @@ public class BeanBaseJInvent extends BeanBase {
     }
 
     public int getSizeListaEquipos(){
-        return this.getListaTodosEquipos().size();
+        return this.getCurrentClasificacion().getEquipoCollection().size();
     }
 
     public int getSizeListaExistencias(){
@@ -411,6 +421,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.msg.setText("Existencia " + this.currentExistencia.getCodigo() + " agregada exitosamente");
         this.msg.setVisible(true);
         this.currentExistencia = null;
+        this.actualizarCurrentNodoClasificacion();
         return "done";
     }
 
@@ -800,25 +811,37 @@ public class BeanBaseJInvent extends BeanBase {
         DefaultMutableTreeNode nodoPadre = this.clasificaciontm.seleccionarNodo(((ClasificacionUserObject)((DefaultMutableTreeNode)currentNodo.getParent()).getUserObject()).getClasificacion().getIdclasificacion().toString());
         Clasificacion clPadre = ((ClasificacionUserObject)nodoPadre.getUserObject()).getClasificacion();
 
-        for(Equipo eq: clRemover.getEquipoCollection())
+        emgr.getTransaction().begin();
+
+        for(Equipo eq: clRemover.getEquipoCollection()){
             eq.setIdclasificacion(clPadre);
+            emgr.merge(eq);
+        }
         clPadre.getEquipoCollection().addAll(clRemover.getEquipoCollection());
         clRemover.getEquipoCollection().clear();
 
-        for(Software sw: clRemover.getSoftwareCollection())
+        for(Software sw: clRemover.getSoftwareCollection()){
             sw.setIdclasificacion(clPadre);
+            emgr.merge(sw);
+        }
         clPadre.getSoftwareCollection().addAll(clRemover.getSoftwareCollection());
         clRemover.getSoftwareCollection().clear();
 
-        for(Accesorio ac: clRemover.getAccesorioCollection())
+        for(Accesorio ac: clRemover.getAccesorioCollection()){
             ac.setIdclasificacion(clPadre);
+            emgr.merge(ac);
+        }
         clPadre.getAccesorioCollection().addAll(clRemover.getAccesorioCollection());
         clRemover.getAccesorioCollection().clear();
 
-        for(Pieza pz: clRemover.getPiezaCollection())
+        for(Pieza pz: clRemover.getPiezaCollection()){
             pz.setIdclasificacion(clPadre);
+            emgr.merge(pz);
+        }
         clPadre.getPiezaCollection().addAll(clRemover.getPiezaCollection());
         clRemover.getPiezaCollection().clear();
+        
+        emgr.getTransaction().commit();
 
         emgr.getTransaction().begin();
         emgr.remove(clRemover);
@@ -827,7 +850,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.crdClasificacion.hidePopupDel();
 
         Clasificacion current = this.getCurrentClasificacion();
-        this.clasificaciontm.getCurrentUserObject().setText(current.getNombre() + "(" + (current.getEquipoCollection().size() + current.getAccesorioCollection().size() + current.getPiezaCollection().size() + current.getSoftwareCollection().size()) + ")");
+        this.actualizarCurrentNodoClasificacion();
 
         nodoPadre.remove(currentNodo);
         this.msg.setText("Clasificación eliminada satisfactoriamente. Los items asociados a esta clasificación fueron trasladados a la clasificación padre");
@@ -853,7 +876,7 @@ public class BeanBaseJInvent extends BeanBase {
         Clasificacion cl = this.getCurrentClasificacion();
         int cantExistencias = 0;
         for(Equipo eq: cl.getEquipoCollection())
-            cantExistencias += eq.getExistenciaSize();
+            cantExistencias += eq.getExistenciaSize() + 1;
 
         this.clasificaciontm.getCurrentUserObject().setText(cl.getNombre() + " (" + (cantExistencias + cl.getSoftwareCollection().size() + cl.getAccesorioCollection().size() + cl.getPiezaCollection().size()) +  ")");
     }
@@ -1337,5 +1360,228 @@ public class BeanBaseJInvent extends BeanBase {
 
     public int getListaTodasPiezasSize(){
         return this.listaTodasPiezas.size();
+    }
+
+    /**
+     * @return the crdMarcas
+     */
+    public CrudManager getCrdMarcas() {
+        return crdMarcas;
+    }
+
+    /**
+     * @param crdMarcas the crdMarcas to set
+     */
+    public void setCrdMarcas(CrudManager crdMarcas) {
+        this.crdMarcas = crdMarcas;
+    }
+
+    /**
+     * @return the crdUbicaciones
+     */
+    public CrudManager getCrdUbicaciones() {
+        return crdUbicaciones;
+    }
+
+    /**
+     * @param crdUbicaciones the crdUbicaciones to set
+     */
+    public void setCrdUbicaciones(CrudManager crdUbicaciones) {
+        this.crdUbicaciones = crdUbicaciones;
+    }
+
+    /**
+     * @return the currentMarca
+     */
+    public Marca getCurrentMarca() {
+        return currentMarca;
+    }
+
+    /**
+     * @param currentMarca the currentMarca to set
+     */
+    public void setCurrentMarca(Marca currentMarca) {
+        this.currentMarca = currentMarca;
+    }
+
+    /**
+     * @return the currentUbicacion
+     */
+    public Ubicacion getCurrentUbicacion() {
+        return currentUbicacion;
+    }
+
+    /**
+     * @param currentUbicacion the currentUbicacion to set
+     */
+    public void setCurrentUbicacion(Ubicacion currentUbicacion) {
+        this.currentUbicacion = currentUbicacion;
+    }
+
+    public String addMarca(){
+        EntityManager emgr = this.getEntityManager();
+        emgr.getTransaction().begin();
+        emgr.persist(this.currentMarca);
+        emgr.getTransaction().commit();
+        this.listaMarcas.add(this.currentMarca);
+        this.crdMarcas.hidePopupAdd();
+        this.msg.setText("Marca " + this.currentMarca.getNombre() + " agregada exitosamente");
+        this.msg.setVisible(true);
+        this.initItemsMarcas();
+        this.currentMarca = new Marca();
+        this.currentMarca.setAccesorioCollection(new ArrayList<Accesorio>());
+        this.currentMarca.setEquipoCollection(new ArrayList<Equipo>());
+        this.currentMarca.setPiezaCollection(new ArrayList<Pieza>());
+        return "done";
+    }
+
+    public String editMarca(){
+        String idMarca = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
+        this.currentMarca = (Marca)this.getEntityManager().createQuery("SELECT m FROM Marca m WHERE m.idmarca=" + idMarca).getSingleResult();
+        this.crdMarcas.showPopupEdit();
+        return "done";
+    }
+
+    public String commitEditMarca(){
+        EntityManager emgr = this.getEntityManager();
+        emgr.getTransaction().begin();
+        emgr.merge(this.currentMarca);
+        emgr.getTransaction().commit();
+        this.crdMarcas.hidePopupEdit();
+        this.msg.setText("Marca editada exitosamente");
+        this.msg.setVisible(true);
+
+        for(Marca m: this.listaMarcas){
+            if(m.getIdmarca() == this.currentMarca.getIdmarca()){
+                m.setNombre(this.currentMarca.getNombre());
+                break;
+            }
+        }
+        this.initItemsMarcas();
+        this.currentMarca = new Marca();
+        this.currentMarca.setAccesorioCollection(new ArrayList<Accesorio>());
+        this.currentMarca.setEquipoCollection(new ArrayList<Equipo>());
+        this.currentMarca.setPiezaCollection(new ArrayList<Pieza>());
+        return "done";
+    }
+
+    public String delMarca(){
+        EntityManager emgr = this.getEntityManager();        
+        this.currentMarca = (Marca)emgr.createQuery("SELECT m FROM Marca m WHERE m.idmarca=" + this.crdMarcas.getCurrentId()).getSingleResult();
+        Marca mGenerica = (Marca)emgr.createQuery("SELECT m FROM Marca m WHERE m.idmarca=0").getSingleResult();
+        emgr.getTransaction().begin();
+
+        for(Equipo eq: this.currentMarca.getEquipoCollection()){
+            eq.setIdmarca(mGenerica);
+            emgr.merge(eq);
+       }        
+
+        for(Accesorio acc: this.currentMarca.getAccesorioCollection()){
+            acc.setIdmarca(mGenerica);
+            emgr.merge(acc);
+        }
+       
+        for(Pieza pz: this.currentMarca.getPiezaCollection()){
+            pz.setIdmarca(mGenerica);
+            emgr.merge(pz);
+        }
+        
+        emgr.remove(this.currentMarca);
+        emgr.getTransaction().commit();
+        for(Marca m: this.listaMarcas){
+            if(m.getIdmarca() == this.currentMarca.getIdmarca()){
+                this.listaMarcas.remove(m);
+                break;
+            }
+        }
+        this.initItemsMarcas();
+        this.currentMarca = new Marca();
+        this.currentMarca.setAccesorioCollection(new ArrayList<Accesorio>());
+        this.currentMarca.setEquipoCollection(new ArrayList<Equipo>());
+        this.currentMarca.setPiezaCollection(new ArrayList<Pieza>());
+
+        this.crdMarcas.hidePopupDel();
+        this.msg.setText("Marca eliminada exitosamente");
+        this.msg.setVisible(true);
+        return "done";
+    }
+
+    public String addUbicacion(){
+        EntityManager emgr = this.getEntityManager();
+        emgr.getTransaction().begin();
+        emgr.persist(this.currentUbicacion);
+        emgr.getTransaction().commit();
+        this.listaUbicaciones.add(currentUbicacion);
+        this.initItemsUbicaciones();
+        this.crdUbicaciones.hidePopupAdd();
+        this.msg.setText("Nueva ubicación agregada exitosamente");
+        this.msg.setVisible(true);
+        this.currentUbicacion = new Ubicacion();
+        return "done";
+    }
+
+    public String editUbicacion(){
+        String idUbicacion = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
+        this.currentUbicacion = (Ubicacion)this.getEntityManager().createQuery("SELECT u FROM Ubicacion u WHERE u.idubicacion=" + idUbicacion).getSingleResult();
+        this.crdUbicaciones.showPopupEdit();
+        return "done";
+    }
+
+    public String commitEditUbicacion(){
+        EntityManager emgr = this.getEntityManager();
+        emgr.getTransaction().begin();
+        emgr.merge(this.currentUbicacion);
+        emgr.getTransaction().commit();
+
+        for(Ubicacion u: this.listaUbicaciones){
+            if(u.getIdubicacion() == this.currentUbicacion.getIdubicacion()){
+                u.setNombre(this.currentUbicacion.getNombre());
+                break;
+            }
+        }
+        this.initItemsUbicaciones();
+        this.crdUbicaciones.hidePopupEdit();
+        this.msg.setText("Ubicación modificada satisfactoriamente");
+        this.msg.setVisible(true);
+        this.currentUbicacion = new Ubicacion();
+        return "done";
+    }
+
+    public String delUbicacion(){
+        EntityManager emgr = this.getEntityManager();
+        this.currentUbicacion = (Ubicacion)emgr.createQuery("SELECT u FROM Ubicacion u WHERE u.idubicacion=" + this.crdUbicaciones.getCurrentId()).getSingleResult();
+        Ubicacion uGenerica = (Ubicacion)emgr.createQuery("SELECT u FROM Ubicacion u WHERE u.idubicacion=0").getSingleResult();
+        emgr.getTransaction().begin();
+        for(Existencia exst: this.currentUbicacion.getExistenciaCollection()){
+            exst.setIdubicacion(uGenerica);
+            emgr.merge(exst);
+        }
+
+        for(Reserva rsrv: this.currentUbicacion.getReservaCollection()){
+            rsrv.setIdubicacion(uGenerica);
+            emgr.merge(rsrv);
+        }
+
+        this.currentUbicacion.getExistenciaCollection().clear();
+        this.currentUbicacion.getReservaCollection().clear();
+        emgr.getTransaction().commit();
+
+        emgr.getTransaction().begin();
+        emgr.remove(this.currentUbicacion);
+        emgr.getTransaction().commit();
+
+        for(Ubicacion u: this.listaUbicaciones){
+            if(u.getIdubicacion() == this.currentUbicacion.getIdubicacion()){
+                this.listaUbicaciones.remove(u);
+                break;
+            }
+        }
+        this.initItemsUbicaciones();
+
+        this.crdUbicaciones.hidePopupDel();
+        this.msg.setText("Ubicación eliminada satisfactoriamente");
+        this.msg.setVisible(true);
+        this.currentUbicacion = new Ubicacion();
+        return "done";
     }
 }
