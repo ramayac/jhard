@@ -2,6 +2,7 @@ package edu.ues.jhard.beans;
 
 import edu.ues.jhard.jpa.Articulos;
 import edu.ues.jhard.jpa.Usuario;
+import edu.ues.jhard.jwiki.JreqArticulo;
 import java.sql.Date;
 import java.util.List;
 import org.junit.After;
@@ -37,6 +38,27 @@ public class BeanBaseJWikiTest {
     }
 
     /**
+     * Ejemplo de busqueda para JRequest
+     */
+    @Test
+    public void testBusquedaDesdeJRequest() {
+        System.out.println("BusquedaDesdeJRequest");
+        String criterios = "display Linux tasks top"; //criterios separados por espacio.
+        BeanBaseJWiki instance = new BeanBaseJWiki(); //obten tu instancia de Bean de JWiki
+        List<JreqArticulo> ja = instance.searchEnWiki(criterios);
+        if(ja==null) fail("resultado nulo");
+        if(!(ja.size()>0)) fail("resultado menor al esperado");
+
+        System.out.println("Articulos encontrados:");
+        for (JreqArticulo a : ja) {
+            System.out.println("ID:" + a.getIdarticulo() +", TITULO ARTICULO: " + a.getTitulo());
+        }
+
+        System.out.println("Exito en la prueba!");
+    }
+
+
+    /**
      * Buscamos articulos por palabras en la BD
      */
     @Test
@@ -44,7 +66,7 @@ public class BeanBaseJWikiTest {
         System.out.println("FullTextSearch");
         BeanBaseJWiki instance = new BeanBaseJWiki();
         List<Articulos> la = instance.searchPalabrasEnArticulo("display Linux tasks top");
-        if(!(la.size()>=0)) fail("resultado menor al esperado");
+        if(!(la.size()>0)) fail("resultado menor al esperado");
         System.out.println("Exito en la prueba!");
         //assertNotNull(result);
     }
