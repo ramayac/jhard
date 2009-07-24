@@ -117,6 +117,7 @@ public class jwikiUser extends AbstractPageBean {
     }
 
     public Articulos getArticuloActual() {
+        System.out.println(articuloActual.getDescripcion());
         return articuloActual;
     }
 
@@ -289,6 +290,7 @@ public class jwikiUser extends AbstractPageBean {
     }
 
     public boolean getHayArticulos(){
+        if(this.listaArticulos==null) return false;
         if(this.listaArticulos.size()==NONE) return false;
         return true;
     }
@@ -312,9 +314,9 @@ public class jwikiUser extends AbstractPageBean {
     }
 
     public String busquedaArticulos(){
-       //TODO: funcionalidad
-       //String[] arr=this.criteriosBusqueda.trim().split(",");
-       //this.listaArticulos = this.jwikiInstance.searchListaEntradaPorEtiquetas(arr);
+       this.criteriosBusqueda = criteriosBusqueda.replaceAll("'", EMPTY_STRING);
+       this.criteriosBusqueda = criteriosBusqueda.replaceAll("\"", EMPTY_STRING);
+       this.listaArticulos = this.jwikiInstance.searchPalabrasEnArticulo(criteriosBusqueda);
        return EMPTY_STRING;
     }
 

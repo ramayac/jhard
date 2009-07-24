@@ -37,6 +37,19 @@ public class BeanBaseJWikiTest {
     }
 
     /**
+     * Buscamos articulos por palabras en la BD
+     */
+    @Test
+    public void testFullTextSearch() {
+        System.out.println("FullTextSearch");
+        BeanBaseJWiki instance = new BeanBaseJWiki();
+        List<Articulos> la = instance.searchPalabrasEnArticulo("display Linux tasks top");
+        if(!(la.size()>=0)) fail("resultado menor al esperado");
+        System.out.println("Exito en la prueba!");
+        //assertNotNull(result);
+    }
+
+    /**
      * Obtenemos una articulo de la BD
      */
     @Test
@@ -49,9 +62,23 @@ public class BeanBaseJWikiTest {
         //assertEquals(expResult, result);
         System.out.println("Exito en la prueba!");
     }
-
+    
+     /**
+     * Obtenemos una articulo de la BD con descripcion de XXX palabras
+     */
+//    @Test
+//    public void testGetArticuloDescCorta() {
+//        System.out.println("getArticuloDescCorta");
+//        BeanBaseJWiki instance = new BeanBaseJWiki();
+//        //Articulos expResult = null;
+//        Articulos result = instance.searchArticuloPorTitulo("ntra").get(0);
+//        assertNotNull(result);
+//        System.out.println(result.getDescripcionCorta());
+//        System.out.println("Exito en la prueba!");
+//    }
+    
     /**
-     * Obtejemos N articulos de la BD
+     * Obtenemos N articulos de la BD
      */
     @Test
     public void testNArticulos() {

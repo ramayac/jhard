@@ -86,6 +86,11 @@ public class Articulos implements Serializable {
         return descripcion;
     }
 
+    public String getDescripcionCorta() {
+        String s = descripcion.substring(0, 500);
+        return s;
+    }
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
