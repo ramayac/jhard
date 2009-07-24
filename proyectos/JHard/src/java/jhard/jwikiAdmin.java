@@ -7,6 +7,7 @@
 package jhard;
 
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
+import com.icesoft.faces.component.ext.HtmlOutputText;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.beans.BeanBaseJWiki;
@@ -15,7 +16,9 @@ import edu.ues.jhard.jhardmin.LoginManager;
 import edu.ues.jhard.jpa.Articulos;
 import edu.ues.jhard.jpa.Usuario;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -28,29 +31,17 @@ import javax.servlet.http.HttpServletRequest;
  * lifecycle methods and event handlers where you may add behavior
  * to respond to incoming events.</p>
  */
-public class jwikiUser extends AbstractPageBean {
-    static final int NONE = 0;
-    static final int MAX_COMENTARIOS = 10;
-    static final int MAX_ENTRADAS = 5;
+public class jwikiAdmin extends AbstractPageBean {
+    static final String INVITADO = "Invitado";
+    static final int MAX_ARTICULOS = 30;
+    static final int MAX_COMENTARIOS = 30;
+    static final String EMPTY_STRING = new String();
     static final int ROL_EDITORCONTENIDO = 4;
     static final int ROL_ADMINISTRADOR = 1;
-    static final String EMPTY_STRING = "";
-    static final String INVITADO = "Invitado";
 
-    private Articulos articuloActual = null;
-
-    private List<Articulos> listaArticulos = new ArrayList<Articulos>();
-    private Boolean soloUna = new Boolean(false);
-    //private Integer indice = new Integer(0);
-
-    private String criteriosBusqueda = EMPTY_STRING;
-    
     private int __placeholder;
-    private LoggedUser lu;
-    private Usuario U;
 
     private HtmlOutputLabel lblUser = new HtmlOutputLabel();
-    private BeanBaseJWiki jwikiInstance = new BeanBaseJWiki();
 
     public HtmlOutputLabel getLblUser() {
         return lblUser;
@@ -70,32 +61,20 @@ public class jwikiUser extends AbstractPageBean {
 
     // </editor-fold>
 
+    private LoggedUser lu;
+    private Usuario U;
+
     public LoggedUser getLu() {
-        return lu;
+        return this.lu;
     }
 
-    public Boolean getHayUsuarioLogueado() {
-        return lu!=null;
-    }
+    //what the fuck?
+//    public void setLu(LoggedUser lu) {
+//        this.lu = lu;
+//    }
 
-    public void setLu(LoggedUser lu) {
-        this.lu = lu;
-    }
-
-    public Usuario getU(){
-        return U;
-    }
-
-    public void setU(Usuario u){
-        this.U=u;
-    }
-
-    public  BeanBaseJHardmin getJHardminInstance() {
-        return (BeanBaseJHardmin) getBean("JHardminInstance");
-    }
-
-    public  BeanBaseJWiki getJWikiInstance() {
-        return this.jwikiInstance;
+    public Usuario getUser(){
+        return this.U;
     }
 
     public String getCurrentUserName(){
@@ -111,47 +90,43 @@ public class jwikiUser extends AbstractPageBean {
         return this.U.getNombre();
     }
 
-    public Integer getRolUsuarioConectado(){
-        if(this.U==null) return -1;
-        return this.U.getIdrol().getIdrol();
+
+//    public void setU(Usuario u){
+//        this.U=u;
+//    }
+
+    public  BeanBaseJHardmin getJHardminInstance() {
+        return (BeanBaseJHardmin) getBean("JHardminInstance");
     }
 
-    public Articulos getArticuloActual() {
-        System.out.println(articuloActual.getDescripcion());
-        return articuloActual;
-    }
+    private BeanBaseJWiki jwikiInstance = new BeanBaseJWiki(); //sera mejor como jWikiInstance en el faces-config? revisar el rednimiento.
 
-    public void setArticuloActual(Articulos articuloActual) {
-        this.articuloActual = articuloActual;
+    public  BeanBaseJWiki getjwikiInstance() {
+        return this.jwikiInstance;
     }
 
     /**
      * <p>Construct a new Page bean instance.</p>
      */
-    public jwikiUser() {
-        lu= getJHardminInstance().getCurrentUser();
+    public jwikiAdmin() {
+
+        this.lu= getJHardminInstance().getCurrentUser();
         
-        this.listaArticulos = this.getJWikiInstance().getAllArticulos();
+        this.listaArticulos = this.getjwikiInstance().getAllArticulos();
         if(this.listaArticulos.size()>0) this.articuloActual = this.listaArticulos.get(0);
         
-        if(lu!=null){
-            U = LoginManager.getInstance().getUsuario(lu);
-            this.lblUser.setValue((String)U.getNombre());
-//            switch(U.getIdrol().getIdrol()){
-//                case ROL_ADMINISTRADOR:
-//                case ROL_EDITORCONTENIDO:
-//                default:
-//                    break;
-//            }
-        } else this.lblUser.setValue(INVITADO);
-    }
+        if(this.lu!=null){
+            this.U = LoginManager.getInstance().getUsuario(lu);
+            this.lblUser.setValue(U.getNombre());
 
-    public String getCriteriosBusqueda() {
-        return criteriosBusqueda;
-    }
-
-    public void setCriteriosBusqueda(String criteriosBusqueda) {
-        this.criteriosBusqueda = criteriosBusqueda;
+            switch(this.U.getIdrol().getIdrol()){
+                case ROL_ADMINISTRADOR:
+                case ROL_EDITORCONTENIDO:
+                default:
+                    break;
+                }
+        }else
+            this.lblUser.setValue(INVITADO);
     }
 
     /**
@@ -252,80 +227,171 @@ public class jwikiUser extends AbstractPageBean {
         return (ApplicationBean1) getBean("ApplicationBean1");
     }
 
+    /*----------------------------------------------------------------------------------*/
+
+    private Articulos articuloActual = null;
+    private Articulos articuloNuevo = new Articulos();
+    private List<Articulos> listaArticulos = new ArrayList<Articulos>();
+    private Integer idArticuloEliminar = new Integer(-1);
+
+    //private Comentarios comentarioActual = null;
+    private Boolean editandoArticulo = new Boolean(false);
+    private Boolean popupElimArticulo = new Boolean(false);
+
+    private HtmlOutputText lblMensajesArticulos = new HtmlOutputText();
+
+
+    public Articulos getArticuloActual() {
+        return articuloActual;
+    }
+
+    public void setArticuloActual(Articulos articuloActual) {
+        this.articuloActual = articuloActual;
+    }
+
+    public Articulos getArticuloNuevo() {
+        return articuloNuevo;
+    }
+
+    public void setArticuloNuevo(Articulos articuloNuevo) {
+        this.articuloNuevo = articuloNuevo;
+    }
+
+    public Boolean getEditandoArticulo() {
+        return editandoArticulo;
+    }
+
+    public void setEditandoArticulo(Boolean editandoArticulo) {
+        this.editandoArticulo = editandoArticulo;
+    }
+
+    public BeanBaseJWiki getJwikiInstance() {
+        return jwikiInstance;
+    }
+
+    public void setJwikiInstance(BeanBaseJWiki jwikiInstance) {
+        this.jwikiInstance = jwikiInstance;
+    }
+
+    public HtmlOutputText getLblMensajesArticulos() {
+        return lblMensajesArticulos;
+    }
+
+    public void setLblMensajesArticulos(HtmlOutputText lblMensajesArticulos) {
+        this.lblMensajesArticulos = lblMensajesArticulos;
+    }
+
     public List<Articulos> getListaArticulos() {
-        return this.listaArticulos;
+        return listaArticulos;
     }
 
     public void setListaArticulos(List<Articulos> listaArticulos) {
         this.listaArticulos = listaArticulos;
     }
 
-    /**
-     * Metodo para saber si se ve una o varias Articulos
-     * @param varias
-     */
-    public Boolean getSoloUna() {
-        return this.soloUna;
+    public Boolean getPopupElimArticulo() {
+        return popupElimArticulo;
+    }
+
+    public void setPopupElimArticulo(Boolean popupElimArticulo) {
+        this.popupElimArticulo = popupElimArticulo;
     }
 
     /**
-     * Metodo para establecer si se ve una o varias Articulos
-     * @param varias
-     */
-    public void setSoloUna(Boolean varias) {
-        this.soloUna = varias;
-    }
-
-    /**
-     * Metodo para obtener una entrada por su ID
-     * @param identrada id de la entada que se desea
+     * Metodo para obtener un articulo por su ID
+     * @param idarticulo id de la entada que se desea
      * @return
      */
     public String elegirArticuloActual() {
         String idSeleccionado = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idSeleccionado");
         Integer id = new Integer(idSeleccionado);
         this.articuloActual = this.jwikiInstance.getArticulo(id.intValue());
-        this.setSoloUna(true);
+        this.setEditandoArticulo(true);
         return EMPTY_STRING;
-    }
-
-    public boolean getHayArticulos(){
-        if(this.listaArticulos==null) return false;
-        if(this.listaArticulos.size()==NONE) return false;
-        return true;
     }
 
     public boolean getShowPagArticulos(){
-        if(this.listaArticulos.size()>MAX_ENTRADAS) return true;
+        if(this.listaArticulos.size()>MAX_ARTICULOS) return true;
         return false;
     }
 
-    public boolean getPermisoBorrarComentario(){
-        switch(this.getRolUsuarioConectado()){
-            case -1:
-                return false; //no hay informacion de usuario
-            case ROL_ADMINISTRADOR:
-            case ROL_EDITORCONTENIDO:
-                return true; //tengo los permisos para borrar los comentarios POR MI ROL
-            //default:
-                //break;
-        }
-        return false;
+    public String EliminarArticulo(){
+        this.setPopupElimArticulo(true);
+        this.lblMensajesArticulos.setValue("¿Seguro que desea Eliminar el artículo seleccionado?");
+        String idArticulo = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idArticulo");
+        Integer id = Integer.parseInt(idArticulo);
+        if(id>0) this.idArticuloEliminar = id;
+        return EMPTY_STRING;
     }
-
-    public String busquedaArticulos(){
-       //TODO: convertir esto en filtrado real...
-       this.criteriosBusqueda = criteriosBusqueda.replaceAll("'", EMPTY_STRING);
-       this.criteriosBusqueda = criteriosBusqueda.replaceAll("\"", EMPTY_STRING);
-       this.listaArticulos = this.jwikiInstance.searchPalabrasEnArticulo(criteriosBusqueda);
+    
+   public String btnEliminarArticulo_action(){
+       try {
+            if(this.idArticuloEliminar>0){
+                this.jwikiInstance.deleteArticulo(this.idArticuloEliminar);
+                this.listaArticulos = this.jwikiInstance.getAllArticulos();
+                this.lblMensajesArticulos.setValue("Artículo eliminado con éxito.");
+            } 
+       } catch (Exception e) {
+            this.lblMensajesArticulos.setValue("Ocurrió un error al intentar borrar el artículo.");
+       } finally {
+           this.idArticuloEliminar = -1;
+       }
        return EMPTY_STRING;
     }
 
-    /**
-     * Metodo para establecer hacer toggle a la vista de entradas (Unica o Multiple)
-     */
-    public String toggleVista() {
-        this.setSoloUna(false);
+    public String btnAceptarElimArt_action() {
+        return this.btnEliminarArticulo_action();
+    }
+
+    public String btnCancelarMensajes_action() {
+        this.setPopupElimArticulo(false);
+        this.idArticuloEliminar = -1;
         return EMPTY_STRING;
     }
+
+    public boolean getArticuloValido(){
+        return (this.idArticuloEliminar>0);
+    }
+
+    public Boolean getHayArticulos(){
+        if(this.listaArticulos.size()>0) return true;
+        return false;
+    }
+
+    public String EditarArticulo(){
+        String idArticulo = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idArticulo");
+        Integer id = Integer.parseInt(idArticulo);
+        this.articuloActual = this.jwikiInstance.getArticulo(id.intValue());
+        this.setEditandoArticulo(true);
+        return EMPTY_STRING;
+    }
+
+    public String cancelarGuardarArticulo() {
+        this.articuloActual = null;
+        this.articuloNuevo = new Articulos();
+        this.setEditandoArticulo(false);
+        return EMPTY_STRING;
+    }
+
+    public String modificarArticulo(){
+        this.articuloActual.setIdusuario(this.U);
+        this.jwikiInstance.updateArticulos(this.articuloActual);
+        this.listaArticulos = this.getjwikiInstance().getAllArticulos();
+        this.setEditandoArticulo(false);
+        return EMPTY_STRING;
+    }
+
+    public String agregarArticulo(){
+        this.articuloNuevo.setIdusuario(this.U);
+        this.articuloNuevo.setFechahora(new Date());
+        this.jwikiInstance.createArticulo(this.articuloNuevo);
+        this.listaArticulos = this.getjwikiInstance().getAllArticulos();
+        this.setEditandoArticulo(false);
+        return EMPTY_STRING;
+    }
+
+    public TimeZone getTimeZone() {
+        return java.util.TimeZone.getDefault();
+    }
+
 }

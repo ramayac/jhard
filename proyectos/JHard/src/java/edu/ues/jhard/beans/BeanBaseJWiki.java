@@ -197,6 +197,7 @@ public class BeanBaseJWiki extends BeanBase {
     }
 
     private String BuildSQLSearch(String[] arr) {
+        //TODO: pasar a SQL parametrizado y filtrar arr[0]<3
         String sql = "SELECT a.idarticulo, ( ";
         if (arr.length == 1)
             sql += "(LENGTH(a.descripcion) - LENGTH(REPLACE(a.descripcion, '" + arr[0] + "', '')))/" + arr[0].length();
