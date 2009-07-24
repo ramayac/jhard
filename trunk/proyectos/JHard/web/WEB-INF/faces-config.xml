@@ -103,4 +103,14 @@
         <managed-bean-class>jhard.jwikiUser</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>jprocurAdmin_1</managed-bean-name>
+        <managed-bean-class>jhard.jprocurAdmin_1</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>jwikiAdmin</managed-bean-name>
+        <managed-bean-class>jhard.jwikiAdmin</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>

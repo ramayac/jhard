@@ -12,7 +12,7 @@
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
                 <ice:outputStyle href="./xmlhttp/css/rime/rime.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
-                <title>JProcur Admin</title>
+                <title>Administración de Promoción de Cursos</title>
                 <meta content="" name="keywords"/>
                 <meta content="" name="description"/>
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
@@ -22,9 +22,13 @@
                 <script charset="utf-8" type="text/javascript">
                     jQuery.noConflict();
                     jQuery(document).ready(function() {
-                        var tabla = jQuery("form table.mitablaentradas");
-                        jQuery("#filtroTablaEntrda").keyup(function() {
-                            jQuery.uiTableFilter(tabla, this.value );
+                        var tabla1 = jQuery("form table.mitablaentradas");
+                        jQuery("#filtroTablaEntrada").keyup(function() {
+                            jQuery.uiTableFilter(tabla1, this.value );
+                        })
+                        var tabla2 = jQuery("form table.mitablacomentarios");
+                        jQuery("#filtroTablaComentarios").keyup(function() {
+                            jQuery.uiTableFilter(tabla2, this.value );
                         })
                     });
                 </script>

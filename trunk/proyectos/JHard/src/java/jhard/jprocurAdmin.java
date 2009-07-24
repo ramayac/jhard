@@ -2,7 +2,7 @@
  * jrequestUser.java
  *
  * Created on 05-29-2009, 10:56:59 AM
- * Copyright hugol
+ * Copyright ramayac
  */
 package jhard;
 
