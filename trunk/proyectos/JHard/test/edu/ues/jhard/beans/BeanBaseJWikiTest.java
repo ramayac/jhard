@@ -81,7 +81,7 @@ public class BeanBaseJWikiTest {
         //System.out.println("testRegistrarArticulos");
         BeanBaseJHardmin hardmin = new BeanBaseJHardmin();
         Usuario usuario = hardmin.getUsuario(1);
-        Articulos articulo = new Articulos(0, "El articulo 9999", "nain, nine, nueve, 9, iiiiiiii, etc etc etc", new Date(2009, 9, 9), usuario.getIdusuario());
+        Articulos articulo = new Articulos(0, "El articulo 9999", "nain, nine, nueve, 9, iiiiiiii, etc etc etc", new Date(2009, 9, 9), usuario);
         BeanBaseJWiki instance = new BeanBaseJWiki();
         if(!instance.createArticulo(articulo)) fail("fallo en REGISTRAR ENTRADA");
     }
