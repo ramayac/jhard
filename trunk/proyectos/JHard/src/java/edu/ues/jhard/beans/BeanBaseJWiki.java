@@ -1,8 +1,10 @@
 package edu.ues.jhard.beans;
 
 import edu.ues.jhard.jpa.Articulos;
-import edu.ues.jhard.jpa.Usuario;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import javax.persistence.*;
 
 /**
@@ -16,13 +18,22 @@ import javax.persistence.*;
  */
 public class BeanBaseJWiki extends BeanBase {
 
+    //private final static String MAX_PALABRAS = "200";
+    private final static String ESPACIO = " ";
+    static final String EMPTY_STRING = "";
+    private final static int MIN_CRITERIO = 5;
+    private final static int MAX_ARTICULOS = 10;
+
     /**
      * Metodo para obtener uno o varios objetos Articulos que coincidan con el criterio de busqueda.
      * Este metodo busca sobre el campo titulo de las Articulos.
      */
     public List<Articulos> searchArticuloPorTitulo(String criterio){
         EntityManager em = this.getEntityManager();
-        String sql = "SELECT * FROM articulos a WHERE a.titulo LIKE ?0 ORDER BY a.fechahora DESC";
+        //SUBstring(a.descripcion,1,"+MAX_PALABRAS+") descripcion,
+        //SUBstring_INDEX(a.descripcion,' ',"+MAX_PALABRAS+") descripcion
+        String sql = "SELECT a.idarticulo, a.titulo, a.descripcion, a.fechahora, a.idusuario " +
+                "FROM articulos a WHERE a.titulo LIKE ?0 ORDER BY a.fechahora DESC";
         criterio = "%"+criterio+"%";
         Query q = em.createNativeQuery(sql, Articulos.class);
         q.setParameter(0, criterio);
@@ -31,13 +42,48 @@ public class BeanBaseJWiki extends BeanBase {
     }
 
 
+
+    /**
+     * Metodo de busqueda de articulos... 1 palabra: GENIAL.
+     * @param criterio
+     * @return
+     */
+    public List<Articulos> searchPalabrasEnArticulo(String criterios){
+        if(criterios.length()<MIN_CRITERIO) return null;
+        EntityManager em = this.getEntityManager();
+        String[] arr = criterios.trim().split(ESPACIO);
+
+        String sql = BuildSQLSearch(arr);
+
+        System.out.println(sql);
+        Query q = em.createNativeQuery(sql); //sin clase, retorna un Vector
+        Vector resultado = (Vector) q.getResultList();
+
+        List<Integer> listaIds = new ArrayList();
+        for (Object o: resultado) {
+            Vector v = (Vector)o;
+            BigDecimal numero = (BigDecimal)v.get(1);
+            if(numero.intValue()>0) listaIds.add(Math.round((Long)v.get(0)));
+        }
+
+        List<Articulos> listArticulos = new ArrayList();
+        int limite = (listaIds.size()>MAX_ARTICULOS)?MAX_ARTICULOS:listaIds.size();
+        for (int i = 0; i < limite; i++) { //ni modo, asi es la vida. tengo que pedir uno por uno :S
+            Articulos a = em.find(Articulos.class, listaIds.get(i));
+            listArticulos.add(a);
+        }
+
+        return listArticulos;
+    }
+
     /**
      * Metodo para obtener uno o varios objetos Articulos que coincidan con el criterio de busqueda.
      * Este metodo busca sobre el campo titulo de las Articulos.
      */
     public List<Articulos> getAllArticulos(){
         EntityManager em = this.getEntityManager();
-        String sql = "SELECT * FROM articulos a ORDER BY a.fechahora DESC";
+        String sql = "SELECT a.idarticulo, a.titulo, a.descripcion, a.fechahora, a.idusuario " +
+                "FROM articulos a ORDER BY a.fechahora DESC";
         Query q = em.createNativeQuery(sql, Articulos.class);
         List<Articulos> la = q.getResultList();
         return la;
@@ -49,7 +95,8 @@ public class BeanBaseJWiki extends BeanBase {
      */
     public List<Articulos> getUltimosNArticulos(int numero) {
         EntityManager em = this.getEntityManager();
-        String sql = "SELECT * FROM articulos a ORDER BY a.fechahora DESC";
+        String sql = "SELECT a.idarticulo, a.titulo, a.descripcion, a.fechahora, a.idusuario " +
+                "FROM articulos a ORDER BY a.fechahora DESC";
         Query q = em.createNativeQuery(sql, Articulos.class);
         q.setFirstResult(0);
         q.setMaxResults(numero);
@@ -147,5 +194,23 @@ public class BeanBaseJWiki extends BeanBase {
         em.refresh(a);
         em.getTransaction().commit();
         return a;
+    }
+
+    private String BuildSQLSearch(String[] arr) {
+        String sql = "SELECT a.idarticulo, ( ";
+        if (arr.length == 1)
+            sql += "(LENGTH(a.descripcion) - LENGTH(REPLACE(a.descripcion, '" + arr[0] + "', '')))/" + arr[0].length();
+        if (arr.length > 1) {
+            for (int i = 0; i < arr.length; i++) {
+                String s = arr[i];
+                sql += "(LENGTH(a.descripcion) - LENGTH(REPLACE(a.descripcion, '" + s + "', '')))/" + s.length();
+                if (i + 1 >= arr.length) {
+                    break;
+                }
+                sql += " + ";
+            }
+        }
+        sql += " ) ocurrencias FROM articulos a GROUP BY a.idarticulo ORDER BY 2 DESC";
+        return sql;
     }
 }

@@ -51,7 +51,6 @@ public class BeanBaseJProcur extends BeanBase {
     public Entrada[] searchEntradaPorEtiquetas(String[] etiquetas){
         EntityManager em = this.getEntityManager();
 
-        /*SQL ADHOC*/
         String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE";
         for (int i = 0; i < etiquetas.length; i++) {
             sql += "( t.descripcion LIKE ?"+i+" )";

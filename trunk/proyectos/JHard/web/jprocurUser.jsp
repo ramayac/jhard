@@ -36,7 +36,10 @@
                                 <a href="#">Inventario</a>
                             </li>
                             <li class="current_page_item">
-                                <a href="jprocurUser.iface">Wiki y Cursos</a>
+                                <a href="jprocurUser.iface">Cursos</a>
+                            </li>
+                            <li>
+                                <a href="jwikiUser.iface">Wiki</a>
                             </li>
                             <li class="last">
                                 <a href="jcanon.iface">Cañones</a>

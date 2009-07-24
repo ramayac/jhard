@@ -35,8 +35,10 @@
                             <li>
                                 <a href="#">Inventario</a>
                             </li>
+                            <li>
+                                <a href="jprocurUser.iface">Cursos</a>
+                            </li>
                             <li class="current_page_item">
-                                <a href="jwikiUser.iface">Cursos</a>
                                 <a href="jwikiUser.iface">Wiki</a>
                             </li>
                             <li class="last">
@@ -60,7 +62,7 @@
                                     <h2>Aviso</h2>
                                     <ul>
                                         <li>No existen criterios asociados con su búsqueda.</li>
-                                        <li>No hay articulos que mostrar.</li>
+                                        <li>No hay artículos que mostrar.</li>
                                     </ul>
                                 </div>
                             </ice:panelGroup>
@@ -77,41 +79,12 @@
                                         value="#{jwikiUser.articuloActual.idusuario.nombre}"/>, en: <ice:outputText id="lblArticuloFechaUnico" value="#{jwikiUser.articuloActual.fechahora}"/>
                                 </div>
                                 <br/>
-                                <br/>
-                                <div align="center">
-                                    <ice:dataPaginator for="tablaArticuloComentarios" id="paginadorComentarios" paginator="true" rendered="#{jwikiUser.showPagComentarios}">
-                                        <f:facet name="first">
-                                            <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
-                                        </f:facet>
-                                        <f:facet name="previous">
-                                            <ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/>
-                                        </f:facet>
-                                        <f:facet name="next">
-                                            <ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/>
-                                        </f:facet>
-                                        <f:facet name="last">
-                                            <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
-                                        </f:facet>
-                                    </ice:dataPaginator>
-                                </div>
-                                <br/>
-                                <ice:panelGroup id="pnlAddComent" rendered="#{jwikiUser.agregandoUnComentario}">
-                                        Agrega un comentario a la articulo:<br/>
-                                    <ice:inputTextarea id="itComentario" partialSubmit="true" title="Comentario" value="#{jwikiUser.comentarioNuevo.comentario}"/>
-                                    <br/>
-                                        Firma: <br/>
-                                    <ice:inputText id="itC" partialSubmit="true" rendered="#{!jwikiUser.hayUsuarioLogueado}" title="Firma" value="#{jwikiUser.comentarioNuevo.firma}"/>
-                                    <ice:outputLabel id="itC2" rendered="#{jwikiUser.hayUsuarioLogueado}" title="Firma" value="#{jwikiUser.currentUserName}"/>
-                                </ice:panelGroup>
-                                <br/>
                                 <ice:commandButton action="#{jwikiUser.toggleVista}" id="btnToggle" styleClass="btnAccion2" value="Regresar"/>
-                                <ice:commandButton action="#{jwikiUser.agregandoComentario}" id="btnAgregandoComentario"
-                                    rendered="#{!jwikiUser.agregandoUnComentario}" styleClass="btnAccion2" value="Comentar"/>
-                                <ice:commandButton action="#{jwikiUser.agregarComentario}" id="btnAgregarComentario"
-                                    rendered="#{jwikiUser.agregandoUnComentario}" styleClass="btnAccion2" value="Guardar Comentario"/>
+                                <br/>
                             </ice:panelGroup>
                             <ice:panelGroup id="panelVistaMultiple" rendered="#{!jwikiUser.soloUna}">
-                                <ice:dataTable id="tablaArticulos" rows="5" value="#{jwikiUser.listaArticulos}" var="indiceArticulo">
+                                <ice:dataTable id="tablaArticulos" rows="5" value="#{jwikiUser.listaArticulos}" 
+                                var="indiceArticulo" width="100%">
                                     <ice:column id="columnaArticulos">
                                         <div class="post">
                                             <h2>
@@ -159,8 +132,8 @@
                             <li id="search">
                                 <ice:form id="formBusqueda">
                                     <h2>Búsqueda</h2>
-                                    <ice:inputText id="itBusqueda" partialSubmit="true" title="Búsqueda por etiquetas" value="#{jwikiUser.criteriosBusqueda}"/>
-                                    <ice:commandButton action="#{jwikiUser.busquedaArticulos}" id="btnBusquedaEtiquetas" styleClass="btnAccion2" value="Buscar"/>
+                                    <ice:inputText id="itBusqueda" partialSubmit="true" title="Búsqueda de artículos" value="#{jwikiUser.criteriosBusqueda}"/>
+                                    <ice:commandButton action="#{jwikiUser.busquedaArticulos}" id="btnBusqueda" styleClass="btnAccion2" value="Buscar"/>
                                 </ice:form>
                             </li>
                             <li>
