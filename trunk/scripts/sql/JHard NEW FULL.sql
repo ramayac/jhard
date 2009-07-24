@@ -121,8 +121,9 @@ CREATE TABLE  `jhard`.`articulos` (
   PRIMARY KEY  (`idarticulo`),
   KEY `fk_articulo_usuario` (`idusuario`),
   KEY `idxArtTitulo` (`titulo`),
-  KEY `idxArtFecha` (`fechahora`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Articulos de jwiki';
+  KEY `idxArtFecha` (`fechahora`),
+  CONSTRAINT `fkarticulousuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Articulos de jwiki';
 
 --
 -- Dumping data for table `jhard`.`articulos`
@@ -130,6 +131,7 @@ CREATE TABLE  `jhard`.`articulos` (
 
 /*!40000 ALTER TABLE `articulos` DISABLE KEYS */;
 LOCK TABLES `articulos` WRITE;
+INSERT INTO `jhard`.`articulos` VALUES  (1,'Entrada 1','Entrada 1\n','2009-01-01 00:00:00',1);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `articulos` ENABLE KEYS */;
 
@@ -396,7 +398,7 @@ CREATE TABLE  `jhard`.`comentarios` (
   PRIMARY KEY  (`idcoment`),
   KEY `fk_comentarios_entrada` (`identrada`),
   CONSTRAINT `fk_comentarios_entrada` FOREIGN KEY (`identrada`) REFERENCES `entrada` (`identrada`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `jhard`.`comentarios`
@@ -408,7 +410,8 @@ INSERT INTO `jhard`.`comentarios` VALUES  (1,'Comentario 1','2008-01-01 00:00:00
  (2,'Este es un comentarios','2009-03-02 00:00:00',1,'Rodrigo',1),
  (3,'Comentario 3','2009-02-02 00:00:00',1,'ComentaMano',1),
  (4,'Lorem ipsum!!!','2009-02-02 00:00:00',1,'Latin Man',1),
- (5,'Comentario 2','2009-01-01 00:00:00',1,'firefox',1);
+ (5,'Comentario 2','2009-01-01 00:00:00',1,'firefox',1),
+ (7,'Amo esto','2009-07-23 11:22:47',1,'Sr. Byte',1);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `comentarios` ENABLE KEYS */;
 
