@@ -4,11 +4,7 @@
     Created on : 06-21-2009, 6:00:43 AM
     Author     : ramayac
 -->
-<jsp:root version="2.1"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ice="http://www.icesoft.com/icefaces/component"
-    xmlns:jsp="http://java.sun.com/JSP/Page">
+<jsp:root version="2.1" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ice="http://www.icesoft.com/icefaces/component" xmlns:jsp="http://java.sun.com/JSP/Page">
     <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"/>
     <f:view>
         <html id="outputHtml1">
@@ -31,16 +27,17 @@
                                 <a href="Index.iface">Principal</a>
                             </li>
                             <li>
-                                <a href="jrquest.iface">Mantenimientos</a>
+                                <a href="jrequest.iface">Mantenimientos</a>
                             </li>
                             <li>
                                 <a href="#">Grupos de Laboratorio</a>
                             </li>
                             <li>
-                                <a href="jinvent.jspx">Inventario</a>
+                                <a href="#">Inventario</a>
                             </li>
                             <li class="current_page_item">
-                                <a href="jprocurUser.iface">Wiki y Cursos</a>
+                                <a href="jwikiUser.iface">Cursos</a>
+                                <a href="jwikiUser.iface">Wiki</a>
                             </li>
                             <li class="last">
                                 <a href="jcanon.iface">Cañones</a>
@@ -57,79 +54,114 @@
                 <div id="page">
                     <!-- start content -->
                     <div id="content">
-                        <div class="post">
-                            <h2 class="title">Solucion a problemas comunes de Informatica</h2>
-                            <div class="entry">
-                                <p class="text">En este sitio encontrará una serie de articulos, relacionados a la solucion de problemas comunes de informática.
-                                </p>
-                            </div>
-                            <ice:form id="formEntrada">
-                                <ice:panelGroup id="panelVistaUnica" rendered="#{jwikiUser.soloUna}">
-                                    <h3 styleClass="tituloSeccion">
-                                        <ice:outputLabel id="lblEntradaTituloUnico" style="font-weight:bold; " value="#{jwikiUser.entradaActual.titulo}"/>
-                                    </h3>
+                        <ice:form id="formArticulo">
+                            <ice:panelGroup rendered="#{!jwikiUser.hayArticulos}">
+                                <div class="post">
+                                    <h2>Aviso</h2>
+                                    <ul>
+                                        <li>No existen criterios asociados con su búsqueda.</li>
+                                        <li>No hay articulos que mostrar.</li>
+                                    </ul>
+                                </div>
+                            </ice:panelGroup>
+                            <ice:panelGroup id="panelVistaUnica" rendered="#{jwikiUser.soloUna}">
+                                <div class="post">
+                                    <h2>
+                                        <ice:outputLabel id="lblArticuloTituloUnico" style="font-weight:bold; " value="#{jwikiUser.articuloActual.titulo}"/>
+                                    </h2>
                                     <br/>
-                                    <ice:outputText id="lblEntradaDescripcionUnico" value="#{jwikiUser.entradaActual.descripcion}"/>
-                                    <br/>
-                                    <br/>
-                                    Escrito por: <ice:outputText id="lblEntradaUsuarioUnico" value="#{jwikiUser.entradaActual.idusuario.nombre}"/>, en: <ice:outputText id="lblEntradaFechaUnico" value="#{jwikiUser.entradaActual.fechahora}"/>
-                                    <br/>
-                                    <br/>
-                                    <!-- ICEFaces MIERDA!, no deja usar ni UI:Repeat ni c:ForEach, MIERDAAA! :@ -->
-                                    Etiquetas:<br/>
-                                    <ice:outputLabel id="lblEtiquetas" style="font-weight:bold; " value="#{jwikiUser.etiquetasString}"/>
+                                    <ice:outputLabel id="lblArticuloDescripcionUnico" value="#{jwikiUser.articuloActual.descripcion}"/>
                                     <br/>
                                     <br/>
-                                    Comentarios:<br/>
-                                    <ice:dataTable id="tablaEntradaComentarios" rows="10" value="#{jwikiUser.entradaActual.comentariosList}" var="indiceComentario" width="100%">
-                                        <ice:column id="columnaComentarios">
-                                            <ice:panelGroup id="pnlComent" rendered="#{indiceComentario.aprobado}">
-                                                <ice:outputText id="lblComent" value="#{indiceComentario.comentario}"/><!-- aqui hay que poner un commandLink para eliminar comentarios -->
-                                            </ice:panelGroup>
-                                        </ice:column>
-                                    </ice:dataTable>
-                                    <div align="center">
-                                        <ice:dataPaginator for="tablaEntradaComentarios" id="paginadorComentarios" paginator="true" rendered="#{jwikiUser.showPagComentarios}">
-                                            <f:facet name="first"><ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/></f:facet>
-                                            <f:facet name="previous"><ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/></f:facet>
-                                            <f:facet name="next"><ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/></f:facet>
-                                            <f:facet name="last"><ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/></f:facet>
-                                        </ice:dataPaginator>
-                                    </div>
-                                    <ice:commandButton action="#{jwikiUser.toggleVista}" id="btnToggle" styleClass="btnAccion2" value="Regresar"/>
+                                    Escrito por: <ice:outputText id="lblArticuloUsuarioUnico"
+                                        value="#{jwikiUser.articuloActual.idusuario.nombre}"/>, en: <ice:outputText id="lblArticuloFechaUnico" value="#{jwikiUser.articuloActual.fechahora}"/>
+                                </div>
+                                <br/>
+                                <br/>
+                                <div align="center">
+                                    <ice:dataPaginator for="tablaArticuloComentarios" id="paginadorComentarios" paginator="true" rendered="#{jwikiUser.showPagComentarios}">
+                                        <f:facet name="first">
+                                            <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
+                                        </f:facet>
+                                        <f:facet name="previous">
+                                            <ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/>
+                                        </f:facet>
+                                        <f:facet name="next">
+                                            <ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/>
+                                        </f:facet>
+                                        <f:facet name="last">
+                                            <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
+                                        </f:facet>
+                                    </ice:dataPaginator>
+                                </div>
+                                <br/>
+                                <ice:panelGroup id="pnlAddComent" rendered="#{jwikiUser.agregandoUnComentario}">
+                                        Agrega un comentario a la articulo:<br/>
+                                    <ice:inputTextarea id="itComentario" partialSubmit="true" title="Comentario" value="#{jwikiUser.comentarioNuevo.comentario}"/>
+                                    <br/>
+                                        Firma: <br/>
+                                    <ice:inputText id="itC" partialSubmit="true" rendered="#{!jwikiUser.hayUsuarioLogueado}" title="Firma" value="#{jwikiUser.comentarioNuevo.firma}"/>
+                                    <ice:outputLabel id="itC2" rendered="#{jwikiUser.hayUsuarioLogueado}" title="Firma" value="#{jwikiUser.currentUserName}"/>
                                 </ice:panelGroup>
-                                <ice:panelGroup id="panelVistaMultiple" rendered="#{!jwikiUser.soloUna}">
-                                    <ice:dataTable id="tablaEntradas" rows="5" value="#{jwikiUser.listaEntradas}" var="indiceEntrada">
-                                        <ice:column id="columnaEntradas">
-                                            <h3 styleClass="tituloSeccion">
-                                                <ice:commandLink action="#{jwikiUser.elegirEntradaActual}">
-                                                    <ice:outputLabel id="lblTitulo" style="font-weight:bold; " value="#{indiceEntrada.titulo}"/>
-                                                    <f:param name="idSeleccionado" value="#{indiceEntrada.identrada}"/>
+                                <br/>
+                                <ice:commandButton action="#{jwikiUser.toggleVista}" id="btnToggle" styleClass="btnAccion2" value="Regresar"/>
+                                <ice:commandButton action="#{jwikiUser.agregandoComentario}" id="btnAgregandoComentario"
+                                    rendered="#{!jwikiUser.agregandoUnComentario}" styleClass="btnAccion2" value="Comentar"/>
+                                <ice:commandButton action="#{jwikiUser.agregarComentario}" id="btnAgregarComentario"
+                                    rendered="#{jwikiUser.agregandoUnComentario}" styleClass="btnAccion2" value="Guardar Comentario"/>
+                            </ice:panelGroup>
+                            <ice:panelGroup id="panelVistaMultiple" rendered="#{!jwikiUser.soloUna}">
+                                <ice:dataTable id="tablaArticulos" rows="5" value="#{jwikiUser.listaArticulos}" var="indiceArticulo">
+                                    <ice:column id="columnaArticulos">
+                                        <div class="post">
+                                            <h2>
+                                                <ice:commandLink action="#{jwikiUser.elegirArticuloActual}">
+                                                    <ice:outputLabel id="lblTitulo" style="font-weight:bold; " value="#{indiceArticulo.titulo}"/>
+                                                    <f:param name="idSeleccionado" value="#{indiceArticulo.idarticulo}"/>
                                                 </ice:commandLink>
-                                            </h3>
+                                            </h2>
                                             <br/>
-                                            <ice:outputText id="lblDescripcion" value="#{indiceEntrada.descripcion}"/>
+                                            <div align="right">
+                                                <small>
+                                                    <ice:outputLabel id="lblArticuloFechaMultiple" value="#{indiceArticulo.fechahora}"/>
+                                                </small>
+                                            </div>
                                             <br/>
-                                        </ice:column>
-                                    </ice:dataTable>
-                                    <div align="center">
-                                        <ice:dataPaginator for="tablaEntradas" id="paginadorEntrada" paginator="true" rendered="#{jwikiUser.showPagEntradas}">
-                                            <f:facet name="first"><ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/></f:facet>
-                                            <f:facet name="previous"><ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/></f:facet>
-                                            <f:facet name="next"><ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/></f:facet>
-                                            <f:facet name="last"><ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/></f:facet>
-                                        </ice:dataPaginator>
-                                    </div>
-                                </ice:panelGroup>
-                            </ice:form>
-                        </div>
+                                            <ice:outputLabel id="lblDescripcion" value="#{indiceArticulo.descripcion}"/>
+                                            <br/>
+                                        </div>
+                                    </ice:column>
+                                </ice:dataTable>
+                                <div align="center">
+                                    <ice:dataPaginator for="tablaArticulos" id="paginadorArticulo" paginator="true" rendered="#{jwikiUser.showPagArticulos}">
+                                        <f:facet name="first">
+                                            <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
+                                        </f:facet>
+                                        <f:facet name="previous">
+                                            <ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/>
+                                        </f:facet>
+                                        <f:facet name="next">
+                                            <ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/>
+                                        </f:facet>
+                                        <f:facet name="last">
+                                            <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
+                                        </f:facet>
+                                    </ice:dataPaginator>
+                                </div>
+                            </ice:panelGroup>
+                        </ice:form>
+                        <br/>
                     </div>
                     <!-- end content -->
                     <!-- start sidebar -->
                     <div id="sidebar">
                         <ul>
                             <li id="search">
-                                <h2>Búsqueda Wiki</h2>
+                                <ice:form id="formBusqueda">
+                                    <h2>Búsqueda</h2>
+                                    <ice:inputText id="itBusqueda" partialSubmit="true" title="Búsqueda por etiquetas" value="#{jwikiUser.criteriosBusqueda}"/>
+                                    <ice:commandButton action="#{jwikiUser.busquedaArticulos}" id="btnBusquedaEtiquetas" styleClass="btnAccion2" value="Buscar"/>
+                                </ice:form>
                             </li>
                             <li>
                                 <h2>
@@ -163,24 +195,6 @@
                                     <li>
                                         <a href="#">Nec metus sed donec</a>
                                     </li>
-                                    <li>
-                                        <a href="#">Magna lacus bibendum mauris</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Velit semper nisi molestie</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Eget tempor eget nonummy</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Nec metus sed donec</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Magna lacus bibendum mauris</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Velit semper nisi molestie</a>
-                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -192,8 +206,7 @@
                 <!-- start footer -->
                 <div id="footer">
                     <div id="footer-wrap">
-                        <p id="legal" style="line-height: 13px">Universidad de El Salvador Facultad Multidisciplinaria de Occidente <br/>
-                            Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/>
+                        <p id="legal" style="line-height: 13px">Universidad de El Salvador Facultad Multidisciplinaria de Occidente <br/> Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/>
                             <a href="#">Créditos</a> - <a href="http://www.uesocc.edu.sv">Pagina Principal de la UES FMOcc</a>
                         </p>
                     </div>

@@ -13,7 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -26,7 +28,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "articulos")
-@NamedQueries({@NamedQuery(name = "Articulos.findAll", query = "SELECT a FROM Articulos a"), @NamedQuery(name = "Articulos.findByIdarticulo", query = "SELECT a FROM Articulos a WHERE a.idarticulo = :idarticulo"), @NamedQuery(name = "Articulos.findByTitulo", query = "SELECT a FROM Articulos a WHERE a.titulo = :titulo"), @NamedQuery(name = "Articulos.findByFechahora", query = "SELECT a FROM Articulos a WHERE a.fechahora = :fechahora"), @NamedQuery(name = "Articulos.findByIdusuario", query = "SELECT a FROM Articulos a WHERE a.idusuario = :idusuario")})
+@NamedQueries({@NamedQuery(name = "Articulos.findAll", query = "SELECT a FROM Articulos a"), @NamedQuery(name = "Articulos.findByIdarticulo", query = "SELECT a FROM Articulos a WHERE a.idarticulo = :idarticulo"), @NamedQuery(name = "Articulos.findByTitulo", query = "SELECT a FROM Articulos a WHERE a.titulo = :titulo"), @NamedQuery(name = "Articulos.findByFechahora", query = "SELECT a FROM Articulos a WHERE a.fechahora = :fechahora")})
 public class Articulos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,9 +47,9 @@ public class Articulos implements Serializable {
     @Column(name = "fechahora")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechahora;
-    @Basic(optional = false)
-    @Column(name = "idusuario")
-    private int idusuario;
+    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
+    @ManyToOne(optional = false)
+    private Usuario idusuario;
 
     public Articulos() {
     }
@@ -56,12 +58,12 @@ public class Articulos implements Serializable {
         this.idarticulo = idarticulo;
     }
 
-    public Articulos(Integer idarticulo, String titulo, String descripcion, Date fechahora, int idusuario) {
+    public Articulos(Integer idarticulo, String titulo, String descripcion, Date fechahora, Usuario usuario) {
         this.idarticulo = idarticulo;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechahora = fechahora;
-        this.idusuario = idusuario;
+        this.idusuario = usuario;
     }
 
     public Integer getIdarticulo() {
@@ -96,11 +98,11 @@ public class Articulos implements Serializable {
         this.fechahora = fechahora;
     }
 
-    public int getIdusuario() {
+    public Usuario getIdusuario() {
         return idusuario;
     }
 
-    public void setIdusuario(int idusuario) {
+    public void setIdusuario(Usuario idusuario) {
         this.idusuario = idusuario;
     }
 

@@ -1,6 +1,7 @@
 package edu.ues.jhard.beans;
 
 import edu.ues.jhard.jpa.Articulos;
+import edu.ues.jhard.jpa.Usuario;
 import java.util.List;
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
  * - Only Refresh para obtener los ultimos datos de la BD
  * - remove to delete an entity from the database.
  * - method flush to send updates to the database within a transaction before the transaction is committed. (unicamente en el mismo contexto)
+ * - Recuerda obtener el objeto usuario asociado con el id en la tabla Articulos!!!!!!
  */
 public class BeanBaseJWiki extends BeanBase {
 
