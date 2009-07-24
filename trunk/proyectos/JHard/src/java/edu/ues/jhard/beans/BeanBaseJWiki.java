@@ -1,6 +1,7 @@
 package edu.ues.jhard.beans;
 
 import edu.ues.jhard.jpa.Articulos;
+import edu.ues.jhard.jwiki.JreqArticulo;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +42,6 @@ public class BeanBaseJWiki extends BeanBase {
         return la;
     }
 
-
-
     /**
      * Metodo de busqueda de articulos... 1 palabra: GENIAL.
      * @param criterio
@@ -75,6 +74,35 @@ public class BeanBaseJWiki extends BeanBase {
 
         return listArticulos;
     }
+
+    /**
+     * Metodo de busqueda de articulos para ser usado en JRequest
+     * @param criterio
+     * @return
+     */
+    public List<JreqArticulo> searchEnWiki(String criterios){
+        if(criterios.length()<MIN_CRITERIO) return null;
+        EntityManager em = this.getEntityManager();
+        String[] arr = criterios.trim().split(ESPACIO);
+
+        String sql = BuildSQLSearch(arr);
+
+        System.out.println(sql);
+        Query q = em.createNativeQuery(sql);
+        Vector vectorArticulos = (Vector) q.getResultList();
+
+        List<JreqArticulo> resultado =  new ArrayList<JreqArticulo>();
+
+        for (Object o : vectorArticulos) {
+            Vector v = (Vector)o;
+            JreqArticulo ja = new JreqArticulo();
+            ja.setVector(v);
+            if(ja.TieneOcurrencias()) resultado.add(ja);
+        }
+        
+        return resultado;
+    }
+
 
     /**
      * Metodo para obtener uno o varios objetos Articulos que coincidan con el criterio de busqueda.
@@ -211,7 +239,7 @@ public class BeanBaseJWiki extends BeanBase {
                 sql += " + ";
             }
         }
-        sql += " ) ocurrencias FROM articulos a GROUP BY a.idarticulo ORDER BY 2 DESC";
+        sql += " ) ocurrencias, a.titulo FROM articulos a GROUP BY a.idarticulo ORDER BY 2 DESC";
         return sql;
     }
 }

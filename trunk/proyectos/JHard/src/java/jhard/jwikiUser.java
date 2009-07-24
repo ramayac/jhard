@@ -117,7 +117,6 @@ public class jwikiUser extends AbstractPageBean {
     }
 
     public Articulos getArticuloActual() {
-        System.out.println(articuloActual.getDescripcion());
         return articuloActual;
     }
 
@@ -130,10 +129,6 @@ public class jwikiUser extends AbstractPageBean {
      */
     public jwikiUser() {
         lu= getJHardminInstance().getCurrentUser();
-        
-        this.listaArticulos = this.getJWikiInstance().getAllArticulos();
-        if(this.listaArticulos.size()>0) this.articuloActual = this.listaArticulos.get(0);
-        
         if(lu!=null){
             U = LoginManager.getInstance().getUsuario(lu);
             this.lblUser.setValue((String)U.getNombre());
@@ -144,6 +139,19 @@ public class jwikiUser extends AbstractPageBean {
 //                    break;
 //            }
         } else this.lblUser.setValue(INVITADO);
+
+        String wikiId = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("wkid");
+        //System.out.println("Wiki ID: "+ wikiId);
+        if((wikiId == null) || (wikiId.isEmpty())){
+            this.listaArticulos = this.getJWikiInstance().getAllArticulos();
+            if(this.listaArticulos.size()>0) this.articuloActual = this.listaArticulos.get(0);
+        } else {
+            Integer wkid = new Integer(wikiId);
+            this.articuloActual = this.getJWikiInstance().getArticulo(wkid);
+            this.listaArticulos = new ArrayList<Articulos>();
+            this.listaArticulos.add(articuloActual);//hack
+            //this.setSoloUna(true);
+        }
     }
 
     public String getCriteriosBusqueda() {
@@ -296,6 +304,7 @@ public class jwikiUser extends AbstractPageBean {
     }
 
     public boolean getShowPagArticulos(){
+        if(this.listaArticulos==null) return false;
         if(this.listaArticulos.size()>MAX_ENTRADAS) return true;
         return false;
     }
