@@ -3,6 +3,7 @@
     Document   : Page1
     Created on : 25-may-2009, 23:02:54
     Author     : Hugol
+    Modificado por: Ramayac, para incluir menu y botton jspx.
 -->
 <jsp:root version="2.0" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ice="http://www.icesoft.com/icefaces/component" xmlns:jsp="http://java.sun.com/JSP/Page">
     <jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"/>
@@ -21,34 +22,7 @@
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <!--start header -->
-                <div id="header">
-                    <div id="menu">
-                        <ul>
-                            <li class="current_page_item">
-                                <a href="Index.iface">Principal</a>
-                            </li>
-                            <li>
-                                <a href="jrequestUser.iface">Mantenimientos</a>
-                            </li>
-                            <li>
-                                <a href="#">Grupos de Laboratorio</a>
-                            </li>
-                            <li>
-                                <a href="jinvent.jspx">Inventario</a>
-                            </li>
-                            <li>
-                                <a href="jprocurUser.iface">Wiki y Cursos</a>
-                            </li>
-                            <li class="last">
-                                <a href="jcanon.iface">Cañones</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div id="logo">
-                    <h1>Laboratorio de Hardware</h1>
-                    <h2>Universidad de El Salvador, Facultad Multidisciplinaria de Occidente</h2>
-                </div>
+                    <jsp:directive.include file="/jspf/menu.jspx"/>
                 <!-- end header -->
                 <!-- start page -->
                 <div id="page">
@@ -66,15 +40,6 @@
                     <!-- start sidebar -->
                     <div id="sidebar">
                         <ul>
-                            <li id="search">
-                                <h2>Búsqueda Wiki</h2>
-                                <form action="" method="get">
-                                    <fieldset>
-                                        <input class="inputTexto" name="s" type="text" value=""/>
-                                        <input class="inputBoton" type="submit" value="Buscar"/>
-                                    </fieldset>
-                                </form>
-                            </li>
                             <li>
                                 <h2>
                                     <ice:outputLabel id="txtUserLogin" value="Sesión"/>
@@ -133,14 +98,7 @@
                 </div>
                 <!-- end page -->
                 <!-- start footer -->
-                <div id="footer">
-                    <div id="footer-wrap">
-                        <p id="legal" style="line-height: 13px">Universidad de El Salvador Facultad Multidisciplinaria de Occidente <br/>
-	Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/>
-                            <a href="#">Créditos</a> - <a href="http://www.uesocc.edu.sv">Pagina Principal de la UES FMOcc</a>
-                        </p>
-                    </div>
-                </div>
+                    <jsp:directive.include file="/jspf/bottom.jspx"/>
                 <!-- end footer -->
             </body>
         </html>

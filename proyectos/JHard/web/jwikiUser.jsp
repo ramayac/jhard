@@ -20,37 +20,7 @@
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <!--start header -->
-                <div id="header">
-                    <div id="menu">
-                        <ul>
-                            <li>
-                                <a href="Index.iface">Principal</a>
-                            </li>
-                            <li>
-                                <a href="jrequest.iface">Mantenimientos</a>
-                            </li>
-                            <li>
-                                <a href="#">Grupos de Laboratorio</a>
-                            </li>
-                            <li>
-                                <a href="#">Inventario</a>
-                            </li>
-                            <li>
-                                <a href="jprocurUser.iface">Cursos</a>
-                            </li>
-                            <li class="current_page_item">
-                                <a href="jwikiUser.iface">Wiki</a>
-                            </li>
-                            <li class="last">
-                                <a href="jcanon.iface">Cañones</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div id="logo">
-                    <h1>Laboratorio de Hardware</h1>
-                    <h2>Universidad de El Salvador, Facultad Multidisciplinaria de Occidente</h2>
-                </div>
+                    <jsp:directive.include file="/jspf/menu.jspx"/>
                 <!-- end header -->
                 <!-- start page -->
                 <div id="page">
@@ -177,13 +147,7 @@
                 </div>
                 <!-- end page -->
                 <!-- start footer -->
-                <div id="footer">
-                    <div id="footer-wrap">
-                        <p id="legal" style="line-height: 13px">Universidad de El Salvador Facultad Multidisciplinaria de Occidente <br/> Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/>
-                            <a href="#">Créditos</a> - <a href="http://www.uesocc.edu.sv">Pagina Principal de la UES FMOcc</a>
-                        </p>
-                    </div>
-                </div>
+                    <jsp:directive.include file="/jspf/bottom.jspx"/>
                 <!-- end footer -->
             </body>
         </html>

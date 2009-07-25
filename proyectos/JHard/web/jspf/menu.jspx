@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Document   : menu
+    Created on : 07-25-2009, 12:45:10 PM
+    Author     : rodrigo
+-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:element name="text">
+            <div id="header">
+                <div id="menu">
+                    <ul>
+                        <li>
+                            <a href="Index.iface">Principal</a>
+                        </li>
+                        <li>
+                            <a href="jrequest.iface">Mantenimientos</a>
+                        </li>
+                        <li>
+                            <a href="#">Laboratorios</a>
+                        </li>
+                        <li>
+                            <a href="jinvent.jspx">Inventario</a>
+                        </li>
+                        <li>
+                            <a href="jprocurUser.iface">Cursos</a>
+                        </li>
+                        <li>
+                            <a href="jwikiUser.iface">Wiki</a>
+                        </li>
+                        <li>
+                            <a href="jcanon.iface">Cañones</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="logo">
+                <h1>Laboratorio de Hardware</h1>
+                <h2>Universidad de El Salvador, Facultad Multidisciplinaria de Occidente</h2>
+            </div>
+    </jsp:element>
+</jsp:root>
