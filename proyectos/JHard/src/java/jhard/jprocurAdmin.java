@@ -8,6 +8,7 @@ package jhard;
 
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.icesoft.faces.component.ext.HtmlOutputText;
+//import com.icesoft.faces.component.ext.RowSelectorEvent;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.beans.BeanBaseJProcur;
@@ -18,6 +19,7 @@ import edu.ues.jhard.jpa.Entrada;
 import edu.ues.jhard.jpa.Tag;
 import edu.ues.jhard.jpa.TagEntrada;
 import edu.ues.jhard.jpa.Usuario;
+import edu.ues.jhard.jprocur.SelectableTag;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +43,18 @@ public class jprocurAdmin extends AbstractPageBean {
     static final String EMPTY_STRING = new String();
     static final int ROL_EDITORCONTENIDO = 4;
     static final int ROL_ADMINISTRADOR = 1;
+
+    private Entrada entradaActual = null;
+    private Entrada entradaNueva = new Entrada();
+    private List<Entrada> listaEntradas = new ArrayList<Entrada>();
+    //private Comentarios comentarioActual = null;
+    private List<Comentarios> listaComentarios = new ArrayList<Comentarios>();
+    
+    //lista de etiquetas que se pueden agregar a la entrada
+    //private List<Tag> listaAddTags = new ArrayList<Tag>();
+
+    //lista de etiquetas de para el row selector
+    private List<SelectableTag> listaSelTag = new ArrayList<SelectableTag>();
 
     private int __placeholder;
 
@@ -118,7 +132,9 @@ public class jprocurAdmin extends AbstractPageBean {
         this.listaEntradas = this.getJProcurInstance().getAllEntradas();
         this.listaComentarios = this.getJProcurInstance().getComentariosNoAprobados();
         if(this.listaEntradas.size()>0) this.entradaActual = this.listaEntradas.get(0);
-        
+
+        llenarListaTags();
+
         if(this.lu!=null){
             this.U = LoginManager.getInstance().getUsuario(lu);
             this.lblUser.setValue(U.getNombre());
@@ -233,11 +249,22 @@ public class jprocurAdmin extends AbstractPageBean {
 
     /*----------------------------------------------------------------------------------*/
 
-    private Entrada entradaActual = null;
-    private Entrada entradaNueva = new Entrada();
-    private List<Entrada> listaEntradas = new ArrayList<Entrada>();
-    //private Comentarios comentarioActual = null;
-    private List<Comentarios> listaComentarios = new ArrayList<Comentarios>();
+
+//    public List<Tag> getListaTag() {
+//        return listaTag;
+//    }
+//
+//    public void setListaTag(List<Tag> listaTag) {
+//        this.listaTag = listaTag;
+//    }
+
+    public List<SelectableTag> getListaSelTag() {
+        return listaSelTag;
+    }
+
+    public void setListaSelTag(List<SelectableTag> listaSelTag) {
+        this.listaSelTag = listaSelTag;
+    }
 
     public Entrada getEntradaNueva() {
         return entradaNueva;
@@ -524,12 +551,28 @@ public class jprocurAdmin extends AbstractPageBean {
         this.jprocurInstance.updateEntrada(this.entradaActual);
         this.listaEntradas = this.getJProcurInstance().getAllEntradas();
         this.setEditandoEntrada(false);
+        this.llenarListaTags();
         return EMPTY_STRING;
     }
 
     public String agregarEntrada(){
         this.entradaNueva.setIdusuario(this.U);
         this.entradaNueva.setFechahora(new Date());
+
+        /*Agregamos las Etiquetas de acuerdo a la lista seleccionada*/
+        List<TagEntrada> lte = new ArrayList<TagEntrada>();
+        for (SelectableTag st : this.listaSelTag) {
+            if(st.getSeleccionada()){
+                TagEntrada te = new TagEntrada();
+                te.setIdentrada(entradaNueva);
+                te.setIdtag(st.toTag());
+                lte.add(te);
+            }
+        }
+        this.entradaNueva.setTagEntradaCollection(lte);
+
+        this.llenarListaTags();
+
         this.jprocurInstance.createEntrada(this.entradaNueva);
         this.listaEntradas = this.getJProcurInstance().getAllEntradas();
         this.setEditandoEntrada(false);
@@ -539,5 +582,30 @@ public class jprocurAdmin extends AbstractPageBean {
     public TimeZone getTimeZone() {
         return java.util.TimeZone.getDefault();
     }
+
+//    public void rowSelTagListener(RowSelectorEvent event) {
+//        //selectedEmployees.clear();
+//
+//        // build the new selected list
+//        List<Tag> listaAddTags = new ArrayList<Tag>();
+//
+//
+//        Employee employee;
+//        for(int i = 0, max = employees.size(); i < max; i++){
+//        employee = (Employee)employees.get(i);
+//            if (employee.isSelected()) {
+//                selectedEmployees.add(employee);
+//            }
+//        }
+//    }
+
+    private void llenarListaTags() {
+        List<Tag> listaAllTags = this.getJProcurInstance().getAllEtiquetas();
+        this.listaSelTag.clear();
+        for (Tag t : listaAllTags) {
+            this.listaSelTag.add(new SelectableTag(t));
+        }
+    }
+
 
 }

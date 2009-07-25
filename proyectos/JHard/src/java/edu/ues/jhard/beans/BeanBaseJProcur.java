@@ -20,6 +20,13 @@ import javax.persistence.*;
  */
 public class BeanBaseJProcur extends BeanBase {
 
+    public List<Tag> getAllEtiquetas() {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Tag.findAll");
+        List<Tag> lt = (List<Tag>)q.getResultList();
+        return lt;
+    }
+
     /**
      * Metodo para obtener uno o varios objeto entrada por UNA etiqueta, se asume que la entrada es nueva, asi que se hace
      * un em.persist sobre la misma.

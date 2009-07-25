@@ -154,30 +154,41 @@
                                     </ice:panelTab>
                                     <ice:panelTab id="panelEntrada" label="Agregar Entrada">
                                         <!-- panel de para agregar las Entradas -->
-                                        <ice:panelGroup id="panelAgregarEntrada">
-                                        <div class="post">
-                                            Título: <ice:inputText id="itTitulo2" title="Título de la entrada"
-                                            value="#{jprocurAdmin.entradaNueva.titulo}"
-                                            partialSubmit="true"/>
-                                            <br/>
-                                            <ice:inputRichText id="richDescripcion2"
-                                            value="#{jprocurAdmin.entradaNueva.descripcion}"
-                                            language="es" skin="silver" toolbar="Basic"/>
-                                            <br/>
-                                            <br/>
-                                            Escrito por: <ice:outputLabel id="lblAutor2" style="font-weight:bold; " title=""
-                                            value="#{jprocurAdmin.currentUserName}"/><div align="right"><ice:outputLabel
-                                            id="lblFechaHora2" value="#{jprocurAdmin.entradaActual.fechahora}" title="Fecha y hora de la creacion de la entrada."/></div>
-                                            <br/>
-                                            <br/>
-                                            Etiquetas:<br/>
-                                            __aqui un panel con las etiquetas que se pueden poner__
-                                            <br/><br/>
-                                            <div align="center">
-                                            <ice:commandButton action="#{jprocurAdmin.agregarEntrada}" id="btnGuardar2" styleClass="btnAccion2" value="Guardar"/>
-                                            <ice:commandButton action="#{jprocurAdmin.cancelarGuardarEntrada}" id="btnCancelar2" styleClass="btnAccion2" value="Cancelar"/>
-                                            </div>
-                                        </div>
+                                        <ice:panelGroup>
+                                            <ice:panelGroup id="panelAgregarEntrada" style="float:left;margin-top:10px; width:580px;">
+                                                Título: <ice:inputText id="itTitulo2" title="Título de la entrada"
+                                                value="#{jprocurAdmin.entradaNueva.titulo}"
+                                                partialSubmit="true"/>
+                                                <br/><br/>
+                                                <ice:inputRichText id="richDescripcion2"
+                                                value="#{jprocurAdmin.entradaNueva.descripcion}"
+                                                language="es" skin="silver" toolbar="Basic" height="500"/>
+                                                <br/>
+                                                <br/>
+                                                Escrito por: <ice:outputLabel id="lblAutor2" style="font-weight:bold; " title=""
+                                                value="#{jprocurAdmin.currentUserName}"/><div align="right"><ice:outputLabel
+                                                id="lblFechaHora2" value="#{jprocurAdmin.entradaActual.fechahora}" title="Fecha y hora de la creacion de la entrada."/></div>
+                                            </ice:panelGroup>
+                                            <ice:panelGroup id="addTags" style="float:left;margin-top:10px;margin-left:15px;">
+                                                <ice:dataTable id="listaEtiquetasAdd"
+                                                               var="etiqueta"
+                                                               value="#{jprocurAdmin.listaSelTag}">
+                                                    <ice:column>
+                                                        <ice:rowSelector id="selected"
+                                                                         value="#{etiqueta.seleccionada}"
+                                                                         multiple="true"
+                                                                         preStyleOnSelection="true"/>
+                                                        <f:facet name="header"><ice:outputText id="etiqueta" value="Etiquetas"/></f:facet>
+                                                        <ice:outputText id="tagDesc" value="#{etiqueta.descripcion}"/>
+                                                    </ice:column>
+                                                </ice:dataTable>
+                                            </ice:panelGroup>
+                                            <ice:panelGroup>
+                                                <div align="center">
+                                                <ice:commandButton action="#{jprocurAdmin.agregarEntrada}" id="btnGuardar2" styleClass="btnAccion2" value="Guardar"/>
+                                                <ice:commandButton action="#{jprocurAdmin.cancelarGuardarEntrada}" id="btnCancelar2" styleClass="btnAccion2" value="Cancelar"/>
+                                                </div>
+                                            </ice:panelGroup>
                                         </ice:panelGroup>
                                     </ice:panelTab>
                                     <ice:panelTab id="panelComentarios" label="Moderar Comentarios">
@@ -203,7 +214,7 @@
                                                     <f:facet name="header">
                                                         <ice:outputText value="Fecha de Publicación"/>
                                                     </f:facet>
-                                                    <ice:outputLabel id="lblFecha" style="font-weight:bold; " value="#{indiceEntrada.fechahorara}"/>
+                                                    <ice:outputLabel id="lblFecha" value="#{indiceEntrada.fechahorara}"/>
                                                 </ice:column>
                                                 <ice:column>
                                                     <f:facet name="header">

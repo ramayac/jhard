@@ -72,9 +72,13 @@
                                         <ice:panelGroup id="panelEditarArticulo" rendered="#{jwikiAdmin.editandoArticulo}">
                                             <div class="post">
                                             Título: <ice:inputText id="itTitulo"
-                                                    partialSubmit="true" title="Título del artículo" value="#{jwikiAdmin.articuloActual.titulo}"/>
+                                                    partialSubmit="true" title="Título del artículo" 
+                                                    value="#{jwikiAdmin.articuloActual.titulo}" maxlength="50"/>
                                                 <br/>
-                                                <ice:inputRichText id="richDescripcion" language="es" skin="silver" toolbar="Default" value="#{jwikiAdmin.articuloActual.descripcion}"/>
+                                                <ice:inputRichText id="richDescripcion"
+                                                language="es" skin="silver" toolbar="Default"
+                                                value="#{jwikiAdmin.articuloActual.descripcion}"
+                                                height="600"/>
                                                 <br/>
                                                 <br/>
                                             Escrito por: <ice:outputLabel id="lblAutor"
