@@ -66,14 +66,13 @@
                     <div id="content">
                         <div class="post">
                             <ice:form id="formArticulo">
-                                <ice:panelTabSet id="panelAdmin" tabPlacement="Top">
+                                <ice:panelTabSet id="panelAdmin" tabPlacement="Top" selectedIndex="#{jwikiAdmin.tabIndex}">
                                     <ice:panelTab id="panelArticulos" label="Administrar Artículos">
                                         <!-- panel de para EDITAR UN ARTICULO -->
                                         <ice:panelGroup id="panelEditarArticulo" rendered="#{jwikiAdmin.editandoArticulo}">
                                             <div class="post">
                                             Título: <ice:inputText id="itTitulo"
-                                                    partialSubmit="true" title="Título del artículo" 
-                                                    value="#{jwikiAdmin.articuloActual.titulo}" maxlength="50"/>
+                                                    partialSubmit="true" title="Título del artículo" value="#{jwikiAdmin.articuloActual.titulo}"/>
                                                 <br/>
                                                 <ice:inputRichText id="richDescripcion"
                                                 language="es" skin="silver" toolbar="Default"
@@ -101,7 +100,7 @@
                                             <div align="right">Filtro: <input id="filtroTablaArticulos"/>
                                             </div>
                                             <ice:dataTable id="tablaArticulos" rendered="#{jwikiAdmin.hayArticulos}" rows="30" styleClass="mitablaarticulos"
-                                                value="#{jwikiAdmin.listaArticulos}" var="indiceArticulo">
+                                            value="#{jwikiAdmin.listaArticulos}" var="indiceArticulo" resizable="true">
                                                 <ice:column>
                                                     <f:facet name="header">
                                                         <ice:outputText value="Título de la Articulo"/>
@@ -163,9 +162,10 @@
                                             Título: <ice:inputText id="itTitulo2"
                                                     partialSubmit="true" title="Título de la artículo" value="#{jwikiAdmin.articuloNuevo.titulo}"/>
                                                 <br/>
-                                                <ice:inputRichText id="richDescripcion2" language="es" skin="silver" toolbar="Default" value="#{jwikiAdmin.articuloNuevo.descripcion}"/>
-                                                <br/>
-                                                <br/>
+                                                <ice:inputRichText id="richDescripcion2" language="es" skin="silver" toolbar="Default" 
+                                                value="#{jwikiAdmin.articuloNuevo.descripcion}" height="600"/>
+                                            </div>
+                                            <br/><br/>
                                             Escrito por: <ice:outputLabel id="lblAutor2"
                                                     style="font-weight:bold; " title="" value="#{jwikiAdmin.currentUserName}"/>
                                                 <div align="right">
@@ -179,7 +179,6 @@
                                                     <ice:commandButton action="#{jwikiAdmin.cancelarGuardarArticulo}" id="btnCancelar2"
                                                         styleClass="btnAccion2" value="Cancelar"/>
                                                 </div>
-                                            </div>
                                         </ice:panelGroup>
                                     </ice:panelTab>
                                 </ice:panelTabSet>

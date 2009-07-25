@@ -39,6 +39,8 @@ public class jwikiAdmin extends AbstractPageBean {
     static final int ROL_EDITORCONTENIDO = 4;
     static final int ROL_ADMINISTRADOR = 1;
 
+    private Integer tabIndex = new Integer(0);
+
     private int __placeholder;
 
     private HtmlOutputLabel lblUser = new HtmlOutputLabel();
@@ -370,6 +372,7 @@ public class jwikiAdmin extends AbstractPageBean {
         this.articuloActual = null;
         this.articuloNuevo = new Articulos();
         this.setEditandoArticulo(false);
+        this.tabIndex = 0;
         return EMPTY_STRING;
     }
 
@@ -394,4 +397,19 @@ public class jwikiAdmin extends AbstractPageBean {
         return java.util.TimeZone.getDefault();
     }
 
+    public Integer getTabIndex() {
+        return tabIndex;
+    }
+
+    public void setTabIndex(int tabIndex) {
+        this.tabIndex = tabIndex;
+    }
+
+    public void setTabIndex(Integer tabIndex) {
+        this.tabIndex = tabIndex;
+    }
+
+    public void setTabIndex(String tabIndex) {
+        this.tabIndex = Integer.parseInt(tabIndex);
+    }
 }

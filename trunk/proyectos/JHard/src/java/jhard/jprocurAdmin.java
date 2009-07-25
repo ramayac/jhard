@@ -49,6 +49,8 @@ public class jprocurAdmin extends AbstractPageBean {
     private List<Entrada> listaEntradas = new ArrayList<Entrada>();
     //private Comentarios comentarioActual = null;
     private List<Comentarios> listaComentarios = new ArrayList<Comentarios>();
+
+    private Integer tabIndex = new Integer(0);
     
     //lista de etiquetas que se pueden agregar a la entrada
     //private List<Tag> listaAddTags = new ArrayList<Tag>();
@@ -543,6 +545,7 @@ public class jprocurAdmin extends AbstractPageBean {
         this.entradaActual = null;
         this.entradaNueva = new Entrada();
         this.setEditandoEntrada(false);
+        this.tabIndex = 0;
         return EMPTY_STRING;
     }
 
@@ -606,6 +609,20 @@ public class jprocurAdmin extends AbstractPageBean {
             this.listaSelTag.add(new SelectableTag(t));
         }
     }
+    
+    public Integer getTabIndex() {
+        return tabIndex;
+    }
 
+    public void setTabIndex(int tabIndex) {
+        this.tabIndex = tabIndex;
+    }
 
+    public void setTabIndex(Integer tabIndex) {
+        this.tabIndex = tabIndex;
+    }
+
+    public void setTabIndex(String tabIndex) {
+        this.tabIndex = Integer.parseInt(tabIndex);
+    }
 }

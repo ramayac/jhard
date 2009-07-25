@@ -70,7 +70,7 @@
                     <div id="content">
                         <div class="post">
                             <ice:form id="formEntrada">
-                                <ice:panelTabSet id="panelAdmin" tabPlacement="Top">
+                                <ice:panelTabSet id="panelAdmin" tabPlacement="Top" selectedIndex="#{jprocurAdmin.tabIndex}">
                                     <ice:panelTab id="panelEntradas" label="Administrar Entradas">
                                         <!-- panel de para EDITAR UNA ENTRADAS -->
                                         <ice:panelGroup id="panelEditarEntrada" rendered="#{jprocurAdmin.editandoEntrada}">
@@ -105,7 +105,7 @@
                                             <div align="right">Filtro: <input id="filtroTablaEntrada"/></div>
                                             <ice:dataTable id="tablaEntradas" rows="30" 
                                             value="#{jprocurAdmin.listaEntradas}" var="indiceEntrada" styleClass="mitablaentradas"
-                                            rendered="#{jprocurAdmin.hayEntradas}">
+                                            rendered="#{jprocurAdmin.hayEntradas}" resizable="true">
                                                 <ice:column>
                                                     <f:facet name="header">
                                                         <ice:outputText value="Título de la Entrada"/>
@@ -171,8 +171,7 @@
                                             </ice:panelGroup>
                                             <ice:panelGroup id="addTags" style="float:left;margin-top:10px;margin-left:15px;">
                                                 <ice:dataTable id="listaEtiquetasAdd"
-                                                               var="etiqueta"
-                                                               value="#{jprocurAdmin.listaSelTag}">
+                                                var="etiqueta" resizable="true" value="#{jprocurAdmin.listaSelTag}">
                                                     <ice:column>
                                                         <ice:rowSelector id="selected"
                                                                          value="#{etiqueta.seleccionada}"
@@ -197,7 +196,7 @@
                                             <div align="right">Filtro: <input id="filtroTablaComentarios"/></div>
                                             <ice:dataTable id="tablaComentarios" rows="30" value="#{jprocurAdmin.listaComentarios}" 
                                             var="indiceComentario" styleClass="mitablacomentarios"
-                                            rendered="#{jprocurAdmin.hayComentarios}">
+                                            rendered="#{jprocurAdmin.hayComentarios}" resizable="true">
                                                 <ice:column>
                                                     <f:facet name="header">
                                                         <ice:outputText value="Comentario"/>
