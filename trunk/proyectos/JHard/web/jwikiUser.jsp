@@ -12,11 +12,12 @@
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
                 <ice:outputStyle href="./xmlhttp/css/rime/rime.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
-                <title>Wiki</title>
+                <title>Wiki del Laboratorio</title>
                 <meta content="" name="keywords"/>
                 <meta content="" name="description"/>
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+                <link rel="alternate" type="application/rss+xml" title="jHard - Ultimos Articulos" href="feed?opt=2"/>
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <!--start header -->
@@ -26,10 +27,14 @@
                 <div id="page">
                     <!-- start content -->
                     <div id="content">
+                        <div class="post">
+                            <h2 class="title">Wiki del Laboratorio</h2>
+                        </div>
                         <ice:form id="formArticulo">
                             <ice:panelGroup rendered="#{!jwikiUser.hayArticulos}">
                                 <div class="post">
-                                    <h2>Aviso</h2>
+                                    <br/>
+                                    <h2 class="title">Aviso</h2>
                                     <ul>
                                         <li>No existen criterios asociados con su búsqueda.</li>
                                         <li>No hay artículos que mostrar.</li>

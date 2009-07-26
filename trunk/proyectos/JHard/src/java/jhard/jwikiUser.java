@@ -41,7 +41,6 @@ public class jwikiUser extends AbstractPageBean {
 
     private List<Articulos> listaArticulos = new ArrayList<Articulos>();
     private Boolean soloUna = new Boolean(false);
-    //private Integer indice = new Integer(0);
 
     private String criteriosBusqueda = EMPTY_STRING;
     
@@ -67,8 +66,6 @@ public class jwikiUser extends AbstractPageBean {
      */
     private void _init() throws Exception {
     }
-
-    // </editor-fold>
 
     public LoggedUser getLu() {
         return lu;

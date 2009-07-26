@@ -38,6 +38,9 @@
                     <!-- start content -->
                     <div id="content">
                         <div class="post">
+                            <h2 class="title">Administración Wiki</h2>
+                        </div>
+                        <div class="post">
                             <ice:form id="formArticulo">
                                 <ice:panelTabSet id="panelAdmin" tabPlacement="Top" selectedIndex="#{jwikiAdmin.tabIndex}">
                                     <ice:panelTab id="panelArticulos" label="Administrar Artículos">

@@ -17,6 +17,7 @@
                 <meta content="" name="description"/>
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+                <link rel="alternate" type="application/rss+xml" title="jHard - Ultimos Articulos" href="feed?opt=1"/>
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <!--start header -->
@@ -26,6 +27,9 @@
                 <div id="page">
                     <!-- start content -->
                     <div id="content">
+                        <div class="post">
+                            <h2 class="title">Promoción de Cursos</h2>
+                        </div>
                         <ice:form id="formEntrada">
                             <ice:panelGroup rendered="#{!jprocurUser.hayEntradas}">
                                 <div class="post">
@@ -50,8 +54,7 @@
                                 </div>
                                 <br/>
                                 <br/>
-                                Etiquetas:<br/>
-                                <ice:outputLabel id="lblEtiquetas" style="font-weight:bold; " value="#{jprocurUser.etiquetasString}"/>
+                                Etiquetas: <ice:outputLabel id="lblEtiquetas" style="font-weight:bold; " value="#{jprocurUser.etiquetasString}"/>
                                 <br/>
                                 <br/>
                                 Comentarios:<br/>

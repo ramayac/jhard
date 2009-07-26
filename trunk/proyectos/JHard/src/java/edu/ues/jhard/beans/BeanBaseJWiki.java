@@ -214,7 +214,7 @@ public class BeanBaseJWiki extends BeanBase {
      * Metodo para recargar una Articulos por demanda
      * @param Articulos
      */
-    public Articulos recargarArticulos(Articulos articulo){
+    public Articulos recargarArticulo(Articulos articulo){
         EntityManager em = this.getEntityManager();
         Articulos a = em.find(Articulos.class, articulo.getIdarticulo());
         a = articulo;
