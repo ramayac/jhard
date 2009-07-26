@@ -7,6 +7,8 @@ package edu.ues.jhard.beans;
 
 import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jhardmin.LoginManager;
+import edu.ues.jhard.jinvent.CrudManager;
+import edu.ues.jhard.jpa.Autorizacion;
 import edu.ues.jhard.jpa.Rol;
 import edu.ues.jhard.jpa.Usuario;
 import edu.ues.jhard.util.ActionMessage;
@@ -33,6 +35,7 @@ public class BeanBaseJHardmin extends BeanBase {
     private Boolean loginFail;
     private List<Rol> roleList;
     private List<Usuario> userList;
+    private List<Autorizacion> listaAutorizaciones;
     private ActionMessage msg;
     private Boolean popUpAddUserVisible;
     private Boolean popUpEditUserVisible;
@@ -44,6 +47,8 @@ public class BeanBaseJHardmin extends BeanBase {
     private Boolean popUpConfirmDelUserVisible;
     private String popUpConfirmDelUserMessage;
     private Usuario editDelUser;
+    private CrudManager crdAutorizaciones;
+    private Autorizacion currentAutorizacion;
 
     public BeanBaseJHardmin(){
         this.loginFail = false;
@@ -51,6 +56,9 @@ public class BeanBaseJHardmin extends BeanBase {
         this.setInputUsrPassword("");
         this.roleList = this.getEntityManager().createNamedQuery("Rol.findAll").getResultList();
         this.userList = this.getEntityManager().createNamedQuery("Usuario.findAll").getResultList();
+        this.listaAutorizaciones = this.getEntityManager().createQuery("SELECT a FROM Autorizacion a").getResultList();
+        this.currentAutorizacion = new Autorizacion();
+        this.crdAutorizaciones = new CrudManager();
         this.msg = new ActionMessage();
         this.setPopUpAddUserVisible(false);
         this.setPopUpEditUserVisible(false);
@@ -544,5 +552,59 @@ public class BeanBaseJHardmin extends BeanBase {
      */
     public void setPopUpEditUserVisible(Boolean popUpEditUserVisible) {
         this.popUpEditUserVisible = popUpEditUserVisible;
+    }
+
+    /**
+     * @return the listaAutorizaciones
+     */
+    public List<Autorizacion> getListaAutorizaciones() {
+        return listaAutorizaciones;
+    }
+
+    /**
+     * @param listaAutorizaciones the listaAutorizaciones to set
+     */
+    public void setListaAutorizaciones(List<Autorizacion> listaAutorizaciones) {
+        this.listaAutorizaciones = listaAutorizaciones;
+    }
+
+    /**
+     * @return the crdAutorizaciones
+     */
+    public CrudManager getCrdAutorizaciones() {
+        return crdAutorizaciones;
+    }
+
+    /**
+     * @param crdAutorizaciones the crdAutorizaciones to set
+     */
+    public void setCrdAutorizaciones(CrudManager crdAutorizaciones) {
+        this.crdAutorizaciones = crdAutorizaciones;
+    }
+
+    /**
+     * @return the currentAutorizacion
+     */
+    public Autorizacion getCurrentAutorizacion() {
+        return currentAutorizacion;
+    }
+
+    /**
+     * @param currentAutorizacion the currentAutorizacion to set
+     */
+    public void setCurrentAutorizacion(Autorizacion currentAutorizacion) {
+        this.currentAutorizacion = currentAutorizacion;
+    }
+        
+    public int getListaAutorizacionesSize(){
+        return this.listaAutorizaciones.size();
+    }
+
+    public String addAutorizacion(){
+        return "done";
+    }
+
+    public String delAutorizacion(){
+        return "done";
     }
 }

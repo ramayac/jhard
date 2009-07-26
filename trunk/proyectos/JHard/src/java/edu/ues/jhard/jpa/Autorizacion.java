@@ -89,4 +89,10 @@ public class Autorizacion implements Serializable {
     public String toString() {
         return "edu.ues.jhard.jpa.Pieza[idpieza=" + idautorizacion + "]";
     }
+
+    public String getDescListaUsuarios(){
+        String descListaUsuarios = "(Total: 0)";
+
+        return descListaUsuarios;
+    }
 }
