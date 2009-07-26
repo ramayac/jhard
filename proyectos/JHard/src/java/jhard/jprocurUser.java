@@ -337,7 +337,7 @@ public class jprocurUser extends AbstractPageBean {
             default: //para los > de 2.
                 for (TagEntrada tagEntrada : te)
                     resultado += tagEntrada.getIdtag().getDescripcion() + ", ";
-                resultado += ".";
+                resultado = resultado.substring(0, resultado.length()-2); //HACK shame on me.
                 break;
         }
         return resultado;

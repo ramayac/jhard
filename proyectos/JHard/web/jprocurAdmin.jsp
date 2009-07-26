@@ -41,6 +41,9 @@
                     <!-- start content -->
                     <div id="content">
                         <div class="post">
+                            <h2 class="title">Adminsitración Promoción de Cursos</h2>
+                        </div>
+                        <div class="post">
                             <ice:form id="formEntrada">
                                 <ice:panelTabSet id="panelAdmin" tabPlacement="Top" selectedIndex="#{jprocurAdmin.tabIndex}">
                                     <ice:panelTab id="panelEntradas" label="Administrar Entradas">
