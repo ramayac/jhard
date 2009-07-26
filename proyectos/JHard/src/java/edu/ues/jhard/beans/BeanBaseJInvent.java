@@ -1584,4 +1584,5 @@ public class BeanBaseJInvent extends BeanBase {
         this.currentUbicacion = new Ubicacion();
         return "done";
     }
+
 }
