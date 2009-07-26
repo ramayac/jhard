@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.0.51b-community-nt
+-- Server version	5.0.67-0ubuntu6
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -22,11 +22,11 @@ CREATE DATABASE IF NOT EXISTS jhard;
 USE jhard;
 
 --
--- Definition of table `accesorio`
+-- Definition of table `jhard`.`accesorio`
 --
 
-DROP TABLE IF EXISTS `accesorio`;
-CREATE TABLE `accesorio` (
+DROP TABLE IF EXISTS `jhard`.`accesorio`;
+CREATE TABLE  `jhard`.`accesorio` (
   `idaccesorio` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada accesorio',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del accesorio',
   `idmarca` int(11) NOT NULL COMMENT 'Referencia a la marca del accesorio',
@@ -43,19 +43,21 @@ CREATE TABLE `accesorio` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `accesorio`
+-- Dumping data for table `jhard`.`accesorio`
 --
 
 /*!40000 ALTER TABLE `accesorio` DISABLE KEYS */;
+LOCK TABLES `accesorio` WRITE;
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `accesorio` ENABLE KEYS */;
 
 
 --
--- Definition of table `administrador`
+-- Definition of table `jhard`.`administrador`
 --
 
-DROP TABLE IF EXISTS `administrador`;
-CREATE TABLE `administrador` (
+DROP TABLE IF EXISTS `jhard`.`administrador`;
+CREATE TABLE  `jhard`.`administrador` (
   `idadministrador` int(11) NOT NULL COMMENT 'Id correlativo unico de cada administrador',
   `clave` varchar(45) NOT NULL COMMENT 'Clave del administrador',
   `idusuario` int(11) NOT NULL COMMENT 'referencia al usuario relacionado con este admnistrador',
@@ -65,23 +67,24 @@ CREATE TABLE `administrador` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `administrador`
+-- Dumping data for table `jhard`.`administrador`
 --
 
 /*!40000 ALTER TABLE `administrador` DISABLE KEYS */;
-INSERT INTO `administrador` (`idadministrador`,`clave`,`idusuario`) VALUES 
- (1,'21232F297A57A5A743894A0E4A801FC3',1),
+LOCK TABLES `administrador` WRITE;
+INSERT INTO `jhard`.`administrador` VALUES  (1,'21232F297A57A5A743894A0E4A801FC3',1),
  (2,'21232F297A57A5A743894A0E4A801FC3',2),
  (3,'CD82BE786DA71D1DD4EA68C0908AF6E6',9);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `administrador` ENABLE KEYS */;
 
 
 --
--- Definition of table `adquisicion`
+-- Definition of table `jhard`.`adquisicion`
 --
 
-DROP TABLE IF EXISTS `adquisicion`;
-CREATE TABLE `adquisicion` (
+DROP TABLE IF EXISTS `jhard`.`adquisicion`;
+CREATE TABLE  `jhard`.`adquisicion` (
   `idadquisicion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de la adquisicion',
   `fecha` date NOT NULL COMMENT 'Fecha en la que se adquirio el equipo o software',
   `precio` double NOT NULL COMMENT 'Precio de compra del equipo o software (dejar a cero si fue una donacion)',
@@ -91,24 +94,25 @@ CREATE TABLE `adquisicion` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `adquisicion`
+-- Dumping data for table `jhard`.`adquisicion`
 --
 
 /*!40000 ALTER TABLE `adquisicion` DISABLE KEYS */;
-INSERT INTO `adquisicion` (`idadquisicion`,`fecha`,`precio`,`descripcion`,`proveedor`) VALUES 
- (1,'2002-01-09',200,'Computadora Clon','Medicomp'),
+LOCK TABLES `adquisicion` WRITE;
+INSERT INTO `jhard`.`adquisicion` VALUES  (1,'2002-01-09',200,'Computadora Clon','Medicomp'),
  (2,'2009-03-04',400,'Dell Vostro','Dell'),
  (3,'2002-01-03',50,'Licencia Microsoft Windows','Microsoft'),
  (4,'2002-01-03',200,'Cañon Epson','Tecnoservice');
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `adquisicion` ENABLE KEYS */;
 
 
 --
--- Definition of table `articulos`
+-- Definition of table `jhard`.`articulos`
 --
 
-DROP TABLE IF EXISTS `articulos`;
-CREATE TABLE `articulos` (
+DROP TABLE IF EXISTS `jhard`.`articulos`;
+CREATE TABLE  `jhard`.`articulos` (
   `idarticulo` int(10) unsigned NOT NULL auto_increment,
   `titulo` varchar(50) NOT NULL,
   `descripcion` text NOT NULL,
@@ -119,24 +123,25 @@ CREATE TABLE `articulos` (
   KEY `idxArtTitulo` (`titulo`),
   KEY `idxArtFecha` (`fechahora`),
   CONSTRAINT `fkarticulousuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Articulos de jwiki';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='Articulos de jwiki';
 
 --
--- Dumping data for table `articulos`
+-- Dumping data for table `jhard`.`articulos`
 --
 
 /*!40000 ALTER TABLE `articulos` DISABLE KEYS */;
-INSERT INTO `articulos` (`idarticulo`,`titulo`,`descripcion`,`fechahora`,`idusuario`) VALUES 
- (1,'Entrada 1','Entrada 1\n','2009-01-01 00:00:00',1);
+LOCK TABLES `articulos` WRITE;
+INSERT INTO `jhard`.`articulos` VALUES  (2,'¿Qué es un Wiki?','<p>Un <b>wiki</b>, o una <b>wiki</b>, es un <a title=\"Sitio web\" href=\"http://es.wikipedia.org/wiki/Sitio_web\">sitio web</a> cuyas p&aacute;ginas web pueden ser editadas por m&uacute;ltiples voluntarios a trav&eacute;s del <a title=\"Navegador web\" href=\"http://es.wikipedia.org/wiki/Navegador_web\">navegador web</a>. Los <a title=\"Usuario\" href=\"http://es.wikipedia.org/wiki/Usuario\">usuarios</a> pueden crear, modificar o borrar un mismo texto que comparten. Los textos o &quot;p&aacute;ginas wiki&quot; tienen t&iacute;tulos &uacute;nicos. Si se escribe el t&iacute;tulo de una &quot;p&aacute;gina-wiki&quot; en alg&uacute;n lugar del wiki, esta palabra se convierte en un &quot;enlace web&quot; (o &quot;<a title=\"Link\" href=\"http://es.wikipedia.org/wiki/Link\">link</a>&quot;) a la p&aacute;gina web.</p>\n<p>En una p&aacute;gina sobre &quot;alpinismo&quot; puede haber una palabra como &quot;piolet&quot; o &quot;br&uacute;jula&quot; que est&eacute; marcada como palabra perteneciente a un t&iacute;tulo de p&aacute;gina wiki. La mayor parte de las implementaciones de wikis indican en el <a class=\"mw-redirect\" title=\"URL\" href=\"http://es.wikipedia.org/wiki/URL\">URL</a> de la p&aacute;gina el propio t&iacute;tulo de la p&aacute;gina wiki (en Wikipedia ocurre as&iacute;: <a rel=\"nofollow\" title=\"http://es.wikipedia.org/wiki/Alpinismo\" class=\"external free\" href=\"http://es.wikipedia.org/wiki/Alpinismo\">http://es.wikipedia.org/wiki/Alpinismo</a>), facilitando el uso y comprensibilidad del link fuera del propio sitio web. Adem&aacute;s, esto permite formar en muchas ocasiones una coherencia terminol&oacute;gica, generando una ordenaci&oacute;n <i>natural</i> del contenido.</p>\n<p>La aplicaci&oacute;n de mayor peso y a la que le debe su mayor fama hasta el momento ha sido la creaci&oacute;n de enciclopedias colaborativas, g&eacute;nero al que pertenece la <a title=\"Wikipedia\" href=\"http://es.wikipedia.org/wiki/Wikipedia\">Wikipedia</a>. Existen muchas otras aplicaciones m&aacute;s cercanas a la coordinaci&oacute;n de informaciones y acciones, o la puesta en com&uacute;n de conocimientos o textos dentro de grupos.</p>\n<p>La mayor parte de los wikis actuales conservan un historial de cambios que permite recuperar f&aacute;cilmente cualquier estado anterior y ver \'qui&eacute;n\' hizo cada cambio, lo cual facilita enormemente el mantenimiento conjunto y el control de usuarios destructivos. Habitualmente, sin necesidad de una revisi&oacute;n previa, se actualiza el contenido que muestra la p&aacute;gina wiki editada.</p>','2009-07-25 18:59:20',13);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `articulos` ENABLE KEYS */;
 
 
 --
--- Definition of table `asistencia`
+-- Definition of table `jhard`.`asistencia`
 --
 
-DROP TABLE IF EXISTS `asistencia`;
-CREATE TABLE `asistencia` (
+DROP TABLE IF EXISTS `jhard`.`asistencia`;
+CREATE TABLE  `jhard`.`asistencia` (
   `idasistencia` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada asistencia',
   `idestudiante` int(11) NOT NULL COMMENT 'Referencia al estudiante que asistio al curso',
   `idclase` int(11) NOT NULL COMMENT 'Referencia a la clase a la cual pertenece esta asistencia',
@@ -151,19 +156,21 @@ CREATE TABLE `asistencia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `asistencia`
+-- Dumping data for table `jhard`.`asistencia`
 --
 
 /*!40000 ALTER TABLE `asistencia` DISABLE KEYS */;
+LOCK TABLES `asistencia` WRITE;
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `asistencia` ENABLE KEYS */;
 
 
 --
--- Definition of table `atributohardware`
+-- Definition of table `jhard`.`atributohardware`
 --
 
-DROP TABLE IF EXISTS `atributohardware`;
-CREATE TABLE `atributohardware` (
+DROP TABLE IF EXISTS `jhard`.`atributohardware`;
+CREATE TABLE  `jhard`.`atributohardware` (
   `idatributohardware` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico del atributo de hardware',
   `nombre` varchar(45) NOT NULL COMMENT 'Nombre del atributo',
   `valor` varchar(45) NOT NULL COMMENT 'Valor del atributo',
@@ -181,22 +188,23 @@ CREATE TABLE `atributohardware` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `atributohardware`
+-- Dumping data for table `jhard`.`atributohardware`
 --
 
 /*!40000 ALTER TABLE `atributohardware` DISABLE KEYS */;
-INSERT INTO `atributohardware` (`idatributohardware`,`nombre`,`valor`,`unidadmedida`,`idhardware`,`idpieza`,`idaccesorio`) VALUES 
- (1,'Reservable','1','null',3,NULL,NULL),
+LOCK TABLES `atributohardware` WRITE;
+INSERT INTO `jhard`.`atributohardware` VALUES  (1,'Reservable','1','null',3,NULL,NULL),
  (2,'Reservable','1','null',5,NULL,NULL);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `atributohardware` ENABLE KEYS */;
 
 
 --
--- Definition of table `autorizacion`
+-- Definition of table `jhard`.`autorizacion`
 --
 
-DROP TABLE IF EXISTS `autorizacion`;
-CREATE TABLE `autorizacion` (
+DROP TABLE IF EXISTS `jhard`.`autorizacion`;
+CREATE TABLE  `jhard`.`autorizacion` (
   `idautorizacion` int(10) unsigned NOT NULL auto_increment,
   `codigo` varchar(10) default NULL,
   `cantmaxima` int(10) unsigned default NULL,
@@ -204,19 +212,21 @@ CREATE TABLE `autorizacion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `autorizacion`
+-- Dumping data for table `jhard`.`autorizacion`
 --
 
 /*!40000 ALTER TABLE `autorizacion` DISABLE KEYS */;
+LOCK TABLES `autorizacion` WRITE;
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `autorizacion` ENABLE KEYS */;
 
 
 --
--- Definition of table `bitacoracambiosusuario`
+-- Definition of table `jhard`.`bitacoracambiosusuario`
 --
 
-DROP TABLE IF EXISTS `bitacoracambiosusuario`;
-CREATE TABLE `bitacoracambiosusuario` (
+DROP TABLE IF EXISTS `jhard`.`bitacoracambiosusuario`;
+CREATE TABLE  `jhard`.`bitacoracambiosusuario` (
   `idbitacora` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada bitacora',
   `idusuario` int(11) NOT NULL COMMENT 'Referencia al usuario que realizo el cambio',
   `descripcion` text NOT NULL COMMENT 'Descripcion del cambio que realizo el usuario',
@@ -227,19 +237,21 @@ CREATE TABLE `bitacoracambiosusuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `bitacoracambiosusuario`
+-- Dumping data for table `jhard`.`bitacoracambiosusuario`
 --
 
 /*!40000 ALTER TABLE `bitacoracambiosusuario` DISABLE KEYS */;
+LOCK TABLES `bitacoracambiosusuario` WRITE;
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `bitacoracambiosusuario` ENABLE KEYS */;
 
 
 --
--- Definition of table `bitacoraestados`
+-- Definition of table `jhard`.`bitacoraestados`
 --
 
-DROP TABLE IF EXISTS `bitacoraestados`;
-CREATE TABLE `bitacoraestados` (
+DROP TABLE IF EXISTS `jhard`.`bitacoraestados`;
+CREATE TABLE  `jhard`.`bitacoraestados` (
   `idbitacora` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada bitacora',
   `fecha` date NOT NULL COMMENT 'Fecha en la que ocurrio el cambio de estado',
   `idestado` int(11) NOT NULL COMMENT 'Referencia al estado al cual cambio el equipo',
@@ -256,12 +268,12 @@ CREATE TABLE `bitacoraestados` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `bitacoraestados`
+-- Dumping data for table `jhard`.`bitacoraestados`
 --
 
 /*!40000 ALTER TABLE `bitacoraestados` DISABLE KEYS */;
-INSERT INTO `bitacoraestados` (`idbitacora`,`fecha`,`idestado`,`descripcion`,`idequipoexistente`,`idequiposimple`) VALUES 
- (1,'2009-06-22',2,'Virus',NULL,4),
+LOCK TABLES `bitacoraestados` WRITE;
+INSERT INTO `jhard`.`bitacoraestados` VALUES  (1,'2009-06-22',2,'Virus',NULL,4),
  (2,'2009-06-22',2,'Virus',NULL,4),
  (3,'2009-06-23',2,'No sirve el monitor porque lo jodi si lo jodi',NULL,13),
  (4,'2009-06-24',2,'aja si como no',NULL,13),
@@ -270,15 +282,16 @@ INSERT INTO `bitacoraestados` (`idbitacora`,`fecha`,`idestado`,`descripcion`,`id
  (7,'2009-06-28',2,'Se reinstalo el NERO PORQUE SE JODIO',NULL,10),
  (8,'2009-06-29',2,'Se reinstalo el ubuntu y se le puso XP',NULL,14),
  (9,'2009-06-29',2,'Le dieron verga a EEUU',NULL,12);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `bitacoraestados` ENABLE KEYS */;
 
 
 --
--- Definition of table `carrera`
+-- Definition of table `jhard`.`carrera`
 --
 
-DROP TABLE IF EXISTS `carrera`;
-CREATE TABLE `carrera` (
+DROP TABLE IF EXISTS `jhard`.`carrera`;
+CREATE TABLE  `jhard`.`carrera` (
   `idcarrera` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada carrera',
   `codigo` varchar(7) NOT NULL COMMENT 'Codigo de la carrera, distintivo en el sistema adacad',
   `nombre` varchar(200) NOT NULL COMMENT 'Nombre de la carrera',
@@ -289,21 +302,22 @@ CREATE TABLE `carrera` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `carrera`
+-- Dumping data for table `jhard`.`carrera`
 --
 
 /*!40000 ALTER TABLE `carrera` DISABLE KEYS */;
-INSERT INTO `carrera` (`idcarrera`,`codigo`,`nombre`,`idfacultad`) VALUES 
- (1,'I30515','Ingeniería de Sistemas Informáticos',1);
+LOCK TABLES `carrera` WRITE;
+INSERT INTO `jhard`.`carrera` VALUES  (1,'I30515','Ingeniería de Sistemas Informáticos',1);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `carrera` ENABLE KEYS */;
 
 
 --
--- Definition of table `clase`
+-- Definition of table `jhard`.`clase`
 --
 
-DROP TABLE IF EXISTS `clase`;
-CREATE TABLE `clase` (
+DROP TABLE IF EXISTS `jhard`.`clase`;
+CREATE TABLE  `jhard`.`clase` (
   `idclase` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada clase',
   `fecha` date NOT NULL COMMENT 'Fecha en la que se llevo a cabo esta clase',
   `idhorario` int(11) NOT NULL COMMENT 'Referencia al horario en el que se recibio esta clase',
@@ -321,21 +335,22 @@ CREATE TABLE `clase` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `clase`
+-- Dumping data for table `jhard`.`clase`
 --
 
 /*!40000 ALTER TABLE `clase` DISABLE KEYS */;
-INSERT INTO `clase` (`idclase`,`fecha`,`idhorario`,`idinstructor`,`tema`,`observaciones`,`iddocente`) VALUES 
- (1,'2009-03-05',1,2,'Herencia en Java','N/A',1);
+LOCK TABLES `clase` WRITE;
+INSERT INTO `jhard`.`clase` VALUES  (1,'2009-03-05',1,2,'Herencia en Java','N/A',1);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `clase` ENABLE KEYS */;
 
 
 --
--- Definition of table `clasificacion`
+-- Definition of table `jhard`.`clasificacion`
 --
 
-DROP TABLE IF EXISTS `clasificacion`;
-CREATE TABLE `clasificacion` (
+DROP TABLE IF EXISTS `jhard`.`clasificacion`;
+CREATE TABLE  `jhard`.`clasificacion` (
   `idclasificacion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada clasificacion',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre de la clasificacion',
   `descripcion` text COMMENT 'Descripcion de la clasificacion',
@@ -344,12 +359,12 @@ CREATE TABLE `clasificacion` (
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `clasificacion`
+-- Dumping data for table `jhard`.`clasificacion`
 --
 
 /*!40000 ALTER TABLE `clasificacion` DISABLE KEYS */;
-INSERT INTO `clasificacion` (`idclasificacion`,`nombre`,`descripcion`,`idsuperior`) VALUES 
- (1,'General','Clasificacion general',NULL),
+LOCK TABLES `clasificacion` WRITE;
+INSERT INTO `jhard`.`clasificacion` VALUES  (1,'General','Clasificacion general',NULL),
  (2,'Hardware','Hardware',1),
  (3,'Software','Software',1),
  (4,'Equipos','Equipos',2),
@@ -364,15 +379,16 @@ INSERT INTO `clasificacion` (`idclasificacion`,`nombre`,`descripcion`,`idsuperio
  (14,'Laptops','Laptops',4),
  (15,'Impresoras','Impresoras',5),
  (16,'Cañones','Proyectores',5);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `clasificacion` ENABLE KEYS */;
 
 
 --
--- Definition of table `comentarios`
+-- Definition of table `jhard`.`comentarios`
 --
 
-DROP TABLE IF EXISTS `comentarios`;
-CREATE TABLE `comentarios` (
+DROP TABLE IF EXISTS `jhard`.`comentarios`;
+CREATE TABLE  `jhard`.`comentarios` (
   `idcoment` int(11) unsigned NOT NULL auto_increment,
   `comentario` varchar(250) NOT NULL,
   `fechahorara` datetime NOT NULL,
@@ -382,29 +398,25 @@ CREATE TABLE `comentarios` (
   PRIMARY KEY  (`idcoment`),
   KEY `fk_comentarios_entrada` (`identrada`),
   CONSTRAINT `fk_comentarios_entrada` FOREIGN KEY (`identrada`) REFERENCES `entrada` (`identrada`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `comentarios`
+-- Dumping data for table `jhard`.`comentarios`
 --
 
 /*!40000 ALTER TABLE `comentarios` DISABLE KEYS */;
-INSERT INTO `comentarios` (`idcoment`,`comentario`,`fechahorara`,`identrada`,`firma`,`aprobado`) VALUES 
- (1,'Comentario 1','2008-01-01 00:00:00',1,'anon',1),
- (2,'Este es un comentarios','2009-03-02 00:00:00',1,'Rodrigo',1),
- (3,'Comentario 3','2009-02-02 00:00:00',1,'ComentaMano',1),
- (4,'Lorem ipsum!!!','2009-02-02 00:00:00',1,'Latin Man',1),
- (5,'Comentario 2','2009-01-01 00:00:00',1,'firefox',1),
- (7,'Amo esto','2009-07-23 11:22:47',1,'Sr. Byte',1);
+LOCK TABLES `comentarios` WRITE;
+INSERT INTO `jhard`.`comentarios` VALUES  (8,'¿Alguien tiene alguna duda?','2009-07-25 19:09:26',9,'ramayac',1);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `comentarios` ENABLE KEYS */;
 
 
 --
--- Definition of table `curso`
+-- Definition of table `jhard`.`curso`
 --
 
-DROP TABLE IF EXISTS `curso`;
-CREATE TABLE `curso` (
+DROP TABLE IF EXISTS `jhard`.`curso`;
+CREATE TABLE  `jhard`.`curso` (
   `idcurso` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada curso',
   `nombre` varchar(200) NOT NULL COMMENT 'Nombre del curso (por si este difiere del nombre de la materia o por si no esta relacionado con una materia especifica)',
   `cupomax` int(11) NOT NULL COMMENT 'Cantidad maxima de alumnos que pueden inscribirse a este curso',
@@ -427,24 +439,25 @@ CREATE TABLE `curso` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `curso`
+-- Dumping data for table `jhard`.`curso`
 --
 
 /*!40000 ALTER TABLE `curso` DISABLE KEYS */;
-INSERT INTO `curso` (`idcurso`,`nombre`,`cupomax`,`idmateria`,`idinstructor`,`fechainicio`,`ciclo`,`anio`,`iddocente`,`idestado`) VALUES 
- (1,'Grupo 1 ',20,2,2,'2009-03-03',1,2009,1,NULL);
+LOCK TABLES `curso` WRITE;
+INSERT INTO `jhard`.`curso` VALUES  (1,'Grupo 1 ',20,2,2,'2009-03-03',1,2009,1,NULL);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `curso` ENABLE KEYS */;
 
 
 --
--- Definition of table `docente`
+-- Definition of table `jhard`.`docente`
 --
 
-DROP TABLE IF EXISTS `docente`;
-CREATE TABLE `docente` (
+DROP TABLE IF EXISTS `jhard`.`docente`;
+CREATE TABLE  `jhard`.`docente` (
   `iddocente` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada docente',
-  `Apellidos` varchar(200) NOT NULL COMMENT 'Apellidos del docente',
-  `Nombres` varchar(200) NOT NULL COMMENT 'Nombres del docente',
+  `apellidos` varchar(200) NOT NULL COMMENT 'Apellidos del docente',
+  `nombres` varchar(200) NOT NULL COMMENT 'Nombres del docente',
   `idusuario` int(11) NOT NULL COMMENT 'Referencia al usuario con el que el docente ingresa al sistema',
   `visible` int(11) NOT NULL COMMENT 'Es 1 por defecto. Indica que el usuario esta activo. Al momento de borrar usuarios del sistema, nada mas cambiar este estado a 0.',
   PRIMARY KEY  (`iddocente`),
@@ -453,22 +466,23 @@ CREATE TABLE `docente` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `docente`
+-- Dumping data for table `jhard`.`docente`
 --
 
 /*!40000 ALTER TABLE `docente` DISABLE KEYS */;
-INSERT INTO `docente` (`iddocente`,`Apellidos`,`Nombres`,`idusuario`,`visible`) VALUES 
- (1,'Linares Paula','Carlos Stanley',4,1),
+LOCK TABLES `docente` WRITE;
+INSERT INTO `jhard`.`docente` VALUES  (1,'Linares Paula','Carlos Stanley',4,1),
  (2,'Barrera','Luis Alonso',1,1);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `docente` ENABLE KEYS */;
 
 
 --
--- Definition of table `entrada`
+-- Definition of table `jhard`.`entrada`
 --
 
-DROP TABLE IF EXISTS `entrada`;
-CREATE TABLE `entrada` (
+DROP TABLE IF EXISTS `jhard`.`entrada`;
+CREATE TABLE  `jhard`.`entrada` (
   `identrada` int(11) unsigned NOT NULL auto_increment,
   `titulo` varchar(50) NOT NULL,
   `descripcion` text NOT NULL,
@@ -479,27 +493,25 @@ CREATE TABLE `entrada` (
   KEY `idxEntrTitulo` (`titulo`),
   KEY `idxEntrFecha` (`fechahora`),
   CONSTRAINT `fk_entrada_usuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `entrada`
+-- Dumping data for table `jhard`.`entrada`
 --
 
 /*!40000 ALTER TABLE `entrada` DISABLE KEYS */;
-INSERT INTO `entrada` (`identrada`,`titulo`,`descripcion`,`fechahora`,`idusuario`) VALUES 
- (1,'Titulo 1','Lorem ipsum dolor sit amet, \\nconsectetur adipiscing elit. \\nSed cursus dictum cursus. \\nCras nibh augue, pharetra tempor hendrerit at,\\nconvallis id nunc. Maecenas felis lorem,\\nfeugiat nec mollis id, rhoncus pharetra enim.\\nSed quis libero porttitor odio accumsan imperdiet ac iaculis nisl. Maecenas diam orci, porta sit amet ornare a, cursus sit amet massa. Cras a posuere eros. Donec sodales luctus purus. Etiam nibh ante, mollis ac condimentum in, convallis egestas nisi. Integer imperdiet lectus eget velit aliquet rutrum. \\nProin ligula tellus, viverra vitae tincidunt ut, venenatis nec justo. In ut nisl urna. Aliquam erat volutpat. Nam quis sem ut magna fermentum tempus vitae at eros. Vivamus fermentum sem eget nunc viverra vitae consequat diam tempus.','2009-06-01 00:00:00',1),
- (2,'Titulo 2','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus dictum cursus. Cras nibh augue, pharetra tempor hendrerit at, convallis id nunc. Maecenas felis lorem, feugiat nec mollis id, rhoncus pharetra enim. Sed quis libero porttitor odio accumsan imperdiet ac iaculis nisl. Maecenas diam orci, porta sit amet ornare a, cursus sit amet massa. Cras a posuere eros. Donec sodales luctus purus. Etiam nibh ante, mollis ac condimentum in, convallis egestas nisi. Integer imperdiet lectus eget velit aliquet rutrum. Proin ligula tellus, viverra vitae tincidunt ut, venenatis nec justo. In ut nisl urna. Aliquam erat volutpat. Nam quis sem ut magna fermentum tempus vitae at eros. Vivamus fermentum sem eget nunc viverra vitae consequat diam tempus.','2009-05-30 00:00:00',1),
- (3,'Titulo 3','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus dictum cursus. Cras nibh augue, pharetra tempor hendrerit at, convallis id nunc. Maecenas felis lorem, feugiat nec mollis id, rhoncus pharetra enim. Sed quis libero porttitor odio accumsan imperdiet ac iaculis nisl. Maecenas diam orci, porta sit amet ornare a, cursus sit amet massa. Cras a posuere eros. Donec sodales luctus purus. Etiam nibh ante, mollis ac condimentum in, convallis egestas nisi. Integer imperdiet lectus eget velit aliquet rutrum. Proin ligula tellus, viverra vitae tincidunt ut, venenatis nec justo. In ut nisl urna. Aliquam erat volutpat. Nam quis sem ut magna fermentum tempus vitae at eros. Vivamus fermentum sem eget nunc viverra vitae consequat diam tempus.','2009-05-30 00:00:00',1),
- (4,'Titulo 4','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus dictum cursus. Cras nibh augue, pharetra tempor hendrerit at, convallis id nunc. Maecenas felis lorem, feugiat nec mollis id, rhoncus pharetra enim. Sed quis libero porttitor odio accumsan imperdiet ac iaculis nisl. Maecenas diam orci, porta sit amet ornare a, cursus sit amet massa. Cras a posuere eros. Donec sodales luctus purus. Etiam nibh ante, mollis ac condimentum in, convallis egestas nisi. Integer imperdiet lectus eget velit aliquet rutrum. Proin ligula tellus, viverra vitae tincidunt ut, venenatis nec justo. In ut nisl urna. Aliquam erat volutpat. Nam quis sem ut magna fermentum tempus vitae at eros. Vivamus fermentum sem eget nunc viverra vitae consequat diam tempus.','2009-05-30 00:00:00',9);
+LOCK TABLES `entrada` WRITE;
+INSERT INTO `jhard`.`entrada` VALUES  (9,'Cursos de Linux','<p>Linux es un sistema operativo de descarga gratuita que se creo a principios de los a&ntilde;os noventa para competir con Windows. Se caracteriza por ser libre y por venir acompa&ntilde;ado de un c&oacute;digo fuente. Este curso gratis le ense&ntilde;ar&aacute; una serie de pautas para que empiece a manejar Linux.</p>\n<p>El curso comienza el Sabado 31 de Febrero de 2009.</p>','2009-07-25 19:08:15',13);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `entrada` ENABLE KEYS */;
 
 
 --
--- Definition of table `equipo`
+-- Definition of table `jhard`.`equipo`
 --
 
-DROP TABLE IF EXISTS `equipo`;
-CREATE TABLE `equipo` (
+DROP TABLE IF EXISTS `jhard`.`equipo`;
+CREATE TABLE  `jhard`.`equipo` (
   `idequipo` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada equipo',
   `idmarca` int(11) NOT NULL COMMENT 'Referencia a la marca que posee este equipo',
   `nombre` varchar(45) NOT NULL COMMENT 'Nombre del equipo',
@@ -513,26 +525,27 @@ CREATE TABLE `equipo` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `equipo`
+-- Dumping data for table `jhard`.`equipo`
 --
 
 /*!40000 ALTER TABLE `equipo` DISABLE KEYS */;
-INSERT INTO `equipo` (`idequipo`,`idmarca`,`nombre`,`modelo`,`idclasificacion`) VALUES 
- (1,9,'PC','PC',13),
+LOCK TABLES `equipo` WRITE;
+INSERT INTO `jhard`.`equipo` VALUES  (1,9,'PC','PC',13),
  (2,1,'DellPC','Vostro',13),
  (3,12,'Cañon','Epson',16),
  (4,3,'Laptop','Satellite',14),
  (5,12,'Cañon','ProView',16),
  (6,2,'Laptop','VGN',14);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `equipo` ENABLE KEYS */;
 
 
 --
--- Definition of table `equiposimple`
+-- Definition of table `jhard`.`equiposimple`
 --
 
-DROP TABLE IF EXISTS `equiposimple`;
-CREATE TABLE `equiposimple` (
+DROP TABLE IF EXISTS `jhard`.`equiposimple`;
+CREATE TABLE  `jhard`.`equiposimple` (
   `idEquipoSimple` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada equipo simple',
   `descripcion` text NOT NULL COMMENT 'Descripcion del equipo simple',
   `propietario` varchar(200) NOT NULL COMMENT 'Nombre del propietario del equipo simple',
@@ -543,12 +556,12 @@ CREATE TABLE `equiposimple` (
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `equiposimple`
+-- Dumping data for table `jhard`.`equiposimple`
 --
 
 /*!40000 ALTER TABLE `equiposimple` DISABLE KEYS */;
-INSERT INTO `equiposimple` (`idEquipoSimple`,`descripcion`,`propietario`,`idestado`) VALUES 
- (1,'Computadora Oficina Jurídica','Carmencita',1),
+LOCK TABLES `equiposimple` WRITE;
+INSERT INTO `jhard`.`equiposimple` VALUES  (1,'Computadora Oficina Jurídica','Carmencita',1),
  (2,'Computadora Secretaria Matemáticas','Karlita',1),
  (3,'Computadora Docentes Matemática','rosario',1),
  (4,'Computadora Carmencita','Carmencita',2),
@@ -563,34 +576,37 @@ INSERT INTO `equiposimple` (`idEquipoSimple`,`descripcion`,`propietario`,`idesta
  (13,'Computadora Arq Centeno','Carmencita',2),
  (14,'Laptop Luis','Luis Barrera',1),
  (19,'Big Boss','Daddy Yankee',2);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `equiposimple` ENABLE KEYS */;
 
 
 --
--- Definition of table `estadocurso`
+-- Definition of table `jhard`.`estadocurso`
 --
 
-DROP TABLE IF EXISTS `estadocurso`;
-CREATE TABLE `estadocurso` (
+DROP TABLE IF EXISTS `jhard`.`estadocurso`;
+CREATE TABLE  `jhard`.`estadocurso` (
   `idestadocurso` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada estado del curso',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del estado del curso',
   PRIMARY KEY  (`idestadocurso`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `estadocurso`
+-- Dumping data for table `jhard`.`estadocurso`
 --
 
 /*!40000 ALTER TABLE `estadocurso` DISABLE KEYS */;
+LOCK TABLES `estadocurso` WRITE;
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `estadocurso` ENABLE KEYS */;
 
 
 --
--- Definition of table `estadoequipo`
+-- Definition of table `jhard`.`estadoequipo`
 --
 
-DROP TABLE IF EXISTS `estadoequipo`;
-CREATE TABLE `estadoequipo` (
+DROP TABLE IF EXISTS `jhard`.`estadoequipo`;
+CREATE TABLE  `jhard`.`estadoequipo` (
   `idestado` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada estado',
   `nombre` varchar(45) NOT NULL COMMENT 'Nombre del estado',
   `descripcion` text COMMENT 'Descripcion del estado',
@@ -598,49 +614,51 @@ CREATE TABLE `estadoequipo` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `estadoequipo`
+-- Dumping data for table `jhard`.`estadoequipo`
 --
 
 /*!40000 ALTER TABLE `estadoequipo` DISABLE KEYS */;
-INSERT INTO `estadoequipo` (`idestado`,`nombre`,`descripcion`) VALUES 
- (1,'Excelente','Óptimas condiciones'),
+LOCK TABLES `estadoequipo` WRITE;
+INSERT INTO `jhard`.`estadoequipo` VALUES  (1,'Excelente','Óptimas condiciones'),
  (2,'Muy Bueno','Condiciones aceptables'),
  (3,'Bueno','Condiciones estables'),
  (4,'Malo','Falla por ciertos períodos de tiempo'),
  (5,'Muy Malo','Falla casi siempre'),
  (6,'Pésimo','Imposible de utilizar');
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `estadoequipo` ENABLE KEYS */;
 
 
 --
--- Definition of table `estadoreserva`
+-- Definition of table `jhard`.`estadoreserva`
 --
 
-DROP TABLE IF EXISTS `estadoreserva`;
-CREATE TABLE `estadoreserva` (
+DROP TABLE IF EXISTS `jhard`.`estadoreserva`;
+CREATE TABLE  `jhard`.`estadoreserva` (
   `idestadoreserva` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada reserva',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del estado de la reserva',
   PRIMARY KEY  (`idestadoreserva`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `estadoreserva`
+-- Dumping data for table `jhard`.`estadoreserva`
 --
 
 /*!40000 ALTER TABLE `estadoreserva` DISABLE KEYS */;
-INSERT INTO `estadoreserva` (`idestadoreserva`,`nombre`) VALUES 
- (1,'Pendiente'),
+LOCK TABLES `estadoreserva` WRITE;
+INSERT INTO `jhard`.`estadoreserva` VALUES  (1,'Pendiente'),
  (2,'En uso'),
  (3,'Despachada');
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `estadoreserva` ENABLE KEYS */;
 
 
 --
--- Definition of table `estudiante`
+-- Definition of table `jhard`.`estudiante`
 --
 
-DROP TABLE IF EXISTS `estudiante`;
-CREATE TABLE `estudiante` (
+DROP TABLE IF EXISTS `jhard`.`estudiante`;
+CREATE TABLE  `jhard`.`estudiante` (
   `idestudiante` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada estudiante',
   `carnet` varchar(7) NOT NULL COMMENT 'Carnet del estudiante, representativo y distintivo en el registro de la facultad',
   `apellidos` varchar(200) NOT NULL COMMENT 'Apellidos del estudiante',
@@ -653,21 +671,22 @@ CREATE TABLE `estudiante` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `estudiante`
+-- Dumping data for table `jhard`.`estudiante`
 --
 
 /*!40000 ALTER TABLE `estudiante` DISABLE KEYS */;
-INSERT INTO `estudiante` (`idestudiante`,`carnet`,`apellidos`,`nombres`,`idusuario`,`visible`) VALUES 
- (1,'SM08003','Salgado Martínez','Rebeca Marcela',7,1);
+LOCK TABLES `estudiante` WRITE;
+INSERT INTO `jhard`.`estudiante` VALUES  (1,'SM08003','Salgado Martínez','Rebeca Marcela',7,1);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `estudiante` ENABLE KEYS */;
 
 
 --
--- Definition of table `existencia`
+-- Definition of table `jhard`.`existencia`
 --
 
-DROP TABLE IF EXISTS `existencia`;
-CREATE TABLE `existencia` (
+DROP TABLE IF EXISTS `jhard`.`existencia`;
+CREATE TABLE  `jhard`.`existencia` (
   `idexistencia` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada existencia',
   `idhardware` int(11) NOT NULL COMMENT 'Referencia al hardware al cual pertenece esta existencia',
   `idubicacion` int(11) NOT NULL COMMENT 'Referencia a la ubicacion donde se encuentra localizada esta existencia',
@@ -683,12 +702,12 @@ CREATE TABLE `existencia` (
 ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `existencia`
+-- Dumping data for table `jhard`.`existencia`
 --
 
 /*!40000 ALTER TABLE `existencia` DISABLE KEYS */;
-INSERT INTO `existencia` (`idexistencia`,`idhardware`,`idubicacion`,`idestado`,`codigo`) VALUES 
- (1,1,1,1,'codigo de barras'),
+LOCK TABLES `existencia` WRITE;
+INSERT INTO `jhard`.`existencia` VALUES  (1,1,1,1,'codigo de barras'),
  (2,1,1,1,'codigo de barras'),
  (3,1,1,1,'codigo de barras'),
  (4,2,1,1,'codigo de barras'),
@@ -723,39 +742,41 @@ INSERT INTO `existencia` (`idexistencia`,`idhardware`,`idubicacion`,`idestado`,`
  (33,1,1,1,'labcom1-20'),
  (34,1,1,1,'labcom1-21'),
  (35,1,1,1,'labcom1-22'),
- (36,1,1,1,'labcom1-23'),
- (37,1,1,1,'labcom1-24'),
+ (36,1,1,1,'labcom1-23');
+INSERT INTO `jhard`.`existencia` VALUES  (37,1,1,1,'labcom1-24'),
  (38,1,1,1,'labcom1-25');
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `existencia` ENABLE KEYS */;
 
 
 --
--- Definition of table `facultad`
+-- Definition of table `jhard`.`facultad`
 --
 
-DROP TABLE IF EXISTS `facultad`;
-CREATE TABLE `facultad` (
+DROP TABLE IF EXISTS `jhard`.`facultad`;
+CREATE TABLE  `jhard`.`facultad` (
   `idfacultad` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada facultad',
   `nombre` varchar(200) NOT NULL COMMENT 'Nombre de la facultad',
   PRIMARY KEY  (`idfacultad`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `facultad`
+-- Dumping data for table `jhard`.`facultad`
 --
 
 /*!40000 ALTER TABLE `facultad` DISABLE KEYS */;
-INSERT INTO `facultad` (`idfacultad`,`nombre`) VALUES 
- (1,'Facultad Multidisciplinaria de Occidente');
+LOCK TABLES `facultad` WRITE;
+INSERT INTO `jhard`.`facultad` VALUES  (1,'Facultad Multidisciplinaria de Occidente');
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `facultad` ENABLE KEYS */;
 
 
 --
--- Definition of table `horario`
+-- Definition of table `jhard`.`horario`
 --
 
-DROP TABLE IF EXISTS `horario`;
-CREATE TABLE `horario` (
+DROP TABLE IF EXISTS `jhard`.`horario`;
+CREATE TABLE  `jhard`.`horario` (
   `idhorario` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada horario',
   `diasemana` int(11) NOT NULL COMMENT 'Dia de la semana que se brinda el curso (1= lunes, 7= domingo)',
   `horainicio` time NOT NULL COMMENT 'Hora a la que da inicio el curso',
@@ -770,21 +791,22 @@ CREATE TABLE `horario` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `horario`
+-- Dumping data for table `jhard`.`horario`
 --
 
 /*!40000 ALTER TABLE `horario` DISABLE KEYS */;
-INSERT INTO `horario` (`idhorario`,`diasemana`,`horainicio`,`horafin`,`idcurso`,`idaula`) VALUES 
- (1,1,'10:00:00','10:55:00',1,1);
+LOCK TABLES `horario` WRITE;
+INSERT INTO `jhard`.`horario` VALUES  (1,1,'10:00:00','10:55:00',1,1);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `horario` ENABLE KEYS */;
 
 
 --
--- Definition of table `inscripcion`
+-- Definition of table `jhard`.`inscripcion`
 --
 
-DROP TABLE IF EXISTS `inscripcion`;
-CREATE TABLE `inscripcion` (
+DROP TABLE IF EXISTS `jhard`.`inscripcion`;
+CREATE TABLE  `jhard`.`inscripcion` (
   `idinscripcion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada inscripcion',
   `idcurso` int(11) NOT NULL COMMENT 'Referencia al curso al cual se inscribio el estudiante',
   `idestudiante` int(11) NOT NULL COMMENT 'Referencia al estudiante inscrito en este curso',
@@ -796,19 +818,21 @@ CREATE TABLE `inscripcion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `inscripcion`
+-- Dumping data for table `jhard`.`inscripcion`
 --
 
 /*!40000 ALTER TABLE `inscripcion` DISABLE KEYS */;
+LOCK TABLES `inscripcion` WRITE;
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `inscripcion` ENABLE KEYS */;
 
 
 --
--- Definition of table `instalacion`
+-- Definition of table `jhard`.`instalacion`
 --
 
-DROP TABLE IF EXISTS `instalacion`;
-CREATE TABLE `instalacion` (
+DROP TABLE IF EXISTS `jhard`.`instalacion`;
+CREATE TABLE  `jhard`.`instalacion` (
   `idinstalacion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada instalacion',
   `idsoftware` int(11) NOT NULL COMMENT 'Referencia al software instalado',
   `fechainstalacion` date NOT NULL COMMENT 'Fecha en la que se realizo la instalacion',
@@ -821,21 +845,22 @@ CREATE TABLE `instalacion` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `instalacion`
+-- Dumping data for table `jhard`.`instalacion`
 --
 
 /*!40000 ALTER TABLE `instalacion` DISABLE KEYS */;
-INSERT INTO `instalacion` (`idinstalacion`,`idsoftware`,`fechainstalacion`,`idequipoexistente`) VALUES 
- (1,1,'2009-04-03',2);
+LOCK TABLES `instalacion` WRITE;
+INSERT INTO `jhard`.`instalacion` VALUES  (1,1,'2009-04-03',2);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `instalacion` ENABLE KEYS */;
 
 
 --
--- Definition of table `instructor`
+-- Definition of table `jhard`.`instructor`
 --
 
-DROP TABLE IF EXISTS `instructor`;
-CREATE TABLE `instructor` (
+DROP TABLE IF EXISTS `jhard`.`instructor`;
+CREATE TABLE  `jhard`.`instructor` (
   `idinstructor` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada instructor',
   `carnet` varchar(7) NOT NULL COMMENT 'Carnet con el cual se encuentra registrado en adacad',
   `apellidos` varchar(200) NOT NULL COMMENT 'Apellidos del instructor',
@@ -848,22 +873,23 @@ CREATE TABLE `instructor` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `instructor`
+-- Dumping data for table `jhard`.`instructor`
 --
 
 /*!40000 ALTER TABLE `instructor` DISABLE KEYS */;
-INSERT INTO `instructor` (`idinstructor`,`carnet`,`apellidos`,`nombres`,`idusuario`,`visible`) VALUES 
- (1,'CC02043','Cerna','Fredy',8,1),
+LOCK TABLES `instructor` WRITE;
+INSERT INTO `jhard`.`instructor` VALUES  (1,'CC02043','Cerna','Fredy',8,1),
  (2,'BP04004','Barrientos Padilla','Hugo Alejandro',9,1);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `instructor` ENABLE KEYS */;
 
 
 --
--- Definition of table `mantenimiento`
+-- Definition of table `jhard`.`mantenimiento`
 --
 
-DROP TABLE IF EXISTS `mantenimiento`;
-CREATE TABLE `mantenimiento` (
+DROP TABLE IF EXISTS `jhard`.`mantenimiento`;
+CREATE TABLE  `jhard`.`mantenimiento` (
   `idmantenimiento` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada mantenimiento',
   `fecha` date NOT NULL COMMENT 'Fecha en la que se efectuo el mantenimiento',
   `descripcion` text NOT NULL COMMENT 'Descripcion del mantenimiento',
@@ -884,12 +910,12 @@ CREATE TABLE `mantenimiento` (
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `mantenimiento`
+-- Dumping data for table `jhard`.`mantenimiento`
 --
 
 /*!40000 ALTER TABLE `mantenimiento` DISABLE KEYS */;
-INSERT INTO `mantenimiento` (`idmantenimiento`,`fecha`,`descripcion`,`idtecnico`,`idsolicitud`,`idequipoexistente`,`idequiposimple`,`estado`) VALUES 
- (2,'3909-06-21','Virus',3,7,NULL,4,'Finalizado'),
+LOCK TABLES `mantenimiento` WRITE;
+INSERT INTO `jhard`.`mantenimiento` VALUES  (2,'3909-06-21','Virus',3,7,NULL,4,'Finalizado'),
  (3,'3909-06-21','VIRUS MIERDA',4,3,NULL,1,'Pendiente'),
  (4,'3909-06-23','No sirve el monitor',4,8,NULL,13,'Finalizado'),
  (5,'3909-06-26','No abre el Office 2003 y necesitamos el Office 2007',14,10,NULL,11,'Finalizado'),
@@ -899,27 +925,28 @@ INSERT INTO `mantenimiento` (`idmantenimiento`,`fecha`,`descripcion`,`idtecnico`
  (10,'2009-06-29','JODIO EL UBUNTU',14,16,NULL,14,'Finalizado'),
  (11,'2009-06-29','Brasil campeon de la confederaciones',4,15,NULL,12,'Finalizado'),
  (13,'2009-07-01','Virus',3,2,NULL,1,'Pendiente');
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `mantenimiento` ENABLE KEYS */;
 
 
 --
--- Definition of table `marca`
+-- Definition of table `jhard`.`marca`
 --
 
-DROP TABLE IF EXISTS `marca`;
-CREATE TABLE `marca` (
+DROP TABLE IF EXISTS `jhard`.`marca`;
+CREATE TABLE  `jhard`.`marca` (
   `idmarca` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada marca',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre de la marca',
   PRIMARY KEY  (`idmarca`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `marca`
+-- Dumping data for table `jhard`.`marca`
 --
 
 /*!40000 ALTER TABLE `marca` DISABLE KEYS */;
-INSERT INTO `marca` (`idmarca`,`nombre`) VALUES 
- (0,'Generica'),
+LOCK TABLES `marca` WRITE;
+INSERT INTO `jhard`.`marca` VALUES  (0,'Generica'),
  (1,'Dell'),
  (2,'Sony'),
  (3,'Toshiba'),
@@ -932,15 +959,16 @@ INSERT INTO `marca` (`idmarca`,`nombre`) VALUES
  (10,'Kingston'),
  (11,'Seagate'),
  (12,'Epson');
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `marca` ENABLE KEYS */;
 
 
 --
--- Definition of table `materia`
+-- Definition of table `jhard`.`materia`
 --
 
-DROP TABLE IF EXISTS `materia`;
-CREATE TABLE `materia` (
+DROP TABLE IF EXISTS `jhard`.`materia`;
+CREATE TABLE  `jhard`.`materia` (
   `idmateria` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada materia',
   `codigo` varchar(7) NOT NULL COMMENT 'Codigo de la materia, con el cual se identifica en adacad',
   `nombre` varchar(200) NOT NULL COMMENT 'Nombre de la materia',
@@ -951,22 +979,23 @@ CREATE TABLE `materia` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `materia`
+-- Dumping data for table `jhard`.`materia`
 --
 
 /*!40000 ALTER TABLE `materia` DISABLE KEYS */;
-INSERT INTO `materia` (`idmateria`,`codigo`,`nombre`,`idcarrera`) VALUES 
- (1,'ALG-135','Algoritmos Gráficos',1),
+LOCK TABLES `materia` WRITE;
+INSERT INTO `jhard`.`materia` VALUES  (1,'ALG-135','Algoritmos Gráficos',1),
  (2,'PRN-235','Programación II',1);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `materia` ENABLE KEYS */;
 
 
 --
--- Definition of table `pieza`
+-- Definition of table `jhard`.`pieza`
 --
 
-DROP TABLE IF EXISTS `pieza`;
-CREATE TABLE `pieza` (
+DROP TABLE IF EXISTS `jhard`.`pieza`;
+CREATE TABLE  `jhard`.`pieza` (
   `idpieza` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada pieza',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre de la pieza',
   `idmarca` int(11) NOT NULL COMMENT 'Referencia a la marca de la pieza',
@@ -983,22 +1012,23 @@ CREATE TABLE `pieza` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `pieza`
+-- Dumping data for table `jhard`.`pieza`
 --
 
 /*!40000 ALTER TABLE `pieza` DISABLE KEYS */;
-INSERT INTO `pieza` (`idpieza`,`nombre`,`idmarca`,`modelo`,`idclasificacion`,`idexistencia`) VALUES 
- (1,'memoria RAM',10,'kingston',6,NULL),
+LOCK TABLES `pieza` WRITE;
+INSERT INTO `jhard`.`pieza` VALUES  (1,'memoria RAM',10,'kingston',6,NULL),
  (2,'disco duro',11,'seagate',6,NULL);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `pieza` ENABLE KEYS */;
 
 
 --
--- Definition of table `reserva`
+-- Definition of table `jhard`.`reserva`
 --
 
-DROP TABLE IF EXISTS `reserva`;
-CREATE TABLE `reserva` (
+DROP TABLE IF EXISTS `jhard`.`reserva`;
+CREATE TABLE  `jhard`.`reserva` (
   `idreserva` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada reserva',
   `fechareserva` date NOT NULL COMMENT 'fecha en la que se reservo el equipo',
   `fechahorainicioprestamo` datetime NOT NULL COMMENT 'Fecha y hora inicial a la que se utilizara el equipo',
@@ -1023,12 +1053,12 @@ CREATE TABLE `reserva` (
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `reserva`
+-- Dumping data for table `jhard`.`reserva`
 --
 
 /*!40000 ALTER TABLE `reserva` DISABLE KEYS */;
-INSERT INTO `reserva` (`idreserva`,`fechareserva`,`fechahorainicioprestamo`,`fechahorafinprestamo`,`idubicacion`,`idequipoexistente`,`idusuario`,`idestado`,`descripcion`,`iddocente`) VALUES 
- (1,'2009-07-08','2009-07-15 15:55:00','2009-07-15 17:15:00',1,6,9,3,'Prestamo de Cañon Epson Epson',1),
+LOCK TABLES `reserva` WRITE;
+INSERT INTO `jhard`.`reserva` VALUES  (1,'2009-07-08','2009-07-15 15:55:00','2009-07-15 17:15:00',1,6,9,3,'Prestamo de Cañon Epson Epson',1),
  (2,'2009-07-09','2009-07-16 10:05:00','2009-07-16 11:45:00',1,6,9,1,'Prestamo de Cañon Epson a Stanley',1),
  (3,'2009-07-10','2009-07-10 10:05:00','2009-07-10 11:45:00',1,6,9,1,'Prestamo de Cañon Epson  Epson',2),
  (4,'2009-07-10','2009-07-09 17:10:00','2009-07-09 18:50:00',1,6,8,1,'Prestamo de Cañon Epson  Epson',2),
@@ -1038,8 +1068,8 @@ INSERT INTO `reserva` (`idreserva`,`fechareserva`,`fechahorainicioprestamo`,`fec
  (9,'2009-07-10','2009-07-07 10:55:00','2009-07-07 12:35:00',1,12,9,3,'Prestamo de Laptop Sony VGN',2),
  (10,'2009-07-10','2009-07-08 13:00:00','2009-07-08 15:30:00',1,12,9,1,'Prestamo de Laptop Sony VGN',1),
  (11,'2009-07-10','2009-07-15 14:40:00','2009-07-15 16:20:00',1,12,9,1,'Prestamo de Laptop Sony VGN',1),
- (12,'2009-07-10','2009-07-06 06:45:00','2009-07-06 09:15:00',1,9,9,3,'Prestamo de Laptop Toshiba Satellite',1),
- (14,'2009-07-10','2009-07-08 08:25:00','2009-07-08 10:05:00',1,10,9,3,'Prestamo de Cañon Epson  ProView',1),
+ (12,'2009-07-10','2009-07-06 06:45:00','2009-07-06 09:15:00',1,9,9,3,'Prestamo de Laptop Toshiba Satellite',1);
+INSERT INTO `jhard`.`reserva` VALUES  (14,'2009-07-10','2009-07-08 08:25:00','2009-07-08 10:05:00',1,10,9,3,'Prestamo de Cañon Epson  ProView',1),
  (15,'2009-07-11','2009-07-11 13:00:00','2009-07-11 17:10:00',1,10,9,3,'Prestamo de Cañon Epson  ProView',2),
  (16,'2009-07-11','2009-07-11 13:00:00','2009-07-11 17:10:00',1,12,9,3,'Prestamo de Laptop Sony VGN',2),
  (17,'2009-07-11','2009-07-07 10:05:00','2009-07-07 11:45:00',1,10,9,1,'Prestamo de Cañon Epson  ProView',1),
@@ -1048,17 +1078,18 @@ INSERT INTO `reserva` (`idreserva`,`fechareserva`,`fechahorainicioprestamo`,`fec
  (20,'2009-07-11','2009-07-06 10:05:00','2009-07-06 11:45:00',1,11,9,1,'Prestamo de Cañon Epson  ProView',2),
  (22,'2009-07-12','2009-07-12 10:05:00','2009-07-12 11:45:00',1,8,9,1,'Prestamo de Laptop Toshiba Satellite',2),
  (23,'2009-07-12','2009-07-12 10:05:00','2009-07-12 11:45:00',1,12,9,1,'Prestamo de Laptop Sony VGN',2),
- (24,'2009-07-12','2009-07-12 10:05:00','2009-07-12 11:45:00',1,12,9,1,'Prestamo de Laptop Sony VGN',2),
- (25,'2009-07-12','2009-07-12 10:05:00','2009-07-12 11:45:00',1,8,9,1,'Prestamo de Laptop Toshiba Satellite',2);
+ (24,'2009-07-12','2009-07-12 10:05:00','2009-07-12 11:45:00',1,12,9,1,'Prestamo de Laptop Sony VGN',2);
+INSERT INTO `jhard`.`reserva` VALUES  (25,'2009-07-12','2009-07-12 10:05:00','2009-07-12 11:45:00',1,8,9,1,'Prestamo de Laptop Toshiba Satellite',2);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `reserva` ENABLE KEYS */;
 
 
 --
--- Definition of table `responsable`
+-- Definition of table `jhard`.`responsable`
 --
 
-DROP TABLE IF EXISTS `responsable`;
-CREATE TABLE `responsable` (
+DROP TABLE IF EXISTS `jhard`.`responsable`;
+CREATE TABLE  `jhard`.`responsable` (
   `idresponsable` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada responsable',
   `apellidos` varchar(200) NOT NULL COMMENT 'Apellidos de la persona responsable',
   `nombres` varchar(200) NOT NULL COMMENT 'Nombres de la persona responsable',
@@ -1069,19 +1100,21 @@ CREATE TABLE `responsable` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `responsable`
+-- Dumping data for table `jhard`.`responsable`
 --
 
 /*!40000 ALTER TABLE `responsable` DISABLE KEYS */;
+LOCK TABLES `responsable` WRITE;
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `responsable` ENABLE KEYS */;
 
 
 --
--- Definition of table `rol`
+-- Definition of table `jhard`.`rol`
 --
 
-DROP TABLE IF EXISTS `rol`;
-CREATE TABLE `rol` (
+DROP TABLE IF EXISTS `jhard`.`rol`;
+CREATE TABLE  `jhard`.`rol` (
   `idrol` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada rol',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del rol',
   `descripcion` text NOT NULL COMMENT 'Descripcion del rol',
@@ -1089,26 +1122,27 @@ CREATE TABLE `rol` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `rol`
+-- Dumping data for table `jhard`.`rol`
 --
 
 /*!40000 ALTER TABLE `rol` DISABLE KEYS */;
-INSERT INTO `rol` (`idrol`,`nombre`,`descripcion`) VALUES 
- (1,'Administrador','Administrador de JHard'),
+LOCK TABLES `rol` WRITE;
+INSERT INTO `jhard`.`rol` VALUES  (1,'Administrador','Administrador de JHard'),
  (2,'Administrativo','Personal Administrativo UES-FMO'),
  (3,'Docente','Docente UES-FMO'),
  (4,'Editor de Contenido','Encargado de actualizar contenido de JHard'),
  (5,'Estudiante','Estudiante UES-FMO'),
  (6,'Instructor','Instructor de materia UES-FMO');
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `rol` ENABLE KEYS */;
 
 
 --
--- Definition of table `software`
+-- Definition of table `jhard`.`software`
 --
 
-DROP TABLE IF EXISTS `software`;
-CREATE TABLE `software` (
+DROP TABLE IF EXISTS `jhard`.`software`;
+CREATE TABLE  `jhard`.`software` (
   `idsoftware` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada software',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del software',
   `version` varchar(15) NOT NULL COMMENT 'Version del software',
@@ -1121,21 +1155,22 @@ CREATE TABLE `software` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `software`
+-- Dumping data for table `jhard`.`software`
 --
 
 /*!40000 ALTER TABLE `software` DISABLE KEYS */;
-INSERT INTO `software` (`idsoftware`,`nombre`,`version`,`codigolicencia`,`cantidadlicencias`,`idclasificacion`) VALUES 
- (1,'Microsoft Windows XP','Service Pack 2','JGOL-JGFL-KGJK.KJGF-O3JW-OLB3',20,9);
+LOCK TABLES `software` WRITE;
+INSERT INTO `jhard`.`software` VALUES  (1,'Microsoft Windows XP','Service Pack 2','JGOL-JGFL-KGJK.KJGF-O3JW-OLB3',20,9);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `software` ENABLE KEYS */;
 
 
 --
--- Definition of table `solicitante`
+-- Definition of table `jhard`.`solicitante`
 --
 
-DROP TABLE IF EXISTS `solicitante`;
-CREATE TABLE `solicitante` (
+DROP TABLE IF EXISTS `jhard`.`solicitante`;
+CREATE TABLE  `jhard`.`solicitante` (
   `idsolicitante` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada persona solicitante',
   `apellidos` varchar(200) NOT NULL COMMENT 'Apellidos del solicitante',
   `nombres` varchar(200) NOT NULL COMMENT 'Nombres del solicitante',
@@ -1146,19 +1181,21 @@ CREATE TABLE `solicitante` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `solicitante`
+-- Dumping data for table `jhard`.`solicitante`
 --
 
 /*!40000 ALTER TABLE `solicitante` DISABLE KEYS */;
+LOCK TABLES `solicitante` WRITE;
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `solicitante` ENABLE KEYS */;
 
 
 --
--- Definition of table `solicitud`
+-- Definition of table `jhard`.`solicitud`
 --
 
-DROP TABLE IF EXISTS `solicitud`;
-CREATE TABLE `solicitud` (
+DROP TABLE IF EXISTS `jhard`.`solicitud`;
+CREATE TABLE  `jhard`.`solicitud` (
   `idsolicitud` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada solicitud',
   `fecha` date NOT NULL COMMENT 'Fecha en la que se registro la solicitud',
   `prioridad` varchar(25) NOT NULL COMMENT 'Tipo de prioridad en la cual se clasifican las solicitudes de mantenimiento. Sus posibles valores son: Alta, Media y Baja',
@@ -1176,12 +1213,12 @@ CREATE TABLE `solicitud` (
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `solicitud`
+-- Dumping data for table `jhard`.`solicitud`
 --
 
 /*!40000 ALTER TABLE `solicitud` DISABLE KEYS */;
-INSERT INTO `solicitud` (`idsolicitud`,`fecha`,`prioridad`,`descripcion`,`idusuario`,`idequipoexistente`,`idequiposimple`) VALUES 
- (1,'2009-06-06','Alta','Virus',1,1,1),
+LOCK TABLES `solicitud` WRITE;
+INSERT INTO `jhard`.`solicitud` VALUES  (1,'2009-06-06','Alta','Virus',1,1,1),
  (2,'2009-06-17','Media','Virus',1,NULL,1),
  (3,'2009-06-17','Media','VIRUS MIERDA',10,NULL,1),
  (4,'2009-06-17','Media','a veeeeer!',5,NULL,4),
@@ -1197,15 +1234,16 @@ INSERT INTO `solicitud` (`idsolicitud`,`fecha`,`prioridad`,`descripcion`,`idusua
  (14,'3909-06-28','Media','jajajaja',9,NULL,8),
  (15,'2009-06-29','Media','Brasil campeon de la confederaciones',9,NULL,12),
  (16,'2009-06-29','Media','JODIO EL UBUNTU',9,NULL,14);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `solicitud` ENABLE KEYS */;
 
 
 --
--- Definition of table `tag`
+-- Definition of table `jhard`.`tag`
 --
 
-DROP TABLE IF EXISTS `tag`;
-CREATE TABLE `tag` (
+DROP TABLE IF EXISTS `jhard`.`tag`;
+CREATE TABLE  `jhard`.`tag` (
   `idtag` int(11) unsigned NOT NULL auto_increment,
   `descripcion` varchar(25) NOT NULL,
   PRIMARY KEY  (`idtag`),
@@ -1213,32 +1251,24 @@ CREATE TABLE `tag` (
 ) ENGINE=InnoDB AUTO_INCREMENT=778 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tag`
+-- Dumping data for table `jhard`.`tag`
 --
 
 /*!40000 ALTER TABLE `tag` DISABLE KEYS */;
-INSERT INTO `tag` (`idtag`,`descripcion`) VALUES 
- (3,'hardware'),
- (8,'impresora'),
- (6,'ip'),
- (9,'latin'),
- (7,'linux'),
- (10,'lorem'),
- (1,'portada'),
- (5,'red'),
- (4,'software'),
- (11,'Tag9999'),
- (777,'TagTest'),
- (2,'wiki');
+LOCK TABLES `tag` WRITE;
+INSERT INTO `jhard`.`tag` VALUES  (2,'2009'),
+ (1,'curso'),
+ (3,'linux');
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `tag` ENABLE KEYS */;
 
 
 --
--- Definition of table `tag_entrada`
+-- Definition of table `jhard`.`tag_entrada`
 --
 
-DROP TABLE IF EXISTS `tag_entrada`;
-CREATE TABLE `tag_entrada` (
+DROP TABLE IF EXISTS `jhard`.`tag_entrada`;
+CREATE TABLE  `jhard`.`tag_entrada` (
   `idtagentrada` int(11) unsigned NOT NULL auto_increment,
   `idtag` int(11) unsigned NOT NULL,
   `identrada` int(11) unsigned NOT NULL,
@@ -1246,32 +1276,29 @@ CREATE TABLE `tag_entrada` (
   KEY `fk_tag_entrada_tag` (`idtag`),
   KEY `fk_tag_entrada_entrada` (`identrada`),
   KEY `idxTagEntrada` (`idtag`,`identrada`),
-  CONSTRAINT `fk_tag_entrada_entrada` FOREIGN KEY (`identrada`) REFERENCES `entrada` (`identrada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tag_entrada_entrada` FOREIGN KEY (`identrada`) REFERENCES `entrada` (`identrada`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_tag_entrada_tag` FOREIGN KEY (`idtag`) REFERENCES `tag` (`idtag`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tag_entrada`
+-- Dumping data for table `jhard`.`tag_entrada`
 --
 
 /*!40000 ALTER TABLE `tag_entrada` DISABLE KEYS */;
-INSERT INTO `tag_entrada` (`idtagentrada`,`idtag`,`identrada`) VALUES 
- (1,1,1),
- (2,2,2),
- (3,9,3),
- (4,10,1),
- (5,10,2),
- (6,10,3),
- (7,10,4);
+LOCK TABLES `tag_entrada` WRITE;
+INSERT INTO `jhard`.`tag_entrada` VALUES  (44,1,9),
+ (46,2,9),
+ (45,3,9);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `tag_entrada` ENABLE KEYS */;
 
 
 --
--- Definition of table `tecnico`
+-- Definition of table `jhard`.`tecnico`
 --
 
-DROP TABLE IF EXISTS `tecnico`;
-CREATE TABLE `tecnico` (
+DROP TABLE IF EXISTS `jhard`.`tecnico`;
+CREATE TABLE  `jhard`.`tecnico` (
   `idtecnico` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada tecnico',
   `apellidos` varchar(200) NOT NULL COMMENT 'Apellidos del tecnico',
   `nombres` varchar(200) NOT NULL COMMENT 'Nombres del tecnico',
@@ -1280,46 +1307,48 @@ CREATE TABLE `tecnico` (
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tecnico`
+-- Dumping data for table `jhard`.`tecnico`
 --
 
 /*!40000 ALTER TABLE `tecnico` DISABLE KEYS */;
-INSERT INTO `tecnico` (`idtecnico`,`apellidos`,`nombres`,`cargo`) VALUES 
- (3,'Aguirre','Gabriel','Tecnico'),
+LOCK TABLES `tecnico` WRITE;
+INSERT INTO `jhard`.`tecnico` VALUES  (3,'Aguirre','Gabriel','Tecnico'),
  (4,'Mineros','Roberto','Tecnico'),
  (14,'Villatoro','Ana Graciela','Tecnico'),
  (16,'Martinez','Diego','Tecnico');
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `tecnico` ENABLE KEYS */;
 
 
 --
--- Definition of table `ubicacion`
+-- Definition of table `jhard`.`ubicacion`
 --
 
-DROP TABLE IF EXISTS `ubicacion`;
-CREATE TABLE `ubicacion` (
+DROP TABLE IF EXISTS `jhard`.`ubicacion`;
+CREATE TABLE  `jhard`.`ubicacion` (
   `idubicacion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada ubicacion',
   `nombre` varchar(45) default NULL COMMENT 'Nombre de la ubicacion',
   PRIMARY KEY  (`idubicacion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ubicacion`
+-- Dumping data for table `jhard`.`ubicacion`
 --
 
 /*!40000 ALTER TABLE `ubicacion` DISABLE KEYS */;
-INSERT INTO `ubicacion` (`idubicacion`,`nombre`) VALUES 
- (0,'Generica'),
+LOCK TABLES `ubicacion` WRITE;
+INSERT INTO `jhard`.`ubicacion` VALUES  (0,'Generica'),
  (1,'LABCOM-1');
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `ubicacion` ENABLE KEYS */;
 
 
 --
--- Definition of table `usuario`
+-- Definition of table `jhard`.`usuario`
 --
 
-DROP TABLE IF EXISTS `usuario`;
-CREATE TABLE `usuario` (
+DROP TABLE IF EXISTS `jhard`.`usuario`;
+CREATE TABLE  `jhard`.`usuario` (
   `idusuario` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada usuario',
   `nombre` varchar(25) NOT NULL COMMENT 'Nombre del usuario',
   `clave` varchar(35) NOT NULL COMMENT 'Clave de acceso del usuario',
@@ -1333,12 +1362,12 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `usuario`
+-- Dumping data for table `jhard`.`usuario`
 --
 
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` (`idusuario`,`nombre`,`clave`,`idrol`,`idautorizacion`) VALUES 
- (1,'LuisBarrera','21232F297A57A5A743894A0E4A801FC3',1,NULL),
+LOCK TABLES `usuario` WRITE;
+INSERT INTO `jhard`.`usuario` VALUES  (1,'LuisBarrera','21232F297A57A5A743894A0E4A801FC3',1,NULL),
  (2,'Madrid','21232F297A57A5A743894A0E4A801FC3',1,NULL),
  (3,'Claudia','9003D1DF22EB4D3820015070385194C8',2,NULL),
  (4,'Stanley','9003D1DF22EB4D3820015070385194C8',3,NULL),
@@ -1351,25 +1380,28 @@ INSERT INTO `usuario` (`idusuario`,`nombre`,`clave`,`idrol`,`idautorizacion`) VA
  (11,'rosario','9003D1DF22EB4D3820015070385194C8',3,NULL),
  (12,'robertux','3858F62230AC3C915F300C664312C63F',1,NULL),
  (13,'ramayac','21232F297A57A5A743894A0E4A801FC3',1,NULL);
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
 
 --
--- Definition of table `valoracion`
+-- Definition of table `jhard`.`valoracion`
 --
 
-DROP TABLE IF EXISTS `valoracion`;
-CREATE TABLE `valoracion` (
+DROP TABLE IF EXISTS `jhard`.`valoracion`;
+CREATE TABLE  `jhard`.`valoracion` (
   `fk_userid` int(11) NOT NULL,
   `fk_identrada` int(11) NOT NULL,
   KEY `entrada` USING BTREE (`fk_userid`,`fk_identrada`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `valoracion`
+-- Dumping data for table `jhard`.`valoracion`
 --
 
 /*!40000 ALTER TABLE `valoracion` DISABLE KEYS */;
+LOCK TABLES `valoracion` WRITE;
+UNLOCK TABLES;
 /*!40000 ALTER TABLE `valoracion` ENABLE KEYS */;
 
 
