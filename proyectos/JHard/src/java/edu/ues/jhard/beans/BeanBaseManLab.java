@@ -7,6 +7,11 @@ import edu.ues.jhard.jpa.Facultad;
 import edu.ues.jhard.jpa.Carrera;
 import edu.ues.jhard.jpa.Materia;
 import edu.ues.jhard.jpa.Estadocurso;
+import edu.ues.jhard.jpa.Curso;
+import edu.ues.jhard.jpa.Clase;
+import edu.ues.jhard.jpa.Asistencia;
+import edu.ues.jhard.jpa.Inscripcion;
+import edu.ues.jhard.jpa.Horario;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -747,8 +752,520 @@ public class BeanBaseManLab extends BeanBase{
         return i;
     }
 
-    
+    /**
+     * Metodo para obtener una Inscripcion por su ID
+     * @param idInscripcion id de la inscripcion que se desea
+     * @return
+     */
+    public Inscripcion getInscripcion(int idInscripcion) {
+        EntityManager em = this.getEntityManager();
+        Inscripcion i = em.find(Inscripcion.class, idInscripcion);
+        return i;
+    }
 
+    /**
+     * Metodo para obtener una Inscripcion por su ID
+     * @param idInscripcion id de la inscripcion que se desea
+     * @return
+     */
+    public List<Inscripcion> getAllInscripcions() {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Inscripcion.findAll");
+        return (List<Inscripcion>)q.getResultList();
+    }
+
+    /**
+     * Metodo para añadir un objeto Inscripcion
+     * @param Inscripcion
+     */
+    public boolean createInscripcion(Inscripcion inscripcion){
+        try {
+            EntityManager em = this.getEntityManager();
+            em.getTransaction().begin();
+            em.persist(inscripcion);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Metodo para eliminar una Inscripcion por su ID
+     * @param idInscripcion
+     */
+    public void deleteInscripcion(int idInscripcion) {
+        EntityManager em = this.getEntityManager();
+        Inscripcion i = (Inscripcion)em.find(Inscripcion.class, idInscripcion);
+        em.getTransaction().begin();
+        em.remove(i);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para eliminar un objeto Inscripcion
+     * @param Inscripcion
+     */
+    public void deleteInscripcion(Inscripcion inscripcion){
+        EntityManager em = this.getEntityManager();
+        Inscripcion i = em.find(Inscripcion.class, inscripcion.getIdinscripcion());
+        if(i==null) return;
+        em.getTransaction().begin();
+        em.remove(i);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para actualizar un objeto Inscripcion
+     * @param Inscripcion
+     */
+    public void updateInscripcion(Inscripcion inscripcion){
+        EntityManager em = this.getEntityManager();
+        Inscripcion i = em.find(Inscripcion.class, inscripcion.getIdinscripcion());
+        i = inscripcion;
+        em.getTransaction().begin();
+        em.merge(i);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para recargar una Inscripcion por demanda, por su ID
+     * @param Inscripcion
+     */
+    public Inscripcion recargarInscripcion(Integer idInscripcion){
+        EntityManager em = this.getEntityManager();
+        Inscripcion i = em.find(Inscripcion.class, idInscripcion);
+        em.getTransaction().begin();
+        em.refresh(i);
+        em.getTransaction().commit();
+        return i;
+    }
+
+    /**
+     * Metodo para recargar una Inscripcion por demanda
+     * @param Inscripcion
+     */
+    public Inscripcion recargarInscripcion(Inscripcion inscripcion){
+        EntityManager em = this.getEntityManager();
+        Inscripcion i = em.find(Inscripcion.class, inscripcion.getIdinscripcion());
+        i = inscripcion;
+        em.getTransaction().begin();
+        em.refresh(i);
+        em.getTransaction().commit();
+        return i;
+    }
+
+    /**
+     * Metodo para obtener un Curso por su ID
+     * @param idCurso id del curso que se desea
+     * @return
+     */
+    public Curso getCurso(int idCurso) {
+        EntityManager em = this.getEntityManager();
+        Curso c = em.find(Curso.class, idCurso);
+        return c;
+    }
+
+    /**
+     * Metodo para obtener un Curso por su ID
+     * @param idCurso id del curso que se desea
+     * @return
+     */
+    public List<Curso> getAllCursos() {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Curso.findAll");
+        return (List<Curso>)q.getResultList();
+    }
+
+    /**
+     * Metodo para añadir un objeto Curso
+     * @param Curso
+     */
+    public boolean createCurso(Curso curso){
+        try {
+            EntityManager em = this.getEntityManager();
+            em.getTransaction().begin();
+            em.persist(curso);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Metodo para eliminar un Curso por su ID
+     * @param idCurso
+     */
+    public void deleteCurso(int idCurso) {
+        EntityManager em = this.getEntityManager();
+        Curso c = (Curso)em.find(Curso.class, idCurso);
+        em.getTransaction().begin();
+        em.remove(c);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para eliminar un objeto Curso
+     * @param Curso
+     */
+    public void deleteCurso(Curso curso){
+        EntityManager em = this.getEntityManager();
+        Curso c = em.find(Curso.class, curso.getIdcurso());
+        if(c==null) return;
+        em.getTransaction().begin();
+        em.remove(c);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para actualizar un objeto Curso
+     * @param Curso
+     */
+    public void updateCurso(Curso curso){
+        EntityManager em = this.getEntityManager();
+        Curso c = em.find(Curso.class, curso.getIdcurso());
+        c = curso;
+        em.getTransaction().begin();
+        em.merge(c);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para recargar un Curso por demanda, por su ID
+     * @param Curso
+     */
+    public Curso recargarCurso(Integer idCurso){
+        EntityManager em = this.getEntityManager();
+        Curso c = em.find(Curso.class, idCurso);
+        em.getTransaction().begin();
+        em.refresh(c);
+        em.getTransaction().commit();
+        return c;
+    }
+
+    /**
+     * Metodo para recargar un Curso por demanda
+     * @param Curso
+     */
+    public Curso recargarCurso(Curso curso){
+        EntityManager em = this.getEntityManager();
+        Curso c = em.find(Curso.class, curso.getIdcurso());
+        c = curso;
+        em.getTransaction().begin();
+        em.refresh(c);
+        em.getTransaction().commit();
+        return c;
+    }
+
+    /**
+     * Metodo para obtener una Clase por su ID
+     * @param idClase id de la clase que se desea
+     * @return
+     */
+    public Clase getClase(int idClase) {
+        EntityManager em = this.getEntityManager();
+        Clase c = em.find(Clase.class, idClase);
+        return c;
+    }
+
+    /**
+     * Metodo para obtener una Clase por su ID
+     * @param idClase id de la clase que se desea
+     * @return
+     */
+    public List<Clase> getAllClases() {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Clase.findAll");
+        return (List<Clase>)q.getResultList();
+    }
+
+    /**
+     * Metodo para añadir un objeto Clase
+     * @param Clase
+     */
+    public boolean createClase(Clase clase){
+        try {
+            EntityManager em = this.getEntityManager();
+            em.getTransaction().begin();
+            em.persist(clase);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Metodo para eliminar una Clase por su ID
+     * @param idClase
+     */
+    public void deleteClase(int idClase) {
+        EntityManager em = this.getEntityManager();
+        Clase c = (Clase)em.find(Clase.class, idClase);
+        em.getTransaction().begin();
+        em.remove(c);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para eliminar un objeto Clase
+     * @param Clase
+     */
+    public void deleteClase(Clase clase){
+        EntityManager em = this.getEntityManager();
+        Clase c = em.find(Clase.class, clase.getIdclase());
+        if(c==null) return;
+        em.getTransaction().begin();
+        em.remove(c);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para actualizar un objeto Clase
+     * @param Clase
+     */
+    public void updateClase(Clase clase){
+        EntityManager em = this.getEntityManager();
+        Clase c = em.find(Clase.class, clase.getIdclase());
+        c = clase;
+        em.getTransaction().begin();
+        em.merge(c);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para recargar una Clase por demanda, por su ID
+     * @param Clase
+     */
+    public Clase recargarClase(Integer idClase){
+        EntityManager em = this.getEntityManager();
+        Clase c = em.find(Clase.class, idClase);
+        em.getTransaction().begin();
+        em.refresh(c);
+        em.getTransaction().commit();
+        return c;
+    }
+
+    /**
+     * Metodo para recargar una Clase por demanda
+     * @param Clase
+     */
+    public Clase recargarClase(Clase clase){
+        EntityManager em = this.getEntityManager();
+        Clase c = em.find(Clase.class, clase.getIdclase());
+        c = clase;
+        em.getTransaction().begin();
+        em.refresh(c);
+        em.getTransaction().commit();
+        return c;
+    }
+
+    /**
+     * Metodo para obtener una Asistencia por su ID
+     * @param idAsistencia id de la asistencia que se desea
+     * @return
+     */
+    public Asistencia getAsistencia(int idAsistencia) {
+        EntityManager em = this.getEntityManager();
+        Asistencia a = em.find(Asistencia.class, idAsistencia);
+        return a;
+    }
+
+    /**
+     * Metodo para obtener una Asistencia por su ID
+     * @param idAsistencia id de la asistencia que se desea
+     * @return
+     */
+    public List<Asistencia> getAllAsistencias() {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Asistencia.findAll");
+        return (List<Asistencia>)q.getResultList();
+    }
+
+    /**
+     * Metodo para añadir un objeto Asistencia
+     * @param Asistencia
+     */
+    public boolean createAsistencia(Asistencia clase){
+        try {
+            EntityManager em = this.getEntityManager();
+            em.getTransaction().begin();
+            em.persist(clase);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Metodo para eliminar una Asistencia por su ID
+     * @param idAsistencia
+     */
+    public void deleteAsistencia(int idAsistencia) {
+        EntityManager em = this.getEntityManager();
+        Asistencia a = (Asistencia)em.find(Asistencia.class, idAsistencia);
+        em.getTransaction().begin();
+        em.remove(a);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para eliminar un objeto Asistencia
+     * @param Asistencia
+     */
+    public void deleteAsistencia(Asistencia asistencia){
+        EntityManager em = this.getEntityManager();
+        Asistencia a = em.find(Asistencia.class, asistencia.getIdasistencia());
+        if(a==null) return;
+        em.getTransaction().begin();
+        em.remove(a);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para actualizar un objeto Asistencia
+     * @param Asistencia
+     */
+    public void updateAsistencia(Asistencia clase){
+        EntityManager em = this.getEntityManager();
+        Asistencia a = em.find(Asistencia.class, clase.getIdasistencia());
+        a = clase;
+        em.getTransaction().begin();
+        em.merge(a);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para recargar una Asistencia por demanda, por su ID
+     * @param Asistencia
+     */
+    public Asistencia recargarAsistencia(Integer idAsistencia){
+        EntityManager em = this.getEntityManager();
+        Asistencia a = em.find(Asistencia.class, idAsistencia);
+        em.getTransaction().begin();
+        em.refresh(a);
+        em.getTransaction().commit();
+        return a;
+    }
+
+    /**
+     * Metodo para recargar una Asistencia por demanda
+     * @param Asistencia
+     */
+    public Asistencia recargarAsistencia(Asistencia clase){
+        EntityManager em = this.getEntityManager();
+        Asistencia a = em.find(Asistencia.class, clase.getIdasistencia());
+        a = clase;
+        em.getTransaction().begin();
+        em.refresh(a);
+        em.getTransaction().commit();
+        return a;
+    }
+
+    /**
+     * Metodo para obtener un Horario por su ID
+     * @param idHorario id del horario que se desea
+     * @return
+     */
+    public Horario getHorario(int idHorario) {
+        EntityManager em = this.getEntityManager();
+        Horario h = em.find(Horario.class, idHorario);
+        return h;
+    }
+
+    /**
+     * Metodo para obtener un Horario por su ID
+     * @param idHorario id del horario que se desea
+     * @return
+     */
+    public List<Horario> getAllHorarios() {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Horario.findAll");
+        return (List<Horario>)q.getResultList();
+    }
+
+    /**
+     * Metodo para añadir un objeto Horario
+     * @param Horario
+     */
+    public boolean createHorario(Horario horario){
+        try {
+            EntityManager em = this.getEntityManager();
+            em.getTransaction().begin();
+            em.persist(horario);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Metodo para eliminar un Horario por su ID
+     * @param idHorario
+     */
+    public void deleteHorario(int idHorario) {
+        EntityManager em = this.getEntityManager();
+        Horario h = (Horario)em.find(Horario.class, idHorario);
+        em.getTransaction().begin();
+        em.remove(h);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para eliminar un objeto Horario
+     * @param Horario
+     */
+    public void deleteHorario(Horario horario){
+        EntityManager em = this.getEntityManager();
+        Horario h = em.find(Horario.class, horario.getIdhorario());
+        if(h==null) return;
+        em.getTransaction().begin();
+        em.remove(h);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para actualizar un objeto Horario
+     * @param Horario
+     */
+    public void updateHorario(Horario horario){
+        EntityManager em = this.getEntityManager();
+        Horario h = em.find(Horario.class, horario.getIdhorario());
+        h = horario;
+        em.getTransaction().begin();
+        em.merge(h);
+        em.getTransaction().commit();
+    }
+
+    /**
+     * Metodo para recargar un Horario por demanda, por su ID
+     * @param Horario
+     */
+    public Horario recargarHorario(Integer idHorario){
+        EntityManager em = this.getEntityManager();
+        Horario h = em.find(Horario.class, idHorario);
+        em.getTransaction().begin();
+        em.refresh(h);
+        em.getTransaction().commit();
+        return h;
+    }
+
+    /**
+     * Metodo para recargar un Horario por demanda
+     * @param Horario
+     */
+    public Horario recargarHorario(Horario horario){
+        EntityManager em = this.getEntityManager();
+        Horario h = em.find(Horario.class, horario.getIdhorario());
+        h = horario;
+        em.getTransaction().begin();
+        em.refresh(h);
+        em.getTransaction().commit();
+        return h;
+    }
 
     @Deprecated
     public Docente getDocenteByUsuario(Integer idUsuario) {
