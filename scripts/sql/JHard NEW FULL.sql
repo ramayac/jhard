@@ -123,7 +123,7 @@ CREATE TABLE  `jhard`.`articulos` (
   KEY `idxArtTitulo` (`titulo`),
   KEY `idxArtFecha` (`fechahora`),
   CONSTRAINT `fkarticulousuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='Articulos de jwiki';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Articulos de jwiki';
 
 --
 -- Dumping data for table `jhard`.`articulos`
@@ -131,7 +131,8 @@ CREATE TABLE  `jhard`.`articulos` (
 
 /*!40000 ALTER TABLE `articulos` DISABLE KEYS */;
 LOCK TABLES `articulos` WRITE;
-INSERT INTO `jhard`.`articulos` VALUES  (2,'¿Qué es un Wiki?','<p>Un <b>wiki</b>, o una <b>wiki</b>, es un <a title=\"Sitio web\" href=\"http://es.wikipedia.org/wiki/Sitio_web\">sitio web</a> cuyas p&aacute;ginas web pueden ser editadas por m&uacute;ltiples voluntarios a trav&eacute;s del <a title=\"Navegador web\" href=\"http://es.wikipedia.org/wiki/Navegador_web\">navegador web</a>. Los <a title=\"Usuario\" href=\"http://es.wikipedia.org/wiki/Usuario\">usuarios</a> pueden crear, modificar o borrar un mismo texto que comparten. Los textos o &quot;p&aacute;ginas wiki&quot; tienen t&iacute;tulos &uacute;nicos. Si se escribe el t&iacute;tulo de una &quot;p&aacute;gina-wiki&quot; en alg&uacute;n lugar del wiki, esta palabra se convierte en un &quot;enlace web&quot; (o &quot;<a title=\"Link\" href=\"http://es.wikipedia.org/wiki/Link\">link</a>&quot;) a la p&aacute;gina web.</p>\n<p>En una p&aacute;gina sobre &quot;alpinismo&quot; puede haber una palabra como &quot;piolet&quot; o &quot;br&uacute;jula&quot; que est&eacute; marcada como palabra perteneciente a un t&iacute;tulo de p&aacute;gina wiki. La mayor parte de las implementaciones de wikis indican en el <a class=\"mw-redirect\" title=\"URL\" href=\"http://es.wikipedia.org/wiki/URL\">URL</a> de la p&aacute;gina el propio t&iacute;tulo de la p&aacute;gina wiki (en Wikipedia ocurre as&iacute;: <a rel=\"nofollow\" title=\"http://es.wikipedia.org/wiki/Alpinismo\" class=\"external free\" href=\"http://es.wikipedia.org/wiki/Alpinismo\">http://es.wikipedia.org/wiki/Alpinismo</a>), facilitando el uso y comprensibilidad del link fuera del propio sitio web. Adem&aacute;s, esto permite formar en muchas ocasiones una coherencia terminol&oacute;gica, generando una ordenaci&oacute;n <i>natural</i> del contenido.</p>\n<p>La aplicaci&oacute;n de mayor peso y a la que le debe su mayor fama hasta el momento ha sido la creaci&oacute;n de enciclopedias colaborativas, g&eacute;nero al que pertenece la <a title=\"Wikipedia\" href=\"http://es.wikipedia.org/wiki/Wikipedia\">Wikipedia</a>. Existen muchas otras aplicaciones m&aacute;s cercanas a la coordinaci&oacute;n de informaciones y acciones, o la puesta en com&uacute;n de conocimientos o textos dentro de grupos.</p>\n<p>La mayor parte de los wikis actuales conservan un historial de cambios que permite recuperar f&aacute;cilmente cualquier estado anterior y ver \'qui&eacute;n\' hizo cada cambio, lo cual facilita enormemente el mantenimiento conjunto y el control de usuarios destructivos. Habitualmente, sin necesidad de una revisi&oacute;n previa, se actualiza el contenido que muestra la p&aacute;gina wiki editada.</p>','2009-07-25 18:59:20',13);
+INSERT INTO `jhard`.`articulos` VALUES  (2,'¿Qué es un Wiki?','<p>Un <b>wiki</b>, o una <b>wiki</b>, es un <a title=\"Sitio web\" href=\"http://es.wikipedia.org/wiki/Sitio_web\">sitio web</a> cuyas p&aacute;ginas web pueden ser editadas por m&uacute;ltiples voluntarios a trav&eacute;s del <a title=\"Navegador web\" href=\"http://es.wikipedia.org/wiki/Navegador_web\">navegador web</a>. Los <a title=\"Usuario\" href=\"http://es.wikipedia.org/wiki/Usuario\">usuarios</a> pueden crear, modificar o borrar un mismo texto que comparten. Los textos o &quot;p&aacute;ginas wiki&quot; tienen t&iacute;tulos &uacute;nicos. Si se escribe el t&iacute;tulo de una &quot;p&aacute;gina-wiki&quot; en alg&uacute;n lugar del wiki, esta palabra se convierte en un &quot;enlace web&quot; (o &quot;<a title=\"Link\" href=\"http://es.wikipedia.org/wiki/Link\">link</a>&quot;) a la p&aacute;gina web.</p>\n<p>En una p&aacute;gina sobre &quot;alpinismo&quot; puede haber una palabra como &quot;piolet&quot; o &quot;br&uacute;jula&quot; que est&eacute; marcada como palabra perteneciente a un t&iacute;tulo de p&aacute;gina wiki. La mayor parte de las implementaciones de wikis indican en el <a class=\"mw-redirect\" title=\"URL\" href=\"http://es.wikipedia.org/wiki/URL\">URL</a> de la p&aacute;gina el propio t&iacute;tulo de la p&aacute;gina wiki (en Wikipedia ocurre as&iacute;: <a rel=\"nofollow\" title=\"http://es.wikipedia.org/wiki/Alpinismo\" class=\"external free\" href=\"http://es.wikipedia.org/wiki/Alpinismo\">http://es.wikipedia.org/wiki/Alpinismo</a>), facilitando el uso y comprensibilidad del link fuera del propio sitio web. Adem&aacute;s, esto permite formar en muchas ocasiones una coherencia terminol&oacute;gica, generando una ordenaci&oacute;n <i>natural</i> del contenido.</p>\n<p>La aplicaci&oacute;n de mayor peso y a la que le debe su mayor fama hasta el momento ha sido la creaci&oacute;n de enciclopedias colaborativas, g&eacute;nero al que pertenece la <a title=\"Wikipedia\" href=\"http://es.wikipedia.org/wiki/Wikipedia\">Wikipedia</a>. Existen muchas otras aplicaciones m&aacute;s cercanas a la coordinaci&oacute;n de informaciones y acciones, o la puesta en com&uacute;n de conocimientos o textos dentro de grupos.</p>\n<p>La mayor parte de los wikis actuales conservan un historial de cambios que permite recuperar f&aacute;cilmente cualquier estado anterior y ver \'qui&eacute;n\' hizo cada cambio, lo cual facilita enormemente el mantenimiento conjunto y el control de usuarios destructivos. Habitualmente, sin necesidad de una revisi&oacute;n previa, se actualiza el contenido que muestra la p&aacute;gina wiki editada.</p>','2009-07-25 18:59:20',13),
+ (3,'¿Qué es JHard?','<p>\n<meta content=\"text/html; charset=utf-8\" http-equiv=\"CONTENT-TYPE\">\n<title></title>\n<meta content=\"OpenOffice.org 3.1  (Linux)\" name=\"GENERATOR\"> 	<style type=\"text/css\">\n	<!--\n		@page { margin: 2cm }\n		P { margin-bottom: 0.21cm }\n	-->\n	</style>   </meta>\n</meta>\n</p>\n<p>El sistema <strong>JHard</strong>, es una solucion informatica creada para el Laboratorio de Hardware y Software de la <a href=\"http://www.uesocc.edu.sv\">Universidad de El Salvador - Facultad Multidisciplinaria de Occidente</a>.<br />\n<br />\nEst&aacute; compuesto por seis m&oacute;dulos robustos a los que tienen acceso los usuarios de todo tipo, sin embargo est&aacute; compuesto de otra gran cantidad de subcomponentes que a&ntilde;aden caracter&iacute;sticas adicionales, necesarias para el funcionamiento interno del mismo. A continuaci&oacute;n,&nbsp; se listan los&nbsp; seis m&oacute;dulos principales con los que tendr&aacute; interacci&oacute;n los usuarios finales, y las necesidades que cada uno pretenden solventar:</p>\n<ol>\n    <li>JInvent: Manejo de Inventario del Laboratorio de Hardware (No consumibles)</li>\n    <li>JRequest: Solicitud de servicio al laboratorio.</li>\n    <li>JWiki: Modulo colaborativo de conocimiento, con soluciones a problemas comunes.</li>\n    <li>ProCur: Modulo de Manejo de Contenidos (CMS) para la promoci&oacute;n de cursos del Laboratorio de Hardware</li>\n    <li>ManLab: Modulo de para la gesti&oacute;n de inscripci&oacute;n de laboratorios pr&aacute;cticos en el Laboratorio de Hardware.</li>\n    <li>JCanon: Modulo para la gesti&oacute;n de reserva de ca&ntilde;ones y/o laptops.</li>\n</ol>\n<p>El sistema JHard tendr&aacute; adem&aacute;s, una interfaz administrativa (JHardmin) con la que se podr&aacute; dar mantenimiento al sitio, y administrar los perfiles/roles de los usuarios.</p>\n<p>&nbsp;</p>','2009-07-26 09:18:43',13);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `articulos` ENABLE KEYS */;
 
@@ -493,7 +494,7 @@ CREATE TABLE  `jhard`.`entrada` (
   KEY `idxEntrTitulo` (`titulo`),
   KEY `idxEntrFecha` (`fechahora`),
   CONSTRAINT `fk_entrada_usuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `jhard`.`entrada`
@@ -501,7 +502,8 @@ CREATE TABLE  `jhard`.`entrada` (
 
 /*!40000 ALTER TABLE `entrada` DISABLE KEYS */;
 LOCK TABLES `entrada` WRITE;
-INSERT INTO `jhard`.`entrada` VALUES  (9,'Cursos de Linux','<p>Linux es un sistema operativo de descarga gratuita que se creo a principios de los a&ntilde;os noventa para competir con Windows. Se caracteriza por ser libre y por venir acompa&ntilde;ado de un c&oacute;digo fuente. Este curso gratis le ense&ntilde;ar&aacute; una serie de pautas para que empiece a manejar Linux.</p>\n<p>El curso comienza el Sabado 31 de Febrero de 2009.</p>','2009-07-25 19:08:15',13);
+INSERT INTO `jhard`.`entrada` VALUES  (9,'Cursos de Linux','<p>Linux es un sistema operativo de descarga gratuita que se creo a principios de los a&ntilde;os noventa para competir con Windows. Se caracteriza por ser libre y por venir acompa&ntilde;ado de un c&oacute;digo fuente. Este curso gratis le ense&ntilde;ar&aacute; una serie de pautas para que empiece a manejar Linux.</p>\n<p>El curso comienza el Sabado 31 de Febrero de 2009.</p>','2009-07-25 19:08:15',13),
+ (10,'Curso Ejemplo','<p>Este curso se realizara los <strong>Domingos, de 6 a.m. - 6 p.m.</strong> por los proximos <strong>3 a&ntilde;os</strong>.</p>\n<p>En el curso de ejemplo se impartira:</p>\n<ul>\n    <li>Instalacion de sistema operativo Windows XP en 100 maquinas</li>\n    <li>Limpieza de equipo del laboratorio en 4 horas</li>\n    <li>Preparar comida para los docentes que imparten el curso</li>\n    <li>Colaboracion para la compra de bebidas &quot;espirituosas&quot;</li>\n</ul>\n<p>Esperamos sus comentarios para hacer los preparativos necesarios.</p>','2009-07-26 09:56:37',13);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `entrada` ENABLE KEYS */;
 
@@ -1248,7 +1250,7 @@ CREATE TABLE  `jhard`.`tag` (
   `descripcion` varchar(25) NOT NULL,
   PRIMARY KEY  (`idtag`),
   KEY `idxTagDesc` (`descripcion`)
-) ENGINE=InnoDB AUTO_INCREMENT=778 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `jhard`.`tag`
@@ -1257,8 +1259,13 @@ CREATE TABLE  `jhard`.`tag` (
 /*!40000 ALTER TABLE `tag` DISABLE KEYS */;
 LOCK TABLES `tag` WRITE;
 INSERT INTO `jhard`.`tag` VALUES  (2,'2009'),
+ (7,'ayuda'),
  (1,'curso'),
- (3,'linux');
+ (5,'hardware'),
+ (6,'internet'),
+ (3,'linux'),
+ (4,'software'),
+ (8,'virus');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `tag` ENABLE KEYS */;
 
@@ -1269,7 +1276,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `jhard`.`tag_entrada`;
 CREATE TABLE  `jhard`.`tag_entrada` (
-  `idtagentrada` int(11) unsigned NOT NULL auto_increment,
+  `idtagentrada` int(10) unsigned NOT NULL auto_increment,
   `idtag` int(11) unsigned NOT NULL,
   `identrada` int(11) unsigned NOT NULL,
   PRIMARY KEY  (`idtagentrada`,`identrada`,`idtag`),
@@ -1278,7 +1285,7 @@ CREATE TABLE  `jhard`.`tag_entrada` (
   KEY `idxTagEntrada` (`idtag`,`identrada`),
   CONSTRAINT `fk_tag_entrada_entrada` FOREIGN KEY (`identrada`) REFERENCES `entrada` (`identrada`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_tag_entrada_tag` FOREIGN KEY (`idtag`) REFERENCES `tag` (`idtag`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `jhard`.`tag_entrada`
@@ -1286,9 +1293,10 @@ CREATE TABLE  `jhard`.`tag_entrada` (
 
 /*!40000 ALTER TABLE `tag_entrada` DISABLE KEYS */;
 LOCK TABLES `tag_entrada` WRITE;
-INSERT INTO `jhard`.`tag_entrada` VALUES  (44,1,9),
- (46,2,9),
- (45,3,9);
+INSERT INTO `jhard`.`tag_entrada` VALUES  (18,1,9),
+ (23,1,10),
+ (19,2,9),
+ (20,3,9);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `tag_entrada` ENABLE KEYS */;
 
