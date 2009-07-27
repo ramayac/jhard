@@ -6,12 +6,16 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -33,8 +37,11 @@ public class Autorizacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "cantmaxima")
     private Integer cantmaxima;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idautorizacion")
+    private Collection<Usuario> usuarioCollection;
 
     public Autorizacion() {
+        
     }
 
     public Autorizacion(Integer idautorizacion) {
@@ -91,8 +98,29 @@ public class Autorizacion implements Serializable {
     }
 
     public String getDescListaUsuarios(){
-        String descListaUsuarios = "(Total: 0)";
+        String descListaUsuarios = "(Total: " + this.usuarioCollection.size() + ") ";
+        for(Usuario u: this.usuarioCollection)
+            descListaUsuarios += u.getNombre() + ", ";
 
+        if(this.usuarioCollection.size() > 0)
+            descListaUsuarios = descListaUsuarios.substring(0, descListaUsuarios.length() - 2);
+        if(descListaUsuarios.length() > 25)
+            descListaUsuarios = descListaUsuarios.substring(0, 24);
+        
         return descListaUsuarios;
+    }
+
+    /**
+     * @return the usuarioCollection
+     */
+    public Collection<Usuario> getUsuarioCollection() {
+        return usuarioCollection;
+    }
+
+    /**
+     * @param usuarioCollection the usuarioCollection to set
+     */
+    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
+        this.usuarioCollection = usuarioCollection;
     }
 }

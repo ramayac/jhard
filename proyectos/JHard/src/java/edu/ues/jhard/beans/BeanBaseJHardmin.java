@@ -12,6 +12,7 @@ import edu.ues.jhard.jpa.Autorizacion;
 import edu.ues.jhard.jpa.Rol;
 import edu.ues.jhard.jpa.Usuario;
 import edu.ues.jhard.util.ActionMessage;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
@@ -49,6 +50,10 @@ public class BeanBaseJHardmin extends BeanBase {
     private Usuario editDelUser;
     private CrudManager crdAutorizaciones;
     private Autorizacion currentAutorizacion;
+    private Usuario usuarioRegistrado;
+    private String claveUsuarioConfirmacion;
+    private String autorizacionUsuario;
+    private boolean popupRegistrarUsuarioVisible;
 
     public BeanBaseJHardmin(){
         this.loginFail = false;
@@ -67,6 +72,7 @@ public class BeanBaseJHardmin extends BeanBase {
         this.newUser = new Usuario();
         this.initSelectItems();
         this.editDelUser = new Usuario();
+        this.usuarioRegistrado = new Usuario();
     }
 
     public Usuario getUsuario(String userName, String userPwd){
@@ -601,10 +607,152 @@ public class BeanBaseJHardmin extends BeanBase {
     }
 
     public String addAutorizacion(){
+        EntityManager emgr = this.getEntityManager();
+        emgr.getTransaction().begin();
+        emgr.persist(this.currentAutorizacion);
+        emgr.getTransaction().commit();
+        this.listaAutorizaciones.add(this.currentAutorizacion);
+        this.crdAutorizaciones.hidePopupAdd();
+        this.msg.setText("Nueva autorizacion agregada satisfactoriamente");
+        this.msg.setVisible(true);
+        this.currentAutorizacion = new Autorizacion();
+        this.currentAutorizacion.setUsuarioCollection(new ArrayList<Usuario>());
         return "done";
     }
 
     public String delAutorizacion(){
+        EntityManager emgr = this.getEntityManager();
+        this.currentAutorizacion = (Autorizacion)emgr.createQuery("SELECT a FROM Autorizacion a WHERE a.idautorizacion=" + this.crdAutorizaciones.getCurrentId()).getSingleResult();
+
+        emgr.getTransaction().begin();
+        for(Usuario u: this.currentAutorizacion.getUsuarioCollection()){
+            u.setIdautorizacion(null);
+            emgr.merge(u);
+        }
+        emgr.remove(this.currentAutorizacion);
+        emgr.getTransaction().commit();
+
+        this.crdAutorizaciones.hidePopupDel();
+        for(int i=0; i<this.listaAutorizaciones.size(); i++){            
+            if(this.listaAutorizaciones.get(i).getIdautorizacion() == this.currentAutorizacion.getIdautorizacion()){                
+                break;
+            }
+        }        
+        this.msg.setText("Autorizacion eliminada satisfactoriamente. Los usuarios creados a partir de esta autorizacion continuaran existiendo en el sistema.");
+        this.msg.setVisible(true);
+        this.currentAutorizacion = new Autorizacion();
+        this.currentAutorizacion.setUsuarioCollection(new ArrayList<Usuario>());
         return "done";
+    }
+
+    public String showPopupRegistrarUsuario(){
+        this.setPopupRegistrarUsuarioVisible(true);
+        return "done";
+    }
+
+    public String hidePopupRegistrarUsuario(){
+        this.setPopupRegistrarUsuarioVisible(false);
+        return "done";
+    }
+
+    public String registrarUsuario(){
+        EntityManager emgr = this.getEntityManager();
+        Rol rolEstudiante = (Rol)emgr.createQuery("SELECT r FROM Rol r WHERE r.idrol=5").getSingleResult();
+        this.usuarioRegistrado.setIdrol(rolEstudiante);
+        Autorizacion autRegistro = null;
+        try{
+            autRegistro = (Autorizacion)emgr.createQuery("SELECT a FROM Autorizacion a WHERE a.codigo=" + this.autorizacionUsuario).getSingleResult();
+        }
+        catch(Exception ex){
+            //pass
+        }
+        if(autRegistro == null){
+            this.msg.setText("Codigo de autorizacion inexistente");
+            this.msg.setVisible(true);
+            return "fail";
+        }
+        if(autRegistro.getCantmaxima() == autRegistro.getUsuarioCollection().size()){
+            this.msg.setText("No se pueden crear mas usuarios con este codigo de autorizacion");
+            this.msg.setVisible(true);
+            return "fail";
+        }
+        if(!this.usuarioRegistrado.getClave().equalsIgnoreCase(this.claveUsuarioConfirmacion)){
+            this.msg.setText("Clave no coincide con su confirmacion");
+            this.msg.setVisible(true);
+            return "fail";
+        }
+        autRegistro.getUsuarioCollection().add(this.usuarioRegistrado);
+
+        emgr.getTransaction().begin();
+        emgr.persist(this.usuarioRegistrado);
+        emgr.merge(autRegistro);
+        emgr.getTransaction().commit();
+
+        this.hidePopupRegistrarUsuario();
+        this.msg.setText("Usuario registrado satisfactoriamente");
+        this.msg.setVisible(true);
+        for(Autorizacion aut: this.listaAutorizaciones){
+            if(aut.getIdautorizacion() == autRegistro.getIdautorizacion()){
+                aut.getUsuarioCollection().add(this.usuarioRegistrado);
+            }
+        }
+        this.usuarioRegistrado = new Usuario();
+        return "done";
+    }
+
+    /**
+     * @return the usuarioRegistardo
+     */
+    public Usuario getUsuarioRegistrado() {
+        return usuarioRegistrado;
+    }
+
+    /**
+     * @param usuarioRegistardo the usuarioRegistardo to set
+     */
+    public void setUsuarioRegistrado(Usuario usuarioRegistrado) {
+        this.usuarioRegistrado = usuarioRegistrado;
+    }
+
+    /**
+     * @return the claveUsuarioConfirmacion
+     */
+    public String getClaveUsuarioConfirmacion() {
+        return claveUsuarioConfirmacion;
+    }
+
+    /**
+     * @param claveUsuarioConfirmacion the claveUsuarioConfirmacion to set
+     */
+    public void setClaveUsuarioConfirmacion(String claveUsuarioConfirmacion) {
+        this.claveUsuarioConfirmacion = claveUsuarioConfirmacion;
+    }
+
+    /**
+     * @return the autorizacionUsuario
+     */
+    public String getAutorizacionUsuario() {
+        return autorizacionUsuario;
+    }
+
+    /**
+     * @param autorizacionUsuario the autorizacionUsuario to set
+     */
+    public void setAutorizacionUsuario(String autorizacionUsuario) {
+        this.autorizacionUsuario = autorizacionUsuario;
+    }
+
+    /**
+     * @return the popupRegistrarUsuarioVisible
+     */
+    public boolean getPopupRegistrarUsuarioVisible() {
+        return popupRegistrarUsuarioVisible;
+    }
+
+    /**
+     * @param popupRegistrarUsuarioVisible the popupRegistrarUsuarioVisible to set
+     */
+    public void setPopupRegistrarUsuarioVisible(boolean popupRegistrarUsuarioVisible) {
+        this.popupRegistrarUsuarioVisible = popupRegistrarUsuarioVisible;
     }
 }

@@ -144,19 +144,11 @@
                                                     </ice:column>                                                    
                                                 </ice:dataTable>                                                
                                                 <ice:dataPaginator id="pgrListaUsuarios1" for="tblListaUsuarios" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JHardminInstance.userListSize > 10}">
-                                                <f:facet name="first">
-                                                    <ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/>
-                                                </f:facet>
-                                                <f:facet name="previous">
-                                                    <ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/>
-                                                </f:facet>
-                                                <f:facet name="next">
-                                                    <ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/>
-                                                </f:facet>
-                                                <f:facet name="last">
-                                                    <ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/>
-                                                </f:facet>
-                                            </ice:dataPaginator>
+                                                <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
+                                                <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
+                                                <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
+                                                <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
+                                                </ice:dataPaginator>
                                             
                                             <p class="actionSection"><ice:commandButton id="addUser" value="Agregar usuario" action="#{JHardminInstance.showPopupAddUser}" /></p>
                                             <ice:panelPopup id="popUpAddUser" modal="true" draggable="true" rendered="#{JHardminInstance.popUpAddUserVisible}">
@@ -248,7 +240,7 @@
                                             </ice:panelGroup>
                                         </f:facet>
                                         <ice:panelGroup>
-                                            <ice:dataTable id="tblListaAutorizaciones" value="#{JHardminInstance.listaAutorizaciones}" var="autorizacion" rows="10">
+                                            <ice:dataTable id="tblListaAutorizaciones" value="#{JHardminInstance.listaAutorizaciones}" var="autorizacion" rows="5">
                                                 <ice:column>
                                                     <f:facet name="header"><ice:outputText value="Código" /></f:facet>
                                                     <ice:outputText value="#{autorizacion.codigo}" />
@@ -267,7 +259,7 @@
                                                     </ice:commandLink>
                                                 </ice:column>
                                             </ice:dataTable>
-                                            <ice:dataPaginator id="pgrListaAutorizaciones" for="tblListaAutorizaciones" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JHardminInstance.listaAutorizacionesSize > 10}" >
+                                            <ice:dataPaginator id="pgrListaAutorizaciones" for="tblListaAutorizaciones" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JHardminInstance.listaAutorizacionesSize > 5}" >
                                                 <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
                                                 <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
                                                 <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
@@ -284,7 +276,7 @@
                                                         <ice:inputText id="txtCodigoAutorizacion" value="#{JHardminInstance.currentAutorizacion.codigo}" />
                                                     </p>
                                                     <p>
-                                                        <ice:outputLabel id="lblCantMax" for="txtCantMax" value="Cantidad máxima de usuarios:" />
+                                                        <ice:outputLabel id="lblCantMax" for="txtCantMax" value="Cantidad de usuarios:" />
                                                         <ice:inputText id="txtCantMax" value="#{JHardminInstance.currentAutorizacion.cantmaxima}" />
                                                     </p>
                                                     <p class="actionSection">

@@ -434,12 +434,21 @@ public class BeanBaseJInvent extends BeanBase {
 
     public String commitEditExistencia(){
         EntityManager emgr = this.getEntityManager();
-        Equipo eq = (Equipo)emgr.createQuery("SELECT h FROM Equipo h WHERE h.idequipo=" + this.equipoSelected ).getSingleResult();
-        Ubicacion ubc = (Ubicacion)emgr.createQuery("SELECT u FROM Ubicacion u WHERE u.idubicacion=" + this.ubicacionSelected).getSingleResult();
-        eq.getExistenciaCollection().add(this.currentExistencia);
-        ubc.getExistenciaCollection().add(this.currentExistencia);
-        this.currentExistencia.setIdhardware(eq);
-        this.currentExistencia.setIdubicacion(ubc);
+        
+        if(!this.currentExistencia.getIdhardware().getIdequipo().toString().equalsIgnoreCase(this.equipoSelected)){
+            Equipo newAssignedEquipo = (Equipo)emgr.createQuery("SELECT e FROM Equipo e WHERE e.idequipo=" + this.equipoSelected).getSingleResult();
+            Equipo oldAssignedEquipo = this.currentExistencia.getIdhardware();
+            oldAssignedEquipo.getExistenciaCollection().remove(this.currentExistencia);
+            newAssignedEquipo.getExistenciaCollection().add(currentExistencia);
+            currentExistencia.setIdhardware(newAssignedEquipo);
+            emgr.getTransaction().begin();
+            emgr.merge(oldAssignedEquipo);
+            emgr.merge(newAssignedEquipo);
+            emgr.merge(currentExistencia);
+            emgr.getTransaction().commit();
+        }
+
+        
         
         emgr.getTransaction().begin();
         emgr.merge(this.currentExistencia);
