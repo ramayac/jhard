@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Document   : nologin
+    Created on : 07-25-2009, 12:45:10 PM
+    Author     : rodrigo
+-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:element name="text">
+        <h2 class="title">Aviso:</h2>
+        <ul>
+            <li>Su usuario no tiene permiso para operar en esta página.</li>
+            <li>No se ha logueado al sistema.</li>
+        </ul>
+    </jsp:element>
+</jsp:root>

@@ -45,10 +45,10 @@
                         </div>
                         <div class="post">
                             <ice:form id="formEntrada">
-                                <ice:panelTabSet id="panelAdmin" tabPlacement="Top" selectedIndex="#{jprocurAdmin.tabIndex}">
+                                <ice:panelTabSet id="panelAdmin" tabPlacement="Top" selectedIndex="#{jprocurAdmin.tabIndex}" rendered="#{jprocurAdmin.permisos}">
                                     <ice:panelTab id="panelEntradas" label="Administrar Entradas">
                                         <!-- panel de para EDITAR UNA ENTRADAS -->
-                                        <ice:panelGroup id="panelEditarEntrada" rendered="#{jprocurAdmin.editandoEntrada}">
+                                        <ice:panelGroup id="panelEditarEntrada" rendered="#{jprocurAdmin.editandoEntrada}" style="float:left;margin-top:10px; width:580px;">
                                         <div class="post">
                                             Título: <ice:inputText id="itTitulo" title="Título de la entrada"
                                             value="#{jprocurAdmin.entradaActual.titulo}"
@@ -56,7 +56,8 @@
                                             <br/>
                                             <ice:inputRichText id="richDescripcion"
                                             value="#{jprocurAdmin.entradaActual.descripcion}"
-                                            language="es" skin="silver" toolbar="Basic"/>
+                                            language="es" skin="silver" toolbar="Basic"
+                                            saveOnSubmit="true"/>
                                             <br/>
                                             <br/>
                                             Escrito por: <ice:outputLabel id="lblAutor" style="font-weight:bold; " title="Último usuario que guardó la entrada."
@@ -65,8 +66,19 @@
                                             </div>
                                             <br/>
                                             <br/>
-                                            Etiquetas:<br/>
-                                            __aqui un panel con las etiquetas que se pueden poner__
+                                            <ice:panelGroup id="editTags" style="float:left;margin-top:10px;margin-left:15px;">
+                                                <ice:dataTable id="listaEtiquetasEdit"
+                                                var="etiqueta" resizable="true" value="#{jprocurAdmin.listaSelTag}">
+                                                    <ice:column>
+                                                        <ice:rowSelector id="selected"
+                                                                         value="#{etiqueta.seleccionada}"
+                                                                         multiple="true"
+                                                                         preStyleOnSelection="true"/>
+                                                        <f:facet name="header"><ice:outputText id="etiqueta" value="Etiquetas"/></f:facet>
+                                                        <ice:outputText id="tagEditDesc" value="#{etiqueta.descripcion}"/>
+                                                    </ice:column>
+                                                </ice:dataTable>
+                                            </ice:panelGroup>
                                             <br/>
                                             <div align="center">
                                             <ice:commandButton action="#{jprocurAdmin.modificarEntrada}" id="btnGuardar" styleClass="btnAccion2" value="Guardar"/>
@@ -137,7 +149,8 @@
                                                 <br/><br/>
                                                 <ice:inputRichText id="richDescripcion2"
                                                 value="#{jprocurAdmin.entradaNueva.descripcion}"
-                                                language="es" skin="silver" toolbar="Basic" height="500"/>
+                                                language="es" skin="silver" toolbar="Basic" height="500"
+                                                saveOnSubmit="true"/>
                                                 <br/>
                                                 <br/>
                                                 Escrito por: <ice:outputLabel id="lblAutor2" style="font-weight:bold; " title=""
@@ -224,7 +237,9 @@
                                         <!-- FIN panel de para administrar las Etiquetas -->
                                     </ice:panelTab>
                                 </ice:panelTabSet>
-
+                                <ice:panelGroup  rendered="#{!jprocurAdmin.permisos}">
+                                    <jsp:directive.include file="/jspf/nologin.jspx"/>
+                                </ice:panelGroup>
                                 <!-- panel de mensajes para viñeta de Entradas-->
                                 <ice:panelPopup autoCentre="true" id="panelMensajeEntradas" modal="true"
                                 rendered="#{jprocurAdmin.popupElimEntrada}">
@@ -272,6 +287,26 @@
                                     </ice:panelGroup>
                                 </div>
                                 </f:facet>
+                                </ice:panelPopup>
+                                <!-- panel de mensajes -->
+
+                                <!-- panel de mensajes de avisos...-->
+                                <ice:panelPopup autoCentre="true" id="ppmsj" modal="true" rendered="#{jprocurAdmin.showPPMesaje}">
+                                    <f:facet name="header">
+                                        <ice:panelGrid><ice:outputText id="pptit" value="JWiki"/></ice:panelGrid>
+                                    </f:facet>
+                                    <f:facet name="body">
+                                        <div class="post">
+                                        <ice:panelGroup>
+                                            <ice:outputText binding="#{jprocurAdmin.lblPPMesajes}" id="lblppmsj" value="Mensajes AQUI"/>
+                                            <br/>
+                                            <br/>
+                                            <div align="center">
+                                            <ice:commandButton action="#{jprocurAdmin.btnOK_action}" id="ppok" value="OK"/>
+                                            </div>
+                                        </ice:panelGroup>
+                                        </div>
+                                    </f:facet>
                                 </ice:panelPopup>
                                 <!-- panel de mensajes -->
                             </ice:form>

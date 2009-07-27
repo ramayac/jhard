@@ -8,7 +8,6 @@ package jhard;
 
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.icesoft.faces.component.ext.HtmlOutputText;
-//import com.icesoft.faces.component.ext.RowSelectorEvent;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.beans.BeanBaseJProcur;
@@ -49,18 +48,28 @@ public class jprocurAdmin extends AbstractPageBean {
     private List<Entrada> listaEntradas = new ArrayList<Entrada>();
     //private Comentarios comentarioActual = null;
     private List<Comentarios> listaComentarios = new ArrayList<Comentarios>();
-
     private Integer tabIndex = new Integer(0);
-    
-    //lista de etiquetas que se pueden agregar a la entrada
-    //private List<Tag> listaAddTags = new ArrayList<Tag>();
-
     //lista de etiquetas de para el row selector
     private List<SelectableTag> listaSelTag = new ArrayList<SelectableTag>();
-
-    private int __placeholder;
-
     private HtmlOutputLabel lblUser = new HtmlOutputLabel();
+    private Boolean showPPMesaje = new Boolean(false);
+    private HtmlOutputText lblPPMesajes = new HtmlOutputText();
+
+    public HtmlOutputText getLblPPMesajes() {
+        return lblPPMesajes;
+    }
+
+    public void setLblPPMesajes(HtmlOutputText lblPPMesajes) {
+        this.lblPPMesajes = lblPPMesajes;
+    }
+
+    public Boolean getShowPPMesaje() {
+        return showPPMesaje;
+    }
+
+    public void setShowPPMesaje(Boolean showPPMesaje) {
+        this.showPPMesaje = showPPMesaje;
+    }
 
     public HtmlOutputLabel getLblUser() {
         return lblUser;
@@ -305,8 +314,8 @@ public class jprocurAdmin extends AbstractPageBean {
      * Metodo para establecer si se ve una o varias Entradas
      * @param varias
      */
-    public void setEditandoEntrada(Boolean varias) {
-        this.editandoEntrada = varias;
+    public void setEditandoEntrada(Boolean editandoentrada) {
+        this.editandoEntrada = editandoentrada;
     }
 
     /**
@@ -537,6 +546,17 @@ public class jprocurAdmin extends AbstractPageBean {
         String idComent = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idEntrada");
         Integer id = Integer.parseInt(idComent);
         this.entradaActual = this.jprocurInstance.getEntrada(id.intValue());
+        this.llenarListaTags();
+
+        List<TagEntrada> lte = this.entradaActual.getTagEntradaList();
+        //Shame shame shame on me... :P
+        for (int i = 0; i < this.listaSelTag.size(); i++) {
+            SelectableTag selTag = this.listaSelTag.get(i);
+            for (TagEntrada tagEnt : lte) {
+                if(tagEnt.getIdtag().getIdtag() == selTag.getIdtag()) selTag.setSeleccionada(true);
+            }
+        }
+
         this.setEditandoEntrada(true);
         return EMPTY_STRING;
     }
@@ -549,12 +569,54 @@ public class jprocurAdmin extends AbstractPageBean {
         return EMPTY_STRING;
     }
 
+//    /**
+//     * Busca TagEntradas similares y retorna el ID si encuentra la coincidencia (Entrada y Tag)
+//     * @param lteOrig
+//     * @param te
+//     * @return
+//     */
+//    private Integer buscarIdTagEntrada(List<TagEntrada> lteOrig, TagEntrada te) {
+//        for (TagEntrada tagEntrada : lteOrig) {
+//            if((tagEntrada.getIdentrada().getIdentrada() == te.getIdtagentrada())
+//                    && (tagEntrada.getIdtag().getIdtag() == te.getIdtag().getIdtag())){
+//                return tagEntrada.getIdtagentrada(); //ya existia la TagEntrada con esas etiquetas
+//            }
+//        }
+//        return 0; //es nueva la TagEntrada
+//    }
+
     public String modificarEntrada(){
         this.entradaActual.setIdusuario(this.U);
-        this.jprocurInstance.updateEntrada(this.entradaActual);
-        this.listaEntradas = this.getJProcurInstance().getAllEntradas();
-        this.setEditandoEntrada(false);
+
+        //This is a tricky one...
+        List<TagEntrada> lte = new ArrayList<TagEntrada>();
+        for (SelectableTag st : this.listaSelTag) {
+            if(st.getSeleccionada()){
+                lte.add(new TagEntrada(0, st.toTag(), entradaActual));
+            }
+        }
+        for (TagEntrada te : this.entradaActual.getTagEntradaList())
+            this.jprocurInstance.deleteTagEntrada(te);
+
+//        System.out.println("Lista de TagEntradas que se asignaran a la entrada:");
+//        for (TagEntrada tagEntrada : lte) {
+//            System.out.println(tagEntrada.getIdtag().getIdtag() + "," +tagEntrada.getIdtag().getDescripcion());
+//        }
+        this.entradaActual.setTagEntradaCollection(lte);
+        
+        if(this.jprocurInstance.updateEntrada(this.entradaActual)!=null){
+            this.lblPPMesajes.setValue("Se modificó la Entrada.");
+            this.showPPMesaje = true;
+            this.setEditandoEntrada(false);
+        } else {
+            this.lblPPMesajes.setValue("Ocurrió un problema al modificar la Entrada.");
+            this.showPPMesaje = true;
+            this.listaEntradas.clear();
+            this.listaEntradas = this.getJProcurInstance().getAllEntradas();
+        }
         this.llenarListaTags();
+        this.tabIndex = 0;
+        
         return EMPTY_STRING;
     }
 
@@ -562,6 +624,7 @@ public class jprocurAdmin extends AbstractPageBean {
         this.entradaNueva.setIdusuario(this.U);
         this.entradaNueva.setFechahora(new Date());
 
+        this.entradaNueva.getTagEntradaCollection().clear();
         /*Agregamos las Etiquetas de acuerdo a la lista seleccionada*/
         List<TagEntrada> lte = new ArrayList<TagEntrada>();
         for (SelectableTag st : this.listaSelTag) {
@@ -574,10 +637,16 @@ public class jprocurAdmin extends AbstractPageBean {
         }
         this.entradaNueva.setTagEntradaCollection(lte);
 
-        this.llenarListaTags();
-
-        this.jprocurInstance.createEntrada(this.entradaNueva);
-        this.listaEntradas = this.getJProcurInstance().getAllEntradas();
+        if(this.jprocurInstance.createEntrada(this.entradaNueva)){
+            this.lblPPMesajes.setValue("Entrada agregada con éxito.");
+            this.showPPMesaje = true;
+            this.llenarListaTags();
+            this.listaEntradas.clear();
+            this.listaEntradas = this.getJProcurInstance().getAllEntradas();
+        } else {
+            this.lblPPMesajes.setValue("Ocurrió un error al intentar agregar una Entrada.");
+            this.showPPMesaje = true;
+        }        
         this.setEditandoEntrada(false);
         return EMPTY_STRING;
     }
@@ -624,5 +693,31 @@ public class jprocurAdmin extends AbstractPageBean {
 
     public void setTabIndex(String tabIndex) {
         this.tabIndex = Integer.parseInt(tabIndex);
+    }
+
+    public String btnOK_action() {
+        this.tabIndex = 0;
+        this.idEntradaEliminar = -1;
+        this.idComentario = -1;
+        this.showPPMesaje = false;
+        return EMPTY_STRING;
+    }
+
+    public Integer getRolUsuarioConectado(){
+        if(this.U==null) return -1;
+        return this.U.getIdrol().getIdrol();
+    }
+
+    public boolean getPermisos(){
+        switch(this.getRolUsuarioConectado()){
+            case -1:
+                return false; //no hay informacion de usuario
+            case ROL_ADMINISTRADOR:
+            case ROL_EDITORCONTENIDO:
+                return true; //tengo los permisos 
+            //default:
+                //break;
+        }
+        return false;
     }
 }
