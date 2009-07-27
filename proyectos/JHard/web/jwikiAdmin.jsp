@@ -42,7 +42,7 @@
                         </div>
                         <div class="post">
                             <ice:form id="formArticulo">
-                                <ice:panelTabSet id="panelAdmin" tabPlacement="Top" selectedIndex="#{jwikiAdmin.tabIndex}">
+                                <ice:panelTabSet id="panelAdmin" tabPlacement="Top" selectedIndex="#{jwikiAdmin.tabIndex}" rendered="#{jwikiAdmin.permisos}">
                                     <ice:panelTab id="panelArticulos" label="Administrar Artículos">
                                         <!-- panel de para EDITAR UN ARTICULO -->
                                         <ice:panelGroup id="panelEditarArticulo" rendered="#{jwikiAdmin.editandoArticulo}">
@@ -53,7 +53,7 @@
                                                 <ice:inputRichText id="richDescripcion"
                                                 language="es" skin="silver" toolbar="Default"
                                                 value="#{jwikiAdmin.articuloActual.descripcion}"
-                                                height="600"/>
+                                                height="600" saveOnSubmit="true"/>
                                                 <br/>
                                                 <br/>
                                             Escrito por: <ice:outputLabel id="lblAutor"
@@ -158,6 +158,9 @@
                                         </ice:panelGroup>
                                     </ice:panelTab>
                                 </ice:panelTabSet>
+                                <ice:panelGroup rendered="#{!jwikiAdmin.permisos}">
+                                    <jsp:directive.include file="/jspf/nologin.jspx"/>
+                                </ice:panelGroup>
                                 <!-- panel de mensajes para viñeta de Articulos-->
                                 <ice:panelPopup autoCentre="true" id="panelMensajeArticulos" modal="true" rendered="#{jwikiAdmin.popupElimArticulo}">
                                     <f:facet name="header">
@@ -182,6 +185,25 @@
                                                     </ice:panelGrid>
                                                 </div>
                                             </ice:panelGroup>
+                                        </div>
+                                    </f:facet>
+                                </ice:panelPopup>
+                                <!-- panel de mensajes -->
+                                <!-- panel de mensajes de avisos...-->
+                                <ice:panelPopup autoCentre="true" id="ppmsj" modal="true" rendered="#{jwikiAdmin.showPPMesaje}">
+                                    <f:facet name="header">
+                                        <ice:panelGrid><ice:outputText id="pptit" value="JWiki"/></ice:panelGrid>
+                                    </f:facet>
+                                    <f:facet name="body">
+                                        <div class="post">
+                                        <ice:panelGroup>
+                                            <ice:outputText binding="#{jwikiAdmin.lblPPMesajes}" id="lblppmsj" value="Mensajes AQUI"/>
+                                            <br/>
+                                            <br/>
+                                            <div align="center">
+                                            <ice:commandButton action="#{jwikiAdmin.btnOK_action}" id="ppok" value="OK"/>
+                                            </div>
+                                        </ice:panelGroup>
                                         </div>
                                     </f:facet>
                                 </ice:panelPopup>

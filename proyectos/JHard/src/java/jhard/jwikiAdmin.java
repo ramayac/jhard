@@ -239,10 +239,27 @@ public class jwikiAdmin extends AbstractPageBean {
     //private Comentarios comentarioActual = null;
     private Boolean editandoArticulo = new Boolean(false);
     private Boolean popupElimArticulo = new Boolean(false);
+    private Boolean showPPMesaje = new Boolean(false);
 
     private HtmlOutputText lblMensajesArticulos = new HtmlOutputText();
+    private HtmlOutputText lblPPMesajes = new HtmlOutputText();
 
+    public HtmlOutputText getLblPPMesajes() {
+        return lblPPMesajes;
+    }
 
+    public void setLblPPMesajes(HtmlOutputText lblPPMesajes) {
+        this.lblPPMesajes = lblPPMesajes;
+    }
+
+    public Boolean getShowPPMesaje() {
+        return showPPMesaje;
+    }
+
+    public void setShowPPMesaje(Boolean showPPMesaje) {
+        this.showPPMesaje = showPPMesaje;
+    }
+    
     public Articulos getArticuloActual() {
         return articuloActual;
     }
@@ -351,6 +368,13 @@ public class jwikiAdmin extends AbstractPageBean {
         return EMPTY_STRING;
     }
 
+    public String btnOK_action() {
+        this.tabIndex = 0;
+        this.idArticuloEliminar = -1;
+        this.showPPMesaje = false;
+        return EMPTY_STRING;
+    }
+
     public boolean getArticuloValido(){
         return (this.idArticuloEliminar>0);
     }
@@ -387,9 +411,15 @@ public class jwikiAdmin extends AbstractPageBean {
     public String agregarArticulo(){
         this.articuloNuevo.setIdusuario(this.U);
         this.articuloNuevo.setFechahora(new Date());
-        this.jwikiInstance.createArticulo(this.articuloNuevo);
-        this.listaArticulos = this.getjwikiInstance().getAllArticulos();
-        this.setEditandoArticulo(false);
+        if(this.jwikiInstance.createArticulo(this.articuloNuevo)){
+            this.listaArticulos = this.getjwikiInstance().getAllArticulos();
+            this.setEditandoArticulo(false);
+            this.lblPPMesajes.setValue("Artículo agregado con éxito.");
+        } else {
+            this.setEditandoArticulo(false);
+            this.lblPPMesajes.setValue("Ocurrió un error al intentar agregar el Artículo.");
+        }
+        this.showPPMesaje = true;
         return EMPTY_STRING;
     }
 
@@ -411,5 +441,23 @@ public class jwikiAdmin extends AbstractPageBean {
 
     public void setTabIndex(String tabIndex) {
         this.tabIndex = Integer.parseInt(tabIndex);
+    }
+
+    public Integer getRolUsuarioConectado(){
+        if(this.U==null) return -1;
+        return this.U.getIdrol().getIdrol();
+    }
+
+    public boolean getPermisos(){
+        switch(this.getRolUsuarioConectado()){
+            case -1:
+                return false; //no hay informacion de usuario
+            case ROL_ADMINISTRADOR:
+            case ROL_EDITORCONTENIDO:
+                return true; //tengo los permisos
+            //default:
+                //break;
+        }
+        return false;
     }
 }

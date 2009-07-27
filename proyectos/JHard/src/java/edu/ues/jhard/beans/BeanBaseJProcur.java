@@ -34,9 +34,9 @@ public class BeanBaseJProcur extends BeanBase {
     public List<Entrada> searchEntradaPorEtiqueta(String etiqueta){
         EntityManager em = this.getEntityManager();
         //SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t
-        //WHERE(t.descripcion LIKE 'wiki') AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada;
+        //WHERE(t.descripcion LIKE 'wiki') AND te.idtag=t.idtag  AND te.identrada=e.identrada;
         String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE" +
-                "(t.descripcion LIKE ?1 ) AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada ORDER BY e.fechahora DESC";
+                "(t.descripcion LIKE ?1 ) AND te.idtag=t.idtag  AND te.identrada=e.identrada ORDER BY e.fechahora DESC";
 
         Query q = em.createNativeQuery(sql, Entrada.class);
         q.setParameter(1, etiqueta);
@@ -63,7 +63,7 @@ public class BeanBaseJProcur extends BeanBase {
             sql += "( t.descripcion LIKE ?"+i+" )";
             if((i+1)<etiquetas.length) sql += " OR ";
         }
-        sql += " AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada ORDER BY e.fechahora DESC";
+        sql += " AND te.idtag=t.idtag  AND te.identrada=e.identrada ORDER BY e.fechahora DESC";
 
         Query q = em.createNativeQuery(sql, Entrada.class);
 
@@ -95,8 +95,9 @@ public class BeanBaseJProcur extends BeanBase {
             sql += "( t.descripcion LIKE ?"+i+" )";
             if((i+1)<etiquetas.length) sql += " OR ";
         }
-        sql += " AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada ORDER BY e.fechahora DESC";
+        sql += " AND te.idtag=t.idtag  AND te.identrada=e.identrada ORDER BY e.fechahora DESC";
 
+        System.out.println(sql);
         Query q = em.createNativeQuery(sql, Entrada.class);
 
         for (int i = 0; i < etiquetas.length; i++) {
@@ -148,7 +149,7 @@ public class BeanBaseJProcur extends BeanBase {
             sql += "( t.descripcion LIKE ?"+i+" )";
             if((i+1)<etiquetas.size()) sql += " OR ";
         }
-        sql += " AND te.idtag=t.idtag  AND te.idtagentrada=e.identrada ";
+        sql += " AND te.idtag=t.idtag  AND te.identrada=e.identrada ";
 
         Query q = em.createNativeQuery(sql, Entrada.class);
 
@@ -404,6 +405,7 @@ public class BeanBaseJProcur extends BeanBase {
             em.persist(entrada);
             em.getTransaction().commit();
         } catch (Exception e) {
+            System.out.println("(createEntrada) "+e.getMessage());
             return false;
         }
         return true;
@@ -506,6 +508,21 @@ public class BeanBaseJProcur extends BeanBase {
         return true;
     }
 
+    public boolean createTagEntrada(List<TagEntrada> listaTagEntradas){
+        try {
+            EntityManager em = this.getEntityManager();
+            em.getTransaction().begin();
+            em.persist(listaTagEntradas);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            System.out.println("(createTagEntrada) "+ex.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+
+
     /**
      * Metodo para eliminar una Entrada por su ID
      * @param identrada
@@ -570,7 +587,6 @@ public class BeanBaseJProcur extends BeanBase {
 
     /**
      * Elimina la REFERENCIA de un Tag asociado con una entrada
-     * @param tag
      */
     public void deleteTagEntrada(Entrada entrada, Tag tag){
         EntityManager em = this.getEntityManager();
@@ -587,16 +603,49 @@ public class BeanBaseJProcur extends BeanBase {
     }
 
     /**
+     * Elimina la REFERENCIA de un Tag asociado con una entrada
+     */
+    public void deleteTagEntrada(Entrada entrada){
+        EntityManager em = this.getEntityManager();
+
+        Query q = em.createNamedQuery("TagEntrada.findByIdentrada");
+        q.setParameter("identrada", entrada);
+
+        List<TagEntrada> lte = q.getResultList();
+
+        em.getTransaction().begin();
+        em.remove(lte);
+        em.getTransaction().commit();
+    }
+
+    public void deleteTagEntrada(TagEntrada tagentrada){
+        EntityManager em = this.getEntityManager();
+        TagEntrada te = em.find(TagEntrada.class, tagentrada.getIdtagentrada());
+
+        em.getTransaction().begin();
+        em.remove(te);
+        em.getTransaction().commit();
+    }
+
+
+
+    /**
      * Metodo para actualizar un objeto entrada
      * @param entrada
      */
-    public void updateEntrada(Entrada entrada){
-        EntityManager em = this.getEntityManager();
-        Entrada e = em.find(Entrada.class, entrada.getIdentrada());
-        e = entrada;
-        em.getTransaction().begin();
-        em.merge(e);
-        em.getTransaction().commit();
+    public Entrada updateEntrada(Entrada entrada){
+        try {
+            EntityManager em = this.getEntityManager();
+            Entrada e = em.find(Entrada.class, entrada.getIdentrada());
+            e = entrada;
+            em.getTransaction().begin();
+            em.merge(e);
+            em.getTransaction().commit();
+            return e;
+        } catch (Exception ex) {
+            System.out.println("(updateEntrada) "+ex.getMessage());
+        }
+        return null;
     }
 
     /**
@@ -651,6 +700,13 @@ public class BeanBaseJProcur extends BeanBase {
         em.getTransaction().commit();
         return e;
     }
+
+//    public void mergeTagsEntrada(List<TagEntrada> listaTagEntradas){
+//        EntityManager em = this.getEntityManager();
+//        em.getTransaction().begin();
+//        em.merge(listaTagEntradas);
+//        em.getTransaction().commit();
+//    }
 
 //    /**
 //     * Metodo para añadirle una lista de etiquetas a una entrada

@@ -336,8 +336,7 @@ public class jprocurUser extends AbstractPageBean {
                 break;
             default: //para los > de 2.
                 for (TagEntrada tagEntrada : te)
-                    resultado += tagEntrada.getIdtag().getDescripcion() + ", ";
-                resultado = resultado.substring(0, resultado.length()-2); //HACK shame on me.
+                    resultado += tagEntrada.getIdtag().getDescripcion() + " ";
                 break;
         }
         return resultado;
@@ -417,6 +416,7 @@ public class jprocurUser extends AbstractPageBean {
     }
 
     public String busquedaEntradas(){
+       //System.out.println(this.criteriosBusqueda);
        String[] arr=this.criteriosBusqueda.trim().split(",");
        this.listaEntradas = this.jprocurInstance.searchListaEntradaPorEtiquetas(arr);
        return EMPTY_STRING;
@@ -424,7 +424,7 @@ public class jprocurUser extends AbstractPageBean {
 
     public String eliminarComentario(){
         String idSel = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idSelComent");
-        System.out.println("id comentario: " + idSel);
+        //System.out.println("id comentario: " + idSel);
         Integer id = new Integer(idSel);
         this.jprocurInstance.deleteComentario(id);
         this.entradaActual.setComentariosCollection(this.jprocurInstance.getComentariosEntrada(entradaActual));
