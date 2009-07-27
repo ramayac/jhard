@@ -29,8 +29,7 @@ public class LoginManager {
      * Agrega el usuario a la lista de usuarios logueados, si este existe en la base de datos y si no estaba logueado antes
      */
     public synchronized int Login(String userName, String userPwd, String url){        
-        if(!this.isLogged(userName)){
-           System.out.println("Encriptando...");
+        if(!this.isLogged(userName)){          
             if(this.existsInBD(userName, userPwd)){
                 Usuario usr = new BeanBaseJHardmin().getUsuario(userName, encrypt(userPwd));
                 this.loggedUsers.put(usr.getIdusuario(), new LoggedUser(usr.getIdusuario(), userName, usr.getIdrol(), url));
@@ -104,10 +103,8 @@ public class LoginManager {
         return Integer.valueOf(Double.valueOf(Math.random()*100).intValue());
     }
 
-    public boolean existsInBD(String userName, String userPwd){
-        System.out.println("Creando el bean base...");
-        BeanBaseJHardmin bbase = new BeanBaseJHardmin();
-        System.out.println("Obteniendo el usuario...");
+    public boolean existsInBD(String userName, String userPwd){        
+        BeanBaseJHardmin bbase = new BeanBaseJHardmin();        
         Usuario u = bbase.getUsuario(userName, encrypt(userPwd));
         return (u != null);
     }
@@ -133,11 +130,9 @@ public class LoginManager {
         
         
         try
-         {
-             System.out.println(plainText);
+         {             
             MD5 md = MD5.getInstance();
             encripted = md.hashData(plainText.getBytes());
-             System.out.println(encripted);
             
         }
          catch(NoSuchAlgorithmException e)

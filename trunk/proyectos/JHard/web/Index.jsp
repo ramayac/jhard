@@ -86,9 +86,36 @@
                                             <ice:commandLink action="#{Redireccion.jcanonAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Reserva de Equipo Multimedia"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink action="" rendered="#{JHardminInstance.currentUser == null}" value="Solo para usuarios registrados"/>
+                                            <ice:commandLink action="#{JHardminInstance.showPopupRegistrarUsuario}" rendered="#{JHardminInstance.currentUser == null}" value="Crear usuario del sistema"/>
                                         </li>
                                     </ul>
+                                    <ice:panelPopup id="pupCrearUsuario" draggable="true" modal="true" rendered="#{JHardminInstance.popupRegistrarUsuarioVisible}">
+                                        <f:facet name="header"><ice:outputText value="Agregar nuevo usuario" /></f:facet>
+                                        <f:facet name="body">
+                                            <ice:panelGroup styleClass="frmElementList">
+                                                <p>
+                                                    <ice:outputLabel id="lblNombreUsuario" for="txtNombreUsuario" value="Nombre:" />
+                                                    <ice:inputText id="txtNombreUsuario" value="#{JHardminInstance.usuarioRegistrado.nombre}" />
+                                                </p>
+                                                <p>
+                                                    <ice:outputLabel id="lblClaveUsuario" for="TxtClaveUsuario" value="Clave:" />
+                                                    <ice:inputSecret id="txtClaveUsuario" value="#{JHardminInstance.usuarioRegistrado.clave}" />
+                                                </p>
+                                                <p>
+                                                    <ice:outputLabel id="lblClaveUsuarioConfirm" for="txtClaveUsuarioConfirm" value="Confirmar clave:" />
+                                                    <ice:inputSecret id="txtClaveUsuarioConfirm" value="#{JHardminInstance.claveUsuarioConfirmacion}" />
+                                                </p>
+                                                <p>
+                                                    <ice:outputLabel id="lblAutorizacionUsuario" for="txtAutorizacionUsuario" value="Codigo de autorizacion:" />
+                                                    <ice:inputText id="txtAutorizacionUsuario" value="#{JHardminInstance.autorizacionUsuario}" />
+                                                </p>
+                                                <p class="actionSection">
+                                                    <ice:commandButton id="cmdConfirmRegistrarUsuario" value="Agregar" action="#{JHardminInstance.registrarUsuario}" />
+                                                    <ice:commandButton id="cmdCancelRegistrarUsuario" value="Cancelar" action="#{JHardminInstance.hidePopupRegistrarUsuario}" />
+                                                </p>
+                                            </ice:panelGroup>
+                                        </f:facet>
+                                    </ice:panelPopup>
                                 </ice:form>
                             </li>
                         </ul>
