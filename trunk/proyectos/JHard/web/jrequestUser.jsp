@@ -20,34 +20,7 @@
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <!--start header -->
-                <div id="header">
-                    <div id="menu">
-                        <ul>
-                            <li>
-                                <a href="Index.iface">Principal</a>
-                            </li>
-                            <li class="current_page_item">
-                                <a href="jrequestUser.iface">Mantenimientos</a>
-                            </li>
-                            <li>
-                                <a href="#">Grupos de Laboratorio</a>
-                            </li>
-                            <li>
-                                <a href="#">Inventario</a>
-                            </li>
-                            <li>
-                                <a href="#">Wiki y Cursos</a>
-                            </li>
-                            <li class="last">
-                                <a href="#">Cañones</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div id="logo">
-                    <h1>Laboratorio de Hardware</h1>
-                    <h2>Universidad de El Salvador, Facultad Multidisciplinaria de Occidente</h2>
-                </div>
+                <jsp:directive.include file="/jspf/menu.jspx"/>
                 <!-- end header -->
                 <!-- start page -->
                 <div id="page">
@@ -66,30 +39,31 @@
                                                 </ice:panelGroup>
                                             </f:facet>
                                             <ice:panelGroup id="panelGroup13" style="height: 350px">
-                                                <p><h3 styleClass="tituloSeccion">
-                                                    <ice:outputLabel id="outputLabel2" value="Ingrese palabras clave para realizar una búsqueda de soluciones"/>
+                                                <p>
+                                                    <h3 styleClass="tituloSeccion">
+                                                        <ice:outputLabel binding="#{jrequestUser.txtMensajeWiki}" id="txtMensajeWiki" value="Ingrese palabras clave separadas por espacios para realizar una búsqueda de soluciones"/>
                                                     </h3>
+                                                    <ice:outputConnectionStatus binding="#{jrequestUser.estatus}" id="estatus" styleClass="actionStatus"/>
+                                                    
                                                 </p>
                                                 <p>
-                                                    <ice:inputTextarea id="txtProblemas" style="width: 300px"/>
+                                                    <ice:inputTextarea binding="#{jrequestUser.txtProblemas}" id="txtProblemas" style="width: 502px"/>
                                                 </p>
                                                 <p>
                                                     <ice:commandButton action="#{jrequestUser.btnBuscar_action}" binding="#{jrequestUser.btnBuscar}"
                                                         id="btnBuscar" styleClass="btnAccion2" value="Buscar"/>
                                                 </p>
                                                 <p>
-                                                    <ice:dataTable id="tblListaPost" rows="5" style="" title="Lista de Posts" value="" var="">
+                                                    <ice:dataTable id="tblListaPost" rows="5" style="" title="Lista de Posts"
+                                                        value="#{jrequestUser.listaArticulos}" var="art">
                                                         <ice:column>
                                                             <f:facet name="header">
                                                                 <ice:outputText value="Nombre"/>
                                                             </f:facet>
-                                                            <ice:commandLink value="Nombre del Post"/>
-                                                        </ice:column>
-                                                        <ice:column>
-                                                            <f:facet name="header">
-                                                                <ice:outputText value="Descripción"/>
-                                                            </f:facet>
-                                                            <ice:outputText value="Descripción del Post"/>
+                                                            <ice:commandLink action="#{jrequestUser.irWiki}" value="#{art.titulo}">
+                                                                    <f:param name="idarticulo" value="#{art.idarticulo}"/>
+                                                            </ice:commandLink>
+
                                                         </ice:column>
                                                     </ice:dataTable>
                                                     <ice:dataPaginator for="tblListaPost" id="pgrListaPosts" paginator="true" style="">
@@ -187,22 +161,15 @@
                                             <ice:commandLink action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}" value="Cambiar clave de acceso"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink value="Administrar Solicitudes de JRequest" action="#{Redireccion.jrequestAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"  />
+                                            <ice:commandLink action="#{Redireccion.jrequestAdmin}"
+                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Solicitudes de JRequest"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink value="Tareas Administrativas de JRequest" action="#{Redireccion.jrequestAdministracion}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"></ice:commandLink>
+                                            <ice:commandLink action="#{Redireccion.jrequestAdministracion}"
+                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Tareas Administrativas de JRequest"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink value="Emitir Solicitud de Soporte Técnico" action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
-                                        </li>
-                                        <li>
-                                            <a href="#">Otras Opciones</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Otras Opciones</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Otras Opciones</a>
+                                            <ice:commandLink action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}" value="Emitir Solicitud de Soporte Técnico"/>
                                         </li>
                                     </ul>
                                 </ice:form>
