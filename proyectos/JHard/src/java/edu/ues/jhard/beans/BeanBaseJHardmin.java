@@ -613,7 +613,7 @@ public class BeanBaseJHardmin extends BeanBase {
         emgr.getTransaction().commit();
         this.listaAutorizaciones.add(this.currentAutorizacion);
         this.crdAutorizaciones.hidePopupAdd();
-        this.msg.setText("Nueva autorizacion agregada satisfactoriamente");
+        this.msg.setText("Nueva autorización agregada satisfactoriamente");
         this.msg.setVisible(true);
         this.currentAutorizacion = new Autorizacion();
         this.currentAutorizacion.setUsuarioCollection(new ArrayList<Usuario>());
@@ -634,11 +634,12 @@ public class BeanBaseJHardmin extends BeanBase {
 
         this.crdAutorizaciones.hidePopupDel();
         for(int i=0; i<this.listaAutorizaciones.size(); i++){            
-            if(this.listaAutorizaciones.get(i).getIdautorizacion() == this.currentAutorizacion.getIdautorizacion()){                
+            if(this.listaAutorizaciones.get(i).getIdautorizacion() == this.currentAutorizacion.getIdautorizacion()){
+                this.listaAutorizaciones.remove(i);
                 break;
             }
         }        
-        this.msg.setText("Autorizacion eliminada satisfactoriamente. Los usuarios creados a partir de esta autorizacion continuaran existiendo en el sistema.");
+        this.msg.setText("Autorización eliminada satisfactoriamente. Los usuarios creados a partir de esta autorizacion continuaran existiendo en el sistema.");
         this.msg.setVisible(true);
         this.currentAutorizacion = new Autorizacion();
         this.currentAutorizacion.setUsuarioCollection(new ArrayList<Usuario>());
@@ -661,27 +662,43 @@ public class BeanBaseJHardmin extends BeanBase {
         this.usuarioRegistrado.setIdrol(rolEstudiante);
         Autorizacion autRegistro = null;
         try{
-            autRegistro = (Autorizacion)emgr.createQuery("SELECT a FROM Autorizacion a WHERE a.codigo=" + this.autorizacionUsuario).getSingleResult();
+            autRegistro = (Autorizacion)emgr.createQuery("SELECT a FROM Autorizacion a WHERE a.codigo='" + this.autorizacionUsuario + "'").getSingleResult();            
         }
         catch(Exception ex){
             //pass
         }
         if(autRegistro == null){
-            this.msg.setText("Codigo de autorizacion inexistente");
+            this.hidePopupRegistrarUsuario();
+            this.msg.setText("Código de autorización inexistente");
             this.msg.setVisible(true);
             return "fail";
         }
         if(autRegistro.getCantmaxima() == autRegistro.getUsuarioCollection().size()){
-            this.msg.setText("No se pueden crear mas usuarios con este codigo de autorizacion");
+            this.hidePopupRegistrarUsuario();
+            this.msg.setText("No se pueden crear mas usuarios con este codigo de autorización");
             this.msg.setVisible(true);
             return "fail";
         }
         if(!this.usuarioRegistrado.getClave().equalsIgnoreCase(this.claveUsuarioConfirmacion)){
-            this.msg.setText("Clave no coincide con su confirmacion");
+            this.hidePopupRegistrarUsuario();
+            this.msg.setText("Clave no coincide con su confirmación");
             this.msg.setVisible(true);
             return "fail";
         }
+        for(Usuario u: this.userList){
+            if(u.getNombre().equalsIgnoreCase(this.usuarioRegistrado.getNombre())){
+                this.hidePopupRegistrarUsuario();
+                this.msg.setText("Ya existe en el sistema un usuario con este nombre");
+                this.msg.setVisible(true);
+                return "fail";
+            }
+        }
         autRegistro.getUsuarioCollection().add(this.usuarioRegistrado);
+        this.inputUsrName = this.usuarioRegistrado.getNombre();
+        this.inputUsrPassword = this.usuarioRegistrado.getClave();
+
+        this.usuarioRegistrado.setClave(LoginManager.getInstance().encrypt(this.usuarioRegistrado.getClave()));
+        this.usuarioRegistrado.setIdautorizacion(autRegistro);
 
         emgr.getTransaction().begin();
         emgr.persist(this.usuarioRegistrado);
@@ -693,9 +710,13 @@ public class BeanBaseJHardmin extends BeanBase {
         this.msg.setVisible(true);
         for(Autorizacion aut: this.listaAutorizaciones){
             if(aut.getIdautorizacion() == autRegistro.getIdautorizacion()){
-                aut.getUsuarioCollection().add(this.usuarioRegistrado);
+                this.usuarioRegistrado.setIdautorizacion(aut);
+                aut.getUsuarioCollection().add(this.usuarioRegistrado);                
+                break;
             }
         }
+        this.userList.add(this.usuarioRegistrado);
+        this.login();
         this.usuarioRegistrado = new Usuario();
         return "done";
     }

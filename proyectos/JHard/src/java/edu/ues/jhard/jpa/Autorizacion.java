@@ -104,8 +104,8 @@ public class Autorizacion implements Serializable {
 
         if(this.usuarioCollection.size() > 0)
             descListaUsuarios = descListaUsuarios.substring(0, descListaUsuarios.length() - 2);
-        if(descListaUsuarios.length() > 25)
-            descListaUsuarios = descListaUsuarios.substring(0, 24);
+        if(descListaUsuarios.length() > 50)
+            descListaUsuarios = descListaUsuarios.substring(0, 50) + "...";
         
         return descListaUsuarios;
     }

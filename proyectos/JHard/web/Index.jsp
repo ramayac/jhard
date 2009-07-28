@@ -68,6 +68,17 @@
                             </li>
                             <li>
                                 <ice:form id="frmCommonTasks">
+                                    <ice:panelPopup styleClass="panelPopup" draggable="true" modal="true" rendered="#{JHardminInstance.msg.visible}" visible="#{JHardminInstance.msg.visible}" clientOnly="true" >
+                                    <f:facet name="header" >
+                                        <ice:outputText value="Mensaje" styleClass="popupHeader" />
+                                    </f:facet>
+                                    <f:facet name="body">
+                                        <ice:panelGroup>
+                                            <p><ice:outputText value="#{JHardminInstance.msg.text}" styleClass="#{JHardminInstance.msg.type}" /></p>
+                                            <p class="actionSection"><ice:commandButton action="#{JHardminInstance.closePopup}" id="btnCerrar" value="OK" /></p>
+                                        </ice:panelGroup>
+                                    </f:facet>
+                                    </ice:panelPopup>
                                     <h2>Tareas Comunes</h2>
                                     <ul>
                                         <li>
