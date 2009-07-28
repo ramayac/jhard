@@ -8,15 +8,25 @@ package jhard;
 
 import com.icesoft.faces.component.ext.HtmlCommandButton;
 
+import com.icesoft.faces.component.ext.HtmlInputTextarea;
+import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.icesoft.faces.component.jsfcl.data.PopupBean;
+import com.icesoft.faces.component.outputconnectionstatus.OutputConnectionStatus;
 import com.icesoft.faces.component.panelpopup.PanelPopup;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 
 
 import edu.ues.jhard.beans.BeanBaseJHardmin;
+import edu.ues.jhard.beans.BeanBaseJWiki;
 import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jpa.Usuario;
+import edu.ues.jhard.jwiki.JreqArticulo;
+import java.io.IOException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.FacesException;
+import javax.faces.context.FacesContext;
 
 
 /**
@@ -38,7 +48,16 @@ public class jrequestUser extends AbstractPageBean {
     private void _init() throws Exception {
     }
 
-    
+    private HtmlInputTextarea txtProblemas = new HtmlInputTextarea();
+
+    public HtmlInputTextarea getTxtProblemas() {
+        return txtProblemas;
+    }
+
+    public void setTxtProblemas(HtmlInputTextarea hit) {
+        this.txtProblemas = hit;
+    }
+
     private HtmlCommandButton btnBuscar = new HtmlCommandButton();
 
     public HtmlCommandButton getBtnBuscar() {
@@ -88,7 +107,8 @@ public class jrequestUser extends AbstractPageBean {
     // </editor-fold>
 
 
-
+    private List<JreqArticulo> listaArticulos;
+    private String dirWiki;
 
     private boolean renderer;
     /**
@@ -128,13 +148,34 @@ public class jrequestUser extends AbstractPageBean {
     public  BeanBaseJHardmin getJHardminInstance() {
         return (BeanBaseJHardmin) getBean("JHardminInstance");
     }
+    private HtmlOutputLabel txtMensajeWiki = new HtmlOutputLabel();
+
+    public HtmlOutputLabel getTxtMensajeWiki() {
+        return txtMensajeWiki;
+    }
+
+    public void setTxtMensajeWiki(HtmlOutputLabel hol) {
+        this.txtMensajeWiki = hol;
+    }
+    private OutputConnectionStatus estatus = new OutputConnectionStatus();
+
+    public OutputConnectionStatus getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(OutputConnectionStatus ocs) {
+        this.estatus = ocs;
+    }
 
     /**
      * <p>Construct a new Page bean instance.</p>
      */
     public jrequestUser() {
         
-
+        dirWiki="jwikiUser.iface?wkid=";
+        String criterios = "display Linux tasks top"; //criterios separados por espacio.
+        BeanBaseJWiki instance = new BeanBaseJWiki(); //obten tu instancia de Bean de JWiki
+        this.listaArticulos= instance.searchEnWiki(criterios);
     }
 
     /**
@@ -249,8 +290,47 @@ public class jrequestUser extends AbstractPageBean {
 //    }
 
     public String btnBuscar_action() {
-        //return null means stay on the same page
+        this.estatus.setActiveLabel("Buscando en JWiki");
+
+        BeanBaseJWiki instance = new BeanBaseJWiki(); //obten tu instancia de Bean de JWiki
+
+        List<JreqArticulo> ja = instance.searchEnWiki((String)this.txtProblemas.getValue());
+
+        if(ja==null)
+            this.txtMensajeWiki.setValue("No existen resultados de acuerdo a su búsqueda. Intente de nuevo. ");
+        else{
+            if(!(ja.size()>0)) 
+                this.txtMensajeWiki.setValue("No existen resultados de acuerdo a su búsqueda. Intente de nuevo. ");
+            else{
+                
+                this.txtMensajeWiki.setValue("Resultados de la búsqueda JWiki ");
+                
+                System.out.println("Articulos encontrados:");
+
+                for (JreqArticulo a : ja) {
+                    System.out.println("ID:" + a.getIdarticulo() +", TITULO ARTICULO: " + a.getTitulo());
+                }
+                this.listaArticulos.clear();
+                this.listaArticulos=ja;
+
+                System.out.println("Exito en la prueba!");
+            }    
+            
+        }
+
         return null;
+    }
+
+    public String irWiki(){
+        String idArt = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idarticulo");
+        dirWiki+=idArt;
+        System.out.println(dirWiki);
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect(dirWiki);
+        } catch (IOException ex) {
+            Logger.getLogger(jrequestUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "done";
     }
 
     public String btnSolicitud_action() {
@@ -271,6 +351,34 @@ public class jrequestUser extends AbstractPageBean {
     public String btnOk_action() {
         this.renderer=false;
         return null;
+    }
+
+    /**
+     * @return the listaArticulos
+     */
+    public List<JreqArticulo> getListaArticulos() {
+        return listaArticulos;
+    }
+
+    /**
+     * @param listaArticulos the listaArticulos to set
+     */
+    public void setListaArticulos(List<JreqArticulo> listaArticulos) {
+        this.listaArticulos = listaArticulos;
+    }
+
+    /**
+     * @return the dirWiki
+     */
+    public String getDirWiki() {
+        return dirWiki;
+    }
+
+    /**
+     * @param dirWiki the dirWiki to set
+     */
+    public void setDirWiki(String dirWiki) {
+        this.dirWiki = dirWiki;
     }
 
 }

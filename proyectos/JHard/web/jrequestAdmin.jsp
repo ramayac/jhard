@@ -85,7 +85,7 @@
                                                             <ice:outputLabel id="lblFin" value="Finalizado"/>
                                                             <ice:selectBooleanCheckbox binding="#{jrequestAdmin.checkFIn}" id="checkFIn" partialSubmit="true" value="#{jrequestAdmin.fakeFin.selectedBoolean}"/>
                                                             <ice:outputLabel id="outputLabel13" value="Escriba el plan de Mantenimiento llevado a cabo:"/>
-                                                            <ice:inputTextarea binding="#{jrequestAdmin.txtDescripcion}" id="txtDescripcion"/>
+                                                            <ice:inputTextarea binding="#{jrequestAdmin.txtDescripcion}" style="width:300px;"  id="txtDescripcion"/>
                                                             <ice:outputLabel id="outputLabel12" value="Nuevo Estado del Equipo"/>
                                                             <ice:selectOneMenu binding="#{jrequestAdmin.comboEstado}" id="comboEstado" partialSubmit="true">
                                                                 <f:selectItems id="fakeComboEstado" value="#{jrequestAdmin.eeq}"/>
@@ -104,6 +104,12 @@
                                             <ice:panelGroup id="panelGroup4" style="position: inherit; ">
                                                 <p>
                                                     <ice:outputLabel id="outputLabel11" style="font-weight:bold; font-size:14px;" value="Seleccione un equipo simple para visualizar y/o modificar su bitácora"/>
+                                                </p>
+                                                <p>
+                                                    <ice:outputLabel value="Equipos LABCOM-1"/>
+                                                    <ice:selectBooleanCheckbox binding="#{jrequestAdmin.checkEx}" id="checkEx" partialSubmit="true" valueChangeListener="#{jrequestAdmin.checkEx_processValueChange}" value="#{jrequestAdmin.fakeEx.selectedBoolean}"/>
+                                                    <ice:outputLabel value="Equipos Simples"/>
+                                                    <ice:selectBooleanCheckbox binding="#{jrequestAdmin.checkEq}" id="checkEq" partialSubmit="true" valueChangeListener="#{jrequestAdmin.checkEq_processValueChange}" value="#{jrequestAdmin.fakeEq.selectedBoolean}"/>
                                                 </p>
                                                 <p>
                                                     <ice:selectInputText action="#{jrequestAdmin.txtEqSimples_action}" binding="#{jrequestAdmin.txtEqSimples}"

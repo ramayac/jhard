@@ -178,6 +178,21 @@ public class BeanBaseJRequest extends BeanBase{
         return eqs;
     }
 
+    public Existencia[] getExistencia() {
+        EntityManager em=this.getEntityManager();
+        String codigo ="%labcom1%";
+
+        Query q=em.createNamedQuery("Existencia.findByCodigo");
+        
+        q.setParameter("codigo", codigo);
+
+        Existencia[] ex=(Existencia[])q.getResultList().toArray(new Existencia[0]);
+
+        for(int i=0;i<ex.length;i++)
+            em.refresh(ex[i]);
+        return ex;
+    }
+
 
     public void registrarEquipoSimple(Equiposimple eqs) {
         EntityManager em=this.getEntityManager();
@@ -311,6 +326,22 @@ public class BeanBaseJRequest extends BeanBase{
         Query q=em.createNamedQuery("Bitacoraestados.findoByIdEquipoSimple");
 
         q.setParameter("idequiposimple", e);
+
+        Bitacoraestados[] be=(Bitacoraestados[])q.getResultList().toArray(new Bitacoraestados[0]);
+
+        for(int i=0;i<be.length;i++)
+            em.refresh(be[i]);
+        return be;
+    }
+
+
+
+    public Bitacoraestados[] getBitacoraEstadosByIdExistencia(Existencia e) {
+        EntityManager em=this.getEntityManager();
+
+        Query q=em.createNamedQuery("Bitacoraestados.findoByIdExistencia");
+
+        q.setParameter("idequipoexistente", e);
 
         Bitacoraestados[] be=(Bitacoraestados[])q.getResultList().toArray(new Bitacoraestados[0]);
 

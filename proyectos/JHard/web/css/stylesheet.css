@@ -2699,6 +2699,11 @@ h3{
     padding: 2px;
 }
 
+.actionStatus{
+    right: 0px;
+    padding: 2px;
+}
+
 .tituloSeccion{
     position: relative;
 }

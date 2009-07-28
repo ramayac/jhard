@@ -30,6 +30,7 @@ import edu.ues.jhard.jpa.Tecnico;
 import edu.ues.jhard.jpa.Usuario;
 import edu.ues.jhard.jpa.Bitacoraestados;
 import edu.ues.jhard.jpa.Estadoequipo;
+import edu.ues.jhard.jpa.Existencia;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -195,6 +196,24 @@ public class jrequestAdmin extends AbstractPageBean {
     public void setFakeFin(DefaultSelectedData dsd) {
         this.fakeFin = dsd;
     }
+    private DefaultSelectedData fakeEx = new DefaultSelectedData();
+
+    public DefaultSelectedData getFakeEx() {
+        return fakeEx;
+    }
+
+    public void setFakeEx(DefaultSelectedData dsd) {
+        this.fakeEx = dsd;
+    }
+    private DefaultSelectedData fakeEq = new DefaultSelectedData();
+
+    public DefaultSelectedData getFakeEq() {
+        return fakeEq;
+    }
+
+    public void setFakeEq(DefaultSelectedData dsd) {
+        this.fakeEq = dsd;
+    }
     private HtmlOutputText lblMantenimiento = new HtmlOutputText();
 
     public HtmlOutputText getLblMantenimiento() {
@@ -221,6 +240,24 @@ public class jrequestAdmin extends AbstractPageBean {
 
     public void setCheckFIn(HtmlSelectBooleanCheckbox hsbc) {
         this.checkFIn = hsbc;
+    }
+    private HtmlSelectBooleanCheckbox checkEx = new HtmlSelectBooleanCheckbox();
+
+    public HtmlSelectBooleanCheckbox getCheckEx() {
+        return checkEx;
+    }
+
+    public void setCheckEx(HtmlSelectBooleanCheckbox hsbc) {
+        this.checkEx = hsbc;
+    }
+    private HtmlSelectBooleanCheckbox checkEq = new HtmlSelectBooleanCheckbox();
+
+    public HtmlSelectBooleanCheckbox getCheckEq() {
+        return checkEq;
+    }
+
+    public void setCheckEq(HtmlSelectBooleanCheckbox hsbc) {
+        this.checkEq = hsbc;
     }
     private HtmlCommandButton btnCerrar = new HtmlCommandButton();
 
@@ -455,6 +492,8 @@ private List man= new ArrayList();
     //ESTE METODO DEBE DE IR EN EL NEGOCIO
     public void llenarLista(){
 
+        BeanBaseJRequest instance = new BeanBaseJRequest();
+
         //Limpio las listas si están llenas
         limpiarListas();
 
@@ -479,11 +518,14 @@ private List man= new ArrayList();
                     cont++;
                 }
             }
-
+            String label1;
             if(cont==0){
-                Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
-                String label = u.getNombre()+" - "+solicitudes[i].getDescripcion();
-                getSoc().add(new SelectItem(solicitudes[i].getIdsolicitud(), label));
+                //Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
+                if(solicitudes[i].getIdequiposimple()==null)
+                    label1 = solicitudes[i].getIdequipoexistente().getCodigo()+" - "+solicitudes[i].getDescripcion();
+                else
+                    label1 = solicitudes[i].getIdequiposimple().getDescripcion()+" - "+solicitudes[i].getDescripcion();
+                getSoc().add(new SelectItem(solicitudes[i].getIdsolicitud(), label1));
             }
         }
 
@@ -500,11 +542,23 @@ private List man= new ArrayList();
         //Agarro todos los mantenimientos
         mantenimientos = new edu.ues.jhard.beans.BeanBaseJRequest().getMantenimientoByEstado("Pendiente");
 
+        String label2;
         //Creo e instancio el ArrayList que contendrá el selectlistonebox
         for(int i=0;i<mantenimientos.length;i++){
-            Equiposimple eq = new BeanBaseJRequest().getEquipoSimpleByID(mantenimientos[i].getIdequiposimple().getIdEquipoSimple());
-            String label = eq.getDescripcion() +" - "+ mantenimientos[i].getDescripcion();
-            getMan().add(new SelectItem(mantenimientos[i].getIdmantenimiento(), label));
+            System.out.println(mantenimientos[i].getIdmantenimiento());
+            if(mantenimientos[i].getIdequiposimple()==null){
+                Existencia ex = instance.getEntityManager().find(Existencia.class, mantenimientos[i].getIdequipoexistente().getIdexistencia());
+
+                label2 = ex.getCodigo() +" - "+ mantenimientos[i].getDescripcion();
+            } else{
+                Equiposimple eq = instance.getEquipoSimpleByID(mantenimientos[i].getIdequiposimple().getIdEquipoSimple());
+
+                label2 = eq.getDescripcion() +" - "+ mantenimientos[i].getDescripcion();
+            }
+
+
+
+            getMan().add(new SelectItem(mantenimientos[i].getIdmantenimiento(), label2));
         }
 
 //        UISelectItems itemsMan = new UISelectItems();
@@ -534,17 +588,6 @@ private List eeq = new ArrayList();
 //        this.comboTecnicos.getChildren().add(itemsTec);
 
 
-        //SELECTINPUT DE EQUIPOS SIMPLES
-        Equiposimple [] eqsimple = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
-        for(int i=0;i<eqsimple.length;i++){
-            String label = eqsimple[i].getPropietario()+" "+eqsimple[i].getDescripcion();
-            getEqs().add(new SelectItem(eqsimple[i].getIdEquipoSimple(),label));
-        }
-//        UISelectItems itemsEq = new UISelectItems();
-//        itemsEq.setValue(getEqs());
-//        this.txtEqSimples.getChildren().add(itemsEq);
-
-
         //COMBO DE ESTADOS DE EQUIPOS
         Estadoequipo [] estado = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
         for(int i=0;i<estado.length;i++){
@@ -555,6 +598,30 @@ private List eeq = new ArrayList();
 //        itemsEstad.setValue(getEeq());
 //        this.comboEstado.getChildren().add(itemsEstad);
     }
+
+    private void llenarComboEqExBitacora(int opcion){
+        this.getEqs().clear();
+        
+        //SELECTINPUT DE EQUIPOS SIMPLES O EXISTENCIAS
+
+        if(opcion==1){
+            //EQ SIMPLE
+            Equiposimple [] eqsimple = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
+
+            for(int i=0;i<eqsimple.length;i++){
+                String label = eqsimple[i].getPropietario()+" "+eqsimple[i].getDescripcion();
+                getEqs().add(new SelectItem(eqsimple[i].getIdEquipoSimple(),label));
+            }
+        }else{
+            //EXISTENCIA
+            Existencia [] exist = new edu.ues.jhard.beans.BeanBaseJRequest().getExistencia();
+
+            for(int i=0;i<exist.length;i++){
+                String label = exist[i].getCodigo();
+                getEqs().add(new SelectItem(exist[i].getIdexistencia(),label));
+            }
+        }
+    }
     
     private Tecnico tecnicoElegido=null;
     private Estadoequipo estadoElegido=null;
@@ -562,6 +629,7 @@ private List eeq = new ArrayList();
     private Mantenimiento mantenimientoElegido=null;
     private Bitacoraestados bitacoraElegida=null;
     private Equiposimple eqSimpleElegido=null;
+    private Existencia existenciaElegida=null;
     private boolean render;
 
     /**
@@ -581,9 +649,27 @@ private List eeq = new ArrayList();
         fakeComboPrioridad.clear();
         fakeComboPrioridad.setItems(new String[]{"Alta", "Media", "Baja"});
 
+        this.checkEq.setSelected(true);
         llenarLista();
         llenarCombo();
         
+    }
+    public void checkEx_processValueChange(ValueChangeEvent vce) {
+        if(this.checkEx.isSelected()){
+            this.checkEq.setSelected(false);
+            this.txtEqSimples.setValue("");
+            this.bit.clear();
+            llenarComboEqExBitacora(2);
+        }
+
+    }
+    public void checkEq_processValueChange(ValueChangeEvent vce) {
+        if(this.checkEq.isSelected()){
+            this.checkEx.setSelected(false);
+            this.txtEqSimples.setValue("");
+            this.bit.clear();
+            llenarComboEqExBitacora(1);
+        }
     }
 
     /**
@@ -712,7 +798,10 @@ private List eeq = new ArrayList();
 
             m.setIdtecnico(tecnicoElegido);
 
-            m.setIdequiposimple(this.solicitudElegida.getIdequiposimple());
+            if(this.solicitudElegida.getIdequiposimple()==null)
+                m.setIdequipoexistente(this.solicitudElegida.getIdequipoexistente());
+            else
+                m.setIdequiposimple(this.solicitudElegida.getIdequiposimple());
 
             m.setIdsolicitud(this.solicitudElegida);
 
@@ -757,6 +846,8 @@ private List eeq = new ArrayList();
         limpiarListaBitacoras();
         this.renderMantenimientos=false;
         this.renderBitacoras=false;
+        this.checkEq.setSelected(false);
+        this.checkEx.setSelected(false);
     }
 
     public void listaMantenimientos_processValueChange(ValueChangeEvent vce) {
@@ -766,9 +857,18 @@ private List eeq = new ArrayList();
 
         this.mantenimientoElegido=m;
 
-        Equiposimple eq= new BeanBaseJRequest().getEquipoSimpleByID(this.mantenimientoElegido.getIdequiposimple().getIdEquipoSimple());
 
-        this.lblMantenimiento.setValue("¿Finalizado el Mantenimiento de " +this.mantenimientoElegido.getDescripcion() +" al Equipo "+ eq.getDescripcion() +" ?");
+        if(this.mantenimientoElegido.getIdequiposimple()==null){
+                Existencia ex  = new BeanBaseJRequest().getEntityManager().find(Existencia.class, this.mantenimientoElegido.getIdequipoexistente().getIdexistencia());
+                this.lblMantenimiento.setValue("¿Finalizado el Mantenimiento de " +this.mantenimientoElegido.getDescripcion() +" al Equipo "+ ex.getCodigo() +" ?");
+
+            } else{
+                Equiposimple eq = new BeanBaseJRequest().getEquipoSimpleByID(this.mantenimientoElegido.getIdequiposimple().getIdEquipoSimple());
+                this.lblMantenimiento.setValue("¿Finalizado el Mantenimiento de " +this.mantenimientoElegido.getDescripcion() +" al Equipo "+ eq.getDescripcion() +" ?");
+
+            }
+
+        
         this.renderMantenimientos=true;
 
 
@@ -795,20 +895,23 @@ private List eeq = new ArrayList();
 
             be.setDescripcion((String)this.txtDescripcion.getValue());
 
-            be.setIdequiposimple(this.mantenimientoElegido.getIdequiposimple());
+            if(this.solicitudElegida.getIdequiposimple()==null)
+                be.setIdequipoexistente(this.mantenimientoElegido.getIdequipoexistente());
+            else
+                be.setIdequiposimple(this.mantenimientoElegido.getIdequiposimple());
 
             new BeanBaseJRequest().modificarMantenimiento(mantenimientoElegido, "Finalizado");
             
             new BeanBaseJRequest().registrarBitacoraEstados(be);
 
 
-            this.renderMantenimientos=false;
+            
             this.checkFIn.setSelected(false);
             this.txtDescripcion.setValue("");
 
             this.lblMensajes.setValue("Mantenimiento realizado con éxito. Se ha ingresado a la bitácora del equipo");
             this.render=true;
-
+            this.renderMantenimientos=false;
         }
         if(!this.checkFIn.isSelected()){
             this.lblMantenimiento.setValue("Si ha terminado ya el mantenimiento, seleccione la casilla apropiada");
@@ -937,9 +1040,15 @@ private List bit= new ArrayList();
             String label = bitacoras[i].getDescripcion()  +" - "+ bitacoras[i].getFecha().toString();
             getBit().add(new SelectItem(bitacoras[i].getIdbitacora(), label));
         }
-//        UISelectItems itemsBit = new UISelectItems();
-//        itemsBit.setValue(bit);
-//        this.listaBitacoras.getChildren().add(itemsBit);
+    }
+
+        private void llenarListaBitacoras(Existencia e){
+        //LISTA DE BITACORAS
+        Bitacoraestados [] bitacoras = new edu.ues.jhard.beans.BeanBaseJRequest().getBitacoraEstadosByIdExistencia(e);
+        for(int i=0;i<bitacoras.length;i++){
+            String label = bitacoras[i].getDescripcion()  +" - "+ bitacoras[i].getFecha().toString();
+            getBit().add(new SelectItem(bitacoras[i].getIdbitacora(), label));
+        }
     }
 
     private void limpiarListaBitacoras(){
@@ -955,9 +1064,18 @@ private List bit= new ArrayList();
         System.out.println("LO CONVIERTO A INTEGER");
         System.out.println(id);
         System.out.println("HAGO LA INSTANCIA DEL EQUIPO");
-        Equiposimple e=new BeanBaseJRequest().getEntityManager().find(Equiposimple.class, id);
-        eqSimpleElegido=e;
-        llenarListaBitacoras(e);
+        
+        if(this.checkEq.isSelected()){
+            Equiposimple e=new BeanBaseJRequest().getEntityManager().find(Equiposimple.class, id);
+            eqSimpleElegido=e;
+            llenarListaBitacoras(e);
+        }else{
+            Existencia ex=new BeanBaseJRequest().getEntityManager().find(Existencia.class, id);
+            existenciaElegida=ex;
+            llenarListaBitacoras(ex);
+        }
+
+
         return null;
     }
 
@@ -997,7 +1115,11 @@ private List bit= new ArrayList();
         this.render=true;
         limpiarListaBitacoras();
 
-        llenarListaBitacoras(eqSimpleElegido);
+        if(this.checkEq.isSelected()){
+            llenarListaBitacoras(eqSimpleElegido);
+        }else{
+            llenarListaBitacoras(existenciaElegida);
+        }
 
         return "";
     }
