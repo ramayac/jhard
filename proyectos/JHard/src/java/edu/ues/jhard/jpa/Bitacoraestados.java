@@ -30,7 +30,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "bitacoraestados", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Bitacoraestados.findAll", query = "SELECT b FROM Bitacoraestados b"), 
+@NamedQueries({@NamedQuery(name = "Bitacoraestados.findAll", query = "SELECT b FROM Bitacoraestados b ORDER BY b.fecha DESC"),
                @NamedQuery(name = "Bitacoraestados.findByIdbitacora", query = "SELECT b FROM Bitacoraestados b WHERE b.idbitacora = :idbitacora"),
                @NamedQuery(name = "Bitacoraestados.findoByIdEquipoSimple", query = "SELECT b FROM Bitacoraestados b WHERE b.idequiposimple = :idequiposimple ORDER BY b.fecha DESC"),
                @NamedQuery(name = "Bitacoraestados.findoByIdExistencia", query = "SELECT b FROM Bitacoraestados b WHERE b.idequipoexistente = :idequipoexistente ORDER BY b.fecha DESC"),

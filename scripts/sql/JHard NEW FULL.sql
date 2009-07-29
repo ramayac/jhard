@@ -569,10 +569,10 @@ INSERT INTO `jhard`.`equiposimple` VALUES  (1,'Computadora Oficina Jurídica','C
  (4,'Computadora Carmencita','Carmencita',2),
  (5,'Compu Medicina','Carmencita',2),
  (6,'Compu cacasa ','Carmencita',3),
- (7,'Compu de Reyes','Carmencita',4),
+ (7,'Compu de Reyes','Carmencita',3),
  (8,'Compu del Bunker','Carmencita',3),
  (9,'bunker 2','Carmencita',3),
- (10,'Compu Italia','Carmencita',4),
+ (10,'Compu Italia','Carmencita',3),
  (11,'Compu Egipto','Carmencita',3),
  (12,'Compu Brasil','Carmencita',1),
  (13,'Computadora Arq Centeno','Carmencita',2),
@@ -622,11 +622,9 @@ CREATE TABLE  `jhard`.`estadoequipo` (
 /*!40000 ALTER TABLE `estadoequipo` DISABLE KEYS */;
 LOCK TABLES `estadoequipo` WRITE;
 INSERT INTO `jhard`.`estadoequipo` VALUES  (1,'Excelente','Óptimas condiciones'),
- (2,'Muy Bueno','Condiciones aceptables'),
- (3,'Bueno','Condiciones estables'),
- (4,'Malo','Falla por ciertos períodos de tiempo'),
- (5,'Muy Malo','Falla casi siempre'),
- (6,'Pésimo','Imposible de utilizar');
+ (2,'Funcional','Condiciones aceptables'),
+ (3,'Fallido','El equipo reporta fallas'),
+ (4,'En mantenimiento','El equipo esta siendo reparado');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `estadoequipo` ENABLE KEYS */;
 

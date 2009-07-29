@@ -107,6 +107,7 @@
                                                                     <p>
                                                                         <ice:outputLabel id="lblDescripcionClasificacion" for="txtDescripcionClasificacion" value="Descripcion:" />
                                                                         <ice:inputText id="txtDescripcionClasificacion" value="#{JInventInstance.nuevaClasificacion.descripcion}" />
+
                                                                     </p>
                                                                     <p class="actionSection">
                                                                         <ice:commandButton id="cmdCommitAgregarClasificacion" value="Agregar" action="#{JInventInstance.addClasificaicon}" />
@@ -191,6 +192,11 @@
                                                             </ice:column>
                                                             <ice:column>
                                                                 <ice:commandLink value="Eliminar" action="#{JInventInstance.crdExistencia.showPopupDel}">
+                                                                    <f:param name="currentId" value="#{existencia.idexistencia}" />
+                                                                </ice:commandLink>
+                                                            </ice:column>
+                                                            <ice:column>
+                                                                <ice:commandLink value="Mantenimiento" action="#{JInventInstance.showPopupMantenimiento}">
                                                                     <f:param name="currentId" value="#{existencia.idexistencia}" />
                                                                 </ice:commandLink>
                                                             </ice:column>
@@ -328,8 +334,59 @@
                                                                 </ice:panelGroup>
                                                             </f:facet>
                                                         </ice:panelPopup>
+                                                        <ice:panelPopup id="pupMantenimientoExistencia" draggable="true" modal="true" rendered="#{JInventInstance.popupMantenimientoVisible}" style="width: 450px;">
+                                                            <f:facet name="header"><ice:outputText value="Mantenimiento de la existencia de equipo" /></f:facet>
+                                                            <f:facet name="body">
+                                                                <ice:panelGroup styleClass="frmElementList">
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblEstadoActual" for="grpEstadoActualValue" value="Estado actual del equipo:" />                                                                        
+                                                                        <ice:graphicImage alt="#{JInventInstance.currentExistencia.idestado.nombre}" url="img/#{JInventInstance.currentExistencia.imagenEstado}"  />
+                                                                        <ice:outputText value="#{JInventInstance.currentExistencia.idestado.nombre}" style="font-weight: bold; margin: 0px 10px;" />
+                                                                        <!-- command link para enviar a mantenimiento, en caso que idestado sea 1 -->                                                                        
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblBitacoraEstados" for="grpBitacoraEstados" value="Bitácora de estados:" />
+                                                                        <ice:panelGroup id="grpBitacoraEstados">
+                                                                            <ice:dataTable id="tblBitacoraEstados" value="#{JInventInstance.listaEstadosExistencia}" var="estado" rows="5">
+                                                                                <ice:column>
+                                                                                    <ice:graphicImage alt="#{estado.nombre}" url="img/#{estado.idequipoexistente.imagenEstado}"  />
+                                                                                </ice:column>
+                                                                                <ice:column>
+                                                                                    <f:facet name="header"><ice:outputText value="Fecha" /></f:facet>
+                                                                                    <ice:outputText value="#{estado.fecha}" />
+                                                                                </ice:column>
+                                                                                <ice:column>
+                                                                                    <f:facet name="header"><ice:outputText value="Descripción" /></f:facet>
+                                                                                    <ice:outputText value="#{estado.descripcion}" />
+                                                                                </ice:column>
+                                                                            </ice:dataTable>
+                                                                            <ice:dataPaginator id="pgrBitacoraEstados" for="tblBitacoraEstados" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.listaBitacoraEstadosSize > 5}">
+                                                                                <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
+                                                                                <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
+                                                                                <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
+                                                                                <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
+                                                                            </ice:dataPaginator>
+                                                                        </ice:panelGroup>
 
-                                                        <h3 class="tituloSeccion">
+                                                                    </p>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblSolicitud" for="txaSolicitud" value="Solicitud: " rendered="#{JInventInstance.currentExistencia.idestado.idestado == 1}" />
+                                                                        <ice:inputTextarea id="txaSolicitud" value="#{JInventInstance.descripcionSolicitud}" rendered="#{JInventInstance.currentExistencia.idestado.idestado == 1}" />
+                                                                        <br/>
+                                                                        <ice:outputLabel id="lblRelleno" for="lnkEnviarSolicitud" rendered="#{JInventInstance.currentExistencia.idestado.idestado == 1}" />
+                                                                        <ice:commandLink id="lnkEnviarSolicitud" value="Enviar" action="#{JInventInstance.enviarSolicitudMantenimiento}" rendered="#{JInventInstance.currentExistencia.idestado.idestado == 1}" >
+                                                                            <f:param name="idusr" value="#{JHardminInstance.currentUser.uid}" />
+                                                                        </ice:commandLink>
+                                                                        <ice:outputText value="Equipo reportado como fallido" style="font-weight: bold;" rendered="#{JInventInstance.currentExistencia.idestado.idestado == 2}" />
+                                                                    </p>
+                                                                    <p class="actionSection">
+                                                                        <ice:commandButton id="cmdCerrarPopupMantenimiento" value="Cerrar" action="#{JInventInstance.hidePopupMantenimiento}" />
+                                                                    </p>
+                                                                </ice:panelGroup>
+                                                            </f:facet>
+                                                        </ice:panelPopup>
+
+                                                        <h3 class="tituloSeccion" style="margin-top: 20px;">
                                                            <ice:outputFormat value="Definiciones de Equipos (Total: {0})">
                                                                <f:param value="#{JInventInstance.sizeListaEquipos}"/>
                                                             </ice:outputFormat>
