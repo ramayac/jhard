@@ -10,6 +10,7 @@ import edu.ues.jhard.jinvent.ClasificacionTreeModel;
 import edu.ues.jhard.jinvent.ClasificacionUserObject;
 import edu.ues.jhard.jinvent.CrudManager;
 import edu.ues.jhard.jpa.Accesorio;
+import edu.ues.jhard.jpa.Bitacoraestados;
 import edu.ues.jhard.jpa.Clasificacion;
 import edu.ues.jhard.jpa.Equipo;
 import edu.ues.jhard.jpa.Estadoequipo;
@@ -20,7 +21,9 @@ import edu.ues.jhard.jpa.Marca;
 import edu.ues.jhard.jpa.Pieza;
 import edu.ues.jhard.jpa.Reserva;
 import edu.ues.jhard.jpa.Software;
+import edu.ues.jhard.jpa.Solicitud;
 import edu.ues.jhard.jpa.Ubicacion;
+import edu.ues.jhard.jpa.Usuario;
 import edu.ues.jhard.util.ActionMessage;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,6 +69,7 @@ public class BeanBaseJInvent extends BeanBase {
     private List<Software> listaTodosSoftware;
     private List<Estadoequipo> listaEstados;
     private List<Ubicacion> listaUbicaciones;
+    private List<Bitacoraestados> listaEstadosExistencia;
     private SelectItemGroup listaItemsMarcas;
     private SelectItemGroup listaItemsEquipos;
     private SelectItemGroup listaItemsUbicaciones;
@@ -80,6 +84,8 @@ public class BeanBaseJInvent extends BeanBase {
     private String softwareSelected;
     private String ubicacionSelected;
     private boolean existenciaEditMode;
+    private boolean popupMantenimientoVisible;
+    private String descripcionSolicitud;
     private ActionMessage msg;
 
     public BeanBaseJInvent(){
@@ -104,7 +110,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.listaMarcas = this.getEntityManager().createNamedQuery("Marca.findAll").getResultList();        
         this.listaTodosEquipos = this.getEntityManager().createNamedQuery("Equipo.findAll").getResultList();
         this.initItemsMarcas();
-        this.listaUbicaciones = this.getEntityManager().createNamedQuery("Ubicacion.findAll").getResultList();
+        this.listaUbicaciones = this.getEntityManager().createNamedQuery("Ubicacion.findAll").getResultList();        
     }
 
     /**
@@ -448,12 +454,42 @@ public class BeanBaseJInvent extends BeanBase {
             emgr.getTransaction().commit();
         }
 
-        
-        
+        if(!this.currentExistencia.getIdubicacion().getIdubicacion().toString().equalsIgnoreCase(this.ubicacionSelected)){
+            Ubicacion newAssignedUbicacion = (Ubicacion)emgr.createQuery("SELECT u FROM Ubicacion u WHERE u.idubicacion=" + this.ubicacionSelected).getSingleResult();
+            Ubicacion oldAssignedUbicacion = this.currentExistencia.getIdubicacion();
+            oldAssignedUbicacion.getExistenciaCollection().remove(this.currentExistencia);
+            newAssignedUbicacion.getExistenciaCollection().add(this.currentExistencia);
+            currentExistencia.setIdubicacion(newAssignedUbicacion);
+            emgr.getTransaction().begin();
+            emgr.merge(oldAssignedUbicacion);
+            emgr.merge(newAssignedUbicacion);
+            emgr.merge(this.currentExistencia);
+            emgr.getTransaction().commit();
+        }
+
+        emgr.getTransaction().begin();
+        for(Accesorio acc: this.currentExistencia.getAccesorioCollection())
+            emgr.merge(acc);
+
+        for(Instalacion inst: this.currentExistencia.getInstalacionCollection())
+            emgr.merge(inst);
+
+        for(Pieza pz: this.currentExistencia.getPiezaCollection())
+            emgr.merge(pz);
+        emgr.getTransaction().commit();
+
         emgr.getTransaction().begin();
         emgr.merge(this.currentExistencia);
         emgr.getTransaction().commit();
-        
+
+        for(Existencia ext: this.getCurrentClasificacion().getExistenciaCollection()){            
+            if(ext.getIdexistencia() == this.currentExistencia.getIdexistencia()){                
+                ext.setCodigo(this.currentExistencia.getCodigo());
+                ext.setIdhardware(this.currentExistencia.getIdhardware());
+                ext.setIdubicacion(this.currentExistencia.getIdubicacion());
+                break;
+            }
+        }
         this.crdExistencia.hidePopupEdit();
         this.msg.setText("Existencia modificada satisfactoriamente");
         this.msg.setVisible(true);
@@ -788,8 +824,7 @@ public class BeanBaseJInvent extends BeanBase {
         emgr.merge(this.getCurrentClasificacion());
         emgr.getTransaction().commit();
         this.crdClasificacion.hidePopupEdit();
-        Clasificacion current = this.getCurrentClasificacion();
-        this.clasificaciontm.getCurrentUserObject().setText(current.getNombre() + "(" + (current.getEquipoCollection().size() + current.getAccesorioCollection().size() + current.getPiezaCollection().size() + current.getSoftwareCollection().size()) + ")");
+        actualizarCurrentNodoClasificacion();
 
         this.msg.setText("Clasificación modificada exitosamente");
         this.msg.setVisible(true);
@@ -885,7 +920,7 @@ public class BeanBaseJInvent extends BeanBase {
         Clasificacion cl = this.getCurrentClasificacion();
         int cantExistencias = 0;
         for(Equipo eq: cl.getEquipoCollection())
-            cantExistencias += eq.getExistenciaSize() + 1;
+            cantExistencias += eq.getExistenciaSize();
 
         this.clasificaciontm.getCurrentUserObject().setText(cl.getNombre() + " (" + (cantExistencias + cl.getSoftwareCollection().size() + cl.getAccesorioCollection().size() + cl.getPiezaCollection().size()) +  ")");
     }
@@ -1592,6 +1627,94 @@ public class BeanBaseJInvent extends BeanBase {
         this.msg.setVisible(true);
         this.currentUbicacion = new Ubicacion();
         return "done";
+    }
+
+    /**
+     * @return the listaEstadosExistencia
+     */
+    public List<Bitacoraestados> getListaEstadosExistencia() {
+        return listaEstadosExistencia;
+    }
+
+    /**
+     * @param listaEstadosExistencia the listaEstadosExistencia to set
+     */
+    public void setListaEstadosExistencia(List<Bitacoraestados> listaEstadosExistencia) {
+        this.listaEstadosExistencia = listaEstadosExistencia;
+    }
+
+    /**
+     * @return the popupMantenimientoVisible
+     */
+    public boolean getPopupMantenimientoVisible() {
+        return popupMantenimientoVisible;
+    }
+
+    /**
+     * @param popupMantenimientoVisible the popupMantenimientoVisible to set
+     */
+    public void setPopupMantenimientoVisible(boolean popupMantenimientoVisible) {
+        this.popupMantenimientoVisible = popupMantenimientoVisible;
+    }
+
+    public String showPopupMantenimiento(){
+        String idExistencia = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");        
+        this.listaEstadosExistencia = this.getEntityManager().createQuery("SELECT b FROM Bitacoraestados b WHERE b.idequipoexistente.idexistencia=" + idExistencia).getResultList();
+        this.currentExistencia = (Existencia)this.getEntityManager().createQuery("SELECT e FROM Existencia e WHERE e.idexistencia=" + idExistencia).getSingleResult();
+        this.popupMantenimientoVisible = true;
+        return "done";
+    }
+
+    public String hidePopupMantenimiento(){
+        this.popupMantenimientoVisible = false;
+        return "done";
+    }
+
+    public int getListaBitacoraEstadosSize(){
+        if(this.listaEstadosExistencia != null)
+            return this.listaEstadosExistencia.size();
+        else
+            return 0;
+    }
+
+    public String enviarSolicitudMantenimiento(){
+        EntityManager emgr = this.getEntityManager();
+        String idUsuario = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idusr");
+        Usuario usr = (Usuario)emgr.createQuery("SELECT u FROM Usuario u WHERE u.idusuario=" + idUsuario).getSingleResult();
+        Estadoequipo estadoFallido = (Estadoequipo)emgr.createQuery("SELECT e FROM Estadoequipo e WHERE e.idestado=2").getSingleResult();
+        Solicitud sol = new Solicitud();
+
+        sol.setDescripcion(this.descripcionSolicitud);
+        sol.setFecha(Calendar.getInstance().getTime());
+        sol.setIdequipoexistente(this.currentExistencia);
+        sol.setIdusuario(usr);
+        sol.setPrioridad("ALTA");
+        new BeanBaseJRequest().registrarSolicitud(sol);
+        this.currentExistencia.setIdestado(estadoFallido);
+        emgr.getTransaction().begin();
+        emgr.merge(this.currentExistencia);
+        emgr.getTransaction().commit();
+        for(Existencia ext: this.getCurrentClasificacion().getExistenciaCollection()){
+            if(ext.getIdexistencia() == this.currentExistencia.getIdexistencia()){
+                ext.setIdestado(this.currentExistencia.getIdestado());
+                break;
+            }
+        }
+        return "done";
+    }
+
+    /**
+     * @return the descripcionSolicitud
+     */
+    public String getDescripcionSolicitud() {
+        return descripcionSolicitud;
+    }
+
+    /**
+     * @param descripcionSolicitud the descripcionSolicitud to set
+     */
+    public void setDescripcionSolicitud(String descripcionSolicitud) {
+        this.descripcionSolicitud = descripcionSolicitud;
     }
 
 }
