@@ -75,9 +75,9 @@ public class BeanBaseJHardmin extends BeanBase {
         this.roleList = this.getEntityManager().createNamedQuery("Rol.findAll").getResultList();
         this.userList = this.getEntityManager().createNamedQuery("Usuario.findAll").getResultList();
         this.listaAutorizaciones = this.getEntityManager().createQuery("SELECT a FROM Autorizacion a").getResultList();
-        this.listaEstudiantes = this.getEntityManager().createNamedQuery("Estudiante.findAll").getResultList();
-        this.listaInstructores = this.getEntityManager().createNamedQuery("Instructor.findAll").getResultList();
-        this.listaDocentes = this.getEntityManager().createNamedQuery("Docente.findAll").getResultList();
+        this.listaEstudiantes = this.getEntityManager().createNamedQuery("Estudiante.findAllVisible").getResultList();
+        this.listaInstructores = this.getEntityManager().createNamedQuery("Instructor.findAllVisible").getResultList();
+        this.listaDocentes = this.getEntityManager().createNamedQuery("Docente.findAllVisible").getResultList();
         this.currentAutorizacion = new Autorizacion();
         this.crdAutorizaciones = new CrudManager();
         this.crdEstudiantes = new CrudManager();
@@ -973,6 +973,7 @@ public class BeanBaseJHardmin extends BeanBase {
 
         emgr.getTransaction().begin();
         this.currentEstudiante.setIdusuario(usr);
+        this.currentEstudiante.setVisible(1);
         emgr.persist(this.currentEstudiante);
         emgr.getTransaction().commit();
         this.crdEstudiantes.hidePopupAdd();
@@ -981,6 +982,34 @@ public class BeanBaseJHardmin extends BeanBase {
         this.msg.setVisible(true);
         this.currentEstudiante = new Estudiante();
         this.currentEstudiante.setIdusuario(null);
+        return "done";
+    }
+
+    public String delEstudiante(){
+        EntityManager emgr = this.getEntityManager();
+        this.currentEstudiante = (Estudiante)emgr.createQuery("SELECT e FROM Estudiante e WHERE e.idestudiante=" + this.crdEstudiantes.getCurrentId()).getSingleResult();
+        this.currentEstudiante.setVisible(0);
+        emgr.getTransaction().begin();
+        emgr.merge(this.currentEstudiante);
+        emgr.getTransaction().commit();
+        this.crdEstudiantes.hidePopupDel();
+
+        for(Estudiante e: this.listaEstudiantes){
+            if(e.getIdestudiante() == this.currentEstudiante.getIdestudiante()){
+                this.listaEstudiantes.remove(e);
+                break;
+            }
+        }
+
+        for(Usuario u: this.userList){
+            if(u.getIdusuario() == this.currentEstudiante.getIdusuario().getIdusuario()){
+                this.userList.remove(u);
+                break;
+            }
+        }
+
+        this.msg.setText("Estudiante " + this.currentEstudiante.getNombres() + " " + this.currentEstudiante.getApellidos() + " eliminado satisfactoriamente");
+        this.msg.setVisible(true);
         return "done";
     }
 
@@ -1011,6 +1040,7 @@ public class BeanBaseJHardmin extends BeanBase {
 
         emgr.getTransaction().begin();
         this.currentInstructor.setIdusuario(usr);
+        this.currentInstructor.setVisible(1);
         emgr.persist(this.currentInstructor);
         emgr.getTransaction().commit();
         this.crdInstructores.hidePopupAdd();
@@ -1019,6 +1049,34 @@ public class BeanBaseJHardmin extends BeanBase {
         this.msg.setVisible(true);
         this.currentInstructor = new Instructor();
         this.currentInstructor.setIdusuario(null);
+        return "done";
+    }
+
+    public String delInstructor(){
+        EntityManager emgr = this.getEntityManager();
+        this.currentInstructor = (Instructor)emgr.createQuery("SELECT i FROM Instructor i WHERE i.idinstructor=" + this.crdInstructores.getCurrentId()).getSingleResult();
+        this.currentInstructor.setVisible(0);
+        emgr.getTransaction().begin();
+        emgr.merge(this.currentInstructor);
+        emgr.getTransaction().commit();
+        this.crdInstructores.hidePopupDel();
+
+        for(Instructor i: this.listaInstructores){
+            if(i.getIdinstructor() == this.currentInstructor.getIdinstructor()){
+                this.listaInstructores.remove(i);
+                break;
+            }
+        }
+
+        for(Usuario u: this.userList){
+            if(u.getIdusuario() == this.currentInstructor.getIdusuario().getIdusuario()){
+                this.userList.remove(u);
+                break;
+            }
+        }
+
+        this.msg.setText("Instructor " + this.currentInstructor.getNombres() + " " + this.currentInstructor.getApellidos() + " eliminado satisfactoriamente");
+        this.msg.setVisible(true);
         return "done";
     }
 
@@ -1042,6 +1100,7 @@ public class BeanBaseJHardmin extends BeanBase {
 
         emgr.getTransaction().begin();
         this.currentDocente.setIdusuario(usr);
+        this.currentDocente.setVisible(1);
         emgr.persist(this.currentDocente);
         emgr.getTransaction().commit();
         this.crdDocentes.hidePopupAdd();
@@ -1050,6 +1109,34 @@ public class BeanBaseJHardmin extends BeanBase {
         this.msg.setVisible(true);
         this.currentDocente = new Docente();
         this.currentDocente.setIdusuario(null);
+        return "done";
+    }
+
+    public String delDocente(){
+        EntityManager emgr = this.getEntityManager();
+        this.currentDocente = (Docente)emgr.createQuery("SELECT d FROM Docente d WHERE d.iddocente=" + this.crdDocentes.getCurrentId()).getSingleResult();
+        this.currentDocente.setVisible(0);
+        emgr.getTransaction().begin();
+        emgr.merge(this.currentDocente);
+        emgr.getTransaction().commit();
+        this.crdDocentes.hidePopupDel();
+
+        for(Docente d: this.listaDocentes){
+            if(d.getIddocente() == this.currentDocente.getIddocente()){
+                this.listaDocentes.remove(d);
+                break;
+            }
+        }
+
+        for(Usuario u: this.userList){
+            if(u.getIdusuario() == this.currentDocente.getIdusuario().getIdusuario()){
+                this.userList.remove(u);
+                break;
+            }
+        }
+
+        this.msg.setText("Docente " + this.currentDocente.getNombres() + " " + this.currentDocente.getApellidos() + " eliminado satisfactoriamente");
+        this.msg.setVisible(true);
         return "done";
     }
 }

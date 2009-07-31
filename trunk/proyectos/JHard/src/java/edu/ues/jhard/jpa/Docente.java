@@ -27,7 +27,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "docente", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Docente.findAll", query = "SELECT d FROM Docente d"), 
+@NamedQueries({@NamedQuery(name = "Docente.findAll", query = "SELECT d FROM Docente d"),
+               @NamedQuery(name = "Docente.findAllVisible", query = "SELECT d FROM Docente d WHERE d.visible = 1"),
                @NamedQuery(name = "Docente.findByIddocente", query = "SELECT d FROM Docente d WHERE d.iddocente = :iddocente"),
                @NamedQuery(name = "Docente.findByIdUsuario", query = "SELECT d FROM Docente d WHERE d.idusuario.idusuario = :idusuario"),
                @NamedQuery(name = "Docente.findByApellidos", query = "SELECT d FROM Docente d WHERE d.apellidos = :apellidos"),

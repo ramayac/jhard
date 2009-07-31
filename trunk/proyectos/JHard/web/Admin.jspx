@@ -348,6 +348,20 @@
                                                             </ice:panelGroup>
                                                         </f:facet>
                                                     </ice:panelPopup>
+                                                    <ice:panelPopup id="pupEliminarEstudiante" draggable="true" modal="true" rendered="#{JHardminInstance.crdEstudiantes.popupDelVisible}">
+                                                        <f:facet name="header"><ice:outputText value="Confirmación" /></f:facet>
+                                                        <f:facet name="body">
+                                                            <ice:panelGroup styleClass="frmElementList">
+                                                                <p>
+                                                                    <ice:outputText value="Esta seguro que desea eliminar el elemento seleccionado?" />
+                                                                </p>
+                                                                <p class="actionSection">
+                                                                    <ice:commandButton id="cmdCommitEliminarEstudiante" value="Si" action="#{JHardminInstance.delEstudiante}" />
+                                                                    <ice:commandButton id="cmdCancelEliminarEstudiante" value="No" action="#{JHardminInstance.crdEstudiantes.hidePopupDel}" />
+                                                                </p>
+                                                            </ice:panelGroup>
+                                                        </f:facet>
+                                                     </ice:panelPopup>
                                                     <p class="actionSection">
                                                         <ice:commandButton id="addEstudiante" value="Agregar estudiante" action="#{JHardminInstance.crdEstudiantes.showPopupAdd}" />
                                                         <ice:outputFormat value="{0} estudiantes en total" style="padding: 0px 10px;">
@@ -375,7 +389,7 @@
                                                             </ice:commandLink>
                                                         </ice:column>
                                                         <ice:column>
-                                                            <ice:commandLink value="Eliminar" action="" >
+                                                            <ice:commandLink value="Eliminar" action="#{JHardminInstance.crdInstructores.showPopupDel}" >
                                                                 <f:param name="currentId" value="#{instructor.idinstructor}" />
                                                             </ice:commandLink>
                                                         </ice:column>
@@ -409,6 +423,20 @@
                                                             </ice:panelGroup>
                                                         </f:facet>
                                                     </ice:panelPopup>
+                                                    <ice:panelPopup id="pupEliminarInstructor" draggable="true" modal="true" rendered="#{JHardminInstance.crdInstructores.popupDelVisible}">
+                                                        <f:facet name="header"><ice:outputText value="Confirmación" /></f:facet>
+                                                        <f:facet name="body">
+                                                            <ice:panelGroup styleClass="frmElementList">
+                                                                <p>
+                                                                    <ice:outputText value="Esta seguro que desea eliminar el elemento seleccionado?" />
+                                                                </p>
+                                                                <p class="actionSection">
+                                                                    <ice:commandButton id="cmdCommitEliminarInstructor" value="Si" action="#{JHardminInstance.delInstructor}" />
+                                                                    <ice:commandButton id="cmdCancelEliminarInstructor" value="No" action="#{JHardminInstance.crdInstructores.hidePopupDel}" />
+                                                                </p>
+                                                            </ice:panelGroup>
+                                                        </f:facet>
+                                                     </ice:panelPopup>
                                                     <p class="actionSection">
                                                         <ice:commandButton id="addInstructor" value="Agregar instructor" action="#{JHardminInstance.crdInstructores.showPopupAdd}" />
                                                         <ice:outputFormat value="{0} instructores en total" style="padding: 0px 10px;">
@@ -432,7 +460,7 @@
                                                             </ice:commandLink>
                                                         </ice:column>
                                                         <ice:column>
-                                                            <ice:commandLink value="Eliminar" action="" >
+                                                            <ice:commandLink value="Eliminar" action="#{JHardminInstance.crdDocentes.showPopupDel}" >
                                                                 <f:param name="currentId" value="#{docente.iddocente}" />
                                                             </ice:commandLink>
                                                         </ice:column>
@@ -462,6 +490,20 @@
                                                             </ice:panelGroup>
                                                         </f:facet>
                                                     </ice:panelPopup>
+                                                    <ice:panelPopup id="pupEliminarDocente" draggable="true" modal="true" rendered="#{JHardminInstance.crdDocentes.popupDelVisible}">
+                                                        <f:facet name="header"><ice:outputText value="Confirmación" /></f:facet>
+                                                        <f:facet name="body">
+                                                            <ice:panelGroup styleClass="frmElementList">
+                                                                <p>
+                                                                    <ice:outputText value="Esta seguro que desea eliminar el elemento seleccionado?" />
+                                                                </p>
+                                                                <p class="actionSection">
+                                                                    <ice:commandButton id="cmdCommitEliminarDocente" value="Si" action="#{JHardminInstance.delDocente}" />
+                                                                    <ice:commandButton id="cmdCancelEliminarDocente" value="No" action="#{JHardminInstance.crdDocentes.hidePopupDel}" />
+                                                                </p>
+                                                            </ice:panelGroup>
+                                                        </f:facet>
+                                                     </ice:panelPopup>
                                                     <p class="actionSection">
                                                         <ice:commandButton id="addDocente" value="Agregar docente" action="#{JHardminInstance.crdDocentes.showPopupAdd}" />
                                                         <ice:outputFormat value="{0} docentes en total" style="padding: 0px 10px;">
