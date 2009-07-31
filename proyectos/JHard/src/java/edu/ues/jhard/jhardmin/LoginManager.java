@@ -105,7 +105,7 @@ public class LoginManager {
 
     public boolean existsInBD(String userName, String userPwd){        
         BeanBaseJHardmin bbase = new BeanBaseJHardmin();        
-        Usuario u = bbase.getUsuario(userName, encrypt(userPwd));
+        Usuario u = bbase.getUsuario(userName, encrypt(userPwd));        
         return (u != null);
     }
 
