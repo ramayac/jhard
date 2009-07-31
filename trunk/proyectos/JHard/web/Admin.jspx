@@ -290,6 +290,188 @@
                                             </f:facet>
                                         </ice:panelPopup>
                                     </ice:panelCollapsible>
+                                    <ice:panelCollapsible rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}">
+                                        <f:facet name="header"><ice:panelGroup><ice:outputText value="Administración de Personas en Cursos" /></ice:panelGroup></f:facet>
+                                        <ice:panelGroup>
+                                            <ice:panelTabSet>
+                                                <ice:panelTab id="tabEstudiantes" label="Estudiantes">
+                                                    <ice:dataTable id="tblListaEstudiantes" value="#{JHardminInstance.listaEstudiantes}" var="estudiante" rows="10">
+                                                        <ice:column>
+                                                            <f:facet name="header"><ice:outputText value="Carnet" /></f:facet>
+                                                            <ice:outputText value="#{estudiante.carnet}" />
+                                                        </ice:column>
+                                                        <ice:column>
+                                                            <f:facet name="header"><ice:outputText value="Apellidos" /></f:facet>
+                                                            <ice:outputText value="#{estudiante.apellidos}" />
+                                                        </ice:column>
+                                                        <ice:column>
+                                                            <f:facet name="header"><ice:outputText value="Nombres" /></f:facet>
+                                                            <ice:outputText value="#{estudiante.nombres}" />
+                                                        </ice:column>
+                                                        <ice:column>
+                                                            <ice:commandLink value="Editar" action="#{JHardminInstance.editEstudiante}" >
+                                                                <f:param name="currentId" value="#{estudiante.idestudiante}" />
+                                                            </ice:commandLink>
+                                                        </ice:column>
+                                                        <ice:column>
+                                                            <ice:commandLink value="Eliminar" action="#{JHardminInstance.crdEstudiantes.showPopupDel}" >
+                                                                <f:param name="currentId" value="#{estudiante.idestudiante}" />
+                                                            </ice:commandLink>
+                                                        </ice:column>
+                                                    </ice:dataTable>
+                                                    <ice:dataPaginator id="pgrListaEstudiantes" for="tblListaEstudiantes" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JHardminInstance.sizeListaEstudiantes > 10}" >
+                                                        <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
+                                                        <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
+                                                        <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
+                                                        <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
+                                                    </ice:dataPaginator>
+                                                    <ice:panelPopup id="pupAgregarEstudiante" modal="true" draggable="true" rendered="#{JHardminInstance.crdEstudiantes.popupAddVisible}">
+                                                        <f:facet name="header"><ice:outputText value="Agregar nuevo estudiante" /></f:facet>
+                                                        <f:facet name="body">
+                                                            <ice:panelGroup styleClass="frmElementList">
+                                                                <p>
+                                                                    <ice:outputLabel id="lblCarnetEstudiante" for="txtCarnetEstudiante" value="Carnet:" />
+                                                                    <ice:inputText id="txtCarnetEstudiante" value="#{JHardminInstance.currentEstudiante.carnet}" />
+                                                                </p>
+                                                                <p>
+                                                                    <ice:outputLabel id="lblApellidosEstudiante" for="txtapellidosEstudiante" value="Apellidos:" />
+                                                                    <ice:inputText id="txtApellidosEstudiante" value="#{JHardminInstance.currentEstudiante.apellidos}" />
+                                                                </p>
+                                                                <p>
+                                                                    <ice:outputLabel id="lblNombresEstudiante" for="txtNombresEstudiante" value="Nombres:" />
+                                                                    <ice:inputText id="txtNombresEstudiante" value="#{JHardminInstance.currentEstudiante.nombres}" />
+                                                                </p>                                                                
+                                                                <p class="actionSection">
+                                                                    <ice:commandButton id="cmdCommitAgregarEstudiante" value="Agregar" action="#{JHardminInstance.addEstudiante}" />
+                                                                    <ice:commandButton id="cmdCancelAgregarEstudiante" value="Cancelar" action="#{JHardminInstance.crdEstudiantes.hidePopupAdd}" />
+                                                                </p>
+                                                            </ice:panelGroup>
+                                                        </f:facet>
+                                                    </ice:panelPopup>
+                                                    <p class="actionSection">
+                                                        <ice:commandButton id="addEstudiante" value="Agregar estudiante" action="#{JHardminInstance.crdEstudiantes.showPopupAdd}" />
+                                                        <ice:outputFormat value="{0} estudiantes en total" style="padding: 0px 10px;">
+                                                            <f:param value="#{JHardminInstance.sizeListaEstudiantes}" />
+                                                        </ice:outputFormat>
+                                                    </p>
+                                                </ice:panelTab>
+                                                <ice:panelTab id="tabInstructores" label="Instructores">
+                                                    <ice:dataTable id="tblListaInstructores" value="#{JHardminInstance.listaInstructores}" var="instructor" rows="10" >
+                                                        <ice:column>
+                                                            <f:facet name="header"><ice:outputText value="Carnet" /></f:facet>
+                                                            <ice:outputText value="#{instructor.carnet}" />
+                                                        </ice:column>
+                                                        <ice:column>
+                                                            <f:facet name="header"><ice:outputText value="Apellidos" /></f:facet>
+                                                            <ice:outputText value="#{instructor.apellidos}" />
+                                                        </ice:column>
+                                                        <ice:column>
+                                                            <f:facet name="header"><ice:outputText value="Nombres" /></f:facet>
+                                                            <ice:outputText value="#{instructor.nombres}" />
+                                                        </ice:column>
+                                                        <ice:column>
+                                                            <ice:commandLink value="Editar" action="" >
+                                                                <f:param name="currentId" value="#{instructor.idinstructor}" />
+                                                            </ice:commandLink>
+                                                        </ice:column>
+                                                        <ice:column>
+                                                            <ice:commandLink value="Eliminar" action="" >
+                                                                <f:param name="currentId" value="#{instructor.idinstructor}" />
+                                                            </ice:commandLink>
+                                                        </ice:column>
+                                                    </ice:dataTable>
+                                                    <ice:dataPaginator id="pgrListaInstructores" for="tblListaInstructores" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JHardminInstance.sizeListaInstructores > 10}" >
+                                                        <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
+                                                        <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
+                                                        <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
+                                                        <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
+                                                    </ice:dataPaginator>
+                                                    <ice:panelPopup id="pupAgregarInstructor" draggable="true" modal="true" rendered="#{JHardminInstance.crdInstructores.popupAddVisible}">
+                                                        <f:facet name="header"><ice:outputText value="Agregar nuevo instructor" /></f:facet>
+                                                        <f:facet name="body">
+                                                            <ice:panelGroup styleClass="frmElementList">
+                                                                <p>
+                                                                    <ice:outputLabel id="lblCarnetInstructor" for="txtCarnetInstructor" value="Carnet:" />
+                                                                    <ice:inputText id="txtCarnetInstructor" value="#{JHardminInstance.currentInstructor.carnet}" />
+                                                                </p>
+                                                                <p>
+                                                                    <ice:outputLabel id="lblApellidosInstructor" for="txtApellidosInstructor" value="Apellidos:" />
+                                                                    <ice:inputText id="txtApellidosInstructor" value="#{JHardminInstance.currentInstructor.apellidos}" />
+                                                                </p>
+                                                                <p>
+                                                                    <ice:outputLabel id="lblNombresInstructor" for="txtNombresInstructor" value="Nombres:" />
+                                                                    <ice:inputText id="txtNombresInstructor" value="#{JHardminInstance.currentInstructor.nombres}" />
+                                                                </p>
+                                                                <p class="actionSection">
+                                                                    <ice:commandButton id="cmdCommitAgregarInstructor" value="Agregar" action="#{JHardminInstance.addInstructor}" />
+                                                                    <ice:commandButton id="cmdCancelAgregarInstructor" value="Cancelar" action="#{JHardminInstance.crdInstructores.hidePopupAdd}" />
+                                                                </p>
+                                                            </ice:panelGroup>
+                                                        </f:facet>
+                                                    </ice:panelPopup>
+                                                    <p class="actionSection">
+                                                        <ice:commandButton id="addInstructor" value="Agregar instructor" action="#{JHardminInstance.crdInstructores.showPopupAdd}" />
+                                                        <ice:outputFormat value="{0} instructores en total" style="padding: 0px 10px;">
+                                                            <f:param value="#{JHardminInstance.sizeListaInstructores}" />
+                                                        </ice:outputFormat>
+                                                    </p>
+                                                </ice:panelTab>
+                                                <ice:panelTab id="tabDocentes" label="Docentes">
+                                                    <ice:dataTable id="tblDocentes" value="#{JHardminInstance.listaDocentes}" var="docente" rows="10" >
+                                                        <ice:column>
+                                                            <f:facet name="header"><ice:outputText value="Apellidos" /></f:facet>
+                                                            <ice:outputText value="#{docente.apellidos}" />
+                                                        </ice:column>
+                                                        <ice:column>
+                                                            <f:facet name="header"><ice:outputText value="Nombres" /></f:facet>
+                                                            <ice:outputText value="#{docente.nombres}" />
+                                                        </ice:column>
+                                                        <ice:column>
+                                                            <ice:commandLink value="Editar" action="" >
+                                                                <f:param name="currentId" value="#{docente.iddocente}" />
+                                                            </ice:commandLink>
+                                                        </ice:column>
+                                                        <ice:column>
+                                                            <ice:commandLink value="Eliminar" action="" >
+                                                                <f:param name="currentId" value="#{docente.iddocente}" />
+                                                            </ice:commandLink>
+                                                        </ice:column>
+                                                    </ice:dataTable>
+                                                    <ice:dataPaginator id="pgrListaDocentes" for="tblListaDocentes" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JHardminInstance.sizeListaDocentes > 10}" >
+                                                        <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
+                                                        <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
+                                                        <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
+                                                        <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
+                                                    </ice:dataPaginator>
+                                                    <ice:panelPopup id="pupAgregarDocente" draggable="true" modal="true" rendered="#{JHardminInstance.crdDocentes.popupAddVisible}">
+                                                        <f:facet name="header"><ice:outputText value="Agregar nuevo docente" /></f:facet>
+                                                        <f:facet name="body">
+                                                            <ice:panelGroup styleClass="frmElementList">
+                                                                <p>
+                                                                    <ice:outputLabel id="lblApellidosDocente" for="txtApellidosDocente" value="Apellidos:" />
+                                                                    <ice:inputText id="txtApellidosDocente" value="#{JHardminInstance.currentDocente.apellidos}" />
+                                                                </p>
+                                                                <p>
+                                                                    <ice:outputLabel id="lblNombresDocente" for="txtNombresDocente" value="Nombres:" />
+                                                                    <ice:inputText id="txtNombresDocente" value="#{JHardminInstance.currentDocente.nombres}" />
+                                                                </p>
+                                                                <p class="actionSection">
+                                                                    <ice:commandButton id="cmdCommitAgregarDocente" value="Agregar" action="#{JHardminInstance.addDocente}" />
+                                                                    <ice:commandButton id="cmdCancelAgregarDocente" value="Cancelar" action="#{JHardminInstance.crdDocentes.hidePopupAdd}" />
+                                                                </p>
+                                                            </ice:panelGroup>
+                                                        </f:facet>
+                                                    </ice:panelPopup>
+                                                    <p class="actionSection">
+                                                        <ice:commandButton id="addDocente" value="Agregar docente" action="#{JHardminInstance.crdDocentes.showPopupAdd}" />
+                                                        <ice:outputFormat value="{0} docentes en total" style="padding: 0px 10px;">
+                                                            <f:param value="#{JHardminInstance.sizeListaDocentes}" />
+                                                        </ice:outputFormat>
+                                                    </p>
+                                                </ice:panelTab>
+                                            </ice:panelTabSet>
+                                        </ice:panelGroup>
+                                    </ice:panelCollapsible>
                                 </ice:panelGroup>
                                 <ice:panelPopup styleClass="panelPopup" draggable="true" modal="true" rendered="#{JHardminInstance.msg.visible}" visible="#{JHardminInstance.msg.visible}" clientOnly="true" >
                                     <f:facet name="header" >

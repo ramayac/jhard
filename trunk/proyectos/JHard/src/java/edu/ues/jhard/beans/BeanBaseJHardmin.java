@@ -9,6 +9,9 @@ import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jhardmin.LoginManager;
 import edu.ues.jhard.jinvent.CrudManager;
 import edu.ues.jhard.jpa.Autorizacion;
+import edu.ues.jhard.jpa.Docente;
+import edu.ues.jhard.jpa.Estudiante;
+import edu.ues.jhard.jpa.Instructor;
 import edu.ues.jhard.jpa.Rol;
 import edu.ues.jhard.jpa.Usuario;
 import edu.ues.jhard.util.ActionMessage;
@@ -37,6 +40,9 @@ public class BeanBaseJHardmin extends BeanBase {
     private List<Rol> roleList;
     private List<Usuario> userList;
     private List<Autorizacion> listaAutorizaciones;
+    private List<Estudiante> listaEstudiantes;
+    private List<Instructor> listaInstructores;
+    private List<Docente> listaDocentes;
     private ActionMessage msg;
     private Boolean popUpAddUserVisible;
     private Boolean popUpEditUserVisible;
@@ -49,11 +55,18 @@ public class BeanBaseJHardmin extends BeanBase {
     private String popUpConfirmDelUserMessage;
     private Usuario editDelUser;
     private CrudManager crdAutorizaciones;
+    private CrudManager crdEstudiantes;
+    private CrudManager crdInstructores;
+    private CrudManager crdDocentes;
     private Autorizacion currentAutorizacion;
     private Usuario usuarioRegistrado;
     private String claveUsuarioConfirmacion;
     private String autorizacionUsuario;
     private boolean popupRegistrarUsuarioVisible;
+    private Estudiante currentEstudiante;
+    private Instructor currentInstructor;
+    private Docente currentDocente;
+
 
     public BeanBaseJHardmin(){
         this.loginFail = false;
@@ -62,8 +75,14 @@ public class BeanBaseJHardmin extends BeanBase {
         this.roleList = this.getEntityManager().createNamedQuery("Rol.findAll").getResultList();
         this.userList = this.getEntityManager().createNamedQuery("Usuario.findAll").getResultList();
         this.listaAutorizaciones = this.getEntityManager().createQuery("SELECT a FROM Autorizacion a").getResultList();
+        this.listaEstudiantes = this.getEntityManager().createNamedQuery("Estudiante.findAll").getResultList();
+        this.listaInstructores = this.getEntityManager().createNamedQuery("Instructor.findAll").getResultList();
+        this.listaDocentes = this.getEntityManager().createNamedQuery("Docente.findAll").getResultList();
         this.currentAutorizacion = new Autorizacion();
         this.crdAutorizaciones = new CrudManager();
+        this.crdEstudiantes = new CrudManager();
+        this.crdInstructores = new CrudManager();
+        this.crdDocentes = new CrudManager();
         this.msg = new ActionMessage();
         this.setPopUpAddUserVisible(false);
         this.setPopUpEditUserVisible(false);
@@ -73,18 +92,30 @@ public class BeanBaseJHardmin extends BeanBase {
         this.initSelectItems();
         this.editDelUser = new Usuario();
         this.usuarioRegistrado = new Usuario();
+        this.currentEstudiante = new Estudiante();
+        this.currentInstructor = new Instructor();
+        this.currentDocente = new Docente();
     }
 
     public Usuario getUsuario(String userName, String userPwd){
         Usuario u = null;
-        try{            
-            EntityManager eMgr = this.getEntityManager();            
-            String strSql = "SELECT u FROM Usuario u WHERE u.nombre = '"+userName+"' AND u.clave = '"+userPwd+"'";            
-            Query q = eMgr.createQuery(strSql);            
+        EntityManager eMgr = this.getEntityManager();
+        System.out.println("nombre: " + userName);
+        System.out.println("clave: " + userPwd);
+        String strSql = "SELECT u FROM Usuario u WHERE u.nombre = '"+userName+"' AND u.clave = '"+userPwd+"'";
+        Query q = eMgr.createQuery(strSql);
+        try{                        
             u = (Usuario)q.getSingleResult();            
         }
         catch(Exception ex){
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
+            try{
+                u = (Usuario)q.getResultList().get(0);
+            }
+            catch(Exception innerEx){
+                System.out.println(ex.getMessage());
+                //pass
+            }
         }        
         return u;
     }
@@ -775,5 +806,250 @@ public class BeanBaseJHardmin extends BeanBase {
      */
     public void setPopupRegistrarUsuarioVisible(boolean popupRegistrarUsuarioVisible) {
         this.popupRegistrarUsuarioVisible = popupRegistrarUsuarioVisible;
+    }
+
+    /**
+     * @return the listaEstudiantes
+     */
+    public List<Estudiante> getListaEstudiantes() {
+        return listaEstudiantes;
+    }
+
+    /**
+     * @param listaEstudiantes the listaEstudiantes to set
+     */
+    public void setListaEstudiantes(List<Estudiante> listaEstudiantes) {
+        this.listaEstudiantes = listaEstudiantes;
+    }
+
+    /**
+     * @return the listaInstructores
+     */
+    public List<Instructor> getListaInstructores() {
+        return listaInstructores;
+    }
+
+    /**
+     * @param listaInstructores the listaInstructores to set
+     */
+    public void setListaInstructores(List<Instructor> listaInstructores) {
+        this.listaInstructores = listaInstructores;
+    }
+
+    /**
+     * @return the listaDocentes
+     */
+    public List<Docente> getListaDocentes() {
+        return listaDocentes;
+    }
+
+    /**
+     * @param listaDocentes the listaDocentes to set
+     */
+    public void setListaDocentes(List<Docente> listaDocentes) {
+        this.listaDocentes = listaDocentes;
+    }
+
+    /**
+     * @return the crdEstudiantes
+     */
+    public CrudManager getCrdEstudiantes() {
+        return crdEstudiantes;
+    }
+
+    /**
+     * @param crdEstudiantes the crdEstudiantes to set
+     */
+    public void setCrdEstudiantes(CrudManager crdEstudiantes) {
+        this.crdEstudiantes = crdEstudiantes;
+    }
+
+    /**
+     * @return the crdInstructores
+     */
+    public CrudManager getCrdInstructores() {
+        return crdInstructores;
+    }
+
+    /**
+     * @param crdInstructores the crdInstructores to set
+     */
+    public void setCrdInstructores(CrudManager crdInstructores) {
+        this.crdInstructores = crdInstructores;
+    }
+
+    /**
+     * @return the crdDocentes
+     */
+    public CrudManager getCrdDocentes() {
+        return crdDocentes;
+    }
+
+    /**
+     * @param crdDocentes the crdDocentes to set
+     */
+    public void setCrdDocentes(CrudManager crdDocentes) {
+        this.crdDocentes = crdDocentes;
+    }
+
+    /**
+     * @return the currentEstudiante
+     */
+    public Estudiante getCurrentEstudiante() {
+        return currentEstudiante;
+    }
+
+    /**
+     * @param currentEstudiante the currentEstudiante to set
+     */
+    public void setCurrentEstudiante(Estudiante currentEstudiante) {
+        this.currentEstudiante = currentEstudiante;
+    }
+
+    /**
+     * @return the currentInstructor
+     */
+    public Instructor getCurrentInstructor() {
+        return currentInstructor;
+    }
+
+    /**
+     * @param currentInstructor the currentInstructor to set
+     */
+    public void setCurrentInstructor(Instructor currentInstructor) {
+        this.currentInstructor = currentInstructor;
+    }
+
+    /**
+     * @return the currentDocente
+     */
+    public Docente getCurrentDocente() {
+        return currentDocente;
+    }
+
+    /**
+     * @param currentDocente the currentDocente to set
+     */
+    public void setCurrentDocente(Docente currentDocente) {
+        this.currentDocente = currentDocente;
+    }
+
+    public int getSizeListaEstudiantes(){
+        return this.listaEstudiantes.size();
+    }
+
+    public int getSizeListaInstructores(){
+        return this.listaInstructores.size();
+    }
+
+    public int getSizeListaDocentes(){
+        return this.listaDocentes.size();
+    }
+
+    public String addEstudiante(){
+        EntityManager emgr = this.getEntityManager();
+        if(emgr.createQuery("SELECT e FROM Estudiante e WHERE e.carnet='" + this.currentEstudiante.getCarnet() + "'").getResultList().size() > 0){
+            this.crdEstudiantes.hidePopupAdd();
+            this.msg.setText("Ya existe registrado un estudiante con este carnet.");
+            this.msg.setVisible(true);
+            this.currentEstudiante = new Estudiante();
+            return "fail";
+        }
+
+        Rol rolEstudiante = (Rol)emgr.createQuery("SELECT r FROM Rol r WHERE r.idrol=5").getSingleResult();        
+        String nombreUsuario = this.currentEstudiante.getCarnet();
+        int contador = 1;        
+        while(LoginManager.getInstance().existsInBD(nombreUsuario, nombreUsuario)){
+            nombreUsuario = this.currentEstudiante.getCarnet() + String.valueOf(contador++);
+        }
+        Usuario usr = new Usuario();
+        usr.setNombre(nombreUsuario);
+        usr.setClave(LoginManager.getInstance().encrypt(nombreUsuario));
+        usr.setIdrol(rolEstudiante);
+        emgr.getTransaction().begin();
+        emgr.persist(usr);
+        emgr.getTransaction().commit();
+        this.userList.add(usr);
+
+        emgr.getTransaction().begin();
+        this.currentEstudiante.setIdusuario(usr);
+        emgr.persist(this.currentEstudiante);
+        emgr.getTransaction().commit();
+        this.crdEstudiantes.hidePopupAdd();
+        this.listaEstudiantes.add(this.currentEstudiante);
+        this.msg.setText("Nuevo estudiante " + this.currentEstudiante.getNombres() + " agregado satisfactoriamente");
+        this.msg.setVisible(true);
+        this.currentEstudiante = new Estudiante();
+        this.currentEstudiante.setIdusuario(null);
+        return "done";
+    }
+
+    public String addInstructor(){
+        EntityManager emgr = this.getEntityManager();
+        if(emgr.createQuery("SELECT i FROM Instructor i WHERE i.carnet='" + this.currentInstructor.getCarnet() + "'").getResultList().size() > 0){
+            this.crdInstructores.hidePopupAdd();
+            this.msg.setText("Ya existe registrado un instructor con este carnet.");
+            this.msg.setVisible(true);
+            this.currentInstructor = new Instructor();
+            return "fail";
+        }
+
+        Rol rolInstructor = (Rol)emgr.createQuery("SELECT r FROM Rol r WHERE r.idrol=6").getSingleResult();
+        String nombreUsuario = this.currentInstructor.getCarnet();
+        int contador = 1;
+        while(LoginManager.getInstance().existsInBD(nombreUsuario, nombreUsuario)){
+            nombreUsuario = this.currentInstructor.getCarnet() + String.valueOf(contador++);
+        }
+        Usuario usr = new Usuario();
+        usr.setNombre(nombreUsuario);
+        usr.setClave(LoginManager.getInstance().encrypt(nombreUsuario));
+        usr.setIdrol(rolInstructor);
+        emgr.getTransaction().begin();
+        emgr.persist(usr);
+        emgr.getTransaction().commit();
+        this.userList.add(usr);
+
+        emgr.getTransaction().begin();
+        this.currentInstructor.setIdusuario(usr);
+        emgr.persist(this.currentInstructor);
+        emgr.getTransaction().commit();
+        this.crdInstructores.hidePopupAdd();
+        this.listaInstructores.add(this.currentInstructor);
+        this.msg.setText("Nuevo instructor " + this.currentInstructor.getNombres() + " agregado satisfactoriamente");
+        this.msg.setVisible(true);
+        this.currentInstructor = new Instructor();
+        this.currentInstructor.setIdusuario(null);
+        return "done";
+    }
+
+    public String addDocente(){
+        EntityManager emgr = this.getEntityManager();
+
+        Rol rolDocente = (Rol)emgr.createQuery("SELECT r FROM Rol r WHERE r.idrol=3").getSingleResult();
+        String nombreUsuario = this.currentDocente.getNombres().split(" ")[0];
+        int contador = 1;
+        while(LoginManager.getInstance().existsInBD(nombreUsuario, nombreUsuario)){
+            nombreUsuario = this.currentDocente.getNombres().split(" ")[0] + String.valueOf(contador++);
+        }
+        Usuario usr = new Usuario();
+        usr.setNombre(nombreUsuario);
+        usr.setClave(LoginManager.getInstance().encrypt(nombreUsuario));
+        usr.setIdrol(rolDocente);
+        emgr.getTransaction().begin();
+        emgr.persist(usr);
+        emgr.getTransaction().commit();
+        this.userList.add(usr);
+
+        emgr.getTransaction().begin();
+        this.currentDocente.setIdusuario(usr);
+        emgr.persist(this.currentDocente);
+        emgr.getTransaction().commit();
+        this.crdDocentes.hidePopupAdd();
+        this.listaDocentes.add(this.currentDocente);
+        this.msg.setText("Nuevo docente " + this.currentDocente.getNombres() + " agregado satisfactoriamente");
+        this.msg.setVisible(true);
+        this.currentDocente = new Docente();
+        this.currentDocente.setIdusuario(null);
+        return "done";
     }
 }
