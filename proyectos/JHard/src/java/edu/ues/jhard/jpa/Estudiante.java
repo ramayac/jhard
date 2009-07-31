@@ -27,7 +27,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "estudiante", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Estudiante.findAll", query = "SELECT e FROM Estudiante e"), @NamedQuery(name = "Estudiante.findByIdestudiante", query = "SELECT e FROM Estudiante e WHERE e.idestudiante = :idestudiante"), @NamedQuery(name = "Estudiante.findByCarnet", query = "SELECT e FROM Estudiante e WHERE e.carnet = :carnet"), @NamedQuery(name = "Estudiante.findByApellidos", query = "SELECT e FROM Estudiante e WHERE e.apellidos = :apellidos"), @NamedQuery(name = "Estudiante.findByNombres", query = "SELECT e FROM Estudiante e WHERE e.nombres = :nombres"), @NamedQuery(name = "Estudiante.findByVisible", query = "SELECT e FROM Estudiante e WHERE e.visible = :visible")})
+@NamedQueries({@NamedQuery(name = "Estudiante.findAll", query = "SELECT e FROM Estudiante e"), 
+@NamedQuery(name = "Estudiante.findAllVisible", query = "SELECT e FROM Estudiante e WHERE e.visible = 1"),
+@NamedQuery(name = "Estudiante.findByIdestudiante", query = "SELECT e FROM Estudiante e WHERE e.idestudiante = :idestudiante"),
+@NamedQuery(name = "Estudiante.findByCarnet", query = "SELECT e FROM Estudiante e WHERE e.carnet = :carnet"),
+@NamedQuery(name = "Estudiante.findByApellidos", query = "SELECT e FROM Estudiante e WHERE e.apellidos = :apellidos"),
+@NamedQuery(name = "Estudiante.findByNombres", query = "SELECT e FROM Estudiante e WHERE e.nombres = :nombres"),
+@NamedQuery(name = "Estudiante.findByVisible", query = "SELECT e FROM Estudiante e WHERE e.visible = :visible")})
 public class Estudiante implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

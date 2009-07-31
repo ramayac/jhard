@@ -27,7 +27,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "instructor", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Instructor.findAll", query = "SELECT i FROM Instructor i"), @NamedQuery(name = "Instructor.findByIdinstructor", query = "SELECT i FROM Instructor i WHERE i.idinstructor = :idinstructor"), @NamedQuery(name = "Instructor.findByCarnet", query = "SELECT i FROM Instructor i WHERE i.carnet = :carnet"), @NamedQuery(name = "Instructor.findByApellidos", query = "SELECT i FROM Instructor i WHERE i.apellidos = :apellidos"), @NamedQuery(name = "Instructor.findByNombres", query = "SELECT i FROM Instructor i WHERE i.nombres = :nombres"), @NamedQuery(name = "Instructor.findByVisible", query = "SELECT i FROM Instructor i WHERE i.visible = :visible")})
+@NamedQueries({
+    @NamedQuery(name = "Instructor.findAll", query = "SELECT i FROM Instructor i"),
+    @NamedQuery(name = "Instructor.findAllVisible", query = "SELECT i FROM Instructor i WHERE i.visible = 1"),
+    @NamedQuery(name = "Instructor.findByIdinstructor", query = "SELECT i FROM Instructor i WHERE i.idinstructor = :idinstructor"),
+    @NamedQuery(name = "Instructor.findByCarnet", query = "SELECT i FROM Instructor i WHERE i.carnet = :carnet"),
+    @NamedQuery(name = "Instructor.findByApellidos", query = "SELECT i FROM Instructor i WHERE i.apellidos = :apellidos"),
+    @NamedQuery(name = "Instructor.findByNombres", query = "SELECT i FROM Instructor i WHERE i.nombres = :nombres"),
+    @NamedQuery(name = "Instructor.findByVisible", query = "SELECT i FROM Instructor i WHERE i.visible = :visible")})
 public class Instructor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
