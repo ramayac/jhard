@@ -14,6 +14,7 @@ import javax.faces.FacesException;
 public class BeanBaseJHard extends AbstractPageBean {
 
     static final int NONE = 0;
+    static final int INVALIDO = -1;
     static final int ROL_INSTRUCTOR = 6;
     static final int ROL_ESTUDIANTE = 5;
     static final int ROL_EDITORCONTENIDO = 4;
@@ -80,7 +81,7 @@ public class BeanBaseJHard extends AbstractPageBean {
 
     public Integer getRolUsuarioConectado() {
         if (this.U == null) {
-            return -1;
+            return INVALIDO;
         }
         return this.U.getIdrol().getIdrol();
     }
