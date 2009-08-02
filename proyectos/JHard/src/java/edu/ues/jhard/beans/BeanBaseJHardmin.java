@@ -60,6 +60,7 @@ public class BeanBaseJHardmin extends BeanBase {
     private CrudManager crdDocentes;
     private Autorizacion currentAutorizacion;
     private Usuario usuarioRegistrado;
+    private Estudiante estudianteUsuarioRegistrado;
     private String claveUsuarioConfirmacion;
     private String autorizacionUsuario;
     private boolean popupRegistrarUsuarioVisible;
@@ -92,6 +93,7 @@ public class BeanBaseJHardmin extends BeanBase {
         this.initSelectItems();
         this.editDelUser = new Usuario();
         this.usuarioRegistrado = new Usuario();
+        this.estudianteUsuarioRegistrado = new Estudiante();
         this.currentEstudiante = new Estudiante();
         this.currentInstructor = new Instructor();
         this.currentDocente = new Docente();
@@ -730,11 +732,21 @@ public class BeanBaseJHardmin extends BeanBase {
 
         this.usuarioRegistrado.setClave(LoginManager.getInstance().encrypt(this.usuarioRegistrado.getClave()));
         this.usuarioRegistrado.setIdautorizacion(autRegistro);
+        this.usuarioRegistrado.setNombre(this.estudianteUsuarioRegistrado.getCarnet());
 
         emgr.getTransaction().begin();
         emgr.persist(this.usuarioRegistrado);
         emgr.merge(autRegistro);
         emgr.getTransaction().commit();
+
+        this.usuarioRegistrado.getEstudianteCollection().add(this.estudianteUsuarioRegistrado);
+        this.estudianteUsuarioRegistrado.setIdusuario(this.usuarioRegistrado);
+        this.estudianteUsuarioRegistrado.setVisible(1);
+        emgr.getTransaction().begin();
+        emgr.persist(this.estudianteUsuarioRegistrado);
+        emgr.merge(this.usuarioRegistrado);
+        emgr.getTransaction().commit();
+        this.listaEstudiantes.add(this.estudianteUsuarioRegistrado);
 
         this.hidePopupRegistrarUsuario();
         this.msg.setText("Usuario registrado satisfactoriamente");
@@ -985,6 +997,34 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    public String beforeEditEstudiante(){
+        String idEstudiante = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
+        this.currentEstudiante = (Estudiante)this.getEntityManager().createQuery("SELECT e FROM Estudiante e WHERE e.idestudiante=" + idEstudiante).getSingleResult();
+        this.crdEstudiantes.showPopupEdit();
+        return "done";
+    }
+
+    public String editEstudiante(){
+        EntityManager emgr = this.getEntityManager();
+        emgr.getTransaction().begin();
+        emgr.merge(this.currentEstudiante);
+        emgr.getTransaction().commit();
+        this.crdEstudiantes.hidePopupEdit();
+
+        for(Estudiante e: this.listaEstudiantes){
+            if(e.getIdestudiante() == this.currentEstudiante.getIdestudiante()){
+                e.setCarnet(this.currentEstudiante.getCarnet());
+                e.setNombres(this.currentEstudiante.getNombres());
+                e.setApellidos(this.currentEstudiante.getApellidos());
+                break;
+            }
+        }
+
+        this.msg.setText("Estudiante actualizado satisfactoriamente");
+        this.msg.setVisible(true);
+        return "done";
+    }
+
     public String delEstudiante(){
         EntityManager emgr = this.getEntityManager();
         this.currentEstudiante = (Estudiante)emgr.createQuery("SELECT e FROM Estudiante e WHERE e.idestudiante=" + this.crdEstudiantes.getCurrentId()).getSingleResult();
@@ -1052,6 +1092,34 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    public String beforeEditInstructor(){
+        String idInstructor = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
+        this.currentInstructor = (Instructor)this.getEntityManager().createQuery("SELECT i FROM Instructor i WHERE i.idinstructor=" + idInstructor).getSingleResult();
+        this.crdInstructores.showPopupEdit();
+        return "done";
+    }
+
+    public String editInstructor(){
+        EntityManager emgr = this.getEntityManager();
+        emgr.getTransaction().begin();
+        emgr.merge(this.currentInstructor);
+        emgr.getTransaction().commit();
+        this.crdInstructores.hidePopupEdit();
+
+        for(Instructor i: this.listaInstructores){
+            if(i.getIdinstructor() == this.currentInstructor.getIdinstructor()){
+                i.setCarnet(this.currentInstructor.getCarnet());
+                i.setNombres(this.currentInstructor.getNombres());
+                i.setApellidos(this.currentInstructor.getApellidos());
+                break;
+            }
+        }
+
+        this.msg.setText("Instructor actualizado satisfactoriamente");
+        this.msg.setVisible(true);
+        return "done";
+    }
+
     public String delInstructor(){
         EntityManager emgr = this.getEntityManager();
         this.currentInstructor = (Instructor)emgr.createQuery("SELECT i FROM Instructor i WHERE i.idinstructor=" + this.crdInstructores.getCurrentId()).getSingleResult();
@@ -1112,6 +1180,33 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    public String beforeEditDocente(){
+        String idDocente = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
+        this.currentDocente = (Docente)this.getEntityManager().createQuery("SELECT d FROM Docente d WHERE d.iddocente=" + idDocente).getSingleResult();
+        this.crdDocentes.showPopupEdit();
+        return "done";
+    }
+
+    public String editDocente(){
+        EntityManager emgr = this.getEntityManager();
+        emgr.getTransaction().begin();
+        emgr.merge(this.currentDocente);
+        emgr.getTransaction().commit();
+        this.crdDocentes.hidePopupEdit();
+
+        for(Docente d: this.listaDocentes){
+            if(d.getIddocente() == this.currentDocente.getIddocente()){
+                d.setNombres(this.currentDocente.getNombres());
+                d.setApellidos(this.currentDocente.getApellidos());
+                break;
+            }
+        }
+
+        this.msg.setText("Docente actualizado satisfactoriamente");
+        this.msg.setVisible(true);
+        return "done";
+    }
+
     public String delDocente(){
         EntityManager emgr = this.getEntityManager();
         this.currentDocente = (Docente)emgr.createQuery("SELECT d FROM Docente d WHERE d.iddocente=" + this.crdDocentes.getCurrentId()).getSingleResult();
@@ -1139,4 +1234,52 @@ public class BeanBaseJHardmin extends BeanBase {
         this.msg.setVisible(true);
         return "done";
     }
+
+    public Estudiante getEstudianteFromUser(){
+        try{
+            Usuario usr = (Usuario)this.getEntityManager().createQuery("SELECT u FROM Usuario u WHERE u.idusuario=" + this.currentUser.getUid()).getSingleResult();
+            return (Estudiante)usr.getEstudianteCollection().toArray()[0];
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public Instructor getInstructorFromUser(){
+        try{
+            Usuario usr = (Usuario)this.getEntityManager().createQuery("SELECT u FROM Usuario u WHERE u.idusuario=" + this.currentUser.getUid()).getSingleResult();
+            return (Instructor)usr.getInstructorCollection().toArray()[0];
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public Docente getDocenteFromUser(){
+        try{
+            Usuario usr = (Usuario)this.getEntityManager().createQuery("SELECT u FROM Usuario u WHERE u.idusuario=" + this.currentUser.getUid()).getSingleResult();
+            return (Docente)usr.getDocenteCollection().toArray()[0];
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * @return the estudianteUsuarioRegistrado
+     */
+    public Estudiante getEstudianteUsuarioRegistrado() {
+        return estudianteUsuarioRegistrado;
+    }
+
+    /**
+     * @param estudianteUsuarioRegistrado the estudianteUsuarioRegistrado to set
+     */
+    public void setEstudianteUsuarioRegistrado(Estudiante estudianteUsuarioRegistrado) {
+        this.estudianteUsuarioRegistrado = estudianteUsuarioRegistrado;
+    }
+
 }

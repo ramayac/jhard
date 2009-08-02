@@ -105,9 +105,18 @@
                                         <f:facet name="body">
                                             <ice:panelGroup styleClass="frmElementList">
                                                 <p>
-                                                    <ice:outputLabel id="lblNombreUsuario" for="txtNombreUsuario" value="Nombre:" />
-                                                    <ice:inputText id="txtNombreUsuario" value="#{JHardminInstance.usuarioRegistrado.nombre}" />
+                                                    <ice:outputLabel id="lblCarnetUsuario" for="txtCarnetUsuario" value="Carnet:" />
+                                                    <ice:inputText id="txtCarnetUsuario" value="#{JHardminInstance.estudianteUsuarioRegistrado.carnet}" />
                                                 </p>
+                                                <p>
+                                                    <ice:outputLabel id="lblApellidosUsuario" for="txtApellidosUsuario" value="Apellidos:" />
+                                                    <ice:inputText id="txtApellidosUsuario" value="#{JHardminInstance.estudianteUsuarioRegistrado.apellidos}" />
+                                                </p>
+                                                <p>
+                                                    <ice:outputLabel id="lblNombresUsuario" for="txtNombresUsuario" value="Nombres:" />
+                                                    <ice:inputText id="txtNombresUsuario" value="#{JHardminInstance.estudianteUsuarioRegistrado.nombres}" />
+                                                </p>
+                                                
                                                 <p>
                                                     <ice:outputLabel id="lblClaveUsuario" for="TxtClaveUsuario" value="Clave:" />
                                                     <ice:inputSecret id="txtClaveUsuario" value="#{JHardminInstance.usuarioRegistrado.clave}" />
