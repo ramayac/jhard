@@ -42,6 +42,7 @@
     <class>edu.ues.jhard.jpa.Usuario</class>
     <class>edu.ues.jhard.jpa.Autorizacion</class>
     <class>edu.ues.jhard.jpa.Articulos</class>
+    <class>edu.ues.jhard.jpa.Cicloanyo</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="toplink.jdbc.user" value="jharduser"/>
