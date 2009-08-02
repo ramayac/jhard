@@ -6,8 +6,8 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,48 +26,54 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author robertux
+ * @author rodrigo
  */
 @Entity
-@Table(name = "curso", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c"), @NamedQuery(name = "Curso.findByIdcurso", query = "SELECT c FROM Curso c WHERE c.idcurso = :idcurso"), @NamedQuery(name = "Curso.findByNombre", query = "SELECT c FROM Curso c WHERE c.nombre = :nombre"), @NamedQuery(name = "Curso.findByCupomax", query = "SELECT c FROM Curso c WHERE c.cupomax = :cupomax"), @NamedQuery(name = "Curso.findByFechainicio", query = "SELECT c FROM Curso c WHERE c.fechainicio = :fechainicio"), @NamedQuery(name = "Curso.findByCiclo", query = "SELECT c FROM Curso c WHERE c.ciclo = :ciclo"), @NamedQuery(name = "Curso.findByAnio", query = "SELECT c FROM Curso c WHERE c.anio = :anio")})
+@Table(name = "curso")
+@NamedQueries({@NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c"), @NamedQuery(name = "Curso.findByIdcurso", query = "SELECT c FROM Curso c WHERE c.idcurso = :idcurso"), @NamedQuery(name = "Curso.findByNombre", query = "SELECT c FROM Curso c WHERE c.nombre = :nombre"), @NamedQuery(name = "Curso.findByCupomax", query = "SELECT c FROM Curso c WHERE c.cupomax = :cupomax"), @NamedQuery(name = "Curso.findByFechainicio", query = "SELECT c FROM Curso c WHERE c.fechainicio = :fechainicio"), @NamedQuery(name = "Curso.findByCiclo", query = "SELECT c FROM Curso c WHERE c.ciclo = :ciclo"), @NamedQuery(name = "Curso.findByAnio", query = "SELECT c FROM Curso c WHERE c.anio = :anio"), @NamedQuery(name = "Curso.findByHabilinscrip", query = "SELECT c FROM Curso c WHERE c.habilinscrip = :habilinscrip")})
 public class Curso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idcurso", nullable = false)
+    @Column(name = "idcurso")
     private Integer idcurso;
     @Basic(optional = false)
-    @Column(name = "nombre", nullable = false, length = 200)
+    @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
-    @Column(name = "cupomax", nullable = false)
+    @Column(name = "cupomax")
     private int cupomax;
     @Basic(optional = false)
-    @Column(name = "fechainicio", nullable = false)
+    @Column(name = "fechainicio")
     @Temporal(TemporalType.DATE)
     private Date fechainicio;
     @Column(name = "ciclo")
     private Integer ciclo;
     @Column(name = "anio")
     private Integer anio;
+    @Basic(optional = false)
+    @Column(name = "habilinscrip")
+    private boolean habilinscrip;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcurso")
-    private Collection<Inscripcion> inscripcionCollection;
+    private List<Inscripcion> inscripcionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcurso")
-    private Collection<Horario> horarioCollection;
-    @JoinColumn(name = "idmateria", referencedColumnName = "idmateria")
-    @ManyToOne
-    private Materia idmateria;
-    @JoinColumn(name = "idinstructor", referencedColumnName = "idinstructor", nullable = false)
+    private List<Horario> horarioCollection;
+    @JoinColumn(name = "idcicloanio", referencedColumnName = "idcicloanyo")
     @ManyToOne(optional = false)
-    private Instructor idinstructor;
-    @JoinColumn(name = "iddocente", referencedColumnName = "iddocente", nullable = false)
+    private Cicloanyo idcicloanio;
+    @JoinColumn(name = "iddocente", referencedColumnName = "iddocente")
     @ManyToOne(optional = false)
     private Docente iddocente;
     @JoinColumn(name = "idestado", referencedColumnName = "idestadocurso")
     @ManyToOne
     private Estadocurso idestado;
+    @JoinColumn(name = "idinstructor", referencedColumnName = "idinstructor")
+    @ManyToOne(optional = false)
+    private Instructor idinstructor;
+    @JoinColumn(name = "idmateria", referencedColumnName = "idmateria")
+    @ManyToOne
+    private Materia idmateria;
 
     public Curso() {
     }
@@ -76,11 +82,12 @@ public class Curso implements Serializable {
         this.idcurso = idcurso;
     }
 
-    public Curso(Integer idcurso, String nombre, int cupomax, Date fechainicio) {
+    public Curso(Integer idcurso, String nombre, int cupomax, Date fechainicio, boolean habilinscrip) {
         this.idcurso = idcurso;
         this.nombre = nombre;
         this.cupomax = cupomax;
         this.fechainicio = fechainicio;
+        this.habilinscrip = habilinscrip;
     }
 
     public Integer getIdcurso() {
@@ -131,36 +138,36 @@ public class Curso implements Serializable {
         this.anio = anio;
     }
 
-    public Collection<Inscripcion> getInscripcionCollection() {
+    public boolean getHabilinscrip() {
+        return habilinscrip;
+    }
+
+    public void setHabilinscrip(boolean habilinscrip) {
+        this.habilinscrip = habilinscrip;
+    }
+
+    public List<Inscripcion> getInscripcionCollection() {
         return inscripcionCollection;
     }
 
-    public void setInscripcionCollection(Collection<Inscripcion> inscripcionCollection) {
+    public void setInscripcionCollection(List<Inscripcion> inscripcionCollection) {
         this.inscripcionCollection = inscripcionCollection;
     }
 
-    public Collection<Horario> getHorarioCollection() {
+    public List<Horario> getHorarioCollection() {
         return horarioCollection;
     }
 
-    public void setHorarioCollection(Collection<Horario> horarioCollection) {
+    public void setHorarioCollection(List<Horario> horarioCollection) {
         this.horarioCollection = horarioCollection;
     }
 
-    public Materia getIdmateria() {
-        return idmateria;
+    public Cicloanyo getIdcicloanio() {
+        return idcicloanio;
     }
 
-    public void setIdmateria(Materia idmateria) {
-        this.idmateria = idmateria;
-    }
-
-    public Instructor getIdinstructor() {
-        return idinstructor;
-    }
-
-    public void setIdinstructor(Instructor idinstructor) {
-        this.idinstructor = idinstructor;
+    public void setIdcicloanio(Cicloanyo idcicloanio) {
+        this.idcicloanio = idcicloanio;
     }
 
     public Docente getIddocente() {
@@ -177,6 +184,22 @@ public class Curso implements Serializable {
 
     public void setIdestado(Estadocurso idestado) {
         this.idestado = idestado;
+    }
+
+    public Instructor getIdinstructor() {
+        return idinstructor;
+    }
+
+    public void setIdinstructor(Instructor idinstructor) {
+        this.idinstructor = idinstructor;
+    }
+
+    public Materia getIdmateria() {
+        return idmateria;
+    }
+
+    public void setIdmateria(Materia idmateria) {
+        this.idmateria = idmateria;
     }
 
     @Override
