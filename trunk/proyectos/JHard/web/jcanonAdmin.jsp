@@ -26,6 +26,8 @@
                         else if((pos!="center") || pos==null){LeftPosition=0;TopPosition=20}
                         settings='width='+w+',height='+h+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=no';
                         win=window.open(mypage,myname,settings);
+                        win.resizeTo(screen.width, screen.height);
+                        win.moveTo(0, 0);
                    }
                 </script>
 
@@ -39,7 +41,7 @@
                     <!-- start content -->
                     <div id="content">
                         <div class="post">
-                            <h2 class="title">Mantenimiento de Hardware y Software</h2>
+                            <h2 class="title">Administración de Reservas de Equipo Multimedia</h2>
                             <div class="entry">
                                 <ice:form id="form1">
                                     <ice:panelGroup id="grupoJCanonAdmin" style="width: 100%; ">

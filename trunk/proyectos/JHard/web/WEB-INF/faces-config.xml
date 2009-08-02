@@ -113,4 +113,14 @@
         <managed-bean-class>jhard.jwikiAdmin</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>jmlHorario</managed-bean-name>
+        <managed-bean-class>jhard.jmlHorario</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>jmlHorarioAdmin</managed-bean-name>
+        <managed-bean-class>jhard.jmlHorarioAdmin</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>

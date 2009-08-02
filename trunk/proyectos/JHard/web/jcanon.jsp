@@ -42,7 +42,7 @@
                         location.reload(true);
                     }
 
-                    var win=null;
+                   var win=null;
                    function calendar(mypage,myname,w,h,scroll,pos)
                    {
                         if(pos=="random"){LeftPosition=(screen.width)?Math.floor(Math.random()*(screen.width-w)):100;TopPosition=(screen.height)?Math.floor(Math.random()*((screen.height-h)-75)):100;}
@@ -50,12 +50,14 @@
                         else if((pos!="center") || pos==null){LeftPosition=0;TopPosition=20}
                         settings='width='+w+',height='+h+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=no';
                         win=window.open(mypage,myname,settings);
+                        win.resizeTo(screen.width, screen.height);
+                        win.moveTo(0, 0);
                    }
                 </script>
             </head>
             <body id="outputBody1" onload="init();" style="-rave-layout: grid">
                 <!--start header -->
-    <jsp:directive.include file="/jspf/menu.jspx"/>
+                    <jsp:directive.include file="/jspf/menu.jspx"/>
                 <!-- end header -->
                 <!-- start page -->
                 <div id="page">
@@ -339,7 +341,7 @@
                                             <ice:commandLink action="#{Redireccion.jcanonAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Reserva de Equipo Multimedia"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink onclick="calendar('scheduler.html','mywin','800','600','no','center');"
+                                            <ice:commandLink onclick="calendar('horario.html','mywin','800','600','no','center');"
                                                 rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Ver calendario de reservas "/>
                                         </li>
                                         <li>

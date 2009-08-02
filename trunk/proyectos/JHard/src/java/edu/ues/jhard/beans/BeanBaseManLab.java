@@ -12,6 +12,7 @@ import edu.ues.jhard.jpa.Clase;
 import edu.ues.jhard.jpa.Asistencia;
 import edu.ues.jhard.jpa.Inscripcion;
 import edu.ues.jhard.jpa.Horario;
+import java.sql.Time;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -874,7 +875,13 @@ public class BeanBaseManLab extends BeanBase{
     public List<Curso> getAllCursos() {
         EntityManager em = this.getEntityManager();
         Query q = em.createNamedQuery("Curso.findAll");
-        return (List<Curso>)q.getResultList();
+
+        List<Curso> c = (List<Curso>)q.getResultList();
+
+        for(int i=0;i<c.size();i++)
+            em.refresh(c.get(i));
+        
+        return c;
     }
 
     /**
@@ -1184,6 +1191,29 @@ public class BeanBaseManLab extends BeanBase{
         EntityManager em = this.getEntityManager();
         Query q = em.createNamedQuery("Horario.findAll");
         return (List<Horario>)q.getResultList();
+    }
+
+    public int getAllHorariosUnDia(String hora, int dia) {
+        int cant;
+
+        String [] time = hora.split("\\:");
+        int hour = Integer.parseInt(time[0]);
+        int minute = Integer.parseInt(time[1]);
+        int seconds = 00;
+        Time t = new Time(hour, minute, seconds);
+
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Horario.findByHoraDia");
+        q.setParameter("diasemana", dia);
+        q.setParameter("horainicio", t);
+
+        List<Horario> h = (List<Horario>)q.getResultList();
+
+        if(h.size()>0)
+            cant=1;
+        else
+            cant=0;
+        return cant;
     }
 
     /**

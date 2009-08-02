@@ -150,11 +150,28 @@ public class BeanBaseJRequest extends BeanBase{
     }
 
      public void registrarSolicitud(Solicitud s) {
+        Bitacoraestados b = new Bitacoraestados();
+        b.setDescripcion(s.getDescripcion());
+        b.setFecha(s.getFecha());
+
+        if(s.getIdequiposimple()==null){
+            b.setIdequipoexistente(s.getIdequipoexistente());
+            b.setIdestado(s.getIdequipoexistente().getIdestado());
+        }
+            
+        else{
+            b.setIdequiposimple(s.getIdequiposimple());
+            b.setIdestado(s.getIdequiposimple().getIdestado());
+        }
+        
         EntityManager em=this.getEntityManager();
         em.getTransaction().begin();
         em.persist(s);
         em.getTransaction().commit();
 
+        em.getTransaction().begin();
+        em.persist(b);
+        em.getTransaction().commit();
     }
 
      public void eliminarSolicitud(Solicitud s){
