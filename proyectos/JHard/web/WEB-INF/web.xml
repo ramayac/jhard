@@ -64,6 +64,10 @@
         <servlet-name>feed</servlet-name>
         <servlet-class>edu.ues.jhard.servlets.feed</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>horarios</servlet-name>
+        <servlet-class>edu.ues.jhard.servlets.horarios</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Persistent Faces Servlet</servlet-name>
         <url-pattern>/xmlhttp/*</url-pattern>
@@ -99,6 +103,10 @@
     <servlet-mapping>
         <servlet-name>feed</servlet-name>
         <url-pattern>/feed</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>horarios</servlet-name>
+        <url-pattern>/horarios</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -30,7 +30,12 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "horario", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Horario.findAll", query = "SELECT h FROM Horario h"), @NamedQuery(name = "Horario.findByIdhorario", query = "SELECT h FROM Horario h WHERE h.idhorario = :idhorario"), @NamedQuery(name = "Horario.findByDiasemana", query = "SELECT h FROM Horario h WHERE h.diasemana = :diasemana"), @NamedQuery(name = "Horario.findByHorainicio", query = "SELECT h FROM Horario h WHERE h.horainicio = :horainicio"), @NamedQuery(name = "Horario.findByHorafin", query = "SELECT h FROM Horario h WHERE h.horafin = :horafin")})
+@NamedQueries({@NamedQuery(name = "Horario.findAll", query = "SELECT h FROM Horario h ORDER BY h.diasemana, h.horainicio"),
+               @NamedQuery(name = "Horario.findByIdhorario", query = "SELECT h FROM Horario h WHERE h.idhorario = :idhorario"),
+               @NamedQuery(name = "Horario.findByDiasemana", query = "SELECT h FROM Horario h WHERE h.diasemana = :diasemana"),
+               @NamedQuery(name = "Horario.findByHorainicio", query = "SELECT h FROM Horario h WHERE h.horainicio = :horainicio"),
+               @NamedQuery(name = "Horario.findByHoraDia", query = "SELECT h FROM Horario h WHERE h.horainicio = :horainicio AND h.diasemana = :diasemana"),
+               @NamedQuery(name = "Horario.findByHorafin", query = "SELECT h FROM Horario h WHERE h.horafin = :horafin")})
 public class Horario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -153,4 +158,32 @@ public class Horario implements Serializable {
         return "edu.ues.jhard.jpa.Horario[idhorario=" + idhorario + "]";
     }
 
+    public String getdiaSemanal(){
+        String dia="";
+        switch(this.diasemana){
+            case 1: dia = "Lunes";
+                    break;
+            case 2: dia = "Martes";
+                    break;
+            case 3: dia = "Miércoles";
+                    break;
+            case 4: dia = "Jueves";
+                    break;
+            case 5: dia = "Viernes";
+                    break;
+            case 6: dia = "Sábado";
+                    break;
+        }
+        return dia;
+    }
+
+    public String getstart(){
+
+        return String.valueOf(this.horainicio.getHours())+":"+String.valueOf(this.horainicio.getMinutes());
+    }
+
+    public String getend(){
+
+        return String.valueOf(this.horafin.getHours())+":"+String.valueOf(this.horafin.getMinutes());
+    }
 }

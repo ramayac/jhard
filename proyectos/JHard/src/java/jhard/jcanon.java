@@ -38,11 +38,8 @@ import java.util.Calendar;
 import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.component.UISelectItems;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 
 /**
