@@ -85,6 +85,36 @@ public class BeanBaseJHard extends AbstractPageBean {
         return this.U.getIdrol().getIdrol();
     }
 
+    public Boolean esAdministrador(){
+        if(getRolUsuarioConectado()==ROL_ADMINISTRADOR) return true;
+        return false;
+    }
+
+    public Boolean esAdministrativo(){
+        if(getRolUsuarioConectado()==ROL_ADMINISTRADOR) return true;
+        return false;
+    }
+
+    public Boolean esDocente(){
+        if(getRolUsuarioConectado()==ROL_DOCENTE) return true;
+        return false;
+    }
+
+    public Boolean esInstructor(){
+        if(getRolUsuarioConectado()==ROL_INSTRUCTOR) return true;
+        return false;
+    }
+
+    public Boolean esEstudiante(){
+        if(getRolUsuarioConectado()==ROL_ESTUDIANTE) return true;
+        return false;
+    }
+
+    public Boolean esEditor(){
+        if(getRolUsuarioConectado()==ROL_EDITORCONTENIDO) return true;
+        return false;
+    }
+
     /**
      * <p>Callback method that is called whenever a page is navigated to,
      * either directly via a URL, or indirectly via page navigation.
