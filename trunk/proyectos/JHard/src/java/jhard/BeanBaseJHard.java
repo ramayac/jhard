@@ -14,8 +14,13 @@ import javax.faces.FacesException;
 public class BeanBaseJHard extends AbstractPageBean {
 
     static final int NONE = 0;
+    static final int ROL_INSTRUCTOR = 6;
+    static final int ROL_ESTUDIANTE = 5;
     static final int ROL_EDITORCONTENIDO = 4;
+    static final int ROL_DOCENTE = 3;
+    static final int ROL_ADMINISTRATIVO = 2;
     static final int ROL_ADMINISTRADOR = 1;
+    
     static final String EMPTY_STRING = "";
     static final String INVITADO = "Invitado";
 
