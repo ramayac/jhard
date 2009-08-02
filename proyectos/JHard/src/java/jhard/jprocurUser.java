@@ -6,17 +6,12 @@
  */
 package jhard;
 
-import com.icesoft.faces.component.ext.HtmlOutputLabel;
-import com.sun.rave.web.ui.appbase.AbstractPageBean;
-import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.beans.BeanBaseJProcur;
-import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jhardmin.LoginManager;
 import edu.ues.jhard.jpa.Comentarios;
 import edu.ues.jhard.jpa.Entrada;
 import edu.ues.jhard.jpa.Tag;
 import edu.ues.jhard.jpa.TagEntrada;
-import edu.ues.jhard.jpa.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,14 +27,9 @@ import javax.servlet.http.HttpServletRequest;
  * lifecycle methods and event handlers where you may add behavior
  * to respond to incoming events.</p>
  */
-public class jprocurUser extends AbstractPageBean {
-    static final int NONE = 0;
+public class jprocurUser extends BeanBaseJHard {
     static final int MAX_COMENTARIOS = 10;
     static final int MAX_ENTRADAS = 5;
-    static final int ROL_EDITORCONTENIDO = 4;
-    static final int ROL_ADMINISTRADOR = 1;
-    static final String EMPTY_STRING = "";
-    static final String INVITADO = "Invitado";
 
     private Entrada entradaActual = null;
     private Comentarios comentarioNuevo = new Comentarios();
@@ -51,19 +41,8 @@ public class jprocurUser extends AbstractPageBean {
     private String criteriosBusqueda = EMPTY_STRING;
     
     private int __placeholder;
-    private LoggedUser lu;
-    private Usuario U;
-
-    private HtmlOutputLabel lblUser = new HtmlOutputLabel();
+ 
     private BeanBaseJProcur jprocurInstance = new BeanBaseJProcur();
-
-    public HtmlOutputLabel getLblUser() {
-        return lblUser;
-    }
-
-    public void setLblUser(HtmlOutputLabel hol) {
-        this.lblUser = hol;
-    }
 
     /**
      * <p>Automatically managed component initialization.  <strong>WARNING:</strong>
@@ -75,50 +54,8 @@ public class jprocurUser extends AbstractPageBean {
 
     // </editor-fold>
 
-    public LoggedUser getLu() {
-        return lu;
-    }
-
-    public Boolean getHayUsuarioLogueado() {
-        return lu!=null;
-    }
-
-    public void setLu(LoggedUser lu) {
-        this.lu = lu;
-    }
-
-    public Usuario getU(){
-        return U;
-    }
-
-    public void setU(Usuario u){
-        this.U=u;
-    }
-
-    public  BeanBaseJHardmin getJHardminInstance() {
-        return (BeanBaseJHardmin) getBean("JHardminInstance");
-    }
-
     public  BeanBaseJProcur getJProcurInstance() {
         return this.jprocurInstance;
-    }
-
-    public String getCurrentUserName(){
-        if(this.lu == null) return INVITADO;
-        if(this.U == null) return INVITADO;
-        this.lu= getJHardminInstance().getCurrentUser();
-        if(this.lu == null) {
-            this.U = null;
-            return INVITADO;
-        } else {
-            this.U = LoginManager.getInstance().getUsuario(this.lu);
-        }
-        return this.U.getNombre();
-    }
-
-    public Integer getRolUsuarioConectado(){
-        if(this.U==null) return -1;
-        return this.U.getIdrol().getIdrol();
     }
 
     /**
@@ -219,33 +156,6 @@ public class jprocurUser extends AbstractPageBean {
      */
     @Override
     public void destroy() {
-    }
-
-    /**
-     * <p>Return a reference to the scoped data bean.</p>
-     *
-     * @return reference to the scoped data bean
-     */
-    protected SessionBean1 getSessionBean1() {
-        return (SessionBean1) getBean("SessionBean1");
-    }
-
-    /**
-     * <p>Return a reference to the scoped data bean.</p>
-     *
-     * @return reference to the scoped data bean
-     */
-    protected RequestBean1 getRequestBean1() {
-        return (RequestBean1) getBean("RequestBean1");
-    }
-
-    /**
-     * <p>Return a reference to the scoped data bean.</p>
-     *
-     * @return reference to the scoped data bean
-     */
-    protected ApplicationBean1 getApplicationBean1() {
-        return (ApplicationBean1) getBean("ApplicationBean1");
     }
 
     public List<Entrada> getListaEntradas() {
