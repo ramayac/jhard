@@ -170,6 +170,7 @@ CREATE TABLE  `jhard`.`clase` (
   `iddocente` int(11) default NULL COMMENT 'Referencia al docente encargado de dar esta clase (en caso que haya sido un docente)',
   `horainicio` time NOT NULL COMMENT 'Hora de inicio de la clase (hora real)',
   `horafin` time NOT NULL COMMENT 'Hora "marcada" como fin de la clase',
+  `finalizada` tinyint(1) NOT NULL COMMENT 'Marca la clase como finalizada',
   PRIMARY KEY  (`idclase`),
   KEY `fkidhorario_clase` (`idhorario`),
   KEY `fkidinstructor_clase` (`idinstructor`),
@@ -177,8 +178,9 @@ CREATE TABLE  `jhard`.`clase` (
   CONSTRAINT `fkiddocente_clase` FOREIGN KEY (`iddocente`) REFERENCES `docente` (`iddocente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidhorario_clase` FOREIGN KEY (`idhorario`) REFERENCES `horario` (`idhorario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidinstructor_clase` FOREIGN KEY (`idinstructor`) REFERENCES `instructor` (`idinstructor`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-INSERT INTO `jhard`.`clase` VALUES  (1,'2009-03-05',1,2,'Herencia en Java','N/A',1,'00:00:00','00:00:00');
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+INSERT INTO `jhard`.`clase` VALUES  (1,'2009-03-05',1,2,'Herencia en Java','N/A',1,'00:00:00','00:00:00',1),
+ (2,'2009-08-03',1,NULL,'Java Collections','',NULL,'12:23:54','10:55:00',0);
 CREATE TABLE  `jhard`.`clasificacion` (
   `idclasificacion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada clasificacion',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre de la clasificacion',
@@ -412,14 +414,15 @@ CREATE TABLE  `jhard`.`horario` (
   KEY `fkidaula_horario` (`idaula`),
   CONSTRAINT `fkidaula_horario` FOREIGN KEY (`idaula`) REFERENCES `ubicacion` (`idubicacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidcurso_horario` FOREIGN KEY (`idcurso`) REFERENCES `curso` (`idcurso`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`horario` VALUES  (1,1,'10:05:00','10:55:00',1,1),
  (2,3,'10:00:00','10:55:00',1,1),
  (3,5,'10:00:00','10:55:00',1,1),
  (4,1,'10:55:00','11:45:00',1,1),
  (5,2,'10:05:00','10:55:00',1,1),
  (6,2,'07:35:00','08:25:00',1,1),
- (7,3,'07:35:00','09:15:00',1,1);
+ (7,3,'07:35:00','09:15:00',1,1),
+ (8,1,'14:00:00','20:00:00',1,1);
 CREATE TABLE  `jhard`.`inscripcion` (
   `idinscripcion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada inscripcion',
   `idcurso` int(11) NOT NULL COMMENT 'Referencia al curso al cual se inscribio el estudiante',
