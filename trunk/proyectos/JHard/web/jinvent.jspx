@@ -23,34 +23,7 @@
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <!--start header -->
-                <div id="header">
-                    <div id="menu">
-                        <ul>
-                            <li>
-                                <a href="Index.iface">Principal</a>
-                            </li>
-                            <li>
-                                <a href="jrequestUser.iface">Mantenimientos</a>
-                            </li>
-                            <li>
-                                <a href="#">Grupos de Laboratorio</a>
-                            </li>
-                            <li class="current_page_item">
-                                <a href="#">Inventario</a>
-                            </li>
-                            <li>
-                                <a href="jprocurUser.iface">Wiki y Cursos</a>
-                            </li>
-                            <li class="last">
-                                <a href="jcanon.iface">Cañones</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div id="logo">
-                    <h1>Laboratorio de Hardware</h1>
-                    <h2>Universidad de El Salvador, Facultad Multidisciplinaria de Occidente</h2>
-                </div>
+                <jsp:directive.include file="/jspf/menu.jspx"/>
                 <!-- end header -->
                 <!-- start page -->
                 <div id="page">

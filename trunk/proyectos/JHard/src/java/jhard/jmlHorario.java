@@ -380,7 +380,6 @@ public class jmlHorario extends AbstractPageBean {
             this.diaSeleccionado=5;
         if(dia.equals("Sábado"))
             this.diaSeleccionado=6;
-
     }
 
     /**

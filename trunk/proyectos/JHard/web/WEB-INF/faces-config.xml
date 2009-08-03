@@ -69,6 +69,11 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
+        <managed-bean-name>Navegacion</managed-bean-name>
+        <managed-bean-class>edu.ues.jhard.util.Navegacion</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
         <managed-bean-name>jprocurUser</managed-bean-name>
         <managed-bean-class>jhard.jprocurUser</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>

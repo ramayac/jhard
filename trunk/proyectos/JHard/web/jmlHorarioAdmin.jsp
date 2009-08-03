@@ -215,11 +215,11 @@
                                                 rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Ver calendario de Horarios "/>
                                         </li>
                                         <li>
-                                            <ice:commandLink action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}" value="Cambiar clave de acceso"/>
+                                            <ice:commandLink action="#{Redireccion.jmlHorario}"
+                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Ir a página principal de Inscripición de Horarios"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink action="#{Redireccion.jrequestAdmin}"
-                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Ir a página principal de Inscripición de Horarios"/>
+                                            <ice:commandLink action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}" value="Cambiar clave de acceso"/>
                                         </li>
                                         <li>
                                             <ice:commandLink action="#{Redireccion.jrequestAdministracion}"

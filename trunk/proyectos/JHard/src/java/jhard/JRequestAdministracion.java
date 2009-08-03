@@ -20,6 +20,7 @@ import edu.ues.jhard.beans.BeanBaseJRequest;
 import edu.ues.jhard.jpa.Equiposimple;
 import edu.ues.jhard.jpa.Estadoequipo;
 import edu.ues.jhard.jpa.Tecnico;
+import edu.ues.jhard.util.Navegacion;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.FacesException;

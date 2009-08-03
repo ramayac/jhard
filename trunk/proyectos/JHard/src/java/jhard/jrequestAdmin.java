@@ -877,6 +877,8 @@ private List eeq = new ArrayList();
     public String btnAceptarFinalizado_action() {
 
         if(this.checkFIn.isSelected()&& (!this.txtDescripcion.getValue().equals(""))){
+            BeanBaseJRequest instance = new BeanBaseJRequest();
+
             Bitacoraestados be = new Bitacoraestados();
 
             Calendar c = Calendar.getInstance();
@@ -895,14 +897,23 @@ private List eeq = new ArrayList();
 
             be.setDescripcion((String)this.txtDescripcion.getValue());
 
-            if(this.solicitudElegida.getIdequiposimple()==null)
+            if(this.mantenimientoElegido.getIdequiposimple()==null){
+                Existencia ex = instance.getEntityManager().find(Existencia.class, this.mantenimientoElegido.getIdequipoexistente().getIdexistencia());
+                ex.setIdestado(estadoElegido);
+                instance.modificarExistencia(ex);
                 be.setIdequipoexistente(this.mantenimientoElegido.getIdequipoexistente());
-            else
+            }
+            else{
+                Equiposimple eq2 = instance.getEntityManager().find(Equiposimple.class, this.mantenimientoElegido.getIdequiposimple().getIdEquipoSimple());
+                eq2.setIdestado(estadoElegido);
+                instance.modificarEquipoSImple(eq2);
                 be.setIdequiposimple(this.mantenimientoElegido.getIdequiposimple());
 
-            new BeanBaseJRequest().modificarMantenimiento(mantenimientoElegido, "Finalizado");
+            }
+                
+            instance.modificarMantenimiento(mantenimientoElegido, "Finalizado");
             
-            new BeanBaseJRequest().registrarBitacoraEstados(be);
+            instance.registrarBitacoraEstados(be);
 
 
             

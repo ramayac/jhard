@@ -142,7 +142,12 @@ input, textarea, select {
 	color: #FFFFFF;
 }
 
-#menu .current_page_item a {
+/*#menu .current_page_item a {
+	background: #bb3e28;
+	color: #FFFFFF;
+}*/
+
+.current_page_item {
 	background: #bb3e28;
 	color: #FFFFFF;
 }

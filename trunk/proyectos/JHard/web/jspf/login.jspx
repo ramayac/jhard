@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- 
     Document   : login
     Created on : 07-25-2009, 12:45:10 PM
@@ -7,7 +7,7 @@
 <jsp:root version="2.1" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ice="http://www.icesoft.com/icefaces/component" xmlns:jsp="http://java.sun.com/JSP/Page">
     <jsp:element name="text">
         <h2>
-            <ice:outputLabel id="txtUserLogin" value="SesiÃ³n"/>
+            <ice:outputLabel id="txtUserLogin" value="Sesión"/>
         </h2>
         <ice:form id="frmLogin" rendered="#{JHardminInstance.currentUser == null}">
             <ice:outputText id="lblLoginFail" rendered="#{JHardminInstance.loginFail}" styleClass="errorText" value="Datos incorrectos"/>

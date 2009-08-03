@@ -412,7 +412,6 @@ public class jcanon extends AbstractPageBean {
         selectOneMenu1DefaultItems.clear();
         selectOneMenu1DefaultItems.setItems(new String[]{"Cañon","Laptop"});
 
-
         this.comboCan.setDisabled(true);
         this.comboLaptop.setDisabled(true);
         this.horaFin.setDisabled(true);
