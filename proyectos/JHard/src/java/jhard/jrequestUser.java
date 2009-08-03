@@ -171,7 +171,6 @@ public class jrequestUser extends AbstractPageBean {
      * <p>Construct a new Page bean instance.</p>
      */
     public jrequestUser() {
-        
         dirWiki="jwikiUser.iface?wkid=";
         String criterios = "display Linux tasks top"; //criterios separados por espacio.
         BeanBaseJWiki instance = new BeanBaseJWiki(); //obten tu instancia de Bean de JWiki

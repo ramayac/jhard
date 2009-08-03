@@ -58,7 +58,7 @@
                             <div class="entry">
                                 <p class="text">Administración de Solicitudes de Mantenimiento UES-FMOcc</p>
                                 <ice:form id="form1" style="">
-                                    <ice:panelTabSet id="tabJrequestAdmin" selectedIndex="2"
+                                    <ice:panelTabSet rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" id="tabJrequestAdmin" selectedIndex="2"
                                         tabChangeListener="#{jrequestAdmin.tabJrequestAdmin_processTabChange}" tabPlacement="Bottom" width="576">
                                         <ice:panelTab id="tabMantenimientos" label="Mantenimientos">
                                             <ice:panelGroup id="panelGroup2" style="position: inherit; width: 100%; ">

@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +42,7 @@ public class horarios extends HttpServlet {
         BeanBaseManLab instance = new BeanBaseManLab();
         List<Horario> horarios = instance.getAllHorarios();
         Calendar c = Calendar.getInstance();
+
         int dia =0;
 
         try {
@@ -48,10 +50,12 @@ public class horarios extends HttpServlet {
 
             for(Horario hr: horarios){
                 Date fecha = c.getTime();
+                
+                System.out.println("Q DIA DE LA SEMANA ES " + c.get(Calendar.DAY_OF_WEEK));
                 int posicion = c.get(Calendar.DAY_OF_WEEK)-hr.getDiasemana();
 
                 System.out.println(posicion);
-
+                System.out.println("QUE DIA DEL MES ES "+ c.get(Calendar.DATE));
                 if (posicion>0){
                     dia = c.get(Calendar.DATE) -  posicion + 1;
 

@@ -6,7 +6,6 @@
  */
 package jhard;
 
-import com.icesoft.faces.component.ext.HtmlCommandButton;
 import com.icesoft.faces.component.ext.HtmlSelectOneListbox;
 import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;

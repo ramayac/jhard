@@ -126,7 +126,7 @@
                                             <ice:commandButton action="#{jmlHorario.btnInscribirCurso_action}" binding="#{jmlHorario.btnInscribirCurso}"
                                                 id="btnInscribirCurso" styleClass="btnAccion2" value="Inscribir Curso"/>
                                             
-                                            <ice:commandButton style="right: 0px; padding: 2px;" id="btnAdmin" styleClass="btnAccion2" value="Administrar Horarios" />
+                                            <ice:commandButton style="right: 0px; padding: 2px;" id="btnAdmin" action="#{Redireccion.jmlHorarioAdmin}" styleClass="btnAccion2" value="Administrar Horarios" />
                                             
                                         </ice:panelGroup>
                                     </ice:panelCollapsible>
@@ -195,7 +195,7 @@
                                     <h2>Tareas Comunes</h2>
                                     <ul>
                                         <li>
-                                            <ice:commandLink onclick="calendar('scheduler.html','mywin','800','600','no','center');"
+                                            <ice:commandLink onclick="calendar('horario.html','mywin','800','600','no','center');"
                                                 rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Ver calendario de Horarios "/>
                                         </li>
                                         <li>

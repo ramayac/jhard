@@ -1,41 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- 
     Document   : menu superior
     Created on : 07-25-2009, 12:45:10 PM
     Author     : rodrigo
 -->
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+<jsp:root version="2.0" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ice="http://www.icesoft.com/icefaces/component" xmlns:jsp="http://java.sun.com/JSP/Page">
     <jsp:element name="text">
+            <ice:outputStyle href="../css/default.css" id="estilo"/>
             <div id="header">
                 <div id="menu">
+                    <ice:form id="navegar">
                     <ul>
                         <li>
-                            <a href="Index.iface">Principal</a>
+                            <ice:commandLink rendered="#{Navegacion.moduloActual!='Index'}" action="#{Redireccion.index}" value="Principal"/>
+                            <ice:commandLink styleClass="current_page_item" rendered="#{Navegacion.moduloActual=='Index'}" action="#{Redireccion.index}" value="#{Navegacion.moduloActual}"/>
                         </li>
                         <li>
-                            <a href="jrequestUser.iface">Mantenimientos</a>
+                            <ice:commandLink rendered="#{Navegacion.moduloActual!='JRequest'}" action="#{Redireccion.jrequestUser}" value="Mantenimientos"/>
+                            <ice:commandLink styleClass="current_page_item" rendered="#{Navegacion.moduloActual=='JRequest'}" action="#{Redireccion.jrequestUser}" value="Mantenimientos"/>
                         </li>
                         <li>
-                            <a href="#">Laboratorios</a>
+                            <ice:commandLink rendered="#{Navegacion.moduloActual!='ManLab'}" action="#{Redireccion.jmlHorario}" value="Laboratorios"/>
+                            <ice:commandLink styleClass="current_page_item" rendered="#{Navegacion.moduloActual=='ManLab'}" action="#{Redireccion.jmlHorario}" value="Laboratorios"/>
                         </li>
                         <li>
-                            <a href="jinvent.jspx">Inventario</a>
+                            <ice:commandLink rendered="#{Navegacion.moduloActual!='JInvent'}" action="#{Redireccion.jinvent}" value="Inventario"/>
+                            <ice:commandLink styleClass="current_page_item" rendered="#{Navegacion.moduloActual=='JInvent'}" action="#{Redireccion.jinvent}" value="Inventario"/>
                         </li>
                         <li>
-                            <a href="jprocurUser.iface">Cursos</a>
+                            <ice:commandLink rendered="#{Navegacion.moduloActual!='JProCur'}" action="#{Redireccion.jProCurUser}" value="Cursos"/>
+                            <ice:commandLink styleClass="current_page_item" rendered="#{Navegacion.moduloActual=='JProCur'}" action="#{Redireccion.jProCurUser}" value="Cursos"/>
                         </li>
                         <li>
-                            <a href="jwikiUser.iface">Wiki</a>
+                            <ice:commandLink rendered="#{Navegacion.moduloActual!='JWiki'}" action="#{Redireccion.jWikiUser}" value="Wiki"/>
+                            <ice:commandLink styleClass="current_page_item" rendered="#{Navegacion.moduloActual=='JWiki'}" action="#{Redireccion.jWikiUser}" value="Wiki"/>
                         </li>
                         <li>
-                            <a href="jcanon.iface">Ca√±ones</a>
+                            <ice:commandLink styleClass="last" rendered="#{Navegacion.moduloActual!='JCanon'}" action="#{Redireccion.jcanon}" value="CaÒones"/>
+                            <ice:commandLink styleClass="current_page_item" rendered="#{Navegacion.moduloActual=='JCanon'}" action="#{Redireccion.jcanon}" value="CaÒones"/>
                         </li>
                     </ul>
+                </ice:form>
                 </div>
             </div>
             <div id="logo">
                 <h1>Laboratorio de Hardware</h1>
                 <h2>Universidad de El Salvador, Facultad Multidisciplinaria de Occidente</h2>
             </div>
-    </jsp:element>
+     </jsp:element>
 </jsp:root>

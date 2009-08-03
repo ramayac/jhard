@@ -22,6 +22,8 @@ import edu.ues.jhard.jpa.Equiposimple;
 import edu.ues.jhard.jpa.Estadoequipo;
 import edu.ues.jhard.jpa.Solicitud;
 import edu.ues.jhard.jpa.Usuario;
+import edu.ues.jhard.util.Navegacion;
+import edu.ues.jhard.util.Redireccion;
 import java.util.Calendar;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -297,7 +299,7 @@ public void LlenarCombos(){
     public jrequestUserSolicitud() {
 //        comboEqSimpleDefaultItems.clear();
 //        comboEstadosDefaultItems.clear();
-
+        
         lu= getJHardminInstance().getCurrentUser();
         
         U = LoginManager.getInstance().getUsuario(lu);
@@ -312,6 +314,9 @@ public void LlenarCombos(){
             this.lblUsuario.setValue(U.getNombre());
         }
         LlenarCombos();
+    }
+    public  Redireccion getRedireccion() {
+        return (Redireccion) getBean("Redireccion");
     }
 
     /**
@@ -501,6 +506,7 @@ public void LlenarCombos(){
 
     public String btnAceptar_action() {
         this.renderPop2=false;
+        getRedireccion().index();
         return null;
     }
 

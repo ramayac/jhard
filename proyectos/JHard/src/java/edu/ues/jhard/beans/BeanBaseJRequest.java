@@ -73,6 +73,19 @@ public class BeanBaseJRequest extends BeanBase{
          em.getTransaction().commit();
      }
 
+     public void modificarExistencia(Existencia e){
+
+         EntityManager em = this.getEntityManager();
+         Existencia E= em.find(Existencia.class, e.getIdexistencia());
+
+         //SOLO CAMBIO EL ESTADO
+         E.setIdestado(e.getIdestado());
+
+         em.getTransaction().begin();
+         em.persist(E);
+         em.getTransaction().commit();
+     }
+
 
      public Mantenimiento[] getMantenimiento() {
         EntityManager em=this.getEntityManager();
@@ -155,11 +168,19 @@ public class BeanBaseJRequest extends BeanBase{
         b.setFecha(s.getFecha());
 
         if(s.getIdequiposimple()==null){
+            Existencia e = this.getEntityManager().find(Existencia.class, s.getIdequipoexistente().getIdexistencia());
+            Estadoequipo ee = this.getEntityManager().find(Estadoequipo.class, 2);
+            e.setIdestado(ee);
+            this.modificarExistencia(e);
             b.setIdequipoexistente(s.getIdequipoexistente());
             b.setIdestado(s.getIdequipoexistente().getIdestado());
         }
             
         else{
+            Equiposimple e = this.getEntityManager().find(Equiposimple.class, s.getIdequiposimple().getIdEquipoSimple());
+            Estadoequipo ee = this.getEntityManager().find(Estadoequipo.class, 2);
+            e.setIdestado(ee);
+            this.modificarEquipoSImple(e);
             b.setIdequiposimple(s.getIdequiposimple());
             b.setIdestado(s.getIdequiposimple().getIdestado());
         }
