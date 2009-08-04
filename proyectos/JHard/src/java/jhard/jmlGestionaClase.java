@@ -172,6 +172,11 @@ public class jmlGestionaClase extends BeanBaseJHard {
         return listaClases;
     }
 
+    public Boolean getHaylistaClaseVacia(){
+        if(this.listaClases.size()>0) return false;
+        return true;
+    }
+
     public void setListaClases(List<Clase> listaClases) {
         this.listaClases = listaClases;
     }
