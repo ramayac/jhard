@@ -5,6 +5,7 @@
 
 package edu.ues.jhard.beans;
 
+import com.icesoft.faces.component.datapaginator.DataPaginator;
 import com.icesoft.faces.component.tree.TreeNode;
 import edu.ues.jhard.jinvent.ClasificacionTreeModel;
 import edu.ues.jhard.jinvent.ClasificacionUserObject;
@@ -92,6 +93,7 @@ public class BeanBaseJInvent extends BeanBase {
     private String descripcionSolicitud;
     private String valorBusqueda;
     private ActionMessage msg;
+    private DataPaginator pgr;
 
     public BeanBaseJInvent(){
         this.clasificaciontm = new ClasificacionTreeModel(this.getEntityManager());
@@ -137,13 +139,12 @@ public class BeanBaseJInvent extends BeanBase {
     public void clasificacionSelected(ActionEvent event){
         String idClasificacion = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("clId");
         this.getClasificaciontm().seleccionarNodo(idClasificacion);
-        if(idClasificacion.equalsIgnoreCase("-1"))
+        if(idClasificacion.equalsIgnoreCase("-1")){
             this.setSearchMode(true);
-        else{
-            //DefaultMutableTreeNode nodo = this.getClasificaciontm().seleccionarNodo(idClasificacion);
-            this.setSearchMode(false);
+            this.valorBusqueda = "";
         }
-        
+        else            
+            this.setSearchMode(false);        
     }
 
     public Clasificacion getCurrentClasificacion(){
@@ -1773,12 +1774,47 @@ public class BeanBaseJInvent extends BeanBase {
                         ext.getIdhardware().getIdmarca().getNombre().toUpperCase().contains(this.valorBusqueda) ||
                         ext.getIdhardware().getModelo().toUpperCase().contains(this.valorBusqueda)){
                     this.listaResultadosBusqueda.add(ext);
-                    listaItemsBusqueda.add(new SelectItem(ext.getIdexistencia(), ext.getCodigo() + " - " + ext.getIdhardware().getNombre() + " " + ext.getIdhardware().getIdmarca().getNombre() + " " + ext.getIdhardware().getModelo()));
+                    listaItemsBusqueda.add(new SelectItem("[" + ext.getIdexistencia() + "]" +  ext.getCodigo() + " - " + ext.getIdhardware().getNombre() + " " + ext.getIdhardware().getIdmarca().getNombre() + " " + ext.getIdhardware().getModelo()));
+                }
+            }
+        }        
+        this.listaResultadosBusqueda = listaItemsBusqueda;        
+    }
+
+    public void seleccionarExistencia(ActionEvent event){
+        try{            
+            String idExistencia = this.valorBusqueda.substring(this.valorBusqueda.indexOf("[")+1, this.valorBusqueda.indexOf("]"));            
+            Existencia current = (Existencia)this.getEntityManager().createQuery("SELECT e FROM Existencia e WHERE e.idexistencia=" + idExistencia).getSingleResult();
+
+            this.setSearchMode(false);
+            this.getClasificaciontm().seleccionarNodo(current.getIdhardware().getIdclasificacion().getIdclasificacion().toString());
+            
+            int currentPage = (int)Math.ceil(this.getCurrentClasificacion().getExistenciaCollection().indexOf(current) / 5);
+            System.out.println("currentPage: " + currentPage);
+            
+            System.out.println("pageCount" + this.pgr.getPageCount());
+            System.out.println("lastPage?" + this.pgr.isLastPage());
+            if(this.pgr.getPageIndex()  > currentPage){
+                int diff = this.pgr.getPageIndex() - currentPage;
+                for(int i=0; i<diff; i++){
+                    this.pgr.gotoPreviousPage();
+                    System.out.println("Going to prev page...");
+                    System.out.println("pageIndex: " + this.pgr.getPageIndex());
+                }
+            }
+            else{
+                int diff = currentPage - this.pgr.getPageIndex();
+                for(int i=0; i<diff; i++){
+                    this.pgr.gotoNextPage();
+                    System.out.println("Going to next page...");
+                    System.out.println("pageIndex: " + this.pgr.getPageIndex());
                 }
             }
         }
-                
-        this.listaResultadosBusqueda = listaItemsBusqueda;        
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -1793,6 +1829,20 @@ public class BeanBaseJInvent extends BeanBase {
      */
     public void setValorBusqueda(String valorBusqueda) {
         this.valorBusqueda = valorBusqueda;
+    }
+
+    /**
+     * @return the pgr
+     */
+    public DataPaginator getPgr() {
+        return pgr;
+    }
+
+    /**
+     * @param pgr the pgr to set
+     */
+    public void setPgr(DataPaginator pgr) {
+        this.pgr = pgr;
     }
 
 }
