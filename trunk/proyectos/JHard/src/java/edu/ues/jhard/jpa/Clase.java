@@ -31,7 +31,16 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "clase")
-@NamedQueries({@NamedQuery(name = "Clase.findAll", query = "SELECT c FROM Clase c"), @NamedQuery(name = "Clase.findByIdclase", query = "SELECT c FROM Clase c WHERE c.idclase = :idclase"), @NamedQuery(name = "Clase.findByFecha", query = "SELECT c FROM Clase c WHERE c.fecha = :fecha"), @NamedQuery(name = "Clase.findByTema", query = "SELECT c FROM Clase c WHERE c.tema = :tema"), @NamedQuery(name = "Clase.findByHorainicio", query = "SELECT c FROM Clase c WHERE c.horainicio = :horainicio"), @NamedQuery(name = "Clase.findByHorafin", query = "SELECT c FROM Clase c WHERE c.horafin = :horafin"), @NamedQuery(name = "Clase.findByFinalizada", query = "SELECT c FROM Clase c WHERE c.finalizada = :finalizada")})
+@NamedQueries({
+    @NamedQuery(name = "Clase.findAll", query = "SELECT c FROM Clase c"),
+    @NamedQuery(name = "Clase.findByIdclase", query = "SELECT c FROM Clase c WHERE c.idclase = :idclase"),
+    @NamedQuery(name = "Clase.findByFecha", query = "SELECT c FROM Clase c WHERE c.fecha = :fecha"),
+    @NamedQuery(name = "Clase.findbyMismaFecha", query = "SELECT COUNT(c) FROM Clase c WHERE c.fecha = :fecha AND c.idhorario = :idhorario"),
+    @NamedQuery(name = "Clase.findByTema", query = "SELECT c FROM Clase c WHERE c.tema = :tema"),
+    @NamedQuery(name = "Clase.findByHorainicio", query = "SELECT c FROM Clase c WHERE c.horainicio = :horainicio"),
+    @NamedQuery(name = "Clase.findByHorafin", query = "SELECT c FROM Clase c WHERE c.horafin = :horafin"),
+    @NamedQuery(name = "Clase.findByFinalizada", query = "SELECT c FROM Clase c WHERE c.finalizada = :finalizada")
+})
 public class Clase implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

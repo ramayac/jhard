@@ -46,24 +46,23 @@
                                     <h2>2. Confirma el horario</h2>
                                     Confirme el horario asignado para esta clase o practica para el Curso: <ice:outputLabel
                                         id="lblTituloCurso2" style="font-weight:bold; " value="#{jmlGestionaClase.cursoSeleccionado.nombre}"/>
-                                    <ice:dataTable id="tabla2" rendered="#{jmlGestionaClase.hayHorariosValidos}" rows="10"
-                                        value="#{jmlGestionaClase.listaHorariosValidos}" var="indiceHorario" width="100%">
-                                        <ice:column id="columnaHorarios">
-                                            <f:facet name="header">Lista de Horarios Programados para este día</f:facet>
-                                            <ice:commandLink action="#{jmlGestionaClase.elegirHorario}">
-                                                <ice:outputLabel id="lblDiaSemana" style="font-weight:bold; "
-                                                    value="#{indiceHorario.nombrediasemana}"/>-<ice:outputLabel id="lblHoraInicio" style="font-weight:bold; "
-                                                    value="#{indiceHorario.horainicioformated}"/>-<ice:outputLabel id="lblHoraFin" style="font-weight:bold; "
-                                                    value="#{indiceHorario.horafinformated}"/>-<ice:outputLabel id="lblAula" style="font-weight:bold; " value="#{indiceHorario.idaula.nombre}"/>
-                                                <f:param name="idHorario" value="#{indiceHorario.idhorario}"/>
-                                            </ice:commandLink>
-                                        </ice:column>
-                                    </ice:dataTable>
-                                    <ice:panelGroup rendered="#{!jmlIniciaClase.hayHorariosValidos}">
-                                        <br/>
-                                        <br/>
+                                        <ice:panelGroup rendered="#{jmlGestionaClase.hayHorariosValidos}">
+                                        <ice:dataTable id="tabla2" value="#{jmlGestionaClase.listaHorariosValidos}" var="indiceHorario" width="100%">
+                                            <ice:column id="columnaHorarios">
+                                                <f:facet name="header">Lista de Horarios Programados para este día</f:facet>
+                                                <ice:commandLink action="#{jmlGestionaClase.elegirHorario}">
+                                                    <ice:outputLabel id="lblDiaSemana" style="font-weight:bold; "
+                                                        value="#{indiceHorario.nombrediasemana}"/>-<ice:outputLabel id="lblHoraInicio" style="font-weight:bold; "
+                                                        value="#{indiceHorario.horainicioformated}"/>-<ice:outputLabel id="lblHoraFin" style="font-weight:bold; "
+                                                        value="#{indiceHorario.horafinformated}"/>-<ice:outputLabel id="lblAula" style="font-weight:bold; " value="#{indiceHorario.idaula.nombre}"/>
+                                                    <f:param name="idHorario" value="#{indiceHorario.idhorario}"/>
+                                                </ice:commandLink>
+                                            </ice:column>
+                                        </ice:dataTable>
+                                    </ice:panelGroup>
+                                    <ice:panelGroup rendered="#{!jmlGestionaClase.hayHorariosValidos}">
+                                        <h2 class="title">Aviso:</h2>
                                         <div align="center">
-                                            <h2 class="title">Aviso:</h2>
                                             <ul><li>No hay un horario asignable para este instante.</li></ul>
                                         <br/>
                                         <ice:commandButton action="#{jmlGestionaClase.cancelar}" styleClass="btnAccion2" value="Cancelar"/>
@@ -81,6 +80,8 @@
                                     Tema de la clase/practica: <ice:inputText id="txtTema" partialSubmit="true"
                                         required="true" title="Tema de la clase/practica." value="#{jmlGestionaClase.nuevaClase.tema}"/>
                                     <br/>
+                                    Observaciones: <ice:inputText id="txtObservaciones" partialSubmit="true"
+                                        title="Observaciones" value="#{jmlGestionaClase.nuevaClase.observaciones}"/>
                                     <br/>
                                     <div align="center">
                                         <ice:commandButton action="#{jmlGestionaClase.iniciarClase}" id="btnComenzar" styleClass="btnAccion2" value="Iniciar Clase"/>
@@ -88,6 +89,35 @@
                                     </div>
                                 </div>
                             </ice:panelGroup>
+                            <ice:panelGroup rendered="#{jmlGestionaClase.yaHayClase}">
+                                <div class="post">
+                                <h2 class="title">Aviso:</h2>
+                                <div align="center">
+                                <ul><li>Ya existe una clase con ese horario asignado.</li></ul>
+                                <br/>
+                                <ice:commandButton action="#{jmlGestionaClase.cancelar}" styleClass="btnAccion2" value="Regresar"/>
+                                </div>
+                                </div>
+                            </ice:panelGroup>
+                            <!-- panel de mensajes de avisos...-->
+                            <ice:panelPopup autoCentre="true" id="ppmsj" modal="true" rendered="#{jmlGestionaClase.popup.visible}">
+                                <f:facet name="header">
+                                    <ice:panelGrid><ice:outputText id="pptit" value="#{jmlGestionaClase.popup.titulo}"/></ice:panelGrid>
+                                </f:facet>
+                                <f:facet name="body">
+                                <div class="post">
+                                    <ice:panelGroup>
+                                        <ice:outputText id="lblppmsj" value="#{jmlGestionaClase.popup.mensaje}"/>
+                                        <br/>
+                                        <br/>
+                                        <div align="center">
+                                        <ice:commandButton action="#{jmlGestionaClase.btnGoBegin_action}" id="ppok" value="OK"/>
+                                        </div>
+                                    </ice:panelGroup>
+                                    </div>
+                                </f:facet>
+                            </ice:panelPopup>
+                            <!-- panel de mensajes -->
                         </ice:form>
                         <br/>
                     </div>
