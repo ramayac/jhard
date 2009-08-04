@@ -1031,6 +1031,7 @@ public class BeanBaseJHardmin extends BeanBase {
         this.currentEstudiante.setVisible(0);
         emgr.getTransaction().begin();
         emgr.merge(this.currentEstudiante);
+        emgr.remove(this.currentEstudiante.getIdusuario());
         emgr.getTransaction().commit();
         this.crdEstudiantes.hidePopupDel();
 
@@ -1126,6 +1127,7 @@ public class BeanBaseJHardmin extends BeanBase {
         this.currentInstructor.setVisible(0);
         emgr.getTransaction().begin();
         emgr.merge(this.currentInstructor);
+        emgr.remove(this.currentInstructor.getIdusuario());
         emgr.getTransaction().commit();
         this.crdInstructores.hidePopupDel();
 
@@ -1213,6 +1215,7 @@ public class BeanBaseJHardmin extends BeanBase {
         this.currentDocente.setVisible(0);
         emgr.getTransaction().begin();
         emgr.merge(this.currentDocente);
+        emgr.remove(this.currentDocente.getIdusuario());
         emgr.getTransaction().commit();
         this.crdDocentes.hidePopupDel();
 

@@ -33,6 +33,8 @@ import java.util.Iterator;
 import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.event.ValueChangeListener;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.persistence.EntityManager;
@@ -76,6 +78,7 @@ public class BeanBaseJInvent extends BeanBase {
     private SelectItemGroup listaItemsAccesorios;
     private SelectItemGroup listaItemsPiezas;
     private SelectItemGroup listaItemsSoftware;
+    private List listaResultadosBusqueda;
     private String marcaSelected;
     private String estadoSelected;
     private String equipoSelected;
@@ -85,7 +88,9 @@ public class BeanBaseJInvent extends BeanBase {
     private String ubicacionSelected;
     private boolean existenciaEditMode;
     private boolean popupMantenimientoVisible;
+    private boolean searchMode;
     private String descripcionSolicitud;
+    private String valorBusqueda;
     private ActionMessage msg;
 
     public BeanBaseJInvent(){
@@ -110,7 +115,9 @@ public class BeanBaseJInvent extends BeanBase {
         this.listaMarcas = this.getEntityManager().createNamedQuery("Marca.findAll").getResultList();        
         this.listaTodosEquipos = this.getEntityManager().createNamedQuery("Equipo.findAll").getResultList();
         this.initItemsMarcas();
-        this.listaUbicaciones = this.getEntityManager().createNamedQuery("Ubicacion.findAll").getResultList();        
+        this.listaUbicaciones = this.getEntityManager().createNamedQuery("Ubicacion.findAll").getResultList();
+        this.listaResultadosBusqueda = new ArrayList();        
+        this.valorBusqueda = "";
     }
 
     /**
@@ -129,7 +136,13 @@ public class BeanBaseJInvent extends BeanBase {
 
     public void clasificacionSelected(ActionEvent event){
         String idClasificacion = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("clId");
-        DefaultMutableTreeNode nodo = this.getClasificaciontm().seleccionarNodo(idClasificacion);
+        this.getClasificaciontm().seleccionarNodo(idClasificacion);
+        if(idClasificacion.equalsIgnoreCase("-1"))
+            this.setSearchMode(true);
+        else{
+            //DefaultMutableTreeNode nodo = this.getClasificaciontm().seleccionarNodo(idClasificacion);
+            this.setSearchMode(false);
+        }
         
     }
 
@@ -1700,6 +1713,7 @@ public class BeanBaseJInvent extends BeanBase {
                 break;
             }
         }
+        this.listaEstadosExistencia = this.getEntityManager().createQuery("SELECT b FROM Bitacoraestados b WHERE b.idequipoexistente.idexistencia=" + this.currentExistencia.getIdexistencia()).getResultList();
         return "done";
     }
 
@@ -1715,6 +1729,70 @@ public class BeanBaseJInvent extends BeanBase {
      */
     public void setDescripcionSolicitud(String descripcionSolicitud) {
         this.descripcionSolicitud = descripcionSolicitud;
+    }
+
+    /**
+     * @return the searchMode
+     */
+    public boolean isSearchMode() {
+        return searchMode;
+    }
+
+    /**
+     * @param searchMode the searchMode to set
+     */
+    public void setSearchMode(boolean searchMode) {
+        this.searchMode = searchMode;
+    }
+
+    /**
+     * @return the listaResultadosBusqueda
+     */
+    public List getListaResultadosBusqueda() {
+        return listaResultadosBusqueda;
+    }
+
+    /**
+     * @param listaResultadosBusqueda the listaResultadosBusqueda to set
+     */
+    public void setListaResultadosBusqueda(List listaResultadosBusqueda) {
+        this.listaResultadosBusqueda = listaResultadosBusqueda;
+    }
+   
+    public void actualizarAutocompletado(ValueChangeEvent event){
+        this.valorBusqueda = event.getNewValue().toString().toUpperCase();
+        if(valorBusqueda.equalsIgnoreCase("")){
+            this.listaResultadosBusqueda.clear();
+            return;
+        }        
+        List<SelectItem> listaItemsBusqueda = new ArrayList<SelectItem>();
+        for(Equipo eq: this.listaTodosEquipos){
+            for(Existencia ext: eq.getExistenciaCollection()){
+                if(ext.getCodigo().toUpperCase().contains(this.valorBusqueda) ||
+                        ext.getIdhardware().getNombre().toUpperCase().contains(this.valorBusqueda) ||
+                        ext.getIdhardware().getIdmarca().getNombre().toUpperCase().contains(this.valorBusqueda) ||
+                        ext.getIdhardware().getModelo().toUpperCase().contains(this.valorBusqueda)){
+                    this.listaResultadosBusqueda.add(ext);
+                    listaItemsBusqueda.add(new SelectItem(ext.getIdexistencia(), ext.getCodigo() + " - " + ext.getIdhardware().getNombre() + " " + ext.getIdhardware().getIdmarca().getNombre() + " " + ext.getIdhardware().getModelo()));
+                }
+            }
+        }
+                
+        this.listaResultadosBusqueda = listaItemsBusqueda;        
+    }
+
+    /**
+     * @return the valorBusqueda
+     */
+    public String getValorBusqueda() {
+        return valorBusqueda;
+    }
+
+    /**
+     * @param valorBusqueda the valorBusqueda to set
+     */
+    public void setValorBusqueda(String valorBusqueda) {
+        this.valorBusqueda = valorBusqueda;
     }
 
 }

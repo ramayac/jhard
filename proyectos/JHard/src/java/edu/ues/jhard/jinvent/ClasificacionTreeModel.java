@@ -49,6 +49,7 @@ public class ClasificacionTreeModel {
         this.modelo = new DefaultTreeModel(nodo);
         this.currentUserObject = (ClasificacionUserObject)nodo.getUserObject();
         this.generarNodosHijos(nodo);
+        this.generarNodoBusqueda(nodo);
     }
 
     public DefaultMutableTreeNode agregarNodo(DefaultMutableTreeNode nodoPadre, Clasificacion cl){
@@ -130,5 +131,26 @@ public class ClasificacionTreeModel {
             totalExistencias += eq.getExistenciaSize();
         }
         clUsrObj.setText(nuevaCl.getNombre() + " (" + (totalExistencias + nuevaCl.getSoftwareCollection().size() + nuevaCl.getAccesorioCollection().size() + nuevaCl.getPiezaCollection().size()) + ")");
+    }
+
+    private void generarNodoBusqueda(DefaultMutableTreeNode nodoPadre) {
+        DefaultMutableTreeNode nodo = new DefaultMutableTreeNode();
+        ClasificacionUserObject clUsrObj = new ClasificacionUserObject(nodo);
+        Clasificacion cl = new Clasificacion();
+        cl.setIdclasificacion(-1);
+        cl.setNombre("Búsquedas");
+        cl.setDescripcion("Búsquedas");
+        nodo.setUserObject(clUsrObj);
+        clUsrObj.setClasificacion(cl);
+        int totalExistencias = 0;
+
+        clUsrObj.setText("Búsquedas");
+        clUsrObj.setLeaf(false);
+        clUsrObj.setExpanded(true);
+        clUsrObj.setLeafIcon("imgBusqueda.png");
+        clUsrObj.setBranchContractedIcon("imgBusqueda.png");
+        clUsrObj.setBranchExpandedIcon("imgBusqueda.png");
+        if(nodoPadre != null)
+            nodoPadre.add(nodo);
     }
 }
