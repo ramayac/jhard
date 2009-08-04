@@ -307,6 +307,7 @@ public class jcanonAdmin extends AbstractPageBean {
     // </editor-fold>
 
     private List<Reserva> listaReservasPendientes;
+    private boolean renderedError;
         /**
      * <p>Construct a new Page bean instance.</p>
      */
@@ -538,7 +539,7 @@ public class jcanonAdmin extends AbstractPageBean {
 
 
         this.fechaMod.setValue(this.reservaMod.getFechahorainicioprestamo());
-        
+        this.renderedError=false;
         this.panelPosponer.setRendered(true);
         this.panelPosponer.setVisible(true);
         this.panelPosponer.setModal(true);
@@ -602,7 +603,9 @@ public class jcanonAdmin extends AbstractPageBean {
     }
 
     public String btnAceptarMod_action() {
-        
+        renderedError=false;
+        BeanBaseJCanon instance = new BeanBaseJCanon();
+        List<Reserva>  mismoDia;
         Date fechaI = (Date)this.fechaMod.getValue();
         String [] tiempoI = this.horaInicioMod.getValue().toString().split("\\:");
         int hourI = Integer.parseInt(tiempoI[0]);
@@ -618,8 +621,32 @@ public class jcanonAdmin extends AbstractPageBean {
         int secondF = 00;
 
         reservaMod.setFechahorafinprestamo(new Date(fechaI.getYear(),fechaI.getMonth(),(fechaI.getDate()+1),hourF,minuteF,secondF));
-        
-        new BeanBaseJCanon().modificarEstadoReserva(reservaMod);
+
+        mismoDia=instance.getReservasMismoDia((fechaI.getDate()+1), (fechaI.getMonth()+1), (fechaI.getYear()+1900));
+
+                System.out.println("tamaño lista:---> "+ mismoDia.size());
+                int reservas =0;
+
+                for (int i=0; i<mismoDia.size();i++) {
+
+                    Reserva r = mismoDia.get(i);
+
+                    if(reservaMod.getFechahorainicioprestamo().getTime()>=r.getFechahorainicioprestamo().getTime() && reservaMod.getFechahorafinprestamo().getTime()<=r.getFechahorafinprestamo().getTime())
+                    {   reservas++;
+                        System.out.println("ENTRA--> "+ reservas);
+                    }
+                        //reservas += Integer.parseInt(instance.getReservasDeUnaMismaHoraFecha(r.getFechahorainicioprestamo()));
+                }
+
+                int equipos = Integer.parseInt(instance.getNumeroEquipoMultimedia(reservaMod.getIdequipoexistente().getIdhardware().getIdclasificacion().getIdclasificacion()));
+
+                System.out.println("RESERVAS--->>>>" + reservas);
+        if(reservas>=equipos){
+                    this.renderedError=true;
+                    this.lblMensajes.setValue("No se puede realizar la reserva. Equipo multimedia insuficiente");
+
+        }else{
+        instance.modificarEstadoReserva(reservaMod);
         listaReservasPendientes=new BeanBaseJCanon().getReservasPendientesEnUso();
         
         this.panelPosponer.setRendered(false);
@@ -631,7 +658,7 @@ public class jcanonAdmin extends AbstractPageBean {
         this.panelMensajes.setRendered(true);
         this.panelMensajes.setVisible(true);
         this.panelMensajes.setModal(true);
-
+       }
         return null;
     }
 
@@ -667,6 +694,20 @@ public class jcanonAdmin extends AbstractPageBean {
         this.horaSeleccionada=this.horaInicioMod.getValue().toString();
 
         LlenarHora(2);
+    }
+
+    /**
+     * @return the renderedError
+     */
+    public boolean isRenderedError() {
+        return renderedError;
+    }
+
+    /**
+     * @param renderedError the renderedError to set
+     */
+    public void setRenderedError(boolean renderedError) {
+        this.renderedError = renderedError;
     }
 
 }

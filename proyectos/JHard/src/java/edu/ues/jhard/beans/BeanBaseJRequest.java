@@ -7,6 +7,7 @@ package edu.ues.jhard.beans;
 
 import edu.ues.jhard.jpa.*;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -214,6 +215,30 @@ public class BeanBaseJRequest extends BeanBase{
         for(int i=0;i<eqs.length;i++)
             em.refresh(eqs[i]);
         return eqs;
+    }
+
+    public List<Equiposimple> getListaEquipoSimple() {
+        EntityManager em=this.getEntityManager();
+
+        Query q=em.createNamedQuery("Equiposimple.findAll");
+
+        List<Equiposimple> eqs=(List<Equiposimple>)q.getResultList();
+
+        for(int i=0;i<eqs.size();i++)
+            em.refresh(eqs.get(i));
+        return eqs;
+    }
+
+    public List<Existencia> getListaExistencia() {
+        EntityManager em=this.getEntityManager();
+
+        Query q=em.createNamedQuery("Existencia.findAll");
+
+        List<Existencia> e=(List<Existencia>)q.getResultList();
+
+        for(int i=0;i<e.size();i++)
+            em.refresh(e.get(i));
+        return e;
     }
 
     public Existencia[] getExistencia() {

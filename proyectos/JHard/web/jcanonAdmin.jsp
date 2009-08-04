@@ -187,6 +187,7 @@
                                                         <ice:panelGroup id="panelGrid5" style="display: block; height: 326px">
                                                             <ice:outputText binding="#{jcanonAdmin.lblTextMod}" id="lblTextMod" value="Reserva a modificar"/>
                                                             <br/>
+                                                            <ice:outputText rendered="#{jcanonAdmin.renderedError}" id="noPosponer" value="#{jcanonAdmin.lblMensajes}" style="font-size:12px;"/>
                                                             <br/>
                                                             <ice:selectInputDate binding="#{jcanonAdmin.fechaMod}" id="fechaMod"
                                                                 style="height:180px; width: 190px" value="#{jcanonAdmin.selectInputDate1Bean.date1}"/>
