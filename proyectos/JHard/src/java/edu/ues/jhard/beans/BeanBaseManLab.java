@@ -10,6 +10,7 @@ import edu.ues.jhard.jpa.Estadocurso;
 import edu.ues.jhard.jpa.Curso;
 import edu.ues.jhard.jpa.Clase;
 import edu.ues.jhard.jpa.Asistencia;
+import edu.ues.jhard.jpa.Cicloanyo;
 import edu.ues.jhard.jpa.Inscripcion;
 import edu.ues.jhard.jpa.Horario;
 import java.sql.Time;
@@ -884,6 +885,76 @@ public class BeanBaseManLab extends BeanBase{
         return c;
     }
 
+
+    /**
+     * Metodo para obtener los cursos, asociado siempre del ciclo y año actual
+     * @param docente
+     * @param cicloanyo
+     * @return
+     */
+    public List<Curso> getCursosCiclo() {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Cicloanyo.findAll");
+        List<Cicloanyo> cicloanyo = q.getResultList();
+
+        q = em.createNamedQuery("Curso.findByCiclo");
+        q.setParameter("idcicloanyo", cicloanyo.get(cicloanyo.size()-1));
+
+        List<Curso> c = (List<Curso>)q.getResultList();
+
+        for(int i=0;i<c.size();i++)
+            em.refresh(c.get(i));
+
+        return c;
+    }
+
+
+    /**
+     * Metodo para obtener los cursos, asociados con un docente, siempre del ciclo y año actual
+     * @param docente
+     * @param cicloanyo
+     * @return
+     */
+    public List<Curso> getCursosDocenteCiclo(Docente docente) {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Cicloanyo.findAll");
+        List<Cicloanyo> cicloanyo = q.getResultList();
+
+        q = em.createNamedQuery("Curso.findByDocenteCiclo");
+        q.setParameter("iddocente", docente);
+        q.setParameter("idcicloanyo", cicloanyo.get(cicloanyo.size()-1));
+
+        List<Curso> c = (List<Curso>)q.getResultList();
+
+        for(int i=0;i<c.size();i++)
+            em.refresh(c.get(i));
+
+        return c;
+    }
+
+    /**
+     * Metodos para obtener los cursos asociados con un instructor, siempre del ciclo y año actual
+     * @param instructor
+     * @param cicloanyo
+     * @return
+     */
+    public List<Curso> getCursosInstructorCiclo(Instructor instructor) {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Cicloanyo.findAll");
+        List<Cicloanyo> cicloanyo = q.getResultList();
+
+        q = em.createNamedQuery("Curso.findByInstructorCiclo");
+        q.setParameter("idinstructor", instructor);
+        q.setParameter("idcicloanyo", cicloanyo.get(cicloanyo.size()-1));
+
+        List<Curso> c = (List<Curso>)q.getResultList();
+
+        for(int i=0;i<c.size();i++)
+            em.refresh(c.get(i));
+
+        return c;
+    }
+
     /**
      * Metodo para añadir un objeto Curso
      * @param Curso
@@ -998,6 +1069,7 @@ public class BeanBaseManLab extends BeanBase{
             em.persist(clase);
             em.getTransaction().commit();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
         return true;
@@ -1190,6 +1262,16 @@ public class BeanBaseManLab extends BeanBase{
     public List<Horario> getAllHorarios() {
         EntityManager em = this.getEntityManager();
         Query q = em.createNamedQuery("Horario.findAll");
+        return (List<Horario>)q.getResultList();
+    }
+
+    /**
+     * Metodo para obtener una lista Horarios asociado con un curso
+     */
+    public List<Horario> getHorariosCurso(Curso curso) {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Horario.findByIdCurso");
+        q.setParameter("idcurso", curso);
         return (List<Horario>)q.getResultList();
     }
 

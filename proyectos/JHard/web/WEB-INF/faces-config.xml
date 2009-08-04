@@ -134,8 +134,8 @@
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>jmlIniciaClase</managed-bean-name>
-        <managed-bean-class>jhard.jmlIniciaClase</managed-bean-class>
+        <managed-bean-name>jmlGestionaClase</managed-bean-name>
+        <managed-bean-class>jhard.jmlGestionaClase</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>

@@ -5,7 +5,10 @@
 
 package edu.ues.jhard.jpa;
 
+import edu.ues.jhard.util.Utilidades;
 import java.io.Serializable;
+
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -32,6 +35,7 @@ import javax.persistence.TemporalType;
 @Table(name = "horario", catalog = "jhard", schema = "")
 @NamedQueries({@NamedQuery(name = "Horario.findAll", query = "SELECT h FROM Horario h ORDER BY h.diasemana, h.horainicio"),
                @NamedQuery(name = "Horario.findByIdhorario", query = "SELECT h FROM Horario h WHERE h.idhorario = :idhorario"),
+               @NamedQuery(name = "Horario.findByIdCurso", query = "SELECT h FROM Horario h WHERE h.idcurso = :idcurso"),
                @NamedQuery(name = "Horario.findByDiasemana", query = "SELECT h FROM Horario h WHERE h.diasemana = :diasemana"),
                @NamedQuery(name = "Horario.findByHorainicio", query = "SELECT h FROM Horario h WHERE h.horainicio = :horainicio"),
                @NamedQuery(name = "Horario.findByHoraDia", query = "SELECT h FROM Horario h WHERE h.horainicio = :horainicio AND h.diasemana = :diasemana"),
@@ -89,6 +93,10 @@ public class Horario implements Serializable {
         return diasemana;
     }
 
+    public String getNombrediasemana(){
+        return Utilidades.DiaNombre(this.diasemana);
+    }
+
     public void setDiasemana(int diasemana) {
         this.diasemana = diasemana;
     }
@@ -97,12 +105,22 @@ public class Horario implements Serializable {
         return horainicio;
     }
 
+    public String getHorainicioformated() {
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+        return sdf.format(horainicio);
+    }
+
     public void setHorainicio(Date horainicio) {
         this.horainicio = horainicio;
     }
 
     public Date getHorafin() {
         return horafin;
+    }
+
+    public String getHorafinformated() {
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+        return sdf.format(horafin);
     }
 
     public void setHorafin(Date horafin) {

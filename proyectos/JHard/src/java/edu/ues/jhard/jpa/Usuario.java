@@ -7,6 +7,7 @@ package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -108,6 +109,10 @@ public class Usuario implements Serializable {
         return instructorCollection;
     }
 
+    public List<Instructor> getInstructorList() {
+        return (List<Instructor>)instructorCollection;
+    }
+
     public void setInstructorCollection(Collection<Instructor> instructorCollection) {
         this.instructorCollection = instructorCollection;
     }
@@ -144,6 +149,10 @@ public class Usuario implements Serializable {
         this.estudianteCollection = estudianteCollection;
     }
 
+    public List<Estudiante> getEstudianteList() {
+        return (List<Estudiante>)estudianteCollection;
+    }
+
     public Collection<Solicitud> getSolicitudCollection() {
         return solicitudCollection;
     }
@@ -178,6 +187,10 @@ public class Usuario implements Serializable {
 
     public Collection<Docente> getDocenteCollection() {
         return docenteCollection;
+    }
+
+    public List<Docente> getDocenteList() {
+        return (List<Docente>)docenteCollection;
     }
 
     public void setDocenteCollection(Collection<Docente> docenteCollection) {

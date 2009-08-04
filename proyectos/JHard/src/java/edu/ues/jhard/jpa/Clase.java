@@ -6,8 +6,8 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,39 +27,50 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author robertux
+ * @author rodrigo
  */
 @Entity
-@Table(name = "clase", catalog = "jhard", schema = "")
-@NamedQueries({@NamedQuery(name = "Clase.findAll", query = "SELECT c FROM Clase c"), @NamedQuery(name = "Clase.findByIdclase", query = "SELECT c FROM Clase c WHERE c.idclase = :idclase"), @NamedQuery(name = "Clase.findByFecha", query = "SELECT c FROM Clase c WHERE c.fecha = :fecha"), @NamedQuery(name = "Clase.findByTema", query = "SELECT c FROM Clase c WHERE c.tema = :tema")})
+@Table(name = "clase")
+@NamedQueries({@NamedQuery(name = "Clase.findAll", query = "SELECT c FROM Clase c"), @NamedQuery(name = "Clase.findByIdclase", query = "SELECT c FROM Clase c WHERE c.idclase = :idclase"), @NamedQuery(name = "Clase.findByFecha", query = "SELECT c FROM Clase c WHERE c.fecha = :fecha"), @NamedQuery(name = "Clase.findByTema", query = "SELECT c FROM Clase c WHERE c.tema = :tema"), @NamedQuery(name = "Clase.findByHorainicio", query = "SELECT c FROM Clase c WHERE c.horainicio = :horainicio"), @NamedQuery(name = "Clase.findByHorafin", query = "SELECT c FROM Clase c WHERE c.horafin = :horafin"), @NamedQuery(name = "Clase.findByFinalizada", query = "SELECT c FROM Clase c WHERE c.finalizada = :finalizada")})
 public class Clase implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idclase", nullable = false)
+    @Column(name = "idclase")
     private Integer idclase;
     @Basic(optional = false)
-    @Column(name = "fecha", nullable = false)
+    @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
     @Basic(optional = false)
-    @Column(name = "tema", nullable = false, length = 45)
+    @Column(name = "tema")
     private String tema;
     @Lob
-    @Column(name = "observaciones", length = 65535)
+    @Column(name = "observaciones")
     private String observaciones;
-    @JoinColumn(name = "idhorario", referencedColumnName = "idhorario", nullable = false)
+    @Basic(optional = false)
+    @Column(name = "horainicio")
+    @Temporal(TemporalType.TIME)
+    private Date horainicio;
+    @Basic(optional = false)
+    @Column(name = "horafin")
+    @Temporal(TemporalType.TIME)
+    private Date horafin;
+    @Basic(optional = false)
+    @Column(name = "finalizada")
+    private boolean finalizada;
+    @JoinColumn(name = "iddocente", referencedColumnName = "iddocente")
+    @ManyToOne
+    private Docente iddocente;
+    @JoinColumn(name = "idhorario", referencedColumnName = "idhorario")
     @ManyToOne(optional = false)
     private Horario idhorario;
     @JoinColumn(name = "idinstructor", referencedColumnName = "idinstructor")
     @ManyToOne
     private Instructor idinstructor;
-    @JoinColumn(name = "iddocente", referencedColumnName = "iddocente")
-    @ManyToOne
-    private Docente iddocente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclase")
-    private Collection<Asistencia> asistenciaCollection;
+    private List<Asistencia> asistenciaCollection;
 
     public Clase() {
     }
@@ -68,10 +79,20 @@ public class Clase implements Serializable {
         this.idclase = idclase;
     }
 
-    public Clase(Integer idclase, Date fecha, String tema) {
+    public Clase(Integer idclase, Date fecha, String tema, boolean finalizada) {
         this.idclase = idclase;
         this.fecha = fecha;
         this.tema = tema;
+        this.finalizada = finalizada;
+    }
+
+    public Clase(Integer idclase, Date fecha, String tema, Date horainicio, Date horafin, boolean finalizada) {
+        this.idclase = idclase;
+        this.fecha = fecha;
+        this.tema = tema;
+        this.horainicio = horainicio;
+        this.horafin = horafin;
+        this.finalizada = finalizada;
     }
 
     public Integer getIdclase() {
@@ -106,6 +127,38 @@ public class Clase implements Serializable {
         this.observaciones = observaciones;
     }
 
+    public Date getHorainicio() {
+        return horainicio;
+    }
+
+    public void setHorainicio(Date horainicio) {
+        this.horainicio = horainicio;
+    }
+
+    public Date getHorafin() {
+        return horafin;
+    }
+
+    public void setHorafin(Date horafin) {
+        this.horafin = horafin;
+    }
+
+    public boolean getFinalizada() {
+        return finalizada;
+    }
+
+    public void setFinalizada(boolean finalizada) {
+        this.finalizada = finalizada;
+    }
+
+    public Docente getIddocente() {
+        return iddocente;
+    }
+
+    public void setIddocente(Docente iddocente) {
+        this.iddocente = iddocente;
+    }
+
     public Horario getIdhorario() {
         return idhorario;
     }
@@ -122,19 +175,11 @@ public class Clase implements Serializable {
         this.idinstructor = idinstructor;
     }
 
-    public Docente getIddocente() {
-        return iddocente;
-    }
-
-    public void setIddocente(Docente iddocente) {
-        this.iddocente = iddocente;
-    }
-
-    public Collection<Asistencia> getAsistenciaCollection() {
+    public List<Asistencia> getAsistenciaCollection() {
         return asistenciaCollection;
     }
 
-    public void setAsistenciaCollection(Collection<Asistencia> asistenciaCollection) {
+    public void setAsistenciaCollection(List<Asistencia> asistenciaCollection) {
         this.asistenciaCollection = asistenciaCollection;
     }
 
