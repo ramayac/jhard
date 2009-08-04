@@ -19,9 +19,9 @@
                 <meta content="" name="description"/>
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-                <script type="text/javascript" src="js/validaciones.js"></script>
+                <script type="text/javascript" src="js/validaciones.js"></script>                
             </head>
-            <body id="outputBody1" style="-rave-layout: grid">
+            <body id="outputBody1" style="-rave-layout: grid" >
                 <!--start header -->
                 <jsp:directive.include file="/jspf/menu.jspx"/>
                 <!-- end header -->
@@ -49,14 +49,16 @@
                                                         <ice:treeNode>
                                                             <f:facet name="icon">
                                                                 <ice:panelGroup style="display: inline">
-                                                                    <ice:graphicImage value="/xmlhttp/css/rime/css-images/#{nodo.userObject.icon}"/>
+                                                                    <ice:graphicImage value="/xmlhttp/css/rime/css-images/#{nodo.userObject.icon}" rendered="#{nodo.userObject.clasificacion.idclasificacion > 0}"/>
+                                                                    <ice:graphicImage url="img/#{nodo.userObject.icon}" rendered="#{nodo.userObject.clasificacion.idclasificacion == -1}"/>
                                                                 </ice:panelGroup>
                                                             </f:facet>
                                                             <f:facet name="content">
                                                                 <ice:panelGroup style="display: inline" >
                                                                     <ice:commandLink actionListener="#{JInventInstance.clasificacionSelected}">
                                                                         <f:param name="clId" value="#{nodo.userObject.clasificacion.idclasificacion}" />
-                                                                        <ice:outputText value="#{nodo.userObject.text}" styleClass="selectedNode#{nodo.userObject eq JInventInstance.clasificaciontm.currentUserObject} clasificacionEditable-#{nodo.userObject.clasificacion.idclasificacion > 16}" />
+                                                                        <ice:outputText value="#{nodo.userObject.text}" styleClass="selectedNode#{nodo.userObject eq JInventInstance.clasificaciontm.currentUserObject} clasificacionEditable-#{nodo.userObject.clasificacion.idclasificacion > 16}" rendered="#{nodo.userObject.clasificacion.idclasificacion != -1}" />
+                                                                        <ice:outputText value="#{nodo.userObject.text}" style="color: #2D9F1D;" rendered="#{nodo.userObject.clasificacion.idclasificacion == -1}" styleClass="selectedNode#{nodo.userObject eq JInventInstance.clasificaciontm.currentUserObject}" />
                                                                     </ice:commandLink>
                                                                 </ice:panelGroup>
                                                             </f:facet>
@@ -127,6 +129,7 @@
                                                 </f:facet>
                                                 <f:facet name="second">
                                                     <ice:panelGroup>
+                                                    <ice:panelGroup rendered="#{JInventInstance.searchMode == false}" >
                                                  
                                                         <h3 class="tituloSeccion">
                                                             <ice:outputFormat value="Existencias de Equipos (Total: {0})">
@@ -136,7 +139,7 @@
                                                         </h3>
                                                         <ice:dataTable id="tblListaExistencias" rows="5" value="#{JInventInstance.currentClasificacion.existenciaCollection}" var="existencia" style="margin-bottom: 0px;" >
                                                         <ice:column>
-                                                            <ice:graphicImage alt="#{existencia.idestado.nombre}" url="img/#{existencia.imagenEstado}"  />
+                                                            <ice:graphicImage alt="#{existencia.idestado.nombre}" url="img/#{existencia.imagenEstado}" />
                                                         </ice:column>
                                                         <ice:column>
                                                             <f:facet name="header"><ice:outputText value="Código" /></f:facet>
@@ -322,7 +325,7 @@
                                                                         <ice:panelGroup id="grpBitacoraEstados">
                                                                             <ice:dataTable id="tblBitacoraEstados" value="#{JInventInstance.listaEstadosExistencia}" var="estado" rows="5">
                                                                                 <ice:column>
-                                                                                    <ice:graphicImage alt="#{estado.nombre}" url="img/#{estado.idequipoexistente.imagenEstado}"  />
+                                                                                    <ice:graphicImage alt="#{estado.descripcion}" url="img/#{estado.idequipoexistente.imagenEstado}"  />
                                                                                 </ice:column>
                                                                                 <ice:column>
                                                                                     <f:facet name="header"><ice:outputText value="Fecha" /></f:facet>
@@ -790,6 +793,26 @@
                                                         </f:facet>
                                                         </ice:panelPopup>
                                                     </ice:panelGroup>
+                                                    <ice:panelGroup rendered="#{JInventInstance.searchMode == true}">
+                                                        <h3 class="tituloSeccion">Búsquedas</h3>
+                                                        <ice:panelGroup id="frmTerminosBusqueda" styleClass="frmElementList">
+                                                            <p>
+                                                                <ice:outputText id="txtIndicacionesBusqueda" value="Escriba los términos de búsqueda" />
+                                                            </p>
+                                                            <p>
+                                                                <ice:panelGroup styleClass="actionSection">
+                                                                    <ice:selectInputText id="txtTerminosBusqueda" style="float: left;" valueChangeListener="#{JInventInstance.actualizarAutocompletado}" rows="10" width="230" >
+                                                                        <f:selectItems value="#{JInventInstance.listaResultadosBusqueda}" />
+                                                                </ice:selectInputText>
+                                                                <ice:commandButton id="cmdBuscar" value="Buscar" />
+                                                                </ice:panelGroup>
+                                                            </p>
+                                                        </ice:panelGroup>
+                                                        <ice:panelGroup id="frmResultadosBusqueda">
+
+                                                        </ice:panelGroup>
+                                                    </ice:panelGroup>
+                                                    </ice:panelGroup>
                                                 </f:facet>
                                             </ice:panelDivider>
                                         </ice:panelGroup>
@@ -1049,5 +1072,5 @@
             </body>
         </html>
     </f:view>
-
+    
 </jsp:root>
