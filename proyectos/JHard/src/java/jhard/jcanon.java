@@ -21,7 +21,7 @@ import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJCanon;
 import edu.ues.jhard.beans.BeanBaseJHardmin;
 import edu.ues.jhard.beans.BeanBaseJInvent;
-import edu.ues.jhard.beans.BeanBaseManLab;
+import edu.ues.jhard.beans.BeanBaseJManLab;
 import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jhardmin.LoginManager;
 import edu.ues.jhard.jpa.Docente;
@@ -430,7 +430,7 @@ public class jcanon extends AbstractPageBean {
 
             switch(U.getIdrol().getIdrol()){
             case 3:
-                Ing = new BeanBaseManLab().getDocenteByUsuario(U.getIdusuario());
+                Ing = new BeanBaseJManLab().getDocenteByUsuario(U.getIdusuario());
                 this.comboDocente.setDisabled(true);
                 break;
             default:
@@ -617,7 +617,7 @@ private List in = new ArrayList();
 
     public void LlenarComboDocentes(){
 
-        Docente [] docentes = new edu.ues.jhard.beans.BeanBaseManLab().getDocentes();
+        Docente [] docentes = new edu.ues.jhard.beans.BeanBaseJManLab().getDocentes();
 
         Ing = docentes[0];
 

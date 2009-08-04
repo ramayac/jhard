@@ -11,7 +11,7 @@ import com.icesoft.faces.component.ext.HtmlSelectOneListbox;
 import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
-import edu.ues.jhard.beans.BeanBaseManLab;
+import edu.ues.jhard.beans.BeanBaseJManLab;
 import edu.ues.jhard.jpa.Curso;
 import edu.ues.jhard.jpa.Horario;
 import edu.ues.jhard.jpa.Ubicacion;
@@ -287,7 +287,7 @@ public class jmlHorario extends AbstractPageBean {
 
     public void comboHoraInicio_processValueChange(ValueChangeEvent vce) {
         this.horaSeleccionada=this.comboHoraInicio.getValue().toString();
-        if(new BeanBaseManLab().getAllHorariosUnDia(this.horaSeleccionada, this.diaSeleccionado)==1){
+        if(new BeanBaseJManLab().getAllHorariosUnDia(this.horaSeleccionada, this.diaSeleccionado)==1){
             this.noInscripcion=true;
             this.btnInscribirCurso.setDisabled(true);
         }else{
@@ -312,7 +312,7 @@ public class jmlHorario extends AbstractPageBean {
     }
 
     private void llenarCursos(){
-        List<Curso> cursos =new BeanBaseManLab().getAllCursos();
+        List<Curso> cursos =new BeanBaseJManLab().getAllCursos();
         
         System.out.println("puta q basurecta "+ cursos.size());
 
@@ -326,7 +326,7 @@ public class jmlHorario extends AbstractPageBean {
 
     public String btnInscribirCurso_action() {
         Horario r = new Horario();
-        BeanBaseManLab instance = new BeanBaseManLab();
+        BeanBaseJManLab instance = new BeanBaseJManLab();
         Ubicacion u =  instance.getEntityManager().find(Ubicacion.class, 1);
         String tmp = this.comboCurso.getValue().toString();
         Integer id = Integer.parseInt(tmp);

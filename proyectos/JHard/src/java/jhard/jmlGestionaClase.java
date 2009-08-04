@@ -6,13 +6,14 @@
  */
 package jhard;
 
-import edu.ues.jhard.beans.BeanBaseManLab;
+import edu.ues.jhard.beans.BeanBaseJManLab;
 import edu.ues.jhard.jpa.Clase;
 import edu.ues.jhard.jpa.Curso;
 import edu.ues.jhard.jpa.Docente;
 import edu.ues.jhard.jpa.Horario;
 import edu.ues.jhard.jpa.Instructor;
 import edu.ues.jhard.util.Utilidades;
+import edu.ues.jhard.util.popUp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,13 +23,16 @@ import javax.faces.context.FacesContext;
 
 public class jmlGestionaClase extends BeanBaseJHard {
 
-    private BeanBaseManLab jmanLabInstance = new BeanBaseManLab();
+    private popUp popup = new popUp("jManLab", "", false);
+
+    private BeanBaseJManLab jmanLabInstance = new BeanBaseJManLab();
     private List<Horario> listaHorario = new ArrayList<Horario>();
     private List<Curso> listaCursos = new ArrayList<Curso>();
 
     private Boolean paso1 = new Boolean(true);
     private Boolean paso2 = new Boolean(false);
     private Boolean paso3 = new Boolean(false);
+    private Boolean yaHayClase = new Boolean(false);
 
     private Boolean iniciarClase = new Boolean(false);
     private Boolean terminarClase = new Boolean(false);
@@ -36,6 +40,28 @@ public class jmlGestionaClase extends BeanBaseJHard {
     private Horario horarioSeleccionado = new Horario();
     private Clase nuevaClase = new Clase();
     private Curso cursoSeleccionado = new Curso();
+
+
+    public String btnGoBegin_action() {
+        this.paso(1);
+        return EMPTY_STRING;
+    }
+
+    public popUp getPopup() {
+        return popup;
+    }
+
+    public void setPopup(popUp popup) {
+        this.popup = popup;
+    }
+
+    public Boolean getYaHayClase() {
+        return yaHayClase;
+    }
+
+    public void setYaHayClase(Boolean yaHayClase) {
+        this.yaHayClase = yaHayClase;
+    }
 
     public Boolean getPaso1() {
         return paso1;
@@ -74,15 +100,15 @@ public class jmlGestionaClase extends BeanBaseJHard {
     }
 
     public Boolean getHayHorariosValidos(){
-        if (this.getListaHorariosValidos().isEmpty()) return false;
-        return true;
+        if(this.getListaHorariosValidos().size()>0) return true;
+        return false;
     }
 
     public void setHorarioSeleccionado(Horario horarioSeleccionado) {
         this.horarioSeleccionado = horarioSeleccionado;
     }
 
-    public BeanBaseManLab getJmanLabInstance() {
+    public BeanBaseJManLab getJmanLabInstance() {
         return jmanLabInstance;
     }
 
@@ -142,10 +168,20 @@ public class jmlGestionaClase extends BeanBaseJHard {
         Integer id = Integer.parseInt(idS);
         this.horarioSeleccionado = this.jmanLabInstance.getHorario(id.intValue());
 
-        this.nuevaClase = new Clase(NONE, new Date(), "", false);
-        this.nuevaClase.setIdhorario(horarioSeleccionado);
-        
-        this.paso(3);
+        //Buscar si ya hay clases existentes asociadas con el horario seleccionado para ahora.
+        Integer existenciaClase = this.jmanLabInstance.getClaseDeUnaMismaFecha(new Date(), horarioSeleccionado);
+        if(existenciaClase==0){
+            this.nuevaClase = new Clase(NONE, new Date(), "", false);
+            this.nuevaClase.setIdhorario(horarioSeleccionado);
+            this.paso(3);
+        } else {
+            this.nuevaClase = null;
+            this.setPaso2(false);
+            this.setPaso3(false);
+            this.setYaHayClase(true);
+            System.out.println("Clases existentes: " + existenciaClase);
+        }
+
         return EMPTY_STRING;
     }
 
@@ -168,12 +204,11 @@ public class jmlGestionaClase extends BeanBaseJHard {
 
         if(this.jmanLabInstance.createClase(nuevaClase)){
             //exito al crear la clase
-            this.paso(-1);
-        } else {
-            //ups!
+            this.popup.setMensaje("Se ha creado la clase/practica exitosamente. Ahora los alumnos pueden 'marcar asistencia'.");
+        } else { //ups!
+            this.popup.setMensaje("No se pudo crear la clase/practica.");
         }
-
-        
+        this.popup.setVisible(true);
         return EMPTY_STRING;
     }
 
@@ -208,22 +243,26 @@ public class jmlGestionaClase extends BeanBaseJHard {
     private void paso(int i) {
         switch (i) {
             case 1:
+                popup.setVisible(false);
                 this.listaHorario = new ArrayList<Horario>();
                 this.nuevaClase = new Clase();
                 this.setPaso1(true);
                 this.setPaso2(false);
                 this.setPaso3(false);
+                this.setYaHayClase(false);
                 break;
             case 2:
                 this.nuevaClase = new Clase();
                 this.setPaso1(false);
                 this.setPaso2(true);
                 this.setPaso3(false);
+                this.setYaHayClase(false);
                 break;
             case 3:
                 this.setPaso1(false);
                 this.setPaso2(false);
                 this.setPaso3(true);
+                this.setYaHayClase(false);
                 break;
             default:
                 llenarListaCursos();
@@ -232,6 +271,7 @@ public class jmlGestionaClase extends BeanBaseJHard {
                 this.setPaso1(true);
                 this.setPaso2(false);
                 this.setPaso3(false);
+                this.setYaHayClase(false);
                 break;
         }
     }

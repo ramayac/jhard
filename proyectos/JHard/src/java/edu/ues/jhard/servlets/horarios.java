@@ -5,7 +5,7 @@
 
 package edu.ues.jhard.servlets;
 
-import edu.ues.jhard.beans.BeanBaseManLab;
+import edu.ues.jhard.beans.BeanBaseJManLab;
 import edu.ues.jhard.jpa.Curso;
 import edu.ues.jhard.jpa.Horario;
 import java.io.IOException;
@@ -39,7 +39,7 @@ public class horarios extends HttpServlet {
         PrintWriter out = response.getWriter();
 
 
-        BeanBaseManLab instance = new BeanBaseManLab();
+        BeanBaseJManLab instance = new BeanBaseJManLab();
         List<Horario> horarios = instance.getAllHorarios();
         Calendar c = Calendar.getInstance();
 

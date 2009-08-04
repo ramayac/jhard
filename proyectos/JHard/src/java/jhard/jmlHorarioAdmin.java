@@ -10,7 +10,7 @@ import com.icesoft.faces.component.ext.HtmlSelectOneListbox;
 import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
-import edu.ues.jhard.beans.BeanBaseManLab;
+import edu.ues.jhard.beans.BeanBaseJManLab;
 import edu.ues.jhard.jpa.Horario;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -122,7 +122,7 @@ public class jmlHorarioAdmin extends AbstractPageBean {
      */
     public jmlHorarioAdmin() {
 
-        this.setListaHorarios(new BeanBaseManLab().getAllHorarios());
+        this.setListaHorarios(new BeanBaseJManLab().getAllHorarios());
         this.diaSemana.clear();
         this.horaInicio.clear();
         this.horaFin.clear();
@@ -221,7 +221,7 @@ public class jmlHorarioAdmin extends AbstractPageBean {
         System.out.println("id del horario " + idHor);
         Integer id = Integer.parseInt(idHor);
 
-        this.horarioMod = new BeanBaseManLab().getEntityManager().find(Horario.class, id);
+        this.horarioMod = new BeanBaseJManLab().getEntityManager().find(Horario.class, id);
 
         this.horarioAmodificar="Modificar el horario de: "+this.horarioMod.getIdcurso().getIdmateria().getNombre() +" - "+ this.horarioMod.getIdcurso().getNombre();
 
@@ -233,7 +233,7 @@ public class jmlHorarioAdmin extends AbstractPageBean {
     public String EliminarHorario(){
 
         String idHor = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idHorario");
-        BeanBaseManLab instance = new BeanBaseManLab();
+        BeanBaseJManLab instance = new BeanBaseJManLab();
         System.out.println("id del horario " + idHor);
         Integer id = Integer.parseInt(idHor);
         this.horarioMod = instance.getEntityManager().find(Horario.class, id);
@@ -352,7 +352,7 @@ public class jmlHorarioAdmin extends AbstractPageBean {
 
     public void comboHoraInicio_processValueChange(ValueChangeEvent vce) {
         this.horaSeleccionada=this.comboHoraInicio.getValue().toString();
-        if(new BeanBaseManLab().getAllHorariosUnDia(this.horaSeleccionada, this.diaSeleccionado)==1){
+        if(new BeanBaseJManLab().getAllHorariosUnDia(this.horaSeleccionada, this.diaSeleccionado)==1){
             this.setNoInscripcion(true);
             boton=true;
         }else{
@@ -428,11 +428,11 @@ public class jmlHorarioAdmin extends AbstractPageBean {
         this.horarioMod.setHorainicio(ti);
         this.horarioMod.setHorafin(tf);
 
-        new BeanBaseManLab().updateHorario(horarioMod);
+        new BeanBaseJManLab().updateHorario(horarioMod);
         this.renderPop=false;
         this.mensajitos="Horario Modificado con éxito";
         this.renderMensajes=true;
-        this.setListaHorarios(new BeanBaseManLab().getAllHorarios());
+        this.setListaHorarios(new BeanBaseJManLab().getAllHorarios());
         return null;
     }
 

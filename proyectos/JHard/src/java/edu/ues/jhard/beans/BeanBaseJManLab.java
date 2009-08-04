@@ -14,6 +14,7 @@ import edu.ues.jhard.jpa.Cicloanyo;
 import edu.ues.jhard.jpa.Inscripcion;
 import edu.ues.jhard.jpa.Horario;
 import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -22,7 +23,7 @@ import javax.persistence.Query;
  * @author Rodrigo Ramayac
  * @author Hugol
  */
-public class BeanBaseManLab extends BeanBase{
+public class BeanBaseJManLab extends BeanBase{
 
     /*De lo mas facil a lo mas dificil: Facultad -> Carrera -> Materia y EstadoCurso
      metodos: create, delete, get, getAll, recargar, update, NO search.
@@ -1046,6 +1047,22 @@ public class BeanBaseManLab extends BeanBase{
         Clase c = em.find(Clase.class, idClase);
         return c;
     }
+
+    /**
+     * Metodo para saber si existen Clases ya creadas asociadas con un horario para
+     * X fecha.
+     * @param fecha
+     * @param horario
+     * @return
+     */
+    public int getClaseDeUnaMismaFecha(Date fecha, Horario horario){
+         EntityManager em = this.getEntityManager();
+         Query q = em.createNamedQuery("Clase.findbyMismaFecha");
+         q.setParameter("fecha", fecha);
+         q.setParameter("idhorario", horario);
+         Long count = (Long)q.getSingleResult();
+         return count.intValue();
+     }
 
     /**
      * Metodo para obtener una Clase por su ID
