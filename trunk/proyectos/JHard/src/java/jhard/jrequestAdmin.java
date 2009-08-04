@@ -631,6 +631,9 @@ private List eeq = new ArrayList();
     private Equiposimple eqSimpleElegido=null;
     private Existencia existenciaElegida=null;
     private boolean render;
+    private List<Equiposimple> listaTodosEquipos;
+    private List<Existencia> listaTodasExistencias;
+
 
     /**
      * <p>Construct a new Page bean instance.</p>
@@ -646,6 +649,10 @@ private List eeq = new ArrayList();
 //
 //        fakeComboEstado1.clear();
 //        fakeComboTecnico1.clear();
+        BeanBaseJRequest instance = new BeanBaseJRequest();
+        this.listaTodosEquipos= instance.getListaEquipoSimple();
+        this.listaTodasExistencias= instance.getListaExistencia();
+
         fakeComboPrioridad.clear();
         fakeComboPrioridad.setItems(new String[]{"Alta", "Media", "Baja"});
 
@@ -1038,9 +1045,34 @@ private List eeq = new ArrayList();
 //    }
 
     public void txtEqSimples_processValueChange(ValueChangeEvent vce) {
+        String valorBusqueda = vce.getNewValue().toString().toUpperCase();
+        if(valorBusqueda.equalsIgnoreCase("")){
+            this.eqs.clear();
+            return;
+        }
+        List<SelectItem> listaItemsBusqueda = new ArrayList<SelectItem>();
 
-        
-    }
+        if(this.checkEq.isSelected()){
+            for(Equiposimple eq: this.getListaTodosEquipos()){
+                if(eq.getDescripcion().toUpperCase().contains(valorBusqueda) ||
+                        eq.getPropietario().toUpperCase().contains(valorBusqueda)){
+                    this.eqs.add(eq);
+                    listaItemsBusqueda.add(new SelectItem(eq.getIdEquipoSimple(), eq.getPropietario() + " - " + eq.getDescripcion()));
+                }
+            }
+        }else{
+            for(Existencia eq: this.getListaTodasExistencias()){
+                if(eq.getCodigo().toUpperCase().contains(valorBusqueda) ||
+                        eq.getIdhardware().getIdmarca().getNombre().toUpperCase().contains(valorBusqueda) ||
+                        eq.getIdhardware().getModelo().toUpperCase().contains(valorBusqueda) ||
+                        eq.getIdhardware().getNombre().toUpperCase().contains(valorBusqueda)){
+                    this.eqs.add(eq);
+                    listaItemsBusqueda.add(new SelectItem(eq.getIdexistencia(), eq.getIdhardware().getNombre() + " - " + eq.getCodigo()));
+                }
+            }
+        }
+        this.eqs = listaItemsBusqueda;
+}
 
 private List bit= new ArrayList();
 
@@ -1242,6 +1274,34 @@ private List bit= new ArrayList();
      */
     public List getBit() {
         return bit;
+    }
+
+    /**
+     * @return the listaTodosEquipos
+     */
+    public List<Equiposimple> getListaTodosEquipos() {
+        return listaTodosEquipos;
+    }
+
+    /**
+     * @param listaTodosEquipos the listaTodosEquipos to set
+     */
+    public void setListaTodosEquipos(List<Equiposimple> listaTodosEquipos) {
+        this.listaTodosEquipos = listaTodosEquipos;
+    }
+
+    /**
+     * @return the listaTodasExistencias
+     */
+    public List<Existencia> getListaTodasExistencias() {
+        return listaTodasExistencias;
+    }
+
+    /**
+     * @param listaTodasExistencias the listaTodasExistencias to set
+     */
+    public void setListaTodasExistencias(List<Existencia> listaTodasExistencias) {
+        this.listaTodasExistencias = listaTodasExistencias;
     }
 
 //    public void comboEstado_processValueChange(ValueChangeEvent vce) {

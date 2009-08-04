@@ -179,6 +179,7 @@ public class jrequestUserSolicitud extends AbstractPageBean {
     // </editor-fold>
 
 
+private List<Equiposimple> listaTodosEquipos;
 
 public void LimpiarCombos(){
     
@@ -203,16 +204,16 @@ public void LlenarCombos(){
 //        this.comboEqSimple.getChildren().add(itemsEq);
 
 
-        //SELECTINPUT DE ESTADOS DE EQUIPOS
-        Estadoequipo[] estados = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
-        estadoElegido= estados[0];
-        for(int i=0;i<estados.length;i++){
-            String label = estados[i].getNombre();
-            getEeq().add(new SelectItem(estados[i].getIdestado(),label));
-        }
-        UISelectItems itemsEstad = new UISelectItems();
-        itemsEstad.setValue(getEeq());
-        this.comboEstados.getChildren().add(itemsEstad);
+//        //SELECTINPUT DE ESTADOS DE EQUIPOS
+//        Estadoequipo[] estados = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
+//        estadoElegido= estados[0];
+//        for(int i=0;i<estados.length;i++){
+//            String label = estados[i].getNombre();
+//            getEeq().add(new SelectItem(estados[i].getIdestado(),label));
+//        }
+//        UISelectItems itemsEstad = new UISelectItems();
+//        itemsEstad.setValue(getEeq());
+//        this.comboEstados.getChildren().add(itemsEstad);
     }
 
 
@@ -299,7 +300,9 @@ public void LlenarCombos(){
     public jrequestUserSolicitud() {
 //        comboEqSimpleDefaultItems.clear();
 //        comboEstadosDefaultItems.clear();
-        
+
+        this.listaTodosEquipos= new BeanBaseJRequest().getListaEquipoSimple();
+
         lu= getJHardminInstance().getCurrentUser();
         
         U = LoginManager.getInstance().getUsuario(lu);
@@ -469,6 +472,21 @@ public void LlenarCombos(){
     }
 
     public void comboEqSimple_processValueChange(ValueChangeEvent vce) {
+        String valorBusqueda = vce.getNewValue().toString().toUpperCase();
+        if(valorBusqueda.equalsIgnoreCase("")){
+            this.eqs.clear();
+            return;
+        }
+        List<SelectItem> listaItemsBusqueda = new ArrayList<SelectItem>();
+        for(Equiposimple eq: this.getListaTodosEquipos()){
+                if(eq.getDescripcion().toUpperCase().contains(valorBusqueda) ||
+                        eq.getPropietario().toUpperCase().contains(valorBusqueda)){
+                    this.eqs.add(eq);
+                    listaItemsBusqueda.add(new SelectItem(eq.getIdEquipoSimple(), eq.getPropietario() + " - " + eq.getDescripcion()));
+            }
+        }
+
+        this.eqs = listaItemsBusqueda;
 
         this.lblEstadoSolicitud.setValue(this.comboEqSimple.getValue().toString());
     }
@@ -550,6 +568,20 @@ public void LlenarCombos(){
      */
     public List getEeq() {
         return eeq;
+    }
+
+    /**
+     * @return the listaTodosEquipos
+     */
+    public List<Equiposimple> getListaTodosEquipos() {
+        return listaTodosEquipos;
+    }
+
+    /**
+     * @param listaTodosEquipos the listaTodosEquipos to set
+     */
+    public void setListaTodosEquipos(List<Equiposimple> listaTodosEquipos) {
+        this.listaTodosEquipos = listaTodosEquipos;
     }
 
 }
