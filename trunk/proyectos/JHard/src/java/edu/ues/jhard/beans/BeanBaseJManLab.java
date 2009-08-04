@@ -1045,6 +1045,7 @@ public class BeanBaseJManLab extends BeanBase{
     public Clase getClase(int idClase) {
         EntityManager em = this.getEntityManager();
         Clase c = em.find(Clase.class, idClase);
+        em.refresh(c);
         return c;
     }
 
@@ -1064,6 +1065,20 @@ public class BeanBaseJManLab extends BeanBase{
          return count.intValue();
      }
 
+    /**
+     * Metodo para obtener las clases de un dia, que aun no esten marcadas como clase terminada.
+     * @param fecha
+     * @param finalizada
+     * @return
+     */
+     public List<Clase> getClaseSinTerminarDeUnaMismaFecha(Date fecha, Boolean finalizada){
+         EntityManager em = this.getEntityManager();
+         Query q = em.createNamedQuery("Clase.findByFechaMarcaFinal");
+         q.setParameter("fecha", fecha);
+         q.setParameter("finalizada", finalizada);
+         return (List<Clase>)q.getResultList();
+     }
+    
     /**
      * Metodo para obtener una Clase por su ID
      * @param idClase id de la clase que se desea

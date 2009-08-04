@@ -24,7 +24,19 @@
                 <div id="page">
                     <!-- start content -->
                     <div id="content">
-                        <ice:form id="formIniciarClase">
+                        <ice:form id="formGestionarClases">
+                            <ice:panelGroup id="panelAccion" rendered="#{jmlGestionaClase.mostrarAcciones}">
+                                <div class="post">
+                                    <h2>Gestiona Clase/Practica</h2>
+                                    Seleccione la acción que desea realizar...<br/><br/>
+                                    <div align="center">
+                                        <ice:commandButton action="#{jmlGestionaClase.btnGoPaso1_action}" id="btnGoPaso1" styleClass="btnAccion2" value="Iniciar una Clase/Practica"/>
+                                        <br/>
+                                        <ice:commandButton action="#{jmlGestionaClase.btnGoPaso4_action}" id="btnGoPaso4" styleClass="btnAccion2" value="Terminar una Clase/Practica"/>
+                                    </div>
+                                </div>
+                            </ice:panelGroup>
+                            <!-- Seccion de Inicio de la Clase -->
                             <ice:panelGroup id="panel1" rendered="#{jmlGestionaClase.paso1}">
                                 <div class="post">
                                     <h2>1. Seleccion de un Curso</h2>
@@ -99,6 +111,32 @@
                                 </div>
                                 </div>
                             </ice:panelGroup>
+                            <!-- Fin de Seccion de Inicio de la Clase -->
+
+                            <!-- Seccion de Terminar la Clase -->
+                            <ice:panelGroup id="panel4" rendered="#{jmlGestionaClase.paso4}">
+                                <div class="post">
+                                    <h2>Terminar una Clase/Practica</h2>
+                                    Seleccione de la siguiente lista, la clase/practica que desea dar por "Terminada".
+                                    <ice:dataTable id="tablaClases" value="#{jmlGestionaClase.listaClases}" var="indiceClase" width="100%">
+                                        <ice:column id="columnaClase">
+                                            <f:facet name="header">Lista de Clases/Practicas</f:facet>
+                                            <ice:outputLabel style="font-weight:bold; " value="#{indiceClase.tema}"/>
+                                        </ice:column>
+                                        <ice:column id="columnaAccion">
+                                            <f:facet name="header">Terminar Clase/Practica</f:facet>
+                                            <ice:commandLink action="#{jmlGestionaClase.terminarClase}">
+                                                <ice:outputLabel value="Terminar"/>
+                                                <f:param name="idClaseTerminar" value="#{indiceClase.idclase}"/>
+                                            </ice:commandLink>
+                                        </ice:column>
+                                    </ice:dataTable>
+                                    <br/>
+                                    <div align="center"><ice:commandButton action="#{jmlGestionaClase.cancelar}" styleClass="btnAccion2" value="Regresar"/></div>
+                                </div>
+                            </ice:panelGroup>
+                            <!-- Fin Seccion de Terminar la Clase -->
+
                             <!-- panel de mensajes de avisos...-->
                             <ice:panelPopup autoCentre="true" id="ppmsj" modal="true" rendered="#{jmlGestionaClase.popup.visible}">
                                 <f:facet name="header">

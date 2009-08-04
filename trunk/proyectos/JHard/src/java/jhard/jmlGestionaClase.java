@@ -28,22 +28,41 @@ public class jmlGestionaClase extends BeanBaseJHard {
     private BeanBaseJManLab jmanLabInstance = new BeanBaseJManLab();
     private List<Horario> listaHorario = new ArrayList<Horario>();
     private List<Curso> listaCursos = new ArrayList<Curso>();
+    private List<Clase> listaClases = new ArrayList<Clase>();
 
-    private Boolean paso1 = new Boolean(true);
+    private Boolean mostrarAcciones = new Boolean(true);
+    private Boolean paso1 = new Boolean(false);
     private Boolean paso2 = new Boolean(false);
     private Boolean paso3 = new Boolean(false);
+    private Boolean paso4 = new Boolean(false);
     private Boolean yaHayClase = new Boolean(false);
-
-    private Boolean iniciarClase = new Boolean(false);
-    private Boolean terminarClase = new Boolean(false);
 
     private Horario horarioSeleccionado = new Horario();
     private Clase nuevaClase = new Clase();
     private Curso cursoSeleccionado = new Curso();
 
+    public Boolean getMostrarAcciones() {
+        return mostrarAcciones;
+    }
+
+    public void setMostrarAcciones(Boolean mostrarAcciones) {
+        this.mostrarAcciones = mostrarAcciones;
+    }
 
     public String btnGoBegin_action() {
+        this.paso(0);
+        return EMPTY_STRING;
+    }
+
+    public String btnGoPaso1_action() {
         this.paso(1);
+        return EMPTY_STRING;
+    }
+
+    public String btnGoPaso4_action() {
+        //Cargar lista de clases no marcadas como "terminadas" o que no se pasan del tiempo
+        this.listaClases = this.jmanLabInstance.getClaseSinTerminarDeUnaMismaFecha(new Date(), false);
+        this.paso(4);
         return EMPTY_STRING;
     }
 
@@ -87,6 +106,14 @@ public class jmlGestionaClase extends BeanBaseJHard {
         this.paso3 = paso3;
     }
 
+    public Boolean getPaso4() {
+        return paso4;
+    }
+
+    public void setPaso4(Boolean paso4) {
+        this.paso4 = paso4;
+    }
+
     public Curso getCursoSeleccionado() {
         return cursoSeleccionado;
     }
@@ -128,6 +155,7 @@ public class jmlGestionaClase extends BeanBaseJHard {
         List<Horario> listaHorariosValidos = new ArrayList<Horario>();
         for (Horario horario : this.listaHorario) {
             if (horario.getDiasemana() == Utilidades.DiaHoyEntero()){
+                //System.out.println("getDiasemana: " + horario.getDiasemana() + "== DiaHoyEntero: " + Utilidades.DiaHoyEntero());
                 if (Utilidades.EsAntesDeHora(horario.getHorafin())) {
                     listaHorariosValidos.add(horario);
                 }
@@ -138,6 +166,14 @@ public class jmlGestionaClase extends BeanBaseJHard {
 
     public void setListaHorario(List<Horario> listaHorario) {
         this.listaHorario = listaHorario;
+    }
+
+    public List<Clase> getListaClases() {
+        return listaClases;
+    }
+
+    public void setListaClases(List<Clase> listaClases) {
+        this.listaClases = listaClases;
     }
 
     public Clase getNuevaClase() {
@@ -160,6 +196,21 @@ public class jmlGestionaClase extends BeanBaseJHard {
         this.listaHorario = this.jmanLabInstance.getHorariosCurso(cursoSeleccionado);
 
         this.paso(2);
+        return EMPTY_STRING;
+    }
+
+    public String terminarClase(){
+        try {
+            String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idClaseTerminar");
+            Integer id = Integer.parseInt(idS);
+            Clase claseSel = this.jmanLabInstance.getClase(id.intValue());
+            claseSel.setFinalizada(true);
+            this.jmanLabInstance.updateClase(claseSel);
+            this.popup.setMensaje("La clase/practica se marco como 'Terminada'.");
+        } catch (Exception ex) {
+            this.popup.setMensaje("Ocurrio un error al intentar terminar la clase.");
+        }
+        this.popup.setVisible(true);
         return EMPTY_STRING;
     }
 
@@ -204,7 +255,7 @@ public class jmlGestionaClase extends BeanBaseJHard {
 
         if(this.jmanLabInstance.createClase(nuevaClase)){
             //exito al crear la clase
-            this.popup.setMensaje("Se ha creado la clase/practica exitosamente. Ahora los alumnos pueden 'marcar asistencia'.");
+            this.popup.setMensaje("Se ha creado la clase/practica exitosamente.<br/>Ahora los alumnos pueden 'marcar asistencia'.");
         } else { //ups!
             this.popup.setMensaje("No se pudo crear la clase/practica.");
         }
@@ -213,7 +264,7 @@ public class jmlGestionaClase extends BeanBaseJHard {
     }
 
     public String cancelar(){
-        this.paso(1);
+        this.paso(0);
         return EMPTY_STRING;
     }
 
@@ -242,33 +293,59 @@ public class jmlGestionaClase extends BeanBaseJHard {
 
     private void paso(int i) {
         switch (i) {
+            case 0:
+                popup.setVisible(false);
+                this.listaHorario = new ArrayList<Horario>();
+                this.nuevaClase = new Clase();
+                this.setMostrarAcciones(true);
+                this.setPaso1(false);
+                this.setPaso2(false);
+                this.setPaso3(false);
+                this.setPaso4(false);
+                this.setYaHayClase(false);
+                break;
             case 1:
                 popup.setVisible(false);
                 this.listaHorario = new ArrayList<Horario>();
                 this.nuevaClase = new Clase();
+                this.setMostrarAcciones(false);
                 this.setPaso1(true);
                 this.setPaso2(false);
                 this.setPaso3(false);
+                this.setPaso4(false);
                 this.setYaHayClase(false);
                 break;
             case 2:
                 this.nuevaClase = new Clase();
+                this.setMostrarAcciones(false);
                 this.setPaso1(false);
                 this.setPaso2(true);
                 this.setPaso3(false);
+                this.setPaso4(false);
                 this.setYaHayClase(false);
                 break;
             case 3:
+                this.setMostrarAcciones(false);
                 this.setPaso1(false);
                 this.setPaso2(false);
                 this.setPaso3(true);
+                this.setPaso4(false);
+                this.setYaHayClase(false);
+                break;
+           case 4:
+                this.setMostrarAcciones(false);
+                this.setPaso1(false);
+                this.setPaso2(false);
+                this.setPaso3(false);
+                this.setPaso4(true);
                 this.setYaHayClase(false);
                 break;
             default:
                 llenarListaCursos();
                 this.listaHorario = new ArrayList<Horario>();
                 this.nuevaClase = new Clase();
-                this.setPaso1(true);
+                this.setMostrarAcciones(true);
+                this.setPaso1(false);
                 this.setPaso2(false);
                 this.setPaso3(false);
                 this.setYaHayClase(false);
