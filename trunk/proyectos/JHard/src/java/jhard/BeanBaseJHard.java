@@ -5,6 +5,9 @@ import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jhardmin.LoginManager;
+import edu.ues.jhard.jpa.Docente;
+import edu.ues.jhard.jpa.Estudiante;
+import edu.ues.jhard.jpa.Instructor;
 import edu.ues.jhard.jpa.Usuario;
 import javax.faces.FacesException;
 
@@ -114,6 +117,47 @@ public class BeanBaseJHard extends AbstractPageBean {
     public Boolean esEditor(){
         if(getRolUsuarioConectado()==ROL_EDITORCONTENIDO) return true;
         return false;
+    }
+
+    public Usuario getUsuario(){
+        if (this.lu == null) {
+            return null;
+        }
+        if (this.U == null) {
+            return null;
+        }
+        this.lu = getJHardminInstance().getCurrentUser();
+        if (this.lu == null) {
+            this.U = null;
+            return null;
+        } else {
+            this.U = LoginManager.getInstance().getUsuario(this.lu);
+        }
+        return this.U;
+    }
+
+    public Docente getDocenteUsuario(){
+        try {
+            return this.getUsuario().getDocenteList().get(0);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public Estudiante getEstudianteUsuario(){
+        try {
+            return this.getUsuario().getEstudianteList().get(0);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public Instructor getInstructorUsuario(){
+        try {
+            return this.getUsuario().getInstructorList().get(0);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**

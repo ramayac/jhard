@@ -30,7 +30,23 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "curso")
-@NamedQueries({@NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c"), @NamedQuery(name = "Curso.findByIdcurso", query = "SELECT c FROM Curso c WHERE c.idcurso = :idcurso"), @NamedQuery(name = "Curso.findByNombre", query = "SELECT c FROM Curso c WHERE c.nombre = :nombre"), @NamedQuery(name = "Curso.findByCupomax", query = "SELECT c FROM Curso c WHERE c.cupomax = :cupomax"), @NamedQuery(name = "Curso.findByFechainicio", query = "SELECT c FROM Curso c WHERE c.fechainicio = :fechainicio"), @NamedQuery(name = "Curso.findByCiclo", query = "SELECT c FROM Curso c WHERE c.ciclo = :ciclo"), @NamedQuery(name = "Curso.findByAnio", query = "SELECT c FROM Curso c WHERE c.anio = :anio"), @NamedQuery(name = "Curso.findByHabilinscrip", query = "SELECT c FROM Curso c WHERE c.habilinscrip = :habilinscrip")})
+@NamedQueries({
+    @NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c"),
+    @NamedQuery(name = "Curso.findByIdcurso", query = "SELECT c FROM Curso c WHERE c.idcurso = :idcurso"),
+    @NamedQuery(name = "Curso.findByNombre", query = "SELECT c FROM Curso c WHERE c.nombre = :nombre"),
+    /*@NamedQuery(name = "Curso.findByCupomax", query = "SELECT c FROM Curso c WHERE c.cupomax = :cupomax"),*/
+    @NamedQuery(name = "Curso.findByDocente", query = "SELECT c FROM Curso c WHERE c.iddocente = :iddocente"),
+    @NamedQuery(name = "Curso.findByInstructor", query = "SELECT c FROM Curso c WHERE c.idinstructor = :idinstructor"),
+
+    @NamedQuery(name = "Curso.findByDocenteCiclo", query = "SELECT c FROM Curso c WHERE c.iddocente = :iddocente AND c.idcicloanio = :idcicloanyo"),
+    @NamedQuery(name = "Curso.findByInstructorCiclo", query = "SELECT c FROM Curso c WHERE c.idinstructor = :idinstructor AND c.idcicloanio = :idcicloanyo"),
+
+    @NamedQuery(name = "Curso.findByCiclo", query = "SELECT c FROM Curso c WHERE c.idcicloanio = :idcicloanyo"),
+
+    @NamedQuery(name = "Curso.findByFechainicio", query = "SELECT c FROM Curso c WHERE c.fechainicio = :fechainicio"),
+    /*@NamedQuery(name = "Curso.findByCiclo", query = "SELECT c FROM Curso c WHERE c.ciclo = :ciclo"),
+    @NamedQuery(name = "Curso.findByAnio", query = "SELECT c FROM Curso c WHERE c.anio = :anio"),*/
+    @NamedQuery(name = "Curso.findByHabilinscrip", query = "SELECT c FROM Curso c WHERE c.habilinscrip = :habilinscrip")})
 public class Curso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
