@@ -177,7 +177,7 @@
                                                                 </ice:commandLink>
                                                             </ice:column>
                                                         </ice:dataTable>
-                                                        <ice:dataPaginator id="pgrListaExistencias" for="tblListaExistencias" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.sizeListaExistencias > 5}">
+                                                        <ice:dataPaginator id="pgrListaExistencias" for="tblListaExistencias" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.sizeListaExistencias > 5}" binding="#{JInventInstance.pgr}">
                                                             <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
                                                             <f:facet name="previous"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-previous.gif" style="border:none;" title="Prev Page"/></f:facet>
                                                             <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
@@ -797,11 +797,11 @@
                                                         <h3 class="tituloSeccion">Búsquedas</h3>
                                                         <ice:panelGroup id="frmTerminosBusqueda" styleClass="frmElementList">
                                                             <p>
-                                                                <ice:outputText id="txtIndicacionesBusqueda" value="Escriba los términos de búsqueda" />
+                                                                <ice:outputText id="txtIndicacionesBusqueda" value="Escriba los términos de búsqueda:" />
                                                             </p>
                                                             <p>
                                                                 <ice:panelGroup styleClass="actionSection">
-                                                                    <ice:selectInputText id="txtTerminosBusqueda" style="float: left;" valueChangeListener="#{JInventInstance.actualizarAutocompletado}" rows="10" width="230" >
+                                                                    <ice:selectInputText id="txtTerminosBusqueda" style="float: left;" valueChangeListener="#{JInventInstance.actualizarAutocompletado}" value="#{JInventInstance.valorBusqueda}" actionListener="#{JInventInstance.seleccionarExistencia}" rows="10" width="230" >
                                                                         <f:selectItems value="#{JInventInstance.listaResultadosBusqueda}" />
                                                                 </ice:selectInputText>
                                                                 <ice:commandButton id="cmdBuscar" value="Buscar" />
