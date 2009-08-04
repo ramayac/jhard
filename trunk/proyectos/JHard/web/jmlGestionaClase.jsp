@@ -55,10 +55,10 @@
                             </ice:panelGroup>
                             <ice:panelGroup id="panel2" rendered="#{jmlGestionaClase.paso2}">
                                 <div class="post">
-                                    <h2>2. Confirma el horario</h2>
-                                    Confirme el horario asignado para esta clase o practica para el Curso: <ice:outputLabel
+                                    <ice:panelGroup rendered="#{jmlGestionaClase.hayHorariosValidos}">
+                                        <h2>2. Confirma el horario</h2>
+                                        Confirme el horario asignado para esta clase o practica para el Curso: <ice:outputLabel
                                         id="lblTituloCurso2" style="font-weight:bold; " value="#{jmlGestionaClase.cursoSeleccionado.nombre}"/>
-                                        <ice:panelGroup rendered="#{jmlGestionaClase.hayHorariosValidos}">
                                         <ice:dataTable id="tabla2" value="#{jmlGestionaClase.listaHorariosValidos}" var="indiceHorario" width="100%">
                                             <ice:column id="columnaHorarios">
                                                 <f:facet name="header">Lista de Horarios Programados para este día</f:facet>
@@ -116,6 +116,7 @@
                             <!-- Seccion de Terminar la Clase -->
                             <ice:panelGroup id="panel4" rendered="#{jmlGestionaClase.paso4}">
                                 <div class="post">
+                                    <ice:panelGroup rendered="#{!jmlGestionaClase.haylistaClaseVacia}">
                                     <h2>Terminar una Clase/Practica</h2>
                                     Seleccione de la siguiente lista, la clase/practica que desea dar por "Terminada".
                                     <ice:dataTable id="tablaClases" value="#{jmlGestionaClase.listaClases}" var="indiceClase" width="100%">
@@ -133,6 +134,15 @@
                                     </ice:dataTable>
                                     <br/>
                                     <div align="center"><ice:commandButton action="#{jmlGestionaClase.cancelar}" styleClass="btnAccion2" value="Regresar"/></div>
+                                    </ice:panelGroup>
+                                    <ice:panelGroup rendered="#{jmlGestionaClase.haylistaClaseVacia}">
+                                        <h2 class="title">Aviso:</h2>
+                                        <div align="center">
+                                        <ul><li>No hay clases/practicas que se puedan marcar como "terminadas" en este momento.</li></ul>
+                                        <br/>
+                                        <ice:commandButton action="#{jmlGestionaClase.cancelar}" styleClass="btnAccion2" value="Regresar"/>
+                                        </div>
+                                    </ice:panelGroup>
                                 </div>
                             </ice:panelGroup>
                             <!-- Fin Seccion de Terminar la Clase -->
