@@ -11,9 +11,12 @@ import edu.ues.jhard.jpa.Curso;
 import edu.ues.jhard.jpa.Clase;
 import edu.ues.jhard.jpa.Asistencia;
 import edu.ues.jhard.jpa.Cicloanyo;
+import edu.ues.jhard.jpa.Existencia;
 import edu.ues.jhard.jpa.Inscripcion;
 import edu.ues.jhard.jpa.Horario;
+import edu.ues.jhard.jpa.Ubicacion;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -889,8 +892,6 @@ public class BeanBaseJManLab extends BeanBase{
 
     /**
      * Metodo para obtener los cursos, asociado siempre del ciclo y año actual
-     * @param docente
-     * @param cicloanyo
      * @return
      */
     public List<Curso> getCursosCiclo() {
@@ -907,6 +908,39 @@ public class BeanBaseJManLab extends BeanBase{
             em.refresh(c.get(i));
 
         return c;
+    }
+
+    /**
+     * Metodo para obtener los cursos, asociado siempre del ciclo y año actual
+     * que ha inscrito el estudiante
+     * @return
+     */
+    public List<Curso> getCursosCicloEstudiante(Estudiante estudiante) {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Cicloanyo.findAll");
+        List<Cicloanyo> cicloanyo = q.getResultList();
+
+        q = em.createNamedQuery("Curso.findByCiclo");
+        q.setParameter("idcicloanyo", cicloanyo.get(cicloanyo.size()-1));
+
+        List<Curso> lstC = (List<Curso>)q.getResultList();
+        List<Curso> cursosDelEstudiante = new ArrayList<Curso>();
+
+        for (Curso c : lstC) {
+            List<Inscripcion> lstI = (List<Inscripcion>)c.getInscripcionCollection();
+            for (Inscripcion i : lstI) {
+                if(i.getIdestudiante().getIdestudiante() == estudiante.getIdestudiante()){
+                    cursosDelEstudiante.add(c);
+                    break;
+                }
+            }
+        }
+
+        for (Curso c : cursosDelEstudiante) {
+            em.refresh(c);
+        }
+
+        return cursosDelEstudiante;
     }
 
 
@@ -1409,6 +1443,25 @@ public class BeanBaseJManLab extends BeanBase{
         em.refresh(h);
         em.getTransaction().commit();
         return h;
+    }
+
+
+    public Existencia getExistencia(int idExistencia) {
+        EntityManager em = this.getEntityManager();
+        return em.find(Existencia.class, idExistencia);
+    }
+
+    public List<Existencia> getAllExistencias() {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Existencia.findAll");
+        return (List<Existencia>)q.getResultList();
+    }
+
+    public List<Existencia> getExistenciasUbicacion(Ubicacion ubicacion) {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Existencia.findByIdUbicacion");
+        q.setParameter("idubicacion", ubicacion);
+        return (List<Existencia>)q.getResultList();
     }
 
     @Deprecated

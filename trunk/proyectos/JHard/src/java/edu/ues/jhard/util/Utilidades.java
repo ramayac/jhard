@@ -35,7 +35,26 @@ public class Utilidades {
         }
 
         return false; //para todo lo demas
+    }
 
+    /**
+     * Es la hora 1 antes de la hora2 ?
+     * @param hora1
+     * @param hora2
+     * @return
+     */
+    public static Boolean EsAntesDeHora(Date hora1, Date hora2){
+        int h1 = hora1.getHours();
+        int m1 = hora1.getMinutes();
+        int h2 = hora2.getHours();
+        int m2 = hora2.getMinutes();
+        if(h1 < h2){ //3:00 pm vs 5:00 pm
+            return true;
+        } else if (h1 == h2){ //3:10 pm = 3:20 pm
+            if(m1 < m2) return true;
+        }
+
+        return false; //para todo lo demas
     }
 
     public static String DiaNombre(int dia) {

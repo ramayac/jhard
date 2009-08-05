@@ -7,6 +7,7 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:element name="text">
         <h2 class="title">Aviso:</h2>
+        <div align="center"><img src="img/lock.png"/></div>
         <ul>
             <li>Su usuario no tiene permiso para operar en esta página.</li>
             <li>No se ha logueado al sistema.</li>

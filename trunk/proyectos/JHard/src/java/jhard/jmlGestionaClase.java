@@ -214,6 +214,7 @@ public class jmlGestionaClase extends BeanBaseJHard {
             this.popup.setMensaje("La clase/practica se marco como 'Terminada'.");
         } catch (Exception ex) {
             this.popup.setMensaje("Ocurrio un error al intentar terminar la clase.");
+            System.out.println(ex);
         }
         this.popup.setVisible(true);
         return EMPTY_STRING;
