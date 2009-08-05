@@ -154,8 +154,8 @@ public class jmlGestionaClase extends BeanBaseJHard {
     public List<Horario> getListaHorariosValidos(){
         List<Horario> listaHorariosValidos = new ArrayList<Horario>();
         for (Horario horario : this.listaHorario) {
+            System.out.println("getDiasemana: " + horario.getDiasemana() + "== DiaHoyEntero: " + Utilidades.DiaHoyEntero());
             if (horario.getDiasemana() == Utilidades.DiaHoyEntero()){
-                //System.out.println("getDiasemana: " + horario.getDiasemana() + "== DiaHoyEntero: " + Utilidades.DiaHoyEntero());
                 if (Utilidades.EsAntesDeHora(horario.getHorafin())) {
                     listaHorariosValidos.add(horario);
                 }
@@ -262,7 +262,7 @@ public class jmlGestionaClase extends BeanBaseJHard {
 
         if(this.jmanLabInstance.createClase(nuevaClase)){
             //exito al crear la clase
-            this.popup.setMensaje("Se ha creado la clase/practica exitosamente.<br/>Ahora los alumnos pueden 'marcar asistencia'.");
+            this.popup.setMensaje("Se ha creado la clase/practica exitosamente.\nAhora los alumnos pueden 'marcar asistencia'.");
         } else { //ups!
             this.popup.setMensaje("No se pudo crear la clase/practica.");
         }

@@ -89,13 +89,13 @@
                                     Si cometio algun error, o eligio un horario incorrecto, de clic en el boton Cancelar.
                                     <br/>
                                     <br/>
-                                    Tema de la clase/practica: <ice:inputText id="txtTema" partialSubmit="true"
-                                        required="true" title="Tema de la clase/practica." value="#{jmlGestionaClase.nuevaClase.tema}"/>
-                                    <br/>
-                                    Observaciones: <ice:inputText id="txtObservaciones" partialSubmit="true"
-                                        title="Observaciones" value="#{jmlGestionaClase.nuevaClase.observaciones}"/>
-                                    <br/>
                                     <div align="center">
+                                    Tema de la clase/practica: <ice:inputText id="txtTema" partialSubmit="true" maxlength="45"
+                                        required="true" title="Tema de la clase/practica." value="#{jmlGestionaClase.nuevaClase.tema}"/>
+                                    <br/><br/>
+                                    Observaciones: <br/><ice:inputTextarea id="txtObservaciones" partialSubmit="true"
+                                            title="Observaciones" value="#{jmlGestionaClase.nuevaClase.observaciones}"/>
+                                    <br/><br/>
                                         <ice:commandButton action="#{jmlGestionaClase.iniciarClase}" id="btnComenzar" styleClass="btnAccion2" value="Iniciar Clase"/>
                                         <ice:commandButton action="#{jmlGestionaClase.cancelar}" id="btnCancelar" styleClass="btnAccion2" value="Cancelar"/>
                                     </div>

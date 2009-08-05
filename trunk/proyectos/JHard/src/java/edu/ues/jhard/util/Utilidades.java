@@ -1,8 +1,8 @@
 package edu.ues.jhard.util;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Utilidades varias para manejo de tiempo y otras ocurrencias.
@@ -11,11 +11,10 @@ import java.util.Date;
 public class Utilidades {
 
     public static int DiaHoyEntero() {
-        Format day_formatter = new SimpleDateFormat("F"); //"F" day of week in month
-        Date date = new Date();
-        //formatear fecha y convertirla a entero
-        int i_cday = Integer.parseInt(day_formatter.format(date));
-        return i_cday+1;
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(new Date());
+        int dia = cal.get(Calendar.DAY_OF_WEEK);
+        return dia-1;
     }
 
     /**
