@@ -175,6 +175,7 @@ CREATE TABLE  `jhard`.`clase` (
   `iddocente` int(11) default NULL COMMENT 'Referencia al docente encargado de dar esta clase (en caso que haya sido un docente)',
   `horainicio` time NOT NULL COMMENT 'Hora de inicio de la clase (hora real)',
   `horafin` time NOT NULL COMMENT 'Hora "marcada" como fin de la clase',
+  `finalizada` tinyint(1) NOT NULL,
   PRIMARY KEY  (`idclase`),
   KEY `fkidhorario_clase` (`idhorario`),
   KEY `fkidinstructor_clase` (`idinstructor`),
@@ -183,7 +184,7 @@ CREATE TABLE  `jhard`.`clase` (
   CONSTRAINT `fkidhorario_clase` FOREIGN KEY (`idhorario`) REFERENCES `horario` (`idhorario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidinstructor_clase` FOREIGN KEY (`idinstructor`) REFERENCES `instructor` (`idinstructor`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-INSERT INTO `jhard`.`clase` VALUES  (1,'2009-03-05',1,2,'Herencia en Java','N/A',1,'00:00:00','00:00:00');
+INSERT INTO `jhard`.`clase` VALUES  (1,'2009-03-05',1,2,'Herencia en Java','N/A',1,'00:00:00','00:00:00',0);
 CREATE TABLE  `jhard`.`clasificacion` (
   `idclasificacion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada clasificacion',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre de la clasificacion',
@@ -435,7 +436,8 @@ CREATE TABLE  `jhard`.`inscripcion` (
   KEY `fkidestudiante_inscripcion` (`idestudiante`),
   CONSTRAINT `fkidcurso_inscripcion` FOREIGN KEY (`idcurso`) REFERENCES `curso` (`idcurso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidestudiante_inscripcion` FOREIGN KEY (`idestudiante`) REFERENCES `estudiante` (`idestudiante`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+INSERT INTO `jhard`.`inscripcion` VALUES  (1,1,1);
 CREATE TABLE  `jhard`.`instalacion` (
   `idinstalacion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada instalacion',
   `idsoftware` int(11) NOT NULL COMMENT 'Referencia al software instalado',
