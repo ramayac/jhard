@@ -190,6 +190,7 @@ public class jmlGestionaClase extends BeanBaseJHard {
     }
 
     public jmlGestionaClase() {
+        //this.lu= getJHardminInstance().getCurrentUser();
         llenarListaCursos();
     }
 

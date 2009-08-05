@@ -90,32 +90,32 @@ public class BeanBaseJHard extends AbstractPageBean {
         return this.U.getIdrol().getIdrol();
     }
 
-    public Boolean esAdministrador(){
+    public Boolean esRolAdministrador(){
         if(getRolUsuarioConectado()==ROL_ADMINISTRADOR) return true;
         return false;
     }
 
-    public Boolean esAdministrativo(){
+    public Boolean esRolAdministrativo(){
         if(getRolUsuarioConectado()==ROL_ADMINISTRADOR) return true;
         return false;
     }
 
-    public Boolean esDocente(){
+    public Boolean esRolDocente(){
         if(getRolUsuarioConectado()==ROL_DOCENTE) return true;
         return false;
     }
 
-    public Boolean esInstructor(){
+    public Boolean esRolInstructor(){
         if(getRolUsuarioConectado()==ROL_INSTRUCTOR) return true;
         return false;
     }
 
-    public Boolean esEstudiante(){
+    public Boolean esRolEstudiante(){
         if(getRolUsuarioConectado()==ROL_ESTUDIANTE) return true;
         return false;
     }
 
-    public Boolean esEditor(){
+    public Boolean esRolEditor(){
         if(getRolUsuarioConectado()==ROL_EDITORCONTENIDO) return true;
         return false;
     }
@@ -124,9 +124,9 @@ public class BeanBaseJHard extends AbstractPageBean {
         if (this.lu == null) {
             return null;
         }
-        if (this.U == null) {
+        /*if (this.U == null) {
             return null;
-        }
+        }*/
         this.lu = getJHardminInstance().getCurrentUser();
         if (this.lu == null) {
             this.U = null;
@@ -149,6 +149,7 @@ public class BeanBaseJHard extends AbstractPageBean {
         try {
             return this.getUsuario().getEstudianteList().get(0);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -159,6 +160,10 @@ public class BeanBaseJHard extends AbstractPageBean {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public BeanBaseJHard(){
+        this.lu= getJHardminInstance().getCurrentUser();
     }
 
     /**
