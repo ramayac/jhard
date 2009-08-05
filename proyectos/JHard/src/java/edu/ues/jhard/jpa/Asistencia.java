@@ -20,27 +20,27 @@ import javax.persistence.Table;
 
 /**
  *
- * @author robertux
+ * @author rodrigo
  */
 @Entity
-@Table(name = "asistencia", catalog = "jhard", schema = "")
+@Table(name = "asistencia")
 @NamedQueries({@NamedQuery(name = "Asistencia.findAll", query = "SELECT a FROM Asistencia a"), @NamedQuery(name = "Asistencia.findByIdasistencia", query = "SELECT a FROM Asistencia a WHERE a.idasistencia = :idasistencia")})
 public class Asistencia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idasistencia", nullable = false)
+    @Column(name = "idasistencia")
     private Integer idasistencia;
-    @JoinColumn(name = "idestudiante", referencedColumnName = "idestudiante", nullable = false)
-    @ManyToOne(optional = false)
-    private Estudiante idestudiante;
-    @JoinColumn(name = "idclase", referencedColumnName = "idclase", nullable = false)
+    @JoinColumn(name = "idclase", referencedColumnName = "idclase")
     @ManyToOne(optional = false)
     private Clase idclase;
-    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia", nullable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "idequipoexistente", referencedColumnName = "idexistencia")
+    @ManyToOne
     private Existencia idequipoexistente;
+    @JoinColumn(name = "idestudiante", referencedColumnName = "idestudiante")
+    @ManyToOne(optional = false)
+    private Estudiante idestudiante;
 
     public Asistencia() {
     }
@@ -57,14 +57,6 @@ public class Asistencia implements Serializable {
         this.idasistencia = idasistencia;
     }
 
-    public Estudiante getIdestudiante() {
-        return idestudiante;
-    }
-
-    public void setIdestudiante(Estudiante idestudiante) {
-        this.idestudiante = idestudiante;
-    }
-
     public Clase getIdclase() {
         return idclase;
     }
@@ -79,6 +71,14 @@ public class Asistencia implements Serializable {
 
     public void setIdequipoexistente(Existencia idequipoexistente) {
         this.idequipoexistente = idequipoexistente;
+    }
+
+    public Estudiante getIdestudiante() {
+        return idestudiante;
+    }
+
+    public void setIdestudiante(Estudiante idestudiante) {
+        this.idestudiante = idestudiante;
     }
 
     @Override
