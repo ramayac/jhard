@@ -38,27 +38,47 @@ public class jmlAsistencia extends BeanBaseJHard {
     private List<Clase> listaClases = new ArrayList<Clase>();
     private List<Curso> listaCursos = new ArrayList<Curso>();
     private List<Horario> listaHorario = new ArrayList<Horario>();
-    private List<Existencia> listaExistencia = new ArrayList<Existencia>();
+    //private List<Existencia> listaExistencia = new ArrayList<Existencia>();
 
     private Boolean paso1 = new Boolean(false);
     private Boolean paso2 = new Boolean(false);
-    private Boolean paso3 = new Boolean(false);
 
     private Curso cursoSeleccionado = new Curso();
     private Clase claseSeleccionada = new Clase();
-    private Existencia existenciaSeleccionada = new Existencia();
+    //private Existencia existenciaSeleccionada = new Existencia();
     private BeanBaseJManLab jmanLabInstance = new BeanBaseJManLab();
 
-    public List<Existencia> getListaExistencia() {
-        return listaExistencia;
+//    public List<Existencia> getListaExistencia() {
+//        return listaExistencia;
+//    }
+//
+//    public void setListaExistencia(List<Existencia> listaExistencia) {
+//        this.listaExistencia = listaExistencia;
+//    }
+
+    public Clase getClaseSeleccionada() {
+        return claseSeleccionada;
     }
 
-    public void setListaExistencia(List<Existencia> listaExistencia) {
-        this.listaExistencia = listaExistencia;
+    public void setClaseSeleccionada(Clase claseSeleccionada) {
+        this.claseSeleccionada = claseSeleccionada;
+    }
+
+    public Curso getCursoSeleccionado() {
+        return cursoSeleccionado;
+    }
+
+    public void setCursoSeleccionado(Curso cursoSeleccionado) {
+        this.cursoSeleccionado = cursoSeleccionado;
     }
 
     public List<Clase> getListaClases() {
         return listaClases;
+    }
+
+    public Boolean getHayClases(){
+        if(this.listaClases.size()>0) return true;
+        return false;
     }
 
     public void setListaClases(List<Clase> listaClases) {
@@ -89,14 +109,6 @@ public class jmlAsistencia extends BeanBaseJHard {
         this.paso2 = paso2;
     }
 
-    public Boolean getPaso3() {
-        return paso3;
-    }
-
-    public void setPaso3(Boolean paso3) {
-        this.paso3 = paso3;
-    }
-
     public List<Horario> getListaHorario() {
         return listaHorario;
     }
@@ -118,7 +130,7 @@ public class jmlAsistencia extends BeanBaseJHard {
 
         this.cursoSeleccionado = this.jmanLabInstance.getCurso(id.intValue());
         this.listaHorario = this.jmanLabInstance.getHorariosCurso(cursoSeleccionado);
-        List<Existencia> lstExistencia = new ArrayList<Existencia>();
+        //List<Existencia> lstExistencia = new ArrayList<Existencia>();
 
         for (Horario horario : listaHorario) {
             List<Clase>lstClase = (List<Clase>)horario.getClaseCollection();
@@ -126,35 +138,35 @@ public class jmlAsistencia extends BeanBaseJHard {
                 if(!clase.getFinalizada())
                     if(Utilidades.EsAntesDeHora(clase.getHorafin())){
                         this.listaClases.add(clase);
-                        lstExistencia.addAll(horario.getIdaula().getExistenciaCollection());
+                        //lstExistencia.addAll(horario.getIdaula().getExistenciaCollection());
                     }
         }
 
-        this.listaExistencia = lstExistencia;
+        //this.listaExistencia = lstExistencia;
 
         this.paso(2);
         return EMPTY_STRING;
     }
 
-    public String elegirExistencia() {
-        String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idExistencia");
-        Integer id = Integer.parseInt(idS);
-
-        this.existenciaSeleccionada = this.jmanLabInstance.getExistencia(id);
-        
-        this.paso(3);
-        return EMPTY_STRING;
-    }
+//    public String elegirExistencia() {
+//        String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idExistencia");
+//        Integer id = Integer.parseInt(idS);
+//
+//        this.existenciaSeleccionada = this.jmanLabInstance.getExistencia(id);
+//
+//        this.paso(3);
+//        return EMPTY_STRING;
+//    }
 
 
     public String marcaAsistenciaClase() {
-        String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idCurso");
+        String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idClase");
         Integer id = Integer.parseInt(idS);
         this.claseSeleccionada = this.jmanLabInstance.getClase(id.intValue());
 
         Asistencia nuevaAsistencia = new Asistencia();
         nuevaAsistencia.setIdclase(claseSeleccionada);
-        nuevaAsistencia.setIdequipoexistente(existenciaSeleccionada);
+        //nuevaAsistencia.setIdequipoexistente(existenciaSeleccionada);
         nuevaAsistencia.setIdestudiante(this.getEstudianteUsuario());
 
         if(this.jmanLabInstance.createAsistencia(nuevaAsistencia)){
@@ -162,7 +174,7 @@ public class jmlAsistencia extends BeanBaseJHard {
         } else {
             popup.setMensaje("No se pudo confirmar la asistencia.");
         }
-        popup.setVisible(false);
+        popup.setVisible(true);
 
         return EMPTY_STRING;
     }
@@ -194,21 +206,17 @@ public class jmlAsistencia extends BeanBaseJHard {
     private void paso(int i) {
         switch (i) {
             case 1:
+                this.popup.setVisible(false);
                 this.setPaso1(true);
                 this.setPaso2(false);
-                this.setPaso3(false);
                 break;
             case 2:
+                this.popup.setVisible(false);
                 this.setPaso1(false);
                 this.setPaso2(true);
-                this.setPaso3(false);
-                break;
-            case 3:
-                this.setPaso1(false);
-                this.setPaso2(false);
-                this.setPaso3(true);
                 break;
             default:
+                this.popup.setVisible(false);
                 this.setPaso1(true);
                 this.setPaso2(false);
                 break;
@@ -216,9 +224,9 @@ public class jmlAsistencia extends BeanBaseJHard {
     }
 
     public jmlAsistencia() {
-        System.out.println("FOOOOOOOOOBAAAAAAAAR!");
         //this.lu= getJHardminInstance().getCurrentUser();
         cargaCursosDeEstudiante();
+        this.paso(1);
     }
 
         /**

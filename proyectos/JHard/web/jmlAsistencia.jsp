@@ -24,14 +24,11 @@
                 <div id="page">
                     <!-- start content -->
                     <div id="content">
-                        <div class="post">
-                            <h2 class="title">Cursos del Laboratorio</h2>
-                        </div>
                         <ice:form id="formAsistencia">
                             <ice:panelGroup>
                                 <div class="post">
+                                    <h2>Asistencia a una Clase</h2><br/>
                                     <ice:panelGroup id="panel1" rendered="#{jmlAsistencia.paso1}">
-                                        <h2>Seleccion Materia</h2><br/>
                                         Seleccione a que curso (materia) pertenece la clase ó practica:
                                         <ice:dataTable value="#{jmlAsistencia.listaCursos}" var="indiceCurso" width="100%">
                                             <ice:column id="columnaCursos">
@@ -44,39 +41,28 @@
                                          </ice:dataTable>
                                     </ice:panelGroup>
                                     <ice:panelGroup id="panel2" rendered="#{jmlAsistencia.paso2}">
-                                        <h2>Seleccione la maquina</h2><br/>
-                                        Seleccione la maquina que esta utilizando...
-                                        <ice:dataTable value="#{jmlAsistencia.listaExistencia}" var="indiceExistencia" width="100%">
-                                            <ice:column id="columnaExistencia">
-                                                <f:facet name="header">Lista de Equipos</f:facet>
-                                                <ice:commandLink action="#{jmlAsistencia.elegirExistencia}">
-                                                    <ice:outputLabel style="font-weight:bold; " value="#{indiceExistencia.idhardware.nombre}"/>
-                                                    <f:param name="idExistencia" value="#{indiceExistencia.idhardware.idequipo}"/>
-                                                </ice:commandLink>
-                                            </ice:column>
-                                         </ice:dataTable>
-                                    </ice:panelGroup>
-                                <ice:panelGroup id="panel3" rendered="#{jmlAsistencia.paso3}">
-                                    <ice:panelGroup rendered="#{jmlAsistencia.listaClases}">
-                                        <h2>Marque la asistencia</h2>
-                                        Confirme su asistencia a la clase del curso: <ice:outputLabel id="lblTituloCurso2" style="font-weight:bold; " value="#{jmlAsistencia.cursoSeleccionado.nombre}"/>
+                                        <ice:panelGroup rendered="#{jmlAsistencia.hayClases}">
+                                        Confirme su asistencia a la clase del curso: <ice:outputLabel style="font-weight:bold; " value="#{jmlAsistencia.cursoSeleccionado.nombre}"/>
                                         <ice:dataTable value="#{jmlAsistencia.listaClases}" var="indiceClase" width="100%">
                                             <ice:column id="columnaClases">
                                                 <f:facet name="header">Lista de Clases activas</f:facet>
-                                                <ice:outputLabel id="lblTema" style="font-weight:bold; " value="#{indiceClase.tema}"/>
+                                                <ice:outputLabel id="lblTema" value="#{indiceClase.tema}"/>
                                             </ice:column>
                                             <ice:column id="columnaAsistencia">
                                                 <f:facet name="header">Marca Asistencia</f:facet>
                                                 <ice:commandLink action="#{jmlAsistencia.marcaAsistenciaClase}">
-                                                    Asistencia<f:param name="idHorario" value="#{indiceClase.idclase}"/>
+                                                    Asistencia<f:param name="idClase" value="#{indiceClase.idclase}"/>
                                                 </ice:commandLink>
                                             </ice:column>
                                         </ice:dataTable>
                                     </ice:panelGroup>
-                                    <ice:panelGroup>
+                                    <ice:panelGroup rendered="#{!jmlAsistencia.hayClases}">
                                         <h2 class="title">Aviso:</h2>
                                             <div align="center">
-                                                <ul><li>No hay algo.</li></ul>
+                                                <ul>
+                                                    <li>No hay clases para esta hora.</li>
+                                                    <li>La clase ha concluido.</li>
+                                                </ul>
                                                 <br/>
                                                 <ice:commandButton action="#{jmlAsistencia.cancelar}" styleClass="btnAccion2" value="Cancelar"/>
                                             </div>
