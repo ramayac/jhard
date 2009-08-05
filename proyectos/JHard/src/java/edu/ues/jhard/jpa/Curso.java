@@ -42,6 +42,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Curso.findByInstructorCiclo", query = "SELECT c FROM Curso c WHERE c.idinstructor = :idinstructor AND c.idcicloanio = :idcicloanyo"),
 
     @NamedQuery(name = "Curso.findByCiclo", query = "SELECT c FROM Curso c WHERE c.idcicloanio = :idcicloanyo"),
+    @NamedQuery(name = "Curso.findByCicloHabilitado", query = "SELECT c FROM Curso c WHERE c.idcicloanio = :idcicloanyo AND c.habilinscrip = 1"),
 
     @NamedQuery(name = "Curso.findByFechainicio", query = "SELECT c FROM Curso c WHERE c.fechainicio = :fechainicio"),
     /*@NamedQuery(name = "Curso.findByCiclo", query = "SELECT c FROM Curso c WHERE c.ciclo = :ciclo"),

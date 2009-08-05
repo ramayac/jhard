@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-    Document   : jmlIniciaClase
+    Document   : jmlGestionaClase
     Created on : 08-02-2009, 03:07:30 PM
     Author     : rodrigo
 -->
