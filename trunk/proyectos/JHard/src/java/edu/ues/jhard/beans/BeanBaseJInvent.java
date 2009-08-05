@@ -1781,14 +1781,13 @@ public class BeanBaseJInvent extends BeanBase {
         this.listaResultadosBusqueda = listaItemsBusqueda;        
     }
 
-    public void seleccionarExistencia(ActionEvent event){
+    public void seleccionarExistencia(){
         try{            
             String idExistencia = this.valorBusqueda.substring(this.valorBusqueda.indexOf("[")+1, this.valorBusqueda.indexOf("]"));            
             Existencia current = (Existencia)this.getEntityManager().createQuery("SELECT e FROM Existencia e WHERE e.idexistencia=" + idExistencia).getSingleResult();
 
-            this.setSearchMode(false);
             this.getClasificaciontm().seleccionarNodo(current.getIdhardware().getIdclasificacion().getIdclasificacion().toString());
-            
+            this.setSearchMode(false);
             int currentPage = (int)Math.ceil(this.getCurrentClasificacion().getExistenciaCollection().indexOf(current) / 5);
             System.out.println("currentPage: " + currentPage);
             
