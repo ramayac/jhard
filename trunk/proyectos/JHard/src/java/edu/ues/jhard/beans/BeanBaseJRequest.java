@@ -174,7 +174,7 @@ public class BeanBaseJRequest extends BeanBase{
             e.setIdestado(ee);
             this.modificarExistencia(e);
             b.setIdequipoexistente(s.getIdequipoexistente());
-            b.setIdestado(s.getIdequipoexistente().getIdestado());
+            b.setIdestado(ee);
         }
             
         else{
@@ -183,7 +183,7 @@ public class BeanBaseJRequest extends BeanBase{
             e.setIdestado(ee);
             this.modificarEquipoSImple(e);
             b.setIdequiposimple(s.getIdequiposimple());
-            b.setIdestado(s.getIdequiposimple().getIdestado());
+            b.setIdestado(ee);
         }
         
         EntityManager em=this.getEntityManager();
@@ -205,6 +205,33 @@ public class BeanBaseJRequest extends BeanBase{
          em.getTransaction().commit();
      }
 
+     public Equiposimple[] getEquipoSimpleFuncionando() {
+        EntityManager em=this.getEntityManager();
+
+        Query q=em.createNamedQuery("Equiposimple.findByEstado");
+        Estadoequipo e = this.getEntityManager().find(Estadoequipo.class, 1);
+        q.setParameter("idestado", e);
+        Equiposimple[] eqs=(Equiposimple[])q.getResultList().toArray(new Equiposimple[0]);
+
+        for(int i=0;i<eqs.length;i++)
+            em.refresh(eqs[i]);
+        return eqs;
+    }
+
+    public List<Equiposimple> getListaEquipoSimpleFuncionando() {
+        EntityManager em=this.getEntityManager();
+
+        Query q=em.createNamedQuery("Equiposimple.findByEstado");
+        Estadoequipo e = this.getEntityManager().find(Estadoequipo.class, 1);
+        q.setParameter("idestado", e);
+
+        List<Equiposimple> eqs=(List<Equiposimple>)q.getResultList();
+
+        for(int i=0;i<eqs.size();i++)
+            em.refresh(eqs.get(i));
+        return eqs;
+    }
+
     public Equiposimple[] getEquipoSimple() {
         EntityManager em=this.getEntityManager();
 
@@ -221,7 +248,7 @@ public class BeanBaseJRequest extends BeanBase{
         EntityManager em=this.getEntityManager();
 
         Query q=em.createNamedQuery("Equiposimple.findAll");
-
+        
         List<Equiposimple> eqs=(List<Equiposimple>)q.getResultList();
 
         for(int i=0;i<eqs.size();i++)
@@ -241,13 +268,28 @@ public class BeanBaseJRequest extends BeanBase{
         return e;
     }
 
+    public List<Existencia> getListaExistenciaFuncionando() {
+        EntityManager em=this.getEntityManager();
+
+        Query q=em.createNamedQuery("Existencia.findByEstado");
+
+        Estadoequipo ee = this.getEntityManager().find(Estadoequipo.class, 2);
+        q.setParameter("idestado", ee);
+
+        List<Existencia> e=(List<Existencia>)q.getResultList();
+
+        for(int i=0;i<e.size();i++)
+            em.refresh(e.get(i));
+        return e;
+    }
+
     public Existencia[] getExistencia() {
         EntityManager em=this.getEntityManager();
-        String codigo ="%labcom1%";
+        //String codigo ="%labcom1%";
 
-        Query q=em.createNamedQuery("Existencia.findByCodigo");
+        Query q=em.createNamedQuery("Existencia.findAll");
         
-        q.setParameter("codigo", codigo);
+        //q.setParameter("codigo", codigo);
 
         Existencia[] ex=(Existencia[])q.getResultList().toArray(new Existencia[0]);
 
