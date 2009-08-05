@@ -10,7 +10,6 @@ import com.icesoft.faces.component.ext.HtmlCommandButton;
 import com.icesoft.faces.component.ext.HtmlInputText;
 import com.icesoft.faces.component.ext.HtmlInputTextarea;
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
-import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
 import com.icesoft.faces.component.panelpopup.PanelPopup;
 import com.icesoft.faces.component.selectinputtext.SelectInputText;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
@@ -28,7 +27,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.FacesException;
-import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
@@ -110,15 +108,6 @@ public class jrequestUserSolicitud extends AbstractPageBean {
 
     public void setTxtNombreEq(HtmlInputText hit) {
         this.txtNombreEq = hit;
-    }
-    private HtmlSelectOneMenu comboEstados = new HtmlSelectOneMenu();
-
-    public HtmlSelectOneMenu getComboEstados() {
-        return comboEstados;
-    }
-
-    public void setComboEstados(HtmlSelectOneMenu hsom) {
-        this.comboEstados = hsom;
     }
     private HtmlCommandButton btnAgregar = new HtmlCommandButton();
 
@@ -202,16 +191,16 @@ public void LlenarCombos(){
 //        itemsEq.setValue(eqs);
 //        this.comboEqSimple.getChildren().add(itemsEq);
 
-        //COMBO DE ESTADOS DE EQUIPOS
-        Estadoequipo[] estados = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
-        estadoElegido= estados[0];
-        for(int i=0;i<estados.length;i++){
-            String label = estados[i].getNombre();
-            getEeq().add(new SelectItem(estados[i].getIdestado(),label));
-        }
-        UISelectItems itemsEstad = new UISelectItems();
-        itemsEstad.setValue(getEeq());
-        this.comboEstados.getChildren().add(itemsEstad);
+//        //COMBO DE ESTADOS DE EQUIPOS
+//        Estadoequipo[] estados = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
+//        estadoElegido= estados[0];
+//        for(int i=0;i<estados.length;i++){
+//            String label = estados[i].getNombre();
+//            getEeq().add(new SelectItem(estados[i].getIdestado(),label));
+//        }
+//        UISelectItems itemsEstad = new UISelectItems();
+//        itemsEstad.setValue(getEeq());
+//        this.comboEstados.getChildren().add(itemsEstad);
     }
 
 
@@ -505,9 +494,7 @@ public void LlenarCombos(){
 
         eq.setPropietario((String)this.txtPropietario.getValue());
 
-        String tmp=(String)this.comboEstados.getValue();
-        Integer id=Integer.parseInt(tmp);
-        Estadoequipo e=new BeanBaseJRequest().getEntityManager().find(Estadoequipo.class, id);
+        Estadoequipo e=new BeanBaseJRequest().getEntityManager().find(Estadoequipo.class, 1);
         this.estadoElegido= e;
 
         eq.setIdestado(estadoElegido);

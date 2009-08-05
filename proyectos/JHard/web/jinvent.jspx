@@ -801,7 +801,7 @@
                                                             </p>
                                                             <p>
                                                                 <ice:panelGroup styleClass="actionSection">
-                                                                    <ice:selectInputText id="txtTerminosBusqueda" style="float: left;" valueChangeListener="#{JInventInstance.actualizarAutocompletado}" value="#{JInventInstance.valorBusqueda}" actionListener="#{JInventInstance.seleccionarExistencia}" rows="10" width="230" >
+                                                                    <ice:selectInputText id="txtTerminosBusqueda" style="float: left;" valueChangeListener="#{JInventInstance.actualizarAutocompletado}" value="#{JInventInstance.valorBusqueda}" action="#{JInventInstance.seleccionarExistencia}" rows="10" width="230" >
                                                                         <f:selectItems value="#{JInventInstance.listaResultadosBusqueda}" />
                                                                 </ice:selectInputText>
                                                                 <ice:commandButton id="cmdBuscar" value="Buscar" />

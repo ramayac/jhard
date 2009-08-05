@@ -17,6 +17,15 @@
                 <meta content="" name="description"/>
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+                <script charset="utf-8" type="text/javascript">
+                    function doLoad(){
+                        setTimeout( "refresh()", 1*1000 );
+                    }
+
+                    function refresh(){
+                        location.reload(true);
+                    }
+                    </script>
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <!--start header -->
@@ -43,12 +52,8 @@
                                                 <ice:inputText binding="#{jrequestUserSolicitud.txtNombreEq}" id="txtNombreEq"/>
                                                 <ice:outputLabel id="lblPropietario" value="Propietario del Equipo"/>
                                                 <ice:inputText binding="#{jrequestUserSolicitud.txtPropietario}" id="txtPropietario"/>
-                                                <ice:outputLabel id="lblEstadoEq" value="Estado del Equipo"/>
-                                                <ice:selectOneMenu binding="#{jrequestUserSolicitud.comboEstados}" id="comboEstados" partialSubmit="true">
-                                                    <f:selectItems id="selectOneMenu1selectItems1" value="#{jrequestUserSolicitud.eeq}"/>
-                                                </ice:selectOneMenu>
                                                 <ice:commandButton styleClass="btnAccion2" action="#{jrequestUserSolicitud.btnAgregar_action}"
-                                                    binding="#{jrequestUserSolicitud.btnAgregar}" id="btnAgregar" value="Agregar"/>
+                                                binding="#{jrequestUserSolicitud.btnAgregar}" onclick="doLoad();" id="btnAgregar" value="Agregar"/>
                                                 <ice:commandButton styleClass="btnAccion2" action="#{jrequestUserSolicitud.btnCerrar_action}"
                                                     binding="#{jrequestUserSolicitud.btnCerrar}" id="btnCerrar" value="Cerrar"/>
                                             </ice:panelGrid>
