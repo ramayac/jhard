@@ -1217,6 +1217,20 @@ public class BeanBaseJManLab extends BeanBase{
         return a;
     }
 
+
+    /**
+     * Metodo para obtener una Asistencia por su ID
+     * @param idAsistencia id de la asistencia que se desea
+     * @return
+     */
+    public List<Asistencia> getAsistenciasClaseEstudiante(Clase clase, Estudiante estudiante) {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Asistencia.findByClaseEstudiante");
+        q.setParameter("idclase", clase);
+        q.setParameter("idestudiante", estudiante);
+        return (List<Asistencia>)q.getResultList();
+    }
+
     /**
      * Metodo para obtener una Asistencia por su ID
      * @param idAsistencia id de la asistencia que se desea

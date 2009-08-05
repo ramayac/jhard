@@ -136,14 +136,14 @@ public class jmlAsistencia extends BeanBaseJHard {
             List<Clase>lstClase = (List<Clase>)horario.getClaseCollection();
             for (Clase clase : lstClase)
                 if(!clase.getFinalizada())
-                    if(Utilidades.EsAntesDeHora(clase.getHorafin())){
-                        this.listaClases.add(clase);
-                        //lstExistencia.addAll(horario.getIdaula().getExistenciaCollection());
+                    if(Utilidades.EsDeHoy(clase.getFecha())){
+                        if(Utilidades.EsAntesDeHora(clase.getHorafin())){
+                            this.listaClases.add(clase);
+                            //lstExistencia.addAll(horario.getIdaula().getExistenciaCollection());
+                        }
                     }
         }
-
-        //this.listaExistencia = lstExistencia;
-
+        
         this.paso(2);
         return EMPTY_STRING;
     }
@@ -169,13 +169,20 @@ public class jmlAsistencia extends BeanBaseJHard {
         //nuevaAsistencia.setIdequipoexistente(existenciaSeleccionada);
         nuevaAsistencia.setIdestudiante(this.getEstudianteUsuario());
 
-        if(this.jmanLabInstance.createAsistencia(nuevaAsistencia)){
-            popup.setMensaje("Asistencia confirmada.");
-        } else {
-            popup.setMensaje("No se pudo confirmar la asistencia.");
-        }
-        popup.setVisible(true);
+        List<Asistencia> lstAsistencia = new ArrayList<Asistencia>();
+        lstAsistencia = this.jmanLabInstance.getAsistenciasClaseEstudiante(claseSeleccionada, this.getEstudianteUsuario());
 
+        if(lstAsistencia.size()>0){
+            popup.setMensaje("Ya esta marcada la existencia.");
+        } else {
+            if(this.jmanLabInstance.createAsistencia(nuevaAsistencia)){
+                popup.setMensaje("Asistencia confirmada.");
+            } else {
+                popup.setMensaje("No se pudo confirmar la asistencia.");
+            }    
+        }
+
+        popup.setVisible(true);
         return EMPTY_STRING;
     }
 
@@ -192,9 +199,7 @@ public class jmlAsistencia extends BeanBaseJHard {
 
     private void cargaCursosDeEstudiante() {
         boolean hayusuariologueado = this.getHayUsuarioLogueado();
-        System.out.println("BARFOOOOOOOOOOOOOO " + hayusuariologueado );
         if (hayusuariologueado) {
-            System.out.println("hay un usuario logueado!");
             Estudiante est = this.getEstudianteUsuario();
             if (est!=null) {
                 this.listaCursos = jmanLabInstance.getCursosCicloEstudiante(est);
