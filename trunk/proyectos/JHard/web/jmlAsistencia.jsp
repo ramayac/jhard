@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-    Document   : jmlClase
+    Document   : jmlAsistencia
     Created on : 08-02-2009, 02:19:12 PM
     Author     : rodrigo 
 -->

@@ -23,7 +23,7 @@ import javax.faces.context.FacesContext;
 
 public class jmlGestionaClase extends BeanBaseJHard {
 
-    private popUp popup = new popUp("jManLab", "", false);
+    private popUp popup = new popUp("Aviso", "", false);
 
     private BeanBaseJManLab jmanLabInstance = new BeanBaseJManLab();
     private List<Horario> listaHorario = new ArrayList<Horario>();

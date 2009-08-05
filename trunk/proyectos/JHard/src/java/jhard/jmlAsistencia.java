@@ -1,5 +1,5 @@
 /*
- * jmlClase.java
+ * jmlAsistencia.java
  *
  * Created on 08-02-2009, 02:19:12 PM
  * Copyright rodrigo
@@ -11,7 +11,6 @@ import edu.ues.jhard.jpa.Asistencia;
 import edu.ues.jhard.jpa.Clase;
 import edu.ues.jhard.jpa.Curso;
 import edu.ues.jhard.jpa.Estudiante;
-import edu.ues.jhard.jpa.Existencia;
 import edu.ues.jhard.jpa.Horario;
 import edu.ues.jhard.util.Utilidades;
 import edu.ues.jhard.util.popUp;
@@ -25,7 +24,7 @@ import javax.faces.context.FacesContext;
  */
 public class jmlAsistencia extends BeanBaseJHard {
 
-    private popUp popup = new popUp("jManLab", "", false);
+    private popUp popup = new popUp("Aviso", "", false);
 
     public popUp getPopup() {
         return popup;

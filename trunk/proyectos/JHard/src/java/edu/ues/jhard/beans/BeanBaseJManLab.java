@@ -774,6 +774,19 @@ public class BeanBaseJManLab extends BeanBase{
      * @param idInscripcion id de la inscripcion que se desea
      * @return
      */
+    public List<Inscripcion> getInscripcionCursoEstudiante(Curso curso, Estudiante estudiante) {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Inscripcion.findByCursoEstudiante");
+        q.setParameter("idcurso", curso);
+        q.setParameter("idestudiante", estudiante);
+        return (List<Inscripcion>)q.getResultList();
+    }
+
+    /**
+     * Metodo para obtener una Inscripcion por su ID
+     * @param idInscripcion id de la inscripcion que se desea
+     * @return
+     */
     public List<Inscripcion> getAllInscripcions() {
         EntityManager em = this.getEntityManager();
         Query q = em.createNamedQuery("Inscripcion.findAll");
@@ -941,6 +954,28 @@ public class BeanBaseJManLab extends BeanBase{
         }
 
         return cursosDelEstudiante;
+    }
+
+    /**
+     * Metodo para obtener los cursos, asociado siempre del ciclo y año actual, y que
+     * ademas ha inscrito el estudiante y este habilitado para inscripcion
+     * @return
+     */
+    public List<Curso> getCursosCicloEstudianteHabilitado(Estudiante estudiante) {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Cicloanyo.findAll");
+        List<Cicloanyo> cicloanyo = q.getResultList();
+
+        q = em.createNamedQuery("Curso.findByCicloHabilitado");
+        q.setParameter("idcicloanyo", cicloanyo.get(cicloanyo.size()-1));
+
+        List<Curso> lstC = (List<Curso>)q.getResultList();
+
+        for (Curso c : lstC) {
+            em.refresh(c);
+        }
+
+        return lstC;
     }
 
 
