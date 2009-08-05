@@ -16,8 +16,6 @@
                 <meta content="" name="keywords"/>
                 <meta content="" name="description"/>
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
-                <script src="js/js/jquery.js" type="text/javascript"></script>
-                <script src="js/js/jquery-ui.js" type="text/javascript"></script>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
@@ -49,9 +47,9 @@
                                                 <ice:selectOneMenu binding="#{jrequestUserSolicitud.comboEstados}" id="comboEstados" partialSubmit="true">
                                                     <f:selectItems id="selectOneMenu1selectItems1" value="#{jrequestUserSolicitud.eeq}"/>
                                                 </ice:selectOneMenu>
-                                                <ice:commandButton action="#{jrequestUserSolicitud.btnAgregar_action}"
+                                                <ice:commandButton styleClass="btnAccion2" action="#{jrequestUserSolicitud.btnAgregar_action}"
                                                     binding="#{jrequestUserSolicitud.btnAgregar}" id="btnAgregar" value="Agregar"/>
-                                                <ice:commandButton action="#{jrequestUserSolicitud.btnCerrar_action}"
+                                                <ice:commandButton styleClass="btnAccion2" action="#{jrequestUserSolicitud.btnCerrar_action}"
                                                     binding="#{jrequestUserSolicitud.btnCerrar}" id="btnCerrar" value="Cerrar"/>
                                             </ice:panelGrid>
                                         </f:facet>
@@ -67,7 +65,7 @@
                                                 <ice:outputLabel id="lblNombre" value="Usuario que realiza la petición"/>
                                             </h3>
                                             <br/>
-                                            <ice:outputLabel binding="#{jrequestUserSolicitud.lblUsuario}" id="lblUsuario" style="font-size: 14px; font-weight: bold"/>
+                                            <ice:outputLabel binding="#{jrequestUserSolicitud.lblUsuario}" value="#{JHardminInstance.currentUser.userName}" id="lblUsuario" style="font-size: 14px; font-weight: bold"/>
                                             <br/>
                                             <br/>
                                             <br/>
@@ -84,7 +82,7 @@
                                             </h3>
                                             <br/>
                                             <br/>
-                                            <ice:selectInputText binding="#{jrequestUserSolicitud.comboEqSimple}" id="comboEqSimple" partialSubmit="true"
+                                            <ice:selectInputText binding="#{jrequestUserSolicitud.comboEqSimple}" action="#{jrequestUserSolicitud.selectAction}" id="comboEqSimple" partialSubmit="true"
                                             width="276px" rows="5" valueChangeListener="#{jrequestUserSolicitud.comboEqSimple_processValueChange}">
                                                 <f:selectItems id="selectOneMenu1selectItems" value="#{jrequestUserSolicitud.eqs}"/>
                                             </ice:selectInputText>

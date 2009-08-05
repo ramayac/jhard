@@ -53,22 +53,29 @@
                                                         </ice:panelGrid>
                                                     </f:facet>
                                                     <f:facet name="body">
-                                                        <ice:panelGrid id="panelGrid4" style="display: block; height: 134px" width="326">
+                                                        <ice:panelGroup id="panelGrid4" style="display: block; height: 280px">
                                                             <ice:outputText binding="#{jrequestAdmin.lblMantenimiento}" id="lblMantenimiento" value="MANTENIMIENTO QUE ESTARA FINALIZADO"/>
+                                                            <br/><br/>
                                                             <ice:outputLabel id="lblFin" value="Finalizado"/>
                                                             <ice:selectBooleanCheckbox binding="#{jrequestAdmin.checkFIn}" id="checkFIn" partialSubmit="true" value="#{jrequestAdmin.fakeFin.selectedBoolean}"/>
+                                                            <br/><br/>
                                                             <ice:outputLabel id="outputLabel13" value="Escriba el plan de Mantenimiento llevado a cabo:"/>
-                                                            <ice:inputTextarea binding="#{jrequestAdmin.txtDescripcion}" style="width:300px;"  id="txtDescripcion"/>
+                                                            <br/>
+                                                            <ice:inputTextarea binding="#{jrequestAdmin.txtDescripcion}" style="width:300px; height:70px;"  id="txtDescripcion"/>
+                                                            <br/><br/>
                                                             <ice:outputLabel id="outputLabel12" value="Nuevo Estado del Equipo"/>
-                                                            <ice:selectOneMenu binding="#{jrequestAdmin.comboEstado}" id="comboEstado" partialSubmit="true">
+                                                            <br/><br/>
+                                                            <ice:graphicImage url="img/#{jrequestAdmin.changeIcon}" />
+                                                            <ice:selectOneMenu valueChangeListener="#{jrequestAdmin.cambiarIcono}" binding="#{jrequestAdmin.comboEstado}" id="comboEstado" partialSubmit="true">
                                                                 <f:selectItems id="fakeComboEstado" value="#{jrequestAdmin.eeq}"/>
                                                             </ice:selectOneMenu>
+                                                            <br/><br/>
                                                             <ice:commandButton action="#{jrequestAdmin.btnAceptarFinalizado_action}"
                                                                 binding="#{jrequestAdmin.btnAceptarFinalizado}" id="btnAceptarFinalizado"
                                                                 styleClass="btnAccion2" value="OK"/>
                                                             <ice:commandButton action="#{jrequestAdmin.btnCerrar_action}" binding="#{jrequestAdmin.btnCerrar}"
                                                                 id="btnCerrar" styleClass="btnAccion2" value="Cerrar"/>
-                                                        </ice:panelGrid>
+                                                        </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
                                             </ice:panelGroup>
@@ -107,16 +114,23 @@
                                                         </ice:panelGrid>
                                                     </f:facet>
                                                     <f:facet name="body">
-                                                        <ice:panelGrid id="panelGrid99" style="display:block;width:340px;height:168px;">
+                                                        <ice:panelGroup id="panelGrid99" style="display:block;width:340px;height:240px;">
                                                             <ice:outputText id="outputText3" style="width: 310px" value="Para actualizar esta bitácora, modifique en el cuadro de texto inferior"/>
-                                                            <ice:inputTextarea binding="#{jrequestAdmin.txtModBitacora}" id="txtModBitacora" style="height: 119px; width: 287px"/>
+                                                            <br/><br/>
+                                                            <ice:outputLabel value="Estado actual del Equipo:" id="actual"/>
+                                                            <br/>
+                                                            <ice:outputLabel value="#{jrequestAdmin.estadoActualBit}" id="actualChange"/>
+                                                            <ice:graphicImage url="img/#{jrequestAdmin.changeIcon}" />
+                                                            <ice:inputTextarea binding="#{jrequestAdmin.txtModBitacora}" id="txtModBitacora" style="height: 119px; width: 335px"/>
+                                                            <br/><br/>
                                                             <ice:commandButton action="#{jrequestAdmin.btnAceptarModBitacora_action}"
                                                                 binding="#{jrequestAdmin.btnAceptarModBitacora}" id="btnAceptarModBitacora"
                                                                 styleClass="btnAccion2" value="Aceptar"/>
                                                             <ice:commandButton action="#{jrequestAdmin.btnCancelarModBitacora_action}"
                                                                 binding="#{jrequestAdmin.btnCancelarModBitacora}" id="btnCancelarModBitacora"
                                                                 styleClass="btnAccion2" value="Cerrar"/>
-                                                        </ice:panelGrid>
+                                                            <br/>
+                                                        </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
                                             </ice:panelGroup>

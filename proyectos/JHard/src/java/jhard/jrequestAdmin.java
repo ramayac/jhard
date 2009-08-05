@@ -488,6 +488,7 @@ public class jrequestAdmin extends AbstractPageBean {
 
 private List soc=new ArrayList();
 private List man= new ArrayList();
+private String estadoActualBit;
 
     //ESTE METODO DEBE DE IR EN EL NEGOCIO
     public void llenarLista(){
@@ -604,23 +605,23 @@ private List eeq = new ArrayList();
         
         //SELECTINPUT DE EQUIPOS SIMPLES O EXISTENCIAS
 
-        if(opcion==1){
-            //EQ SIMPLE
-            Equiposimple [] eqsimple = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
-
-            for(int i=0;i<eqsimple.length;i++){
-                String label = eqsimple[i].getPropietario()+" "+eqsimple[i].getDescripcion();
-                getEqs().add(new SelectItem(eqsimple[i].getIdEquipoSimple(),label));
-            }
-        }else{
-            //EXISTENCIA
-            Existencia [] exist = new edu.ues.jhard.beans.BeanBaseJRequest().getExistencia();
-
-            for(int i=0;i<exist.length;i++){
-                String label = exist[i].getCodigo();
-                getEqs().add(new SelectItem(exist[i].getIdexistencia(),label));
-            }
-        }
+//        if(opcion==1){
+//            //EQ SIMPLE
+//            Equiposimple [] eqsimple = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
+//
+//            for(int i=0;i<eqsimple.length;i++){
+//                String label = eqsimple[i].getPropietario()+" "+eqsimple[i].getDescripcion();
+//                getEqs().add(new SelectItem(eqsimple[i].getIdEquipoSimple(),label));
+//            }
+//        }else{
+//            //EXISTENCIA
+//            Existencia [] exist = new edu.ues.jhard.beans.BeanBaseJRequest().getExistencia();
+//
+//            for(int i=0;i<exist.length;i++){
+//                String label = exist[i].getCodigo();
+//                getEqs().add(new SelectItem(exist[i].getIdexistencia(),label));
+//            }
+//        }
     }
     
     private Tecnico tecnicoElegido=null;
@@ -783,7 +784,7 @@ private List eeq = new ArrayList();
     }
 
     public String btnProceder_action() {
-
+        BeanBaseJRequest instance = new BeanBaseJRequest();
         if(this.solicitudElegida==null){
 
             System.out.println("SOLICITUD NULL");
@@ -805,16 +806,27 @@ private List eeq = new ArrayList();
 
             m.setIdtecnico(tecnicoElegido);
 
-            if(this.solicitudElegida.getIdequiposimple()==null)
+            if(this.solicitudElegida.getIdequiposimple()==null){
                 m.setIdequipoexistente(this.solicitudElegida.getIdequipoexistente());
-            else
+                Existencia e = instance.getEntityManager().find(Existencia.class, this.solicitudElegida.getIdequipoexistente().getIdexistencia());
+                Estadoequipo ee = instance.getEntityManager().find(Estadoequipo.class, 3);
+                e.setIdestado(ee);
+                instance.modificarExistencia(e);
+            }
+                
+            else{
                 m.setIdequiposimple(this.solicitudElegida.getIdequiposimple());
+                Equiposimple e = instance.getEntityManager().find(Equiposimple.class, this.solicitudElegida.getIdequiposimple().getIdEquipoSimple());
+                Estadoequipo ee = instance.getEntityManager().find(Estadoequipo.class, 3);
+                e.setIdestado(ee);
+                instance.modificarEquipoSImple(e);
+            }
 
             m.setIdsolicitud(this.solicitudElegida);
 
             m.setEstado("Pendiente");
 
-            new BeanBaseJRequest().registrarMantenimiento(m);
+            instance.registrarMantenimiento(m);
 
             this.lblMensajes.setValue("Solicitud procesada con éxito. Los técnicos se encargarán de satisfacerla");
             this.render=true;
@@ -874,11 +886,8 @@ private List eeq = new ArrayList();
                 this.lblMantenimiento.setValue("¿Finalizado el Mantenimiento de " +this.mantenimientoElegido.getDescripcion() +" al Equipo "+ eq.getDescripcion() +" ?");
 
             }
-
-        
         this.renderMantenimientos=true;
-
-
+        this.changeIcon="imgEstable.png";
     }
 
     public String btnAceptarFinalizado_action() {
@@ -1122,6 +1131,25 @@ private List bit= new ArrayList();
         return null;
     }
 
+    private String changeIcon;
+
+    public void cambiarIcono(ValueChangeEvent vce){
+        String tmp=(String)this.comboEstado.getValue();
+        if(tmp!=null){
+            Integer id=Integer.parseInt(tmp);
+            Estadoequipo eq=new BeanBaseJRequest().getEntityManager().find(Estadoequipo.class, id);
+            if(eq.getNombre().equals("Funcional")){
+                this.changeIcon="imgEstable.png";
+            }
+            if(eq.getNombre().equals("Fallido")){
+                this.changeIcon="imgFallido.png";
+            }
+            if(eq.getNombre().equals("En mantenimiento")){
+                this.changeIcon="imgEnReparacion.png";
+            }
+        }
+    }
+
     public void listaBitacoras_processValueChange(ValueChangeEvent vce) {
 
         String tmp=(String)this.listaBitacoras.getValue();
@@ -1132,6 +1160,35 @@ private List bit= new ArrayList();
         this.bitacoraElegida=be;
         
         this.txtModBitacora.setValue(this.bitacoraElegida.getDescripcion());
+
+        if(this.bitacoraElegida.getIdequiposimple()==null){
+            switch(this.bitacoraElegida.getIdequipoexistente().getIdestado().getIdestado()){
+            case 1:
+                this.changeIcon="imgEstable.png";
+                break;
+            case 2:
+                this.changeIcon="imgFallido.png";
+                break;
+            case 3:
+                this.changeIcon="imgEnReparacion.png";
+                break;
+            }
+            this.estadoActualBit=this.bitacoraElegida.getIdequipoexistente().getIdestado().getNombre();
+        }else{
+            switch(this.bitacoraElegida.getIdequiposimple().getIdestado().getIdestado()){
+            case 1:
+                this.changeIcon="imgEstable.png";
+                break;
+            case 2:
+                this.changeIcon="imgFallido.png";
+                break;
+            case 3:
+                this.changeIcon="imgEnReparacion.png";
+                break;
+            }
+            this.estadoActualBit=this.bitacoraElegida.getIdequiposimple().getIdestado().getNombre();
+        }
+
 
         this.renderBitacoras=true;
 
@@ -1302,6 +1359,34 @@ private List bit= new ArrayList();
      */
     public void setListaTodasExistencias(List<Existencia> listaTodasExistencias) {
         this.listaTodasExistencias = listaTodasExistencias;
+    }
+
+    /**
+     * @return the changeIcon
+     */
+    public String getChangeIcon() {
+        return changeIcon;
+    }
+
+    /**
+     * @param changeIcon the changeIcon to set
+     */
+    public void setChangeIcon(String changeIcon) {
+        this.changeIcon = changeIcon;
+    }
+
+    /**
+     * @return the estadoActualBit
+     */
+    public String getEstadoActualBit() {
+        return estadoActualBit;
+    }
+
+    /**
+     * @param estadoActualBit the estadoActualBit to set
+     */
+    public void setEstadoActualBit(String estadoActualBit) {
+        this.estadoActualBit = estadoActualBit;
     }
 
 //    public void comboEstado_processValueChange(ValueChangeEvent vce) {
