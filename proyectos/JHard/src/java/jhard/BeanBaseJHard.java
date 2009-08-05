@@ -46,7 +46,8 @@ public class BeanBaseJHard extends AbstractPageBean {
     }
 
     public Boolean getHayUsuarioLogueado() {
-        return lu != null;
+        if (lu == null) return false;
+        return true;
     }
 
     public void setLu(LoggedUser lu) {

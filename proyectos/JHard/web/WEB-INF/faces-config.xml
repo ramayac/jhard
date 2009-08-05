@@ -143,4 +143,9 @@
         <managed-bean-class>jhard.BeanBaseJHard</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>jmlAsistencia</managed-bean-name>
+        <managed-bean-class>jhard.jmlAsistencia</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>
