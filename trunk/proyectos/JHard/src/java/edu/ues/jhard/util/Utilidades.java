@@ -1,5 +1,6 @@
 package edu.ues.jhard.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -9,6 +10,11 @@ import java.util.GregorianCalendar;
  * @author rodrigo
  */
 public class Utilidades {
+
+    public static String FormateaHora(Date hora){
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a"); // 	12:08 PM
+        return sdf.format(hora);
+    }
 
     public static int DiaHoyEntero() {
         Calendar cal = new GregorianCalendar();
