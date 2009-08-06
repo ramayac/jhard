@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-    Document   : jmlClase
+    Document   : jmlLaboratorio
     Created on : 08-02-2009, 02:19:12 PM
     Author     : rodrigo 
 -->
@@ -12,37 +12,31 @@
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
                 <ice:outputStyle href="./xmlhttp/css/rime/rime.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
-                <title>Cursos del Laboratorio</title>
+                <title>Laboratorio</title>
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <!--start header -->
-                    <jsp:directive.include file="/jspf/menu.jspx"/>
+                <jsp:directive.include file="/jspf/menu.jspx"/>
                 <!-- end header -->
                 <!-- start page -->
                 <div id="page">
                     <!-- start content -->
                     <div id="content">
-                        <div class="post">
-                            <h2 class="title">Cursos del Laboratorio</h2>
-                        </div>
-                        <ice:form id="formArticulo">
-                            <ice:panelGroup id="panelVistaUnica">
+                        <ice:form id="formLaboratorio">
+                            <ice:panelGroup>
                                 <div class="post">
-                                    <h2>
-                                        <ice:outputLabel id="lblArticuloTituloUnico" style="font-weight:bold; " value="#{jwikiUser.articuloActual.titulo}"/>
-                                    </h2>
+                                    <h2>Actividades del Laboratorio</h2><br/>
+                                    Estas son las actividades que su usuario puede realizar en el Laboratorio...<div align="right"><ice:outputConnectionStatus binding="#{jmlLaboratorio.estatus}" id="estatus" styleClass="actionStatus"/></div>
                                     <br/>
-                                    <ice:outputLabel id="lblArticuloDescripcionUnico" value="#{jwikiUser.articuloActual.descripcion}"/>
-                                    <br/>
-                                    <br/>
-                                    Escrito por: <ice:outputText id="lblArticuloUsuarioUnico"
-                                        value="#{jwikiUser.articuloActual.idusuario.nombre}"/>, en: <ice:outputText id="lblArticuloFechaUnico" value="#{jwikiUser.articuloActual.fechahora}"/>
+                                    <div align="center">
+                                    <ice:commandButton action="#{Redireccion.jmlInscripcion}" styleClass="btnAccion2" value="Inscribirse a un Curso"/><br/>
+                                    <ice:commandButton action="#{Redireccion.jmlAsistencia}" styleClass="btnAccion2" value="Asistencia Clase/Materia"/><br/>
+                                    <ice:commandButton action="#{Redireccion.jmlHorario}" styleClass="btnAccion2" value="Horarios del Laboratorio"/><br/>
+                                    <ice:commandButton action="#{Redireccion.jmlGestionaClase}" styleClass="btnAccion2" value="Gestionar Clases"/>
+                                    </div>
                                 </div>
-                                <br/>
-                                <ice:commandButton action="#{jwikiUser.toggleVista}" id="btnToggle" styleClass="btnAccion2" value="Regresar"/>
-                                <br/>
                             </ice:panelGroup>
                         </ice:form>
                         <br/>
@@ -52,9 +46,9 @@
                     <div id="sidebar">
                         <ul>
                             <li>
-                            <!--login control -->
-                            <jsp:directive.include file="/jspf/login.jspx"/>
-                            <!--login control -->
+                                <!--login control -->
+                                <jsp:directive.include file="/jspf/login.jspx"/>
+                                <!--login control -->
                             </li>
                             <li>
                                 <h2>Otros Vinculos</h2>
@@ -71,7 +65,7 @@
                 </div>
                 <!-- end page -->
                 <!-- start footer -->
-                    <jsp:directive.include file="/jspf/bottom.jspx"/>
+                <jsp:directive.include file="/jspf/bottom.jspx"/>
                 <!-- end footer -->
             </body>
         </html>

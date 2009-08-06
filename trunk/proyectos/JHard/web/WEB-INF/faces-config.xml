@@ -153,4 +153,9 @@
         <managed-bean-class>jhard.jmlInscripcion</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>jmlLaboratorio</managed-bean-name>
+        <managed-bean-class>jhard.jmlLaboratorio</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>

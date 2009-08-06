@@ -20,7 +20,7 @@
                             <ice:commandLink styleClass="current_page_item" rendered="#{Navegacion.moduloActual=='JRequest'}" action="#{Redireccion.jrequestUser}" value="Mantenimientos"/>
                         </li>
                         <li>
-                            <ice:commandLink rendered="#{Navegacion.moduloActual!='ManLab'}" action="#{Redireccion.jmlHorario}" value="Laboratorios"/>
+                            <ice:commandLink rendered="#{Navegacion.moduloActual!='ManLab'}" action="#{Redireccion.jmlLaboratorio}" value="Laboratorios"/>
                             <ice:commandLink styleClass="current_page_item" rendered="#{Navegacion.moduloActual=='ManLab'}" action="#{Redireccion.jmlHorario}" value="Laboratorios"/>
                         </li>
                         <li>
