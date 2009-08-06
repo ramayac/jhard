@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
  */
 public class Redireccion extends AbstractPageBean{
 
+    private static final String EMPTY_STRING = "";
     private Navegacion n;
 
     public String index(){
@@ -25,7 +26,7 @@ public class Redireccion extends AbstractPageBean{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     public String jrequestAdmin(){
@@ -36,7 +37,7 @@ public class Redireccion extends AbstractPageBean{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     public String jrequestUser(){
@@ -47,7 +48,7 @@ public class Redireccion extends AbstractPageBean{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     public String jrequestAdministracion(){
@@ -58,7 +59,7 @@ public class Redireccion extends AbstractPageBean{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     public String jrequestUserSolicitud(){
@@ -69,7 +70,7 @@ public class Redireccion extends AbstractPageBean{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     public String admin(){
@@ -80,7 +81,7 @@ public class Redireccion extends AbstractPageBean{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     public String jinvent(){
@@ -91,7 +92,7 @@ public class Redireccion extends AbstractPageBean{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     public String jcanon(){
@@ -102,7 +103,7 @@ public class Redireccion extends AbstractPageBean{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     public String jcanonAdmin(){
@@ -113,7 +114,51 @@ public class Redireccion extends AbstractPageBean{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "";
+        return EMPTY_STRING;
+    }
+
+    public String jmlLaboratorio(){
+        try {
+            n= (Navegacion)getBean("Navegacion");
+            n.setModuloActual("ManLab");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("jmlLaboratorio.iface");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return EMPTY_STRING;
+    }
+
+    public String jmlGestionaClase(){
+        try {
+            n= (Navegacion)getBean("Navegacion");
+            n.setModuloActual("ManLab");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("jmlGestionaClase.iface");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return EMPTY_STRING;
+    }
+
+    public String jmlAsistencia(){
+        try {
+            n= (Navegacion)getBean("Navegacion");
+            n.setModuloActual("ManLab");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("jmlAsistencia.iface");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return EMPTY_STRING;
+    }
+
+    public String jmlInscripcion(){
+        try {
+            n= (Navegacion)getBean("Navegacion");
+            n.setModuloActual("ManLab");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("jmlInscripcion.iface");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return EMPTY_STRING;
     }
 
     public String jmlHorario(){
@@ -124,7 +169,7 @@ public class Redireccion extends AbstractPageBean{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     public String jmlHorarioAdmin(){
@@ -135,7 +180,7 @@ public class Redireccion extends AbstractPageBean{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     public String jWikiUser(){
@@ -146,7 +191,7 @@ public class Redireccion extends AbstractPageBean{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     public String jProCurUser(){
@@ -157,7 +202,7 @@ public class Redireccion extends AbstractPageBean{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "";
+        return EMPTY_STRING;
     }
 
 }
