@@ -27,14 +27,33 @@
                         <ice:form id="formLaboratorio">
                             <ice:panelGroup>
                                 <div class="post">
-                                    <h2>Actividades del Laboratorio</h2><br/>
-                                    Estas son las actividades que su usuario puede realizar en el Laboratorio...<div align="right"><ice:outputConnectionStatus binding="#{jmlLaboratorio.estatus}" id="estatus" styleClass="actionStatus"/></div>
+                                    <h2>Actividades del Laboratorio</h2>
                                     <br/>
+                                    Estas son las actividades que su usuario puede realizar en el Laboratorio...
+                                    <div align="right"><ice:outputConnectionStatus binding="#{jmlLaboratorio.estatus}" id="estatus" styleClass="actionStatus"/></div>
                                     <div align="center">
-                                    <ice:commandButton action="#{Redireccion.jmlInscripcion}" styleClass="btnAccion2" value="Inscribirse a un Curso"/><br/>
-                                    <ice:commandButton action="#{Redireccion.jmlAsistencia}" styleClass="btnAccion2" value="Asistencia Clase/Materia"/><br/>
-                                    <ice:commandButton action="#{Redireccion.jmlHorario}" styleClass="btnAccion2" value="Horarios del Laboratorio"/><br/>
-                                    <ice:commandButton action="#{Redireccion.jmlGestionaClase}" styleClass="btnAccion2" value="Gestionar Clases"/>
+                                      <ice:panelGrid id="panelbotones" columns="2" cellpadding="8">
+                                          <ice:panelGroup rendered="#{jmlLaboratorio.esRolEstudiante}">
+                                            <ice:commandLink action="#{Redireccion.jmlInscripcion}">
+                                                <img src="img/inscribir.png"/><br/><ice:outputLabel value="Inscribirse a un Curso"/>
+                                            </ice:commandLink>
+                                        </ice:panelGroup>
+                                        <ice:panelGroup rendered="#{jmlLaboratorio.esRolEstudiante}">
+                                            <ice:commandLink action="#{Redireccion.jmlAsistencia}">
+                                                <img src="img/asistencia.png"/><br/><ice:outputLabel value="Asistencia Clase/Materia"/>
+                                            </ice:commandLink>
+                                        </ice:panelGroup>
+                                        <ice:panelGroup>
+                                            <ice:commandLink action="#{Redireccion.jmlHorario}">
+                                                <img src="img/horario.png"/><br/><ice:outputLabel value="Horarios del Laboratorio"/>
+                                            </ice:commandLink>
+                                        </ice:panelGroup>
+                                        <ice:panelGroup rendered="#{jmlLaboratorio.permisos}">
+                                            <ice:commandLink action="#{Redireccion.jmlGestionaClase}">
+                                                <img src="img/clases.png"/><br/><ice:outputLabel value="Gestionar Clases"/>
+                                            </ice:commandLink>
+                                        </ice:panelGroup>
+                                      </ice:panelGrid>
                                     </div>
                                 </div>
                             </ice:panelGroup>

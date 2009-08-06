@@ -21,7 +21,7 @@
                         </li>
                         <li>
                             <ice:commandLink rendered="#{Navegacion.moduloActual!='ManLab'}" action="#{Redireccion.jmlLaboratorio}" value="Laboratorios"/>
-                            <ice:commandLink styleClass="current_page_item" rendered="#{Navegacion.moduloActual=='ManLab'}" action="#{Redireccion.jmlHorario}" value="Laboratorios"/>
+                            <ice:commandLink styleClass="current_page_item" rendered="#{Navegacion.moduloActual=='ManLab'}" action="#{Redireccion.jmlLaboratorio}" value="Laboratorios"/>
                         </li>
                         <li>
                             <ice:commandLink rendered="#{Navegacion.moduloActual!='JInvent'}" action="#{Redireccion.jinvent}" value="Inventario"/>

@@ -37,6 +37,19 @@ public class jmlLaboratorio extends BeanBaseJHard {
         this.estatus = ocs;
     }
 
+    public boolean getPermisos(){
+        switch(this.getRolUsuarioConectado()){
+            case -1:
+                return false; //no hay informacion de usuario
+            case ROL_INSTRUCTOR:
+            case ROL_DOCENTE:
+            case ROL_ADMINISTRADOR:
+                return true; //tengo los permisos
+            //default:
+                //break;
+        }
+        return false;
+    }
 
     public jmlLaboratorio() {
 
