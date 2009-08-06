@@ -69,9 +69,10 @@ CREATE TABLE  `jhard`.`articulos` (
   KEY `idxArtTitulo` (`titulo`),
   KEY `idxArtFecha` (`fechahora`),
   CONSTRAINT `fkarticulousuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Articulos de jwiki';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COMMENT='Articulos de jwiki';
 INSERT INTO `jhard`.`articulos` VALUES  (2,'¿Qué es un Wiki?','<p>Un <b>wiki</b>, o una <b>wiki</b>, es un <a title=\"Sitio web\" href=\"http://es.wikipedia.org/wiki/Sitio_web\">sitio web</a> cuyas p&aacute;ginas web pueden ser editadas por m&uacute;ltiples voluntarios a trav&eacute;s del <a title=\"Navegador web\" href=\"http://es.wikipedia.org/wiki/Navegador_web\">navegador web</a>. Los <a title=\"Usuario\" href=\"http://es.wikipedia.org/wiki/Usuario\">usuarios</a> pueden crear, modificar o borrar un mismo texto que comparten. Los textos o &quot;p&aacute;ginas wiki&quot; tienen t&iacute;tulos &uacute;nicos. Si se escribe el t&iacute;tulo de una &quot;p&aacute;gina-wiki&quot; en alg&uacute;n lugar del wiki, esta palabra se convierte en un &quot;enlace web&quot; (o &quot;<a title=\"Link\" href=\"http://es.wikipedia.org/wiki/Link\">link</a>&quot;) a la p&aacute;gina web.</p>\n<p>En una p&aacute;gina sobre &quot;alpinismo&quot; puede haber una palabra como &quot;piolet&quot; o &quot;br&uacute;jula&quot; que est&eacute; marcada como palabra perteneciente a un t&iacute;tulo de p&aacute;gina wiki. La mayor parte de las implementaciones de wikis indican en el <a class=\"mw-redirect\" title=\"URL\" href=\"http://es.wikipedia.org/wiki/URL\">URL</a> de la p&aacute;gina el propio t&iacute;tulo de la p&aacute;gina wiki (en Wikipedia ocurre as&iacute;: <a rel=\"nofollow\" title=\"http://es.wikipedia.org/wiki/Alpinismo\" class=\"external free\" href=\"http://es.wikipedia.org/wiki/Alpinismo\">http://es.wikipedia.org/wiki/Alpinismo</a>), facilitando el uso y comprensibilidad del link fuera del propio sitio web. Adem&aacute;s, esto permite formar en muchas ocasiones una coherencia terminol&oacute;gica, generando una ordenaci&oacute;n <i>natural</i> del contenido.</p>\n<p>La aplicaci&oacute;n de mayor peso y a la que le debe su mayor fama hasta el momento ha sido la creaci&oacute;n de enciclopedias colaborativas, g&eacute;nero al que pertenece la <a title=\"Wikipedia\" href=\"http://es.wikipedia.org/wiki/Wikipedia\">Wikipedia</a>. Existen muchas otras aplicaciones m&aacute;s cercanas a la coordinaci&oacute;n de informaciones y acciones, o la puesta en com&uacute;n de conocimientos o textos dentro de grupos.</p>\n<p>La mayor parte de los wikis actuales conservan un historial de cambios que permite recuperar f&aacute;cilmente cualquier estado anterior y ver \'qui&eacute;n\' hizo cada cambio, lo cual facilita enormemente el mantenimiento conjunto y el control de usuarios destructivos. Habitualmente, sin necesidad de una revisi&oacute;n previa, se actualiza el contenido que muestra la p&aacute;gina wiki editada.</p>','2009-07-25 18:59:20',13),
  (3,'¿Qué es JHard?','<p>\n<meta content=\"text/html; charset=utf-8\" http-equiv=\"CONTENT-TYPE\">\n<title></title>\n<meta content=\"OpenOffice.org 3.1  (Linux)\" name=\"GENERATOR\"> 	<style type=\"text/css\">\n	<!--\n		@page { margin: 2cm }\n		P { margin-bottom: 0.21cm }\n	-->\n	</style>   </meta>\n</meta>\n</p>\n<p>El sistema <strong>JHard</strong>, es una solucion informatica creada para el Laboratorio de Hardware y Software de la <a href=\"http://www.uesocc.edu.sv\">Universidad de El Salvador - Facultad Multidisciplinaria de Occidente</a>.<br />\n<br />\nEst&aacute; compuesto por seis m&oacute;dulos robustos a los que tienen acceso los usuarios de todo tipo, sin embargo est&aacute; compuesto de otra gran cantidad de subcomponentes que a&ntilde;aden caracter&iacute;sticas adicionales, necesarias para el funcionamiento interno del mismo. A continuaci&oacute;n,&nbsp; se listan los&nbsp; seis m&oacute;dulos principales con los que tendr&aacute; interacci&oacute;n los usuarios finales, y las necesidades que cada uno pretenden solventar:</p>\n<ol>\n    <li>JInvent: Manejo de Inventario del Laboratorio de Hardware (No consumibles)</li>\n    <li>JRequest: Solicitud de servicio al laboratorio.</li>\n    <li>JWiki: Modulo colaborativo de conocimiento, con soluciones a problemas comunes.</li>\n    <li>ProCur: Modulo de Manejo de Contenidos (CMS) para la promoci&oacute;n de cursos del Laboratorio de Hardware</li>\n    <li>ManLab: Modulo de para la gesti&oacute;n de inscripci&oacute;n de laboratorios pr&aacute;cticos en el Laboratorio de Hardware.</li>\n    <li>JCanon: Modulo para la gesti&oacute;n de reserva de ca&ntilde;ones y/o laptops.</li>\n</ol>\n<p>El sistema JHard tendr&aacute; adem&aacute;s, una interfaz administrativa (JHardmin) con la que se podr&aacute; dar mantenimiento al sitio, y administrar los perfiles/roles de los usuarios.</p>\n<p>&nbsp;</p>','2009-07-26 09:18:43',13);
+INSERT INTO `jhard`.`articulos` VALUES  (4,'¿Cómo saco el dispositivo USB del ordenador?','<p>Como para todo hay formas y formas de hacerlo: una correcta con la podremos estar seguros <em>(nunca un 100%)</em> de no perder la informaci&oacute;n almacenada por el camino y la otra <em>&ldquo;resultona&rdquo;</em> <em>(generalmente no suele ocurrir nada, aunque <strong>el riesgo es mucho mayor</strong>)</em> sabemos que est&aacute; mal hecho pero muchas veces por rapidez o por desconocimiento de las dem&aacute;s opciones terminamos echando mano de &eacute;sta.</p>\n<p><strong>M&eacute;todos para extraer correctamente un dispositivo USB</strong></p>\n<ul>\n    <li><strong>Quiz&aacute;s la m&aacute;s r&aacute;pida y la m&aacute;s extendida:</strong> clic izquierdo sobre el icono de extracci&oacute;n segura &gt; seleccionar el dispositivo a extraer y volver a hacer clic.</li>\n</ul>\n<ul>\n    <li><strong>Muy similar a la anterior pero con m&aacute;s opciones:</strong> clic derecho sobre el icono de extracci&oacute;n segura &gt; quitar hardware con seguridad &gt; en el nuevo panel seleccionar el dispositivo a extraer &gt; hacer clic en detener. Observar que marcando la opci&oacute;n <em>mostrar componentes de dispositivos</em> se despliega una lista con el nombre y letra de unidad correspondiente.</li>\n</ul>\n<ul>\n    <li><strong>Forma r&aacute;pida y efectiva:</strong> desde Mi PC &gt; clic derecho sobre el dispositivo a extraer &gt; expulsar.</li>\n</ul>','2009-08-05 14:05:25',13);
 CREATE TABLE  `jhard`.`asistencia` (
   `idasistencia` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada asistencia',
   `idestudiante` int(11) NOT NULL COMMENT 'Referencia al estudiante que asistio al curso',
@@ -84,7 +85,8 @@ CREATE TABLE  `jhard`.`asistencia` (
   CONSTRAINT `fkidclase_asistencia` FOREIGN KEY (`idclase`) REFERENCES `clase` (`idclase`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidequipoexistente_asistencia` FOREIGN KEY (`idequipoexistente`) REFERENCES `existencia` (`idexistencia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidestudiante_asistencia` FOREIGN KEY (`idestudiante`) REFERENCES `estudiante` (`idestudiante`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+INSERT INTO `jhard`.`asistencia` VALUES  (4,1,3,NULL);
 CREATE TABLE  `jhard`.`atributohardware` (
   `idatributohardware` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico del atributo de hardware',
   `nombre` varchar(45) NOT NULL COMMENT 'Nombre del atributo',
@@ -183,8 +185,10 @@ CREATE TABLE  `jhard`.`clase` (
   CONSTRAINT `fkiddocente_clase` FOREIGN KEY (`iddocente`) REFERENCES `docente` (`iddocente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidhorario_clase` FOREIGN KEY (`idhorario`) REFERENCES `horario` (`idhorario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidinstructor_clase` FOREIGN KEY (`idinstructor`) REFERENCES `instructor` (`idinstructor`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-INSERT INTO `jhard`.`clase` VALUES  (1,'2009-03-05',1,2,'Herencia en Java','N/A',1,'00:00:00','00:00:00',0);
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+INSERT INTO `jhard`.`clase` VALUES  (1,'2009-03-05',1,2,'Herencia en Java','N/A',1,'00:00:00','00:00:00',0),
+ (2,'2009-08-03',8,NULL,'Java Collections I','',NULL,'11:53:19','15:00:00',1),
+ (3,'2009-08-05',8,NULL,'Simple Date Format Java','',NULL,'15:30:41','19:00:00',1);
 CREATE TABLE  `jhard`.`clasificacion` (
   `idclasificacion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada clasificacion',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre de la clasificacion',
@@ -245,8 +249,9 @@ CREATE TABLE  `jhard`.`curso` (
   CONSTRAINT `fkidestado_curso` FOREIGN KEY (`idestado`) REFERENCES `estadocurso` (`idestadocurso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidinstructor_curso` FOREIGN KEY (`idinstructor`) REFERENCES `instructor` (`idinstructor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidmateria_curso` FOREIGN KEY (`idmateria`) REFERENCES `materia` (`idmateria`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-INSERT INTO `jhard`.`curso` VALUES  (1,'Grupo 1 ',20,2,2,'2009-03-03',1,2009,1,NULL,2,0);
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+INSERT INTO `jhard`.`curso` VALUES  (1,'Grupo 1 ',20,2,2,'2009-03-03',2,2009,1,NULL,2,1),
+ (2,'Grupo 2',20,2,2,'2009-03-03',2,2009,1,NULL,2,1);
 CREATE TABLE  `jhard`.`docente` (
   `iddocente` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada docente',
   `apellidos` varchar(200) NOT NULL COMMENT 'Apellidos del docente',
@@ -419,14 +424,15 @@ CREATE TABLE  `jhard`.`horario` (
   KEY `fkidaula_horario` (`idaula`),
   CONSTRAINT `fkidaula_horario` FOREIGN KEY (`idaula`) REFERENCES `ubicacion` (`idubicacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidcurso_horario` FOREIGN KEY (`idcurso`) REFERENCES `curso` (`idcurso`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`horario` VALUES  (1,1,'10:05:00','10:55:00',1,1),
  (2,3,'10:00:00','10:55:00',1,1),
  (3,5,'10:00:00','10:55:00',1,1),
  (4,1,'10:55:00','11:45:00',1,1),
  (5,2,'10:05:00','10:55:00',1,1),
  (6,2,'07:35:00','08:25:00',1,1),
- (7,3,'07:35:00','09:15:00',1,1);
+ (7,3,'07:35:00','09:15:00',1,1),
+ (8,3,'07:35:00','19:00:00',1,1);
 CREATE TABLE  `jhard`.`inscripcion` (
   `idinscripcion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada inscripcion',
   `idcurso` int(11) NOT NULL COMMENT 'Referencia al curso al cual se inscribio el estudiante',
@@ -436,8 +442,9 @@ CREATE TABLE  `jhard`.`inscripcion` (
   KEY `fkidestudiante_inscripcion` (`idestudiante`),
   CONSTRAINT `fkidcurso_inscripcion` FOREIGN KEY (`idcurso`) REFERENCES `curso` (`idcurso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidestudiante_inscripcion` FOREIGN KEY (`idestudiante`) REFERENCES `estudiante` (`idestudiante`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-INSERT INTO `jhard`.`inscripcion` VALUES  (1,1,1);
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+INSERT INTO `jhard`.`inscripcion` VALUES  (1,1,1),
+ (2,2,1);
 CREATE TABLE  `jhard`.`instalacion` (
   `idinstalacion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada instalacion',
   `idsoftware` int(11) NOT NULL COMMENT 'Referencia al software instalado',
@@ -588,15 +595,6 @@ INSERT INTO `jhard`.`reserva` VALUES  (14,'2009-07-10','2009-07-08 08:25:00','20
 INSERT INTO `jhard`.`reserva` VALUES  (25,'2009-07-12','2009-07-12 10:05:00','2009-07-12 11:45:00',1,8,9,1,'Prestamo de Laptop Toshiba Satellite',2),
  (26,'2009-07-31','2009-07-31 10:05:00','2009-07-31 10:55:00',1,7,9,1,'Prestamo de Cañon Epson  Epson',1),
  (27,'2009-07-31','2009-07-31 10:05:00','2009-07-31 10:55:00',1,12,9,1,'Prestamo de Laptop Sony VGN',1);
-CREATE TABLE  `jhard`.`responsable` (
-  `idresponsable` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada responsable',
-  `apellidos` varchar(200) NOT NULL COMMENT 'Apellidos de la persona responsable',
-  `nombres` varchar(200) NOT NULL COMMENT 'Nombres de la persona responsable',
-  `tipodocumento` varchar(45) NOT NULL COMMENT 'Tipo de documento presentado para solicitar el equipo',
-  `valordocumento` varchar(45) NOT NULL COMMENT 'Valor del documento presentado para solicitar el equipo',
-  `visible` int(11) NOT NULL default '1' COMMENT 'Es 1 por defecto. Indica que el usuario esta activo. Al momento de borrar usuarios del sistema, nada mas cambiar este estado a 0.',
-  PRIMARY KEY  (`idresponsable`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE  `jhard`.`rol` (
   `idrol` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada rol',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del rol',
@@ -621,15 +619,6 @@ CREATE TABLE  `jhard`.`software` (
   CONSTRAINT `fkidclasificacion_software` FOREIGN KEY (`idclasificacion`) REFERENCES `clasificacion` (`idclasificacion`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`software` VALUES  (1,'Microsoft Windows XP','Service Pack 2','JGOL-JGFL-KGJK.KJGF-O3JW-OLB3',20,9);
-CREATE TABLE  `jhard`.`solicitante` (
-  `idsolicitante` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada persona solicitante',
-  `apellidos` varchar(200) NOT NULL COMMENT 'Apellidos del solicitante',
-  `nombres` varchar(200) NOT NULL COMMENT 'Nombres del solicitante',
-  `tipodocumento` varchar(45) NOT NULL COMMENT 'Tipo de documento presentado para la solicitud',
-  `valordocumento` varchar(45) NOT NULL COMMENT 'Valor del documento presentado para la solicitud',
-  `visible` int(11) NOT NULL default '1' COMMENT 'Es 1 por defecto. Indica que el usuario esta activo. Al momento de borrar usuarios del sistema, nada mas cambiar este estado a 0.',
-  PRIMARY KEY  (`idsolicitante`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE  `jhard`.`solicitud` (
   `idsolicitud` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada solicitud',
   `fecha` date NOT NULL COMMENT 'Fecha en la que se registro la solicitud',
@@ -737,11 +726,6 @@ INSERT INTO `jhard`.`usuario` VALUES  (1,'LuisBarrera','21232F297A57A5A743894A0E
  (11,'rosario','9003D1DF22EB4D3820015070385194C8',3,NULL),
  (12,'robertux','3858F62230AC3C915F300C664312C63F',1,NULL),
  (13,'ramayac','21232F297A57A5A743894A0E4A801FC3',1,NULL);
-CREATE TABLE  `jhard`.`valoracion` (
-  `fk_userid` int(11) NOT NULL,
-  `fk_identrada` int(11) NOT NULL,
-  KEY `entrada` USING BTREE (`fk_userid`,`fk_identrada`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
 
