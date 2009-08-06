@@ -26,15 +26,16 @@ import javax.servlet.http.HttpServletResponse;
  * @author rodrigo
  */
 public class feed extends HttpServlet {
-    private static final int JPROCUR = 2;
     private static final int JWIKI = 1;
+    private static final int JPROCUR = 2;
     private static final String DEFAULT_FEED_TYPE = "default.feed.type";
+    private static final String FEED_SITE_LINK = "http://www.jhard.com";
     private static final String RSS2 = "rss_2.0";
     private static final String ATOM = "atom_0.3";
     private static final String FEED_TYPE = "type";
     private static final String OPCION = "opt";
     private static final String MIME_TYPE = "application/xml;charset=UTF-8"; //mime o content type
-    private static final String COULD_NOT_GENERATE_FEED_ERROR = "Could not generate feed";
+    private static final String COULD_NOT_GENERATE_FEED_ERROR = "No pude generar los datos para la suscripción";
     private static final int MAX_FEED_ITEMS = 10;
 
     private String defaultFeedType;
@@ -73,6 +74,19 @@ public class feed extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        doPost(request, response);
+    } 
+
+    /** 
+     * Handles the HTTP <code>POST</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
         Integer opt = new Integer(-1);
         try {
             String opcion = request.getParameter(OPCION);
@@ -103,19 +117,6 @@ public class feed extends HttpServlet {
             log(msg,ex);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,msg);
         }
-    } 
-
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        //... meh!
     }
 
     /** 
@@ -124,14 +125,14 @@ public class feed extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Generador de sindicación para jHard.";
+        return "Servlet generador de sindicación (ATOM/RSS Feeds) para jHard.";
     }
 
     protected SyndFeed getFeedArticulos(HttpServletRequest req) throws IOException,FeedException {
         SyndFeed feed = new SyndFeedImpl();
 
         feed.setTitle("Artículos Laboratorio Hardware");
-        feed.setLink("http://srbyte.com"); //TODO: cambiar.
+        feed.setLink(FEED_SITE_LINK); //TODO: cambiar.
         feed.setDescription("Suscribete al wiki del Laboratorio de Hardware, se muestran los últimos 10 artículos.");
 
         List entrys = new ArrayList();
@@ -162,7 +163,7 @@ public class feed extends HttpServlet {
         SyndFeed feed = new SyndFeedImpl();
 
         feed.setTitle("Entradas Laboratorio Hardware");
-        feed.setLink("http://srbyte.com"); //TODO: cambiar.
+        feed.setLink(FEED_SITE_LINK);
         feed.setDescription("Suscribete a la promoción de cursos del Laboratorio de Hardware, se muestran las 10 entradas.");
 
         List entrys = new ArrayList();
@@ -193,7 +194,7 @@ public class feed extends HttpServlet {
         this.listaArticulos = this.getJWikiInstance().getUltimosNArticulos(MAX_FEED_ITEMS);
         this.listaEntradas = this.getJProcurInstance().getUltimasNEntradas(MAX_FEED_ITEMS);
         feed.ultimaActualizacion = new Date();
-        System.out.println("(RSS Servlet)Se recargo la lista de articulos y entradas.");
+        System.out.println("(FEED Servlet) Se recargo la lista de articulos y entradas.");
     }
 
     private boolean puedoActualizar(){

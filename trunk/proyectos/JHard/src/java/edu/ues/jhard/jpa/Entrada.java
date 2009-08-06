@@ -5,6 +5,7 @@
 
 package edu.ues.jhard.jpa;
 
+import edu.ues.jhard.util.Utilidades;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -170,9 +171,7 @@ public class Entrada implements Serializable {
     }
 
     public String getFecha(){
-        return String.valueOf(this.fechahora.getDate())+" - "+
-                String.valueOf(this.fechahora.getMonth()+1)+" - "+
-                String.valueOf(this.fechahora.getYear()+1900);
+        return Utilidades.FormatearFechaHora(this.fechahora);
     }
 
 //    public String gethoraInicio(){

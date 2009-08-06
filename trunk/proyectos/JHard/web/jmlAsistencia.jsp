@@ -25,7 +25,7 @@
                     <!-- start content -->
                     <div id="content">
                         <ice:form id="formAsistencia">
-                            <ice:panelGroup>
+                            <ice:panelGroup rendered="#{jmlAsistencia.permisos}">
                                 <div class="post">
                                     <h2>Asistencia a una Clase</h2><br/>
                                     <ice:panelGroup id="panel1" rendered="#{jmlAsistencia.paso1}">
@@ -69,6 +69,9 @@
                                    </ice:panelGroup>
                                 </ice:panelGroup>
                                 </div>
+                            </ice:panelGroup>
+                            <ice:panelGroup rendered="#{!jmlAsistencia.permisos}">
+                                    <jsp:directive.include file="/jspf/nologin.jspx"/>
                             </ice:panelGroup>
                             <!-- panel de mensajes de avisos...-->
                             <ice:panelPopup autoCentre="true" id="ppmsj" modal="true" rendered="#{jmlAsistencia.popup.visible}">

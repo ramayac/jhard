@@ -770,6 +770,18 @@ public class BeanBaseJManLab extends BeanBase{
     }
 
     /**
+     * Metodo para obtener la cantidad de estudiantes inscritos en un curso.
+     * @param idInscripcion id de la inscripcion que se desea
+     * @return Cantidad de inscripciones asociadas con el curso.
+     */
+    public Integer getInscripcionCurso(Curso curso) {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Inscripcion.findCantCurso");
+        q.setParameter("idcurso", curso);
+        return Integer.parseInt(q.getSingleResult().toString());
+    }
+
+    /**
      * Metodo para obtener una Inscripcion por su ID
      * @param idInscripcion id de la inscripcion que se desea
      * @return

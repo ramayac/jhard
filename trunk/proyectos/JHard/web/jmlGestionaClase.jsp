@@ -25,6 +25,7 @@
                     <!-- start content -->
                     <div id="content">
                         <ice:form id="formGestionarClases">
+                            <ice:panelGroup rendered="#{jmlGestionaClase.permisos}">
                             <ice:panelGroup id="panelAccion" rendered="#{jmlGestionaClase.mostrarAcciones}">
                                 <div class="post">
                                     <h2>Gestiona Clase/Practica</h2>
@@ -46,7 +47,7 @@
                                         <ice:column id="columnaCursos">
                                             <f:facet name="header">Lista de Cursos</f:facet>
                                             <ice:commandLink action="#{jmlGestionaClase.elegirCurso}">
-                                                <ice:outputLabel id="lblTituloCurso" style="font-weight:bold; " value="#{indiceCurso.nombre}"/>
+                                                <ice:outputLabel id="lblTituloCurso" style="font-weight:bold; " value="#{indiceCurso.nombre}"/> - <ice:outputLabel id="lblMateriaCurso" style="font-weight:bold; " value="#{indiceCurso.idmateria.nombre}"/>
                                                 <f:param name="idCurso" value="#{indiceCurso.idcurso}"/>
                                             </ice:commandLink>
                                         </ice:column>
@@ -145,8 +146,11 @@
                                     </ice:panelGroup>
                                 </div>
                             </ice:panelGroup>
+                            </ice:panelGroup>
                             <!-- Fin Seccion de Terminar la Clase -->
-
+                            <ice:panelGroup rendered="#{!jmlGestionaClase.permisos}">
+                                    <jsp:directive.include file="/jspf/nologin.jspx"/>
+                            </ice:panelGroup>
                             <!-- panel de mensajes de avisos...-->
                             <ice:panelPopup autoCentre="true" id="ppmsj" modal="true" rendered="#{jmlGestionaClase.popup.visible}">
                                 <f:facet name="header">

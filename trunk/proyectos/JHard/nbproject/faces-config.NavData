@@ -2,15 +2,15 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="jrequestAdmin.jsp" x="2400" y="300" zoom="true"/>
         <Node id="jmlHorario.jsp" x="150" y="750" zoom="true"/>
+        <Node id="jmlInscripcion.jsp" x="650" y="450" zoom="true"/>
+        <Node id="jrequestAdmin.jsp" x="2400" y="300" zoom="true"/>
         <Node id="jspf/bottom.jspx" x="150" y="600" zoom="true"/>
         <Node id="Admin.jspx" x="65" y="134" zoom="true"/>
         <Node id="jmlHorarioAdmin.jsp" x="400" y="600" zoom="true"/>
         <Node id="JRequestAdministracion.jsp" x="150" y="300" zoom="true"/>
         <Node id="jcanon.jsp" x="400" y="150" zoom="true"/>
         <Node id="jspf/login.jspx" x="900" y="450" zoom="true"/>
-        <Node id="jmlClase.jsp" x="650" y="450" zoom="true"/>
         <Node id="jmlGestionaClase.jsp" x="900" y="300" zoom="true"/>
         <Node id="Index.jsp" x="1953" y="584" zoom="false"/>
         <Node id="jrequestUser.jsp" x="650" y="900" zoom="true"/>
@@ -21,6 +21,7 @@
         <Node id="jprocurAdmin.jsp" x="400" y="450" zoom="true"/>
         <Node id="jspf/menu.jspx" x="1400" y="150" zoom="true"/>
         <Node id="scheduler.html" x="900" y="150" zoom="true"/>
+        <Node id="jmlLaboratorio.jsp" x="400" y="750" zoom="true"/>
         <Node id="jwikiAdmin.jsp" x="650" y="300" zoom="true"/>
         <Node id="jprocurUser.jsp" x="150" y="450" zoom="true"/>
         <Node id="horario.html" x="1150" y="150" zoom="true"/>
