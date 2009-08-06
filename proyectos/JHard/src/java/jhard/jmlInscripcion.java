@@ -30,11 +30,8 @@ public class jmlInscripcion extends BeanBaseJHard {
     public void setPopup(popUp popup) {
         this.popup = popup;
     }
-
     private List<Curso> listaCursos = new ArrayList<Curso>();
-
     private Curso cursoSeleccionado = new Curso();
-
     private BeanBaseJManLab jmanLabInstance = new BeanBaseJManLab();
 
     public Curso getCursoSeleccionado() {
@@ -63,7 +60,7 @@ public class jmlInscripcion extends BeanBaseJHard {
         return EMPTY_STRING;
     }
 
-    public String cancelar(){
+    public String cancelar() {
         this.paso(0);
         return EMPTY_STRING;
     }
@@ -74,20 +71,25 @@ public class jmlInscripcion extends BeanBaseJHard {
 
         this.cursoSeleccionado = this.getJmanLabInstance().getCurso(id.intValue());
 
-        List<Inscripcion> lstInscripciones = this.getJmanLabInstance().getInscripcionCursoEstudiante(cursoSeleccionado, this.getEstudianteUsuario());
+        Integer inscritos = this.getJmanLabInstance().getInscripcionCurso(cursoSeleccionado);
+        if (this.cursoSeleccionado.getCupomax() < inscritos) {
+            List<Inscripcion> lstInscripciones = this.getJmanLabInstance().getInscripcionCursoEstudiante(cursoSeleccionado, this.getEstudianteUsuario());
 
-        if(lstInscripciones.size()>0){
-            popup.setMensaje("Usted ya esta inscrito en este curso.");
-        } else {
-            Inscripcion nuevaInscripcion = new Inscripcion();
-            nuevaInscripcion.setIdestudiante(this.getEstudianteUsuario());
-            nuevaInscripcion.setIdcurso(cursoSeleccionado);
-
-            if(this.jmanLabInstance.createInscripcion(nuevaInscripcion)){
-                popup.setMensaje("Inscripcion confirmada.");
+            if (lstInscripciones.size() > 0) {
+                popup.setMensaje("Usted ya está inscrito en este curso.");
             } else {
-                popup.setMensaje("No se pudo realizar la inscripción.");
+                Inscripcion nuevaInscripcion = new Inscripcion();
+                nuevaInscripcion.setIdestudiante(this.getEstudianteUsuario());
+                nuevaInscripcion.setIdcurso(cursoSeleccionado);
+
+                if (this.jmanLabInstance.createInscripcion(nuevaInscripcion)) {
+                    popup.setMensaje("Inscripción confirmada.");
+                } else {
+                    popup.setMensaje("No se pudo realizar la inscripción.");
+                }
             }
+        } else {
+            popup.setMensaje("El curso llegó a su cupo máximo.");
         }
         popup.setVisible(true);
 
@@ -98,7 +100,7 @@ public class jmlInscripcion extends BeanBaseJHard {
         boolean hayusuariologueado = this.getHayUsuarioLogueado();
         if (hayusuariologueado) {
             Estudiante est = this.getEstudianteUsuario();
-            if (est!=null) {
+            if (est != null) {
                 this.listaCursos = jmanLabInstance.getCursosCicloEstudianteHabilitado(est);
                 System.out.println("Es estudiante, y los cursos que puede ver el estudiante son: " + this.listaCursos.size());
             }
@@ -113,11 +115,23 @@ public class jmlInscripcion extends BeanBaseJHard {
         }
     }
 
+    public boolean getPermisos() {
+        switch (this.getRolUsuarioConectado()) {
+            case -1:
+                return false; //no hay informacion de usuario
+            case ROL_ESTUDIANTE:
+                return true; //tengo los permisos
+            //default:
+            //break;
+        }
+        return false;
+    }
+
     public jmlInscripcion() {
         cargaCursosDeEstudiante();
     }
 
-        /**
+    /**
      * <p>Callback method that is called whenever a page is navigated to,
      * either directly via a URL, or indirectly via page navigation.
      * Customize this method to acquire resources that will be needed
@@ -186,5 +200,4 @@ public class jmlInscripcion extends BeanBaseJHard {
      */
     public void destroy() {
     }
-
 }

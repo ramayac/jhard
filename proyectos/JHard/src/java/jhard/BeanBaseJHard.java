@@ -90,32 +90,32 @@ public class BeanBaseJHard extends AbstractPageBean {
         return this.U.getIdrol().getIdrol();
     }
 
-    public Boolean esRolAdministrador(){
+    public Boolean getEsRolAdministrador(){
         if(getRolUsuarioConectado()==ROL_ADMINISTRADOR) return true;
         return false;
     }
 
-    public Boolean esRolAdministrativo(){
+    public Boolean getEsRolAdministrativo(){
         if(getRolUsuarioConectado()==ROL_ADMINISTRADOR) return true;
         return false;
     }
 
-    public Boolean esRolDocente(){
+    public Boolean getEsRolDocente(){
         if(getRolUsuarioConectado()==ROL_DOCENTE) return true;
         return false;
     }
 
-    public Boolean esRolInstructor(){
+    public Boolean getEsRolInstructor(){
         if(getRolUsuarioConectado()==ROL_INSTRUCTOR) return true;
         return false;
     }
 
-    public Boolean esRolEstudiante(){
+    public Boolean getEsRolEstudiante(){
         if(getRolUsuarioConectado()==ROL_ESTUDIANTE) return true;
         return false;
     }
 
-    public Boolean esRolEditor(){
+    public Boolean getEsRolEditor(){
         if(getRolUsuarioConectado()==ROL_EDITORCONTENIDO) return true;
         return false;
     }

@@ -227,6 +227,18 @@ public class jmlAsistencia extends BeanBaseJHard {
         }
     }
 
+    public boolean getPermisos(){
+        switch(this.getRolUsuarioConectado()){
+            case -1:
+                return false; //no hay informacion de usuario
+            case ROL_ESTUDIANTE:
+                return true; //tengo los permisos
+            //default:
+                //break;
+        }
+        return false;
+    }
+
     public jmlAsistencia() {
         //this.lu= getJHardminInstance().getCurrentUser();
         cargaCursosDeEstudiante();

@@ -11,9 +11,21 @@ import java.util.GregorianCalendar;
  */
 public class Utilidades {
 
+    //Se añaden SimpleDateFormats para cada caso de formato, para evitar problemas de concurrencia
+    private static final SimpleDateFormat sdfHora = new SimpleDateFormat("h:mm a"); // 	12:08 PM
+    private static final SimpleDateFormat sdfFechaHora = new SimpleDateFormat("EEE, d MMM 'yy HH:mm a"); // Wed, 4 Jul '09 12:08 PM
+    private static final SimpleDateFormat sdfFecha = new SimpleDateFormat("EEE, MMM d, 'yy"); // Wed, 4 Jul '09
+
+    public static String FormatearFechaHora(Date fechaHora){
+        return sdfFechaHora.format(fechaHora);
+    }
+
+    public static String FormatearFecha(Date fecha){
+        return sdfFecha.format(fecha);
+    }
+
     public static String FormateaHora(Date hora){
-        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a"); // 	12:08 PM
-        return sdf.format(hora);
+        return sdfHora.format(hora);
     }
 
     public static int DiaHoyEntero() {

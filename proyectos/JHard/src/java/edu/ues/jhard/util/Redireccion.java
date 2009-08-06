@@ -16,11 +16,12 @@ import javax.faces.context.FacesContext;
 public class Redireccion extends AbstractPageBean{
 
     private static final String EMPTY_STRING = "";
+    private static final String BEAN_NAME = "Navegacion";
     private Navegacion n;
 
     public String index(){
         try {
-            n = (Navegacion)getBean("Navegacion");
+            n = (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("Index");
             FacesContext.getCurrentInstance().getExternalContext().redirect("Index.iface");
         } catch (IOException ex) {
@@ -31,7 +32,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jrequestAdmin(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("JRequest");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jrequestAdmin.iface");
         } catch (IOException ex) {
@@ -42,7 +43,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jrequestUser(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("JRequest");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jrequestUser.iface");
         } catch (IOException ex) {
@@ -53,7 +54,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jrequestAdministracion(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("JRequest");
             FacesContext.getCurrentInstance().getExternalContext().redirect("JRequestAdministracion.iface");
         } catch (IOException ex) {
@@ -64,7 +65,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jrequestUserSolicitud(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("JRequest");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jrequestUserSolicitud.iface");
         } catch (IOException ex) {
@@ -75,7 +76,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String admin(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("Index");
             FacesContext.getCurrentInstance().getExternalContext().redirect("Admin.jspx");
         } catch (IOException ex) {
@@ -86,7 +87,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jinvent(){
         try {
-            n = (Navegacion)getBean("Navegacion");
+            n = (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("JInvent");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jinvent.jspx");
         } catch (IOException ex) {
@@ -97,7 +98,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jcanon(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("JCanon");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jcanon.iface");
         } catch (IOException ex) {
@@ -108,7 +109,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jcanonAdmin(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("JCanon");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jcanonAdmin.iface");
         } catch (IOException ex) {
@@ -119,7 +120,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jmlLaboratorio(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("ManLab");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jmlLaboratorio.iface");
         } catch (IOException ex) {
@@ -130,7 +131,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jmlGestionaClase(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("ManLab");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jmlGestionaClase.iface");
         } catch (IOException ex) {
@@ -141,7 +142,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jmlAsistencia(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("ManLab");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jmlAsistencia.iface");
         } catch (IOException ex) {
@@ -152,7 +153,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jmlInscripcion(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("ManLab");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jmlInscripcion.iface");
         } catch (IOException ex) {
@@ -163,7 +164,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jmlHorario(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("ManLab");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jmlHorario.iface");
         } catch (IOException ex) {
@@ -174,7 +175,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jmlHorarioAdmin(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("ManLab");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jmlHorarioAdmin.iface");
         } catch (IOException ex) {
@@ -185,7 +186,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jWikiUser(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("JWiki");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jwikiUser.iface");
         } catch (IOException ex) {
@@ -196,7 +197,7 @@ public class Redireccion extends AbstractPageBean{
 
     public String jProCurUser(){
         try {
-            n= (Navegacion)getBean("Navegacion");
+            n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("JProCur");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jprocurUser.iface");
         } catch (IOException ex) {

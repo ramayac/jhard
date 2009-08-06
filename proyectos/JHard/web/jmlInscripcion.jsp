@@ -25,7 +25,7 @@
                     <!-- start content -->
                     <div id="content">
                         <ice:form id="formAsistencia">
-                            <ice:panelGroup>
+                            <ice:panelGroup rendered="#{jmlInscripcion.permisos}">
                                 <div class="post">
                                     <h2>Inscripcion a un Curso</h2>
                                     <br/>
@@ -34,7 +34,7 @@
                                         <ice:dataTable value="#{jmlInscripcion.listaCursos}" var="indiceCurso" width="100%">
                                             <ice:column id="columnaCursos">
                                                 <f:facet name="header">Lista de Cursos</f:facet>
-                                                <ice:outputLabel id="lblTituloCurso" style="font-weight:bold; " value="#{indiceCurso.nombre}"/>
+                                                <ice:outputLabel id="lblTituloCurso" style="font-weight:bold; " value="#{indiceCurso.nombre}"/> - <ice:outputLabel id="lblMateriaCurso" style="font-weight:bold; " value="#{indiceCurso.idmateria.nombre}"/>
                                             </ice:column>
                                             <ice:column id="columnaInscripcion">
                                                 <f:facet name="header">Inscribir</f:facet>
@@ -45,6 +45,9 @@
                                         </ice:dataTable>
                                     </ice:panelGroup>
                                 </div>
+                            </ice:panelGroup>
+                            <ice:panelGroup rendered="#{!jmlInscripcion.permisos}">
+                                    <jsp:directive.include file="/jspf/nologin.jspx"/>
                             </ice:panelGroup>
                             <!-- panel de mensajes de avisos...-->
                             <ice:panelPopup autoCentre="true" id="ppmsj" modal="true" rendered="#{jmlInscripcion.popup.visible}">

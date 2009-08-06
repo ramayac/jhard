@@ -5,6 +5,7 @@
 
 package edu.ues.jhard.jpa;
 
+import edu.ues.jhard.util.Utilidades;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -109,6 +110,10 @@ public class Articulos implements Serializable {
 
     public void setIdusuario(Usuario idusuario) {
         this.idusuario = idusuario;
+    }
+
+    public String getFecha(){
+        return Utilidades.FormatearFechaHora(this.fechahora);
     }
 
     @Override

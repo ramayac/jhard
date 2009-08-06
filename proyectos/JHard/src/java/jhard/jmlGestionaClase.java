@@ -210,6 +210,11 @@ public class jmlGestionaClase extends BeanBaseJHard {
             String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idClaseTerminar");
             Integer id = Integer.parseInt(idS);
             Clase claseSel = this.jmanLabInstance.getClase(id.intValue());
+
+            if(Utilidades.EsAntesDeHora(claseSel.getHorafin())){
+                claseSel.setHorafin(new Date());
+            }
+            
             claseSel.setFinalizada(true);
             this.jmanLabInstance.updateClase(claseSel);
             this.popup.setMensaje("La clase/practica se marco como 'Terminada'.");
@@ -296,6 +301,20 @@ public class jmlGestionaClase extends BeanBaseJHard {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public boolean getPermisos(){
+        switch(this.getRolUsuarioConectado()){
+            case -1:
+                return false; //no hay informacion de usuario
+            case ROL_ESTUDIANTE:
+            case ROL_DOCENTE:
+            case ROL_ADMINISTRADOR:
+                return true; //tengo los permisos
+            //default:
+                //break;
+        }
+        return false;
     }
 
     private void paso(int i) {
