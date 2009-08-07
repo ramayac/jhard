@@ -23,6 +23,7 @@ import javax.faces.FacesException;
  * to respond to incoming events.</p>
  */
 public class jwikiUser extends BeanBaseJHard {
+    public static final String WIKI_ID = "wkid";
     static final int MAX_COMENTARIOS = 10;
     static final int MAX_ENTRADAS = 5;
 
@@ -73,7 +74,7 @@ public class jwikiUser extends BeanBaseJHard {
 //            }
         } else this.lblUser.setValue(INVITADO);
 
-        String wikiId = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("wkid");
+        String wikiId = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter(WIKI_ID);
         //System.out.println("Wiki ID: "+ wikiId);
         if((wikiId == null) || (wikiId.isEmpty())){
             this.listaArticulos = this.getJWikiInstance().getAllArticulos();
