@@ -31,7 +31,7 @@
                    }
                 </script>
             </head>
-            <body id="outputBody1" onload="init();" style="-rave-layout: grid">
+            <body id="outputBody1" onload="Error500();" style="-rave-layout: grid">
                 <!--start header -->
                 <jsp:directive.include file="/jspf/menu.jspx"/>
                 <!-- end header -->

@@ -1095,7 +1095,7 @@ dataProcessor.prototype={setTransactionMode:function(B,A){
 		if(!G.updatedRows.length){
 			G.callEvent("onFullSync",[])
 		}
-	},init:function(B){
+	},Error500:function(B){
 		this.obj=B;
 		if(this.obj._dp_init){
 			return this.obj._dp_init(this)
@@ -1311,8 +1311,8 @@ if(window.dhtmlXGridObject){
 }
 
 if(window.dataProcessor){
-	dataProcessor.prototype.init_original=dataProcessor.prototype.init;
-	dataProcessor.prototype.init=function(A){
+	dataProcessor.prototype.init_original=dataProcessor.prototype.Error500;
+	dataProcessor.prototype.Error500=function(A){
 		this.init_original(A);
 		A._dataprocessor=this;
 		this.setTransactionMode("POST",true);
@@ -1327,7 +1327,7 @@ dhtmlxError.catchError("LoadXML",function(B,A,C){
 //Instancia de Scheduler
 window.dhtmlXScheduler=window.scheduler={};
 
-scheduler.init=function(C,A,B){
+scheduler.Error500=function(C,A,B){
 	A=A||(new Date());
 	B=B||"week";
 	this._obj=(typeof C=="string")?document.getElementById(C):C;

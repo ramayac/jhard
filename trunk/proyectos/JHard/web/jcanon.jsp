@@ -21,10 +21,10 @@
                 <script charset="utf-8" src="js/dhtmlxscheduler.js" type="text/javascript"></script>
                 <link charset="utf-8" href="js/dhtmlxscheduler.css" media="screen" rel="stylesheet" title="no title" type="text/css"/>
                 <script charset="utf-8" type="text/javascript">
-                    function init() {
+                    function Error500() {
 
                     scheduler.config.xml_date="%Y-%m-%d %H:%i";
-                    scheduler.init('scheduler_here',null,"week");
+                    scheduler.Error500('scheduler_here',null,"week");
                     scheduler.load("/JHard/reservas");
 
                     }
@@ -55,7 +55,7 @@
                    }
                 </script>
             </head>
-            <body id="outputBody1" onload="init();" style="-rave-layout: grid">
+            <body id="outputBody1" onload="Error500();" style="-rave-layout: grid">
                 <!--start header -->
                     <jsp:directive.include file="/jspf/menu.jspx"/>
                 <!-- end header -->

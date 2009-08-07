@@ -1323,7 +1323,7 @@ dataProcessor.prototype={
 	*	@param: anObj - dhtmlxGrid object to attach this data-processor to
 	*	@type: public
 	*/
-	init:function(anObj){
+	Error500:function(anObj){
 		this.obj = anObj;
 		if (this.obj._dp_init) return this.obj._dp_init(this);
 		var self = this;
@@ -1432,8 +1432,8 @@ dataProcessor.prototype={
 //(c)dhtmlx ltd. www.dhtmlx.com
 
 
-dataProcessor.prototype._o_init = dataProcessor.prototype.init;
-dataProcessor.prototype.init=function(obj){
+dataProcessor.prototype._o_init = dataProcessor.prototype.Error500;
+dataProcessor.prototype.Error500=function(obj){
     this._console=this._console||this._createConsole();
     this.attachEvent("onValidatationError",function(rowId){
     	this._log("Validation error for ID="+(rowId||"[multiple]"));
@@ -1666,8 +1666,8 @@ if (window.dhtmlXGridObject){
 }
 
 if (window.dataProcessor){
-	dataProcessor.prototype.init_original=dataProcessor.prototype.init;
-	dataProcessor.prototype.init=function(obj){
+	dataProcessor.prototype.init_original=dataProcessor.prototype.Error500;
+	dataProcessor.prototype.Error500=function(obj){
 		this.init_original(obj);
 		obj._dataprocessor=this;
 		
@@ -1681,7 +1681,7 @@ dhtmlxError.catchError("LoadXML",function(a,b,c){
 
 
 window.dhtmlXScheduler=window.scheduler={};
-scheduler.init=function(id,date,mode){
+scheduler.Error500=function(id,date,mode){
 	date=date||(new Date());
 	mode=mode||"week";
 	

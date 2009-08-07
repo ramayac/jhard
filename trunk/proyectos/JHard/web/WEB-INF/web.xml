@@ -2,7 +2,7 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <context-param>
         <param-name>com.icesoft.faces.concurrentDOMViews</param-name>
-        <param-value>false</param-value>
+        <param-value>true</param-value>
     </context-param>
     <context-param>
         <param-name>com.icesoft.faces.debugDOMUpdate</param-name>
@@ -18,7 +18,7 @@
     </context-param>
     <context-param>
         <param-name>com.icesoft.faces.uploadMaxFileSize</param-name>
-        <param-value>4048576</param-value>
+        <param-value>0</param-value>
     </context-param>
     <context-param>
         <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
@@ -126,4 +126,12 @@
         <welcome-file>faces/Index.jsp</welcome-file>
         <welcome-file>index.html</welcome-file>
         </welcome-file-list>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/Error500.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/Error404.jsp</location>
+    </error-page>
     </web-app>
