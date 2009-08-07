@@ -158,4 +158,9 @@
         <managed-bean-class>jhard.jmlLaboratorio</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>Error500</managed-bean-name>
+        <managed-bean-class>jhard.Error500</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>
