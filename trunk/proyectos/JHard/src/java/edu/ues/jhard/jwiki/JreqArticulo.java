@@ -8,6 +8,7 @@ import java.util.Vector;
  * @author rodrigo ramayac
  */
 public class JreqArticulo {
+
     private Integer idarticulo = new Integer(0);
     private String titulo = new String();
     private Double ocurrencias = new Double(0.0);
@@ -36,15 +37,24 @@ public class JreqArticulo {
         this.ocurrencias = ocurrencias;
     }
 
-    public boolean TieneOcurrencias(){
-        return (this.ocurrencias.intValue()>0);
+    public boolean TieneOcurrencias() {
+        return (this.ocurrencias.intValue() > 0);
     }
 
-    public void setVector(Vector v){
-        if(v==null) return;
-        if(v.size()!=3) return;
-        this.idarticulo = Math.round((Long)v.get(0));
-        this.ocurrencias = ((BigDecimal)v.get(1)).doubleValue();
-        this.titulo = (String)v.get(2);
+    public void setVector(Vector v) {
+        if (v == null) return;
+        switch (v.size()) {
+            case 2:
+                this.idarticulo = Math.round((Long) v.get(0));
+                //this.ocurrencias = ((BigDecimal) v.get(1)).doubleValue();
+                this.titulo = (String) v.get(1);
+                //this.ocurrencias = 0.0;
+                break;
+            case 3:
+                this.idarticulo = Math.round((Long) v.get(0));
+                this.ocurrencias = ((BigDecimal) v.get(1)).doubleValue();
+                this.titulo = (String) v.get(2);
+                break;
+        }
     }
 }

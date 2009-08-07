@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
  * to respond to incoming events.</p>
  */
 public class jprocurUser extends BeanBaseJHard {
+    public static final String ART_ID = "artid";
     static final int MAX_COMENTARIOS = 10;
     static final int MAX_ENTRADAS = 5;
 
@@ -63,10 +64,7 @@ public class jprocurUser extends BeanBaseJHard {
      */
     public jprocurUser() {
         lu= getJHardminInstance().getCurrentUser();
-        
-        this.listaEntradas = this.getJProcurInstance().getAllEntradas();
-        if(this.listaEntradas.size()>0) this.entradaActual = this.listaEntradas.get(0);
-        
+
         if(lu!=null){
             U = LoginManager.getInstance().getUsuario(lu);
             this.lblUser.setValue((String)U.getNombre());
@@ -77,6 +75,20 @@ public class jprocurUser extends BeanBaseJHard {
 //                    break;
 //            }
         } else this.lblUser.setValue(INVITADO);
+
+        String sId = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter(ART_ID);
+        //System.out.println("Articulo ID: "+ sId);
+        if((sId == null) || (sId.isEmpty())){
+            this.listaEntradas = this.getJProcurInstance().getAllEntradas();
+            if(this.listaEntradas.size()>0) this.entradaActual = this.listaEntradas.get(0);
+        } else {
+            Integer id = new Integer(sId);
+            this.entradaActual = this.getJProcurInstance().getEntrada(id);
+            this.listaEntradas = new ArrayList<Entrada>();
+            this.listaEntradas.add(entradaActual);
+        }
+        //this.listaEntradas = this.getJProcurInstance().getAllEntradas();
+        //if(this.listaEntradas.size()>0) this.entradaActual = this.listaEntradas.get(0);
     }
 
     public String getCriteriosBusqueda() {

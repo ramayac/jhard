@@ -22,7 +22,7 @@ public class BeanBaseJWiki extends BeanBase {
     //private final static String MAX_PALABRAS = "200";
     private final static String ESPACIO = " ";
     static final String EMPTY_STRING = "";
-    private final static int MIN_CRITERIO = 5;
+    private final static int MIN_CRITERIO = 3;
     private final static int MAX_ARTICULOS = 10;
 
     /**
@@ -130,6 +130,27 @@ public class BeanBaseJWiki extends BeanBase {
         q.setMaxResults(numero);
         List<Articulos> la = q.getResultList();
         return la;
+    }
+
+    public List<JreqArticulo> getUltimosCincoArticulosSmall(){
+        EntityManager em = this.getEntityManager();
+
+        String sql = "SELECT a.idarticulo, a.titulo FROM articulos a GROUP BY a.idarticulo ORDER BY a.fechahora DESC";
+
+        //System.out.println(sql);
+        Query q = em.createNativeQuery(sql);
+        Vector vectorArticulos = (Vector) q.getResultList();
+
+        List<JreqArticulo> resultado =  new ArrayList<JreqArticulo>();
+
+        for (Object o : vectorArticulos) {
+            Vector v = (Vector)o;
+            JreqArticulo ja = new JreqArticulo();
+            ja.setVector(v);
+            resultado.add(ja);
+        }
+
+        return resultado;
     }
 
     /**
