@@ -139,6 +139,7 @@ public class BeanBaseJWiki extends BeanBase {
 
         //System.out.println(sql);
         Query q = em.createNativeQuery(sql);
+        q.setMaxResults(5);
         Vector vectorArticulos = (Vector) q.getResultList();
 
         List<JreqArticulo> resultado =  new ArrayList<JreqArticulo>();
