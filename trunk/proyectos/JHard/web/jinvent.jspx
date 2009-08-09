@@ -993,45 +993,29 @@
                     <!-- start sidebar -->
                     <div id="sidebar">
                         <ul>
-                            <li id="search">
-                                <h2>Búsqueda Wiki</h2>
-                                <form action="" method="get">
-                                    <fieldset>
-                                        <input class="inputTexto" name="s" type="text" value=""/>
-                                        <input class="inputBoton" type="submit" value="Buscar"/>
-                                    </fieldset>
-                                </form>
-                            </li>
                             <li>
-                                <h2>
-                                    <ice:outputLabel id="txtUserLogin" value="Sesión"/>
-                                </h2>
-                                <ice:form id="frmLogin" rendered="#{JHardminInstance.currentUser == null}">
-                                    <ice:outputText id="lblLoginFail" styleClass="errorText" rendered="#{JHardminInstance.loginFail}" value="Datos incorrectos"/>
-                                    <p>
-                                        <ice:outputLabel id="lblUser" value="Usuario:"/>
-                                        <ice:inputText id="txtUser" style="width: 120px" value="#{JHardminInstance.inputUsrName}" required="true" requiredMessage="El nombre de usuario es requerido"/>
-                                        <h:message for="txtUser" styleClass="errorText" />
-                                    </p>
-                                    <p>
-                                        <ice:outputLabel id="lblPass" value="Clave:"/>
-                                        <ice:inputSecret id="txtPass" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}" required="true" requiredMessage="La clave de acceso es requerida" />
-                                        <h:message for="txtPass" styleClass="errorText" />
-                                    </p>
-                                    <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" value="Login" styleClass="btnAccion"/>
-                                </ice:form>
-                                <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
-                                    <p>
-                                        <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
-                                        <ice:outputLabel id="lblNomUsuario" styleClass="formValue" value="#{JHardminInstance.currentUser.userName}"/>
-                                    </p>
-                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion" value="Logout"/>                                    
-                                </ice:form>
+                            <!--login control -->
+                            <jsp:directive.include file="/jspf/login.jspx"/>
+                            <!--login control -->
                             </li>
                             <li>
                                 <ice:form id="frmCommonTasks">
+                                 <ice:panelPopup styleClass="panelPopup" draggable="true" modal="true" rendered="#{JHardminInstance.msg.visible}" visible="#{JHardminInstance.msg.visible}" clientOnly="true" >
+                                    <f:facet name="header" >
+                                        <ice:outputText value="Mensaje" styleClass="popupHeader" />
+                                    </f:facet>
+                                    <f:facet name="body">
+                                        <ice:panelGroup>
+                                            <p><ice:outputText value="#{JHardminInstance.msg.text}" styleClass="#{JHardminInstance.msg.type}" /></p>
+                                            <p class="actionSection"><ice:commandButton action="#{JHardminInstance.closePopup}" id="btnCerrar" value="OK" /></p>
+                                        </ice:panelGroup>
+                                    </f:facet>
+                                    </ice:panelPopup>
                                 <h2>Tareas Comunes</h2>
                                 <ul>
+                                    <li>
+                                       <ice:commandLink action="#{JHardminInstance.showPopupRegistrarUsuario}" rendered="#{JHardminInstance.currentUser == null}" value="Crear usuario del sistema"/>
+                                    </li>
                                     <li>
                                         <ice:commandLink value="Cambiar clave de acceso" action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}"  />
                                     </li>
@@ -1044,16 +1028,43 @@
                                     <li>
                                         <ice:commandLink value="Emitir Solicitud de Soporte Técnico" action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
                                     </li>
-                                    <li>
-                                        <a href="#">Otras Opciones</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Otras Opciones</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Otras Opciones</a>
-                                    </li>
                                 </ul>
+                                <ice:panelPopup id="pupCrearUsuario" draggable="true" modal="true" rendered="#{JHardminInstance.popupRegistrarUsuarioVisible}">
+                                        <f:facet name="header"><ice:outputText value="Agregar nuevo usuario" /></f:facet>
+                                        <f:facet name="body">
+                                            <ice:panelGroup styleClass="frmElementList">
+                                                <p>
+                                                    <ice:outputLabel id="lblCarnetUsuario" for="txtCarnetUsuario" value="Carnet:" />
+                                                    <ice:inputText id="txtCarnetUsuario" value="#{JHardminInstance.estudianteUsuarioRegistrado.carnet}" />
+                                                </p>
+                                                <p>
+                                                    <ice:outputLabel id="lblApellidosUsuario" for="txtApellidosUsuario" value="Apellidos:" />
+                                                    <ice:inputText id="txtApellidosUsuario" value="#{JHardminInstance.estudianteUsuarioRegistrado.apellidos}" />
+                                                </p>
+                                                <p>
+                                                    <ice:outputLabel id="lblNombresUsuario" for="txtNombresUsuario" value="Nombres:" />
+                                                    <ice:inputText id="txtNombresUsuario" value="#{JHardminInstance.estudianteUsuarioRegistrado.nombres}" />
+                                                </p>
+
+                                                <p>
+                                                    <ice:outputLabel id="lblClaveUsuario" for="TxtClaveUsuario" value="Clave:" />
+                                                    <ice:inputSecret id="txtClaveUsuario" value="#{JHardminInstance.usuarioRegistrado.clave}" />
+                                                </p>
+                                                <p>
+                                                    <ice:outputLabel id="lblClaveUsuarioConfirm" for="txtClaveUsuarioConfirm" value="Confirmar clave:" />
+                                                    <ice:inputSecret id="txtClaveUsuarioConfirm" value="#{JHardminInstance.claveUsuarioConfirmacion}" />
+                                                </p>
+                                                <p>
+                                                    <ice:outputLabel id="lblAutorizacionUsuario" for="txtAutorizacionUsuario" value="Codigo de autorizacion:" />
+                                                    <ice:inputText id="txtAutorizacionUsuario" value="#{JHardminInstance.autorizacionUsuario}" />
+                                                </p>
+                                                <p class="actionSection">
+                                                    <ice:commandButton id="cmdConfirmRegistrarUsuario" value="Agregar" action="#{JHardminInstance.registrarUsuario}" />
+                                                    <ice:commandButton id="cmdCancelRegistrarUsuario" value="Cancelar" action="#{JHardminInstance.hidePopupRegistrarUsuario}" />
+                                                </p>
+                                            </ice:panelGroup>
+                                        </f:facet>
+                                    </ice:panelPopup>
                                 </ice:form>
                             </li>
                         </ul>
@@ -1063,14 +1074,7 @@
                 </div>
                 <!-- end page -->
                 <!-- start footer -->
-                <div id="footer">
-                    <div id="footer-wrap">
-                        <p id="legal" style="line-height: 13px">Universidad de El Salvador Facultad Multidisciplinaria de Occidente <br/>
-	Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/>
-                            <a href="#">Créditos</a> - <a href="http://www.uesocc.edu.sv">Pagina Principal de la UES FMOcc</a>
-                        </p>
-                    </div>
-                </div>
+                    <jsp:directive.include file="/jspf/bottom.jspx"/>
                 <!-- end footer -->
             </body>
         </html>

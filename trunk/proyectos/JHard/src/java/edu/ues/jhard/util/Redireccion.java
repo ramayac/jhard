@@ -219,4 +219,15 @@ public class Redireccion extends AbstractPageBean{
         return EMPTY_STRING;
     }
 
+    public String reportes(){
+        try {
+            n= (Navegacion)getBean(BEAN_NAME);
+            n.setModuloActual("Index");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("reportes.iface");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return EMPTY_STRING;
+    }
+
 }
