@@ -30,6 +30,10 @@
                         jQuery("#filtroTablaComentarios").keyup(function() {
                             jQuery.uiTableFilter(tabla2, this.value );
                         })
+                        var tabla3 = jQuery("form table.mitablaetiquetas");
+                        jQuery("#filtroTablaEtiquetas").keyup(function() {
+                            jQuery.uiTableFilter(tabla3, this.value );
+                        })
                     });
                 </script>
             </head>
@@ -233,7 +237,45 @@
                                     </ice:panelTab>
                                     <ice:panelTab id="panelEtiquetas" label="Administrar Etiquetas">
                                         <!-- panel de para administrar las Etiquetas -->
-                                        <ice:panelGroup id="panelGroup3" style=""/>
+                                        <ice:panelGroup>
+                                            <div align="right">Filtro: <input id="filtroTablaEtiquetas"/></div>
+                                            <ice:dataTable id="tablaEtiquetas" rendered="#{jmlCrudAdmin.hayEtiqueta}" rows="30" styleClass="mitablaetiquetas"
+                                            value="#{jprocurAdmin.listaEtiqueta}" var="indiceEtiqueta" resizable="true">
+                                                <ice:column>
+                                                    <f:facet name="header"><ice:outputText value="Nombre Etiqueta"/></f:facet>
+                                                    <ice:outputLabel style="font-weight:bold; " value="#{indiceEtiqueta.descripcion}"/>
+                                                </ice:column>
+                                                <ice:column>
+                                                    <f:facet name="header"><ice:outputText value="Editar Etiqueta"/></f:facet>
+                                                    <ice:commandLink action="#{indiceEtiqueta.EditarEtiqueta}" value="Editar">
+                                                        <f:param name="idTag" value="#{indiceEtiqueta.idtag}"/>
+                                                    </ice:commandLink>
+                                                </ice:column>
+                                                <ice:column>
+                                                    <f:facet name="header"><ice:outputText value="Eliminar Etiqueta"/></f:facet>
+                                                    <ice:commandLink action="#{indiceEtiqueta.EliminarEtiqueta}" value="Eliminar">
+                                                        <f:param name="idTag" value="#{indiceEtiqueta.idtag}"/>
+                                                    </ice:commandLink>
+                                                </ice:column>
+                                            </ice:dataTable>
+                                            <div align="center">
+                                                <ice:dataPaginator for="tablaEtiquetas" id="paginadorEtiqueta" paginator="true"
+                                                rendered="#{jprocurAdmin.showPagEtiquetas}">
+                                                    <f:facet name="first">
+                                                        <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
+                                                    </f:facet>
+                                                    <f:facet name="previous">
+                                                        <ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/>
+                                                    </f:facet>
+                                                    <f:facet name="next">
+                                                        <ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/>
+                                                    </f:facet>
+                                                    <f:facet name="last">
+                                                        <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
+                                                    </f:facet>
+                                                </ice:dataPaginator>
+                                            </div>
+                                        </ice:panelGroup>
                                         <!-- FIN panel de para administrar las Etiquetas -->
                                     </ice:panelTab>
                                 </ice:panelTabSet>
@@ -264,7 +306,6 @@
                                 </f:facet>
                                 </ice:panelPopup>
                                 <!-- panel de mensajes -->
-
                                 <!-- panel de mensajes para viñeta de Comentarios-->
                                 <ice:panelPopup autoCentre="true" id="panelMensajeComentarios" modal="true" rendered="#{jprocurAdmin.popupComentario}">
                                 <f:facet name="header">
@@ -289,7 +330,6 @@
                                 </f:facet>
                                 </ice:panelPopup>
                                 <!-- panel de mensajes -->
-
                                 <!-- panel de mensajes de avisos...-->
                                 <ice:panelPopup autoCentre="true" id="ppmsj" modal="true" rendered="#{jprocurAdmin.showPPMesaje}">
                                     <f:facet name="header">

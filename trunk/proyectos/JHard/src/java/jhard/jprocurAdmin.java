@@ -39,6 +39,7 @@ public class jprocurAdmin extends AbstractPageBean {
     static final String INVITADO = "Invitado";
     static final int MAX_ENTRADAS = 30;
     static final int MAX_COMENTARIOS = 30;
+    static final int MAX_ETIQUETAS = 30;
     static final String EMPTY_STRING = new String();
     static final int ROL_EDITORCONTENIDO = 4;
     static final int ROL_ADMINISTRADOR = 1;
@@ -48,6 +49,7 @@ public class jprocurAdmin extends AbstractPageBean {
     private List<Entrada> listaEntradas = new ArrayList<Entrada>();
     //private Comentarios comentarioActual = null;
     private List<Comentarios> listaComentarios = new ArrayList<Comentarios>();
+    private List<Tag> listaEtiqueta = new ArrayList<Tag>();
     private Integer tabIndex = new Integer(0);
     //lista de etiquetas de para el row selector
     private List<SelectableTag> listaSelTag = new ArrayList<SelectableTag>();
@@ -260,14 +262,13 @@ public class jprocurAdmin extends AbstractPageBean {
 
     /*----------------------------------------------------------------------------------*/
 
+    public List<Tag> getListaEtiqueta() {
+        return listaEtiqueta;
+    }
 
-//    public List<Tag> getListaTag() {
-//        return listaTag;
-//    }
-//
-//    public void setListaTag(List<Tag> listaTag) {
-//        this.listaTag = listaTag;
-//    }
+    public void setListaEtiqueta(List<Tag> listaEtiqueta) {
+        this.listaEtiqueta = listaEtiqueta;
+    }
 
     public List<SelectableTag> getListaSelTag() {
         return listaSelTag;
@@ -292,6 +293,12 @@ public class jprocurAdmin extends AbstractPageBean {
     public void setListaComentarios(List<Comentarios> listaComentarios) {
         this.listaComentarios = listaComentarios;
     }
+
+    public Boolean getHayEtiqueta(){
+        if(this.listaEtiqueta.size()>0) return true;
+        return false;
+    }
+
     private Boolean editandoEntrada = new Boolean(false);
 
     public List<Entrada> getListaEntradas() {
@@ -356,6 +363,11 @@ public class jprocurAdmin extends AbstractPageBean {
 
     public boolean getShowPagEntradas(){
         if(this.listaEntradas.size()>MAX_ENTRADAS) return true;
+        return false;
+    }
+
+    public boolean getShowPagEtiquetas(){
+        if(this.listaEtiqueta.size()>MAX_ETIQUETAS) return true;
         return false;
     }
 
@@ -569,22 +581,6 @@ public class jprocurAdmin extends AbstractPageBean {
         return EMPTY_STRING;
     }
 
-//    /**
-//     * Busca TagEntradas similares y retorna el ID si encuentra la coincidencia (Entrada y Tag)
-//     * @param lteOrig
-//     * @param te
-//     * @return
-//     */
-//    private Integer buscarIdTagEntrada(List<TagEntrada> lteOrig, TagEntrada te) {
-//        for (TagEntrada tagEntrada : lteOrig) {
-//            if((tagEntrada.getIdentrada().getIdentrada() == te.getIdtagentrada())
-//                    && (tagEntrada.getIdtag().getIdtag() == te.getIdtag().getIdtag())){
-//                return tagEntrada.getIdtagentrada(); //ya existia la TagEntrada con esas etiquetas
-//            }
-//        }
-//        return 0; //es nueva la TagEntrada
-//    }
-
     public String modificarEntrada(){
         this.entradaActual.setIdusuario(this.U);
 
@@ -654,22 +650,6 @@ public class jprocurAdmin extends AbstractPageBean {
     public TimeZone getTimeZone() {
         return java.util.TimeZone.getDefault();
     }
-
-//    public void rowSelTagListener(RowSelectorEvent event) {
-//        //selectedEmployees.clear();
-//
-//        // build the new selected list
-//        List<Tag> listaAddTags = new ArrayList<Tag>();
-//
-//
-//        Employee employee;
-//        for(int i = 0, max = employees.size(); i < max; i++){
-//        employee = (Employee)employees.get(i);
-//            if (employee.isSelected()) {
-//                selectedEmployees.add(employee);
-//            }
-//        }
-//    }
 
     private void llenarListaTags() {
         List<Tag> listaAllTags = this.getJProcurInstance().getAllEtiquetas();
