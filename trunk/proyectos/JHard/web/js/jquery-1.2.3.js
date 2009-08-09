@@ -15,8 +15,8 @@ if ( window.jQuery )
 	var _jQuery = window.jQuery;
 
 var jQuery = window.jQuery = function( selector, context ) {
-	// The jQuery object is actually just the init constructor 'enhanced'
-	return new jQuery.prototype.init( selector, context );
+	// The jQuery object is actually just the Error500 constructor 'enhanced'
+	return new jQuery.prototype.Error500( selector, context );
 };
 
 // Map over the $ in case of overwrite
@@ -34,7 +34,7 @@ var quickExpr = /^[^<]*(<(.|\s)+>)[^>]*$|^#(\w+)$/;
 var isSimple = /^.[^:#\[\.]*$/;
 
 jQuery.fn = jQuery.prototype = {
-	init: function( selector, context ) {
+	Error500: function( selector, context ) {
 		// Make sure that a selection was provided
 		selector = selector || document;
 
@@ -545,8 +545,8 @@ jQuery.fn = jQuery.prototype = {
 	}
 };
 
-// Give the init function the jQuery prototype for later instantiation
-jQuery.prototype.init.prototype = jQuery.prototype;
+// Give the Error500 function the jQuery prototype for later instantiation
+jQuery.prototype.Error500.prototype = jQuery.prototype;
 
 function evalScript( i, elem ) {
 	if ( elem.src )

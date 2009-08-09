@@ -7,6 +7,12 @@
 package jhard;
 
 import edu.ues.jhard.beans.BeanBaseJManLab;
+import edu.ues.jhard.jhardmin.LoginManager;
+import edu.ues.jhard.jpa.Carrera;
+import edu.ues.jhard.jpa.Curso;
+import edu.ues.jhard.jpa.Materia;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.FacesException;
 
 /**
@@ -17,10 +23,127 @@ import javax.faces.FacesException;
  * to respond to incoming events.</p>
  */
 public class jmlCrudAdmin extends BeanBaseJHard {
-    
-    private int __placeholder;
+
+    private int MAX_MATERIA = 30;
+    private int MAX_CARRERA = 30;
+    private int MAX_CURSO = 30;
 
     private BeanBaseJManLab jml = new BeanBaseJManLab();
+
+    private List<Materia> listaMateria = new ArrayList<Materia>();
+    private List<Carrera> listaCarrera = new ArrayList<Carrera>();
+    private List<Curso> listaCurso = new ArrayList<Curso>();
+
+    public BeanBaseJManLab getJml() {
+        return jml;
+    }
+
+    public void setJml(BeanBaseJManLab jml) {
+        this.jml = jml;
+    }
+
+    public List<Carrera> getListaCarrera() {
+        return listaCarrera;
+    }
+
+    public void setListaCarrera(List<Carrera> listaCarrera) {
+        this.listaCarrera = listaCarrera;
+    }
+
+    public List<Curso> getListaCurso() {
+        return listaCurso;
+    }
+
+    public void setListaCurso(List<Curso> listaCurso) {
+        this.listaCurso = listaCurso;
+    }
+
+    public List<Materia> getListaMateria() {
+        return listaMateria;
+    }
+
+    public void setListaMateria(List<Materia> listaMateria) {
+        this.listaMateria = listaMateria;
+    }
+
+    public Boolean getHayMateria(){
+        if(this.listaMateria.size()>0) return true;
+        return false;
+    }
+
+    public Boolean getHayCarrera(){
+        if(this.listaCarrera.size()>0) return true;
+        return false;
+    }
+
+    public Boolean getHayCurso(){
+        if(this.listaCurso.size()>0) return true;
+        return false;
+    }
+
+    public boolean getShowPagMateria(){
+        if(this.listaMateria.size()>MAX_MATERIA) return true;
+        return false;
+    }
+
+    public boolean getShowPagCarrera(){
+        if(this.listaCarrera.size()>MAX_CARRERA) return true;
+        return false;
+    }
+
+    public boolean getShowPagCurso(){
+        if(this.listaCurso.size()>MAX_CURSO) return true;
+        return false;
+    }
+
+    public String EditarMateria(){
+        //String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idMateria");
+        //Integer id = Integer.parseInt(idArticulo);
+        return EMPTY_STRING;
+    }
+
+    public String EliminarMateria(){
+        //String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idMateria");
+        //Integer id = Integer.parseInt(idArticulo);
+        return EMPTY_STRING;
+    }
+
+    public String EditarCurso(){
+        //String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idCurso");
+        //Integer id = Integer.parseInt(idArticulo);
+        return EMPTY_STRING;
+    }
+
+    public String EliminarCurso(){
+        //String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idCurso");
+        //Integer id = Integer.parseInt(idArticulo);
+        return EMPTY_STRING;
+    }
+
+    public String EditarCarrera(){
+        //String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idCarrera");
+        //Integer id = Integer.parseInt(idArticulo);
+        return EMPTY_STRING;
+    }
+
+    public String EliminarCarrera(){
+        //String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idCarrera");
+        //Integer id = Integer.parseInt(idArticulo);
+        return EMPTY_STRING;
+    }
+
+    public boolean getPermisos(){
+        switch(this.getRolUsuarioConectado()){
+            case INVALIDO:
+                return false; //no hay informacion de usuario
+            case ROL_ADMINISTRADOR:
+            //case ROL_*: //mas roles?
+                return true; //tengo los permisos
+            //default:
+                //break;
+        }
+        return false;
+    }
 
     /**
      * <p>Automatically managed component initialization.  <strong>WARNING:</strong>
@@ -38,21 +161,25 @@ public class jmlCrudAdmin extends BeanBaseJHard {
      * <p>Construct a new Page bean instance.</p>
      */
     public jmlCrudAdmin() {
+        this.lu= getJHardminInstance().getCurrentUser();
 
+        this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+        this.listaMateria = this.getJManLabInstance().getAllMaterias();
+        this.listaCurso = this.getJManLabInstance().getAllCursos();
+        //if(this.listaCarrera.size()>0) this.articuloActual = this.listaArticulos.get(0);
+
+        if(this.lu!=null){
+            this.U = LoginManager.getInstance().getUsuario(lu);
+            this.lblUser.setValue(U.getNombre());
+
+            switch(this.U.getIdrol().getIdrol()){
+                case ROL_ADMINISTRADOR:
+                default:
+                    break;
+                }
+        }else
+            this.lblUser.setValue(INVITADO);
     }
-
-    /**
-     * Metodo para obtener una entrada por su ID
-     * @param identrada id de la entada que se desea
-     * @return
-     */
-//    public String elegirArticuloActual() {
-//        String idSeleccionado = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idSeleccionado");
-//        Integer id = new Integer(idSeleccionado);
-//        this.articuloActual = this.jwikiInstance.getArticulo(id.intValue());
-//        this.setSoloUna(true);
-//        return EMPTY_STRING;
-//    }
 
     /**
      * <p>Callback method that is called whenever a page is navigated to,
@@ -69,12 +196,6 @@ public class jmlCrudAdmin extends BeanBaseJHard {
     public void init() {
         // Perform initializations inherited from our superclass
         super.init();
-// Perform application initialization that must complete
-        // *before* managed components are initialized
-        // TODO - add your own initialiation code here
-// <editor-fold defaultstate="collapsed" desc="Visual-Web-managed Component Initialization">
-// Initialize automatically managed components
-        // *Note* - this logic should NOT be modified
         try {
             _init();
         } catch (Exception e) {
