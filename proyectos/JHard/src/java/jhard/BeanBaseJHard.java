@@ -87,6 +87,7 @@ public class BeanBaseJHard extends AbstractPageBean {
         if (this.U == null) {
             return INVALIDO;
         }
+        System.out.println(this.U.getIdrol().getIdrol());
         return this.U.getIdrol().getIdrol();
     }
 
