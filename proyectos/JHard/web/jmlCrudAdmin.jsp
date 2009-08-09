@@ -27,7 +27,7 @@
                             jQuery.uiTableFilter(tabla, this.value );
                         })
                         var tabla = jQuery("form table.mitablacurso");
-                        jQuery("#filtroTablaCurso").keyup(function() {
+                        jQuery("#filtroTablaCursos").keyup(function() {
                             jQuery.uiTableFilter(tabla, this.value );
                         })
                         var tabla = jQuery("form table.mitablacarrera");
