@@ -6,6 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -223,5 +224,14 @@ public class Existencia implements Serializable {
         if(this.getIdestado().getIdestado() == 3)
             return "imgEnReparacion.png";
         return imgEstado;
+    }
+
+    public String getNombreTecnicoActualMnto(){
+        if(this.getMantenimientoCollection().size() > 0){
+            Tecnico tec = new ArrayList<Mantenimiento>(this.getMantenimientoCollection()).get(this.getMantenimientoCollection().size()-1).getIdtecnico();
+            return tec.getApellidos() + ", " + tec.getNombres();
+        }
+
+        return "";
     }
 }

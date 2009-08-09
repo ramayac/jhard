@@ -6,6 +6,7 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -149,6 +150,22 @@ public class Equiposimple implements Serializable {
     @Override
     public String toString() {
         return "edu.ues.jhard.jpa.Equiposimple[idEquipoSimple=" + idEquipoSimple + "]";
+    }
+
+    public String getDescUltimaSolicitud(){
+        if(this.getSolicitudCollection().size() > 0)
+            return new ArrayList<Solicitud>(this.getSolicitudCollection()).get(this.getSolicitudCollection().size()-1).getDescripcion();
+
+        return "";
+    }
+
+    public String getNombreTecnicoActualMnto(){
+        if(this.getMantenimientoCollection().size() > 0){
+            Tecnico tec = new ArrayList<Mantenimiento>(this.getMantenimientoCollection()).get(this.getMantenimientoCollection().size()-1).getIdtecnico();
+            return tec.getApellidos() + ", " + tec.getNombres();
+        }
+
+        return "";
     }
 
 }
