@@ -11,14 +11,23 @@ import com.icesoft.faces.component.ext.HtmlInputSecret;
 import com.icesoft.faces.component.ext.HtmlInputText;
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
-import edu.ues.jhard.beans.BeanBaseJHardmin;
+import edu.ues.jhard.beans.BeanBase;
+import edu.ues.jhard.beans.BeanBaseJCanon;
+import edu.ues.jhard.beans.BeanBaseJProcur;
+import edu.ues.jhard.beans.BeanBaseJRequest;
+import edu.ues.jhard.beans.BeanBaseJWiki;
 import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jhardmin.LoginManager;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import edu.ues.jhard.jpa.Entrada;
+import edu.ues.jhard.jpa.Equiposimple;
+import edu.ues.jhard.jpa.Existencia;
+import edu.ues.jhard.jpa.Reserva;
+import edu.ues.jhard.jwiki.JreqArticulo;
+import java.util.Calendar;
+import java.util.List;
 import javax.faces.FacesException;
-import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  * <p>Page bean that corresponds to a similarly named JSP page.  This
@@ -77,10 +86,27 @@ public class Index extends AbstractPageBean {
 
     // </editor-fold>
 
+    private List<JreqArticulo> listaUltimasEntradas;
+    private List<Existencia> listaExistenciasFallidas;
+    private List<Existencia> listaExistenciasMantenimiento;
+    private List<Equiposimple> listaEquiposFallidos;
+    private List<Equiposimple> listaEquiposMantenimiento;
+    private List<Reserva> listaReservasHoy;    
+
     /**
      * <p>Construct a new Page bean instance.</p>
      */
     public Index() {
+        EntityManager emgr = new BeanBase().getEntityManager();
+        this.listaUltimasEntradas = new BeanBaseJWiki().getUltimosCincoArticulosSmall();
+        this.listaExistenciasFallidas = emgr.createQuery("SELECT e FROM Existencia e WHERE e.idestado.idestado=2").getResultList();
+        this.listaExistenciasMantenimiento = emgr.createQuery("SELECT e FROM Existencia e WHERE e.idestado.idestado=3").getResultList();
+        this.listaEquiposFallidos = emgr.createQuery("SELECT e FROM Equiposimple e WHERE e.idestado.idestado=2").getResultList();
+        this.listaEquiposMantenimiento = emgr.createQuery("SELECT e FROM Equiposimple e WHERE e.idestado.idestado=3").getResultList();
+
+        Calendar cal = Calendar.getInstance();        
+        this.listaReservasHoy = new BeanBaseJCanon().getReservasMismoDia(cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
+
     }
 
     /**
@@ -174,6 +200,124 @@ public class Index extends AbstractPageBean {
         return null;
     }
 
-    
+    /**
+     * @return the listaUltimasEntradas
+     */
+    public List<JreqArticulo> getListaUltimasEntradas() {
+        return listaUltimasEntradas;
+    }
+
+    /**
+     * @param listaUltimasEntradas the listaUltimasEntradas to set
+     */
+    public void setListaUltimasEntradas(List<JreqArticulo> listaUltimasEntradas) {
+        this.setListaUltimasEntradas(listaUltimasEntradas);
+
+    }
+
+    /**
+     * @return the listaExistenciasFallidas
+     */
+    public List<Existencia> getListaExistenciasFallidas() {
+        if(listaExistenciasFallidas.size() > 5)
+            return listaExistenciasFallidas.subList(0, 4);
+
+        return listaExistenciasFallidas;
+    }
+
+    /**
+     * @param listaExistenciasFallidas the listaExistenciasFallidas to set
+     */
+    public void setListaExistenciasFallidas(List<Existencia> listaExistenciasFallidas) {
+        this.listaExistenciasFallidas = listaExistenciasFallidas;
+    }
+
+    /**
+     * @return the listaExistenciasMantenimiento
+     */
+    public List<Existencia> getListaExistenciasMantenimiento() {
+        if(listaExistenciasMantenimiento.size() > 5)
+            return listaExistenciasMantenimiento.subList(0, 4);
+
+        return listaExistenciasMantenimiento;
+    }
+
+    /**
+     * @param listaExistenciasMantenimiento the listaExistenciasMantenimiento to set
+     */
+    public void setListaExistenciasMantenimiento(List<Existencia> listaExistenciasMantenimiento) {
+        this.listaExistenciasMantenimiento = listaExistenciasMantenimiento;
+    }
+
+    /**
+     * @return the equiposFallidos
+     */
+    public List<Equiposimple> getListaEquiposFallidos() {
+        if(listaEquiposFallidos.size() > 5)
+            return listaEquiposFallidos.subList(0, 4);
+
+        return listaEquiposFallidos;
+    }
+
+    /**
+     * @param equiposFallidos the equiposFallidos to set
+     */
+    public void setListaEquiposFallidos(List<Equiposimple> listaEquiposFallidos) {
+        this.listaEquiposFallidos = listaEquiposFallidos;
+    }
+
+    /**
+     * @return the equiposMantenimiento
+     */
+    public List<Equiposimple> getListaEquiposMantenimiento() {
+        if(listaEquiposMantenimiento.size() > 5)
+            return listaEquiposMantenimiento.subList(0, 4);
+
+        return listaEquiposMantenimiento;
+    }
+
+    /**
+     * @param equiposMantenimiento the equiposMantenimiento to set
+     */
+    public void setListaEquiposMantenimiento(List<Equiposimple> listaEquiposMantenimiento) {
+        this.listaEquiposMantenimiento = listaEquiposMantenimiento;
+    }
+
+    /**
+     * @return the reservasHoy
+     */
+    public List<Reserva> getListaReservasHoy() {
+        if(listaReservasHoy.size() > 5)
+            return listaReservasHoy.subList(0, 4);
+
+        return listaReservasHoy;
+    }
+
+    /**
+     * @param reservasHoy the reservasHoy to set
+     */
+    public void setListaReservasHoy(List<Reserva> listaReservasHoy) {
+        this.listaReservasHoy = listaReservasHoy;
+    }
+
+    public int getListaExistenciasFallidasSize(){
+        return this.listaExistenciasFallidas.size();
+    }
+
+    public int getListaExistenciasMantenimientoSize(){
+        return this.listaExistenciasMantenimiento.size();
+    }
+
+    public int getListaEquiposFallidosSize(){
+        return this.listaEquiposFallidos.size();
+    }
+
+    public int getListaEquiposMantenimientoSize(){
+        return this.listaEquiposMantenimiento.size();
+    }
+
+    public int getListaReservasHoySize(){
+        return this.listaReservasHoy.size();
+    }
 }
 

@@ -8,6 +8,7 @@ package edu.ues.jhard.util;
 import com.sun.jsfcl.app.AbstractPageBean;
 import java.io.IOException;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -189,6 +190,18 @@ public class Redireccion extends AbstractPageBean{
             n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("JWiki");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jwikiUser.iface");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return EMPTY_STRING;
+    }
+
+    public String jWikiUserParam(){
+        try {
+            n= (Navegacion)getBean(BEAN_NAME);
+            n.setModuloActual("JWiki");
+            String wikiId = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("wikiId");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("jwikiUser.iface?wkid=" + wikiId);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

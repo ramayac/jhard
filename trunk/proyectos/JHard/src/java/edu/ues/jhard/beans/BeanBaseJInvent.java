@@ -80,6 +80,7 @@ public class BeanBaseJInvent extends BeanBase {
     private SelectItemGroup listaItemsPiezas;
     private SelectItemGroup listaItemsSoftware;
     private List listaResultadosBusqueda;
+    private List listaNombresAtributos;
     private String marcaSelected;
     private String estadoSelected;
     private String equipoSelected;
@@ -117,6 +118,7 @@ public class BeanBaseJInvent extends BeanBase {
         this.listaMarcas = this.getEntityManager().createNamedQuery("Marca.findAll").getResultList();        
         this.listaTodosEquipos = this.getEntityManager().createNamedQuery("Equipo.findAll").getResultList();
         this.initItemsMarcas();
+        this.initAtributos();
         this.listaUbicaciones = this.getEntityManager().createNamedQuery("Ubicacion.findAll").getResultList();
         this.listaResultadosBusqueda = new ArrayList();        
         this.valorBusqueda = "";
@@ -144,7 +146,8 @@ public class BeanBaseJInvent extends BeanBase {
             this.valorBusqueda = "";
         }
         else            
-            this.setSearchMode(false);        
+            this.setSearchMode(false);
+
     }
 
     public Clasificacion getCurrentClasificacion(){
@@ -372,6 +375,10 @@ public class BeanBaseJInvent extends BeanBase {
         this.getListaItemsUbicaciones().setSelectItems(items);
         if(this.getListaUbicaciones().size() > 0)
             this.setUbicacionSelected(this.getListaUbicaciones().get(0).getIdubicacion().toString());
+    }
+
+    private void initAtributos(){
+        this.listaNombresAtributos = this.getEntityManager().createNamedQuery("Atributohardware.findAll").getResultList();
     }
 
     /**
@@ -1289,11 +1296,12 @@ public class BeanBaseJInvent extends BeanBase {
         Software soft = (Software)this.getEntityManager().createQuery("SELECT s FROM Software s WHERE s.idsoftware=" + this.softwareSelected).getSingleResult();        
         Instalacion inst = new Instalacion();
         if(this.currentExistencia.getInstalacionCollection().size() > 0)
-            inst.setIdinstalacion(((ArrayList<Instalacion>)this.currentExistencia.getInstalacionCollection()).get(this.currentExistencia.getInstalacionCollection().size()-1).getIdinstalacion() + 1);
+            inst.setIdinstalacion(((Instalacion)this.currentExistencia.getInstalacionCollection().toArray()[this.currentExistencia.getInstalacionCollection().size() - 1]).getIdinstalacion() + 1);
+            //inst.setIdinstalacion(((ArrayList<Instalacion>)this.currentExistencia.getInstalacionCollection()).get(this.currentExistencia.getInstalacionCollection().size()-1).getIdinstalacion() + 1);
         else
             inst.setIdinstalacion(1);
         inst.setIdsoftware(soft);
-        inst.setFechainstalacion(new Date());        
+        inst.setFechainstalacion(new Date());
         inst.setIdequipoexistente(this.currentExistencia);
         this.currentExistencia.getInstalacionCollection().add(inst);
         return "done";
@@ -1358,7 +1366,7 @@ public class BeanBaseJInvent extends BeanBase {
             }
         }
         return "done";
-    }
+    }   
 
     public String delExistencia(){
         String idExistencia = this.crdExistencia.getCurrentId();
@@ -1792,10 +1800,11 @@ public class BeanBaseJInvent extends BeanBase {
             System.out.println("currentPage: " + currentPage);
             
             System.out.println("pageCount" + this.pgr.getPageCount());
-            System.out.println("lastPage?" + this.pgr.isLastPage());
+            System.out.println("lastPage?" + this.pgr.isLastPage());            
+
             if(this.pgr.getPageIndex()  > currentPage){
                 int diff = this.pgr.getPageIndex() - currentPage;
-                for(int i=0; i<diff; i++){
+                for(int i=0; i<=diff; i++){
                     this.pgr.gotoPreviousPage();
                     System.out.println("Going to prev page...");
                     System.out.println("pageIndex: " + this.pgr.getPageIndex());
@@ -1803,7 +1812,7 @@ public class BeanBaseJInvent extends BeanBase {
             }
             else{
                 int diff = currentPage - this.pgr.getPageIndex();
-                for(int i=0; i<diff; i++){
+                for(int i=0; i<=diff; i++){
                     this.pgr.gotoNextPage();
                     System.out.println("Going to next page...");
                     System.out.println("pageIndex: " + this.pgr.getPageIndex());
@@ -1842,6 +1851,20 @@ public class BeanBaseJInvent extends BeanBase {
      */
     public void setPgr(DataPaginator pgr) {
         this.pgr = pgr;
+    }
+
+    /**
+     * @return the listaNombresAtributos
+     */
+    public List getListaNombresAtributos() {
+        return listaNombresAtributos;
+    }
+
+    /**
+     * @param listaNombresAtributos the listaNombresAtributos to set
+     */
+    public void setListaNombresAtributos(List listaNombresAtributos) {
+        this.listaNombresAtributos = listaNombresAtributos;
     }
 
 }

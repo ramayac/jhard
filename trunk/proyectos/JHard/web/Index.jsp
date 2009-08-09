@@ -31,8 +31,70 @@
                         <div class="post">
                             <h2 class="title">Página Principal</h2>
                             <div class="entry">
-                                
-
+                                <ice:form id="frmMain">                                    
+                                    <ice:panelCollapsible expanded="true">
+                                        <f:facet name="header"><ice:panelGroup><ice:outputText value="Wiki" /></ice:panelGroup></f:facet>
+                                        <ice:panelGroup>
+                                            <h3 class="title" style="margin-bottom: 5px;">Últimos 5 artículos del wiki</h3>
+                                            <ice:panelSeries id="srsJWiki" var="entrada" value="#{Index.listaUltimasEntradas}">
+                                                <ice:panelGroup>
+                                                    <div style="margin: 5px 2px;">
+                                                        <ice:commandLink value="#{entrada.titulo}" action="#{Redireccion.jWikiUserParam}" styleClass="lnkItemDashboard">
+                                                            <f:param name="wikiId" value="#{entrada.idarticulo}" />
+                                                        </ice:commandLink>
+                                                    </div>
+                                                </ice:panelGroup>
+                                            </ice:panelSeries>
+                                        </ice:panelGroup>                                        
+                                    </ice:panelCollapsible>
+                                    <ice:panelCollapsible expanded="true" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}">
+                                        <f:facet name="header"><ice:panelGroup><ice:outputText value="Existencias en estado fallido" /></ice:panelGroup></f:facet>
+                                        <h3 class="title" style="margin-bottom: 5px;"><ice:outputText value="Existencias del inventario [total: #{Index.listaExistenciasFallidasSize}]" /> <ice:commandLink value="Administrar inventario" action="#{Redireccion.jinvent}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" style="margin-left: 20px;" /></h3>
+                                        <ice:panelSeries id="srsJInventExistencias" var="existencia" value="#{Index.listaExistenciasFallidas}">
+                                            <ice:panelGroup>
+                                                <div style="margin: 5px 2px;">
+                                                    <ice:outputText value="#{existencia.codigo} - #{existencia.idhardware.nombre} #{existencia.idhardware.idmarca.nombre} #{existencia.idhardware.modelo}" styleClass="lblItemDashboard" />
+                                                </div>
+                                            </ice:panelGroup>
+                                        </ice:panelSeries>
+                                        <h3 class="title" style="margin-bottom: 5px;"><ice:outputText value="Equipos simples [total: #{Index.listaEquiposFallidosSize}]" /><ice:commandLink value="Administrar equipos simples" action="#{Redireccion.jrequestAdministracion}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" style="margin-left: 20px;" /></h3>
+                                        <ice:panelSeries id="srsJInventEqSimples" var="eqsimple" value="#{Index.listaEquiposFallidos}">
+                                            <ice:panelGroup>
+                                                <div style="margin: 5px 2px;">
+                                                    <ice:outputText value="#{eqsimple.descripcion} - #{eqsimple.propietario}: #{eqsimple.descUltimaSolicitud}" styleClass="lblItemDashboard" style="width: 500px" />
+                                                </div>
+                                            </ice:panelGroup>
+                                        </ice:panelSeries>
+                                    </ice:panelCollapsible>
+                                    <ice:panelCollapsible expanded="true" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}">
+                                        <f:facet name="header"><ice:panelGroup><ice:outputText value="Equipos en mantenimiento" /></ice:panelGroup></f:facet>
+                                        <h3 class="title" style="margin-bottom: 5px;"><ice:outputText value="Existencias del inventario y equipos simples [total: #{Index.listaExistenciasMantenimientoSize + Index.listaEquiposMantenimientoSize}]" /><ice:commandLink value="Administrar mantenimientos" action="#{Redireccion.jrequestAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" style="margin-left: 20px;" /></h3>
+                                        <ice:panelSeries id="srsJRequestExistencias" var="existencia" value="#{Index.listaExistenciasMantenimiento}">
+                                            <ice:panelGroup>
+                                                <div style="margin: 5px 2px;">
+                                                    <ice:outputText value="#{existencia.codigo} - #{existencia.idhardware.nombre} #{existencia.idhardware.idmarca.nombre} #{existencia.idhardware.modelo}. Tecnico: #{existencia.nombreTecnicoActualMnto}" styleClass="lblItemDashboard" style="width: 500px;" />
+                                                </div>
+                                            </ice:panelGroup>
+                                        </ice:panelSeries>                                        
+                                        <ice:panelSeries id="srsJRequestEqSimples" var="eqsimple" value="#{Index.listaEquiposMantenimiento}">
+                                            <ice:panelGroup>
+                                                <div style="margin: 5px 2px;">
+                                                    <ice:outputText value="#{eqsimple.descripcion} - #{eqsimple.propietario}. Tecnico: #{eqsimple.nombreTecnicoActualMnto}" styleClass="lblItemDashboard" style="width: 500px;" />
+                                                </div>
+                                            </ice:panelGroup>
+                                        </ice:panelSeries>
+                                    </ice:panelCollapsible>
+                                    <ice:panelCollapsible expanded="true">
+                                        <f:facet name="header"><ice:panelGroup><ice:outputText value="Reservas para el dia de hoy" /></ice:panelGroup></f:facet>
+                                        <ice:panelSeries id="srsJCanon" var="reserva" value="#{Index.listaReservasHoy}">
+                                            <ice:panelGroup>
+                                                <div style="margin: 5px 2px;">
+                                                    <ice:commandLink value="#{reserva.descripcion} desde #{reserva.horaInicio} hasta #{reserva.horaFinal} por #{reserva.idusuario.nombre}" action="#{Redireccion.jcanon}" styleClass="lnkItemDashboard" style="width: 500px;" />
+                                                </div>
+                                            </ice:panelGroup>
+                                        </ice:panelSeries>
+                                    </ice:panelCollapsible>
+                                </ice:form>
                             </div>
                         </div>
                     </div>

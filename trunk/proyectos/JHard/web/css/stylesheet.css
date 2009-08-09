@@ -2751,3 +2751,14 @@ h3{
     color: #BC3E28;
     border: 1px solid #BC3E28;
 }
+
+.lnkItemDashboard, .lblItemDashboard{
+    border: 1px solid #CFCFCF;
+    display: block;
+    width: 250px;
+    height: 20px;
+}
+
+.lnkItemDashboard:hover{
+    background-color: #FCFCFC;
+}
