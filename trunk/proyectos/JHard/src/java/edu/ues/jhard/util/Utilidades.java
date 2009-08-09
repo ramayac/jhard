@@ -13,8 +13,8 @@ public class Utilidades {
 
     //Se añaden SimpleDateFormats para cada caso de formato, para evitar problemas de concurrencia
     private static final SimpleDateFormat sdfHora = new SimpleDateFormat("h:mm a"); // 	12:08 PM
-    private static final SimpleDateFormat sdfFechaHora = new SimpleDateFormat("EEE, d MMM 'yy HH:mm a"); // Wed, 4 Jul '09 12:08 PM
-    private static final SimpleDateFormat sdfFecha = new SimpleDateFormat("EEE, MMM d, 'yy"); // Wed, 4 Jul '09
+    private static final SimpleDateFormat sdfFechaHora = new SimpleDateFormat("EEE, d MMM yy HH:mm a"); // Wed, 4 Jul '09 12:08 PM
+    private static final SimpleDateFormat sdfFecha = new SimpleDateFormat("EEE, MMM d, yy"); // Wed, 4 Jul '09
 
     public static String FormatearFechaHora(Date fechaHora){
         return sdfFechaHora.format(fechaHora);

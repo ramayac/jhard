@@ -239,7 +239,7 @@
                                         <!-- panel de para administrar las Etiquetas -->
                                         <ice:panelGroup>
                                             <div align="right">Filtro: <input id="filtroTablaEtiquetas"/></div>
-                                            <ice:dataTable id="tablaEtiquetas" rendered="#{jmlCrudAdmin.hayEtiqueta}" rows="30" styleClass="mitablaetiquetas"
+                                            <ice:dataTable id="tablaEtiquetas" rendered="#{jprocurAdmin.hayEtiqueta}" rows="30" styleClass="mitablaetiquetas"
                                             value="#{jprocurAdmin.listaEtiqueta}" var="indiceEtiqueta" resizable="true">
                                                 <ice:column>
                                                     <f:facet name="header"><ice:outputText value="Nombre Etiqueta"/></f:facet>
