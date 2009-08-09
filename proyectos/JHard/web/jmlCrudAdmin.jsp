@@ -22,17 +22,17 @@
                 <script charset="utf-8" type="text/javascript">
                     jQuery.noConflict();
                     jQuery(document).ready(function() {
-                        var tabla = jQuery("form table.mitablamaterias");
+                        var tabla1 = jQuery("form table.mitablamaterias");
                         jQuery("#filtroTablaMaterias").keyup(function() {
-                            jQuery.uiTableFilter(tabla, this.value );
+                            jQuery.uiTableFilter(tabla1, this.value );
                         })
-                        var tabla = jQuery("form table.mitablacurso");
+                        var tabla2 = jQuery("form table.mitablacurso");
                         jQuery("#filtroTablaCursos").keyup(function() {
-                            jQuery.uiTableFilter(tabla, this.value );
+                            jQuery.uiTableFilter(tabla2, this.value );
                         })
-                        var tabla = jQuery("form table.mitablacarrera");
+                        var tabla3 = jQuery("form table.mitablacarrera");
                         jQuery("#filtroTablaCarrera").keyup(function() {
-                            jQuery.uiTableFilter(tabla, this.value );
+                            jQuery.uiTableFilter(tabla3, this.value );
                         })
                     });
                 </script>
