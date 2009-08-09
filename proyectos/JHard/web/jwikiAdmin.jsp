@@ -220,32 +220,69 @@
                             <jsp:directive.include file="/jspf/login.jspx"/>
                             <!--login control -->
                             </li>
-                            <!--<li>
-                                <h2>Otros Vinculos</h2>
+                            <li>
+                                <ice:form id="frmCommonTasks">
+                                 <ice:panelPopup styleClass="panelPopup" draggable="true" modal="true" rendered="#{JHardminInstance.msg.visible}" visible="#{JHardminInstance.msg.visible}" clientOnly="true" >
+                                    <f:facet name="header" >
+                                        <ice:outputText value="Mensaje" styleClass="popupHeader" />
+                                    </f:facet>
+                                    <f:facet name="body">
+                                        <ice:panelGroup>
+                                            <p><ice:outputText value="#{JHardminInstance.msg.text}" styleClass="#{JHardminInstance.msg.type}" /></p>
+                                            <p class="actionSection"><ice:commandButton action="#{JHardminInstance.closePopup}" id="btnCerrar" value="OK" /></p>
+                                        </ice:panelGroup>
+                                    </f:facet>
+                                    </ice:panelPopup>
+                                <h2>Tareas Comunes</h2>
                                 <ul>
                                     <li>
-                                        <a href="#">Nec metus sed donec</a>
+                                            <ice:commandLink value="Cambiar clave de acceso" action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
                                     </li>
                                     <li>
-                                        <a href="#">Magna lacus bibendum mauris</a>
+                                            <ice:commandLink value="Ver Reportes de JHard" action="#{Redireccion.reportes}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
                                     </li>
                                     <li>
-                                        <a href="#">Velit semper nisi molestie</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Eget tempor eget nonummy</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Nec metus sed donec</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Magna lacus bibendum mauris</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Velit semper nisi molestie</a>
+                                            <ice:commandLink action="#{JHardminInstance.showPopupRegistrarUsuario}" rendered="#{JHardminInstance.currentUser == null}" value="Crear usuario del sistema"/>
                                     </li>
                                 </ul>
-                            </li>-->
+                                <ice:panelPopup id="pupCrearUsuario" draggable="true" modal="true" rendered="#{JHardminInstance.popupRegistrarUsuarioVisible}">
+                                        <f:facet name="header"><ice:outputText value="Agregar nuevo usuario" /></f:facet>
+                                        <f:facet name="body">
+                                            <ice:panelGroup styleClass="frmElementList">
+                                                <p>
+                                                    <ice:outputLabel id="lblCarnetUsuario" for="txtCarnetUsuario" value="Carnet:" />
+                                                    <ice:inputText id="txtCarnetUsuario" value="#{JHardminInstance.estudianteUsuarioRegistrado.carnet}" />
+                                                </p>
+                                                <p>
+                                                    <ice:outputLabel id="lblApellidosUsuario" for="txtApellidosUsuario" value="Apellidos:" />
+                                                    <ice:inputText id="txtApellidosUsuario" value="#{JHardminInstance.estudianteUsuarioRegistrado.apellidos}" />
+                                                </p>
+                                                <p>
+                                                    <ice:outputLabel id="lblNombresUsuario" for="txtNombresUsuario" value="Nombres:" />
+                                                    <ice:inputText id="txtNombresUsuario" value="#{JHardminInstance.estudianteUsuarioRegistrado.nombres}" />
+                                                </p>
+
+                                                <p>
+                                                    <ice:outputLabel id="lblClaveUsuario" for="TxtClaveUsuario" value="Clave:" />
+                                                    <ice:inputSecret id="txtClaveUsuario" value="#{JHardminInstance.usuarioRegistrado.clave}" />
+                                                </p>
+                                                <p>
+                                                    <ice:outputLabel id="lblClaveUsuarioConfirm" for="txtClaveUsuarioConfirm" value="Confirmar clave:" />
+                                                    <ice:inputSecret id="txtClaveUsuarioConfirm" value="#{JHardminInstance.claveUsuarioConfirmacion}" />
+                                                </p>
+                                                <p>
+                                                    <ice:outputLabel id="lblAutorizacionUsuario" for="txtAutorizacionUsuario" value="Codigo de autorizacion:" />
+                                                    <ice:inputText id="txtAutorizacionUsuario" value="#{JHardminInstance.autorizacionUsuario}" />
+                                                </p>
+                                                <p class="actionSection">
+                                                    <ice:commandButton id="cmdConfirmRegistrarUsuario" value="Agregar" action="#{JHardminInstance.registrarUsuario}" />
+                                                    <ice:commandButton id="cmdCancelRegistrarUsuario" value="Cancelar" action="#{JHardminInstance.hidePopupRegistrarUsuario}" />
+                                                </p>
+                                            </ice:panelGroup>
+                                        </f:facet>
+                                    </ice:panelPopup>
+                                </ice:form>
+                            </li>
                         </ul>
                     </div>
                     <!-- end sidebar -->
