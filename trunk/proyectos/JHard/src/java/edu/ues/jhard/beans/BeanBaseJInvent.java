@@ -95,7 +95,7 @@ public class BeanBaseJInvent extends BeanBase {
     private String valorBusqueda;
     private ActionMessage msg;
     private DataPaginator pgr;
-    private Existencia searchResult;
+    private Existencia searchResult;    
 
     public BeanBaseJInvent(){
         this.clasificaciontm = new ClasificacionTreeModel(this.getEntityManager());
@@ -159,42 +159,91 @@ public class BeanBaseJInvent extends BeanBase {
     }
 
     public int getCurrentClasificacionExistenciaCollectionSize(){
-        return this.getCurrentClasificacion().getExistenciaCollection().size();
+        try{
+            return this.getCurrentClasificacion().getExistenciaCollection().size();
+        }
+        catch(Exception ex){
+            //pass
+        }
+        return 0;
     }
 
     public int getCurrentClasificacionSoftwareCollectionSize(){
-        return this.getCurrentClasificacion().getSoftwareCollection().size();
+        try{
+            return this.getCurrentClasificacion().getSoftwareCollection().size();
+        }
+        catch(Exception ex){
+            //pass
+        }
+        return 0;
     }
 
     public int getCurrentClasificacionAccesorioCollectionSize(){
-        return this.getCurrentClasificacion().getAccesorioCollection().size();
+        try{
+            return this.getCurrentClasificacion().getAccesorioCollection().size();
+        }
+        catch(Exception ex){
+            //pass
+        }
+        return 0;
     }
 
     public int getCurrentClasificacionPiezaCollectionSize(){
-        return this.getCurrentClasificacion().getPiezaCollection().size();
+        try{
+            return this.getCurrentClasificacion().getPiezaCollection().size();
+        }
+        catch(Exception ex){
+            //pass
+        }
+        return 0;
     }
 
     public int getSizeListaEquipos(){
-        return this.getCurrentClasificacion().getEquipoCollection().size();
+        try{
+            return this.getCurrentClasificacion().getEquipoCollection().size();
+        }
+        catch(Exception ex){
+            return 0;
+        }
     }
 
     public int getSizeListaExistencias(){
         int totalExistencias = 0;
-        for(Equipo eq: this.getCurrentClasificacion().getEquipoCollection())
-            totalExistencias += eq.getExistenciaSize();
+        try{
+            for(Equipo eq: this.getCurrentClasificacion().getEquipoCollection())
+                totalExistencias += eq.getExistenciaSize();
+        }
+        catch(Exception ex){
+            //pass
+        }
         return totalExistencias;
     }
 
     public int getSizeListaSoftware(){
-        return this.getCurrentClasificacion().getSoftwareCollection().size();
+        try{
+            return this.getCurrentClasificacion().getSoftwareCollection().size();
+        }
+        catch(Exception ex){
+            return 0;
+        }
     }
 
     public int getSizeListaAccesorios(){
-        return this.getCurrentClasificacion().getAccesorioCollection().size();
+        try{
+            return this.getCurrentClasificacion().getAccesorioCollection().size();
+        }
+        catch(Exception ex){
+            return 0;
+        }
     }
 
     public int getSizeListaPiezas(){
-        return this.getCurrentClasificacion().getPiezaCollection().size();
+        try{
+            return this.getCurrentClasificacion().getPiezaCollection().size();
+        }
+        catch(Exception ex){
+            return 0;
+        }
     }
 
     public int getSizeListaMarcas(){
@@ -1798,31 +1847,8 @@ public class BeanBaseJInvent extends BeanBase {
             String idExistencia = this.valorBusqueda.substring(this.valorBusqueda.indexOf("[")+1, this.valorBusqueda.indexOf("]"));            
             this.searchResult = (Existencia)this.getEntityManager().createQuery("SELECT e FROM Existencia e WHERE e.idexistencia=" + idExistencia).getSingleResult();
 
-            this.getClasificaciontm().seleccionarNodo(this.searchResult.getIdhardware().getIdclasificacion().getIdclasificacion().toString());
-            //this.setSearchMode(false);
-            int currentPage = (int)Math.ceil(this.getCurrentClasificacion().getExistenciaCollection().indexOf(this.searchResult) / 5) + 1;
-                        
-            System.out.println("currentPage: " + currentPage);
-            this.pgr.setFor("tblListaExistencias");
-            System.out.println("pageCount" + this.pgr.getPageCount());
-            System.out.println("lastPage?" + this.pgr.isLastPage());            
-
-            if(this.pgr.getPageIndex()  > currentPage){
-                int diff = this.pgr.getPageIndex() - currentPage;
-                for(int i=1; i<=diff; i++){
-                    this.pgr.gotoPreviousPage();
-                    System.out.println("Going to prev page...");
-                    System.out.println("pageIndex: " + this.pgr.getPageIndex());
-                }
-            }
-            else{
-                int diff = currentPage - this.pgr.getPageIndex();
-                for(int i=1; i<=diff; i++){
-                    this.pgr.gotoNextPage();
-                    System.out.println("Going to next page...");
-                    System.out.println("pageIndex: " + this.pgr.getPageIndex());
-                }
-            }
+            this.getClasificaciontm().seleccionarNodo(this.searchResult.getIdhardware().getIdclasificacion().getIdclasificacion().toString());            
+            int currentPage = (int)Math.ceil(this.getCurrentClasificacion().getExistenciaCollection().indexOf(this.searchResult) / 5) + 1;            
         }
         catch(Exception ex){
             System.out.println(ex.getMessage());
@@ -1874,30 +1900,21 @@ public class BeanBaseJInvent extends BeanBase {
 
     public String selectPage(){
         int currentPage = (int)Math.ceil(this.getCurrentClasificacion().getExistenciaCollection().indexOf(this.searchResult) / 5) + 1;
+        this.setSearchMode(false);                
 
-            System.out.println("currentPage: " + currentPage);
-            this.pgr.setFor("tblListaExistencias");
-            System.out.println("pageCount" + this.pgr.getPageCount());
-            System.out.println("lastPage?" + this.pgr.isLastPage());
-
-            if(this.pgr.getPageIndex()  > currentPage){
-                int diff = this.pgr.getPageIndex() - currentPage;
-                for(int i=1; i<=diff; i++){
-                    this.pgr.gotoPreviousPage();
-                    System.out.println("Going to prev page...");
-                    System.out.println("pageIndex: " + this.pgr.getPageIndex());
-                }
+        if(this.pgr.getPageIndex()  > currentPage){
+            int diff = this.pgr.getPageIndex() - currentPage;
+            for(int i=1; i<=diff; i++){
+                this.pgr.gotoPreviousPage();                
             }
-            else{
-                int diff = currentPage - this.pgr.getPageIndex();
-                for(int i=1; i<=diff; i++){
-                    this.pgr.gotoNextPage();
-                    System.out.println("Going to next page...");
-                    System.out.println("pageIndex: " + this.pgr.getPageIndex());
-                }
+        }
+        else{
+            int diff = currentPage - this.pgr.getPageIndex();
+            for(int i=1; i<=diff; i++){
+                this.pgr.gotoNextPage();                
             }
-            this.setSearchMode(false);
-            return "done";
+        }
+        return "done";
     }
-
+   
 }
