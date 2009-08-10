@@ -95,6 +95,7 @@ public class BeanBaseJInvent extends BeanBase {
     private String valorBusqueda;
     private ActionMessage msg;
     private DataPaginator pgr;
+    private Existencia searchResult;
 
     public BeanBaseJInvent(){
         this.clasificaciontm = new ClasificacionTreeModel(this.getEntityManager());
@@ -122,6 +123,9 @@ public class BeanBaseJInvent extends BeanBase {
         this.listaUbicaciones = this.getEntityManager().createNamedQuery("Ubicacion.findAll").getResultList();
         this.listaResultadosBusqueda = new ArrayList();        
         this.valorBusqueda = "";
+        this.pgr = new DataPaginator();
+        this.pgr.setFor("tblListaExistencias");
+        this.searchResult = new Existencia();
     }
 
     /**
@@ -1792,19 +1796,20 @@ public class BeanBaseJInvent extends BeanBase {
     public void seleccionarExistencia(){
         try{            
             String idExistencia = this.valorBusqueda.substring(this.valorBusqueda.indexOf("[")+1, this.valorBusqueda.indexOf("]"));            
-            Existencia current = (Existencia)this.getEntityManager().createQuery("SELECT e FROM Existencia e WHERE e.idexistencia=" + idExistencia).getSingleResult();
+            this.searchResult = (Existencia)this.getEntityManager().createQuery("SELECT e FROM Existencia e WHERE e.idexistencia=" + idExistencia).getSingleResult();
 
-            this.getClasificaciontm().seleccionarNodo(current.getIdhardware().getIdclasificacion().getIdclasificacion().toString());
-            this.setSearchMode(false);
-            int currentPage = (int)Math.ceil(this.getCurrentClasificacion().getExistenciaCollection().indexOf(current) / 5);
+            this.getClasificaciontm().seleccionarNodo(this.searchResult.getIdhardware().getIdclasificacion().getIdclasificacion().toString());
+            //this.setSearchMode(false);
+            int currentPage = (int)Math.ceil(this.getCurrentClasificacion().getExistenciaCollection().indexOf(this.searchResult) / 5) + 1;
+                        
             System.out.println("currentPage: " + currentPage);
-            
+            this.pgr.setFor("tblListaExistencias");
             System.out.println("pageCount" + this.pgr.getPageCount());
             System.out.println("lastPage?" + this.pgr.isLastPage());            
 
             if(this.pgr.getPageIndex()  > currentPage){
                 int diff = this.pgr.getPageIndex() - currentPage;
-                for(int i=0; i<=diff; i++){
+                for(int i=1; i<=diff; i++){
                     this.pgr.gotoPreviousPage();
                     System.out.println("Going to prev page...");
                     System.out.println("pageIndex: " + this.pgr.getPageIndex());
@@ -1812,7 +1817,7 @@ public class BeanBaseJInvent extends BeanBase {
             }
             else{
                 int diff = currentPage - this.pgr.getPageIndex();
-                for(int i=0; i<=diff; i++){
+                for(int i=1; i<=diff; i++){
                     this.pgr.gotoNextPage();
                     System.out.println("Going to next page...");
                     System.out.println("pageIndex: " + this.pgr.getPageIndex());
@@ -1865,6 +1870,34 @@ public class BeanBaseJInvent extends BeanBase {
      */
     public void setListaNombresAtributos(List listaNombresAtributos) {
         this.listaNombresAtributos = listaNombresAtributos;
+    }
+
+    public String selectPage(){
+        int currentPage = (int)Math.ceil(this.getCurrentClasificacion().getExistenciaCollection().indexOf(this.searchResult) / 5) + 1;
+
+            System.out.println("currentPage: " + currentPage);
+            this.pgr.setFor("tblListaExistencias");
+            System.out.println("pageCount" + this.pgr.getPageCount());
+            System.out.println("lastPage?" + this.pgr.isLastPage());
+
+            if(this.pgr.getPageIndex()  > currentPage){
+                int diff = this.pgr.getPageIndex() - currentPage;
+                for(int i=1; i<=diff; i++){
+                    this.pgr.gotoPreviousPage();
+                    System.out.println("Going to prev page...");
+                    System.out.println("pageIndex: " + this.pgr.getPageIndex());
+                }
+            }
+            else{
+                int diff = currentPage - this.pgr.getPageIndex();
+                for(int i=1; i<=diff; i++){
+                    this.pgr.gotoNextPage();
+                    System.out.println("Going to next page...");
+                    System.out.println("pageIndex: " + this.pgr.getPageIndex());
+                }
+            }
+            this.setSearchMode(false);
+            return "done";
     }
 
 }
