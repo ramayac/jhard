@@ -19,6 +19,7 @@ import edu.ues.jhard.jpa.Tag;
 import edu.ues.jhard.jpa.TagEntrada;
 import edu.ues.jhard.jpa.Usuario;
 import edu.ues.jhard.jprocur.SelectableTag;
+import edu.ues.jhard.util.popUp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,12 +51,30 @@ public class jprocurAdmin extends AbstractPageBean {
     //private Comentarios comentarioActual = null;
     private List<Comentarios> listaComentarios = new ArrayList<Comentarios>();
     private List<Tag> listaEtiqueta = new ArrayList<Tag>();
+    private Tag etiquetaNueva = new Tag();
     private Integer tabIndex = new Integer(0);
     //lista de etiquetas de para el row selector
     private List<SelectableTag> listaSelTag = new ArrayList<SelectableTag>();
     private HtmlOutputLabel lblUser = new HtmlOutputLabel();
     private Boolean showPPMesaje = new Boolean(false);
     private HtmlOutputText lblPPMesajes = new HtmlOutputText();
+    private popUp popup = new popUp("Aviso", "", false);
+
+    public popUp getPopup() {
+        return popup;
+    }
+
+    public void setPopup(popUp popup) {
+        this.popup = popup;
+    }
+
+    public Tag getEtiquetaNueva() {
+        return etiquetaNueva;
+    }
+
+    public void setEtiquetaNueva(Tag etiquetaNueva) {
+        this.etiquetaNueva = etiquetaNueva;
+    }
 
     public HtmlOutputText getLblPPMesajes() {
         return lblPPMesajes;
@@ -98,11 +117,6 @@ public class jprocurAdmin extends AbstractPageBean {
         return this.lu;
     }
 
-    //what the fuck?
-//    public void setLu(LoggedUser lu) {
-//        this.lu = lu;
-//    }
-
     public Usuario getUser(){
         return this.U;
     }
@@ -144,6 +158,7 @@ public class jprocurAdmin extends AbstractPageBean {
         
         this.listaEntradas = this.getJProcurInstance().getAllEntradas();
         this.listaComentarios = this.getJProcurInstance().getComentariosNoAprobados();
+        this.listaEtiqueta = this.getJProcurInstance().getAllEtiquetas();
         if(this.listaEntradas.size()>0) this.entradaActual = this.listaEntradas.get(0);
 
         llenarListaTags();
@@ -473,7 +488,16 @@ public class jprocurAdmin extends AbstractPageBean {
     private Boolean popupElimEntrada = new Boolean(false);
     private Boolean popupComentario = new Boolean(false);
     private Boolean aprobarComentario = new Boolean(false);
-    private Boolean eliminarComentario = new Boolean(true);
+    private Boolean eliminarComentario = new Boolean(false);
+    private Boolean agregandoEtiqueta = new Boolean(false);
+
+    public Boolean getAgregandoEtiqueta() {
+        return agregandoEtiqueta;
+    }
+
+    public void setAgregandoEtiqueta(Boolean agregandoEtiqueta) {
+        this.agregandoEtiqueta = agregandoEtiqueta;
+    }
 
     public Boolean getEliminarComentario() {
         return eliminarComentario;
@@ -681,6 +705,42 @@ public class jprocurAdmin extends AbstractPageBean {
         this.idComentario = -1;
         this.showPPMesaje = false;
         return EMPTY_STRING;
+    }
+
+    public String btnClose_action() {
+        this.popup.setVisible(false);
+        return EMPTY_STRING;
+    }
+
+    public String btnAddTagDesc_action() {
+        if(this.jprocurInstance.createTag(this.etiquetaNueva)){
+            this.lblPPMesajes.setValue("Etiqueta agregada con éxito.");
+            this.showPPMesaje = true;
+            this.listaEtiqueta.clear();
+            this.listaEtiqueta = this.getJProcurInstance().getAllEtiquetas();
+        } else {
+            this.lblPPMesajes.setValue("Ocurrió un error al intentar agregar la etiqueta.");
+            this.showPPMesaje = true;
+        }
+        this.etiquetaNueva = new Tag();
+        this.showPPMesaje = false;
+        return EMPTY_STRING;
+    }
+
+    public String getEliminarEtiqueta(){
+       String idS = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idTag");
+       Integer id = new Integer(idS);
+       Tag etiqueta = this.jprocurInstance.getEtiqueta(id.intValue());
+       try {
+            this.jprocurInstance.deleteTag(etiqueta.getIdtag());
+            this.popup.setMensaje("La etiqueta fué eliminada.");
+            this.listaEtiqueta = this.jprocurInstance.getAllEtiquetas();
+       } catch (Exception e) {
+            this.popup.setMensaje("Ocurrió un error al intentar eliminar la etiqueta.");
+       } finally {
+           this.popup.setVisible(true);
+       }
+       return EMPTY_STRING;
     }
 
     public Integer getRolUsuarioConectado(){

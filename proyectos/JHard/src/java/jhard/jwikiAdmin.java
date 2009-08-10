@@ -70,11 +70,6 @@ public class jwikiAdmin extends AbstractPageBean {
         return this.lu;
     }
 
-    //what the fuck?
-//    public void setLu(LoggedUser lu) {
-//        this.lu = lu;
-//    }
-
     public Usuario getUser(){
         return this.U;
     }
