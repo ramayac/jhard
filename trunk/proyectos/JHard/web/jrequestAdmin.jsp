@@ -49,7 +49,7 @@
                                                 modal="true" rendered="#{jrequestAdmin.renderMantenimientos}" style="display: block; height: 309px; left: 288px; top: 552px; position: absolute; width: 381px;visibility: hidden;visibility: hidden;">
                                                     <f:facet name="header">
                                                         <ice:panelGrid id="panelGrid3" style="display:block;width:180px;height:20px;">
-                                                            <ice:outputText id="lblTituloMan" value="Mantenimientos JRequest"/>
+                                                            <ice:outputText id="lblTituloMan" value="Mantenimiento de Equipos"/>
                                                         </ice:panelGrid>
                                                     </f:facet>
                                                     <f:facet name="body">
@@ -114,6 +114,7 @@
                                                         </ice:panelGrid>
                                                     </f:facet>
                                                     <f:facet name="body">
+                                                        <div class="post">
                                                         <ice:panelGroup id="panelGrid99" style="display:block;width:340px;height:240px;">
                                                             <ice:outputText id="outputText3" style="width: 310px" value="Para actualizar esta bitácora, modifique en el cuadro de texto inferior"/>
                                                             <br/><br/>
@@ -131,6 +132,7 @@
                                                                 styleClass="btnAccion2" value="Cerrar"/>
                                                             <br/>
                                                         </ice:panelGroup>
+                                                        </div>
                                                     </f:facet>
                                                 </ice:panelPopup>
                                             </ice:panelGroup>
@@ -208,15 +210,17 @@
                                     <ice:panelPopup autoCentre="true" rendered="#{jrequestAdmin.render}" binding="#{jrequestAdmin.popUpMensajes}" draggable="true" id="popUpMensajes" modal="true" style="display: block; width: 214px;visibility: hidden;visibility: hidden;">
                                         <f:facet name="header">
                                             <ice:panelGrid id="panelGrid1" style="display:block;width:180px;height:20px;">
-                                                <ice:outputText id="lblJText" value="JRequest"/>
+                                                <ice:outputText id="lblJText" value="Mensaje"/>
                                             </ice:panelGrid>
                                         </f:facet>
                                         <f:facet name="body">
+                                            <div class="post">
                                             <ice:panelGrid id="panelGrid2" style="display:block;width:180px;height:80px;">
                                                 <ice:outputText binding="#{jrequestAdmin.lblMensajes}" id="lblMensajes" value="Texto de Mensajes"/>
                                                 <ice:commandButton action="#{jrequestAdmin.btnOK_action}" binding="#{jrequestAdmin.btnOK}" id="btnOK"
                                                     styleClass="btnAccion2" value="OK"/>
                                             </ice:panelGrid>
+                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                 </ice:form>
@@ -261,10 +265,12 @@
                                         <ice:outputText value="Mensaje" styleClass="popupHeader" />
                                     </f:facet>
                                     <f:facet name="body">
+                                        <div class="post">
                                         <ice:panelGroup>
                                             <p><ice:outputText value="#{JHardminInstance.msg.text}" styleClass="#{JHardminInstance.msg.type}" /></p>
                                             <p class="actionSection"><ice:commandButton action="#{JHardminInstance.closePopup}" id="btnCerrar" value="OK" /></p>
                                         </ice:panelGroup>
+                                        </div>
                                     </f:facet>
                                     </ice:panelPopup>
                                 <h2>Tareas Comunes</h2>
@@ -297,6 +303,7 @@
                                     <ice:panelPopup id="pupCrearUsuario" draggable="true" modal="true" rendered="#{JHardminInstance.popupRegistrarUsuarioVisible}">
                                         <f:facet name="header"><ice:outputText value="Agregar nuevo usuario" /></f:facet>
                                         <f:facet name="body">
+                                            <div class="post">
                                             <ice:panelGroup styleClass="frmElementList">
                                                 <p>
                                                     <ice:outputLabel id="lblCarnetUsuario" for="txtCarnetUsuario" value="Carnet:" />
@@ -328,6 +335,7 @@
                                                     <ice:commandButton id="cmdCancelRegistrarUsuario" value="Cancelar" action="#{JHardminInstance.hidePopupRegistrarUsuario}" />
                                                 </p>
                                             </ice:panelGroup>
+                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                 </ice:form>

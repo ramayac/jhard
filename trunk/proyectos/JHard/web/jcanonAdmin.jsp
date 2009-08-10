@@ -131,10 +131,11 @@
                                                     style="height: 189px; left: 336px; top: 984px; position: absolute; width: 405px" visible="#{jcanonAdmin.panelPopup1Bean.showModalPanel}">
                                                     <f:facet name="header">
                                                         <ice:panelGrid id="panelGrid1" style="display:block;width:180px;height:20px;">
-                                                            <ice:outputText id="outputText2" value="JCanon"/>
+                                                            <ice:outputText id="outputText2" value="Modificar Estado de Reserva"/>
                                                         </ice:panelGrid>
                                                     </f:facet>
                                                     <f:facet name="body">
+                                                        <div class="post">
                                                         <ice:panelGroup id="grupoModEstado" style="display: block; height: 134px">
                                                             <ice:outputText binding="#{jcanonAdmin.lblMensajeModEstado}" id="lblMensajeModEstado" value="Coloque el nuevo estado para esta reserva"/>
                                                             <ice:panelGrid columns="6" id="grupoChecks" style="display: block; height: 80px" width="360">
@@ -153,6 +154,7 @@
                                                             <ice:commandButton action="#{jcanonAdmin.btnModEstadoCancelar_action}"
                                                                 binding="#{jcanonAdmin.btnModEstadoCancelar}" id="btnModEstadoCancelar" value="Cancelar"/>
                                                         </ice:panelGroup>
+                                                        </div>
                                                     </f:facet>
                                                     <ice:commandButton id="button2" value="submit"/>
                                                 </ice:panelPopup>
@@ -161,10 +163,11 @@
                                                     style="height: 141px; left: 336px; top: 816px; position: absolute; width: 285px" visible="#{jcanonAdmin.panelPopup2Bean.showModalPanel}">
                                                     <f:facet name="header">
                                                         <ice:panelGrid id="panelGrid3" style="display:block;width:180px;height:20px;">
-                                                            <ice:outputText id="outputText4" value="JCanon"/>
+                                                            <ice:outputText id="outputText4" value="Mensajes"/>
                                                         </ice:panelGrid>
                                                     </f:facet>
                                                     <f:facet name="body">
+                                                        <div class="post">
                                                         <ice:panelGroup id="grupoMensajes" style="display: block; height: 86px; width: 230px">
                                                             <ice:outputText binding="#{jcanonAdmin.lblMensajes}" id="lblMensajes" value="Mensajes AQUI"/>
                                                             <ice:panelGrid columns="2" id="panelGrid4" style="display: block; height: 79px; width: 180px">
@@ -173,6 +176,7 @@
                                                                 <ice:commandButton binding="#{jcanonAdmin.btnCancelarMensajes}" id="btnCancelarMensajes" value="Cancelar"/>
                                                             </ice:panelGrid>
                                                         </ice:panelGroup>
+                                                        </div>
                                                     </f:facet>
                                                 </ice:panelPopup>
                                                 <ice:panelPopup autoCentre="true" binding="#{jcanonAdmin.panelPosponer}" draggable="true" id="panelPosponer"
@@ -180,10 +184,11 @@
                                                     style="height: 403px; width: 405px" visible="#{jcanonAdmin.panelPopup1Bean1.showModalPanel}">
                                                     <f:facet name="header">
                                                         <ice:panelGrid id="panelGrid2" style="display:block;width:180px;height:20px;">
-                                                            <ice:outputText id="outputText3" value="JCanon"/>
+                                                            <ice:outputText id="outputText3" value="Posponer Reserva"/>
                                                         </ice:panelGrid>
                                                     </f:facet>
                                                     <f:facet name="body">
+                                                        <div class="post">
                                                         <ice:panelGroup id="panelGrid5" style="display: block; height: 326px">
                                                             <ice:outputText binding="#{jcanonAdmin.lblTextMod}" id="lblTextMod" value="Reserva a modificar"/>
                                                             <br/>
@@ -221,6 +226,7 @@
                                                             <ice:commandButton action="#{jcanonAdmin.btnCancelarMod_action}"
                                                                 binding="#{jcanonAdmin.btnCancelarMod}" id="btnCancelarMod" value="Cancelar"/>
                                                         </ice:panelGroup>
+                                                        </div>
                                                     </f:facet>
                                                 </ice:panelPopup>
                                             </ice:panelGroup>
@@ -267,10 +273,12 @@
                                         <ice:outputText value="Mensaje" styleClass="popupHeader" />
                                     </f:facet>
                                     <f:facet name="body">
+                                        <div class="post">
                                         <ice:panelGroup>
                                             <p><ice:outputText value="#{JHardminInstance.msg.text}" styleClass="#{JHardminInstance.msg.type}" /></p>
                                             <p class="actionSection"><ice:commandButton action="#{JHardminInstance.closePopup}" id="btnCerrar" value="OK" /></p>
                                         </ice:panelGroup>
+                                        </div>
                                     </f:facet>
                                     </ice:panelPopup>
                                 <h2>Tareas Comunes</h2>
@@ -297,6 +305,7 @@
                                     <ice:panelPopup id="pupCrearUsuario" draggable="true" modal="true" rendered="#{JHardminInstance.popupRegistrarUsuarioVisible}">
                                         <f:facet name="header"><ice:outputText value="Agregar nuevo usuario" /></f:facet>
                                         <f:facet name="body">
+                                            <div class="post">
                                             <ice:panelGroup styleClass="frmElementList">
                                                 <p>
                                                     <ice:outputLabel id="lblCarnetUsuario" for="txtCarnetUsuario" value="Carnet:" />
@@ -328,6 +337,7 @@
                                                     <ice:commandButton id="cmdCancelRegistrarUsuario" value="Cancelar" action="#{JHardminInstance.hidePopupRegistrarUsuario}" />
                                                 </p>
                                             </ice:panelGroup>
+                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                 </ice:form>

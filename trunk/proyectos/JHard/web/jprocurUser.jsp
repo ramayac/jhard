@@ -160,6 +160,18 @@
                             <!--login control -->
                             <jsp:directive.include file="/jspf/tareas.jspx"/>
                             <!--login control -->
+                            <ul>
+                                <ice:form id="anotherForm">
+                                <li>
+                                    <ice:commandLink action="#{Redireccion.jProCurAdmin}"
+                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Cursos"/>
+                                </li>
+                                <li>
+                                    <ice:commandLink action="#{Redireccion.jWikiAdmin}"
+                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Wiki"/>
+                                </li>
+                                </ice:form>
+                            </ul>
                             </li>
                         </ul>
                     </div>

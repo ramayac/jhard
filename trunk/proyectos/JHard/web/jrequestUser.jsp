@@ -104,10 +104,12 @@
                                             </ice:panelGrid>
                                         </f:facet>
                                         <f:facet name="body">
+                                            <div class="post">
                                             <ice:panelGrid id="panelGrid3" style="display: block; height: 80px" width="350">
                                                 <ice:outputText id="mensaje" value="Debe registrarse para poder acceder a esta opción"/>
                                                 <ice:commandButton action="#{jrequestUser.btnOk_action}" binding="#{jrequestUser.btnOk}" id="btnOk" value="Aceptar"/>
                                             </ice:panelGrid>
+                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                 </ice:form>
@@ -151,10 +153,12 @@
                                         <ice:outputText value="Mensaje" styleClass="popupHeader" />
                                     </f:facet>
                                     <f:facet name="body">
+                                        <div class="post">
                                         <ice:panelGroup>
                                             <p><ice:outputText value="#{JHardminInstance.msg.text}" styleClass="#{JHardminInstance.msg.type}" /></p>
                                             <p class="actionSection"><ice:commandButton action="#{JHardminInstance.closePopup}" id="btnCerrar" value="OK" /></p>
                                         </ice:panelGroup>
+                                        </div>
                                     </f:facet>
                                     </ice:panelPopup>
                                 <h2>Tareas Comunes</h2>
@@ -188,6 +192,7 @@
                                     <ice:panelPopup id="pupCrearUsuario" draggable="true" modal="true" rendered="#{JHardminInstance.popupRegistrarUsuarioVisible}">
                                         <f:facet name="header"><ice:outputText value="Agregar nuevo usuario" /></f:facet>
                                         <f:facet name="body">
+                                            <div class="post">
                                             <ice:panelGroup styleClass="frmElementList">
                                                 <p>
                                                     <ice:outputLabel id="lblCarnetUsuario" for="txtCarnetUsuario" value="Carnet:" />
@@ -219,6 +224,7 @@
                                                     <ice:commandButton id="cmdCancelRegistrarUsuario" value="Cancelar" action="#{JHardminInstance.hidePopupRegistrarUsuario}" />
                                                 </p>
                                             </ice:panelGroup>
+                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                 </ice:form>

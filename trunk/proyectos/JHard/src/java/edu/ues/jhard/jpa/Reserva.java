@@ -21,6 +21,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import edu.ues.jhard.util.Utilidades;
 
 /**
  *
@@ -203,12 +204,14 @@ public class Reserva implements Serializable {
     }
 
     public String gethoraInicio(){
+        return Utilidades.FormateaHora(this.fechahorainicioprestamo);
         
-        return String.valueOf(this.fechahorainicioprestamo.getHours())+":"+String.valueOf(this.fechahorainicioprestamo.getMinutes());
+        //return String.valueOf(this.fechahorainicioprestamo.getHours())+":"+String.valueOf(this.fechahorainicioprestamo.getMinutes());
     }
 
     public String gethoraFinal(){
+        return Utilidades.FormateaHora(this.fechahorafinprestamo);
 
-        return String.valueOf(this.fechahorafinprestamo.getHours())+":"+String.valueOf(this.fechahorafinprestamo.getMinutes());
+        //return String.valueOf(this.fechahorafinprestamo.getHours())+":"+String.valueOf(this.fechahorafinprestamo.getMinutes());
     }
 }

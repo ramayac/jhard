@@ -579,6 +579,10 @@ private List exc = new ArrayList();
 
         Existencia [] existencias = new edu.ues.jhard.beans.BeanBaseJCanon().getEquipoMultimedia(16);
 
+        if(existencias.length!=0){
+            this.mostrarError=false;
+            this.btnCrearReserva.setDisabled(false);
+
         canonElegido = existencias[0];
 
 
@@ -591,15 +595,27 @@ private List exc = new ArrayList();
 //        UISelectItems itemsEx = new UISelectItems();
 //        itemsEx.setValue(ex);
 //        this.comboCan.getChildren().add(itemsEx);
+
+        }else{
+            this.btnCrearReserva.setDisabled(true);
+            this.mensajeError="No se encuentran existencias disponibles.";
+            this.mostrarError=true;
+        }
     }
 
 private List exl = new ArrayList();
+private String mensajeError;
+private boolean mostrarError;
 
     public void LlenarComboLaptop(){
 
         Existencia [] existencias = new edu.ues.jhard.beans.BeanBaseJCanon().getEquipoMultimedia(14);
 
-        laptopElegida = existencias[0];
+        if(existencias.length!=0){
+            this.mostrarError=false;
+            this.btnCrearReserva.setDisabled(false);
+
+            laptopElegida = existencias[0];
 
 
         for(int i=0;i<existencias.length;i++){
@@ -611,6 +627,12 @@ private List exl = new ArrayList();
 //        UISelectItems itemsEx = new UISelectItems();
 //        itemsEx.setValue(ex);
 //        this.comboLaptop.getChildren().add(itemsEx);
+        }else{
+            this.btnCrearReserva.setDisabled(true);
+            this.mensajeError="No se encuentran existencias disponibles.";
+            this.mostrarError=true;
+        }
+        
     }
 
 private List in = new ArrayList();
@@ -1062,6 +1084,34 @@ private List equ = new ArrayList();
         //String idClasificacion = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("clId");
         getJInventInstance().getClasificaciontm().seleccionarNodo(idClasificacion);
 
+    }
+
+    /**
+     * @return the mensajeError
+     */
+    public String getMensajeError() {
+        return mensajeError;
+    }
+
+    /**
+     * @param mensajeError the mensajeError to set
+     */
+    public void setMensajeError(String mensajeError) {
+        this.mensajeError = mensajeError;
+    }
+
+    /**
+     * @return the mostrarError
+     */
+    public boolean isMostrarError() {
+        return mostrarError;
+    }
+
+    /**
+     * @param mostrarError the mostrarError to set
+     */
+    public void setMostrarError(boolean mostrarError) {
+        this.mostrarError = mostrarError;
     }
 
 }
