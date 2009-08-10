@@ -130,7 +130,7 @@
                                                 </f:facet>
                                                 <f:facet name="second">
                                                     <ice:panelGroup>
-                                                    <ice:panelGroup rendered="#{JInventInstance.searchMode == false}" >
+                                                        <ice:panelGroup visible="#{JInventInstance.searchMode == false}" >
                                                  
                                                         <h3 class="tituloSeccion">
                                                             <ice:outputFormat value="Existencias de Equipos (Total: {0})">
@@ -817,7 +817,7 @@
                                                         </f:facet>
                                                         </ice:panelPopup>
                                                     </ice:panelGroup>
-                                                    <ice:panelGroup rendered="#{JInventInstance.searchMode == true}">
+                                                    <ice:panelGroup visible="#{JInventInstance.searchMode == true}">
                                                         <h3 class="tituloSeccion">Búsquedas</h3>
                                                         <ice:panelGroup id="frmTerminosBusqueda" styleClass="frmElementList">
                                                             <p>
@@ -825,10 +825,10 @@
                                                             </p>
                                                             <p>
                                                                 <ice:panelGroup styleClass="actionSection">
-                                                                    <ice:selectInputText id="txtTerminosBusqueda" style="float: left;" valueChangeListener="#{JInventInstance.actualizarAutocompletado}" value="#{JInventInstance.valorBusqueda}" action="#{JInventInstance.seleccionarExistencia}" rows="10" width="230" >
+                                                                    <ice:selectInputText id="txtTerminosBusqueda" style="float: left;" valueChangeListener="#{JInventInstance.actualizarAutocompletado}" value="#{JInventInstance.valorBusqueda}" action="#{JInventInstance.seleccionarExistencia}" rows="10" width="220" >
                                                                         <f:selectItems value="#{JInventInstance.listaResultadosBusqueda}" />
                                                                 </ice:selectInputText>
-                                                                <ice:commandButton id="cmdBuscar" value="Buscar" action="#{JInventInstance.selectPage}" />
+                                                                <ice:commandButton id="cmdBuscar" value="Seleccionar" action="#{JInventInstance.selectPage}" />
                                                                 </ice:panelGroup>
                                                             </p>
                                                         </ice:panelGroup>

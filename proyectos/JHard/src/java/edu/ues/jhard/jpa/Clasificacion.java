@@ -155,11 +155,16 @@ public class Clasificacion implements Serializable {
     }
 
     public List<Existencia> getExistenciaCollection(){
-        List<Existencia> listaExistenciaTodosEquipos = new ArrayList<Existencia>();
-        for(Equipo eq: this.equipoCollection){
-            listaExistenciaTodosEquipos.addAll(eq.getExistenciaCollection());
+        try{
+            List<Existencia> listaExistenciaTodosEquipos = new ArrayList<Existencia>();
+            for(Equipo eq: this.equipoCollection){
+                listaExistenciaTodosEquipos.addAll(eq.getExistenciaCollection());
+            }
+            return listaExistenciaTodosEquipos;
         }
-        return listaExistenciaTodosEquipos;
+        catch(Exception ex){
+            return new ArrayList<Existencia>();
+        }
     }
 
 }
