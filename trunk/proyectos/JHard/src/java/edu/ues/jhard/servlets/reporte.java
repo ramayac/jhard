@@ -77,6 +77,7 @@ public class reporte extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        //AQUI EMPIEZA LA MAGIA
         Integer rpid = NONE;
         File archivoReporte = null;
         ServletContext contexto = request.getSession().getServletContext();
@@ -89,6 +90,7 @@ public class reporte extends HttpServlet {
             String parametro = request.getParameter(PARAM_VAR); //identificador del archivoReporte
             if (rpid != null) rpid = Integer.parseInt(parametro);
 
+            //AQUI SE SELECCIONA LA MAGIA
             switch (rpid) {
                 case ID_LABSBYCARRERA: //1
                     //Obtenemos los parametros necesarios para este reporte
@@ -107,7 +109,7 @@ public class reporte extends HttpServlet {
 
             //creamos el handler para el archivo
             archivoReporte = new File(rutareal);
-            //Generamos el reporte :)
+            //Generamos el reporte :) //AQUI OCURRE LA MAGIA
             generarReporte(request, response, archivoReporte, parametros, nombreReporte);
 
         } catch (Exception e) {
