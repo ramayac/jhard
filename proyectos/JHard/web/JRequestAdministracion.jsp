@@ -94,24 +94,22 @@
                                         style="height: 213px; left: 264px; top: 144px; position: absolute; width: 381px" visible="#{jrequestAdmin.panelPopup3Bean.showModalPanel}">
                                         <f:facet name="header">
                                             <ice:panelGrid id="panelGrid12" style="display:block;width:180px;height:20px;">
-                                                <ice:outputText id="lblTitulo3" value="JRequest Equipo Simple"/>
+                                                <ice:outputText id="lblTitulo3" value="Agregar Equipo Simple"/>
                                             </ice:panelGrid>
                                         </f:facet>
                                         <f:facet name="body">
+                                            <div class="post">
                                             <ice:panelGrid columns="2" id="panelGrid13" style="display:block;width:180px;height:80px;">
                                                 <ice:outputText id="lblNomEq" value="Nombre Equipo Simple"/>
                                                 <ice:inputText binding="#{JRequestAdministracion.txtNomEQ}" id="txtNomEQ"/>
                                                 <ice:outputLabel id="lblPropietario" value="Propietario del Equipo"/>
                                                 <ice:inputText binding="#{JRequestAdministracion.txtPropietarioEQ}" id="txtPropietarioEQ"/>
-                                                <ice:outputLabel id="lblEstadoEQ" value="Estado del Equipo"/>
-                                                <ice:selectOneMenu binding="#{JRequestAdministracion.comboEstadosEQ}" id="comboEstadosEQ" partialSubmit="true">
-                                                    <f:selectItems id="selectOneMenu1selectItems" value="#{JRequestAdministracion.eeq}"/>
-                                                </ice:selectOneMenu>
                                                 <ice:commandButton action="#{JRequestAdministracion.btnAceptarEQ_action}"
                                                     binding="#{JRequestAdministracion.btnAceptarEQ}" id="btnAceptarEQ" value="Aceptar"/>
                                                 <ice:commandButton action="#{JRequestAdministracion.btnCancelarEQ_action}"
                                                     binding="#{JRequestAdministracion.btnCancelarEQ}" id="btnCancelarEQ" value="Cancelar"/>
                                             </ice:panelGrid>
+                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                     <ice:panelPopup autoCentre="true" binding="#{JRequestAdministracion.popUpAgregarTec}" draggable="true" id="popUpAgregarTec"
@@ -122,6 +120,7 @@
                                             </ice:panelGrid>
                                         </f:facet>
                                         <f:facet name="body">
+                                            <div class="post">
                                             <ice:panelGrid columns="2" id="panelAddTec" style="display: block; height: 134px" width="278">
                                                 <ice:outputLabel id="outputLabel7" value="Nombres"/>
                                                 <ice:inputText binding="#{JRequestAdministracion.txtNomTec}" id="txtNomTec"/>
@@ -132,21 +131,24 @@
                                                 <ice:commandButton action="#{JRequestAdministracion.btnCerrarTec_action}"
                                                     binding="#{JRequestAdministracion.btnCerrarTec}" id="btnCerrarTec" value="Cerrar"/>
                                             </ice:panelGrid>
+                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                     <ice:panelPopup autoCentre="true" binding="#{JRequestAdministracion.popUpMensajes}" draggable="true" id="popUpMensajes"
                                         modal="true" rendered="#{JRequestAdministracion.panelPopup1Bean.showDraggablePanel}" style="height: 46; width: 214px" visible="#{JRequestAdministracion.panelPopup1Bean.showModalPanel}">
                                         <f:facet name="header">
                                             <ice:panelGrid id="tituloMensajes" style="display:block;width:180px;height:20px;">
-                                                <ice:outputText id="lblMensajesTitulo" value="JRequest"/>
+                                                <ice:outputText id="lblMensajesTitulo" value="Mensaje"/>
                                             </ice:panelGrid>
                                         </f:facet>
                                         <f:facet name="body">
+                                            <div class="post">
                                             <ice:panelGrid id="contenidoMensajes" style="display:block;width:180px;height:80px;">
                                                 <ice:outputText binding="#{JRequestAdministracion.lblMensajes}" id="lblMensajes" value="Mensajes"/>
                                                 <ice:commandButton action="#{JRequestAdministracion.btnOk_action}" binding="#{JRequestAdministracion.btnOk}"
                                                     id="btnOk" value="OK"/>
                                             </ice:panelGrid>
+                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                 </ice:form>
@@ -190,10 +192,12 @@
                                         <ice:outputText value="Mensaje" styleClass="popupHeader" />
                                     </f:facet>
                                     <f:facet name="body">
+                                        <div class="post">
                                         <ice:panelGroup>
                                             <p><ice:outputText value="#{JHardminInstance.msg.text}" styleClass="#{JHardminInstance.msg.type}" /></p>
                                             <p class="actionSection"><ice:commandButton action="#{JHardminInstance.closePopup}" id="btnCerrar" value="OK" /></p>
                                         </ice:panelGroup>
+                                        </div>
                                     </f:facet>
                                     </ice:panelPopup>
                                 <h2>Tareas Comunes</h2>
@@ -222,6 +226,7 @@
                                     <ice:panelPopup id="pupCrearUsuario" draggable="true" modal="true" rendered="#{JHardminInstance.popupRegistrarUsuarioVisible}">
                                         <f:facet name="header"><ice:outputText value="Agregar nuevo usuario" /></f:facet>
                                         <f:facet name="body">
+                                            <div class="post">
                                             <ice:panelGroup styleClass="frmElementList">
                                                 <p>
                                                     <ice:outputLabel id="lblCarnetUsuario" for="txtCarnetUsuario" value="Carnet:" />
@@ -253,6 +258,7 @@
                                                     <ice:commandButton id="cmdCancelRegistrarUsuario" value="Cancelar" action="#{JHardminInstance.hidePopupRegistrarUsuario}" />
                                                 </p>
                                             </ice:panelGroup>
+                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                 </ice:form>

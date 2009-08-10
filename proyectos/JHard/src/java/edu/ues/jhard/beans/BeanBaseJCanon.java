@@ -166,9 +166,12 @@ public class BeanBaseJCanon extends BeanBase {
 
          Existencia[] e = (Existencia[])q.getResultList().toArray(new Existencia[0]);
 
-         for (int i = 0; i < e.length; i++) {
+         if(e.length>0){
+            for (int i = 0; i < e.length; i++) {
              em.refresh(e[i]);
          }
+         }
+         
          return e;
      }
 

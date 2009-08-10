@@ -147,6 +147,9 @@
                                             <ice:commandLink value="Cambiar clave de acceso" action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
                                         </li>
                                         <li>
+                                            <ice:commandLink action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Usuarios y Permisos"/>
+                                        </li>
+                                        <li>
                                             <ice:commandLink value="Ver Reportes de JHard" action="#{Redireccion.reportes}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
                                         </li>
                                         <li>
@@ -164,10 +167,7 @@
                                         <li>
                                             <ice:commandLink action="#{Redireccion.jcanonAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Reserva de Equipo Multimedia"/>
                                         </li>
-                                        <li>
-                                            <ice:commandLink action="#{JHardminInstance.showPopupRegistrarUsuario}" rendered="#{JHardminInstance.currentUser == null}" value="Crear usuario del sistema"/>
-                                        </li>
-                                    </ul>
+                                     </ul>
                                     <ice:panelPopup id="pupCrearUsuario" draggable="true" modal="true" rendered="#{JHardminInstance.popupRegistrarUsuarioVisible}">
                                         <f:facet name="header"><ice:outputText value="Agregar nuevo usuario" /></f:facet>
                                         <f:facet name="body">

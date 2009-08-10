@@ -196,6 +196,17 @@ public class Redireccion extends AbstractPageBean{
         return EMPTY_STRING;
     }
 
+    public String jWikiAdmin(){
+        try {
+            n= (Navegacion)getBean(BEAN_NAME);
+            n.setModuloActual("JWiki");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("jwikiAdmin.iface");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return EMPTY_STRING;
+    }
+
     public String jWikiUserParam(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
@@ -213,6 +224,17 @@ public class Redireccion extends AbstractPageBean{
             n= (Navegacion)getBean(BEAN_NAME);
             n.setModuloActual("JProCur");
             FacesContext.getCurrentInstance().getExternalContext().redirect("jprocurUser.iface");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return EMPTY_STRING;
+    }
+
+    public String jProCurAdmin(){
+        try {
+            n= (Navegacion)getBean(BEAN_NAME);
+            n.setModuloActual("JProCur");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("jprocurAdmin.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
         }

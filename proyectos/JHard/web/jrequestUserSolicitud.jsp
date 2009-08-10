@@ -47,6 +47,7 @@
                                             </ice:panelGrid>
                                         </f:facet>
                                         <f:facet name="body">
+                                            <div class="post">
                                             <ice:panelGrid id="panelGrid2" style="display: block; height: 206px; width: 180px">
                                                 <ice:outputLabel id="lblNombreEq" value="Nombre de Equipo"/>
                                                 <ice:inputText binding="#{jrequestUserSolicitud.txtNombreEq}" id="txtNombreEq"/>
@@ -57,6 +58,7 @@
                                                 <ice:commandButton styleClass="btnAccion2" action="#{jrequestUserSolicitud.btnCerrar_action}"
                                                     binding="#{jrequestUserSolicitud.btnCerrar}" id="btnCerrar" value="Cerrar"/>
                                             </ice:panelGrid>
+                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                     <ice:outputLabel id="labelError" rendered="#{JHardminInstance.currentUser == null}"
@@ -107,15 +109,17 @@
                                         modal="true" style="height: 130px; width: 261px;visibility: hidden;visibility: hidden;">
                                         <f:facet name="header">
                                             <ice:panelGrid id="panelGrid3" style="display:block;width:180px;height:20px;">
-                                                <ice:outputText id="outputText2" value="JRequest"/>
+                                                <ice:outputText id="outputText2" value="Mensaje"/>
                                             </ice:panelGrid>
                                         </f:facet>
                                         <f:facet name="body">
+                                            <div class="post">
                                             <ice:panelGrid id="panelGrid4" style="display: block; height: 80px" width="206">
                                                 <ice:outputLabel binding="#{jrequestUserSolicitud.lblEstadoSolicitud}" id="lblEstadoSolicitud" value="Estado de la Solicitud"/>
                                                 <ice:commandButton action="#{jrequestUserSolicitud.btnAceptar_action}"
                                                     binding="#{jrequestUserSolicitud.btnAceptar}" id="btnAceptar" value="Aceptar"/>
                                             </ice:panelGrid>
+                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                 </ice:form>
@@ -159,10 +163,12 @@
                                         <ice:outputText value="Mensaje" styleClass="popupHeader" />
                                     </f:facet>
                                     <f:facet name="body">
+                                        <div class="post">
                                         <ice:panelGroup>
                                             <p><ice:outputText value="#{JHardminInstance.msg.text}" styleClass="#{JHardminInstance.msg.type}" /></p>
                                             <p class="actionSection"><ice:commandButton action="#{JHardminInstance.closePopup}" id="btnCerrar" value="OK" /></p>
                                         </ice:panelGroup>
+                                        </div>
                                     </f:facet>
                                     </ice:panelPopup>
                                 <h2>Tareas Comunes</h2>
@@ -194,6 +200,7 @@
                                     <ice:panelPopup id="pupCrearUsuario" draggable="true" modal="true" rendered="#{JHardminInstance.popupRegistrarUsuarioVisible}">
                                         <f:facet name="header"><ice:outputText value="Agregar nuevo usuario" /></f:facet>
                                         <f:facet name="body">
+                                            <div class="post">
                                             <ice:panelGroup styleClass="frmElementList">
                                                 <p>
                                                     <ice:outputLabel id="lblCarnetUsuario" for="txtCarnetUsuario" value="Carnet:" />
@@ -225,6 +232,7 @@
                                                     <ice:commandButton id="cmdCancelRegistrarUsuario" value="Cancelar" action="#{JHardminInstance.hidePopupRegistrarUsuario}" />
                                                 </p>
                                             </ice:panelGroup>
+                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                 </ice:form>

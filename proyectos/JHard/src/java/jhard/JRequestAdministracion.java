@@ -95,15 +95,7 @@ public class JRequestAdministracion extends AbstractPageBean {
 //    public void setFakeEstadoEQ(DefaultSelectionItems dsi) {
 //        this.fakeEstadoEQ = dsi;
 //    }
-    private HtmlSelectOneMenu comboEstadosEQ = new HtmlSelectOneMenu();
-
-    public HtmlSelectOneMenu getComboEstadosEQ() {
-        return comboEstadosEQ;
-    }
-
-    public void setComboEstadosEQ(HtmlSelectOneMenu hsom) {
-        this.comboEstadosEQ = hsom;
-    }
+    
     private HtmlOutputLabel lblNombreTec = new HtmlOutputLabel();
 
     public HtmlOutputLabel getLblNombreTec() {
@@ -419,17 +411,17 @@ public class JRequestAdministracion extends AbstractPageBean {
 
         //Llenar Combo de Estados de equipos para la Administracion
 
-        Estadoequipo [] estados = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
-
-        estadoElegido = estados[0];
-
-        //ArrayList eeq = new ArrayList();
-
-        for(int i=0;i<estados.length;i++){
-
-            String label = estados[i].getDescripcion();
-            eeq.add(new SelectItem(estados[i].getIdestado(),label));
-        }
+//        Estadoequipo [] estados = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
+//
+//        estadoElegido = estados[0];
+//
+//        //ArrayList eeq = new ArrayList();
+//
+//        for(int i=0;i<estados.length;i++){
+//
+//            String label = estados[i].getDescripcion();
+//            eeq.add(new SelectItem(estados[i].getIdestado(),label));
+//        }
 
         //UISelectItems itemsEeq = new UISelectItems();
         //itemsEeq.setValue(eeq);
@@ -556,11 +548,11 @@ public class JRequestAdministracion extends AbstractPageBean {
 
             eq.setPropietario((String)this.txtPropietarioEQ.getValue());
 
-            String tmp=(String)this.comboEstadosEQ.getValue();
-            if(tmp!=null){
+            //String tmp=(String)this.comboEstadosEQ.getValue();
+            //if(tmp!=null){
 
-                Integer id=Integer.parseInt(tmp);
-                Estadoequipo e=new BeanBaseJRequest().getEntityManager().find(Estadoequipo.class, id);
+                //Integer id=Integer.parseInt(tmp);
+                Estadoequipo e=new BeanBaseJRequest().getEntityManager().find(Estadoequipo.class, 1);
                 this.estadoElegido= e;
 
                 eq.setIdestado(estadoElegido);
@@ -583,17 +575,17 @@ public class JRequestAdministracion extends AbstractPageBean {
                 this.popUpMensajes.setModal(true);
                 System.out.println("SOLO EL ES MODIFICABLE");
 
-         }
+         //}
         }
         if(opcionElegida==2){
                 this.EquipoElegido.setDescripcion((String)this.txtNomEQ.getValue());
                 this.EquipoElegido.setPropietario((String)this.txtPropietarioEQ.getValue());
 
-                String tmp=(String)this.comboEstadosEQ.getValue();
-                if(tmp!=null){
+                //String tmp=(String)this.comboEstadosEQ.getValue();
+                //if(tmp!=null){
 
-                    Integer id=Integer.parseInt(tmp);
-                    Estadoequipo e=new BeanBaseJRequest().getEntityManager().find(Estadoequipo.class, id);
+                    //Integer id=Integer.parseInt(tmp);
+                    Estadoequipo e=new BeanBaseJRequest().getEntityManager().find(Estadoequipo.class, 1);
                     this.estadoElegido= e;
 
                     EquipoElegido.setIdestado(estadoElegido);
@@ -616,7 +608,7 @@ public class JRequestAdministracion extends AbstractPageBean {
                   this.popUpMensajes.setModal(true);
                   System.out.println("SOLO EL ES MODIFICABLE");
 
-                }
+                //}
         }
 
         this.txtNomEQ.setValue("");

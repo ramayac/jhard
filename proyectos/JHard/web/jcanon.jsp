@@ -87,24 +87,27 @@
                                             rendered="#{jcanon.renderer}" style="height: 141px; left: 264px; top: 144px; position: absolute; width: 333px;visibility: hidden;visibility: hidden;">
                                             <f:facet name="header">
                                                 <ice:panelGrid id="panelGrid1" style="display:block;width:180px;height:20px;">
-                                                    <ice:outputText id="lblTitMensajes" value="JCanon"/>
+                                                    <ice:outputText id="lblTitMensajes" value="Mensaje"/>
                                                 </ice:panelGrid>
                                             </f:facet>
                                             <f:facet name="body">
+                                                <div class="post">
                                                 <ice:panelGrid id="panelGrid2" style="display: block; height: 80px" width="278">
                                                     <ice:outputText binding="#{jcanon.lblMensajes}" id="lblMensajes" value="body text"/>
                                                     <ice:commandButton action="#{jcanon.btnOk_action}" binding="#{jcanon.btnOk}" id="btnOk" onclick="doLoad();" value="Ok"/>
                                                 </ice:panelGrid>
+                                                </div>
                                             </f:facet>
                                         </ice:panelPopup>
                                         <ice:panelPopup visible="#{jcanon.visibleMultimedia}" autoCentre="true" binding="#{jcanon.panelAddMultimedia}" draggable="true" id="panelAddMultimedia"
                                             modal="true" rendered="#{jcanon.rendererMultimedia}" style="height: 334px; left: 264px; top: 240px; position: absolute; width: 334px;visibility: hidden;visibility: hidden;">
                                             <f:facet name="header">
                                                 <ice:panelGrid id="panelGrid3" style="display:block;width:180px;height:20px;">
-                                                    <ice:outputText id="outputText1" value="JCanon"/>
+                                                    <ice:outputText id="outputText1" value="Agregar Equipo Multimedia"/>
                                                 </ice:panelGrid>
                                             </f:facet>
                                             <f:facet name="body">
+                                                <div class="post">
                                                 <ice:panelGroup id="panelGrid4" style="display: block; height: 278px">
                                                     <ice:outputText id="outputText2" value="Tipo de Equipo a agregar"/>
                                                     <br/>
@@ -137,11 +140,13 @@
                                                     <ice:commandButton action="#{jcanon.btnCancelarAdd_action}" styleClass="btnAccion2" onclick="doLoad();" binding="#{jcanon.btnCancelarAdd}"
                                                         id="btnCancelarAdd" value="Cancelar"/>
                                                 </ice:panelGroup>
+                                                </div>
                                             </f:facet>
                                         </ice:panelPopup>
                                         <ice:panelPopup id="pupAgregarEquipo" modal="true" autoCentre="true" draggable="true" rendered="#{jcanon.rendererAddEq}">
                                             <f:facet name="header"><ice:outputText value="Agregar nuevo equipo" /></f:facet>
                                             <f:facet name="body">
+                                                <div class="post">
                                                 <ice:panelGroup styleClass="frmElementList" >
                                                     <p>
                                                         <ice:outputLabel id="lblNombreEquipo" for="txtNombreEquipo" value="Nombre:" />
@@ -166,6 +171,7 @@
                                                         <ice:commandButton id="cmdCancelAgregarEquipo" value="Cancelar" action="#{jcanon.cancelEqJInvent}" />
                                                     </p>
                                                 </ice:panelGroup>
+                                                </div>
                                              </f:facet>
                                         </ice:panelPopup>
                                     </ice:panelGroup>
@@ -188,6 +194,7 @@
                                                     <ice:outputLabel id="lblEq" value="Equipo a reservar"/>
                                                 </h3>
                                                 <br/>
+                                                <ice:outputLabel id="errorNoHay" value="#{jcanon.mensajeError}" rendered="#{jcanon.mostrarError}"/>
                                                 <table border="1" id="tabla">
                                                     <thead>
                                                         <tr>
@@ -318,10 +325,12 @@
                                         <ice:outputText value="Mensaje" styleClass="popupHeader" />
                                     </f:facet>
                                     <f:facet name="body">
+                                        <div class="post">
                                         <ice:panelGroup>
                                             <p><ice:outputText value="#{JHardminInstance.msg.text}" styleClass="#{JHardminInstance.msg.type}" /></p>
                                             <p class="actionSection"><ice:commandButton action="#{JHardminInstance.closePopup}" id="btnCerrar" value="OK" /></p>
                                         </ice:panelGroup>
+                                        </div>
                                     </f:facet>
                                     </ice:panelPopup>
                                     <ul>
@@ -348,6 +357,7 @@
                                    <ice:panelPopup id="pupCrearUsuario" draggable="true" modal="true" rendered="#{JHardminInstance.popupRegistrarUsuarioVisible}">
                                         <f:facet name="header"><ice:outputText value="Agregar nuevo usuario" /></f:facet>
                                         <f:facet name="body">
+                                            <div class="post">
                                             <ice:panelGroup styleClass="frmElementList">
                                                 <p>
                                                     <ice:outputLabel id="lblCarnetUsuario" for="txtCarnetUsuario" value="Carnet:" />
@@ -379,6 +389,7 @@
                                                     <ice:commandButton id="cmdCancelRegistrarUsuario" value="Cancelar" action="#{JHardminInstance.hidePopupRegistrarUsuario}" />
                                                 </p>
                                             </ice:panelGroup>
+                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                 </ice:form>
