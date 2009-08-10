@@ -61,7 +61,7 @@
                                         <ice:panelSeries id="srsJInventEqSimples" var="eqsimple" value="#{Index.listaEquiposFallidos}">
                                             <ice:panelGroup>
                                                 <div style="margin: 5px 2px;">
-                                                    <ice:outputText value="#{eqsimple.descripcion} - #{eqsimple.propietario}: #{eqsimple.descUltimaSolicitud}" styleClass="lblItemDashboard" style="width: 500px" />
+                                                    <ice:outputText value="#{eqsimple.descripcion} - #{eqsimple.propietario}: #{eqsimple.descUltimaSolicitud}" styleClass="lblItemDashboard" />
                                                 </div>
                                             </ice:panelGroup>
                                         </ice:panelSeries>
@@ -72,14 +72,14 @@
                                         <ice:panelSeries id="srsJRequestExistencias" var="existencia" value="#{Index.listaExistenciasMantenimiento}">
                                             <ice:panelGroup>
                                                 <div style="margin: 5px 2px;">
-                                                    <ice:outputText value="#{existencia.codigo} - #{existencia.idhardware.nombre} #{existencia.idhardware.idmarca.nombre} #{existencia.idhardware.modelo}. Tecnico: #{existencia.nombreTecnicoActualMnto}" styleClass="lblItemDashboard" style="width: 500px;" />
+                                                    <ice:outputText value="#{existencia.codigo} - #{existencia.idhardware.nombre} #{existencia.idhardware.idmarca.nombre} #{existencia.idhardware.modelo}. Tecnico: #{existencia.nombreTecnicoActualMnto}" styleClass="lblItemDashboard" />
                                                 </div>
                                             </ice:panelGroup>
                                         </ice:panelSeries>                                        
                                         <ice:panelSeries id="srsJRequestEqSimples" var="eqsimple" value="#{Index.listaEquiposMantenimiento}">
                                             <ice:panelGroup>
                                                 <div style="margin: 5px 2px;">
-                                                    <ice:outputText value="#{eqsimple.descripcion} - #{eqsimple.propietario}. Tecnico: #{eqsimple.nombreTecnicoActualMnto}" styleClass="lblItemDashboard" style="width: 500px;" />
+                                                    <ice:outputText value="#{eqsimple.descripcion} - #{eqsimple.propietario}. Tecnico: #{eqsimple.nombreTecnicoActualMnto}" styleClass="lblItemDashboard" />
                                                 </div>
                                             </ice:panelGroup>
                                         </ice:panelSeries>
@@ -89,7 +89,7 @@
                                         <ice:panelSeries id="srsJCanon" var="reserva" value="#{Index.listaReservasHoy}">
                                             <ice:panelGroup>
                                                 <div style="margin: 5px 2px;">
-                                                    <ice:commandLink value="#{reserva.descripcion} desde #{reserva.horaInicio} hasta #{reserva.horaFinal} por #{reserva.idusuario.nombre}" action="#{Redireccion.jcanon}" styleClass="lnkItemDashboard" style="width: 500px;" />
+                                                    <ice:commandLink value="#{reserva.descripcion} desde #{reserva.horaInicio} hasta #{reserva.horaFinal} por #{reserva.idusuario.nombre}" action="#{Redireccion.jcanon}" styleClass="lnkItemDashboard" />
                                                 </div>
                                             </ice:panelGroup>
                                         </ice:panelSeries>

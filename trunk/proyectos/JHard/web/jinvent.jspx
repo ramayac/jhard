@@ -19,7 +19,8 @@
                 <meta content="" name="description"/>
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-                <script type="text/javascript" src="js/validaciones.js"></script>                
+                <script type="text/javascript" src="js/validaciones.js"></script>
+                <script type="text/javascript" src="js/util.js"></script>
             </head>
             <body id="outputBody1" style="-rave-layout: grid" >
                 <!--start header -->
@@ -138,11 +139,31 @@
                                                             <ice:commandLink value="Agregar" action="#{JInventInstance.beforeAddExistencia}" styleClass="actionLink" />
                                                         </h3>
                                                         <ice:dataTable id="tblListaExistencias" rows="5" value="#{JInventInstance.currentClasificacion.existenciaCollection}" var="existencia" style="margin-bottom: 0px;" >
-                                                        <ice:column>
-                                                            <ice:graphicImage alt="#{existencia.idestado.nombre}" url="img/#{existencia.imagenEstado}" />
-                                                            <ice:panelTooltip draggable="true">
-                                                                <f:facet name="header">Titulo</f:facet>
-                                                            </ice:panelTooltip>
+                                                        <ice:column style="padding: 0px;">
+                                                            <ice:panelGroup>
+                                                                <div class="estadoEquipo" onmouseover="showLabel(this)" onmouseout="hideLabel(this)">
+                                                                    <ice:graphicImage alt="#{existencia.idestado.nombre}" url="img/#{existencia.imagenEstado}" />
+                                                                    <ice:commandLink value="#{existencia.idestado.nombre}" action="#{JInventInstance.showPopupMantenimiento}" style="display: none; float: none; padding-left: 5px; cursor: pointer;">
+                                                                        <f:param name="currentId" value="#{existencia.idexistencia}" />
+                                                                    </ice:commandLink>
+                                                                </div>
+                                                            </ice:panelGroup>
+                                                            <!--<ice:panelTooltip id="tlpExistencia" autoCentre="true">
+                                                                <f:facet name="header">Estado del equipo</f:facet>
+                                                                <f:facet name="body">
+                                                                    <ice:panelGroup>
+                                                                    <p>
+                                                                        <ice:outputLabel id="lblEstadoActual" value="Estado:" style="width: 50px; padding: 0px 5px;"/>
+                                                                        <ice:graphicImage alt="#{existencia.idestado.nombre}" url="img/#{existencia.imagenEstado}"  />
+                                                                        <ice:outputLabel value="#{existencia.idestado.nombre}" style="float: none; position: relative; padding-left: 5px;"/>
+                                                                        <br/>
+                                                                        <ice:commandLink value="Mantenimiento" action="#{JInventInstance.showPopupMantenimiento}">
+                                                                            <f:param name="currentId" value="#{existencia.idexistencia}" />
+                                                                        </ice:commandLink>
+                                                                    </p>
+                                                                </ice:panelGroup>
+                                                                </f:facet>
+                                                            </ice:panelTooltip>-->
                                                         </ice:column>
                                                         <ice:column>
                                                             <f:facet name="header"><ice:outputText value="Código" /></f:facet>
@@ -174,11 +195,11 @@
                                                                     <f:param name="currentId" value="#{existencia.idexistencia}" />
                                                                 </ice:commandLink>
                                                             </ice:column>
-                                                            <ice:column>
+                                                            <!--<ice:column>
                                                                 <ice:commandLink value="Mantenimiento" action="#{JInventInstance.showPopupMantenimiento}">
                                                                     <f:param name="currentId" value="#{existencia.idexistencia}" />
                                                                 </ice:commandLink>
-                                                            </ice:column>
+                                                            </ice:column>-->
                                                         </ice:dataTable>
                                                         <ice:dataPaginator id="pgrListaExistencias" for="tblListaExistencias" paginatorMaxPages="4" paginator="true" style="margin: 0px 10px 10px" rendered="#{JInventInstance.sizeListaExistencias > 5}" binding="#{JInventInstance.pgr}" immediate="true" >
                                                             <f:facet name="first"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-first.gif" style="border:none;" title="First Page"/></f:facet>
@@ -807,7 +828,7 @@
                                                                     <ice:selectInputText id="txtTerminosBusqueda" style="float: left;" valueChangeListener="#{JInventInstance.actualizarAutocompletado}" value="#{JInventInstance.valorBusqueda}" action="#{JInventInstance.seleccionarExistencia}" rows="10" width="230" >
                                                                         <f:selectItems value="#{JInventInstance.listaResultadosBusqueda}" />
                                                                 </ice:selectInputText>
-                                                                <ice:commandButton id="cmdBuscar" value="Buscar" />
+                                                                <ice:commandButton id="cmdBuscar" value="Buscar" action="#{JInventInstance.selectPage}" />
                                                                 </ice:panelGroup>
                                                             </p>
                                                         </ice:panelGroup>
