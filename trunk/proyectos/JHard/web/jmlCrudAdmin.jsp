@@ -17,25 +17,6 @@
                 <meta content="" name="description"/>
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-                <script charset="utf-8" src="js/jquery-1.2.3.js" type="text/javascript"></script>
-                <script charset="utf-8" src="js/jquery.uitablefilter.js" type="text/javascript"></script>
-                <script charset="utf-8" type="text/javascript">
-                    jQuery.noConflict();
-                    jQuery(document).ready(function() {
-                        var tabla1 = jQuery("form table.mitablamaterias");
-                        jQuery("#filtroTablaMaterias").keyup(function() {
-                            jQuery.uiTableFilter(tabla1, this.value );
-                        })
-                        var tabla2 = jQuery("form table.mitablacurso");
-                        jQuery("#filtroTablaCursos").keyup(function() {
-                            jQuery.uiTableFilter(tabla2, this.value );
-                        })
-                        var tabla3 = jQuery("form table.mitablacarrera");
-                        jQuery("#filtroTablaCarrera").keyup(function() {
-                            jQuery.uiTableFilter(tabla3, this.value );
-                        })
-                    });
-                </script>
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <!--start header -->
@@ -53,7 +34,6 @@
                                     <ice:panelTab id="panelMateria" label="Gestionar Materia">
                                         <!-- panel de para Agregar, Modificar y Eliminar Materias -->
                                         <ice:panelGroup>
-                                            <div align="right">Filtro: <input id="filtroTablaMaterias"/></div>
                                             <ice:dataTable id="tablaMaterias" rendered="#{jmlCrudAdmin.hayMateria}" rows="30" styleClass="mitablamaterias"
                                             value="#{jmlCrudAdmin.listaMateria}" var="indiceMateria" resizable="true">
                                                 <ice:column>
@@ -96,7 +76,6 @@
                                     <ice:panelTab id="panelCurso" label="Gestionar Curso">
                                         <!-- panel de para Agregar, Modificar y Eliminar Cursos -->
                                         <ice:panelGroup>
-                                            <div align="right">Filtro: <input id="filtroTablaCursos"/></div>
                                             <ice:dataTable id="tablaCurso" rendered="#{jmlCrudAdmin.hayCurso}" rows="30" styleClass="mitablacurso"
                                             value="#{jmlCrudAdmin.listaCurso}" var="indiceCurso" resizable="true">
                                                 <ice:column>
@@ -139,7 +118,6 @@
                                     <ice:panelTab id="panelCarrera" label="Gestionar Carrera">
                                         <!-- panel de para Agregar, Modificar y Eliminar Carrera -->
                                         <ice:panelGroup>
-                                            <div align="right">Filtro: <input id="filtroTablaCarrera"/></div>
                                             <ice:dataTable id="tablaCarrera" rendered="#{jmlCrudAdmin.hayCurso}" rows="30" styleClass="mitablacarrera"
                                             value="#{jmlCrudAdmin.listaCarrera}" var="indiceCarrera" resizable="true">
                                                 <ice:column>
@@ -183,6 +161,25 @@
                                 <ice:panelGroup rendered="#{!jmlCrudAdmin.permisos}">
                                     <jsp:directive.include file="/jspf/nologin.jspx"/>
                                 </ice:panelGroup>
+                                <!-- panel de mensajes de avisos...-->
+                                <ice:panelPopup autoCentre="true" id="ppmsj" modal="true" rendered="#{jmlCrudAdmin.popup.visible}">
+                                    <f:facet name="header">
+                                        <ice:panelGrid><ice:outputText id="pptit" value="#{jmlCrudAdmin.popup.titulo}"/></ice:panelGrid>
+                                    </f:facet>
+                                    <f:facet name="body">
+                                    <div class="post">
+                                        <ice:panelGroup>
+                                            <ice:outputText id="lblppmsj" value="#{jmlCrudAdmin.popup.mensaje}"/>
+                                            <br/>
+                                            <br/>
+                                            <div align="center">
+                                                <ice:commandButton action="#{jmlCrudAdmin.btnOK_action}" id="ppok" value="OK"/>
+                                            </div>
+                                        </ice:panelGroup>
+                                        </div>
+                                    </f:facet>
+                                </ice:panelPopup>
+                                <!-- panel de mensajes -->
                         </ice:form>
                         <br/>
                     </div>

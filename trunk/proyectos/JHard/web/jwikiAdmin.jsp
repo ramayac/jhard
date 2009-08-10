@@ -17,17 +17,6 @@
                 <meta content="" name="description"/>
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-                <script charset="utf-8" src="js/jquery-1.2.3.js" type="text/javascript"></script>
-                <script charset="utf-8" src="js/jquery.uitablefilter.js" type="text/javascript"></script>
-                <script charset="utf-8" type="text/javascript">
-                    jQuery.noConflict();
-                    jQuery(document).ready(function() {
-                        var tabla = jQuery("form table.mitablaarticulos");
-                        jQuery("#filtroTablaArticulos").keyup(function() {
-                            jQuery.uiTableFilter(tabla, this.value );
-                        })
-                    });
-                </script>
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <!--start header -->
@@ -73,8 +62,6 @@
                                         <!-- END panel de para EDITAR UN ARTICULO -->
                                         <!-- panel de para administrar los ARTICULOS -->
                                         <ice:panelGroup id="panelVistaMultipleArticulos" rendered="#{!jwikiAdmin.editandoArticulo}">
-                                            <div align="right">Filtro: <input id="filtroTablaArticulos"/>
-                                            </div>
                                             <ice:dataTable id="tablaArticulos" rendered="#{jwikiAdmin.hayArticulos}" rows="30" styleClass="mitablaarticulos"
                                             value="#{jwikiAdmin.listaArticulos}" var="indiceArticulo" resizable="true">
                                                 <ice:column>

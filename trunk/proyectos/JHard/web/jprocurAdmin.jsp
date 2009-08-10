@@ -17,25 +17,6 @@
                 <meta content="" name="description"/>
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-                <script charset="utf-8" src="js/jquery-1.2.3.js" type="text/javascript"></script>
-                <script charset="utf-8" src="js/jquery.uitablefilter.js" type="text/javascript"></script>
-                <script charset="utf-8" type="text/javascript">
-                    jQuery.noConflict();
-                    jQuery(document).ready(function() {
-                        var tabla1 = jQuery("form table.mitablaentradas");
-                        jQuery("#filtroTablaEntrada").keyup(function() {
-                            jQuery.uiTableFilter(tabla1, this.value );
-                        })
-                        var tabla2 = jQuery("form table.mitablacomentarios");
-                        jQuery("#filtroTablaComentarios").keyup(function() {
-                            jQuery.uiTableFilter(tabla2, this.value );
-                        })
-                        var tabla3 = jQuery("form table.mitablaetiquetas");
-                        jQuery("#filtroTablaEtiquetas").keyup(function() {
-                            jQuery.uiTableFilter(tabla3, this.value );
-                        })
-                    });
-                </script>
             </head>
             <body id="outputBody1" style="-rave-layout: grid">
                 <!--start header -->
@@ -45,7 +26,7 @@
                     <!-- start content -->
                     <div id="content">
                         <div class="post">
-                            <h2 class="title">Adminsitración Promoción de Cursos</h2>
+                            <h2 class="title">Administración Promoción de Cursos</h2>
                         </div>
                         <div class="post">
                             <ice:form id="formEntrada">
@@ -93,7 +74,6 @@
                                         <!-- END panel de para EDITAR UNA ENTRADAS -->
                                         <!-- panel de para administrar las ENTRADAS -->
                                         <ice:panelGroup id="panelVistaMultipleEntradas" rendered="#{!jprocurAdmin.editandoEntrada}">
-                                            <div align="right">Filtro: <input id="filtroTablaEntrada"/></div>
                                             <ice:dataTable id="tablaEntradas" rows="30" 
                                             value="#{jprocurAdmin.listaEntradas}" var="indiceEntrada" styleClass="mitablaentradas"
                                             rendered="#{jprocurAdmin.hayEntradas}" resizable="true">
@@ -185,7 +165,6 @@
                                     <ice:panelTab id="panelComentarios" label="Moderar Comentarios">
                                         <!-- panel de para moderar los Comentarios -->
                                         <ice:panelGroup id="panelVistaMultipleComentarios">
-                                            <div align="right">Filtro: <input id="filtroTablaComentarios"/></div>
                                             <ice:dataTable id="tablaComentarios" rows="30" value="#{jprocurAdmin.listaComentarios}" 
                                             var="indiceComentario" styleClass="mitablacomentarios"
                                             rendered="#{jprocurAdmin.hayComentarios}" resizable="true">
@@ -238,7 +217,6 @@
                                     <ice:panelTab id="panelEtiquetas" label="Administrar Etiquetas">
                                         <!-- panel de para administrar las Etiquetas -->
                                         <ice:panelGroup>
-                                            <div align="right">Filtro: <input id="filtroTablaEtiquetas"/></div>
                                             <ice:dataTable id="tablaEtiquetas" rendered="#{jprocurAdmin.hayEtiqueta}" rows="30" styleClass="mitablaetiquetas"
                                             value="#{jprocurAdmin.listaEtiqueta}" var="indiceEtiqueta" resizable="true">
                                                 <ice:column>
@@ -274,7 +252,15 @@
                                                         <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
                                                     </f:facet>
                                                 </ice:dataPaginator>
-                                            </div>
+                                            </div><br/><br/>
+                                            <ice:panelGroup>
+                                                <div class="post">
+                                                Agregar etiqueta: <br/>
+                                                Descripcion: <ice:inputText id="itTagDesc" title=""
+                                                value="#{jprocurAdmin.etiquetaNueva.descripcion}"
+                                                partialSubmit="true"/> <ice:commandButton action="#{jprocurAdmin.btnAddTagDesc_action}" value="Agregar"/>
+                                                </div>
+                                            </ice:panelGroup>
                                         </ice:panelGroup>
                                         <!-- FIN panel de para administrar las Etiquetas -->
                                     </ice:panelTab>
@@ -343,6 +329,25 @@
                                             <br/>
                                             <div align="center">
                                             <ice:commandButton action="#{jprocurAdmin.btnOK_action}" id="ppok" value="OK"/>
+                                            </div>
+                                        </ice:panelGroup>
+                                        </div>
+                                    </f:facet>
+                                </ice:panelPopup>
+                                <!-- panel de mensajes -->
+                                <!-- panel de mensajes de avisos POP UP SIMPLOOON -->
+                                <ice:panelPopup autoCentre="true" id="ppmsj" modal="true" rendered="#{jprocurAdmin.popup.visible}">
+                                    <f:facet name="header">
+                                        <ice:panelGrid><ice:outputText id="pptit" value="#{jprocurAdmin.popup.titulo}"/></ice:panelGrid>
+                                    </f:facet>
+                                    <f:facet name="body">
+                                    <div class="post">
+                                        <ice:panelGroup>
+                                            <ice:outputText id="lblppmsj" value="#{jprocurAdmin.popup.mensaje}"/>
+                                            <br/>
+                                            <br/>
+                                            <div align="center">
+                                                <ice:commandButton action="#{jprocurAdmin.btnClose_action}" id="ppok" value="OK"/>
                                             </div>
                                         </ice:panelGroup>
                                         </div>

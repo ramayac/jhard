@@ -11,6 +11,7 @@ import edu.ues.jhard.jhardmin.LoginManager;
 import edu.ues.jhard.jpa.Carrera;
 import edu.ues.jhard.jpa.Curso;
 import edu.ues.jhard.jpa.Materia;
+import edu.ues.jhard.util.popUp;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.FacesException;
@@ -27,6 +28,8 @@ public class jmlCrudAdmin extends BeanBaseJHard {
     private int MAX_MATERIA = 30;
     private int MAX_CARRERA = 30;
     private int MAX_CURSO = 30;
+    
+    private popUp popup = new popUp("Aviso", "", false);
 
     private BeanBaseJManLab jml = new BeanBaseJManLab();
 
@@ -40,6 +43,14 @@ public class jmlCrudAdmin extends BeanBaseJHard {
 
     public void setJml(BeanBaseJManLab jml) {
         this.jml = jml;
+    }
+    
+    public popUp getPopup() {
+        return popup;
+    }
+
+    public void setPopup(popUp popup) {
+        this.popup = popup;
     }
 
     public List<Carrera> getListaCarrera() {
@@ -94,6 +105,11 @@ public class jmlCrudAdmin extends BeanBaseJHard {
     public boolean getShowPagCurso(){
         if(this.listaCurso.size()>MAX_CURSO) return true;
         return false;
+    }
+
+    public String btnOK_action() {
+        this.popup.setVisible(false);
+        return EMPTY_STRING;
     }
 
     public String EditarMateria(){
