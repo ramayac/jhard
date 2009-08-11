@@ -78,7 +78,7 @@
                                                                 <ice:panelGroup styleClass="frmElementList">
                                                                     <p>
                                                                         <ice:outputLabel id="lblNombreClasificacion" for="txtNombreClasificacion" value="Nombre:" />
-                                                                        <ice:inputText id="txtNombreClasificacion" value="#{JInventInstance.nuevaClasificacion.nombre}" />
+                                                                        <ice:inputText id="txtNombreClasificacion" value="#{JInventInstance.nuevaClasificacion.nombre}" maxlength="100" />
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblDescripcionClasificacion" for="txtDescripcionClasificacion" value="Descripcion:" />
@@ -98,7 +98,7 @@
                                                                     <ice:panelGroup styleClass="frmElementList">
                                                                         <p>
                                                                             <ice:outputLabel id="lblNombreClasificacionEdit" for="txtNombreClasificacionEdit" value="Nombre:" />
-                                                                            <ice:inputText id="txtNombreClasificacionEdit" value="#{JInventInstance.currentClasificacion.nombre}" />
+                                                                            <ice:inputText id="txtNombreClasificacionEdit" value="#{JInventInstance.currentClasificacion.nombre}" maxlength="100" />
                                                                         </p>
                                                                         <p>
                                                                             <ice:outputLabel id="lblDescripcionClasificacionEdit" for="txtDescripcionClasificacionEdit" value="Descripcion:" />
@@ -219,7 +219,7 @@
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblCodigoExistencia" for="txtCodigoExistencia" value="Código:" />
-                                                                        <ice:inputText id="txtCodigoExistencia" value="#{JInventInstance.currentExistencia.codigo}" />
+                                                                        <ice:inputText id="txtCodigoExistencia" value="#{JInventInstance.currentExistencia.codigo}" maxlength="45" />
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblUbicacionExistencia" for="cmbUbicacionExistencia" value="Ubicación:" />
@@ -428,7 +428,7 @@
                                                                 <ice:panelGroup styleClass="frmElementList">
                                                                     <p>
                                                                         <ice:outputLabel id="lblNombreEquipo" for="txtNombreEquipo" value="Nombre:"/>
-                                                                        <ice:inputText id="txtNombreEquipo" value="#{JInventInstance.currentEquipo.nombre}" />
+                                                                        <ice:inputText id="txtNombreEquipo" value="#{JInventInstance.currentEquipo.nombre}" maxlength="45" />
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblMarcaEquipo" for="cmbMarcaEquipo" value="Marca:" />
@@ -438,7 +438,7 @@
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblModeloEquipo" for="txtModeloEquipo" value="Modelo:" />
-                                                                        <ice:inputText id="txtModeloEquipo" value="#{JInventInstance.currentEquipo.modelo}" />
+                                                                        <ice:inputText id="txtModeloEquipo" value="#{JInventInstance.currentEquipo.modelo}" maxlength="15" />
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblClasificacionEquipo" for="lblClasficacionEquipoValue" value="Clasificación:" />
@@ -461,7 +461,7 @@
                                                                 <ice:panelGroup styleClass="frmElementList">
                                                                     <p>
                                                                         <ice:outputLabel id="lblNombreEquipoEdit" for="txtNombreEquipoEdit" value="Nombre:" />
-                                                                        <ice:inputText id="txtNombreEquipoEdit" value="#{JInventInstance.currentEquipo.nombre}" />
+                                                                        <ice:inputText id="txtNombreEquipoEdit" value="#{JInventInstance.currentEquipo.nombre}" maxlength="45" />
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblMarcaEquipoEdit" for="cmbMarcaEquipoEdit" value="Marca:" />
@@ -472,7 +472,7 @@
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblModeloEquipoEdit" for="txtModeloEquipoEdit" value="Modelo:" />
-                                                                        <ice:inputText id="txtModeloEquipoEdit" value="#{JInventInstance.currentEquipo.modelo}" />
+                                                                        <ice:inputText id="txtModeloEquipoEdit" value="#{JInventInstance.currentEquipo.modelo}" maxlength="15" />
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblClasificacionEquipoEdit" for="lblClasficacionEquipoEditValue" value="Clasificación:" />
@@ -541,7 +541,7 @@
                                                                 <ice:panelGroup>
                                                                     <p>
                                                                         <ice:outputLabel id="lblNombreSoftware" for="txtNombreSoftware" value="Nombre:" />
-                                                                        <ice:inputText id="txtNombreSoftware" value="#{JInventInstance.currentSoftware.nombre}" />
+                                                                        <ice:inputText id="txtNombreSoftware" value="#{JInventInstance.currentSoftware.nombre}" maxlength="100" />
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblVersion" for="txtVersion" value="Version:" />
@@ -549,7 +549,7 @@
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblCodigoLicencia" for="txtCodigoLicencia" value="Codigo de licencia:" />
-                                                                        <ice:inputText id="txtCodigoLicencia"  value="#{JInventInstance.currentSoftware.codigolicencia}" />
+                                                                        <ice:inputText id="txtCodigoLicencia"  value="#{JInventInstance.currentSoftware.codigolicencia}" maxlength="45" />
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblCantLicencias" for="txtCantLicencias" value="Cantidad de licencias:" />
@@ -576,7 +576,7 @@
                                                                 <ice:panelGroup styleClass="frmElementList">
                                                                     <p>
                                                                         <ice:outputLabel id="lblNombreSoftwareEdit" for="txtNombreSoftwareEdit" value="Nombre:" />
-                                                                        <ice:inputText id="txtNombreSoftwareEdit" value="#{JInventInstance.currentSoftware.nombre}" />
+                                                                        <ice:inputText id="txtNombreSoftwareEdit" value="#{JInventInstance.currentSoftware.nombre}" maxlength="100" />
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblVersionSoftwareEdit" for="txtVersionSoftwareEdit" value="Version:" />
@@ -584,7 +584,7 @@
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblCodigoLicenciaEdit" for="txtCodigoLicenciaEdit" value="Codigo de Licencia:" />
-                                                                        <ice:inputText id="txtCodigoLicenciaEdit" value="#{JInventInstance.currentSoftware.codigolicencia}" />
+                                                                        <ice:inputText id="txtCodigoLicenciaEdit" value="#{JInventInstance.currentSoftware.codigolicencia}" maxlength="45" />
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblCantidadLicenciasEdit" for="txtCantidadLicenciasEdit" value="Cantidad de Licencias:" />
@@ -648,7 +648,7 @@
                                                             <ice:panelGroup>
                                                                 <p>
                                                                     <ice:outputLabel id="lblNombreAccesorio" for="txtNombreAccesorio" value="Nombre:" />
-                                                                    <ice:inputText id="txtNombreAccesorio" value="#{JInventInstance.currentAccesorio.nombre}" />
+                                                                    <ice:inputText id="txtNombreAccesorio" value="#{JInventInstance.currentAccesorio.nombre}" maxlength="100" />
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblMarcaAccesorio" for="cmbMarcaAccesorio" value="Marca:" />
@@ -658,7 +658,7 @@
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblModeloAccesorio" for="txtModeloAccesorio" value="Modelo:" />
-                                                                    <ice:inputText id="txtModeloAccesorio" value="#{JInventInstance.currentAccesorio.modelo}" />
+                                                                    <ice:inputText id="txtModeloAccesorio" value="#{JInventInstance.currentAccesorio.modelo}" maxlength="15" />
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblClasificacionModelo" for="lblValorClasificacionModelo" value="Clasificacion:" />
@@ -681,7 +681,7 @@
                                                                 <ice:panelGroup styleClass="frmElementList">
                                                                     <p>
                                                                         <ice:outputLabel id="lblNombreAccesorioEdit" for="txtNombreAccesorioEdit" value="Nombre:" />
-                                                                        <ice:inputText id="txtNombreAccesorioEdit" value="#{JInventInstance.currentAccesorio.nombre}" />
+                                                                        <ice:inputText id="txtNombreAccesorioEdit" value="#{JInventInstance.currentAccesorio.nombre}" maxlength="100" />
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblMarcaAccesorioEdit" for="cmbMarcaModeloEdit" value="Marca:" />
@@ -691,7 +691,7 @@
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblModeloAccesorioEdit" for="txtModeloAccesorioedit" value="Modelo:" />
-                                                                        <ice:inputText id="txtModeloAccesorioEdit" value="#{JInventInstance.currentAccesorio.modelo}" />
+                                                                        <ice:inputText id="txtModeloAccesorioEdit" value="#{JInventInstance.currentAccesorio.modelo}" maxlength="15" />
                                                                     </p>
                                                                     <p class="actionSection">
                                                                         <ice:commandButton id="cmdCommitEditarAccesorio" value="Guardar cambios" action="#{JInventInstance.commitEditAccesorio}" />
@@ -753,7 +753,7 @@
                                                             <ice:panelGroup>
                                                                 <p>
                                                                     <ice:outputLabel id="lblNombrePieza" for="txtNombrePieza" value="Nombre:" />
-                                                                    <ice:inputText id="txtNombrePieza" value="#{JInventInstance.currentPieza.nombre}" />
+                                                                    <ice:inputText id="txtNombrePieza" value="#{JInventInstance.currentPieza.nombre}" maxlength="100" />
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblMarcaPieza" for="cmbMarcaPieza" value="Marca::" />
@@ -763,7 +763,7 @@
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblModeloPieza" for="txtModeloPieza" value="Modelo:" />
-                                                                    <ice:inputText id="txtModeloPieza" value="#{JInventInstance.currentPieza.modelo}" />
+                                                                    <ice:inputText id="txtModeloPieza" value="#{JInventInstance.currentPieza.modelo}" maxlength="15" />
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblClasificacionPieza" for="lblValorClasificacionPieza" value="Clasificacion:" />
@@ -786,7 +786,7 @@
                                                                 <ice:panelGroup styleClass="frmElementList">
                                                                     <p>
                                                                         <ice:outputLabel id="lblNombrePiezaEdit" for="txtNombrePiezaEdit" value="Nombre:" />
-                                                                        <ice:inputText id="txtNombrePiezaEdit" value="#{JInventInstance.currentPieza.nombre}" />
+                                                                        <ice:inputText id="txtNombrePiezaEdit" value="#{JInventInstance.currentPieza.nombre}" maxlength="100" />
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblMarcaPiezaEdit" for="cmbMarcaPiezaEdit" value="Marca:" />
@@ -796,7 +796,7 @@
                                                                     </p>
                                                                     <p>
                                                                         <ice:outputLabel id="lblModeloPiezaEdit" for="txtModeloPiezaEdit" value="Modelo:" />
-                                                                        <ice:inputText id="txtModeloPiezaEdit" value="#{JInventInstance.currentPieza.modelo}" />
+                                                                        <ice:inputText id="txtModeloPiezaEdit" value="#{JInventInstance.currentPieza.modelo}" maxlength="15" />
                                                                     </p>
                                                                     <p class="actionSection">
                                                                         <ice:commandButton id="cmdCommitEditarPieza" value="Guardar cambios" action="#{JInventInstance.commitEditPieza}" />
@@ -825,7 +825,7 @@
                                                             </p>
                                                             <p>
                                                                 <ice:panelGroup styleClass="actionSection">
-                                                                    <ice:selectInputText id="txtTerminosBusqueda" style="float: left;" valueChangeListener="#{JInventInstance.actualizarAutocompletado}" value="#{JInventInstance.valorBusqueda}" action="#{JInventInstance.seleccionarExistencia}" rows="10" width="220" >
+                                                                    <ice:selectInputText id="txtTerminosBusqueda" style="float: left;" valueChangeListener="#{JInventInstance.actualizarAutocompletado}" value="#{JInventInstance.valorBusqueda}" action="#{JInventInstance.seleccionarExistencia}" rows="10" width="220" maxlength="100" >
                                                                         <f:selectItems value="#{JInventInstance.listaResultadosBusqueda}" />
                                                                 </ice:selectInputText>
                                                                 <ice:commandButton id="cmdBuscar" value="Seleccionar" action="#{JInventInstance.selectPage}" />
@@ -882,7 +882,7 @@
                                                     <ice:panelGroup styleClass="frmElementList">
                                                         <p>
                                                             <ice:outputLabel id="lblNombreMarca" for="txtNombreMarca" value="Nombre:" />
-                                                            <ice:inputText id="txtNombreMarca" value="#{JInventInstance.currentMarca.nombre}" />
+                                                            <ice:inputText id="txtNombreMarca" value="#{JInventInstance.currentMarca.nombre}" maxlength="100" />
                                                         </p>
                                                         <p class="actionSection">
                                                             <ice:commandButton id="cmdConfirmAgregarMarca" value="Agregar" action="#{JInventInstance.addMarca}" />
@@ -897,7 +897,7 @@
                                                     <ice:panelGroup styleClass="frmElementList">
                                                         <p>
                                                             <ice:outputLabel id="lblNombreMarcaEdit" for="txtNombreMarcaEdit" value="Nombre:" />
-                                                            <ice:inputText id="txtNombreMarcaEdit" value="#{JInventInstance.currentMarca.nombre}" />
+                                                            <ice:inputText id="txtNombreMarcaEdit" value="#{JInventInstance.currentMarca.nombre}" maxlength="100" />
                                                         </p>
                                                         <p class="actionSection">
                                                             <ice:commandButton id="cmdConfirmEditarMarca" value="Guardar cambios" action="#{JInventInstance.commitEditMarca}" />
@@ -955,7 +955,7 @@
                                                     <ice:panelGroup styleClass="frmElementList">
                                                         <p>
                                                             <ice:outputLabel id="lblNombreUbicacion" for="txtNombreUbicacion" value="Nombre:" />
-                                                            <ice:inputText id="txtNombreUbicacion" value="#{JInventInstance.currentUbicacion.nombre}" />
+                                                            <ice:inputText id="txtNombreUbicacion" value="#{JInventInstance.currentUbicacion.nombre}" maxlength="45" />
                                                         </p>
                                                         <p class="actionSection">
                                                             <ice:commandButton id="cmdConfirmAgregarUbicacion" value="Agregar" action="#{JInventInstance.addUbicacion}" />
@@ -970,7 +970,7 @@
                                                     <ice:panelGroup styleClass="frmElementList">
                                                         <p>
                                                             <ice:outputLabel id="lblNombreUbicacionEdit" for="txtNombreUbicacionEdit" value="Nombre:" />
-                                                            <ice:outputText id="txtNombreUbicacionEdit" value="#{JInventInstance.currentUbicacion.nombre}" />
+                                                            <ice:inputText id="txtNombreUbicacionEdit" value="#{JInventInstance.currentUbicacion.nombre}" maxlength="45" />
                                                         </p>
                                                         <p class="actionSection">
                                                             <ice:commandButton id="cmdConfirmarEditarUbicacion" value="Guardar cambios" action="#{JInventInstance.commitEditUbicacion}" />

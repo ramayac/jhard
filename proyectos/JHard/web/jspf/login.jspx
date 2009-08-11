@@ -13,12 +13,12 @@
             <ice:outputText id="lblLoginFail" rendered="#{JHardminInstance.loginFail}" styleClass="errorText" value="Datos incorrectos"/>
             <p>
                 <ice:outputLabel id="lblUser" value="Usuario:"/>
-                <ice:inputText id="txtUser" required="true" requiredMessage="El nombre de usuario es requerido" style="width: 120px" value="#{JHardminInstance.inputUsrName}"/>
+                <ice:inputText id="txtUser" required="true" requiredMessage="El nombre de usuario es requerido" style="width: 120px" value="#{JHardminInstance.inputUsrName}" maxlength="25" />
                 <h:message for="txtUser" styleClass="errorText"/>
             </p>
             <p>
                 <ice:outputLabel id="lblPass" value="Clave:"/>
-                <ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}"/>
+                <ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}" maxlength="35" />
                 <h:message for="txtPass" styleClass="errorText"/>
             </p>
             <ice:commandButton action="#{JHardminInstance.login}" id="btnLogin" styleClass="btnAccion2" value="Login"/>
