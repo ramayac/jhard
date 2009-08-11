@@ -8,6 +8,7 @@ package jhard;
 
 import com.icesoft.faces.component.outputconnectionstatus.OutputConnectionStatus;
 import edu.ues.jhard.beans.BeanBaseJManLab;
+import edu.ues.jhard.jhardmin.LoginManager;
 import javax.faces.FacesException;
 
 /**
@@ -52,7 +53,19 @@ public class jmlLaboratorio extends BeanBaseJHard {
     }
 
     public jmlLaboratorio() {
+        this.lu= getJHardminInstance().getCurrentUser();
 
+        if(this.lu!=null){
+            this.U = LoginManager.getInstance().getUsuario(lu);
+            this.lblUser.setValue(U.getNombre());
+
+            //switch(this.U.getIdrol().getIdrol()){
+            //    case ROL_ADMINISTRADOR:
+            //    default:
+            //        break;
+            //    }
+        }else
+            this.lblUser.setValue(INVITADO);
     }
 
         /**
