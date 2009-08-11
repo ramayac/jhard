@@ -713,18 +713,38 @@ public class jprocurAdmin extends AbstractPageBean {
     }
 
     public String btnAddTagDesc_action() {
-        if(this.jprocurInstance.createTag(this.etiquetaNueva)){
-            this.lblPPMesajes.setValue("Etiqueta agregada con éxito.");
-            this.showPPMesaje = true;
-            this.listaEtiqueta.clear();
-            this.listaEtiqueta = this.getJProcurInstance().getAllEtiquetas();
+        Integer idtag = this.etiquetaNueva.getIdtag();
+        if(idtag != null || idtag>0){
+            if (this.jprocurInstance.mergeTag(etiquetaNueva)) {
+                this.lblPPMesajes.setValue("Etiqueta modificada con éxito.");
+                this.showPPMesaje = true;
+                this.listaEtiqueta.clear();
+                this.listaEtiqueta = this.getJProcurInstance().getAllEtiquetas();
+            } else {
+                this.lblPPMesajes.setValue("Ocurrió un error al intentar modificar la etiqueta.");
+                this.showPPMesaje = true;
+            }
         } else {
-            this.lblPPMesajes.setValue("Ocurrió un error al intentar agregar la etiqueta.");
-            this.showPPMesaje = true;
+            if (this.jprocurInstance.createTag(this.etiquetaNueva)) {
+                this.lblPPMesajes.setValue("Etiqueta agregada con éxito.");
+                this.showPPMesaje = true;
+                this.listaEtiqueta.clear();
+                this.listaEtiqueta = this.getJProcurInstance().getAllEtiquetas();
+            } else {
+                this.lblPPMesajes.setValue("Ocurrió un error al intentar agregar la etiqueta.");
+                this.showPPMesaje = true;
+            }
         }
         this.etiquetaNueva = new Tag();
         this.showPPMesaje = false;
         return EMPTY_STRING;
+    }
+
+    public String getEditarEtiqueta(){
+       String idS = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idTag");
+       Integer id = new Integer(idS);
+       this.etiquetaNueva = this.jprocurInstance.getEtiqueta(id.intValue());
+       return EMPTY_STRING;
     }
 
     public String getEliminarEtiqueta(){

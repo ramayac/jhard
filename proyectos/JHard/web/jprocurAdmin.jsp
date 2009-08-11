@@ -225,13 +225,13 @@
                                                 </ice:column>
                                                 <ice:column>
                                                     <f:facet name="header"><ice:outputText value="Editar Etiqueta"/></f:facet>
-                                                    <ice:commandLink action="#{indiceEtiqueta.EditarEtiqueta}" value="Editar">
+                                                    <ice:commandLink action="#{jprocurAdmin.editarEtiqueta}" value="Editar">
                                                         <f:param name="idTag" value="#{indiceEtiqueta.idtag}"/>
                                                     </ice:commandLink>
                                                 </ice:column>
                                                 <ice:column>
                                                     <f:facet name="header"><ice:outputText value="Eliminar Etiqueta"/></f:facet>
-                                                    <ice:commandLink action="#{indiceEtiqueta.EliminarEtiqueta}" value="Eliminar">
+                                                    <ice:commandLink action="#{jprocurAdmin.eliminarEtiqueta}" value="Eliminar">
                                                         <f:param name="idTag" value="#{indiceEtiqueta.idtag}"/>
                                                     </ice:commandLink>
                                                 </ice:column>
@@ -256,9 +256,9 @@
                                             <ice:panelGroup>
                                                 <div class="post">
                                                 Agregar etiqueta: <br/>
-                                                Descripcion: <ice:inputText id="itTagDesc" title=""
+                                                Descripcion: <ice:inputText id="itTagDesc" title="Descripción de la etiqueta"
                                                 value="#{jprocurAdmin.etiquetaNueva.descripcion}"
-                                                partialSubmit="true"/> <ice:commandButton action="#{jprocurAdmin.btnAddTagDesc_action}" value="Agregar"/>
+                                                partialSubmit="true"/> <ice:commandButton action="#{jprocurAdmin.btnAddTagDesc_action}" value="Guardar"/>
                                                 </div>
                                             </ice:panelGroup>
                                         </ice:panelGroup>
