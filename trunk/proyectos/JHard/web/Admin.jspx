@@ -88,15 +88,15 @@
                                             <h3>Cambiar Clave de Acceso</h3>
                                             <p>
                                                 <ice:outputLabel id="lblClaveAnterior" value="Clave anterior: " />
-                                                <ice:inputSecret id="txtClaveAnterior" value="#{JHardminInstance.inputChOldPwd}" />
+                                                <ice:inputSecret id="txtClaveAnterior" value="#{JHardminInstance.inputChOldPwd}" maxlength="35" />
                                             </p>
                                             <p>
                                                 <ice:outputLabel id="lblClaveNueva" value="Nueva clave: " />
-                                                <ice:inputSecret id="txtClaveNueva" value="#{JHardminInstance.inputChNewPwd}" />
+                                                <ice:inputSecret id="txtClaveNueva" value="#{JHardminInstance.inputChNewPwd}" maxlength="35" />
                                             </p>
                                             <p>
                                                 <ice:outputLabel id="lblClaveNuevaConfirm" value="Repita la nueva clave: " />
-                                                <ice:inputSecret id="txtClaveNuevaConfirm" value="#{JHardminInstance.inputChNewPwdConfirm}" />
+                                                <ice:inputSecret id="txtClaveNuevaConfirm" value="#{JHardminInstance.inputChNewPwdConfirm}" maxlength="35" />
                                             </p>
                                             <p class="actionSection">
                                                 <ice:commandButton value="Cambiar clave" styleClass="btnAccion" action="#{JHardminInstance.changePassword}" />
@@ -159,15 +159,15 @@
                                                         <ice:panelGroup styleClass="frmElementList">
                                                             <p>
                                                                 <ice:outputLabel id="lblNewUserName" for="txtNewUserName" value="Nombre: " />
-                                                                <ice:inputText id="txtNewUserName" value="#{JHardminInstance.newUser.nombre}" />
+                                                                <ice:inputText id="txtNewUserName" value="#{JHardminInstance.newUser.nombre}" maxlength="25" />
                                                             </p>
                                                             <p>
                                                                 <ice:outputLabel id="lblNewUserPwd" for="txtNewUserPwd" value="Clave: " />
-                                                                <ice:inputSecret id="txtNewUserPwd" value="#{JHardminInstance.newUser.clave}" />
+                                                                <ice:inputSecret id="txtNewUserPwd" value="#{JHardminInstance.newUser.clave}" maxlength="35" />
                                                             </p>
                                                             <p>
                                                                 <ice:outputLabel id="lblNewUserPwdConfirm" for="txtNewUserPwdConfirm" value="Repita la nueva clave: " />
-                                                                <ice:inputSecret id="txtNewUserPwdConfirm" value="#{JHardminInstance.newUserPwdConfirm}" />
+                                                                <ice:inputSecret id="txtNewUserPwdConfirm" value="#{JHardminInstance.newUserPwdConfirm}" maxlength="35" />
                                                             </p>
                                                             <p>
                                                                 <ice:outputLabel id="lblRoleList" for="cmdRoleList" value="Rol: " />
@@ -196,11 +196,11 @@
                                                             </p>
                                                             <p>
                                                                 <ice:outputLabel id="lblEditUserPwd" for="txtEditUserPwd" value="Clave: " />
-                                                                <ice:inputSecret id="txtEditUserPwd" value="#{JHardminInstance.editDelUser.clave}" />
+                                                                <ice:inputSecret id="txtEditUserPwd" value="#{JHardminInstance.editDelUser.clave}" maxlength="35" />
                                                             </p>
                                                             <p>
                                                                 <ice:outputLabel id="lblEditUserPwdConfirm" for="txtEditUserPwdConfirm" value="Repita la nueva clave: " />
-                                                                <ice:inputSecret id="txtEditUserPwdConfirm" value="#{JHardminInstance.newUserPwdConfirm}" />
+                                                                <ice:inputSecret id="txtEditUserPwdConfirm" value="#{JHardminInstance.newUserPwdConfirm}" maxlength="35" />
                                                             </p>
                                                             <p>
                                                                 <ice:outputLabel id="lblRoleList2" for="cmdRoleList2" value="Rol: " />
@@ -273,11 +273,11 @@
                                                 <ice:panelGroup styleClass="frmElementList">
                                                     <p>
                                                         <ice:outputLabel id="lblCodigoAutorizacion" for="txtCodigoAutorizacion" value="Código:" />
-                                                        <ice:inputText id="txtCodigoAutorizacion" value="#{JHardminInstance.currentAutorizacion.codigo}" />
+                                                        <ice:inputText id="txtCodigoAutorizacion" value="#{JHardminInstance.currentAutorizacion.codigo}" maxlength="10" />
                                                     </p>
                                                     <p>
                                                         <ice:outputLabel id="lblCantMax" for="txtCantMax" value="Cantidad de usuarios:" />
-                                                        <ice:inputText id="txtCantMax" value="#{JHardminInstance.currentAutorizacion.cantmaxima}" />
+                                                        <ice:inputText id="txtCantMax" value="#{JHardminInstance.currentAutorizacion.cantmaxima}" maxlength="2" />
                                                     </p>
                                                     <p class="actionSection">
                                                         <ice:commandButton id="cmdConfirmAddAutorizacion" value="Aceptar" action="#{JHardminInstance.addAutorizacion}" />
@@ -346,15 +346,15 @@
                                                             <ice:panelGroup styleClass="frmElementList">
                                                                 <p>
                                                                     <ice:outputLabel id="lblCarnetEstudiante" for="txtCarnetEstudiante" value="Carnet:" />
-                                                                    <ice:inputText id="txtCarnetEstudiante" value="#{JHardminInstance.currentEstudiante.carnet}" />
+                                                                    <ice:inputText id="txtCarnetEstudiante" value="#{JHardminInstance.currentEstudiante.carnet}" maxlength="7" />
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblApellidosEstudiante" for="txtapellidosEstudiante" value="Apellidos:" />
-                                                                    <ice:inputText id="txtApellidosEstudiante" value="#{JHardminInstance.currentEstudiante.apellidos}" />
+                                                                    <ice:inputText id="txtApellidosEstudiante" value="#{JHardminInstance.currentEstudiante.apellidos}" maxlength="200" />
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblNombresEstudiante" for="txtNombresEstudiante" value="Nombres:" />
-                                                                    <ice:inputText id="txtNombresEstudiante" value="#{JHardminInstance.currentEstudiante.nombres}" />
+                                                                    <ice:inputText id="txtNombresEstudiante" value="#{JHardminInstance.currentEstudiante.nombres}" maxlength="200" />
                                                                 </p>                                                                
                                                                 <p class="actionSection">
                                                                     <ice:commandButton id="cmdCommitAgregarEstudiante" value="Agregar" action="#{JHardminInstance.addEstudiante}" />
@@ -369,15 +369,15 @@
                                                             <ice:panelGroup styleClass="frmElementList">
                                                                 <p>
                                                                     <ice:outputLabel id="lblCarnetEstudianteEdit" for="txtCarnetEstudianteEdit" value="Carnet:" />
-                                                                    <ice:inputText id="txtCarnetEstudianteEdit" value="#{JHardminInstance.currentEstudiante.carnet}" />
+                                                                    <ice:inputText id="txtCarnetEstudianteEdit" value="#{JHardminInstance.currentEstudiante.carnet}" maxlength="7" />
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblApellidosEstudianteEdit" for="txtapellidosEstudianteEdit" value="Apellidos:" />
-                                                                    <ice:inputText id="txtApellidosEstudianteEdit" value="#{JHardminInstance.currentEstudiante.apellidos}" />
+                                                                    <ice:inputText id="txtApellidosEstudianteEdit" value="#{JHardminInstance.currentEstudiante.apellidos}" maxlength="200" />
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblNombresEstudianteEdit" for="txtNombresEstudianteEdit" value="Nombres:" />
-                                                                    <ice:inputText id="txtNombresEstudianteEdit" value="#{JHardminInstance.currentEstudiante.nombres}" />
+                                                                    <ice:inputText id="txtNombresEstudianteEdit" value="#{JHardminInstance.currentEstudiante.nombres}" maxlength="200" />
                                                                 </p>
                                                                 <p class="actionSection">
                                                                     <ice:commandButton id="cmdCommitEditarEstudiante" value="Guardar cambios" action="#{JHardminInstance.editEstudiante}" />
@@ -448,15 +448,15 @@
                                                             <ice:panelGroup styleClass="frmElementList">
                                                                 <p>
                                                                     <ice:outputLabel id="lblCarnetInstructor" for="txtCarnetInstructor" value="Carnet:" />
-                                                                    <ice:inputText id="txtCarnetInstructor" value="#{JHardminInstance.currentInstructor.carnet}" />
+                                                                    <ice:inputText id="txtCarnetInstructor" value="#{JHardminInstance.currentInstructor.carnet}" maxlength="7" />
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblApellidosInstructor" for="txtApellidosInstructor" value="Apellidos:" />
-                                                                    <ice:inputText id="txtApellidosInstructor" value="#{JHardminInstance.currentInstructor.apellidos}" />
+                                                                    <ice:inputText id="txtApellidosInstructor" value="#{JHardminInstance.currentInstructor.apellidos}" maxlength="200" />
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblNombresInstructor" for="txtNombresInstructor" value="Nombres:" />
-                                                                    <ice:inputText id="txtNombresInstructor" value="#{JHardminInstance.currentInstructor.nombres}" />
+                                                                    <ice:inputText id="txtNombresInstructor" value="#{JHardminInstance.currentInstructor.nombres}" maxlength="200" />
                                                                 </p>
                                                                 <p class="actionSection">
                                                                     <ice:commandButton id="cmdCommitAgregarInstructor" value="Agregar" action="#{JHardminInstance.addInstructor}" />
@@ -471,15 +471,15 @@
                                                             <ice:panelGroup styleClass="frmElementList">
                                                                 <p>
                                                                     <ice:outputLabel id="lblCarnetInstructorEdit" for="txtCarnetInstructorEdit" value="Carnet:" />
-                                                                    <ice:inputText id="txtCarnetInstructorEdit" value="#{JHardminInstance.currentInstructor.carnet}" />
+                                                                    <ice:inputText id="txtCarnetInstructorEdit" value="#{JHardminInstance.currentInstructor.carnet}" maxlength="7" />
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblApellidosInstructorEdit" for="txtApellidosInstructorEdit" value="Apellidos:" />
-                                                                    <ice:inputText id="txtApellidosInstructorEdit" value="#{JHardminInstance.currentInstructor.apellidos}" />
+                                                                    <ice:inputText id="txtApellidosInstructorEdit" value="#{JHardminInstance.currentInstructor.apellidos}" maxlength="200" />
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblNombresInstructorEdit" for="txtNombresInstructorEdit" value="Nombres:" />
-                                                                    <ice:inputText id="txtNombresInstructorEdit" value="#{JHardminInstance.currentInstructor.nombres}" />
+                                                                    <ice:inputText id="txtNombresInstructorEdit" value="#{JHardminInstance.currentInstructor.nombres}" maxlength="200" />
                                                                 </p>
                                                                 <p class="actionSection">
                                                                     <ice:commandButton id="cmdCommitEditarInstructor" value="Guardar cambios" action="#{JHardminInstance.editInstructor}" />
@@ -546,11 +546,11 @@
                                                             <ice:panelGroup styleClass="frmElementList">
                                                                 <p>
                                                                     <ice:outputLabel id="lblApellidosDocente" for="txtApellidosDocente" value="Apellidos:" />
-                                                                    <ice:inputText id="txtApellidosDocente" value="#{JHardminInstance.currentDocente.apellidos}" />
+                                                                    <ice:inputText id="txtApellidosDocente" value="#{JHardminInstance.currentDocente.apellidos}" maxlength="200" />
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblNombresDocente" for="txtNombresDocente" value="Nombres:" />
-                                                                    <ice:inputText id="txtNombresDocente" value="#{JHardminInstance.currentDocente.nombres}" />
+                                                                    <ice:inputText id="txtNombresDocente" value="#{JHardminInstance.currentDocente.nombres}" maxlength="200" />
                                                                 </p>
                                                                 <p class="actionSection">
                                                                     <ice:commandButton id="cmdCommitAgregarDocente" value="Agregar" action="#{JHardminInstance.addDocente}" />
@@ -565,11 +565,11 @@
                                                             <ice:panelGroup styleClass="frmElementList">
                                                                 <p>
                                                                     <ice:outputLabel id="lblApellidosDocenteEdit" for="txtApellidosDocenteEdit" value="Apellidos:" />
-                                                                    <ice:inputText id="txtApellidosDocenteEdit" value="#{JHardminInstance.currentDocente.apellidos}" />
+                                                                    <ice:inputText id="txtApellidosDocenteEdit" value="#{JHardminInstance.currentDocente.apellidos}" maxlength="200" />
                                                                 </p>
                                                                 <p>
                                                                     <ice:outputLabel id="lblNombresDocenteEdit" for="txtNombresDocenteEdit" value="Nombres:" />
-                                                                    <ice:inputText id="txtNombresDocenteEdit" value="#{JHardminInstance.currentDocente.nombres}" />
+                                                                    <ice:inputText id="txtNombresDocenteEdit" value="#{JHardminInstance.currentDocente.nombres}" maxlength="200" />
                                                                 </p>
                                                                 <p class="actionSection">
                                                                     <ice:commandButton id="cmdCommitEditarDocente" value="Guardar cambios" action="#{JHardminInstance.editDocente}" />
