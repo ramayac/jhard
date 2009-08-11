@@ -479,6 +479,24 @@ public class BeanBaseJProcur extends BeanBase {
     }
 
     /**
+     * Metodo para modificar un objeto etiqueta
+     * @param identrada
+     * @param comentario
+     * @return
+     */
+    public boolean mergeTag(Tag tag){
+        try {
+            EntityManager em = this.getEntityManager();
+            em.getTransaction().begin();
+            em.merge(tag);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Metodo para agregar etiquetas (una o varias) a una entrada.
      * @param identrada
      * @param comentario
