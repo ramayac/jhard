@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -44,6 +46,31 @@ public class jmlCrudAdmin extends BeanBaseJHard {
     private Materia nuevaMateria = new Materia();
     private Carrera nuevaCarrera = new Carrera();
     private Curso nuevoCurso = new Curso();
+
+    private Carrera selectedCarrera = new Carrera();
+    private List listaCarreraSel = new ArrayList();
+
+     public void selCarrera(ValueChangeEvent event) {
+         Integer id = Integer.parseInt(event.getNewValue().toString());
+        //this.selectedCarrera = (Carrera) event.getNewValue();
+        //System.out.println("---->>> "+ event.getNewValue().toString());
+        //System.out.println("---->>> "+ id);
+        this.selectedCarrera = this.getJManLabInstance().getCarrera(id);
+        //System.out.println("---->>> "+ this.selectedCarrera.getCodigo());
+        //return EMPTY_STRING;
+    }
+
+    public List getListaCarreraSel() {
+        listaCarreraSel.clear();
+        for (Carrera c : listaCarrera) {
+            listaCarreraSel.add(new SelectItem(c.getIdcarrera(), c.getCodigo()+"-"+c.getNombre()));
+        }
+        return listaCarreraSel;
+    }
+
+    public void setListaCarreraSel(List listaCarreraSel) {
+        this.listaCarreraSel = listaCarreraSel;
+    }
 
     public Carrera getNuevaCarrera() {
         return nuevaCarrera;
@@ -192,6 +219,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
 
      public String btnMateria_action() {
         Integer id = this.nuevaMateria.getIdmateria();
+        this.nuevaMateria.setIdcarrera(this.selectedCarrera);
         if(id==null) id = 0;
 
         if(id>0){
@@ -206,7 +234,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
             }
         } else {
             if (this.getJManLabInstance().createMateria(this.nuevaMateria)) {
-                this.popup.setMensaje("Carrera agregada con éxito.");
+                this.popup.setMensaje("Materia agregada con éxito.");
                 this.popup.setVisible(true);
                 this.listaMateria.clear();
                 this.listaMateria = this.getJManLabInstance().getAllMaterias();
@@ -232,7 +260,8 @@ public class jmlCrudAdmin extends BeanBaseJHard {
        Materia materia = this.getJManLabInstance().getMateria(id.intValue());
        try {
             this.getJManLabInstance().deleteMateria(materia.getIdmateria());
-            this.popup.setMensaje("La Materia fué eliminada.");
+            this.popup.setMensaje("La materia fué eliminada.");
+            this.listaCarrera.clear();
             this.listaCarrera = this.getJManLabInstance().getAllCarreras();
        } catch (Exception e) {
             this.popup.setMensaje("Ocurrió un error al intentar eliminar la materia.");
