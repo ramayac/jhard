@@ -31,31 +31,35 @@
                         </div>
                         <ice:form id="formAdmLab">
                             <ice:panelTabSet tabPlacement="Top" rendered="#{jmlCrudAdmin.permisos}">
-                                    <ice:panelTab id="panelMateria" label="Gestionar Materia">
-                                        <!-- panel de para Agregar, Modificar y Eliminar Materias -->
+                                    <ice:panelTab id="panelCarrera" label="Gestionar Carrera">
+                                        <!-- panel de para Agregar, Modificar y Eliminar Carrera -->
                                         <ice:panelGroup>
-                                            <ice:dataTable id="tablaMaterias" rendered="#{jmlCrudAdmin.hayMateria}" rows="30" styleClass="mitablamaterias"
-                                            value="#{jmlCrudAdmin.listaMateria}" var="indiceMateria" resizable="true">
+                                            <ice:dataTable id="tablaCarrera" rendered="#{jmlCrudAdmin.hayCarrera}" rows="30" styleClass="mitablacarrera"
+                                            value="#{jmlCrudAdmin.listaCarrera}" var="indiceCarrera" resizable="true">
                                                 <ice:column>
-                                                    <f:facet name="header"><ice:outputText value="Nombre de la materia"/></f:facet>
-                                                    <ice:outputLabel style="font-weight:bold; " value="#{indiceMateria.nombre}"/>
+                                                    <f:facet name="header"><ice:outputText value="Código del curso"/></f:facet>
+                                                    <ice:outputLabel style="font-weight:bold; " value="#{indiceCarrera.codigo}"/>
                                                 </ice:column>
                                                 <ice:column>
-                                                    <f:facet name="header"><ice:outputText value="Editar materia"/></f:facet>
-                                                    <ice:commandLink action="#{indiceMateria.EditarMateria}" value="Editar">
-                                                        <f:param name="idMateria" value="#{indiceMateria.idmateria}"/>
+                                                    <f:facet name="header"><ice:outputText value="Nombre de la carrera"/></f:facet>
+                                                    <ice:outputLabel style="font-weight:bold; " value="#{indiceCarrera.nombre}"/>
+                                                </ice:column>
+                                                <ice:column>
+                                                    <f:facet name="header"><ice:outputText value="Editar carrera"/></f:facet>
+                                                    <ice:commandLink action="#{jmlCrudAdmin.editarCarrera}" value="Editar">
+                                                        <f:param name="idCarrera" value="#{indiceCarrera.idcarrera}"/>
                                                     </ice:commandLink>
                                                 </ice:column>
                                                 <ice:column>
-                                                    <f:facet name="header"><ice:outputText value="Eliminar materia"/></f:facet>
-                                                    <ice:commandLink action="#{indiceMateria.EliminarMateria}" value="Eliminar">
-                                                        <f:param name="idMateria" value="#{indiceMateria.idmateria}"/>
+                                                    <f:facet name="header"><ice:outputText value="Eliminar carrera"/></f:facet>
+                                                    <ice:commandLink action="#{jmlCrudAdmin.eliminarCarrera}" value="Eliminar">
+                                                        <f:param name="idCarrera" value="#{indiceCarrera.idcarrera}"/>
                                                     </ice:commandLink>
                                                 </ice:column>
                                             </ice:dataTable>
                                             <div align="center">
-                                                <ice:dataPaginator for="tablaMaterias" id="paginadorMaterias" paginator="true"
-                                                rendered="#{jmlCrudAdmin.showPagMateria}">
+                                                <ice:dataPaginator for="tablaCarrera" id="paginadorCarrera" paginator="true"
+                                                rendered="#{jmlCrudAdmin.showPagCarrera}">
                                                     <f:facet name="first">
                                                         <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
                                                     </f:facet>
@@ -69,7 +73,18 @@
                                                         <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
                                                     </f:facet>
                                                 </ice:dataPaginator>
-                                            </div>
+                                            </div><br/><br/>
+                                            <ice:panelGroup>
+                                                <div class="post">
+                                                Agregar/Editar Carrera:<br/>
+                                                Código: <ice:inputText id="itCarrCode" title="Código de la carrera"
+                                                value="#{jmlCrudAdmin.nuevaCarrera.codigo}"
+                                                partialSubmit="true"/>
+                                                Nombre: <ice:inputText id="itCarrNombre" title="Nombre de la carrera"
+                                                value="#{jmlCrudAdmin.nuevaCarrera.nombre}"
+                                                partialSubmit="true"/> <ice:commandButton action="#{jmlCrudAdmin.btnCarrera_action}" value="Guardar"/>
+                                                </div>
+                                            </ice:panelGroup>
                                         </ice:panelGroup>
                                         <!-- FIN panel -->
                                     </ice:panelTab>
@@ -84,13 +99,13 @@
                                                 </ice:column>
                                                 <ice:column>
                                                     <f:facet name="header"><ice:outputText value="Editar curso"/></f:facet>
-                                                    <ice:commandLink action="#{indiceCurso.EditarCurso}" value="Editar">
+                                                    <ice:commandLink action="#{jmlCrudAdmin.editarCurso}" value="Editar">
                                                         <f:param name="idCurso" value="#{indiceCurso.idcurso}"/>
                                                     </ice:commandLink>
                                                 </ice:column>
                                                 <ice:column>
                                                     <f:facet name="header"><ice:outputText value="Eliminar curso"/></f:facet>
-                                                    <ice:commandLink action="#{indiceCurso.EliminarCurso}" value="Eliminar">
+                                                    <ice:commandLink action="#{jmlCrudAdmin.eliminarCurso}" value="Eliminar">
                                                         <f:param name="idCurso" value="#{indiceCurso.idcurso}"/>
                                                     </ice:commandLink>
                                                 </ice:column>
@@ -115,31 +130,35 @@
                                         </ice:panelGroup>
                                         <!-- FIN panel -->
                                     </ice:panelTab>
-                                    <ice:panelTab id="panelCarrera" label="Gestionar Carrera">
-                                        <!-- panel de para Agregar, Modificar y Eliminar Carrera -->
+                                    <ice:panelTab id="panelMateria" label="Gestionar Materia">
+                                        <!-- panel de para Agregar, Modificar y Eliminar Materias -->
                                         <ice:panelGroup>
-                                            <ice:dataTable id="tablaCarrera" rendered="#{jmlCrudAdmin.hayCurso}" rows="30" styleClass="mitablacarrera"
-                                            value="#{jmlCrudAdmin.listaCarrera}" var="indiceCarrera" resizable="true">
+                                            <ice:dataTable id="tablaMaterias" rendered="#{jmlCrudAdmin.hayMateria}" rows="30" styleClass="mitablamaterias"
+                                            value="#{jmlCrudAdmin.listaMateria}" var="indiceMateria" resizable="true">
                                                 <ice:column>
-                                                    <f:facet name="header"><ice:outputText value="Nombre de la carrera"/></f:facet>
-                                                    <ice:outputLabel style="font-weight:bold; " value="#{indiceCarrera.nombre}"/>
+                                                    <f:facet name="header"><ice:outputText value="Código del curso"/></f:facet>
+                                                    <ice:outputLabel style="font-weight:bold; " value="#{indiceMateria.codigo}"/>
                                                 </ice:column>
                                                 <ice:column>
-                                                    <f:facet name="header"><ice:outputText value="Editar carrera"/></f:facet>
-                                                    <ice:commandLink action="#{indiceCarrera.EditarCarrera}" value="Editar">
-                                                        <f:param name="idCarrera" value="#{indiceCarrera.idcarrera}"/>
+                                                    <f:facet name="header"><ice:outputText value="Nombre de la materia"/></f:facet>
+                                                    <ice:outputLabel style="font-weight:bold; " value="#{indiceMateria.nombre}"/>
+                                                </ice:column>
+                                                <ice:column>
+                                                    <f:facet name="header"><ice:outputText value="Editar materia"/></f:facet>
+                                                    <ice:commandLink action="#{jmlCrudAdmin.editarMateria}" value="Editar">
+                                                        <f:param name="idMateria" value="#{indiceMateria.idmateria}"/>
                                                     </ice:commandLink>
                                                 </ice:column>
                                                 <ice:column>
-                                                    <f:facet name="header"><ice:outputText value="Eliminar carrera"/></f:facet>
-                                                    <ice:commandLink action="#{indiceCarrera.EliminarCarrera}" value="Eliminar">
-                                                        <f:param name="idCarrera" value="#{indiceCarrera.idcarrera}"/>
+                                                    <f:facet name="header"><ice:outputText value="Eliminar materia"/></f:facet>
+                                                    <ice:commandLink action="#{jmlCrudAdmin.eliminarMateria}" value="Eliminar">
+                                                        <f:param name="idMateria" value="#{indiceMateria.idmateria}"/>
                                                     </ice:commandLink>
                                                 </ice:column>
                                             </ice:dataTable>
                                             <div align="center">
-                                                <ice:dataPaginator for="tablaCarrera" id="paginadorCarrera" paginator="true"
-                                                rendered="#{jmlCrudAdmin.showPagCarrera}">
+                                                <ice:dataPaginator for="tablaMaterias" id="paginadorMaterias" paginator="true"
+                                                rendered="#{jmlCrudAdmin.showPagMateria}">
                                                     <f:facet name="first">
                                                         <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
                                                     </f:facet>
@@ -153,7 +172,18 @@
                                                         <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
                                                     </f:facet>
                                                 </ice:dataPaginator>
-                                            </div>
+                                            </div><br/><br/>
+                                            <ice:panelGroup>
+                                                <div class="post">
+                                                Agregar/Editar Materia: <br/>
+                                                Código: <ice:inputText id="itMatCode" title="Código de la materia"
+                                                value="#{jmlCrudAdmin.nuevaMateria.codigo}"
+                                                partialSubmit="true"/>
+                                                Nombre: <ice:inputText id="itMatNombre" title="Nombre de la asignatura"
+                                                value="#{jmlCrudAdmin.nuevaMateria.nombre}"
+                                                partialSubmit="true"/> <ice:commandButton action="#{jmlCrudAdmin.btnMateria_action}" value="Guardar"/>
+                                                </div>
+                                            </ice:panelGroup>
                                         </ice:panelGroup>
                                         <!-- FIN panel -->
                                     </ice:panelTab>

@@ -10,11 +10,14 @@ import edu.ues.jhard.beans.BeanBaseJManLab;
 import edu.ues.jhard.jhardmin.LoginManager;
 import edu.ues.jhard.jpa.Carrera;
 import edu.ues.jhard.jpa.Curso;
+import edu.ues.jhard.jpa.Facultad;
 import edu.ues.jhard.jpa.Materia;
 import edu.ues.jhard.util.popUp;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.FacesException;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>Page bean that corresponds to a similarly named JSP page.  This
@@ -36,13 +39,34 @@ public class jmlCrudAdmin extends BeanBaseJHard {
     private List<Materia> listaMateria = new ArrayList<Materia>();
     private List<Carrera> listaCarrera = new ArrayList<Carrera>();
     private List<Curso> listaCurso = new ArrayList<Curso>();
+    private List<Facultad> listaFacultad = new ArrayList<Facultad>();
 
-    public BeanBaseJManLab getJml() {
-        return jml;
+    private Materia nuevaMateria = new Materia();
+    private Carrera nuevaCarrera = new Carrera();
+    private Curso nuevoCurso = new Curso();
+
+    public Carrera getNuevaCarrera() {
+        return nuevaCarrera;
     }
 
-    public void setJml(BeanBaseJManLab jml) {
-        this.jml = jml;
+    public void setNuevaCarrera(Carrera nuevaCarrera) {
+        this.nuevaCarrera = nuevaCarrera;
+    }
+
+    public Materia getNuevaMateria() {
+        return nuevaMateria;
+    }
+
+    public void setNuevaMateria(Materia nuevaMateria) {
+        this.nuevaMateria = nuevaMateria;
+    }
+
+    public Curso getNuevoCurso() {
+        return nuevoCurso;
+    }
+
+    public void setNuevoCurso(Curso nuevoCurso) {
+        this.nuevoCurso = nuevoCurso;
     }
     
     public popUp getPopup() {
@@ -112,40 +136,110 @@ public class jmlCrudAdmin extends BeanBaseJHard {
         return EMPTY_STRING;
     }
 
-    public String EditarMateria(){
-        //String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idMateria");
-        //Integer id = Integer.parseInt(idArticulo);
+    public String btnCarrera_action() {
+        Integer id = this.nuevaCarrera.getIdcarrera();
+        if(id==null) id = 0;
+
+        this.nuevaCarrera.setIdfacultad(this.listaFacultad.get(0));
+
+        if(id>0){
+            if (this.getJManLabInstance().updateCarrera(this.nuevaCarrera)) {
+                this.popup.setMensaje("Carrera modificada con éxito.");
+                this.popup.setVisible(true);
+                this.listaCarrera.clear();
+                this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+            } else {
+                this.popup.setMensaje("Ocurrió un error al intentar modificar la carrera.");
+                this.popup.setVisible(true);
+            }
+        } else {
+            if (this.getJManLabInstance().createCarrera(this.nuevaCarrera)) {
+                this.popup.setMensaje("Carrera agregada con éxito.");
+                this.popup.setVisible(true);
+                this.listaCarrera.clear();
+                this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+            } else {
+                this.popup.setMensaje("Ocurrió un error al intentar agregar la carrera.");
+                this.popup.setVisible(true);
+            }
+        }
+        this.nuevaCarrera = new Carrera();
         return EMPTY_STRING;
     }
 
-    public String EliminarMateria(){
-        //String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idMateria");
-        //Integer id = Integer.parseInt(idArticulo);
+    public String editarCarrera(){
+       String idS = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idCarrera");
+       Integer id = new Integer(idS);
+       this.nuevaCarrera = this.getJManLabInstance().getCarrera(id.intValue());
+       return EMPTY_STRING;
+    }
+
+    public String eliminarCarrera(){
+       String idS = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idCarrera");
+       Integer id = new Integer(idS);
+       Carrera carrera = this.getJManLabInstance().getCarrera(id.intValue());
+       try {
+            this.getJManLabInstance().deleteCarrera(carrera.getIdcarrera());
+            this.popup.setMensaje("La Carrera fué eliminada.");
+            this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+       } catch (Exception e) {
+            this.popup.setMensaje("Ocurrió un error al intentar eliminar la carrera.");
+       } finally {
+           this.popup.setVisible(true);
+       }
+       return EMPTY_STRING;
+    }
+
+     public String btnMateria_action() {
+        Integer id = this.nuevaMateria.getIdmateria();
+        if(id==null) id = 0;
+
+        if(id>0){
+            if (this.getJManLabInstance().updateMateria(this.nuevaMateria)) {
+                this.popup.setMensaje("Materia modificada con éxito.");
+                this.popup.setVisible(true);
+                this.listaMateria.clear();
+                this.listaMateria = this.getJManLabInstance().getAllMaterias();
+            } else {
+                this.popup.setMensaje("Ocurrió un error al intentar modificar la materia.");
+                this.popup.setVisible(true);
+            }
+        } else {
+            if (this.getJManLabInstance().createMateria(this.nuevaMateria)) {
+                this.popup.setMensaje("Carrera agregada con éxito.");
+                this.popup.setVisible(true);
+                this.listaMateria.clear();
+                this.listaMateria = this.getJManLabInstance().getAllMaterias();
+            } else {
+                this.popup.setMensaje("Ocurrió un error al intentar agregar la materia.");
+                this.popup.setVisible(true);
+            }
+        }
+        this.nuevaMateria = new Materia();
         return EMPTY_STRING;
     }
 
-    public String EditarCurso(){
-        //String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idCurso");
-        //Integer id = Integer.parseInt(idArticulo);
-        return EMPTY_STRING;
+    public String editarMateria(){
+       String idS = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idMateria");
+       Integer id = new Integer(idS);
+       this.nuevaMateria = this.getJManLabInstance().getMateria(id.intValue());
+       return EMPTY_STRING;
     }
 
-    public String EliminarCurso(){
-        //String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idCurso");
-        //Integer id = Integer.parseInt(idArticulo);
-        return EMPTY_STRING;
-    }
-
-    public String EditarCarrera(){
-        //String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idCarrera");
-        //Integer id = Integer.parseInt(idArticulo);
-        return EMPTY_STRING;
-    }
-
-    public String EliminarCarrera(){
-        //String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idCarrera");
-        //Integer id = Integer.parseInt(idArticulo);
-        return EMPTY_STRING;
+    public String eliminarMateria(){
+       String idS = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idMateria");
+       Integer id = new Integer(idS);
+       Materia materia = this.getJManLabInstance().getMateria(id.intValue());
+       try {
+            this.getJManLabInstance().deleteMateria(materia.getIdmateria());
+            this.popup.setMensaje("La Materia fué eliminada.");
+            this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+       } catch (Exception e) {
+            this.popup.setMensaje("Ocurrió un error al intentar eliminar la materia.");
+       } finally {
+           this.popup.setVisible(true);
+       }
+       return EMPTY_STRING;
     }
 
     public boolean getPermisos(){
@@ -182,6 +276,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
         this.listaCarrera = this.getJManLabInstance().getAllCarreras();
         this.listaMateria = this.getJManLabInstance().getAllMaterias();
         this.listaCurso = this.getJManLabInstance().getAllCursos();
+        this.listaFacultad = this.getJManLabInstance().getAllFacultades();
         //if(this.listaCarrera.size()>0) this.articuloActual = this.listaArticulos.get(0);
 
         if(this.lu!=null){

@@ -255,7 +255,7 @@
                                             </div><br/><br/>
                                             <ice:panelGroup>
                                                 <div class="post">
-                                                Agregar etiqueta: <br/>
+                                                Agregar/Modificar Etiqueta: <br/>
                                                 Descripcion: <ice:inputText id="itTagDesc" title="Descripción de la etiqueta"
                                                 value="#{jprocurAdmin.etiquetaNueva.descripcion}"
                                                 partialSubmit="true"/> <ice:commandButton action="#{jprocurAdmin.btnAddTagDesc_action}" value="Guardar"/>
