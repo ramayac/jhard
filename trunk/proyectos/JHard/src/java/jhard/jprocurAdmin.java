@@ -714,7 +714,9 @@ public class jprocurAdmin extends AbstractPageBean {
 
     public String btnAddTagDesc_action() {
         Integer idtag = this.etiquetaNueva.getIdtag();
-        if(idtag != null || idtag>0){
+        if(idtag==null) idtag = 0;
+
+        if(idtag>0){
             if (this.jprocurInstance.mergeTag(etiquetaNueva)) {
                 this.lblPPMesajes.setValue("Etiqueta modificada con éxito.");
                 this.showPPMesaje = true;
