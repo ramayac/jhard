@@ -302,12 +302,6 @@ public class jmlCrudAdmin extends BeanBaseJHard {
     public jmlCrudAdmin() {
         this.lu= getJHardminInstance().getCurrentUser();
 
-        this.listaCarrera = this.getJManLabInstance().getAllCarreras();
-        this.listaMateria = this.getJManLabInstance().getAllMaterias();
-        this.listaCurso = this.getJManLabInstance().getAllCursos();
-        this.listaFacultad = this.getJManLabInstance().getAllFacultades();
-        //if(this.listaCarrera.size()>0) this.articuloActual = this.listaArticulos.get(0);
-
         if(this.lu!=null){
             this.U = LoginManager.getInstance().getUsuario(lu);
             this.lblUser.setValue(U.getNombre());
@@ -319,6 +313,12 @@ public class jmlCrudAdmin extends BeanBaseJHard {
                 }
         }else
             this.lblUser.setValue(INVITADO);
+
+        this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+        this.listaMateria = this.getJManLabInstance().getAllMaterias();
+        this.listaCurso = this.getJManLabInstance().getAllCursos();
+        this.listaFacultad = this.getJManLabInstance().getAllFacultades();
+        //if(this.listaCarrera.size()>0) this.articuloActual = this.listaArticulos.get(0);
     }
 
     /**
