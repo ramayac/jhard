@@ -15,6 +15,7 @@ import edu.ues.jhard.jpa.Materia;
 import edu.ues.jhard.util.popUp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
@@ -48,16 +49,36 @@ public class jmlCrudAdmin extends BeanBaseJHard {
     private Curso nuevoCurso = new Curso();
 
     private Carrera selectedCarrera = new Carrera();
-    private List listaCarreraSel = new ArrayList();
+    private List<SelectItem> listaCarreraSel = new ArrayList<SelectItem>();
 
-     public void selCarrera(ValueChangeEvent event) {
-         Integer id = Integer.parseInt(event.getNewValue().toString());
-        //this.selectedCarrera = (Carrera) event.getNewValue();
-        //System.out.println("---->>> "+ event.getNewValue().toString());
-        //System.out.println("---->>> "+ id);
+    //private SelectItem mySelCarreraItem = new SelectItem();
+
+    //public SelectItem getMySelCarreraItem() {
+    //    return mySelCarreraItem;
+    //}
+
+    //public void setMySelCarreraItem() {
+        //System.out.println("se ejecuto setMySelCarreraItem");
+        //Integer id = Integer.parseInt(mySelCarreraItem);
+        //this.selectedCarrera = this.getJManLabInstance().getCarrera(id);
+        //this.mySelCarreraItem = new SelectItem(this.selectedCarrera.getIdcarrera(), this.selectedCarrera.getCodigo()+"-"+this.selectedCarrera.getNombre());
+    //}
+
+    //public void setMySelCarreraItem(SelectItem mySelCarreraItem) {
+    //    this.mySelCarreraItem = mySelCarreraItem;
+    //    System.out.println("se ejecuto setMySelCarreraItem con SelectItem");
+    //}
+
+    //public void setMySelCarreraItem(String mySelCarreraItem) {
+        //this.mySelCarreraItem = mySelCarreraItem;
+        //System.out.println("se ejecuto setMySelCarreraItem con STRING!");
+    //}
+
+    public void selCarrera(ValueChangeEvent event) {
+        //System.out.println("se ejecuto valueChange >>>>>>"+event.getNewValue().toString());
+        Integer id = Integer.parseInt(event.getNewValue().toString());
         this.selectedCarrera = this.getJManLabInstance().getCarrera(id);
-        //System.out.println("---->>> "+ this.selectedCarrera.getCodigo());
-        //return EMPTY_STRING;
+        //this.mySelCarreraItem = new SelectItem(this.selectedCarrera.getIdcarrera(), this.selectedCarrera.getCodigo()+"-"+this.selectedCarrera.getNombre());
     }
 
     public List getListaCarreraSel() {
@@ -228,6 +249,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
                 this.popup.setVisible(true);
                 this.listaMateria.clear();
                 this.listaMateria = this.getJManLabInstance().getAllMaterias();
+                //this.mySelCarreraItem = new SelectItem();
             } else {
                 this.popup.setMensaje("Ocurrió un error al intentar modificar la materia.");
                 this.popup.setVisible(true);
@@ -238,6 +260,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
                 this.popup.setVisible(true);
                 this.listaMateria.clear();
                 this.listaMateria = this.getJManLabInstance().getAllMaterias();
+                //this.mySelCarreraItem = new SelectItem();
             } else {
                 this.popup.setMensaje("Ocurrió un error al intentar agregar la materia.");
                 this.popup.setVisible(true);
@@ -248,9 +271,13 @@ public class jmlCrudAdmin extends BeanBaseJHard {
     }
 
     public String editarMateria(){
+       //this.popup.setMensaje("U call?"); this.popup.setVisible(true);
        String idS = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idMateria");
        Integer id = new Integer(idS);
        this.nuevaMateria = this.getJManLabInstance().getMateria(id.intValue());
+       Carrera carr = this.nuevaMateria.getIdcarrera();
+       System.out.println(carr.getCodigo()+"-"+carr.getNombre());
+       //this.mySelCarreraItem = new SelectItem(carr.getIdcarrera(), carr.getCodigo()+"-"+carr.getNombre());
        return EMPTY_STRING;
     }
 
@@ -282,6 +309,10 @@ public class jmlCrudAdmin extends BeanBaseJHard {
                 //break;
         }
         return false;
+    }
+
+    public TimeZone getTimeZone() {
+        return java.util.TimeZone.getDefault();
     }
 
     /**

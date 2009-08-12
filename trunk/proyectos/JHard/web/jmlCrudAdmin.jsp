@@ -35,7 +35,8 @@
                                         <!-- panel de para Agregar, Modificar y Eliminar Carrera -->
                                         <ice:panelGroup>
                                             <ice:dataTable id="tablaCarrera" rendered="#{jmlCrudAdmin.hayCarrera}" rows="30" styleClass="mitablacarrera"
-                                            value="#{jmlCrudAdmin.listaCarrera}" var="indiceCarrera" resizable="true">
+                                            value="#{jmlCrudAdmin.listaCarrera}" var="indiceCarrera" resizable="true"
+                                            width="100%">
                                                 <ice:column>
                                                     <f:facet name="header"><ice:outputText value="Código del curso"/></f:facet>
                                                     <ice:outputLabel style="font-weight:bold; " value="#{indiceCarrera.codigo}"/>
@@ -92,7 +93,8 @@
                                         <!-- panel de para Agregar, Modificar y Eliminar Materias -->
                                         <ice:panelGroup>
                                             <ice:dataTable id="tablaMaterias" rendered="#{jmlCrudAdmin.hayMateria}" rows="30" styleClass="mitablamaterias"
-                                            value="#{jmlCrudAdmin.listaMateria}" var="indiceMateria" resizable="true">
+                                            value="#{jmlCrudAdmin.listaMateria}" var="indiceMateria" resizable="true"
+                                            width="100%">
                                                 <ice:column>
                                                     <f:facet name="header"><ice:outputText value="Código del curso"/></f:facet>
                                                     <ice:outputLabel style="font-weight:bold; " value="#{indiceMateria.codigo}"/>
@@ -135,7 +137,8 @@
                                                 <div class="post">
                                                 Agregar/Editar Materia: <br/>
                                                 Seleccione la carrera a la que pertenece la materia:<br/>
-                                                <ice:selectOneMenu id="idSelCarr" valueChangeListener="#{jmlCrudAdmin.selCarrera}">
+                                                <ice:selectOneMenu id="idSelCarr" partialSubmit="true"
+                                                valueChangeListener="#{jmlCrudAdmin.selCarrera}">
                                                     <f:selectItems id="carrSel" value="#{jmlCrudAdmin.listaCarreraSel}"/>
                                                 </ice:selectOneMenu><br/>
                                                 Código: <ice:inputText id="itMatCode" title="Código de la materia"
@@ -154,7 +157,8 @@
                                         <!-- panel de para Agregar, Modificar y Eliminar Cursos -->
                                         <ice:panelGroup>
                                             <ice:dataTable id="tablaCurso" rendered="#{jmlCrudAdmin.hayCurso}" rows="30" styleClass="mitablacurso"
-                                            value="#{jmlCrudAdmin.listaCurso}" var="indiceCurso" resizable="true">
+                                            value="#{jmlCrudAdmin.listaCurso}" var="indiceCurso" resizable="true"
+                                            width="100%">
                                                 <ice:column>
                                                     <f:facet name="header"><ice:outputText value="Nombre del curso"/></f:facet>
                                                     <ice:outputLabel style="font-weight:bold; " value="#{indiceCurso.nombre}"/>
@@ -188,7 +192,36 @@
                                                         <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
                                                     </f:facet>
                                                 </ice:dataPaginator>
-                                            </div>
+                                            </div><br/><br/>
+                                            <ice:panelGroup>
+                                                <div class="post">
+                                                Agregar/Editar Curso: <br/>
+                                                Nombre: <ice:inputText id="itCursoNombre" title="Nombre del curso" value="#{jmlCrudAdmin.nuevoCurso.nombre}" partialSubmit="true"/>
+                                                Cupo: <ice:inputText id="itCupoMax" title="Cupo máximo" value="#{jmlCrudAdmin.nuevoCurso.cupomax}" partialSubmit="true"/>
+                                                <ice:selectInputDate id="popfecha" renderMonthAsDropdown="true" renderYearAsDropdown="true"
+                                                value="#{jmlCrudAdmin.nuevoCurso.fechainicio}" title="Fecha de inicio" renderAsPopup="true">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{jmlCrudAdmin.timeZone}"/>
+                                                </ice:selectInputDate>
+                                                Ciclo: <ice:selectOneRadio partialSubmit="true">
+                                                    <f:selectItem itemLabel="I" itemValue="false"/>
+                                                    <f:selectItem itemLabel="II" itemValue="true"/>
+                                                </ice:selectOneRadio><br/>
+                                                Habilitar inscripcion: <ice:selectOneRadio partialSubmit="true" value="#{jmlCrudAdmin.nuevoCurso.habilinscrip}">
+                                                    <f:selectItem itemLabel="Habilitar" itemValue="false"/>
+                                                    <f:selectItem itemLabel="Deshabilitar" itemValue="true"/>
+                                                </ice:selectOneRadio><br/>
+                                                Docentes:<ice:selectOneMenu id="idSelDoc" partialSubmit="true">
+                                                    <f:selectItems id="docSel" value=""/>
+                                                </ice:selectOneMenu><br/>
+                                                Instructor:<ice:selectOneMenu id="idSelInst" partialSubmit="true">
+                                                    <f:selectItems id="instSel" value=""/>
+                                                </ice:selectOneMenu><br/>
+                                                Materia:<ice:selectOneMenu id="idSelMat2" partialSubmit="true">
+                                                    <f:selectItems id="mat2Sel" value=""/>
+                                                </ice:selectOneMenu><br/>
+                                                <br/><ice:commandButton action="#{jmlCrudAdmin.btnCurso_action}" value="Guardar"/>
+                                                </div>
+                                            </ice:panelGroup>
                                         </ice:panelGroup>
                                         <!-- FIN panel -->
                                     </ice:panelTab>
