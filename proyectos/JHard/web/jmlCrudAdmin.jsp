@@ -142,11 +142,9 @@
                                                     <f:selectItems id="carrSel" value="#{jmlCrudAdmin.listaCarreraSel}"/>
                                                 </ice:selectOneMenu><br/>
                                                 Código: <ice:inputText id="itMatCode" title="Código de la materia"
-                                                value="#{jmlCrudAdmin.nuevaMateria.codigo}"
-                                                partialSubmit="true"/>
+                                                value="#{jmlCrudAdmin.nuevaMateria.codigo}" partialSubmit="true"/>
                                                 Nombre: <ice:inputText id="itMatNombre" title="Nombre de la asignatura"
-                                                value="#{jmlCrudAdmin.nuevaMateria.nombre}"
-                                                partialSubmit="true"/>
+                                                value="#{jmlCrudAdmin.nuevaMateria.nombre}" partialSubmit="true"/>
                                                 <br/><ice:commandButton action="#{jmlCrudAdmin.btnMateria_action}" value="Guardar"/>
                                                 </div>
                                             </ice:panelGroup>
@@ -202,22 +200,22 @@
                                                 value="#{jmlCrudAdmin.nuevoCurso.fechainicio}" title="Fecha de inicio" renderAsPopup="true">
                                                     <f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{jmlCrudAdmin.timeZone}"/>
                                                 </ice:selectInputDate>
-                                                Ciclo: <ice:selectOneRadio partialSubmit="true">
-                                                    <f:selectItem itemLabel="I" itemValue="false"/>
-                                                    <f:selectItem itemLabel="II" itemValue="true"/>
-                                                </ice:selectOneRadio><br/>
+                                                Ciclo: <ice:selectOneMenu id="idSelCiclo" value="#{jmlCrudAdmin.nuevoCurso.ciclo}" partialSubmit="true">
+                                                    <f:selectItem itemLabel="Impar" itemValue="1" /> 
+                                                    <f:selectItem itemLabel="Par" itemValue="2" />
+                                                </ice:selectOneMenu><br/>
                                                 Habilitar inscripcion: <ice:selectOneRadio partialSubmit="true" value="#{jmlCrudAdmin.nuevoCurso.habilinscrip}">
                                                     <f:selectItem itemLabel="Habilitar" itemValue="false"/>
                                                     <f:selectItem itemLabel="Deshabilitar" itemValue="true"/>
                                                 </ice:selectOneRadio><br/>
-                                                Docentes:<ice:selectOneMenu id="idSelDoc" partialSubmit="true">
-                                                    <f:selectItems id="docSel" value=""/>
+                                                Docentes:<ice:selectOneMenu id="idSelDoc" partialSubmit="true" valueChangeListener="#{jmlCrudAdmin.selDocente}">
+                                                    <f:selectItems id="docSel" value="#{jmlCrudAdmin.listaDocenteSel}"/>
                                                 </ice:selectOneMenu><br/>
-                                                Instructor:<ice:selectOneMenu id="idSelInst" partialSubmit="true">
-                                                    <f:selectItems id="instSel" value=""/>
+                                                Instructor:<ice:selectOneMenu id="idSelInst" partialSubmit="true" valueChangeListener="#{jmlCrudAdmin.selInstructor}">
+                                                    <f:selectItems id="instSel" value="#{jmlCrudAdmin.listaInstructorSel}"/>
                                                 </ice:selectOneMenu><br/>
-                                                Materia:<ice:selectOneMenu id="idSelMat2" partialSubmit="true">
-                                                    <f:selectItems id="mat2Sel" value=""/>
+                                                Materia:<ice:selectOneMenu id="idSelMat" partialSubmit="true" valueChangeListener="#{jmlCrudAdmin.selMateria}">
+                                                    <f:selectItems id="matSel" value="#{jmlCrudAdmin.listaMateriaSel}"/>
                                                 </ice:selectOneMenu><br/>
                                                 <br/><ice:commandButton action="#{jmlCrudAdmin.btnCurso_action}" value="Guardar"/>
                                                 </div>

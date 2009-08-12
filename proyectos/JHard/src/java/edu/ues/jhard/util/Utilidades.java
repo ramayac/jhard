@@ -28,6 +28,13 @@ public class Utilidades {
         return sdfHora.format(hora);
     }
 
+    public static int EsteAnyo() {
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(new Date());
+        int anyo = cal.get(Calendar.YEAR);
+        return anyo;
+    }
+
     public static int DiaHoyEntero() {
         Calendar cal = new GregorianCalendar();
         cal.setTime(new Date());
