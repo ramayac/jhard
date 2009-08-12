@@ -23,7 +23,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "cicloanyo")
-@NamedQueries({@NamedQuery(name = "Cicloanyo.findAll", query = "SELECT c FROM Cicloanyo c"), @NamedQuery(name = "Cicloanyo.findByIdcicloanyo", query = "SELECT c FROM Cicloanyo c WHERE c.idcicloanyo = :idcicloanyo"), @NamedQuery(name = "Cicloanyo.findByDescripcion", query = "SELECT c FROM Cicloanyo c WHERE c.descripcion = :descripcion")})
+@NamedQueries({
+    @NamedQuery(name = "Cicloanyo.findAll", query = "SELECT c FROM Cicloanyo c"),
+    @NamedQuery(name = "Cicloanyo.findByIdcicloanyo", query = "SELECT c FROM Cicloanyo c WHERE c.idcicloanyo = :idcicloanyo"),
+    @NamedQuery(name = "Cicloanyo.findByDescripcion", query = "SELECT c FROM Cicloanyo c WHERE c.descripcion = :descripcion")
+})
 public class Cicloanyo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

@@ -9,9 +9,13 @@ package jhard;
 import edu.ues.jhard.beans.BeanBaseJManLab;
 import edu.ues.jhard.jhardmin.LoginManager;
 import edu.ues.jhard.jpa.Carrera;
+import edu.ues.jhard.jpa.Cicloanyo;
 import edu.ues.jhard.jpa.Curso;
+import edu.ues.jhard.jpa.Docente;
 import edu.ues.jhard.jpa.Facultad;
+import edu.ues.jhard.jpa.Instructor;
 import edu.ues.jhard.jpa.Materia;
+import edu.ues.jhard.util.Utilidades;
 import edu.ues.jhard.util.popUp;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +47,8 @@ public class jmlCrudAdmin extends BeanBaseJHard {
     private List<Carrera> listaCarrera = new ArrayList<Carrera>();
     private List<Curso> listaCurso = new ArrayList<Curso>();
     private List<Facultad> listaFacultad = new ArrayList<Facultad>();
+    private List<Docente> listaDocente = new ArrayList<Docente>();
+    private List<Instructor> listaInstructor = new ArrayList<Instructor>();
 
     private Materia nuevaMateria = new Materia();
     private Carrera nuevaCarrera = new Carrera();
@@ -50,6 +56,137 @@ public class jmlCrudAdmin extends BeanBaseJHard {
 
     private Carrera selectedCarrera = new Carrera();
     private List<SelectItem> listaCarreraSel = new ArrayList<SelectItem>();
+
+    private Materia selectedMateria = new Materia();
+    private List<SelectItem> listaMateriaSel = new ArrayList<SelectItem>();
+    private Docente selectedDocente = new Docente();
+    private List<SelectItem> listaDocenteSel = new ArrayList<SelectItem>();
+    private Instructor selectedInstructor = new Instructor();
+    private List<SelectItem> listaInstructorSel = new ArrayList<SelectItem>();
+
+    public List<Docente> getListaDocente() {
+        return listaDocente;
+    }
+
+    public void setListaDocente(List<Docente> listaDocente) {
+        this.listaDocente = listaDocente;
+    }
+
+    public List<Instructor> getListaInstructor() {
+        return listaInstructor;
+    }
+
+    public void setListaInstructor(List<Instructor> listaInstructor) {
+        this.listaInstructor = listaInstructor;
+    }
+
+    public Instructor getSelectedInstructor() {
+        return selectedInstructor;
+    }
+
+    public void setSelectedInstructor(Instructor selectedInstructor) {
+        this.selectedInstructor = selectedInstructor;
+    }
+
+    public void setListaDocenteSel(List<SelectItem> listaDocenteSel) {
+        this.listaDocenteSel = listaDocenteSel;
+    }
+
+    public void setListaInstructorSel(List<SelectItem> listaInstructorSel) {
+        this.listaInstructorSel = listaInstructorSel;
+    }
+
+    public void setListaMateriaSel(List<SelectItem> listaMateriaSel) {
+        this.listaMateriaSel = listaMateriaSel;
+    }
+
+    public Carrera getSelectedCarrera() {
+        return selectedCarrera;
+    }
+
+    public void setSelectedCarrera(Carrera selectedCarrera) {
+        this.selectedCarrera = selectedCarrera;
+    }
+
+    public Docente getSelectedDocente() {
+        return selectedDocente;
+    }
+
+    public void setSelectedDocente(Docente selectedDocente) {
+        this.selectedDocente = selectedDocente;
+    }
+
+    public Materia getSelectedMateria() {
+        return selectedMateria;
+    }
+
+    public void setListaCarreraSel(List listaCarreraSel) {
+        this.listaCarreraSel = listaCarreraSel;
+    }
+
+    public void setSelectedMateria(Materia selectedMateria) {
+        this.selectedMateria = selectedMateria;
+    }
+
+    public void selDocente(ValueChangeEvent event) {
+        //System.out.println("se ejecuto valueChange >>>>>>"+event.getNewValue().toString());
+        Integer id = Integer.parseInt(event.getNewValue().toString());
+        this.selectedDocente = this.getJManLabInstance().getDocente(id);
+        //this.mySelCarreraItem = new SelectItem(this.selectedCarrera.getIdcarrera(), this.selectedCarrera.getCodigo()+"-"+this.selectedCarrera.getNombre());
+    }
+
+    public void selInstructor(ValueChangeEvent event) {
+        //System.out.println("se ejecuto valueChange >>>>>>"+event.getNewValue().toString());
+        Integer id = Integer.parseInt(event.getNewValue().toString());
+        this.selectedInstructor = this.getJManLabInstance().getInstructor(id);
+        //this.mySelCarreraItem = new SelectItem(this.selectedCarrera.getIdcarrera(), this.selectedCarrera.getCodigo()+"-"+this.selectedCarrera.getNombre());
+    }
+
+    public void selMateria(ValueChangeEvent event) {
+        //System.out.println("se ejecuto valueChange >>>>>>"+event.getNewValue().toString());
+        Integer id = Integer.parseInt(event.getNewValue().toString());
+        this.selectedMateria = this.getJManLabInstance().getMateria(id);
+        //this.mySelCarreraItem = new SelectItem(this.selectedCarrera.getIdcarrera(), this.selectedCarrera.getCodigo()+"-"+this.selectedCarrera.getNombre());
+    }
+
+    public void selCarrera(ValueChangeEvent event) {
+        //System.out.println("se ejecuto valueChange >>>>>>"+event.getNewValue().toString());
+        Integer id = Integer.parseInt(event.getNewValue().toString());
+        this.selectedCarrera = this.getJManLabInstance().getCarrera(id);
+        //this.mySelCarreraItem = new SelectItem(this.selectedCarrera.getIdcarrera(), this.selectedCarrera.getCodigo()+"-"+this.selectedCarrera.getNombre());
+    }
+
+    public List getListaCarreraSel() {
+        listaCarreraSel.clear();
+        for (Carrera c : listaCarrera) {
+            listaCarreraSel.add(new SelectItem(c.getIdcarrera(), c.getCodigo()+"-"+c.getNombre()));
+        }
+        return listaCarreraSel;
+    }
+
+    public List<SelectItem> getListaDocenteSel() {
+        listaDocenteSel.clear();
+        for (Docente d : listaDocente) {
+            listaDocenteSel.add(new SelectItem(d.getIddocente(), d.getApellidos()+", "+d.getNombres()));
+        }
+        return listaDocenteSel;
+    }
+
+    public List<SelectItem> getListaInstructorSel() {
+        listaInstructorSel.clear();
+        for (Instructor i : listaInstructor) {
+            listaInstructorSel.add(new SelectItem(i.getIdusuario(), i.getApellidos()+", "+i.getNombres()));
+        }
+        return listaInstructorSel;
+    }
+
+    public List<SelectItem> getListaMateriaSel() {
+        listaMateriaSel.clear();
+        for (Materia m : listaMateria) {
+            listaMateriaSel.add(new SelectItem(m.getIdmateria(), m.getNombre()));
+        }
+        return listaMateriaSel;
+    }
 
     //private SelectItem mySelCarreraItem = new SelectItem();
 
@@ -73,25 +210,6 @@ public class jmlCrudAdmin extends BeanBaseJHard {
         //this.mySelCarreraItem = mySelCarreraItem;
         //System.out.println("se ejecuto setMySelCarreraItem con STRING!");
     //}
-
-    public void selCarrera(ValueChangeEvent event) {
-        //System.out.println("se ejecuto valueChange >>>>>>"+event.getNewValue().toString());
-        Integer id = Integer.parseInt(event.getNewValue().toString());
-        this.selectedCarrera = this.getJManLabInstance().getCarrera(id);
-        //this.mySelCarreraItem = new SelectItem(this.selectedCarrera.getIdcarrera(), this.selectedCarrera.getCodigo()+"-"+this.selectedCarrera.getNombre());
-    }
-
-    public List getListaCarreraSel() {
-        listaCarreraSel.clear();
-        for (Carrera c : listaCarrera) {
-            listaCarreraSel.add(new SelectItem(c.getIdcarrera(), c.getCodigo()+"-"+c.getNombre()));
-        }
-        return listaCarreraSel;
-    }
-
-    public void setListaCarreraSel(List listaCarreraSel) {
-        this.listaCarreraSel = listaCarreraSel;
-    }
 
     public Carrera getNuevaCarrera() {
         return nuevaCarrera;
@@ -179,6 +297,78 @@ public class jmlCrudAdmin extends BeanBaseJHard {
         return false;
     }
 
+    public String editarCurso(){
+       String idS = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idCurso");
+       Integer id = new Integer(idS);
+       this.nuevoCurso = this.getJManLabInstance().getCurso(id.intValue());
+       return EMPTY_STRING;
+    }
+
+    public String eliminarCurso(){
+       String idS = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idCurso");
+       Integer id = new Integer(idS);
+       Curso curso = this.getJManLabInstance().getCurso(id.intValue());
+       try {
+            this.getJManLabInstance().deleteCurso(curso.getIdcurso());
+            this.popup.setMensaje("El curso fué eliminado.");
+            this.listaCurso.clear();
+            this.listaCurso = this.getJManLabInstance().getAllCursos();
+       } catch (Exception e) {
+            this.popup.setMensaje("Ocurrió un error al intentar eliminar la carrera.");
+       } finally {
+           this.popup.setVisible(true);
+       }
+       return EMPTY_STRING;
+    }
+
+    public String btnCurso_action() {
+        Integer id = this.nuevoCurso.getIdcurso();
+        if(id==null) id = 0;
+
+        //TODO: Validaciones aqui... REM que docente e instructor pueden ir null
+        //this.nuevoCurso.setIddocente(selectedDocente);
+        //this.nuevoCurso.setIdinstructor(selectedInstructor);
+        this.nuevoCurso.setIdmateria(selectedMateria);
+
+        String strCiclo = new String();
+        switch(this.nuevoCurso.getCiclo()){
+            case 1: strCiclo = "I";
+                break;
+            case 2: strCiclo = "II";
+                break;
+            default:
+                break;
+        }
+
+        Cicloanyo cay = this.getJManLabInstance().searchCicloAnyoByDesc(strCiclo+" - "+this.nuevoCurso.getAnio());
+        this.nuevoCurso.setIdcicloanio(cay); //SHIIIIT! ;(
+        this.nuevoCurso.setAnio(Utilidades.EsteAnyo());
+
+        if(id>0){
+            if (this.getJManLabInstance().updateCarrera(this.nuevaCarrera)) {
+                this.popup.setMensaje("Carrera modificada con éxito.");
+                this.popup.setVisible(true);
+                this.listaCarrera.clear();
+                this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+            } else {
+                this.popup.setMensaje("Ocurrió un error al intentar modificar la carrera.");
+                this.popup.setVisible(true);
+            }
+        } else {
+            if (this.getJManLabInstance().createCarrera(this.nuevaCarrera)) {
+                this.popup.setMensaje("Carrera agregada con éxito.");
+                this.popup.setVisible(true);
+                this.listaCarrera.clear();
+                this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+            } else {
+                this.popup.setMensaje("Ocurrió un error al intentar agregar la carrera.");
+                this.popup.setVisible(true);
+            }
+        }
+        this.nuevaCarrera = new Carrera();
+        return EMPTY_STRING;
+    }
+
     public String btnOK_action() {
         this.popup.setVisible(false);
         return EMPTY_STRING;
@@ -229,6 +419,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
        try {
             this.getJManLabInstance().deleteCarrera(carrera.getIdcarrera());
             this.popup.setMensaje("La Carrera fué eliminada.");
+            this.listaCarrera.clear();
             this.listaCarrera = this.getJManLabInstance().getAllCarreras();
        } catch (Exception e) {
             this.popup.setMensaje("Ocurrió un error al intentar eliminar la carrera.");

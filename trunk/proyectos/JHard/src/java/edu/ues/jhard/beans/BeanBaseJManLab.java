@@ -31,6 +31,24 @@ public class BeanBaseJManLab extends BeanBase {
     /*De lo mas facil a lo mas dificil: Facultad -> Carrera -> Materia y EstadoCurso
     metodos: create, delete, get, getAll, recargar, update, NO search.
      */
+
+    /**
+     * Metodo para obtener un ciclo por su descripcion, debe cumplir "la forma": "I - 9999"
+     * @param String
+     * @return
+     */
+    public Cicloanyo searchCicloAnyoByDesc(String desc) {
+        EntityManager em = this.getEntityManager();
+        Query q = em.createNamedQuery("Cicloanyo.findByDescripcion");
+        q.setParameter("descripcion", desc);
+        q.setMaxResults(1);
+        //descripcion
+        List<Cicloanyo> lstc = new ArrayList<Cicloanyo>();
+        lstc = (List<Cicloanyo>) q.getResultList();
+        if(lstc.size()>0) return lstc.get(0);
+        return null;
+    }
+
     /**
      * Metodo para obtener una Facultad por su ID
      * @param idFacultad id de la facultad que se desea
