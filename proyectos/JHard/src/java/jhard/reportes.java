@@ -6,8 +6,22 @@
  */
 package jhard;
 
+import com.icesoft.faces.component.ext.HtmlCommandButton;
+import com.icesoft.faces.component.ext.HtmlSelectBooleanCheckbox;
+import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
+import com.icesoft.faces.component.selectinputtext.SelectInputText;
+import com.icesoft.faces.context.effects.JavascriptContext;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
+import edu.ues.jhard.beans.BeanBaseJRequest;
+import edu.ues.jhard.jpa.Equiposimple;
+import edu.ues.jhard.jpa.Existencia;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.FacesException;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
 
 
 /**
@@ -28,13 +42,77 @@ public class reportes extends AbstractPageBean {
      */
     private void _init() throws Exception {
     }
+    private DefaultSelectedData selectBooleanCheckbox1Bean = new DefaultSelectedData();
+
+    public DefaultSelectedData getSelectBooleanCheckbox1Bean() {
+        return selectBooleanCheckbox1Bean;
+    }
+
+    public void setSelectBooleanCheckbox1Bean(DefaultSelectedData dsd) {
+        this.selectBooleanCheckbox1Bean = dsd;
+    }
+    private DefaultSelectedData selectBooleanCheckbox2Bean = new DefaultSelectedData();
+
+    public DefaultSelectedData getSelectBooleanCheckbox2Bean() {
+        return selectBooleanCheckbox2Bean;
+    }
+
+    public void setSelectBooleanCheckbox2Bean(DefaultSelectedData dsd) {
+        this.selectBooleanCheckbox2Bean = dsd;
+    }
+    private HtmlSelectBooleanCheckbox checkEQ = new HtmlSelectBooleanCheckbox();
+
+    public HtmlSelectBooleanCheckbox getCheckEQ() {
+        return checkEQ;
+    }
+
+    public void setCheckEQ(HtmlSelectBooleanCheckbox hsbc) {
+        this.checkEQ = hsbc;
+    }
+    private HtmlSelectBooleanCheckbox checkEX = new HtmlSelectBooleanCheckbox();
+
+    public HtmlSelectBooleanCheckbox getCheckEX() {
+        return checkEX;
+    }
+
+    public void setCheckEX(HtmlSelectBooleanCheckbox hsbc) {
+        this.checkEX = hsbc;
+    }
+    private HtmlCommandButton btnReportBit = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnReportBit() {
+        return btnReportBit;
+    }
+
+    public void setBtnReportBit(HtmlCommandButton hcb) {
+        this.btnReportBit = hcb;
+    }
+    private SelectInputText txtBit = new SelectInputText();
+
+    public SelectInputText getTxtBit() {
+        return txtBit;
+    }
+
+    public void setTxtBit(SelectInputText sit) {
+        this.txtBit = sit;
+    }
 
     // </editor-fold>
+
+    private List eqs = new ArrayList();
+    private List<Equiposimple> listaTodosEquipos;
+    private List<Existencia> listaTodasExistencias;
+    private Equiposimple EquipoElegido;
+    private Existencia ExistenciaElegida;
+
 
     /**
      * <p>Construct a new Page bean instance.</p>
      */
     public reportes() {
+        BeanBaseJRequest instance = new BeanBaseJRequest();
+        this.listaTodosEquipos= instance.getListaEquipoSimple();
+        this.listaTodasExistencias= instance.getListaExistencia();
     }
 
     /**
@@ -134,6 +212,116 @@ public class reportes extends AbstractPageBean {
     protected ApplicationBean1 getApplicationBean1() {
         return (ApplicationBean1) getBean("ApplicationBean1");
     }
+
+    /**
+     * @return the eqs
+     */
+    public List getEqs() {
+        return eqs;
+    }
+
+    /**
+     * @param eqs the eqs to set
+     */
+    public void setEqs(List eqs) {
+        this.eqs = eqs;
+    }
+
+    public void txtBit_processValueChange(ValueChangeEvent vce) {
+        String valorBusqueda = vce.getNewValue().toString().toUpperCase();
+        if(valorBusqueda.equalsIgnoreCase("")){
+            this.eqs.clear();
+            return;
+        }
+        List<SelectItem> listaItemsBusqueda = new ArrayList<SelectItem>();
+
+        if(this.checkEQ.isSelected()){
+            for(Equiposimple eq: this.getListaTodosEquipos()){
+                if(eq.getDescripcion().toUpperCase().contains(valorBusqueda) ||
+                        eq.getPropietario().toUpperCase().contains(valorBusqueda)){
+                    this.eqs.add(eq);
+                    listaItemsBusqueda.add(new SelectItem(eq.getIdEquipoSimple(), eq.getPropietario() + " - " + eq.getDescripcion()));
+                }
+            }
+        }else{
+            for(Existencia eq: this.getListaTodasExistencias()){
+                if(eq.getCodigo().toUpperCase().contains(valorBusqueda) ||
+                        eq.getIdhardware().getIdmarca().getNombre().toUpperCase().contains(valorBusqueda) ||
+                        eq.getIdhardware().getModelo().toUpperCase().contains(valorBusqueda) ||
+                        eq.getIdhardware().getNombre().toUpperCase().contains(valorBusqueda)){
+                    this.eqs.add(eq);
+                    listaItemsBusqueda.add(new SelectItem(eq.getIdexistencia(), eq.getIdhardware().getNombre() + " - " + eq.getCodigo()));
+                }
+            }
+        }
+        this.eqs = listaItemsBusqueda;
+    }
+
+    /**
+     * @return the listaTodosEquipos
+     */
+    public List<Equiposimple> getListaTodosEquipos() {
+        return listaTodosEquipos;
+    }
+
+    /**
+     * @param listaTodosEquipos the listaTodosEquipos to set
+     */
+    public void setListaTodosEquipos(List<Equiposimple> listaTodosEquipos) {
+        this.listaTodosEquipos = listaTodosEquipos;
+    }
+
+    /**
+     * @return the listaTodasExistencias
+     */
+    public List<Existencia> getListaTodasExistencias() {
+        return listaTodasExistencias;
+    }
+
+    /**
+     * @param listaTodasExistencias the listaTodasExistencias to set
+     */
+    public void setListaTodasExistencias(List<Existencia> listaTodasExistencias) {
+        this.listaTodasExistencias = listaTodasExistencias;
+    }
+
+    public String txtBit_action() {
+        Integer id= (Integer) this.txtBit.getSelectedItem().getValue();
+
+        if(this.checkEQ.isSelected()){
+            Equiposimple e=new BeanBaseJRequest().getEntityManager().find(Equiposimple.class, id);
+            EquipoElegido=e;
+        }else{
+            Existencia ex=new BeanBaseJRequest().getEntityManager().find(Existencia.class, id);
+            ExistenciaElegida=ex;
+        }
+        return null;
+    }
+
+    public void llamarReporte(ActionEvent e) {
+        JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=1&idcarrera=1\",\"Reporte\");");
+    }
+
+    public String btnReportBit_action() {
+        if(this.checkEQ.isSelected())
+            JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=2&ideqsimple="+EquipoElegido.getIdEquipoSimple()+"\",\"Reporte\");");
+        else
+            JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=3&idexistencia="+ExistenciaElegida.getIdexistencia()+"\",\"Reporte\");");
+        return null;
+    }
+
+    public void checkEQ_processValueChange(ValueChangeEvent vce) {
+        if(this.checkEQ.isSelected())
+            this.checkEX.setSelected(false);
+        this.txtBit.setValue("");
+    }
+
+    public void checkEX_processValueChange(ValueChangeEvent vce) {
+        if(this.checkEX.isSelected())
+            this.checkEQ.setSelected(false);
+        this.txtBit.setValue("");
+    }
+
 
 }
 

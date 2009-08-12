@@ -74,11 +74,11 @@ AND carrera.`idcarrera` = $P{idcarrera}]]>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="51" width="555" height="1"/>
 			</line>
 			<staticText>
-				<reportElement x="65" y="13" width="424" height="35"/>
+				<reportElement x="31" y="13" width="458" height="35"/>
 				<textElement textAlignment="Center">
 					<font size="26" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Classic template]]></text>
+				<text><![CDATA[Alumnos de Grupo de Laboratorio]]></text>
 			</staticText>
 		</band>
 	</title>

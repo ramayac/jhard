@@ -31,6 +31,7 @@ import edu.ues.jhard.jpa.Usuario;
 import edu.ues.jhard.jpa.Bitacoraestados;
 import edu.ues.jhard.jpa.Estadoequipo;
 import edu.ues.jhard.jpa.Existencia;
+import edu.ues.jhard.util.Utilidades;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -523,7 +524,7 @@ private String estadoActualBit;
             if(cont==0){
                 //Usuario u = new BeanBaseJHardmin().getUsuario(solicitudes[i].getIdusuario().getIdusuario());
                 if(solicitudes[i].getIdequiposimple()==null)
-                    label1 = solicitudes[i].getIdequipoexistente().getCodigo()+" - "+solicitudes[i].getDescripcion();
+                    label1 = solicitudes[i].getIdequipoexistente().getIdhardware().getNombre()+ " " + solicitudes[i].getIdequipoexistente().getCodigo()+" - "+solicitudes[i].getDescripcion();
                 else
                     label1 = solicitudes[i].getIdequiposimple().getDescripcion()+" - "+solicitudes[i].getDescripcion();
                 getSoc().add(new SelectItem(solicitudes[i].getIdsolicitud(), label1));
@@ -550,7 +551,7 @@ private String estadoActualBit;
             if(mantenimientos[i].getIdequiposimple()==null){
                 Existencia ex = instance.getEntityManager().find(Existencia.class, mantenimientos[i].getIdequipoexistente().getIdexistencia());
 
-                label2 = ex.getCodigo() +" - "+ mantenimientos[i].getDescripcion();
+                label2 = ex.getIdhardware().getNombre()+" "+ ex.getCodigo() +" - "+ mantenimientos[i].getDescripcion();
             } else{
                 Equiposimple eq = instance.getEquipoSimpleByID(mantenimientos[i].getIdequiposimple().getIdEquipoSimple());
 
@@ -600,7 +601,7 @@ private List eeq = new ArrayList();
 //        this.comboEstado.getChildren().add(itemsEstad);
     }
 
-    private void llenarComboEqExBitacora(int opcion){
+    private void llenarComboEqExBitacora(){
         this.getEqs().clear();
         
         //SELECTINPUT DE EQUIPOS SIMPLES O EXISTENCIAS
@@ -667,7 +668,7 @@ private List eeq = new ArrayList();
             this.checkEq.setSelected(false);
             this.txtEqSimples.setValue("");
             this.bit.clear();
-            llenarComboEqExBitacora(2);
+            llenarComboEqExBitacora();
         }
 
     }
@@ -676,7 +677,7 @@ private List eeq = new ArrayList();
             this.checkEx.setSelected(false);
             this.txtEqSimples.setValue("");
             this.bit.clear();
-            llenarComboEqExBitacora(1);
+            llenarComboEqExBitacora();
         }
     }
 
@@ -1089,7 +1090,7 @@ private List bit= new ArrayList();
         //LISTA DE BITACORAS
         Bitacoraestados [] bitacoras = new edu.ues.jhard.beans.BeanBaseJRequest().getBitacoraEstadosByIdEquipoSimple(e);
         for(int i=0;i<bitacoras.length;i++){
-            String label = bitacoras[i].getDescripcion()  +" - "+ bitacoras[i].getFecha().toString();
+            String label = bitacoras[i].getDescripcion()  +" - "+ Utilidades.FormatearFecha(bitacoras[i].getFecha());
             getBit().add(new SelectItem(bitacoras[i].getIdbitacora(), label));
         }
     }
@@ -1098,7 +1099,7 @@ private List bit= new ArrayList();
         //LISTA DE BITACORAS
         Bitacoraestados [] bitacoras = new edu.ues.jhard.beans.BeanBaseJRequest().getBitacoraEstadosByIdExistencia(e);
         for(int i=0;i<bitacoras.length;i++){
-            String label = bitacoras[i].getDescripcion()  +" - "+ bitacoras[i].getFecha().toString();
+            String label = bitacoras[i].getDescripcion()  +" - "+ Utilidades.FormatearFecha(bitacoras[i].getFecha());
             getBit().add(new SelectItem(bitacoras[i].getIdbitacora(), label));
         }
     }

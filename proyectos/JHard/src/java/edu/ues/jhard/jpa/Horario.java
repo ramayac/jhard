@@ -197,11 +197,13 @@ public class Horario implements Serializable {
 
     public String getstart(){
 
-        return String.valueOf(this.horainicio.getHours())+":"+String.valueOf(this.horainicio.getMinutes());
+        return Utilidades.FormateaHora(this.horainicio);
+        //return String.valueOf(this.horainicio.getHours())+":"+String.valueOf(this.horainicio.getMinutes());
     }
 
     public String getend(){
 
-        return String.valueOf(this.horafin.getHours())+":"+String.valueOf(this.horafin.getMinutes());
+        return Utilidades.FormateaHora(this.horafin);
+        //return String.valueOf(this.horafin.getHours())+":"+String.valueOf(this.horafin.getMinutes());
     }
 }
