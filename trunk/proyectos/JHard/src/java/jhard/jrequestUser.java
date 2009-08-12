@@ -21,6 +21,7 @@ import edu.ues.jhard.beans.BeanBaseJWiki;
 import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jpa.Usuario;
 import edu.ues.jhard.jwiki.JreqArticulo;
+import edu.ues.jhard.util.Navegacion;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -324,6 +325,9 @@ public class jrequestUser extends AbstractPageBean {
         String idArt = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idarticulo");
         dirWiki+=idArt;
         System.out.println(dirWiki);
+        Navegacion n;
+        n = (Navegacion)getBean("Navegacion");
+        n.setModuloActual("JWiki");
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect(dirWiki);
         } catch (IOException ex) {

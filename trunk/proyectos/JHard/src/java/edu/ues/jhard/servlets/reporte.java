@@ -40,6 +40,16 @@ public class reporte extends HttpServlet {
 
     public static final String IDCARRERA = "idcarrera";
 
+    public static final int ID_EQSIMPLE = 2;
+    public static final String RUTA_EQSIMPLE = "bitacoraEqSimple.jrxml";
+
+    public static final String IDEQSIMPLE = "ideqsimple";
+
+    public static final int ID_EXISTENCIA = 3;
+    public static final String RUTA_EXISTENCIA = "bitacorasExistencia.jrxml";
+
+    public static final String IDEXISTENCIA = "idexistencia";
+
     public static final String RUTA_REPORTES = "/reportes/";
     public static final String PARAM_VAR = "rpid";
     
@@ -86,10 +96,11 @@ public class reporte extends HttpServlet {
         String nombreReporte = EMPTY_STRING;
 
         try {
+            System.out.println("Empieza...");
             //Obtenemos el parametro que idenficia al reporte "rpid=1"
             String parametro = request.getParameter(PARAM_VAR); //identificador del archivoReporte
             if (rpid != null) rpid = Integer.parseInt(parametro);
-
+            System.out.println("EL REPORTE CON CODIGO " + rpid);
             //AQUI SE SELECCIONA LA MAGIA
             switch (rpid) {
                 case ID_LABSBYCARRERA: //1
@@ -102,19 +113,49 @@ public class reporte extends HttpServlet {
                     //Asignamos el nombre al PDF
                     nombreReporte = "LaboratoriosPorCarrera";
                     break;
-               //TODO: agregar los otros reportes
+               case ID_EQSIMPLE: //2
+                    //Obtenemos los parametros necesarios para este reporte
+
+                    //Integer ideqsimple = Integer.parseInt(request.getParameter(IDEQSIMPLE));
+
+                   //Asignamos los parametros al mapa
+                    parametros.put(IDEQSIMPLE, 2);
+                    //Generamos la ruta real del archivo jrxml
+                    rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_EQSIMPLE);
+                    //Asignamos el nombre al PDF
+                    nombreReporte = "BitacoraEqSimple";
+
+                    break;
+               case ID_EXISTENCIA: //3
+                    //Obtenemos los parametros necesarios para este reporte
+                    
+                   //Integer idexistencia = Integer.parseInt(request.getParameter(IDEXISTENCIA));
+
+                   //Asignamos los parametros al mapa
+                    parametros.put(IDEXISTENCIA, 3);
+                    //Generamos la ruta real del archivo jrxml
+                    rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_EXISTENCIA);
+                    //Asignamos el nombre al PDF
+                    nombreReporte = "BitacoraExistencia";
+                    break;
+
+                //TODO: agregar los otros reportes
                 default:
                     throw new Exception("(reporte Servlet): No coincide el parametro con las opciones existentes.");
             }
-
             //creamos el handler para el archivo
             archivoReporte = new File(rutareal);
+            System.out.println(archivoReporte);
+            System.out.println("LA RUTA-->"+rutareal);
+            System.out.println("A generar reporte");
             //Generamos el reporte :) //AQUI OCURRE LA MAGIA
             generarReporte(request, response, archivoReporte, parametros, nombreReporte);
+            System.out.println("Reporte generado!");
 
         } catch (Exception e) {
             System.out.println("(reporte Servlet): Ocurrio un error inesperado.");
-            System.out.println(e.getMessage());
+            e.printStackTrace();
+            //System.out.println();
         }
     }
 
@@ -132,26 +173,33 @@ public class reporte extends HttpServlet {
         try {
             ServletOutputStream outputstream = null;
             outputstream = response.getOutputStream();
-
+            System.out.println("iniciando...");
             response.setContentType(PDF_TYPE);
             response.setHeader("Content-disposition", "filename=" + nombreReporte + ".pdf");
             response.setHeader("Cache-Control", "no-cache");
 
             synchronized (reporte.class) { //just in case...
+                System.out.println("cargo el file reporte");
                 JasperDesign jasperDesign = JRXmlLoader.load(reporte);
+                System.out.println("compilo el reporte");
                 JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-
+                System.out.println("hago el print");
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, this.conexionJdbc);
-
+                System.out.println("hago el exporter");
                 JRPdfExporter exporter = new JRPdfExporter();
+                System.out.println("coloco parametros");
                 exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                System.out.println("coloco parametros");
                 exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, outputstream);
+                System.out.println("exporto");
                 exporter.exportReport();
+                System.out.println("it's done!");
             }
 
         } catch (JRException jre) {
             System.out.println("(reporte Servlet): Ocurrio un error al intentar generar el reporte.");
             System.out.println(jre.getMessage());
+            jre.printStackTrace();
         } finally {
             //...
         }
