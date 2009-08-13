@@ -329,6 +329,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
         //this.nuevoCurso.setIddocente(selectedDocente);
         //this.nuevoCurso.setIdinstructor(selectedInstructor);
         this.nuevoCurso.setIdmateria(selectedMateria);
+        this.nuevoCurso.setAnio(Utilidades.EsteAnyo());
 
         String strCiclo = new String();
         switch(this.nuevoCurso.getCiclo()){
@@ -340,32 +341,36 @@ public class jmlCrudAdmin extends BeanBaseJHard {
                 break;
         }
 
+        System.out.println(strCiclo+" - "+this.nuevoCurso.getAnio());
         Cicloanyo cay = this.getJManLabInstance().searchCicloAnyoByDesc(strCiclo+" - "+this.nuevoCurso.getAnio());
+        System.out.println(cay.getDescripcion());
+        
         this.nuevoCurso.setIdcicloanio(cay); //SHIIIIT! ;(
         this.nuevoCurso.setAnio(Utilidades.EsteAnyo());
+        this.nuevoCurso.setIddocente(selectedDocente);
 
         if(id>0){
-            if (this.getJManLabInstance().updateCarrera(this.nuevaCarrera)) {
-                this.popup.setMensaje("Carrera modificada con éxito.");
+            if (this.getJManLabInstance().updateCurso(this.nuevoCurso)) {
+                this.popup.setMensaje("Curso modificado con éxito.");
                 this.popup.setVisible(true);
-                this.listaCarrera.clear();
-                this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+                this.listaCurso.clear();
+                this.listaCurso = this.getJManLabInstance().getAllCursos();
             } else {
-                this.popup.setMensaje("Ocurrió un error al intentar modificar la carrera.");
+                this.popup.setMensaje("Ocurrió un error al intentar modificar el curso");
                 this.popup.setVisible(true);
             }
         } else {
-            if (this.getJManLabInstance().createCarrera(this.nuevaCarrera)) {
-                this.popup.setMensaje("Carrera agregada con éxito.");
+            if (this.getJManLabInstance().createCurso(this.nuevoCurso)) {
+                this.popup.setMensaje("Curso agregado con éxito.");
                 this.popup.setVisible(true);
-                this.listaCarrera.clear();
-                this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+                this.listaCurso.clear();
+                this.listaCurso = this.getJManLabInstance().getAllCursos();
             } else {
-                this.popup.setMensaje("Ocurrió un error al intentar agregar la carrera.");
+                this.popup.setMensaje("Ocurrió un error al intentar agregar el curso.");
                 this.popup.setVisible(true);
             }
         }
-        this.nuevaCarrera = new Carrera();
+        this.nuevoCurso = new Curso();
         return EMPTY_STRING;
     }
 
@@ -540,6 +545,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
         this.listaMateria = this.getJManLabInstance().getAllMaterias();
         this.listaCurso = this.getJManLabInstance().getAllCursos();
         this.listaFacultad = this.getJManLabInstance().getAllFacultades();
+        this.listaDocente = this.getJManLabInstance().getAllDocentes();
         //if(this.listaCarrera.size()>0) this.articuloActual = this.listaArticulos.get(0);
     }
 

@@ -1126,13 +1126,18 @@ public class BeanBaseJManLab extends BeanBase {
      * Metodo para actualizar un objeto Curso
      * @param Curso
      */
-    public void updateCurso(Curso curso) {
-        EntityManager em = this.getEntityManager();
-        Curso c = em.find(Curso.class, curso.getIdcurso());
-        c = curso;
-        em.getTransaction().begin();
-        em.merge(c);
-        em.getTransaction().commit();
+    public boolean updateCurso(Curso curso) {
+        try{
+            EntityManager em = this.getEntityManager();
+            Curso c = em.find(Curso.class, curso.getIdcurso());
+            c = curso;
+            em.getTransaction().begin();
+            em.merge(c);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
