@@ -209,13 +209,13 @@
                                                     <f:selectItem itemLabel="Habilitar" itemValue="false"/>
                                                     <f:selectItem itemLabel="Deshabilitar" itemValue="true"/>
                                                 </ice:selectOneRadio><br/>
-                                                Docentes:<ice:selectOneMenu id="idSelDoc" partialSubmit="true" valueChangeListener="#{jmlCrudAdmin.selDocente}">
+                                                Docentes:<ice:selectOneMenu id="idSelDoc" partialSubmit="true" value="#{jmlCrudAdmin.docenteSelStr}" valueChangeListener="#{jmlCrudAdmin.selDocente}">
                                                     <f:selectItems id="docSel" value="#{jmlCrudAdmin.listaDocenteSel}"/>
                                                 </ice:selectOneMenu><br/>
-                                                Instructor:<ice:selectOneMenu id="idSelInst" partialSubmit="true" valueChangeListener="#{jmlCrudAdmin.selInstructor}">
+                                                Instructor:<ice:selectOneMenu id="idSelInst" partialSubmit="true" value="#{jmlCrudAdmin.instructorSelStr}" valueChangeListener="#{jmlCrudAdmin.selInstructor}">
                                                     <f:selectItems id="instSel" value="#{jmlCrudAdmin.listaInstructorSel}"/>
                                                 </ice:selectOneMenu><br/>
-                                                Materia:<ice:selectOneMenu id="idSelMat" partialSubmit="true" valueChangeListener="#{jmlCrudAdmin.selMateria}">
+                                                Materia:<ice:selectOneMenu id="idSelMat" partialSubmit="true" value="#{jmlCrudAdmin.materiaSelStr}" valueChangeListener="#{jmlCrudAdmin.selMateria}">
                                                     <f:selectItems id="matSel" value="#{jmlCrudAdmin.listaMateriaSel}"/>
                                                 </ice:selectOneMenu><br/>
                                                 <br/><ice:commandButton action="#{jmlCrudAdmin.btnCurso_action}" value="Guardar"/><ice:commandButton action="#{jmlCrudAdmin.btnCursoClean_action}" value="Limpiar"/>

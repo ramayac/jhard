@@ -64,7 +64,34 @@ public class jmlCrudAdmin extends BeanBaseJHard {
     private Instructor selectedInstructor = new Instructor();
     private List<SelectItem> listaInstructorSel = new ArrayList<SelectItem>();
 
-    String carreraSelStr = EMPTY_STRING;
+    private String carreraSelStr = EMPTY_STRING;
+    private String materiaSelStr = EMPTY_STRING;
+    private String docenteSelStr = EMPTY_STRING;
+    private String instructorSelStr = EMPTY_STRING;
+
+    public String getDocenteSelStr() {
+        return docenteSelStr;
+    }
+
+    public void setDocenteSelStr(String docenteSelStr) {
+        this.docenteSelStr = docenteSelStr;
+    }
+
+    public String getInstructorSelStr() {
+        return instructorSelStr;
+    }
+
+    public void setInstructorSelStr(String instructorSelStr) {
+        this.instructorSelStr = instructorSelStr;
+    }
+
+    public String getMateriaSelStr() {
+        return materiaSelStr;
+    }
+
+    public void setMateriaSelStr(String materiaSelStr) {
+        this.materiaSelStr = materiaSelStr;
+    }
 
     public String getCarreraSelStr() {
         return carreraSelStr;
@@ -148,7 +175,8 @@ public class jmlCrudAdmin extends BeanBaseJHard {
     public void selInstructor(ValueChangeEvent event) {
         //System.out.println("se ejecuto valueChange >>>>>>"+event.getNewValue().toString());
         Integer id = Integer.parseInt(event.getNewValue().toString());
-        this.selectedInstructor = this.getJManLabInstance().getInstructor(id);
+        if (id<0) this.selectedInstructor = new Instructor();
+        else this.selectedInstructor = this.getJManLabInstance().getInstructor(id);
         //this.mySelCarreraItem = new SelectItem(this.selectedCarrera.getIdcarrera(), this.selectedCarrera.getCodigo()+"-"+this.selectedCarrera.getNombre());
     }
 
@@ -184,6 +212,8 @@ public class jmlCrudAdmin extends BeanBaseJHard {
 
     public List<SelectItem> getListaInstructorSel() {
         listaInstructorSel.clear();
+        //como el instructor puede ser NULL, hay que tener una consideracion extra...
+        listaInstructorSel.add(new SelectItem(-1, "Sin Instructor."));
         for (Instructor i : listaInstructor) {
             listaInstructorSel.add(new SelectItem(i.getIdusuario(), i.getApellidos()+", "+i.getNombres()));
         }
@@ -311,6 +341,17 @@ public class jmlCrudAdmin extends BeanBaseJHard {
        String idS = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idCurso");
        Integer id = new Integer(idS);
        this.nuevoCurso = this.getJManLabInstance().getCurso(id.intValue());
+       Docente doc = this.nuevoCurso.getIddocente();
+       Materia mat = this.nuevoCurso.getIdmateria();
+
+       this.setDocenteSelStr(doc.getIddocente().toString());
+       this.setMateriaSelStr(mat.getIdmateria().toString());
+
+       Instructor inst = this.nuevoCurso.getIdinstructor();
+       if(inst == null || inst == new Instructor()){
+           this.setInstructorSelStr("-1");
+       } else this.setInstructorSelStr(inst.getIdinstructor().toString());
+       
        return EMPTY_STRING;
     }
 
@@ -335,9 +376,10 @@ public class jmlCrudAdmin extends BeanBaseJHard {
         Integer id = this.nuevoCurso.getIdcurso();
         if(id==null) id = 0;
 
-        //TODO: Validaciones aqui... REM que docente e instructor pueden ir null
-        //this.nuevoCurso.setIddocente(selectedDocente);
-        //this.nuevoCurso.setIdinstructor(selectedInstructor);
+        //TODO: Validaciones aqui... REM que instructor pueden ir null
+        this.nuevoCurso.setIdinstructor(selectedInstructor);
+
+        this.nuevoCurso.setIddocente(selectedDocente);
         this.nuevoCurso.setIdmateria(selectedMateria);
         this.nuevoCurso.setAnio(Utilidades.EsteAnyo());
 
@@ -497,7 +539,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
        Integer id = new Integer(idS);
        this.nuevaMateria = this.getJManLabInstance().getMateria(id.intValue());
        Carrera carr = this.nuevaMateria.getIdcarrera();
-       //THAKS ROBERTUX
+       //THANKS ROBERTUX
        this.setCarreraSelStr(carr.getIdcarrera().toString());
 
        System.out.println(carr.getCodigo()+"-"+carr.getNombre());
