@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listadoAccesorios" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<queryString language="SQL">
+	<queryString>
 		<![CDATA[SELECT
      marca.`nombre` AS marca_nombre,
      accesorio.`nombre` AS accesorio_nombre,
@@ -8,7 +8,7 @@
 FROM
      `marca` marca INNER JOIN `accesorio` accesorio ON marca.`idmarca` = accesorio.`idmarca`
 WHERE
-     accesorio.`idexistencia` = null]]>
+     accesorio.`idexistencia` IS null]]>
 	</queryString>
 	<field name="marca_nombre" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>

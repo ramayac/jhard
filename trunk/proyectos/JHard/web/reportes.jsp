@@ -80,7 +80,22 @@
                                             <ice:outputText id="titReservaEquipo" value="Reservas de Equipo Multimedia"/>
                                         </ice:panelGroup>
                                     </f:facet>
-                                    <ice:panelGroup id="panelReservaEquipo" style=""/>
+                                    <ice:panelGroup id="panelReservaEquipo" style="">
+                                        <ice:outputLabel id="fechaInicial" value="Fecha Inicial"/>
+                                        <br/>
+                                        <ice:selectInputDate binding="#{reportes.selectFechaInicial}" id="selectFechaInicial"
+                                            style="height:212px; width: 190px" value="#{reportes.selectInputDate1Bean.date1}"/>
+                                        <br/>
+                                        <br/>
+                                        <ice:outputLabel id="fechaFinal" value="Fecha Final"/>
+                                        <br/>
+                                        <ice:selectInputDate binding="#{reportes.selectFechaFinal}" id="selectFechaFinal"
+                                            style="height: 212px; width: 190px" value="#{reportes.selectInputDate2Bean.date1}"/>
+                                        <br/>
+                                        <br/>
+                                        <ice:commandButton action="#{reportes.btnReportReserva_action}" binding="#{reportes.btnReportReserva}"
+                                            id="btnReportReserva" styleClass="btnAccion2" value="Generar Reporte"/>
+                                    </ice:panelGroup>
                                 </ice:panelCollapsible>
                                 <ice:panelCollapsible expanded="false" id="gruposLab" style="width: 600px">
                                     <f:facet name="header">
