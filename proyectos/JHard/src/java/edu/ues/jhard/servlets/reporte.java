@@ -7,6 +7,7 @@ package edu.ues.jhard.servlets;
 import com.mysql.jdbc.Connection;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.EntityManager;
@@ -19,13 +20,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JRHtmlExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import oracle.toplink.essentials.sessions.DatabaseLogin;
 
@@ -36,19 +40,25 @@ import oracle.toplink.essentials.sessions.DatabaseLogin;
 public class reporte extends HttpServlet {
 
     public static final int ID_LABSBYCARRERA = 1;
-    public static final String RUTA_LABSBYCARRERA = "labsByCarrera.jrxml";
+    public static final String RUTA_LABSBYCARRERA = "labsByCarrera.jasper";
 
     public static final String IDCARRERA = "idcarrera";
 
     public static final int ID_EQSIMPLE = 2;
-    public static final String RUTA_EQSIMPLE = "bitacoraEqSimple.jrxml";
+    public static final String RUTA_EQSIMPLE = "bitacoraEqSimple.jasper";
 
     public static final String IDEQSIMPLE = "ideqsimple";
 
     public static final int ID_EXISTENCIA = 3;
-    public static final String RUTA_EXISTENCIA = "bitacorasExistencia.jrxml";
+    public static final String RUTA_EXISTENCIA = "bitacorasExistencia.jasper";
 
     public static final String IDEXISTENCIA = "idexistencia";
+
+    public static final int ID_RESERVAFECHA = 4;
+    public static final String RUTA_RESERVAFECHA = "reservasByFechas.jasper";
+
+    public static final String IDRESERVAFECHAINICIAL = "fechaInicial";
+    public static final String IDRESERVAFECHAFINAL = "fechaFinal";
 
     public static final String RUTA_REPORTES = "/reportes/";
     public static final String PARAM_VAR = "rpid";
@@ -89,7 +99,6 @@ public class reporte extends HttpServlet {
 
         //AQUI EMPIEZA LA MAGIA
         Integer rpid = NONE;
-        File archivoReporte = null;
         ServletContext contexto = request.getSession().getServletContext();
         Map parametros = new HashMap(); //mapa con los parametros para el reporte
         String rutareal = EMPTY_STRING;
@@ -109,32 +118,57 @@ public class reporte extends HttpServlet {
                     //Asignamos los parametros al mapa
                     parametros.put(IDCARRERA, idcarrera);
                     //Generamos la ruta real del archivo jrxml
-                    rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_LABSBYCARRERA);
+                    //rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_LABSBYCARRERA);
+                    rutareal = RUTA_REPORTES + RUTA_LABSBYCARRERA;
                     //Asignamos el nombre al PDF
                     nombreReporte = "LaboratoriosPorCarrera";
                     break;
                case ID_EQSIMPLE: //2
                     //Obtenemos los parametros necesarios para este reporte
 
-                    //Integer ideqsimple = Integer.parseInt(request.getParameter(IDEQSIMPLE));
+                    Integer ideqsimple = Integer.parseInt(request.getParameter(IDEQSIMPLE));
 
                    //Asignamos los parametros al mapa
-                    parametros.put(IDEQSIMPLE, 2);
+                    parametros.put(IDEQSIMPLE, ideqsimple);
                     //Generamos la ruta real del archivo jrxml
-                    rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_EQSIMPLE);
+                    //rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_EQSIMPLE);
+                    rutareal = RUTA_REPORTES + RUTA_EQSIMPLE;
                     //Asignamos el nombre al PDF
-                    nombreReporte = "BitacoraEqSimple";
+                    nombreReporte = "bitacoraEqSimple.jasper";
 
                     break;
                case ID_EXISTENCIA: //3
                     //Obtenemos los parametros necesarios para este reporte
                     
-                   //Integer idexistencia = Integer.parseInt(request.getParameter(IDEXISTENCIA));
+                   Integer idexistencia = Integer.parseInt(request.getParameter(IDEXISTENCIA));
 
                    //Asignamos los parametros al mapa
-                    parametros.put(IDEXISTENCIA, 3);
+                    parametros.put(IDEXISTENCIA, idexistencia);
                     //Generamos la ruta real del archivo jrxml
-                    rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_EXISTENCIA);
+                    //rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_EXISTENCIA);
+                    rutareal = RUTA_REPORTES + RUTA_EXISTENCIA;
+                    //Asignamos el nombre al PDF
+                    nombreReporte = "bitacorasExistencia.jasper";
+                    break;
+               case ID_RESERVAFECHA: //4
+                    //Obtenemos los parametros necesarios para este reporte
+
+                    Integer diaI = Integer.parseInt(request.getParameter("diaI"));
+                    Integer mesI = Integer.parseInt(request.getParameter("mesI"));
+                    Integer anioI = Integer.parseInt(request.getParameter("anioI"));
+                    Integer diaF = Integer.parseInt(request.getParameter("diaF"));
+                    Integer mesF = Integer.parseInt(request.getParameter("mesF"));
+                    Integer anioF = Integer.parseInt(request.getParameter("anioF"));
+
+                    Date INICIAL = new Date(diaI, mesI, anioI);
+                    Date FINAL = new Date(diaF, mesF, anioF);
+
+                    //Asignamos los parametros al mapa
+                    parametros.put(IDRESERVAFECHAINICIAL, INICIAL);
+                    parametros.put(IDRESERVAFECHAFINAL, FINAL);
+                    //Generamos la ruta real del archivo jrxml
+                    //rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_RESERVAFECHA);
+                    rutareal = RUTA_REPORTES + RUTA_RESERVAFECHA;
                     //Asignamos el nombre al PDF
                     nombreReporte = "BitacoraExistencia";
                     break;
@@ -144,12 +178,14 @@ public class reporte extends HttpServlet {
                     throw new Exception("(reporte Servlet): No coincide el parametro con las opciones existentes.");
             }
             //creamos el handler para el archivo
-            archivoReporte = new File(rutareal);
-            System.out.println(archivoReporte);
+           // File archivoReporte = new File(rutareal);
+
+
             System.out.println("LA RUTA-->"+rutareal);
+
             System.out.println("A generar reporte");
             //Generamos el reporte :) //AQUI OCURRE LA MAGIA
-            generarReporte(request, response, archivoReporte, parametros, nombreReporte);
+            generarReporte(request, response, rutareal, parametros, nombreReporte);
             System.out.println("Reporte generado!");
 
         } catch (Exception e) {
@@ -168,42 +204,61 @@ public class reporte extends HttpServlet {
      * @throws javax.servlet.ServletException
      * @throws java.io.IOException
      */
-    protected void generarReporte(HttpServletRequest request, HttpServletResponse response, File reporte, Map parametros, String nombreReporte)
+    protected void generarReporte(HttpServletRequest request, HttpServletResponse response, String reporte, Map parametros, String nombreReporte)
             throws ServletException, IOException {
         try {
-            ServletOutputStream outputstream = null;
-            outputstream = response.getOutputStream();
-            System.out.println("iniciando...");
-            response.setContentType(PDF_TYPE);
+//            ServletOutputStream outputstream = null;
+//            outputstream = response.getOutputStream();
+
+            response.setContentType("text/html; charset=iso-8859-1");
             response.setHeader("Content-disposition", "filename=" + nombreReporte + ".pdf");
             response.setHeader("Cache-Control", "no-cache");
 
-            synchronized (reporte.class) { //just in case...
-                System.out.println("cargo el file reporte");
-                JasperDesign jasperDesign = JRXmlLoader.load(reporte);
-                System.out.println("compilo el reporte");
-                JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-                System.out.println("hago el print");
-                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, this.conexionJdbc);
-                System.out.println("hago el exporter");
+                //JasperDesign jasperDesign = JRXmlLoader.load(reporte);
+                //JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+
+                System.out.println("AQUI CREO EL REPORTE");
+                JasperReport report = (JasperReport) JRLoader.loadObject(getServletContext().getRealPath(reporte));
+                System.out.println("HAGO LA IMPRESION");
+                JasperPrint jasperPrint = JasperFillManager.fillReport(report, parametros, this.conexionJdbc);
+
+                System.out.println("HAGO EL EXPORTADOR");
+
+                net.sf.jasperreports.view.JasperViewer jv = new net.sf.jasperreports.view.JasperViewer(jasperPrint, false);
+                jv.setVisible(true);
+
+//                JRExporter exporter = null;
+//
+//                exporter = new JRPdfExporter();
+//                System.out.println("PARAMETRO");
+//                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+//                System.out.println("PARAMETRO");
+//                exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getWriter());
+//                System.out.println("EXPORTO...");
+//                exporter.exportReport();
+
+//                JRHtmlExporter exporter = new JRHtmlExporter();
+//                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+//
+//                exporter.setParameter(JRExporterParameter.OUTPUT_WRITER, response.getWriter());
+//
+//        		exporter.exportReport();
+
+		/*
                 JRPdfExporter exporter = new JRPdfExporter();
-                System.out.println("coloco parametros");
                 exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-                System.out.println("coloco parametros");
                 exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, outputstream);
-                System.out.println("exporto");
-                exporter.exportReport();
-                System.out.println("it's done!");
-            }
+                exporter.exportReport();*/
+
 
         } catch (JRException jre) {
             System.out.println("(reporte Servlet): Ocurrio un error al intentar generar el reporte.");
-            System.out.println(jre.getMessage());
             jre.printStackTrace();
         } finally {
             //...
         }
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

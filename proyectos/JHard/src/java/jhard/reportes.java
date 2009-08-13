@@ -9,6 +9,8 @@ package jhard;
 import com.icesoft.faces.component.ext.HtmlCommandButton;
 import com.icesoft.faces.component.ext.HtmlSelectBooleanCheckbox;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
+import com.icesoft.faces.component.jsfcl.data.SelectInputDateBean;
+import com.icesoft.faces.component.selectinputdate.SelectInputDate;
 import com.icesoft.faces.component.selectinputtext.SelectInputText;
 import com.icesoft.faces.context.effects.JavascriptContext;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
@@ -17,6 +19,7 @@ import edu.ues.jhard.jpa.Equiposimple;
 import edu.ues.jhard.jpa.Existencia;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
@@ -104,6 +107,51 @@ public class reportes extends AbstractPageBean {
     private List<Existencia> listaTodasExistencias;
     private Equiposimple EquipoElegido;
     private Existencia ExistenciaElegida;
+    private SelectInputDateBean selectInputDate1Bean = new SelectInputDateBean();
+
+    public SelectInputDateBean getSelectInputDate1Bean() {
+        return selectInputDate1Bean;
+    }
+
+    public void setSelectInputDate1Bean(SelectInputDateBean sidb) {
+        this.selectInputDate1Bean = sidb;
+    }
+    private SelectInputDateBean selectInputDate2Bean = new SelectInputDateBean();
+
+    public SelectInputDateBean getSelectInputDate2Bean() {
+        return selectInputDate2Bean;
+    }
+
+    public void setSelectInputDate2Bean(SelectInputDateBean sidb) {
+        this.selectInputDate2Bean = sidb;
+    }
+    private HtmlCommandButton btnReportReserva = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnReportReserva() {
+        return btnReportReserva;
+    }
+
+    public void setBtnReportReserva(HtmlCommandButton hcb) {
+        this.btnReportReserva = hcb;
+    }
+    private SelectInputDate selectFechaInicial = new SelectInputDate();
+
+    public SelectInputDate getSelectFechaInicial() {
+        return selectFechaInicial;
+    }
+
+    public void setSelectFechaInicial(SelectInputDate sid) {
+        this.selectFechaInicial = sid;
+    }
+    private SelectInputDate selectFechaFinal = new SelectInputDate();
+
+    public SelectInputDate getSelectFechaFinal() {
+        return selectFechaFinal;
+    }
+
+    public void setSelectFechaFinal(SelectInputDate sid) {
+        this.selectFechaFinal = sid;
+    }
 
 
     /**
@@ -320,6 +368,16 @@ public class reportes extends AbstractPageBean {
         if(this.checkEX.isSelected())
             this.checkEQ.setSelected(false);
         this.txtBit.setValue("");
+    }
+
+    public String btnReportReserva_action() {
+
+        Date fechaI = (Date)this.selectFechaInicial.getValue();
+        Date fechaF = (Date)this.selectFechaFinal.getValue();
+
+        JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=4&diaI="+fechaI.getDate()+"&mesI="+(fechaI.getMonth()+1)+"&anioI="+(fechaI.getYear()+1900)+"&diaF="+fechaF.getDate()+"&mesF="+(fechaF.getMonth()+1)+"&anioF="+(fechaI.getYear()+1900)+" \",\"Reporte\");");
+
+        return null;
     }
 
 
