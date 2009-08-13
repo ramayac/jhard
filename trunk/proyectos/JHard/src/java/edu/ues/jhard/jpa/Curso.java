@@ -86,7 +86,7 @@ public class Curso implements Serializable {
     @ManyToOne
     private Estadocurso idestado;
     @JoinColumn(name = "idinstructor", referencedColumnName = "idinstructor")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Instructor idinstructor;
     @JoinColumn(name = "idmateria", referencedColumnName = "idmateria")
     @ManyToOne
