@@ -374,6 +374,21 @@ public class jmlCrudAdmin extends BeanBaseJHard {
         return EMPTY_STRING;
     }
 
+    public String btnCursoClean_action() {
+        this.nuevoCurso = new Curso();
+        return EMPTY_STRING;
+    }
+
+    public String btnMateriaClean_action() {
+        this.nuevaMateria = new Materia();
+        return EMPTY_STRING;
+    }
+
+    public String btnCarreraClean_action() {
+        this.nuevaCarrera = new Carrera();
+        return EMPTY_STRING;
+    }
+
     public String btnOK_action() {
         this.popup.setVisible(false);
         return EMPTY_STRING;

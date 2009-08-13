@@ -75,17 +75,17 @@
                                                     </f:facet>
                                                 </ice:dataPaginator>
                                             </div><br/><br/>
-                                            <ice:panelGroup>
-                                                <div class="post">
-                                                Agregar/Editar Carrera:<br/>
+                                            <ice:panelCollapsible expanded="true">
+                                            <f:facet name="header">Agregar/Editar Carrera</f:facet>
+                                                <ice:panelGroup>
                                                 Código: <ice:inputText id="itCarrCode" title="Código de la carrera"
                                                 value="#{jmlCrudAdmin.nuevaCarrera.codigo}"
                                                 partialSubmit="true"/>
                                                 Nombre: <ice:inputText id="itCarrNombre" title="Nombre de la carrera"
                                                 value="#{jmlCrudAdmin.nuevaCarrera.nombre}"
-                                                partialSubmit="true"/> <ice:commandButton action="#{jmlCrudAdmin.btnCarrera_action}" value="Guardar"/>
-                                                </div>
-                                            </ice:panelGroup>
+                                                partialSubmit="true"/><br/><ice:commandButton action="#{jmlCrudAdmin.btnCarrera_action}" value="Guardar"/><ice:commandButton action="#{jmlCrudAdmin.btnCarreraClean_action}" value="Limpiar"/>
+                                                </ice:panelGroup>
+                                            </ice:panelCollapsible>
                                         </ice:panelGroup>
                                         <!-- FIN panel -->
                                     </ice:panelTab>
@@ -133,9 +133,9 @@
                                                     </f:facet>
                                                 </ice:dataPaginator>
                                             </div><br/><br/>
+                                            <ice:panelCollapsible expanded="true">
+                                            <f:facet name="header">Agregar/Editar Materia</f:facet>
                                             <ice:panelGroup>
-                                                <div class="post">
-                                                Agregar/Editar Materia: <br/>
                                                 Seleccione la carrera a la que pertenece la materia:<br/>
                                                 <ice:selectOneMenu id="idSelCarr" partialSubmit="true"
                                                 valueChangeListener="#{jmlCrudAdmin.selCarrera}">
@@ -145,9 +145,9 @@
                                                 value="#{jmlCrudAdmin.nuevaMateria.codigo}" partialSubmit="true"/>
                                                 Nombre: <ice:inputText id="itMatNombre" title="Nombre de la asignatura"
                                                 value="#{jmlCrudAdmin.nuevaMateria.nombre}" partialSubmit="true"/>
-                                                <br/><ice:commandButton action="#{jmlCrudAdmin.btnMateria_action}" value="Guardar"/>
-                                                </div>
+                                                <br/><ice:commandButton action="#{jmlCrudAdmin.btnMateria_action}" value="Guardar"/><ice:commandButton action="#{jmlCrudAdmin.btnMateriaClean_action}" value="Limpiar"/>
                                             </ice:panelGroup>
+                                            </ice:panelCollapsible>
                                         </ice:panelGroup>
                                         <!-- FIN panel -->
                                     </ice:panelTab>
@@ -191,9 +191,9 @@
                                                     </f:facet>
                                                 </ice:dataPaginator>
                                             </div><br/><br/>
+                                            <ice:panelCollapsible expanded="true">
+                                            <f:facet name="header">Agregar/Editar Curso</f:facet>
                                             <ice:panelGroup>
-                                                <div class="post">
-                                                Agregar/Editar Curso: <br/>
                                                 Nombre: <ice:inputText id="itCursoNombre" title="Nombre del curso" value="#{jmlCrudAdmin.nuevoCurso.nombre}" partialSubmit="true"/>
                                                 Cupo: <ice:inputText id="itCupoMax" title="Cupo máximo" value="#{jmlCrudAdmin.nuevoCurso.cupomax}" partialSubmit="true"/>
                                                 <ice:selectInputDate id="popfecha" renderMonthAsDropdown="true" renderYearAsDropdown="true"
@@ -217,9 +217,9 @@
                                                 Materia:<ice:selectOneMenu id="idSelMat" partialSubmit="true" valueChangeListener="#{jmlCrudAdmin.selMateria}">
                                                     <f:selectItems id="matSel" value="#{jmlCrudAdmin.listaMateriaSel}"/>
                                                 </ice:selectOneMenu><br/>
-                                                <br/><ice:commandButton action="#{jmlCrudAdmin.btnCurso_action}" value="Guardar"/>
-                                                </div>
+                                                <br/><ice:commandButton action="#{jmlCrudAdmin.btnCurso_action}" value="Guardar"/><ice:commandButton action="#{jmlCrudAdmin.btnCursoClean_action}" value="Limpiar"/>
                                             </ice:panelGroup>
+                                            </ice:panelCollapsible>
                                         </ice:panelGroup>
                                         <!-- FIN panel -->
                                     </ice:panelTab>
