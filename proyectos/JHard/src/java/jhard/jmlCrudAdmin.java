@@ -64,6 +64,16 @@ public class jmlCrudAdmin extends BeanBaseJHard {
     private Instructor selectedInstructor = new Instructor();
     private List<SelectItem> listaInstructorSel = new ArrayList<SelectItem>();
 
+    String carreraSelStr = EMPTY_STRING;
+
+    public String getCarreraSelStr() {
+        return carreraSelStr;
+    }
+
+    public void setCarreraSelStr(String carreraSelStr) {
+        this.carreraSelStr = carreraSelStr;
+    }
+
     public List<Docente> getListaDocente() {
         return listaDocente;
     }
@@ -156,7 +166,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
         //this.mySelCarreraItem = new SelectItem(this.selectedCarrera.getIdcarrera(), this.selectedCarrera.getCodigo()+"-"+this.selectedCarrera.getNombre());
     }
 
-    public List getListaCarreraSel() {
+    public List<SelectItem> getListaCarreraSel() {
         listaCarreraSel.clear();
         for (Carrera c : listaCarrera) {
             listaCarreraSel.add(new SelectItem(c.getIdcarrera(), c.getCodigo()+"-"+c.getNombre()));
@@ -487,6 +497,9 @@ public class jmlCrudAdmin extends BeanBaseJHard {
        Integer id = new Integer(idS);
        this.nuevaMateria = this.getJManLabInstance().getMateria(id.intValue());
        Carrera carr = this.nuevaMateria.getIdcarrera();
+       //THAKS ROBERTUX
+       this.setCarreraSelStr(carr.getIdcarrera().toString());
+
        System.out.println(carr.getCodigo()+"-"+carr.getNombre());
        //this.mySelCarreraItem = new SelectItem(carr.getIdcarrera(), carr.getCodigo()+"-"+carr.getNombre());
        return EMPTY_STRING;
@@ -561,6 +574,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
         this.listaCurso = this.getJManLabInstance().getAllCursos();
         this.listaFacultad = this.getJManLabInstance().getAllFacultades();
         this.listaDocente = this.getJManLabInstance().getAllDocentes();
+        this.listaInstructor = this.getJManLabInstance().getAllInstructors();
         //if(this.listaCarrera.size()>0) this.articuloActual = this.listaArticulos.get(0);
     }
 
