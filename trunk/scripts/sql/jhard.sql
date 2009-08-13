@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.0.67-0ubuntu6
+-- Server version	5.1.31-1ubuntu2
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -21,13 +21,13 @@
 CREATE DATABASE IF NOT EXISTS jhard;
 USE jhard;
 CREATE TABLE  `jhard`.`accesorio` (
-  `idaccesorio` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada accesorio',
+  `idaccesorio` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada accesorio',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del accesorio',
   `idmarca` int(11) NOT NULL COMMENT 'Referencia a la marca del accesorio',
   `modelo` varchar(15) NOT NULL COMMENT 'Modelo del accesorio',
   `idclasificacion` int(11) NOT NULL COMMENT 'Referencia a la clasificacion en la que se encuentra este accesorio',
-  `idexistencia` int(11) default NULL,
-  PRIMARY KEY  (`idaccesorio`),
+  `idexistencia` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idaccesorio`),
   KEY `fkidmarca_accesorio` (`idmarca`),
   KEY `fkidclasificacion_accesorio` (`idclasificacion`),
   KEY `fkidexistencia_accesorio` (`idexistencia`),
@@ -39,7 +39,7 @@ CREATE TABLE  `jhard`.`administrador` (
   `idadministrador` int(11) NOT NULL COMMENT 'Id correlativo unico de cada administrador',
   `clave` varchar(45) NOT NULL COMMENT 'Clave del administrador',
   `idusuario` int(11) NOT NULL COMMENT 'referencia al usuario relacionado con este admnistrador',
-  PRIMARY KEY  (`idadministrador`),
+  PRIMARY KEY (`idadministrador`),
   KEY `fkidusuario_administrador` (`idusuario`),
   CONSTRAINT `fkidusuario_administrador` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -47,24 +47,24 @@ INSERT INTO `jhard`.`administrador` VALUES  (1,'21232F297A57A5A743894A0E4A801FC3
  (2,'21232F297A57A5A743894A0E4A801FC3',2),
  (3,'CD82BE786DA71D1DD4EA68C0908AF6E6',9);
 CREATE TABLE  `jhard`.`adquisicion` (
-  `idadquisicion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de la adquisicion',
+  `idadquisicion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de la adquisicion',
   `fecha` date NOT NULL COMMENT 'Fecha en la que se adquirio el equipo o software',
   `precio` double NOT NULL COMMENT 'Precio de compra del equipo o software (dejar a cero si fue una donacion)',
   `descripcion` text COMMENT 'Detalles de la adquisicion',
-  `proveedor` varchar(100) default NULL COMMENT 'Nombre del proveedor o tienda donde se compro el equipo o software (en caso de haber sido comprado)',
-  PRIMARY KEY  (`idadquisicion`)
+  `proveedor` varchar(100) DEFAULT NULL COMMENT 'Nombre del proveedor o tienda donde se compro el equipo o software (en caso de haber sido comprado)',
+  PRIMARY KEY (`idadquisicion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`adquisicion` VALUES  (1,'2002-01-09',200,'Computadora Clon','Medicomp'),
  (2,'2009-03-04',400,'Dell Vostro','Dell'),
  (3,'2002-01-03',50,'Licencia Microsoft Windows','Microsoft'),
  (4,'2002-01-03',200,'Cañon Epson','Tecnoservice');
 CREATE TABLE  `jhard`.`articulos` (
-  `idarticulo` int(10) unsigned NOT NULL auto_increment,
+  `idarticulo` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `titulo` varchar(50) NOT NULL,
   `descripcion` text NOT NULL,
   `fechahora` datetime NOT NULL,
   `idusuario` int(11) NOT NULL,
-  PRIMARY KEY  (`idarticulo`),
+  PRIMARY KEY (`idarticulo`),
   KEY `fk_articulo_usuario` (`idusuario`),
   KEY `idxArtTitulo` (`titulo`),
   KEY `idxArtFecha` (`fechahora`),
@@ -74,11 +74,11 @@ INSERT INTO `jhard`.`articulos` VALUES  (2,'¿Qué es un Wiki?','<p>Un <b>wiki</
  (3,'¿Qué es JHard?','<p>\n<meta content=\"text/html; charset=utf-8\" http-equiv=\"CONTENT-TYPE\">\n<title></title>\n<meta content=\"OpenOffice.org 3.1  (Linux)\" name=\"GENERATOR\"> 	<style type=\"text/css\">\n	<!--\n		@page { margin: 2cm }\n		P { margin-bottom: 0.21cm }\n	-->\n	</style>   </meta>\n</meta>\n</p>\n<p>El sistema <strong>JHard</strong>, es una solucion informatica creada para el Laboratorio de Hardware y Software de la <a href=\"http://www.uesocc.edu.sv\">Universidad de El Salvador - Facultad Multidisciplinaria de Occidente</a>.<br />\n<br />\nEst&aacute; compuesto por seis m&oacute;dulos robustos a los que tienen acceso los usuarios de todo tipo, sin embargo est&aacute; compuesto de otra gran cantidad de subcomponentes que a&ntilde;aden caracter&iacute;sticas adicionales, necesarias para el funcionamiento interno del mismo. A continuaci&oacute;n,&nbsp; se listan los&nbsp; seis m&oacute;dulos principales con los que tendr&aacute; interacci&oacute;n los usuarios finales, y las necesidades que cada uno pretenden solventar:</p>\n<ol>\n    <li>JInvent: Manejo de Inventario del Laboratorio de Hardware (No consumibles)</li>\n    <li>JRequest: Solicitud de servicio al laboratorio.</li>\n    <li>JWiki: Modulo colaborativo de conocimiento, con soluciones a problemas comunes.</li>\n    <li>ProCur: Modulo de Manejo de Contenidos (CMS) para la promoci&oacute;n de cursos del Laboratorio de Hardware</li>\n    <li>ManLab: Modulo de para la gesti&oacute;n de inscripci&oacute;n de laboratorios pr&aacute;cticos en el Laboratorio de Hardware.</li>\n    <li>JCanon: Modulo para la gesti&oacute;n de reserva de ca&ntilde;ones y/o laptops.</li>\n</ol>\n<p>El sistema JHard tendr&aacute; adem&aacute;s, una interfaz administrativa (JHardmin) con la que se podr&aacute; dar mantenimiento al sitio, y administrar los perfiles/roles de los usuarios.</p>\n<p>&nbsp;</p>','2009-07-26 09:18:43',13);
 INSERT INTO `jhard`.`articulos` VALUES  (4,'¿Cómo saco el dispositivo USB del ordenador?','<p>Como para todo hay formas y formas de hacerlo: una correcta con la podremos estar seguros <em>(nunca un 100%)</em> de no perder la informaci&oacute;n almacenada por el camino y la otra <em>&ldquo;resultona&rdquo;</em> <em>(generalmente no suele ocurrir nada, aunque <strong>el riesgo es mucho mayor</strong>)</em> sabemos que est&aacute; mal hecho pero muchas veces por rapidez o por desconocimiento de las dem&aacute;s opciones terminamos echando mano de &eacute;sta.</p>\n<p><strong>M&eacute;todos para extraer correctamente un dispositivo USB</strong></p>\n<ul>\n    <li><strong>Quiz&aacute;s la m&aacute;s r&aacute;pida y la m&aacute;s extendida:</strong> clic izquierdo sobre el icono de extracci&oacute;n segura &gt; seleccionar el dispositivo a extraer y volver a hacer clic.</li>\n</ul>\n<ul>\n    <li><strong>Muy similar a la anterior pero con m&aacute;s opciones:</strong> clic derecho sobre el icono de extracci&oacute;n segura &gt; quitar hardware con seguridad &gt; en el nuevo panel seleccionar el dispositivo a extraer &gt; hacer clic en detener. Observar que marcando la opci&oacute;n <em>mostrar componentes de dispositivos</em> se despliega una lista con el nombre y letra de unidad correspondiente.</li>\n</ul>\n<ul>\n    <li><strong>Forma r&aacute;pida y efectiva:</strong> desde Mi PC &gt; clic derecho sobre el dispositivo a extraer &gt; expulsar.</li>\n</ul>','2009-08-05 14:05:25',13);
 CREATE TABLE  `jhard`.`asistencia` (
-  `idasistencia` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada asistencia',
+  `idasistencia` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada asistencia',
   `idestudiante` int(11) NOT NULL COMMENT 'Referencia al estudiante que asistio al curso',
   `idclase` int(11) NOT NULL COMMENT 'Referencia a la clase a la cual pertenece esta asistencia',
-  `idequipoexistente` int(11) default NULL COMMENT 'Referencia al equipo de hardware que se utilizo en dicha asistencia a la clase',
-  PRIMARY KEY  (`idasistencia`),
+  `idequipoexistente` int(11) DEFAULT NULL COMMENT 'Referencia al equipo de hardware que se utilizo en dicha asistencia a la clase',
+  PRIMARY KEY (`idasistencia`),
   KEY `fkidestudiante_asistencia` (`idestudiante`),
   KEY `fkidclase_asistencia` (`idclase`),
   KEY `fkidequipoexistente_asistencia` (`idequipoexistente`),
@@ -88,14 +88,14 @@ CREATE TABLE  `jhard`.`asistencia` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`asistencia` VALUES  (4,1,3,NULL);
 CREATE TABLE  `jhard`.`atributohardware` (
-  `idatributohardware` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico del atributo de hardware',
+  `idatributohardware` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico del atributo de hardware',
   `nombre` varchar(45) NOT NULL COMMENT 'Nombre del atributo',
   `valor` varchar(45) NOT NULL COMMENT 'Valor del atributo',
   `unidadmedida` varchar(45) NOT NULL COMMENT 'Unidad de medida del atributo',
-  `idhardware` int(11) default NULL COMMENT 'Referencia al elemento de hardware (equipo, pieza o accesorio) al que pertenece el atributo',
-  `idpieza` int(11) default NULL,
-  `idaccesorio` int(11) default NULL,
-  PRIMARY KEY  (`idatributohardware`),
+  `idhardware` int(11) DEFAULT NULL COMMENT 'Referencia al elemento de hardware (equipo, pieza o accesorio) al que pertenece el atributo',
+  `idpieza` int(11) DEFAULT NULL,
+  `idaccesorio` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idatributohardware`),
   KEY `fkidequipo_atributohardware` (`idhardware`),
   KEY `fkidpieza_atributohardware` (`idpieza`),
   KEY `fkidaccesorio_atributohardware` (`idaccesorio`),
@@ -106,28 +106,28 @@ CREATE TABLE  `jhard`.`atributohardware` (
 INSERT INTO `jhard`.`atributohardware` VALUES  (1,'Reservable','1','null',3,NULL,NULL),
  (2,'Reservable','1','null',5,NULL,NULL);
 CREATE TABLE  `jhard`.`autorizacion` (
-  `idautorizacion` int(10) unsigned NOT NULL auto_increment,
-  `codigo` varchar(10) default NULL,
-  `cantmaxima` int(10) unsigned default NULL,
-  PRIMARY KEY  (`idautorizacion`)
+  `idautorizacion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `codigo` varchar(10) DEFAULT NULL,
+  `cantmaxima` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`idautorizacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 CREATE TABLE  `jhard`.`bitacoracambiosusuario` (
-  `idbitacora` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada bitacora',
+  `idbitacora` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada bitacora',
   `idusuario` int(11) NOT NULL COMMENT 'Referencia al usuario que realizo el cambio',
   `descripcion` text NOT NULL COMMENT 'Descripcion del cambio que realizo el usuario',
   `fechahora` datetime NOT NULL COMMENT 'Fecha y hora a la que el usuario realizo el cambio',
-  PRIMARY KEY  (`idbitacora`),
+  PRIMARY KEY (`idbitacora`),
   KEY `fkidusuario_bitacoracambiosusuario` (`idusuario`),
   CONSTRAINT `fkidusuario_bitacoracambiosusuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 CREATE TABLE  `jhard`.`bitacoraestados` (
-  `idbitacora` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada bitacora',
+  `idbitacora` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada bitacora',
   `fecha` date NOT NULL COMMENT 'Fecha en la que ocurrio el cambio de estado',
   `idestado` int(11) NOT NULL COMMENT 'Referencia al estado al cual cambio el equipo',
   `descripcion` text NOT NULL COMMENT 'Descripcion del cambio realizado',
-  `idequipoexistente` int(11) default NULL COMMENT 'Referencia al equipo que sufrio el cambio de estado',
-  `idequiposimple` int(11) default NULL,
-  PRIMARY KEY  (`idbitacora`),
+  `idequipoexistente` int(11) DEFAULT NULL COMMENT 'Referencia al equipo que sufrio el cambio de estado',
+  `idequiposimple` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idbitacora`),
   KEY `fkidestado_bitacoraestados` (`idestado`),
   KEY `fkidequipoexistente_bitacoraestados` (`idequipoexistente`),
   KEY `fkidequiposimple_bitacoraestados` (`idequiposimple`),
@@ -151,34 +151,35 @@ INSERT INTO `jhard`.`bitacoraestados` VALUES  (1,'2009-06-22',2,'Virus',NULL,4),
  (14,'2009-08-02',1,'No estaba conectada.',14,NULL),
  (15,'2009-08-02',1,'No enciende la pantalla',15,NULL);
 CREATE TABLE  `jhard`.`carrera` (
-  `idcarrera` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada carrera',
+  `idcarrera` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada carrera',
   `codigo` varchar(7) NOT NULL COMMENT 'Codigo de la carrera, distintivo en el sistema adacad',
   `nombre` varchar(200) NOT NULL COMMENT 'Nombre de la carrera',
   `idfacultad` int(11) NOT NULL COMMENT 'Referencia a la facultad a la cual pertenece esta carrera',
-  PRIMARY KEY  (`idcarrera`),
+  PRIMARY KEY (`idcarrera`),
   KEY `fkidfacultad_carrera` (`idfacultad`),
   CONSTRAINT `fkidfacultad_carrera` FOREIGN KEY (`idfacultad`) REFERENCES `facultad` (`idfacultad`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-INSERT INTO `jhard`.`carrera` VALUES  (1,'I30515','Ingeniería de Sistemas Informáticos',1);
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+INSERT INTO `jhard`.`carrera` VALUES  (1,'I30515','Ingeniería de Sistemas Informáticos',1),
+ (2,'i99915','Ingenieria en refrigeracion y empuje',1);
 CREATE TABLE  `jhard`.`cicloanyo` (
   `idcicloanyo` int(10) unsigned NOT NULL COMMENT 'Id del ciclo año',
   `descripcion` varchar(10) NOT NULL COMMENT 'Descripcion del ciclo y año ( I - 2009 )',
-  PRIMARY KEY  (`idcicloanyo`)
+  PRIMARY KEY (`idcicloanyo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla con lista de ciclo y año';
 INSERT INTO `jhard`.`cicloanyo` VALUES  (1,'I - 2009'),
  (2,'II - 2009');
 CREATE TABLE  `jhard`.`clase` (
-  `idclase` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada clase',
+  `idclase` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada clase',
   `fecha` date NOT NULL COMMENT 'Fecha en la que se llevo a cabo esta clase',
   `idhorario` int(11) NOT NULL COMMENT 'Referencia al horario en el que se recibio esta clase',
-  `idinstructor` int(11) default NULL COMMENT 'Referencia al instructor encargado de dar esta clase (en caso que haya sido un instructor)',
+  `idinstructor` int(11) DEFAULT NULL COMMENT 'Referencia al instructor encargado de dar esta clase (en caso que haya sido un instructor)',
   `tema` varchar(45) NOT NULL COMMENT 'Tema visto en esta clase',
   `observaciones` text COMMENT 'Observaciones obtenidas segun el resultado general de la clase',
-  `iddocente` int(11) default NULL COMMENT 'Referencia al docente encargado de dar esta clase (en caso que haya sido un docente)',
+  `iddocente` int(11) DEFAULT NULL COMMENT 'Referencia al docente encargado de dar esta clase (en caso que haya sido un docente)',
   `horainicio` time NOT NULL COMMENT 'Hora de inicio de la clase (hora real)',
   `horafin` time NOT NULL COMMENT 'Hora "marcada" como fin de la clase',
   `finalizada` tinyint(1) NOT NULL,
-  PRIMARY KEY  (`idclase`),
+  PRIMARY KEY (`idclase`),
   KEY `fkidhorario_clase` (`idhorario`),
   KEY `fkidinstructor_clase` (`idinstructor`),
   KEY `fkiddocente_clase` (`iddocente`),
@@ -190,11 +191,11 @@ INSERT INTO `jhard`.`clase` VALUES  (1,'2009-03-05',1,2,'Herencia en Java','N/A'
  (2,'2009-08-03',8,NULL,'Java Collections I','',NULL,'11:53:19','15:00:00',1),
  (3,'2009-08-05',8,NULL,'Simple Date Format Java','',NULL,'15:30:41','19:00:00',1);
 CREATE TABLE  `jhard`.`clasificacion` (
-  `idclasificacion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada clasificacion',
+  `idclasificacion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada clasificacion',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre de la clasificacion',
   `descripcion` text COMMENT 'Descripcion de la clasificacion',
-  `idsuperior` int(11) default NULL COMMENT 'Referencia a la clasificacion padre. Si este campo es nulo, indica que esta es una clasificacion raiz',
-  PRIMARY KEY  (`idclasificacion`)
+  `idsuperior` int(11) DEFAULT NULL COMMENT 'Referencia a la clasificacion padre. Si este campo es nulo, indica que esta es una clasificacion raiz',
+  PRIMARY KEY (`idclasificacion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`clasificacion` VALUES  (1,'General','Clasificacion general',NULL),
  (2,'Hardware','Hardware',1),
@@ -214,31 +215,31 @@ INSERT INTO `jhard`.`clasificacion` VALUES  (1,'General','Clasificacion general'
  (17,'IDEs de software','',12),
  (18,'Antivirus','',10);
 CREATE TABLE  `jhard`.`comentarios` (
-  `idcoment` int(11) unsigned NOT NULL auto_increment,
+  `idcoment` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `comentario` varchar(250) NOT NULL,
   `fechahorara` datetime NOT NULL,
   `identrada` int(11) unsigned NOT NULL,
   `firma` varchar(25) NOT NULL,
   `aprobado` tinyint(1) unsigned NOT NULL,
-  PRIMARY KEY  (`idcoment`),
+  PRIMARY KEY (`idcoment`),
   KEY `fk_comentarios_entrada` (`identrada`),
   CONSTRAINT `fk_comentarios_entrada` FOREIGN KEY (`identrada`) REFERENCES `entrada` (`identrada`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`comentarios` VALUES  (8,'¿Alguien tiene alguna duda?','2009-07-25 19:09:26',9,'ramayac',1);
 CREATE TABLE  `jhard`.`curso` (
-  `idcurso` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada curso',
+  `idcurso` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada curso',
   `nombre` varchar(200) NOT NULL COMMENT 'Nombre del curso (por si este difiere del nombre de la materia o por si no esta relacionado con una materia especifica)',
   `cupomax` int(11) NOT NULL COMMENT 'Cantidad maxima de alumnos que pueden inscribirse a este curso',
-  `idmateria` int(11) default NULL COMMENT 'Referencia a la materia relacionada con este curso (en caso que este relacionado con alguna)',
-  `idinstructor` int(11) NOT NULL COMMENT 'Referencia al instructor asignado a impartir este curso',
+  `idmateria` int(11) DEFAULT NULL COMMENT 'Referencia a la materia relacionada con este curso (en caso que este relacionado con alguna)',
+  `idinstructor` int(11) DEFAULT NULL COMMENT 'Referencia al instructor asignado a impartir este curso',
   `fechainicio` date NOT NULL COMMENT 'Fecha de inicio del curso',
-  `ciclo` int(11) default NULL COMMENT 'Ciclo en el que se imparte este curso (1=ciclo impar, 2=ciclo par)',
-  `anio` int(11) default NULL COMMENT 'anio en el que se imparte este curso',
+  `ciclo` int(11) DEFAULT NULL COMMENT 'Ciclo en el que se imparte este curso (1=ciclo impar, 2=ciclo par)',
+  `anio` int(11) DEFAULT NULL COMMENT 'anio en el que se imparte este curso',
   `iddocente` int(11) NOT NULL COMMENT 'Referencia al docente encargado de impartir este curso',
-  `idestado` int(11) default NULL,
+  `idestado` int(11) DEFAULT NULL,
   `idcicloanio` int(10) unsigned NOT NULL COMMENT 'fk al ciclo año al que pertenece el curso',
   `habilinscrip` tinyint(1) NOT NULL COMMENT 'esta habilitado el curso para inscripcion de alumnos?',
-  PRIMARY KEY  (`idcurso`),
+  PRIMARY KEY (`idcurso`),
   KEY `fkidmateria_curso` (`idmateria`),
   KEY `fkidinstructor_curso` (`idinstructor`),
   KEY `fkiddocente_curso` (`iddocente`),
@@ -249,28 +250,28 @@ CREATE TABLE  `jhard`.`curso` (
   CONSTRAINT `fkidestado_curso` FOREIGN KEY (`idestado`) REFERENCES `estadocurso` (`idestadocurso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidinstructor_curso` FOREIGN KEY (`idinstructor`) REFERENCES `instructor` (`idinstructor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkidmateria_curso` FOREIGN KEY (`idmateria`) REFERENCES `materia` (`idmateria`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`curso` VALUES  (1,'Grupo 1 ',20,2,2,'2009-03-03',2,2009,1,NULL,2,1),
  (2,'Grupo 2',20,2,2,'2009-03-03',2,2009,1,NULL,2,1);
 CREATE TABLE  `jhard`.`docente` (
-  `iddocente` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada docente',
+  `iddocente` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada docente',
   `apellidos` varchar(200) NOT NULL COMMENT 'Apellidos del docente',
   `nombres` varchar(200) NOT NULL COMMENT 'Nombres del docente',
   `idusuario` int(11) NOT NULL COMMENT 'Referencia al usuario con el que el docente ingresa al sistema',
   `visible` int(11) NOT NULL COMMENT 'Es 1 por defecto. Indica que el usuario esta activo. Al momento de borrar usuarios del sistema, nada mas cambiar este estado a 0.',
-  PRIMARY KEY  (`iddocente`),
+  PRIMARY KEY (`iddocente`),
   KEY `fkidusuario_docente` (`idusuario`),
   CONSTRAINT `fkidusuario_docente` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`docente` VALUES  (1,'Linares Paula','Carlos Stanley',4,1),
  (2,'Barrera','Luis Alonso',1,1);
 CREATE TABLE  `jhard`.`entrada` (
-  `identrada` int(11) unsigned NOT NULL auto_increment,
+  `identrada` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `titulo` varchar(50) NOT NULL,
   `descripcion` text NOT NULL,
   `fechahora` datetime NOT NULL,
   `idusuario` int(11) NOT NULL,
-  PRIMARY KEY  (`identrada`),
+  PRIMARY KEY (`identrada`),
   KEY `fk_entrada_usuario` (`idusuario`),
   KEY `idxEntrTitulo` (`titulo`),
   KEY `idxEntrFecha` (`fechahora`),
@@ -279,12 +280,12 @@ CREATE TABLE  `jhard`.`entrada` (
 INSERT INTO `jhard`.`entrada` VALUES  (9,'Cursos de Linux','<p>Linux es un sistema operativo de descarga gratuita que se creo a principios de los a&ntilde;os noventa para competir con Windows. Se caracteriza por ser libre y por venir acompa&ntilde;ado de un c&oacute;digo fuente. Este curso gratis le ense&ntilde;ar&aacute; una serie de pautas para que empiece a manejar Linux.</p>\n<p>El curso comienza el Sabado 31 de Febrero de 2009.</p>','2009-07-25 19:08:15',13),
  (10,'Curso Ejemplo','<p>Este curso se realizara los <strong>Domingos, de 6 a.m. - 6 p.m.</strong> por los proximos <strong>3 a&ntilde;os</strong>.</p>\n<p>En el curso de ejemplo se impartira:</p>\n<ul>\n    <li>Instalacion de sistema operativo Windows XP en 100 maquinas</li>\n    <li>Limpieza de equipo del laboratorio en 4 horas</li>\n    <li>Preparar comida para los docentes que imparten el curso</li>\n    <li>Colaboracion para la compra de bebidas &quot;espirituosas&quot;</li>\n</ul>\n<p>Esperamos sus comentarios para hacer los preparativos necesarios.</p>','2009-07-26 09:56:37',13);
 CREATE TABLE  `jhard`.`equipo` (
-  `idequipo` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada equipo',
+  `idequipo` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada equipo',
   `idmarca` int(11) NOT NULL COMMENT 'Referencia a la marca que posee este equipo',
   `nombre` varchar(45) NOT NULL COMMENT 'Nombre del equipo',
   `modelo` varchar(15) NOT NULL COMMENT 'Modelo al cual pertenece el equipo',
   `idclasificacion` int(11) NOT NULL COMMENT 'Referencia a la clasificacion a la cual esta relacionado este equipo',
-  PRIMARY KEY  (`idequipo`),
+  PRIMARY KEY (`idequipo`),
   KEY `fkidmarca_equipo` (`idmarca`),
   KEY `fkidclasificacion_equipo` (`idclasificacion`),
   CONSTRAINT `fkidclasificacion_equipo` FOREIGN KEY (`idclasificacion`) REFERENCES `clasificacion` (`idclasificacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -297,11 +298,11 @@ INSERT INTO `jhard`.`equipo` VALUES  (1,9,'PC','PC',13),
  (5,12,'Cañon','ProView',16),
  (6,2,'Laptop','VGN',14);
 CREATE TABLE  `jhard`.`equiposimple` (
-  `idEquipoSimple` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada equipo simple',
+  `idEquipoSimple` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada equipo simple',
   `descripcion` text NOT NULL COMMENT 'Descripcion del equipo simple',
   `propietario` varchar(200) NOT NULL COMMENT 'Nombre del propietario del equipo simple',
   `idestado` int(11) NOT NULL COMMENT 'Referencia al estado en el que se encuentra el equipo simple',
-  PRIMARY KEY  (`idEquipoSimple`),
+  PRIMARY KEY (`idEquipoSimple`),
   KEY `fkidestado_equiposimple` (`idestado`),
   CONSTRAINT `fkidestado_equiposimple` FOREIGN KEY (`idestado`) REFERENCES `estadoequipo` (`idestado`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
@@ -321,46 +322,46 @@ INSERT INTO `jhard`.`equiposimple` VALUES  (1,'Computadora Oficina Jurídica','C
  (14,'Laptop Luis','Luis Barrera',1),
  (19,'Big Boss','Daddy Yankee',2);
 CREATE TABLE  `jhard`.`estadocurso` (
-  `idestadocurso` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada estado del curso',
+  `idestadocurso` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada estado del curso',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del estado del curso',
-  PRIMARY KEY  (`idestadocurso`)
+  PRIMARY KEY (`idestadocurso`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 CREATE TABLE  `jhard`.`estadoequipo` (
-  `idestado` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada estado',
+  `idestado` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada estado',
   `nombre` varchar(45) NOT NULL COMMENT 'Nombre del estado',
   `descripcion` text COMMENT 'Descripcion del estado',
-  PRIMARY KEY  (`idestado`)
+  PRIMARY KEY (`idestado`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`estadoequipo` VALUES  (1,'Excelente','Óptimas condiciones'),
  (2,'Fallido','El equipo reporta fallas'),
  (3,'En mantenimiento','El equipo esta siendo reparado');
 CREATE TABLE  `jhard`.`estadoreserva` (
-  `idestadoreserva` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada reserva',
+  `idestadoreserva` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada reserva',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del estado de la reserva',
-  PRIMARY KEY  (`idestadoreserva`)
+  PRIMARY KEY (`idestadoreserva`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`estadoreserva` VALUES  (1,'Pendiente'),
  (2,'En uso'),
  (3,'Despachada');
 CREATE TABLE  `jhard`.`estudiante` (
-  `idestudiante` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada estudiante',
+  `idestudiante` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada estudiante',
   `carnet` varchar(7) NOT NULL COMMENT 'Carnet del estudiante, representativo y distintivo en el registro de la facultad',
   `apellidos` varchar(200) NOT NULL COMMENT 'Apellidos del estudiante',
   `nombres` varchar(200) NOT NULL COMMENT 'Nombres del estudiante',
   `idusuario` int(11) NOT NULL COMMENT 'Referencia con la que el usuario ingresa al sistema',
-  `visible` int(11) NOT NULL default '1' COMMENT 'Indica el estado de este estudiante. Es 1 por defecto. Indica que el usuario esta activo. Al momento de borrar usuarios del sistema, nada mas cambiar este estado a 0.',
-  PRIMARY KEY  (`idestudiante`),
+  `visible` int(11) NOT NULL DEFAULT '1' COMMENT 'Indica el estado de este estudiante. Es 1 por defecto. Indica que el usuario esta activo. Al momento de borrar usuarios del sistema, nada mas cambiar este estado a 0.',
+  PRIMARY KEY (`idestudiante`),
   KEY `fkidusuario_estudiante` (`idusuario`),
   CONSTRAINT `fkidusuario_estudiante` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`estudiante` VALUES  (1,'SM08003','Salgado Martínez','Rebeca Marcela',7,1);
 CREATE TABLE  `jhard`.`existencia` (
-  `idexistencia` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada existencia',
+  `idexistencia` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada existencia',
   `idhardware` int(11) NOT NULL COMMENT 'Referencia al hardware al cual pertenece esta existencia',
   `idubicacion` int(11) NOT NULL COMMENT 'Referencia a la ubicacion donde se encuentra localizada esta existencia',
   `idestado` int(11) NOT NULL COMMENT 'Referencia al estado en el que se encuentra esta existencia',
   `codigo` varchar(45) NOT NULL COMMENT 'Codigo con el cual clasificar esta existencia en el inventario',
-  PRIMARY KEY  (`idexistencia`),
+  PRIMARY KEY (`idexistencia`),
   KEY `fkidhardware_existencia` (`idhardware`),
   KEY `fkidubicacion_existencia` (`idubicacion`),
   KEY `fkidestado_existencia` (`idestado`),
@@ -407,19 +408,19 @@ INSERT INTO `jhard`.`existencia` VALUES  (1,1,1,1,'cantidad de barras'),
 INSERT INTO `jhard`.`existencia` VALUES  (37,1,1,1,'labcom1-24'),
  (38,1,1,1,'labcom1-25');
 CREATE TABLE  `jhard`.`facultad` (
-  `idfacultad` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada facultad',
+  `idfacultad` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada facultad',
   `nombre` varchar(200) NOT NULL COMMENT 'Nombre de la facultad',
-  PRIMARY KEY  (`idfacultad`)
+  PRIMARY KEY (`idfacultad`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`facultad` VALUES  (1,'Facultad Multidisciplinaria de Occidente');
 CREATE TABLE  `jhard`.`horario` (
-  `idhorario` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada horario',
+  `idhorario` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada horario',
   `diasemana` int(11) NOT NULL COMMENT 'Dia de la semana que se brinda el curso (1= lunes, 7= domingo)',
   `horainicio` time NOT NULL COMMENT 'Hora a la que da inicio el curso',
   `horafin` time NOT NULL COMMENT 'Hora a la que finaliza el curso',
   `idcurso` int(11) NOT NULL COMMENT 'Referencia al curso relacionado con este horario',
   `idaula` int(11) NOT NULL COMMENT 'Aula en la que se imparte este curso en este horario',
-  PRIMARY KEY  (`idhorario`),
+  PRIMARY KEY (`idhorario`),
   KEY `fkidcurso_horario` (`idcurso`),
   KEY `fkidaula_horario` (`idaula`),
   CONSTRAINT `fkidaula_horario` FOREIGN KEY (`idaula`) REFERENCES `ubicacion` (`idubicacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -434,10 +435,10 @@ INSERT INTO `jhard`.`horario` VALUES  (1,1,'10:05:00','10:55:00',1,1),
  (7,3,'07:35:00','09:15:00',1,1),
  (8,3,'07:35:00','19:00:00',1,1);
 CREATE TABLE  `jhard`.`inscripcion` (
-  `idinscripcion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada inscripcion',
+  `idinscripcion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada inscripcion',
   `idcurso` int(11) NOT NULL COMMENT 'Referencia al curso al cual se inscribio el estudiante',
   `idestudiante` int(11) NOT NULL COMMENT 'Referencia al estudiante inscrito en este curso',
-  PRIMARY KEY  (`idinscripcion`),
+  PRIMARY KEY (`idinscripcion`),
   KEY `fkidcurso_inscripcion` (`idcurso`),
   KEY `fkidestudiante_inscripcion` (`idestudiante`),
   CONSTRAINT `fkidcurso_inscripcion` FOREIGN KEY (`idcurso`) REFERENCES `curso` (`idcurso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -446,11 +447,11 @@ CREATE TABLE  `jhard`.`inscripcion` (
 INSERT INTO `jhard`.`inscripcion` VALUES  (1,1,1),
  (2,2,1);
 CREATE TABLE  `jhard`.`instalacion` (
-  `idinstalacion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada instalacion',
+  `idinstalacion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada instalacion',
   `idsoftware` int(11) NOT NULL COMMENT 'Referencia al software instalado',
   `fechainstalacion` date NOT NULL COMMENT 'Fecha en la que se realizo la instalacion',
   `idequipoexistente` int(11) NOT NULL COMMENT 'Referencia al equipo donde se instalo el software',
-  PRIMARY KEY  (`idinstalacion`),
+  PRIMARY KEY (`idinstalacion`),
   KEY `fkidsoftware_instalacion` (`idsoftware`),
   KEY `fkidequipoexistente_instalacion` (`idequipoexistente`),
   CONSTRAINT `fkidequipoexistente_instalacion` FOREIGN KEY (`idequipoexistente`) REFERENCES `existencia` (`idexistencia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -458,28 +459,28 @@ CREATE TABLE  `jhard`.`instalacion` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`instalacion` VALUES  (1,1,'2009-04-03',2);
 CREATE TABLE  `jhard`.`instructor` (
-  `idinstructor` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada instructor',
+  `idinstructor` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada instructor',
   `carnet` varchar(7) NOT NULL COMMENT 'Carnet con el cual se encuentra registrado en adacad',
   `apellidos` varchar(200) NOT NULL COMMENT 'Apellidos del instructor',
   `nombres` varchar(200) NOT NULL COMMENT 'Nombres del instructor',
   `idusuario` int(11) NOT NULL COMMENT 'Referencia al usuario con el que instructor accede al sistema',
-  `visible` int(11) NOT NULL default '1' COMMENT 'Estado del instructor. Por defecto es 1, lo cual significa que esta en uso. Al momento de borrar un instructor, nada mas se cambia este campo a 0.',
-  PRIMARY KEY  (`idinstructor`),
+  `visible` int(11) NOT NULL DEFAULT '1' COMMENT 'Estado del instructor. Por defecto es 1, lo cual significa que esta en uso. Al momento de borrar un instructor, nada mas se cambia este campo a 0.',
+  PRIMARY KEY (`idinstructor`),
   KEY `fkidusuario_instructor` (`idusuario`),
   CONSTRAINT `fkidusuario_instructor` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`instructor` VALUES  (1,'CC02043','Cerna','Fredy',8,1),
  (2,'BP04004','Barrientos Padilla','Hugo Alejandro',9,1);
 CREATE TABLE  `jhard`.`mantenimiento` (
-  `idmantenimiento` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada mantenimiento',
+  `idmantenimiento` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada mantenimiento',
   `fecha` date NOT NULL COMMENT 'Fecha en la que se efectuo el mantenimiento',
   `descripcion` text NOT NULL COMMENT 'Descripcion del mantenimiento',
   `idtecnico` int(11) NOT NULL COMMENT 'Referencia al tecnico que efectuo el mantenimiento',
-  `idsolicitud` int(11) default NULL COMMENT 'Referencia a la solicitud de mantenimiento realizada, en caso de existir una',
-  `idequipoexistente` int(11) default NULL COMMENT 'Referencia al equipo al cual se efectuo el mantenimiento',
-  `idequiposimple` int(11) default NULL,
+  `idsolicitud` int(11) DEFAULT NULL COMMENT 'Referencia a la solicitud de mantenimiento realizada, en caso de existir una',
+  `idequipoexistente` int(11) DEFAULT NULL COMMENT 'Referencia al equipo al cual se efectuo el mantenimiento',
+  `idequiposimple` int(11) DEFAULT NULL,
   `estado` text NOT NULL,
-  PRIMARY KEY  (`idmantenimiento`),
+  PRIMARY KEY (`idmantenimiento`),
   KEY `fkidtecnico_mantenimiento` (`idtecnico`),
   KEY `fkidsolicitud_mantenimiento` (`idsolicitud`),
   KEY `fkidequipoexistente_mantenimiento` (`idequipoexistente`),
@@ -503,9 +504,9 @@ INSERT INTO `jhard`.`mantenimiento` VALUES  (2,'3909-06-21','Virus',3,7,NULL,4,'
  (15,'2009-08-02','No tira audio',14,17,8,NULL,'Finalizado'),
  (16,'2009-08-02','No enciende',3,18,14,NULL,'Finalizado');
 CREATE TABLE  `jhard`.`marca` (
-  `idmarca` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada marca',
+  `idmarca` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada marca',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre de la marca',
-  PRIMARY KEY  (`idmarca`)
+  PRIMARY KEY (`idmarca`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`marca` VALUES  (0,'Generica'),
  (1,'Dell'),
@@ -521,24 +522,24 @@ INSERT INTO `jhard`.`marca` VALUES  (0,'Generica'),
  (11,'Seagate'),
  (12,'Epson');
 CREATE TABLE  `jhard`.`materia` (
-  `idmateria` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada materia',
+  `idmateria` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada materia',
   `codigo` varchar(7) NOT NULL COMMENT 'Codigo de la materia, con el cual se identifica en adacad',
   `nombre` varchar(200) NOT NULL COMMENT 'Nombre de la materia',
   `idcarrera` int(11) NOT NULL COMMENT 'Referencia a la carrera a la cual pertenece esta materia',
-  PRIMARY KEY  (`idmateria`),
+  PRIMARY KEY (`idmateria`),
   KEY `fkidcarrera_materia` (`idcarrera`),
   CONSTRAINT `fkidcarrera_materia` FOREIGN KEY (`idcarrera`) REFERENCES `carrera` (`idcarrera`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-INSERT INTO `jhard`.`materia` VALUES  (1,'ALG-135','Algoritmos Gráficos',1),
+INSERT INTO `jhard`.`materia` VALUES  (1,'RFG-135','Refrigeracion grafica',2),
  (2,'PRN-235','Programación II',1);
 CREATE TABLE  `jhard`.`pieza` (
-  `idpieza` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada pieza',
+  `idpieza` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada pieza',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre de la pieza',
   `idmarca` int(11) NOT NULL COMMENT 'Referencia a la marca de la pieza',
   `modelo` varchar(15) NOT NULL COMMENT 'Modelo de la pieza',
   `idclasificacion` int(11) NOT NULL COMMENT 'Referencia a la clasificacion en la que se encuentra la pieza',
-  `idexistencia` int(11) default NULL,
-  PRIMARY KEY  (`idpieza`),
+  `idexistencia` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idpieza`),
   KEY `fkidclasificacion_pieza` (`idclasificacion`),
   KEY `fkidmarca_pieza` (`idmarca`),
   KEY `fkidexistencia_pieza` (`idexistencia`),
@@ -549,7 +550,7 @@ CREATE TABLE  `jhard`.`pieza` (
 INSERT INTO `jhard`.`pieza` VALUES  (1,'memoria RAM',10,'kingston',6,NULL),
  (2,'disco duro',11,'seagate',6,NULL);
 CREATE TABLE  `jhard`.`reserva` (
-  `idreserva` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada reserva',
+  `idreserva` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada reserva',
   `fechareserva` date NOT NULL COMMENT 'fecha en la que se reservo el equipo',
   `fechahorainicioprestamo` datetime NOT NULL COMMENT 'Fecha y hora inicial a la que se utilizara el equipo',
   `fechahorafinprestamo` datetime NOT NULL COMMENT 'Fecha y hora final a la que se utilizara el equipo',
@@ -559,7 +560,7 @@ CREATE TABLE  `jhard`.`reserva` (
   `idestado` int(11) NOT NULL COMMENT 'Referencia al estado en el que se encuentra esta reserva',
   `descripcion` text NOT NULL COMMENT 'Descripcion y justificacion de la reserva',
   `iddocente` int(11) NOT NULL,
-  PRIMARY KEY  (`idreserva`),
+  PRIMARY KEY (`idreserva`),
   KEY `fkidestado_reserva` (`idestado`),
   KEY `fkidequipoexistente_reserva` (`idequipoexistente`),
   KEY `fkidubicacion_reserva` (`idubicacion`),
@@ -596,10 +597,10 @@ INSERT INTO `jhard`.`reserva` VALUES  (25,'2009-07-12','2009-07-12 10:05:00','20
  (26,'2009-07-31','2009-07-31 10:05:00','2009-07-31 10:55:00',1,7,9,1,'Prestamo de Cañon Epson  Epson',1),
  (27,'2009-07-31','2009-07-31 10:05:00','2009-07-31 10:55:00',1,12,9,1,'Prestamo de Laptop Sony VGN',1);
 CREATE TABLE  `jhard`.`rol` (
-  `idrol` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada rol',
+  `idrol` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada rol',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del rol',
   `descripcion` text NOT NULL COMMENT 'Descripcion del rol',
-  PRIMARY KEY  (`idrol`)
+  PRIMARY KEY (`idrol`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`rol` VALUES  (1,'Administrador','Administrador de JHard'),
  (2,'Administrativo','Personal Administrativo UES-FMO'),
@@ -608,26 +609,26 @@ INSERT INTO `jhard`.`rol` VALUES  (1,'Administrador','Administrador de JHard'),
  (5,'Estudiante','Estudiante UES-FMO'),
  (6,'Instructor','Instructor de materia UES-FMO');
 CREATE TABLE  `jhard`.`software` (
-  `idsoftware` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada software',
+  `idsoftware` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada software',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del software',
   `version` varchar(15) NOT NULL COMMENT 'Version del software',
-  `codigolicencia` varchar(45) default NULL COMMENT 'codigo de la licencia del software (en caso de poseer alguno)',
-  `cantidadlicencias` int(11) default NULL COMMENT 'Cantidad de licencias disponibles para instalar (en caso de poseer licencias)',
+  `codigolicencia` varchar(45) DEFAULT NULL COMMENT 'codigo de la licencia del software (en caso de poseer alguno)',
+  `cantidadlicencias` int(11) DEFAULT NULL COMMENT 'Cantidad de licencias disponibles para instalar (en caso de poseer licencias)',
   `idclasificacion` int(11) NOT NULL COMMENT 'Referencia a la clasificacion que posee este software',
-  PRIMARY KEY  (`idsoftware`),
+  PRIMARY KEY (`idsoftware`),
   KEY `fkidclasificacion_software` (`idclasificacion`),
   CONSTRAINT `fkidclasificacion_software` FOREIGN KEY (`idclasificacion`) REFERENCES `clasificacion` (`idclasificacion`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`software` VALUES  (1,'Microsoft Windows XP','Service Pack 2','JGOL-JGFL-KGJK.KJGF-O3JW-OLB3',20,9);
 CREATE TABLE  `jhard`.`solicitud` (
-  `idsolicitud` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada solicitud',
+  `idsolicitud` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada solicitud',
   `fecha` date NOT NULL COMMENT 'Fecha en la que se registro la solicitud',
   `prioridad` varchar(25) NOT NULL COMMENT 'Tipo de prioridad en la cual se clasifican las solicitudes de mantenimiento. Sus posibles valores son: Alta, Media y Baja',
   `descripcion` text NOT NULL COMMENT 'Descripcion de la solicitud',
   `idusuario` int(11) NOT NULL COMMENT 'Usuario que registro la solicitud',
-  `idequipoexistente` int(11) default NULL COMMENT 'Equipo al cual se desea efectuar un mantenimiento',
-  `idequiposimple` int(11) default NULL,
-  PRIMARY KEY  (`idsolicitud`),
+  `idequipoexistente` int(11) DEFAULT NULL COMMENT 'Equipo al cual se desea efectuar un mantenimiento',
+  `idequiposimple` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idsolicitud`),
   KEY `fkidequipoexistente_solicitud` (`idequipoexistente`),
   KEY `fkidequiposimple_solicitud` (`idequiposimple`),
   KEY `fkidusuario_solicitud` (`idusuario`),
@@ -655,9 +656,9 @@ INSERT INTO `jhard`.`solicitud` VALUES  (1,'2009-06-06','Alta','Virus',1,1,1),
  (18,'2009-08-02','ALTA','No enciende',12,14,NULL);
 INSERT INTO `jhard`.`solicitud` VALUES  (19,'2009-08-02','ALTA','No enciende la pantalla',12,15,NULL);
 CREATE TABLE  `jhard`.`tag` (
-  `idtag` int(11) unsigned NOT NULL auto_increment,
+  `idtag` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(25) NOT NULL,
-  PRIMARY KEY  (`idtag`),
+  PRIMARY KEY (`idtag`),
   KEY `idxTagDesc` (`descripcion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`tag` VALUES  (2,'2009'),
@@ -669,10 +670,10 @@ INSERT INTO `jhard`.`tag` VALUES  (2,'2009'),
  (4,'software'),
  (8,'virus');
 CREATE TABLE  `jhard`.`tag_entrada` (
-  `idtagentrada` int(10) unsigned NOT NULL auto_increment,
+  `idtagentrada` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `idtag` int(11) unsigned NOT NULL,
   `identrada` int(11) unsigned NOT NULL,
-  PRIMARY KEY  (`idtagentrada`,`identrada`,`idtag`),
+  PRIMARY KEY (`idtagentrada`,`identrada`,`idtag`),
   KEY `fk_tag_entrada_tag` (`idtag`),
   KEY `fk_tag_entrada_entrada` (`identrada`),
   KEY `idxTagEntrada` (`idtag`,`identrada`),
@@ -684,30 +685,30 @@ INSERT INTO `jhard`.`tag_entrada` VALUES  (18,1,9),
  (19,2,9),
  (20,3,9);
 CREATE TABLE  `jhard`.`tecnico` (
-  `idtecnico` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada tecnico',
+  `idtecnico` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada tecnico',
   `apellidos` varchar(200) NOT NULL COMMENT 'Apellidos del tecnico',
   `nombres` varchar(200) NOT NULL COMMENT 'Nombres del tecnico',
   `cargo` varchar(200) NOT NULL COMMENT 'Cargo que desempenia el tecnico',
-  PRIMARY KEY  (`idtecnico`)
+  PRIMARY KEY (`idtecnico`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`tecnico` VALUES  (3,'Aguirre','Gabriel','Tecnico'),
  (4,'Mineros','Roberto','Tecnico'),
  (14,'Villatoro','Ana Graciela','Tecnico'),
  (16,'Martinez','Diego','Tecnico');
 CREATE TABLE  `jhard`.`ubicacion` (
-  `idubicacion` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada ubicacion',
-  `nombre` varchar(45) default NULL COMMENT 'Nombre de la ubicacion',
-  PRIMARY KEY  (`idubicacion`)
+  `idubicacion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico de cada ubicacion',
+  `nombre` varchar(45) DEFAULT NULL COMMENT 'Nombre de la ubicacion',
+  PRIMARY KEY (`idubicacion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 INSERT INTO `jhard`.`ubicacion` VALUES  (0,'Generica'),
  (1,'LABCOM-1');
 CREATE TABLE  `jhard`.`usuario` (
-  `idusuario` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico para cada usuario',
+  `idusuario` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id correlativo unico para cada usuario',
   `nombre` varchar(25) NOT NULL COMMENT 'Nombre del usuario',
   `clave` varchar(35) NOT NULL COMMENT 'Clave de acceso del usuario',
-  `idrol` int(11) default NULL COMMENT 'Referencia al rol que juega este usuario dentro del sistema, el cual define los modulos y acciones a las que tiene acceso',
-  `idautorizacion` int(10) unsigned default NULL,
-  PRIMARY KEY  (`idusuario`),
+  `idrol` int(11) DEFAULT NULL COMMENT 'Referencia al rol que juega este usuario dentro del sistema, el cual define los modulos y acciones a las que tiene acceso',
+  `idautorizacion` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`idusuario`),
   KEY `fkidrol_usuario` (`idrol`),
   KEY `fkidautorizacion_usuario` (`idautorizacion`),
   CONSTRAINT `fkidautorizacion_usuario` FOREIGN KEY (`idautorizacion`) REFERENCES `autorizacion` (`idautorizacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
