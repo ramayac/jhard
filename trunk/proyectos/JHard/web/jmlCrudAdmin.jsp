@@ -138,6 +138,7 @@
                                             <ice:panelGroup>
                                                 Seleccione la carrera a la que pertenece la materia:<br/>
                                                 <ice:selectOneMenu id="idSelCarr" partialSubmit="true"
+                                                value="#{jmlCrudAdmin.carreraSelStr}"
                                                 valueChangeListener="#{jmlCrudAdmin.selCarrera}">
                                                     <f:selectItems id="carrSel" value="#{jmlCrudAdmin.listaCarreraSel}"/>
                                                 </ice:selectOneMenu><br/>
