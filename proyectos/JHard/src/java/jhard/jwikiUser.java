@@ -162,7 +162,11 @@ public class jwikiUser extends BeanBaseJHard {
        //TODO: convertir esto en filtrado real...
        this.criteriosBusqueda = criteriosBusqueda.replaceAll("'", EMPTY_STRING);
        this.criteriosBusqueda = criteriosBusqueda.replaceAll("\"", EMPTY_STRING);
+       this.articuloActual = new Articulos();
+       this.listaArticulos.clear();
        this.listaArticulos = this.jwikiInstance.searchPalabrasEnArticulo(criteriosBusqueda);
+       //if(!this.listaArticulos.isEmpty()) this.articuloActual = this.listaArticulos.get(0);
+       //else this.articuloActual = new Articulos();
        return EMPTY_STRING;
     }
 
