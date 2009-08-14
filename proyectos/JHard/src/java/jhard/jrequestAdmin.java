@@ -42,11 +42,9 @@ import javax.faces.model.SelectItem;
 
 
 /**
- * <p>Page bean that corresponds to a similarly named JSP page.  This
- * class contains component definitions (and initialization code) for
- * all components that you have defined on this page, as well as
- * lifecycle methods and event handlers where you may add behavior
- * to respond to incoming events.</p>
+ *
+ * Bean para la página JSP de jrequestAdmin, que realiza el manejo y administración de solicitudes, mantenimientos de soporte
+ * técnico y bitácoras de equipos simples y existencias
  */
 public class jrequestAdmin extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
@@ -60,35 +58,8 @@ public class jrequestAdmin extends AbstractPageBean {
 
 
     private void _init() throws Exception {
-//        fakeSol.setItems(new String[]{});
-//        fakeMan.setItems(new String[]{});
-//        fakeBit.setItems(new String[]{});
-
-//        fakeComboPrioridad.setItems(new String[]{"Alta", "Media", "Baja"});
-//        fakeComboEstado1.setItems(new String[]{});
-//        fakeComboTecnico1.setItems(new String[]{});
-
-
     }
 
-//    private DefaultSelectItemsArray fakeComboEstado1 = new DefaultSelectItemsArray();
-//
-//    public DefaultSelectItemsArray getFakeComboEstado1() {
-//        return fakeComboEstado1;
-//    }
-//
-//    public void setFakeComboEstado1(DefaultSelectItemsArray dsia) {
-//        this.fakeComboEstado1 = dsia;
-//    }
-//    private DefaultSelectItemsArray fakeComboTecnico1 = new DefaultSelectItemsArray();
-//
-//    public DefaultSelectItemsArray getFakeComboTecnico1() {
-//        return fakeComboTecnico1;
-//    }
-//
-//    public void setFakeComboTecnico1(DefaultSelectItemsArray dsia) {
-//        this.fakeComboTecnico1 = dsia;
-//    }
     private HtmlOutputLabel lblNombre = new HtmlOutputLabel();
 
     public HtmlOutputLabel getLblNombre() {
@@ -323,33 +294,6 @@ public class jrequestAdmin extends AbstractPageBean {
     public void setPopUpAgregarTec(PanelPopup pp) {
         this.popUpAgregarTec = pp;
     }
-//    private DefaultSelectItemsArray fakeSol = new DefaultSelectItemsArray();
-//
-//    public DefaultSelectItemsArray getFakeSol() {
-//        return fakeSol;
-//    }
-//
-//    public void setFakeSol(DefaultSelectItemsArray dsia) {
-//        this.fakeSol = dsia;
-//    }
-//    private DefaultSelectItemsArray fakeMan = new DefaultSelectItemsArray();
-//
-//    public DefaultSelectItemsArray getFakeMan() {
-//        return fakeMan;
-//    }
-//
-//    public void setFakeMan(DefaultSelectItemsArray dsia) {
-//        this.fakeMan = dsia;
-//    }
-//    private DefaultSelectionItems fakeBit = new DefaultSelectionItems();
-//
-//    public DefaultSelectionItems getFakeBit() {
-//        return fakeBit;
-//    }
-//
-//    public void setFakeBit(DefaultSelectionItems dsi) {
-//        this.fakeBit = dsi;
-//    }
     private HtmlSelectOneListbox listaBitacoras = new HtmlSelectOneListbox();
 
     public HtmlSelectOneListbox getListaBitacoras() {
@@ -476,22 +420,15 @@ public class jrequestAdmin extends AbstractPageBean {
     public void setPanelPopup3Bean(PopupBean pb) {
         this.panelPopup3Bean = pb;
     }
-//    private HtmlSelectOneMenu comboEstadosEQ = new HtmlSelectOneMenu();
-//
-//    public HtmlSelectOneMenu getComboEstadosEQ() {
-//        return comboEstadosEQ;
-//    }
-//
-//    public void setComboEstadosEQ(HtmlSelectOneMenu hsom) {
-//        this.comboEstadosEQ = hsom;
-//    }
     // </editor-fold>
 
 private List soc=new ArrayList();
 private List man= new ArrayList();
 private String estadoActualBit;
 
-    //ESTE METODO DEBE DE IR EN EL NEGOCIO
+    /**
+     * Método para llenar las listas de esta página
+     */
     public void llenarLista(){
 
         BeanBaseJRequest instance = new BeanBaseJRequest();
@@ -578,6 +515,9 @@ private List tec = new ArrayList();
 private List eqs = new ArrayList();
 private List eeq = new ArrayList();
 
+    /**
+     * Método para llenar los combos de esta página
+     */
     private void llenarCombo(){
         //COMBO DE TECNICOS
         Tecnico [] tecnicos = new edu.ues.jhard.beans.BeanBaseJRequest().getTecnico();
@@ -585,10 +525,6 @@ private List eeq = new ArrayList();
             String label = tecnicos[i].getNombres()+" "+tecnicos[i].getApellidos();
             getTec().add(new SelectItem(tecnicos[i].getIdtecnico(),label));
         }
-//        UISelectItems itemsTec = new UISelectItems();
-//        itemsTec.setValue(getTec());
-//        this.comboTecnicos.getChildren().add(itemsTec);
-
 
         //COMBO DE ESTADOS DE EQUIPOS
         Estadoequipo [] estado = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
@@ -596,33 +532,10 @@ private List eeq = new ArrayList();
             String label = estado[i].getNombre();
             getEeq().add(new SelectItem(estado[i].getIdestado(),label));
         }
-//        UISelectItems itemsEstad = new UISelectItems();
-//        itemsEstad.setValue(getEeq());
-//        this.comboEstado.getChildren().add(itemsEstad);
     }
 
     private void llenarComboEqExBitacora(){
         this.getEqs().clear();
-        
-        //SELECTINPUT DE EQUIPOS SIMPLES O EXISTENCIAS
-
-//        if(opcion==1){
-//            //EQ SIMPLE
-//            Equiposimple [] eqsimple = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
-//
-//            for(int i=0;i<eqsimple.length;i++){
-//                String label = eqsimple[i].getPropietario()+" "+eqsimple[i].getDescripcion();
-//                getEqs().add(new SelectItem(eqsimple[i].getIdEquipoSimple(),label));
-//            }
-//        }else{
-//            //EXISTENCIA
-//            Existencia [] exist = new edu.ues.jhard.beans.BeanBaseJRequest().getExistencia();
-//
-//            for(int i=0;i<exist.length;i++){
-//                String label = exist[i].getCodigo();
-//                getEqs().add(new SelectItem(exist[i].getIdexistencia(),label));
-//            }
-//        }
     }
     
     private Tecnico tecnicoElegido=null;
@@ -638,19 +551,13 @@ private List eeq = new ArrayList();
 
 
     /**
-     * <p>Construct a new Page bean instance.</p>
+     * <p>Constructor.</p>
      */
 
     private boolean renderBitacoras;
     private boolean renderMantenimientos;
 
     public jrequestAdmin() {
-//        fakeSol.clear();
-//        fakeMan.clear();
-//        fakeBit.clear();
-//
-//        fakeComboEstado1.clear();
-//        fakeComboTecnico1.clear();
         BeanBaseJRequest instance = new BeanBaseJRequest();
         this.listaTodosEquipos= instance.getListaEquipoSimple();
         this.listaTodasExistencias= instance.getListaExistencia();
@@ -784,6 +691,10 @@ private List eeq = new ArrayList();
         }
     }
 
+    /**
+     * Método para mandar a mantenimiento una solicitud de soporte técnico, ya sea para un equipo simple o una existencia de JInvent
+     * @return
+     */
     public String btnProceder_action() {
         BeanBaseJRequest instance = new BeanBaseJRequest();
         if(this.solicitudElegida==null){
@@ -891,6 +802,10 @@ private List eeq = new ArrayList();
         this.changeIcon="imgEstable.png";
     }
 
+    /**
+     * Método para finalizar un mantenimiento y mandar dicho trabajo hacia la bitácora
+     * @return
+     */
     public String btnAceptarFinalizado_action() {
 
         if(this.checkFIn.isSelected()&& (!this.txtDescripcion.getValue().equals(""))){
@@ -931,9 +846,7 @@ private List eeq = new ArrayList();
             instance.modificarMantenimiento(mantenimientoElegido, "Finalizado");
             
             instance.registrarBitacoraEstados(be);
-
-
-            
+    
             this.checkFIn.setSelected(false);
             this.txtDescripcion.setValue("");
 
@@ -959,101 +872,10 @@ private List eeq = new ArrayList();
         return null;
     }
 
-//    public String btnAgregarTec_action() {
-//            this.popUpAgregarTec.setRendered(true);
-//            System.out.println("RENDERICE");
-//            this.popUpAgregarTec.setVisible(true);
-//            System.out.println("PUSE VISIBLE");
-//            this.popUpAgregarTec.setModal(true);
-//            System.out.println("SOLO EL ES MODIFICABLE");
-//
-//        return null;
-//    }
-
-//    public void listaTecnicos_processValueChange(ValueChangeEvent vce) {
-//
-//        String tmp=(String)this.listaTecnicos.getValue();
-//        Integer id=Integer.parseInt(tmp);
-//        Tecnico T=new BeanBaseJRequest().getEntityManager().find(Tecnico.class, id);
-//
-//        this.tecElegidoLista=T;
-//
-//        this.lblNombreTec.setValue(T.getNombres()+" "+T.getApellidos());
-//
-//
-//    }
-
-//    public String btnEliminarTec_action() {
-//        if(tecElegidoLista!=null){
-//            new BeanBaseJRequest().eliminarTecnico(this.tecElegidoLista);
-//
-//            this.lblMensajes.setValue("Técnico eliminado con éxito");
-//            this.popUpMensajes.setRendered(true);
-//            System.out.println("RENDERICE");
-//            this.popUpMensajes.setVisible(true);
-//            System.out.println("PUSE VISIBLE");
-//            this.popUpMensajes.setModal(true);
-//            System.out.println("SOLO EL ES MODIFICABLE");
-//
-//
-//        }
-//        else{
-//            System.out.println("TECNICO NULL");
-//            this.lblMensajes.setValue("Seleccione un Tecnico de la Lista");
-//            this.popUpMensajes.setRendered(true);
-//            System.out.println("RENDERICE");
-//            this.popUpMensajes.setVisible(true);
-//            System.out.println("PUSE VISIBLE");
-//            this.popUpMensajes.setModal(true);
-//            System.out.println("SOLO EL ES MODIFICABLE");
-//        }
-//
-//        return null;
-//    }
-//
-//    public String btnCerrarTec_action() {
-//        this.popUpAgregarTec.setRendered(false);
-//        System.out.println("RENDERICE");
-//        this.popUpAgregarTec.setVisible(false);
-//        System.out.println("PUSE VISIBLE");
-//        this.popUpAgregarTec.setModal(false);
-//        System.out.println("SOLO EL ES MODIFICABLE");
-//        return null;
-//    }
-//
-//    public String btnOkTec_action() {
-//
-//        Tecnico t = new Tecnico();
-//        t.setNombres(this.txtNomTec.getValue().toString());
-//        t.setApellidos(this.txtApeTec.getValue().toString());
-//        t.setCargo("Tecnico");
-//
-//        new BeanBaseJRequest().registrarTecnico(t);
-//
-//        this.popUpAgregarTec.setRendered(false);
-//        System.out.println("RENDERICE");
-//        this.popUpAgregarTec.setVisible(false);
-//        System.out.println("PUSE VISIBLE");
-//        this.popUpAgregarTec.setModal(false);
-//        System.out.println("SOLO EL ES MODIFICABLE");
-//
-//        this.lblMensajes.setValue("Técnico agregado con éxito");
-//        this.popUpMensajes.setRendered(true);
-//        System.out.println("RENDERICE");
-//        this.popUpMensajes.setVisible(true);
-//        System.out.println("PUSE VISIBLE");
-//        this.popUpMensajes.setModal(true);
-//        System.out.println("SOLO EL ES MODIFICABLE");
-//
-//
-//
-//        return null;
-//    }
-//
-//    public String btnLimpiar_action() {
-//        return null;
-//    }
-
+    /**
+     * Método para filtrar el SelectInputText
+     * @param vce
+     */
     public void txtEqSimples_processValueChange(ValueChangeEvent vce) {
         String valorBusqueda = vce.getNewValue().toString().toUpperCase();
         if(valorBusqueda.equalsIgnoreCase("")){
@@ -1095,7 +917,7 @@ private List bit= new ArrayList();
         }
     }
 
-        private void llenarListaBitacoras(Existencia e){
+    private void llenarListaBitacoras(Existencia e){
         //LISTA DE BITACORAS
         Bitacoraestados [] bitacoras = new edu.ues.jhard.beans.BeanBaseJRequest().getBitacoraEstadosByIdExistencia(e);
         for(int i=0;i<bitacoras.length;i++){
@@ -1390,200 +1212,5 @@ private List bit= new ArrayList();
         this.estadoActualBit = estadoActualBit;
     }
 
-//    public void comboEstado_processValueChange(ValueChangeEvent vce) {
-//    }
-//
-//
-//    public void listaEqSimple_processValueChange(ValueChangeEvent vce) {
-//        String tmp=(String)this.listaEqS.getValue();
-//        if(tmp!=null){
-//        Integer id=Integer.parseInt(tmp);
-//        Equiposimple e=new BeanBaseJRequest().getEntityManager().find(Equiposimple.class, id);
-//
-//        this.eqSimpleElegidoAdmin=e;
-//
-//        System.out.println("ENTRA O Q PUTAS-->"+eqSimpleElegidoAdmin.getDescripcion());
-//
-//        }
-//    }
-
-//    private int opcionElegida=0;
-//    private Estadoequipo estadoElegidoEQ;
-//    private Equiposimple eqSimpleElegidoAdmin;
-//
-//
-//    public String btnAceptarEQ_action() {
-//        if (opcionElegida==1){
-//            Equiposimple eq = new Equiposimple();
-//
-//            eq.setDescripcion((String)this.txtNomEQ.getValue());
-//
-//            eq.setPropietario((String)this.txtPropietarioEQ.getValue());
-//
-//            String tmp=(String)this.comboEstadosEQ.getValue();
-//            if(tmp!=null){
-//
-//                Integer id=Integer.parseInt(tmp);
-//                Estadoequipo e=new BeanBaseJRequest().getEntityManager().find(Estadoequipo.class, id);
-//                this.estadoElegidoEQ= e;
-//
-//                eq.setIdestado(estadoElegidoEQ);
-//
-//                new BeanBaseJRequest().registrarEquipoSimple(eq);
-//
-//                this.popUpEqSimple.setRendered(false);
-//                System.out.println("RENDERICE");
-//                this.popUpEqSimple.setVisible(false);
-//                System.out.println("PUSE VISIBLE");
-//                this.popUpEqSimple.setModal(false);
-//                System.out.println("SOLO EL ES MODIFICABLE");
-//
-//
-//                this.lblMensajes.setValue("Equipo Simple Agregado con éxito");
-//                this.popUpMensajes.setRendered(true);
-//                System.out.println("RENDERICE");
-//                this.popUpMensajes.setVisible(true);
-//                System.out.println("PUSE VISIBLE");
-//                this.popUpMensajes.setModal(true);
-//                System.out.println("SOLO EL ES MODIFICABLE");
-//
-//         }
-//        }
-//        if(opcionElegida==2){
-//
-//
-//
-//
-//                new BeanBaseJRequest().modificarEquipoSImple(eqSimpleElegidoAdmin);
-//
-//                this.popUpEqSimple.setRendered(false);
-//                System.out.println("RENDERICE");
-//                this.popUpEqSimple.setVisible(false);
-//                System.out.println("PUSE VISIBLE");
-//                this.popUpEqSimple.setModal(false);
-//                System.out.println("SOLO EL ES MODIFICABLE");
-//
-//
-//                this.lblMensajes.setValue("Equipo Simple Modificado con éxito");
-//                this.popUpMensajes.setRendered(true);
-//                System.out.println("RENDERICE");
-//                this.popUpMensajes.setVisible(true);
-//                System.out.println("PUSE VISIBLE");
-//                this.popUpMensajes.setModal(true);
-//                System.out.println("SOLO EL ES MODIFICABLE");
-//
-//
-//        }
-//
-//        this.txtNomEQ.setValue("");
-//        this.txtPropietarioEQ.setValue("");
-//        this.llenarLista();
-//        this.opcionElegida=0;
-////        this.eqSimpleElegidoAdmin=null;
-////        this.estadoElegidoEQ=null;
-//        return null;
-//    }
-//
-//    public String btnCancelarEQ_action() {
-//        this.popUpEqSimple.setRendered(false);
-//        System.out.println("RENDERICE");
-//        this.popUpEqSimple.setVisible(false);
-//        System.out.println("PUSE VISIBLE");
-//        this.popUpEqSimple.setModal(false);
-//        System.out.println("SOLO EL ES MODIFICABLE");
-//        return null;
-//    }
-//
-//
-//
-//    public void listaEqS_processValueChange(ValueChangeEvent vce) {
-//        String tmp=(String)this.listaEqS.getValue();
-//        System.out.println("tmp-->"+tmp);
-//        if(tmp!=null){
-//            Integer id=Integer.parseInt(tmp);
-//            System.out.println("id-->"+id);
-//            Equiposimple e=new BeanBaseJRequest().getEntityManager().find(Equiposimple.class, id);
-//
-//            this.eqSimpleElegidoAdmin=e;
-//
-//            System.out.println("eqSimpleElegidoAdmin-->"+eqSimpleElegidoAdmin.getDescripcion());
-//
-//        }
-//    }
-//
-//    public String btnEliminarEqS_action() {
-//        System.out.println("ENTRA A BORRAR");
-//        if(eqSimpleElegidoAdmin!=null){
-//            this.opcionElegida=3;
-//            System.out.println("SE METE A ELIMINAR...");
-//            new BeanBaseJRequest().eliminarEquipoSimple(eqSimpleElegidoAdmin);
-//
-//            this.lblMensajes.setValue("Equipo Simple eliminado con éxito");
-//            this.popUpMensajes.setRendered(true);
-//            System.out.println("RENDERICE");
-//            this.popUpMensajes.setVisible(true);
-//            System.out.println("PUSE VISIBLE");
-//            this.popUpMensajes.setModal(true);
-//            System.out.println("SOLO EL ES MODIFICABLE");
-//
-//
-//        }
-//        else{
-//            this.lblMensajes.setValue("Seleccione primero un Equipo Simple");
-//            this.popUpMensajes.setRendered(true);
-//            System.out.println("RENDERICE");
-//            this.popUpMensajes.setVisible(true);
-//            System.out.println("PUSE VISIBLE");
-//            this.popUpMensajes.setModal(true);
-//            System.out.println("SOLO EL ES MODIFICABLE");
-//
-//        }
-//        return null;
-//    }
-//
-//    public String btnModEqS_action() {
-//        if(eqSimpleElegidoAdmin!=null){
-//
-//            this.txtNomEQ.setValue(this.eqSimpleElegidoAdmin.getDescripcion());
-//            this.txtPropietarioEQ.setValue(this.eqSimpleElegidoAdmin.getPropietario());
-//
-//            this.opcionElegida=2;
-//            System.out.println("SE METE A MODIFICAR");
-//            this.popUpEqSimple.setRendered(true);
-//            System.out.println("RENDERICE");
-//            this.popUpEqSimple.setVisible(true);
-//            System.out.println("PUSE VISIBLE");
-//            this.popUpEqSimple.setModal(true);
-//            System.out.println("SOLO EL ES MODIFICABLE");
-//
-//        }
-//        else{
-//            this.lblMensajes.setValue("Seleccione primero un Equipo Simple");
-//            this.popUpMensajes.setRendered(true);
-//            System.out.println("RENDERICE");
-//            this.popUpMensajes.setVisible(true);
-//            System.out.println("PUSE VISIBLE");
-//            this.popUpMensajes.setModal(true);
-//            System.out.println("SOLO EL ES MODIFICABLE");
-//
-//        }
-//        return null;
-//    }
-//
-//    public String btnAgregarEqS_action() {
-//        this.opcionElegida=1;
-//
-//        this.popUpEqSimple.setRendered(true);
-//        System.out.println("RENDERICE");
-//        this.popUpEqSimple.setVisible(true);
-//        System.out.println("PUSE VISIBLE");
-//        this.popUpEqSimple.setModal(true);
-//        System.out.println("SOLO EL ES MODIFICABLE");
-//
-//        return null;
-//    }
-
-
-    
 }
 

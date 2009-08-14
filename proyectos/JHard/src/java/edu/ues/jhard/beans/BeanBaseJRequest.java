@@ -17,8 +17,11 @@ import javax.persistence.*;
 public class BeanBaseJRequest extends BeanBase{
 
 
-    //CRUD
-
+    /**
+     * Método para obtener todos los Estadoequipo de JHard
+     * @return Estadoequipo[] eeq
+     *
+     */
     public Estadoequipo[] getEstadoEquipo() {
         EntityManager em=this.getEntityManager();
         
@@ -31,6 +34,10 @@ public class BeanBaseJRequest extends BeanBase{
         return eeq;
     }
 
+    /**
+     * Método para agregar un nuevo Estadoequipo
+     * @param Estadoequipo eeq
+     */
      public void registrarEstadoEquipo(Estadoequipo eeq) {
         EntityManager em=this.getEntityManager();
         em.getTransaction().begin();
@@ -40,6 +47,10 @@ public class BeanBaseJRequest extends BeanBase{
     }
 
 
+     /**
+      * Método para obtener todos las Bitacoraestados de JHard
+      * @return Bitacoraestados[] be
+      */
      public Bitacoraestados[] getBitacoraEstados() {
         EntityManager em=this.getEntityManager();
 
@@ -52,6 +63,10 @@ public class BeanBaseJRequest extends BeanBase{
         return be;
     }
 
+     /**
+      * Método para registrar una nueva Bitacoraestados
+      * @param Bitacoraestados be
+      */
      public void registrarBitacoraEstados(Bitacoraestados be) {
         EntityManager em=this.getEntityManager();
         em.getTransaction().begin();
@@ -60,6 +75,10 @@ public class BeanBaseJRequest extends BeanBase{
 
     }
 
+     /**
+      * Método para modificar una Bitacoraestado existente en JHard
+      * @param Bitacoraestados b
+      */
      public void modificarBitacoraEstados(Bitacoraestados b){
 
          EntityManager em = this.getEntityManager();
@@ -74,6 +93,10 @@ public class BeanBaseJRequest extends BeanBase{
          em.getTransaction().commit();
      }
 
+     /**
+      * Método para modificar una Existencia de la base de datos de JHard
+      * @param Existencia e
+      */
      public void modificarExistencia(Existencia e){
 
          EntityManager em = this.getEntityManager();
@@ -88,6 +111,10 @@ public class BeanBaseJRequest extends BeanBase{
      }
 
 
+     /**
+      * Método para obtener todos los Mantenimientos de JHard
+      * @return Mantenimiento[] m;
+      */
      public Mantenimiento[] getMantenimiento() {
         EntityManager em=this.getEntityManager();
 
@@ -100,6 +127,10 @@ public class BeanBaseJRequest extends BeanBase{
         return m;
     }
 
+     /**
+      * Método para registrar un nuevo mantenimiento
+      * @param Mantenimiento m
+      */
      public void registrarMantenimiento(Mantenimiento m) {
         EntityManager em=this.getEntityManager();
         em.getTransaction().begin();
@@ -108,6 +139,11 @@ public class BeanBaseJRequest extends BeanBase{
 
     }
 
+     /**
+      * Método para modificar un mantenimiento, en el estado en el que se encuentra, donde el parámetro value puede ser "Pendiente" o "Finalizado"
+      * @param Mantenimiento m
+      * @param String value
+      */
      public void modificarMantenimiento(Mantenimiento m, String value){
 
          EntityManager em = this.getEntityManager();
@@ -120,6 +156,10 @@ public class BeanBaseJRequest extends BeanBase{
      }
 
 
+     /**
+      * Método para obtener todos los Técnicos de JHard
+      * @return Tecnico[] t
+      */
     public Tecnico[] getTecnico() {
         EntityManager em=this.getEntityManager();
 
@@ -132,6 +172,10 @@ public class BeanBaseJRequest extends BeanBase{
         return t;
     }
 
+    /**
+     * Método para agregar un nuevo Técnico
+     * @param Tecnico t
+     */
      public void registrarTecnico(Tecnico t) {
         EntityManager em=this.getEntityManager();
         em.getTransaction().begin();
@@ -163,6 +207,12 @@ public class BeanBaseJRequest extends BeanBase{
         return s;
     }
 
+     /**
+      * Método para agregar una nueva solicitud a JHard. Coloca en estado de mantenimiento el equipo asociado a dicha solicitud y
+      * crea además un registro en Bitacoraestados con la orden que se extiende que el equipo ha fallado
+      *
+      * @param Solicitud s
+      */
      public void registrarSolicitud(Solicitud s) {
         Bitacoraestados b = new Bitacoraestados();
         b.setDescripcion(s.getDescripcion());
@@ -196,6 +246,10 @@ public class BeanBaseJRequest extends BeanBase{
         em.getTransaction().commit();
     }
 
+     /**
+      * Método para eliminar una solicitud de JHard
+      * @param Solicitud s
+      */
      public void eliminarSolicitud(Solicitud s){
 
          EntityManager em = this.getEntityManager();
@@ -205,6 +259,10 @@ public class BeanBaseJRequest extends BeanBase{
          em.getTransaction().commit();
      }
 
+     /**
+      * Método para obtener todo el Equiposimple que se encuentre funcionando con estado "Excelente"
+      * @return Equiposimple[] eqs
+      */
      public Equiposimple[] getEquipoSimpleFuncionando() {
         EntityManager em=this.getEntityManager();
 
@@ -218,6 +276,10 @@ public class BeanBaseJRequest extends BeanBase{
         return eqs;
     }
 
+     /**
+      * Método para obtener todo el Equiposimple que se encuentre funcionando con estado "Excelente"
+      * @return List<Equiposimple> eqs
+      */
     public List<Equiposimple> getListaEquipoSimpleFuncionando() {
         EntityManager em=this.getEntityManager();
 
@@ -232,6 +294,10 @@ public class BeanBaseJRequest extends BeanBase{
         return eqs;
     }
 
+    /**
+     * Método para obtener todos los Equipos Simples de JHard
+     * @return Equiposimple[] eqs
+     */
     public Equiposimple[] getEquipoSimple() {
         EntityManager em=this.getEntityManager();
 
@@ -244,6 +310,10 @@ public class BeanBaseJRequest extends BeanBase{
         return eqs;
     }
 
+    /**
+     * Método para obtener una lista de todos los Equipos Simples de JHard
+     * @return List<Equiposimple> eqs
+     */
     public List<Equiposimple> getListaEquipoSimple() {
         EntityManager em=this.getEntityManager();
 
@@ -256,6 +326,10 @@ public class BeanBaseJRequest extends BeanBase{
         return eqs;
     }
 
+    /**
+     * Método para obtener una lista de todas las Existencias de JHard
+     * @return List<Existencia> e
+     */
     public List<Existencia> getListaExistencia() {
         EntityManager em=this.getEntityManager();
 
@@ -268,6 +342,10 @@ public class BeanBaseJRequest extends BeanBase{
         return e;
     }
 
+    /**
+     * Método para obtener una lista de Existencias con estado "Excelente"
+     * @return List<Existencia> e
+     */
     public List<Existencia> getListaExistenciaFuncionando() {
         EntityManager em=this.getEntityManager();
 
@@ -283,6 +361,10 @@ public class BeanBaseJRequest extends BeanBase{
         return e;
     }
 
+    /**
+     * Método para obtener todas las Existencias de JHard
+     * @return Existencia[] ex
+     */
     public Existencia[] getExistencia() {
         EntityManager em=this.getEntityManager();
         //String codigo ="%labcom1%";
@@ -299,6 +381,10 @@ public class BeanBaseJRequest extends BeanBase{
     }
 
 
+    /**
+     * Método para agregar un nuevo Equipo Simple
+     * @param Equiposimple eqs
+     */
     public void registrarEquipoSimple(Equiposimple eqs) {
         EntityManager em=this.getEntityManager();
         em.getTransaction().begin();
@@ -307,6 +393,10 @@ public class BeanBaseJRequest extends BeanBase{
 
     }
 
+    /**
+     * Método para modificar un Equipo Simple en la base de datos de JHard
+     * @param Equiposimple e
+     */
     public void modificarEquipoSImple(Equiposimple e){
 
          EntityManager em = this.getEntityManager();
@@ -331,6 +421,10 @@ public class BeanBaseJRequest extends BeanBase{
          em.getTransaction().commit();
      }
 
+    /**
+     * Método para eliminar un Equipo simple en la base de datos de JHard
+     * @param Equiposimple e
+     */
     public void eliminarEquipoSimple(Equiposimple e){
 
          EntityManager em = this.getEntityManager();
@@ -341,7 +435,11 @@ public class BeanBaseJRequest extends BeanBase{
      }
 
 
-//REGLAS DE NEGOCIO
+     /**
+      * Método para obtener los Equipos Simples pertenecientes a un propietario en común
+      * @param String propietario
+      * @return Equiposimple[] eqs
+      */
     public Equiposimple[] getEquipoSimpleByPropietario(String propietario) {
         EntityManager em=this.getEntityManager();
 
@@ -356,6 +454,11 @@ public class BeanBaseJRequest extends BeanBase{
         return eqs;
     }
 
+    /**
+     * Método para obtener un Equipo Simple mediante su ID
+     * @param Integer idEquiposimple
+     * @return Equiposimple eqs
+     */
     public Equiposimple getEquipoSimpleByID(Integer idEquiposimple) {
         EntityManager em=this.getEntityManager();
 
@@ -369,6 +472,12 @@ public class BeanBaseJRequest extends BeanBase{
         return eqs;
     }
 
+    /**
+     * Método para obtener las solicitudes mediante una prioridad en específica, tomando en cuenta que las tres prioridades
+     * posibles son "Alta", "Media" y "Baja"
+     * @param String prioridad
+     * @return Solicitud[] s
+     */
     public Solicitud[] getSolicitudesByPrioridad(String prioridad) {
         EntityManager em=this.getEntityManager();
 
@@ -384,6 +493,11 @@ public class BeanBaseJRequest extends BeanBase{
     }
 
 
+    /**
+     * Método para obtener un Estadoequipo a través de su ID
+     * @param Integer idEstado
+     * @return Estadoequipo eeq
+     */
     public Estadoequipo getEstadoEquipoByID(Integer idEstado) {
         EntityManager em=this.getEntityManager();
 
@@ -398,6 +512,11 @@ public class BeanBaseJRequest extends BeanBase{
     }
 
 
+    /**
+     * Método para obtener una solicitud por una fecha específica
+     * @param Date fecha
+     * @return Solicitud s
+     */
     public Solicitud getSolicitudByFecha(Date fecha ) {
         EntityManager em=this.getEntityManager();
 
@@ -411,6 +530,11 @@ public class BeanBaseJRequest extends BeanBase{
         return s;
     }
 
+    /**
+     * Método para obtener una solicitud por una prioridad específica
+     * @param String prioridad
+     * @return Solicitud s
+     */
     public Solicitud getSolicitudByPrioridad(String prioridad) {
         EntityManager em=this.getEntityManager();
 
@@ -425,6 +549,11 @@ public class BeanBaseJRequest extends BeanBase{
         return s;
     }
 
+    /**
+     * Método para obtener las Bitacoraestados de un Equipo Simple en particular
+     * @param Equiposimple e
+     * @return Bitacoraestados[] be
+     */
     public Bitacoraestados[] getBitacoraEstadosByIdEquipoSimple(Equiposimple e) {
         EntityManager em=this.getEntityManager();
 
@@ -440,7 +569,11 @@ public class BeanBaseJRequest extends BeanBase{
     }
 
 
-
+    /**
+     * Método para obtener las Bitacoraestados de una Existencia en particular
+     * @param Existencia e
+     * @return Bitacoraestados[] be
+     */
     public Bitacoraestados[] getBitacoraEstadosByIdExistencia(Existencia e) {
         EntityManager em=this.getEntityManager();
 
@@ -455,6 +588,12 @@ public class BeanBaseJRequest extends BeanBase{
         return be;
     }
 
+    /**
+     * Método para obtener todos los Mantenimientos de acuerdo a un estado en particular, tomando en cuenta que los estados
+     * posibles son "Pendiente" y "Finalizado"
+     * @param String estado
+     * @return Mantenimiento[] m
+     */
     public Mantenimiento[] getMantenimientoByEstado(String estado) {
         EntityManager em=this.getEntityManager();
 
@@ -462,11 +601,11 @@ public class BeanBaseJRequest extends BeanBase{
 
         q.setParameter("estado", estado);
 
-        Mantenimiento[] be=(Mantenimiento[])q.getResultList().toArray(new Mantenimiento[0]);
+        Mantenimiento[] m=(Mantenimiento[])q.getResultList().toArray(new Mantenimiento[0]);
 
-        for(int i=0;i<be.length;i++)
-            em.refresh(be[i]);
-        return be;
+        for(int i=0;i<m.length;i++)
+            em.refresh(m[i]);
+        return m;
     }
 
 }

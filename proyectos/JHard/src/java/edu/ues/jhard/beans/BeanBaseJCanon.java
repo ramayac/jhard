@@ -18,9 +18,13 @@ import javax.persistence.*;
 public class BeanBaseJCanon extends BeanBase {
 
     public BeanBaseJCanon(){
-            }
+    }
 
-
+    /**
+     * Método para obtener todas las reservas de equipo multimedia de JHard
+     *
+     * @return Reserva[] r
+     */
     public Reserva[] getReserva() {
         EntityManager em=this.getEntityManager();
 
@@ -34,6 +38,11 @@ public class BeanBaseJCanon extends BeanBase {
     }
 
 
+    /**
+     * Método para obtener todo el equipo de una clasificación en particular, por medio del ID de Clasificacion
+     * @param Integer idclasificacion
+     * @return Equipo [] eq
+     */
     public Equipo[] getEquipoClasificado(int idclasificacion) {
         EntityManager em=this.getEntityManager();
 
@@ -48,6 +57,10 @@ public class BeanBaseJCanon extends BeanBase {
         return e;
     }
 
+    /**
+     * Método para agregar una nueva Existencia en la base de datos
+     * @param Existencia e
+     */
     public void registrarExistencia(Existencia e) {
         EntityManager em=this.getEntityManager();
         em.getTransaction().begin();
@@ -55,6 +68,11 @@ public class BeanBaseJCanon extends BeanBase {
         em.getTransaction().commit();
 
     }
+
+    /**
+     * Método para modificar el estado de una reserva de la base de datos
+     * @param Reserva r
+     */
     public void modificarEstadoReserva(Reserva r){
 
          EntityManager em = this.getEntityManager();
@@ -72,6 +90,10 @@ public class BeanBaseJCanon extends BeanBase {
          em.getTransaction().commit();
      }
 
+    /**
+     * Método para eliminar una Reserva de la base de datos
+     * @param Reserva r
+     */
     public void eliminarReserva(Reserva r){
 
          EntityManager em = this.getEntityManager();
@@ -82,7 +104,12 @@ public class BeanBaseJCanon extends BeanBase {
      }
 
 
-
+     /**
+      * Método para obtener reservas de equipo multimedia por su estado, tomando en cuenta que los estados pueden ser
+      * "Pendiente", "En Uso" y "Despachada"
+      * @param Integer estado
+      * @return Reserva[] r
+      */
      public Reserva[] getReservaByEstado(Integer estado) {
         EntityManager em=this.getEntityManager();
 
@@ -97,15 +124,21 @@ public class BeanBaseJCanon extends BeanBase {
         return r;
     }
 
+     /**
+      * Método para agregar una nueva reserva de equipo multimedia
+      * @param Reserva r
+      */
      public void registrarReserva(Reserva r) {
         EntityManager em=this.getEntityManager();
         em.getTransaction().begin();
         em.persist(r);
         em.getTransaction().commit();
+     }
 
-    }
-
-
+     /**
+      * Método para obtener todos los Estadoreserva de JHard
+      * @return Estadoreserva[] er
+      */
      public Estadoreserva[] getEstadoReserva() {
         EntityManager em=this.getEntityManager();
 
@@ -118,14 +151,23 @@ public class BeanBaseJCanon extends BeanBase {
         return er;
     }
 
+     /**
+      * Método para agregar un nuevo Estadoreserva, de modo que JHard pueda ser extensible en todo momento
+      * @param Estadoreserva er
+      */
      public void registrarEstadoReserva(Estadoreserva er) {
         EntityManager em=this.getEntityManager();
         em.getTransaction().begin();
         em.persist(er);
         em.getTransaction().commit();
-
     }
 
+     /**
+      * Método para obtener todas las reservas de una hora y día específicos. Se envía la fecha con hora completa y devuelve
+      * el número de reservas en formato String pendientes para ese día y hora
+      * @param Date r
+      * @return String count
+      */
      public String getReservasDeUnaMismaHoraFecha(Date r){
          String count;
 
@@ -141,7 +183,12 @@ public class BeanBaseJCanon extends BeanBase {
      }
 
 
-
+     /**
+      * Método para obtener el número de equipos multimedia disponibles para realizar una reserva, es decir que unicamente
+      * toma en cuenta los equipos que están en dicha clasificación y que se encuentra en estado "Excelente"
+      * @param Integer clasificacionEquipo
+      * @return String count
+      */
      public String getNumeroEquipoMultimedia(Integer clasificacionEquipo){
          String count="";
 
@@ -156,6 +203,12 @@ public class BeanBaseJCanon extends BeanBase {
          return count;
      }
 
+     /**
+      * Método para obtener todo el equipo multimedia registrado en JHard, sin importar su estado
+      *
+      * @param Integer clasificacionEquipo
+      * @return Existencia[] e
+      */
      public Existencia [] getEquipoMultimedia(Integer clasificacionEquipo){
 
          EntityManager em = this.getEntityManager();
@@ -175,6 +228,11 @@ public class BeanBaseJCanon extends BeanBase {
          return e;
      }
 
+     /**
+      * Método para obtener todas las reservas de equipo multimedia que se encuentra con estado "pendiente" y "en uso",
+      * descartando las que se encuentran despachadas
+      * @return List<Reserva> listaReservasPendientesEnUso
+      */
      public List<Reserva> getReservasPendientesEnUso(){
 
          List<Reserva> listaReservasPendientesEnUso;
@@ -188,7 +246,11 @@ public class BeanBaseJCanon extends BeanBase {
          return listaReservasPendientesEnUso;
      }
 
-      public List<Reserva> getReservas(){
+     /**
+      * Método para obtener una lista con todas las reservas realizadas, sin importar el estado en el que se encuentren
+      * @return List<Reserva> r
+      */
+     public List<Reserva> getReservas(){
 
          EntityManager em = this.getEntityManager();
 
@@ -196,6 +258,13 @@ public class BeanBaseJCanon extends BeanBase {
 
      }
 
+     /**
+      * Método para obtener todas las reservas de un mismo día
+      * @param Integer dia
+      * @param Integer mes
+      * @param Integer anio
+      * @return List<Reserva> lista
+      */
       public List<Reserva> getReservasMismoDia(int dia, int mes, int anio){
 
           List<Reserva> lista;
@@ -209,12 +278,6 @@ public class BeanBaseJCanon extends BeanBase {
           Query q = em.createNativeQuery(sql,Reserva.class);
 
           lista = q.getResultList();
-//          Reserva[] r = (Reserva[])q.getResultList().toArray(new Reserva[0]);
-//
-//         for (int i = 0; i < r.length; i++) {
-//             em.refresh(r[i]);
-//         }
-
 
           return lista;
       }

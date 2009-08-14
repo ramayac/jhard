@@ -43,11 +43,9 @@ import javax.faces.model.SelectItem;
 
 
 /**
- * <p>Page bean that corresponds to a similarly named JSP page.  This
- * class contains component definitions (and initialization code) for
- * all components that you have defined on this page, as well as
- * lifecycle methods and event handlers where you may add behavior
- * to respond to incoming events.</p>
+ *
+ * Bean para la página JSP de jcanon, que muestra las reservas de equipo multimedia existentes y
+ * sirve para ingresar nuevas reservas
  */
 public class jcanon extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
@@ -400,15 +398,11 @@ public class jcanon extends AbstractPageBean {
 
     private String ElementoElegido;
     /**
-     * <p>Construct a new Page bean instance.</p>
+     * <p>Constructor.</p>
      */
     public jcanon() {
-//        fakeCLaptop.clear();
-//        fakeCCan.clear();
-//        fakeDocente.clear();
         fakeHoraFin.clear();
         fakeHoraInicio.clear();
-//        selectOneMenu2DefaultItems.clear();
         selectOneMenu1DefaultItems.clear();
         selectOneMenu1DefaultItems.setItems(new String[]{"Cañon","Laptop"});
 
@@ -456,10 +450,6 @@ public class jcanon extends AbstractPageBean {
      */
     @Override
     public void init() {
-//        this.panelMensajes.setRendered(false);
-//        this.panelPopup1Bean.setShowDraggablePanel(false);
-//        this.panelMensajes.setVisible(false);
-
         this.renderer=false;
         this.rendererMultimedia=false;
 
@@ -592,10 +582,6 @@ private List exc = new ArrayList();
             getExc().add(new SelectItem(existencias[i].getIdexistencia(),label));
         }
 
-//        UISelectItems itemsEx = new UISelectItems();
-//        itemsEx.setValue(ex);
-//        this.comboCan.getChildren().add(itemsEx);
-
         }else{
             this.btnCrearReserva.setDisabled(true);
             this.mensajeError="No se encuentran existencias disponibles.";
@@ -649,14 +635,13 @@ private List in = new ArrayList();
             getIn().add(new SelectItem(docentes[i].getIddocente(),label));
         }
 
-//        UISelectItems itemsDoc = new UISelectItems();
-//        itemsDoc.setValue(in);
-//        this.comboDocente.getChildren().add(itemsDoc);
-
     }
-//    fakeHoraFin.setItems(new String[]{});
-//    fakeHoraInicio.setItems(new String[]{});
 
+    /**
+     * Método para llenar los comboboxes con las horas disponibles para reservas, según los horarios
+     * que se manejan en la Universidad
+     * @param Integer inicioFin
+     */
     public void LlenarHora(int inicioFin){
 
         String [] horas=null;
@@ -718,6 +703,9 @@ private List in = new ArrayList();
         LlenarHora(2);
     }
 
+    /**
+     * Método para manejar la acción para crear una nueva reserva de equipo multimedia
+     */
     public String btnCrearReserva_action() {
 
             BeanBaseJCanon instance = new BeanBaseJCanon();
@@ -941,6 +929,10 @@ private List equ = new ArrayList();
         }
     }
 
+    /**
+     * Método para agregar un nuevo Equipo Multimedia
+     * @return
+     */
     public String btnAceptarAdd_action() {
         Existencia e = new Existencia();
         Equipo eq = new Equipo();
@@ -1071,7 +1063,10 @@ private List equ = new ArrayList();
         return equ;
     }
 
-
+    /**
+     * Método para colocar la clasificación específica con respecto al nuevo equipo multimedia que se desea agregar.
+     * Pueden ser cañones o laptops
+     */
     public void setearClasificacion(){
 
         String idClasificacion="";
@@ -1081,7 +1076,6 @@ private List equ = new ArrayList();
             idClasificacion="14";
         }
         System.out.println("la disque clasificacion a mostrar es -->" + idClasificacion);
-        //String idClasificacion = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("clId");
         getJInventInstance().getClasificaciontm().seleccionarNodo(idClasificacion);
 
     }

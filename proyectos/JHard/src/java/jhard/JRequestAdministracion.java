@@ -11,8 +11,6 @@ import com.icesoft.faces.component.ext.HtmlInputText;
 import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.icesoft.faces.component.ext.HtmlOutputText;
 import com.icesoft.faces.component.ext.HtmlSelectOneListbox;
-import com.icesoft.faces.component.ext.HtmlSelectOneMenu;
-import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
 import com.icesoft.faces.component.jsfcl.data.PopupBean;
 import com.icesoft.faces.component.panelpopup.PanelPopup;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
@@ -20,21 +18,18 @@ import edu.ues.jhard.beans.BeanBaseJRequest;
 import edu.ues.jhard.jpa.Equiposimple;
 import edu.ues.jhard.jpa.Estadoequipo;
 import edu.ues.jhard.jpa.Tecnico;
-import edu.ues.jhard.util.Navegacion;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.FacesException;
-import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 
 /**
- * <p>Page bean that corresponds to a similarly named JSP page.  This
- * class contains component definitions (and initialization code) for
- * all components that you have defined on this page, as well as
- * lifecycle methods and event handlers where you may add behavior
- * to respond to incoming events.</p>
+ *
+ * Bean para la página de JRequestAdministracion, que realiza labores administrativas y de mantenimiento
+ * en JRequest
+ * @author Hugol
  */
 public class JRequestAdministracion extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
@@ -235,7 +230,7 @@ public class JRequestAdministracion extends AbstractPageBean {
     // </editor-fold>
 
     /**
-     * <p>Construct a new Page bean instance.</p>
+     * <p>Constructor.</p>
      */
     public JRequestAdministracion() {
         limpiarListasCombos();
@@ -366,7 +361,11 @@ public class JRequestAdministracion extends AbstractPageBean {
     public List getTec() {
         return tec;
     }
-   
+
+    /**
+     * Método para llenar con información a todas las Listas y Comboboxes de esta página. Dichas listas son para técnicos
+     * y equipos simples
+     */
    private void llenarListasCombos(){
         //Llenar lista de Tecnicos para su Administracion
 
@@ -383,11 +382,6 @@ public class JRequestAdministracion extends AbstractPageBean {
             tec.add(new SelectItem(tecnicos[i].getIdtecnico(),label));
         }
 
-//        UISelectItems itemsTec = new UISelectItems();
-//        itemsTec.setValue(tec);
-//        this.listaTecnicos.getChildren().add(itemsTec);
-
-
         //Llenar lista de Equipos simples para su Administracion
 
 
@@ -403,34 +397,15 @@ public class JRequestAdministracion extends AbstractPageBean {
             //equipoSimple.add(new SelectItem(eqs[i].getIdEquipoSimple(),label));
             equipoSimple.add(new SelectItem(eqs[i].getIdEquipoSimple(),label));
         }
-
-        //UISelectItems itemsEQ = new UISelectItems();
-        //itemsEQ.setValue(equipoSimple);
-        //this.listaEqS.getChildren().add(itemsEQ);
-
-
-        //Llenar Combo de Estados de equipos para la Administracion
-
-//        Estadoequipo [] estados = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
-//
-//        estadoElegido = estados[0];
-//
-//        //ArrayList eeq = new ArrayList();
-//
-//        for(int i=0;i<estados.length;i++){
-//
-//            String label = estados[i].getDescripcion();
-//            eeq.add(new SelectItem(estados[i].getIdestado(),label));
-//        }
-
-        //UISelectItems itemsEeq = new UISelectItems();
-        //itemsEeq.setValue(eeq);
-        //this.comboEstadosEQ.getChildren().add(itemsEeq);
-
-
     }
+
+
     private String efecto="";
 
+    /**
+     * Método para manejar el evento del cambio en el ítem elegido de la lista de técnicos
+     * @param ValueChangeEvent vce
+     */
     public void listaTecnicos_processValueChange(ValueChangeEvent vce) {
         String tmp=(String)this.listaTecnicos.getValue();
         if(tmp!=null){
@@ -447,7 +422,11 @@ public class JRequestAdministracion extends AbstractPageBean {
         }
     }
 
-
+    /**
+     * Método para manejar el evento del cambio en el ítem elegido de la lista de equipos simples
+     *
+     * @param ValueChangeEvent vce
+     */
     public void listaEqS_processValueChange(ValueChangeEvent vce) {
         String tmp=(String)this.listaEqS.getValue();
         if(tmp!=null){
@@ -461,6 +440,10 @@ public class JRequestAdministracion extends AbstractPageBean {
         }
     }
 
+    /**
+     * Método para manejar acción del botón btnAgregarTec
+     * @return
+     */
     public String btnAgregarTec_action() {
         this.popUpAgregarTec.setRendered(true);
         System.out.println("RENDERICE");
@@ -471,6 +454,10 @@ public class JRequestAdministracion extends AbstractPageBean {
         return null;
     }
 
+    /**
+     * Método para manejar acción del botón btnEliminarTec
+     * @return
+     */
     public String btnEliminarTec_action() {
         if(TecnicoElegido!=null){
             new BeanBaseJRequest().eliminarTecnico(this.TecnicoElegido);
@@ -629,6 +616,10 @@ public class JRequestAdministracion extends AbstractPageBean {
         return null;
     }
 
+    /**
+     * Método para agregar un nuevo Equipo simple
+     * @return
+     */
     public String btnAgregarEqS_action() {
         this.opcionElegida=1;
 
@@ -641,6 +632,10 @@ public class JRequestAdministracion extends AbstractPageBean {
         return null;
     }
 
+    /**
+     * Método para modificar un equipo simple existente
+     * @return
+     */
     public String btnModEqS_action() {
         if(EquipoElegido!=null){
 
@@ -671,6 +666,10 @@ public class JRequestAdministracion extends AbstractPageBean {
         return null;
     }
 
+    /**
+     * Método para eliminar un equipo simple
+     * @return
+     */
     public String btnEliminarEqS_action() {
         if(EquipoElegido!=null){
             new BeanBaseJRequest().eliminarEquipoSimple(EquipoElegido);
@@ -703,6 +702,9 @@ public class JRequestAdministracion extends AbstractPageBean {
         return null;
     }
 
+    /**
+     * Método para limpiar todas las listas y combos
+     */
     private void limpiarListasCombos(){
         System.out.println("ME METO A LIMPIAR");
         this.eeq.clear();

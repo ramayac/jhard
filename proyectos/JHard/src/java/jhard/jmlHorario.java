@@ -26,11 +26,8 @@ import javax.faces.model.SelectItem;
 
 
 /**
- * <p>Page bean that corresponds to a similarly named JSP page.  This
- * class contains component definitions (and initialization code) for
- * all components that you have defined on this page, as well as
- * lifecycle methods and event handlers where you may add behavior
- * to respond to incoming events.</p>
+ * Bean para página de jmlHorario, que muestra los horarios y agrega nuevos a la manta de horarios
+ * del Labcom-1 para el módulo de ManLab
  */
 public class jmlHorario extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
@@ -142,7 +139,7 @@ public class jmlHorario extends AbstractPageBean {
     
 
     /**
-     * <p>Construct a new Page bean instance.</p>
+     * <p>Constructor.</p>
      */
     public jmlHorario() {
 
@@ -228,6 +225,10 @@ public class jmlHorario extends AbstractPageBean {
     public void destroy() {
     }
 
+    /**
+     * Método para llenar los comoboboxes con las horas disponbiles para horarios en LABCOM-1
+     * @param inicioFin
+     */
     public void LlenarHora(int inicioFin){
 
         String [] horas=null;
@@ -324,6 +325,10 @@ public class jmlHorario extends AbstractPageBean {
 
     }
 
+    /**
+     * Método para inscribir un nuevo curso en un horario elegido
+     * @return
+     */
     public String btnInscribirCurso_action() {
         Horario r = new Horario();
         BeanBaseJManLab instance = new BeanBaseJManLab();

@@ -31,11 +31,8 @@ import javax.faces.context.FacesContext;
 
 
 /**
- * <p>Page bean that corresponds to a similarly named JSP page.  This
- * class contains component definitions (and initialization code) for
- * all components that you have defined on this page, as well as
- * lifecycle methods and event handlers where you may add behavior
- * to respond to incoming events.</p>
+ * Bean para página JSP de jrequestUser, que sirve para buscar posibles soluciones a los problemas
+ * informñaticosque tienen los usuarios comunes de la UES-FMO
  */
 public class jrequestUser extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
@@ -169,7 +166,7 @@ public class jrequestUser extends AbstractPageBean {
     }
 
     /**
-     * <p>Construct a new Page bean instance.</p>
+     * <p>Constructor.</p>
      */
     public jrequestUser() {
         dirWiki="jwikiUser.iface?wkid=";
@@ -192,9 +189,7 @@ public class jrequestUser extends AbstractPageBean {
      */
     @Override
     public void init() {
-        //this.popUpRegister.setRendered(false);
         this.renderer=false;
-        // Perform initializations inherited from our superclass
         super.init();
         // Perform application initialization that must complete
         // *before* managed components are initialized
@@ -278,17 +273,12 @@ public class jrequestUser extends AbstractPageBean {
         return (ApplicationBean1) getBean("ApplicationBean1");
     }
 
-//    public void comboProblemas_processValueChange(ValueChangeEvent vce) {
-//
-//        String tmp=(String)this.comboProblemas.getValue();
-//        Integer id=Integer.valueOf(tmp);
-//        Tecnico t=new BeanBaseJRequest().getEntityManager().find(Tecnico.class, id);
-//
-//        this.tecnicoElegido= t;
-//
-//        this.select.setValue(this.tecnicoElegido.getNombres() + this.tecnicoElegido.getApellidos());
-//    }
 
+    /**
+     * Método para para buscar las posibles soluciones según las palabras clave
+     * que haya ingresado el usuario
+     * @return
+     */
     public String btnBuscar_action() {
         this.estatus.setActiveLabel("Buscando en JWiki");
 
@@ -321,6 +311,10 @@ public class jrequestUser extends AbstractPageBean {
         return null;
     }
 
+    /**
+     * Método para enviar hacia el artículo seleccionado al usuario, dado el ID del artículo
+     * @return
+     */
     public String irWiki(){
         String idArt = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idarticulo");
         dirWiki+=idArt;

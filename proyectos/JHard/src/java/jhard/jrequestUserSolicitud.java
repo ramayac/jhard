@@ -32,11 +32,8 @@ import javax.faces.model.SelectItem;
 
 
 /**
- * <p>Page bean that corresponds to a similarly named JSP page.  This
- * class contains component definitions (and initialization code) for
- * all components that you have defined on this page, as well as
- * lifecycle methods and event handlers where you may add behavior
- * to respond to incoming events.</p>
+ * Bean para página JSP de jrequestUserSolicitud, que envía las solicitudes de soporte técnico que los usuarios realizan
+ * para sus equipos simples de la Facultad
  */
 public class jrequestUserSolicitud extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
@@ -177,30 +174,9 @@ public void LimpiarCombos(){
 private List eqs = new ArrayList();
 private List eeq = new ArrayList();
 
-public void LlenarCombos(){
+    public void LlenarCombos(){
 
         LimpiarCombos();
-        //SELECTINPUT DE EQUIPOS SIMPLES
-//        Equiposimple [] eqsimple = new edu.ues.jhard.beans.BeanBaseJRequest().getEquipoSimple();
-//        eqElegido= eqsimple[0];
-//        for(int i=0;i<eqsimple.length;i++){
-//            String label = eqsimple[i].getPropietario()+" - "+eqsimple[i].getDescripcion();
-//            getEqs().add(new SelectItem(eqsimple[i].getIdEquipoSimple(),label));
-//        }
-//        UISelectItems itemsEq = new UISelectItems();
-//        itemsEq.setValue(eqs);
-//        this.comboEqSimple.getChildren().add(itemsEq);
-
-//        //COMBO DE ESTADOS DE EQUIPOS
-//        Estadoequipo[] estados = new edu.ues.jhard.beans.BeanBaseJRequest().getEstadoEquipo();
-//        estadoElegido= estados[0];
-//        for(int i=0;i<estados.length;i++){
-//            String label = estados[i].getNombre();
-//            getEeq().add(new SelectItem(estados[i].getIdestado(),label));
-//        }
-//        UISelectItems itemsEstad = new UISelectItems();
-//        itemsEstad.setValue(getEeq());
-//        this.comboEstados.getChildren().add(itemsEstad);
     }
 
 
@@ -261,33 +237,12 @@ public void LlenarCombos(){
     public void setLblUsuario(HtmlOutputLabel hol) {
         this.lblUsuario = hol;
     }
-//    private DefaultSelectItemsArray comboEqSimpleDefaultItems = new DefaultSelectItemsArray();
-//
-//    public DefaultSelectItemsArray getComboEqSimpleDefaultItems() {
-//        return comboEqSimpleDefaultItems;
-//    }
-//
-//    public void setComboEqSimpleDefaultItems(DefaultSelectItemsArray dsia) {
-//        this.comboEqSimpleDefaultItems = dsia;
-//    }
-//    private DefaultSelectItemsArray comboEstadosDefaultItems = new DefaultSelectItemsArray();
-//
-//    public DefaultSelectItemsArray getComboEstadosDefaultItems() {
-//        return comboEstadosDefaultItems;
-//    }
-//
-//    public void setComboEstadosDefaultItems(DefaultSelectItemsArray dsia) {
-//        this.comboEstadosDefaultItems = dsia;
-//    }
 
     /**
-     * <p>Construct a new Page bean instance.</p>
+     * <p>Constructor.</p>
      */
 
     public jrequestUserSolicitud() {
-//        comboEqSimpleDefaultItems.clear();
-//        comboEstadosDefaultItems.clear();
-
         this.listaTodosEquipos= new BeanBaseJRequest().getListaEquipoSimpleFuncionando();
 
         lu= getJHardminInstance().getCurrentUser();
@@ -417,6 +372,10 @@ public void LlenarCombos(){
         return null;
     }
 
+    /**
+     * Método para enviar la solicitud del usuario
+     * @return
+     */
     public String btnEnviar_action() {
         Solicitud s = new Solicitud();
         Calendar c = Calendar.getInstance();
@@ -485,12 +444,14 @@ public void LlenarCombos(){
         return null;
     }
 
+    /**
+     * Método para agregar un equipo simple
+     * @return
+     */
     public String btnAgregar_action() {
         Equiposimple eq = new Equiposimple();
 
         eq.setDescripcion((String)this.txtNombreEq.getValue());
-
-        //Usuario u = new BeanBaseJHardmin().getUsuario(5);
 
         eq.setPropietario((String)this.txtPropietario.getValue());
 
