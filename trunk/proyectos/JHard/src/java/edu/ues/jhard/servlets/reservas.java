@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Servlet para obtener todas las reservas pendientes y en uso de equipo multimedia y transformarlas a
+ * un XML que pueda leer y consumir el DHTMLXScheduler para mostrar eventos
  * @author Hugol
  */
 public class reservas extends HttpServlet {

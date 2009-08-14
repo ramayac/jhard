@@ -6,7 +6,11 @@
 package edu.ues.jhard.util;
 
 /**
+ * Clase que se utiliza para reconocer el módulo actual en el que se encuentra navegando en JHard un determinado usuario, y así
+ * mostrarlo reflejado en el menú principal
  *
+ * Una tan sola propiedad, para colocar el nombre del módulo actual en el que se encuentra navegando un usuario en JHard
+ * 
  * @author Hugol
  */
 public class Navegacion {

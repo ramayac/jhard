@@ -23,11 +23,7 @@ import javax.faces.model.SelectItem;
 
 
 /**
- * <p>Page bean that corresponds to a similarly named JSP page.  This
- * class contains component definitions (and initialization code) for
- * all components that you have defined on this page, as well as
- * lifecycle methods and event handlers where you may add behavior
- * to respond to incoming events.</p>
+ * Bean para página JSP de jmlHorarioAdmin, que realiza labores de mantenimiento a los horarios de ManLab
  */
 public class jmlHorarioAdmin extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
@@ -118,7 +114,7 @@ public class jmlHorarioAdmin extends AbstractPageBean {
     private String mensajitos;
 
     /**
-     * <p>Construct a new Page bean instance.</p>
+     * <p>Constructor.</p>
      */
     public jmlHorarioAdmin() {
 
@@ -216,6 +212,10 @@ public class jmlHorarioAdmin extends AbstractPageBean {
         this.listaHorarios = listaHorarios;
     }
 
+    /**
+     * Método para modificar un horario, dado su ID
+     * @return
+     */
     public String modificarHorario(){
         String idHor = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idHorario");
         System.out.println("id del horario " + idHor);
@@ -230,6 +230,10 @@ public class jmlHorarioAdmin extends AbstractPageBean {
         return "done";
     }
 
+    /**
+     * Método para eliminar un horario, dado su ID
+     * @return
+     */
     public String EliminarHorario(){
 
         String idHor = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idHorario");
@@ -292,6 +296,10 @@ public class jmlHorarioAdmin extends AbstractPageBean {
         this.renderMensajes = renderMensajes;
     }
 
+    /**
+     * Método para llenar los comboboxes con las horas disponibles para horarios en LABCOM-1
+     * @param Integer inicioFin
+     */
     public void LlenarHora(int inicioFin){
 
         String [] horas=null;
@@ -412,6 +420,10 @@ public class jmlHorarioAdmin extends AbstractPageBean {
         this.horarioAmodificar = horarioAmodificar;
     }
 
+    /**
+     * Método para aceptar la modificación de un horario
+     * @return
+     */
     public String btnAceptarMod_action() {
         
         String [] tiempoI = this.comboHoraInicio.getValue().toString().split("\\:");

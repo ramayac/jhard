@@ -32,11 +32,7 @@ import javax.faces.model.SelectItem;
 
 
 /**
- * <p>Page bean that corresponds to a similarly named JSP page.  This
- * class contains component definitions (and initialization code) for
- * all components that you have defined on this page, as well as
- * lifecycle methods and event handlers where you may add behavior
- * to respond to incoming events.</p>
+ * Bean para página JSP de jcanonAdmin, para realizar tareas administrativas de JCanon
  */
 public class jcanonAdmin extends AbstractPageBean {
     // <editor-fold defaultstate="collapsed" desc="Managed Component Definition">
@@ -309,7 +305,7 @@ public class jcanonAdmin extends AbstractPageBean {
     private List<Reserva> listaReservasPendientes;
     private boolean renderedError;
         /**
-     * <p>Construct a new Page bean instance.</p>
+     * <p>Constructor</p>
      */
     public jcanonAdmin() {
         horaInicioFake.clear();
@@ -409,6 +405,10 @@ public class jcanonAdmin extends AbstractPageBean {
     
     private Reserva reservaMod;
 
+    /**
+     * Método para modificar el estado de un reserva seleccionada
+     * @return
+     */
     public String modificarEstadoReserva(){
         String idUsuario = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idReserva");
         System.out.println(idUsuario);
@@ -445,15 +445,10 @@ public class jcanonAdmin extends AbstractPageBean {
         return "";
     }
 
-//    public String cambiarEstado(){
-//
-//        this.panelModEstado.setRendered(true);
-//        this.panelModEstado.setVisible(true);
-//        this.panelModEstado.setModal(true);
-//        return "";
-//
-//    }
-
+    /**
+     * Método para aceptar la modificación del estado de una reserva
+     * @return
+     */
     public String btnModEstadoAceptar_action() {
 
         Estadoreserva er=null;
@@ -527,6 +522,10 @@ public class jcanonAdmin extends AbstractPageBean {
     private String [] hours;
     private String horaSeleccionada="6:45";
 
+    /**
+     * Método para posponer una reserva, dado el ID de la reserva a posponer o modificar
+     * @return
+     */
     public String posponerReserva(){
         String idUsuario = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idReserva");
         System.out.println(idUsuario);
@@ -548,6 +547,10 @@ public class jcanonAdmin extends AbstractPageBean {
         return "";
     }
 
+    /**
+     * Método para llenar las horas disponibles para reservar
+     * @param Integer inicioFin
+     */
     public void LlenarHora(int inicioFin){
         this.horaFinMod.getChildren().clear();
         
@@ -602,6 +605,10 @@ public class jcanonAdmin extends AbstractPageBean {
         }
     }
 
+    /**
+     * Método para aceptar la modificación de una reserva
+     * @return
+     */
     public String btnAceptarMod_action() {
         renderedError=false;
         BeanBaseJCanon instance = new BeanBaseJCanon();
@@ -671,7 +678,10 @@ public class jcanonAdmin extends AbstractPageBean {
         return null;
     }
 
-
+    /**
+     * Metodo para eliminar un reserva de equipo multimedia, dado su ID
+     * @return
+     */
     public String Eliminar(){
         String idUsuario = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idReserva");
         System.out.println(idUsuario);

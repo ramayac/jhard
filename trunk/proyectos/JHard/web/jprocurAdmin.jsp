@@ -317,7 +317,7 @@
                                 </ice:panelPopup>
                                 <!-- panel de mensajes -->
                                 <!-- panel de mensajes de avisos...-->
-                                <ice:panelPopup autoCentre="true" id="ppmsj" modal="true" rendered="#{jprocurAdmin.showPPMesaje}">
+                                <ice:panelPopup autoCentre="true" id="ppmsj2" modal="true" rendered="#{jprocurAdmin.showPPMesaje}">
                                     <f:facet name="header">
                                         <ice:panelGrid><ice:outputText id="pptit" value="JWiki"/></ice:panelGrid>
                                     </f:facet>
@@ -338,16 +338,16 @@
                                 <!-- panel de mensajes de avisos POP UP SIMPLOOON -->
                                 <ice:panelPopup autoCentre="true" id="ppmsj" modal="true" rendered="#{jprocurAdmin.popup.visible}">
                                     <f:facet name="header">
-                                        <ice:panelGrid><ice:outputText id="pptit" value="#{jprocurAdmin.popup.titulo}"/></ice:panelGrid>
+                                        <ice:panelGrid><ice:outputText id="pptit2" value="#{jprocurAdmin.popup.titulo}"/></ice:panelGrid>
                                     </f:facet>
                                     <f:facet name="body">
                                     <div class="post">
                                         <ice:panelGroup>
-                                            <ice:outputText id="lblppmsj" value="#{jprocurAdmin.popup.mensaje}"/>
+                                            <ice:outputText id="lblppmsj2" value="#{jprocurAdmin.popup.mensaje}"/>
                                             <br/>
                                             <br/>
                                             <div align="center">
-                                                <ice:commandButton action="#{jprocurAdmin.btnClose_action}" id="ppok" value="OK"/>
+                                                <ice:commandButton action="#{jprocurAdmin.btnClose_action}" id="ppok2" value="OK"/>
                                             </div>
                                         </ice:panelGroup>
                                         </div>

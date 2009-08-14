@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Vector;
 
 /**
- *
+ * Clase para obtener un ID de artículo de Wiki y poder consultar dicho artículo desde el módulo de JRequest
  * @author rodrigo ramayac
  */
 public class JreqArticulo {

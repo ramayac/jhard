@@ -330,7 +330,7 @@
                                             <ice:commandLink action="#{Redireccion.jcanonAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Reserva de Equipo Multimedia"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink onclick="calendar('horario.html','mywin','800','600','no','center');"
+                                            <ice:commandLink onclick="calendar('scheduler.html','mywin','800','600','no','center');"
                                                 rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Ver calendario de reservas "/>
                                         </li>
                                    </ul>

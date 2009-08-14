@@ -6,21 +6,20 @@
 package edu.ues.jhard.servlets;
 
 import edu.ues.jhard.beans.BeanBaseJManLab;
-import edu.ues.jhard.jpa.Curso;
 import edu.ues.jhard.jpa.Horario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Servlet para obtener todos los horarios y transformarlos a
+ * un XML que pueda leer y consumir el DHTMLXScheduler para mostrar eventos
  * @author Hugol
  */
 public class horarios extends HttpServlet {
