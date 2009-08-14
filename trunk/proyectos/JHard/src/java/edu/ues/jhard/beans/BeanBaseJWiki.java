@@ -54,7 +54,7 @@ public class BeanBaseJWiki extends BeanBase {
 
         String sql = BuildSQLSearch(arr);
 
-        System.out.println(sql);
+        //System.out.println(sql);
         Query q = em.createNativeQuery(sql); //sin clase, retorna un Vector
         Vector resultado = (Vector) q.getResultList();
 
@@ -68,7 +68,10 @@ public class BeanBaseJWiki extends BeanBase {
         List<Articulos> listArticulos = new ArrayList();
         int limite = (listaIds.size()>MAX_ARTICULOS)?MAX_ARTICULOS:listaIds.size();
         for (int i = 0; i < limite; i++) { //ni modo, asi es la vida. tengo que pedir uno por uno :S
-            Articulos a = em.find(Articulos.class, listaIds.get(i));
+            Articulos a = new Articulos();
+            //a = this.getArticulo(listaIds.get(i));
+            a = em.find(Articulos.class, listaIds.get(i));
+            System.out.println(a.getIdarticulo()+", "+a.getDescripcion().substring(0, 50));
             listArticulos.add(a);
         }
 

@@ -215,7 +215,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
         //como el instructor puede ser NULL, hay que tener una consideracion extra...
         listaInstructorSel.add(new SelectItem(-1, "Sin Instructor."));
         for (Instructor i : listaInstructor) {
-            listaInstructorSel.add(new SelectItem(i.getIdusuario(), i.getApellidos()+", "+i.getNombres()));
+            listaInstructorSel.add(new SelectItem(i.getIdinstructor(), i.getApellidos()+", "+i.getNombres()));
         }
         return listaInstructorSel;
     }
