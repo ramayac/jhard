@@ -1398,15 +1398,15 @@ scheduler.set_actions=function(){
 	this._obj.onselectstart=function(C){
 		return false
 	};
-	this._obj.onmousemove=function(C){
-		scheduler._on_mouse_move(C||event)
-	};
-	this._obj.onmousedown=function(C){
-		scheduler._on_mouse_down(C||event)
-	};
-	this._obj.onmouseup=function(C){
-		scheduler._on_mouse_up(C||event)
-	};
+//	this._obj.onmousemove=function(C){
+//		scheduler._on_mouse_move(C||event)
+//	};
+//	this._obj.onmousedown=function(C){
+//		scheduler._on_mouse_down(C||event)
+//	};
+//	this._obj.onmouseup=function(C){
+//		scheduler._on_mouse_up(C||event)
+//	};
 	/*this._obj.ondblclick=function(C){
 		scheduler._on_dbl_click(C||event)
 	}*/

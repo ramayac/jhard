@@ -1398,15 +1398,15 @@ scheduler.set_actions=function(){
 	this._obj.onselectstart=function(C){
 		return false
 	};
-	this._obj.onmousemove=function(C){
-		scheduler._on_mouse_move(C||event)
-	};
-	this._obj.onmousedown=function(C){
-		scheduler._on_mouse_down(C||event)
-	};
-	this._obj.onmouseup=function(C){
-		scheduler._on_mouse_up(C||event)
-	};
+//	this._obj.onmousemove=function(C){
+//		scheduler._on_mouse_move(C||event)
+//	};
+//	this._obj.onmousedown=function(C){
+//		scheduler._on_mouse_down(C||event)
+//	};
+//	this._obj.onmouseup=function(C){
+//		scheduler._on_mouse_up(C||event)
+//	};
 	/*this._obj.ondblclick=function(C){
 		scheduler._on_dbl_click(C||event)
 	}*/
@@ -1887,7 +1887,7 @@ scheduler.date={
 	}
 };
 //CAMBIOS EN LOS ICONOS AQUI
-scheduler.locale={date:{month_full:["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"], month_short:["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"], day_full:["Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"], day_short:["Dom","Lun","Mar","Mie","Jue","Vie","Sab"]},labels:{dhx_cal_today_button:"Hoy",day_tab:"Dia",week_tab:"Semana",new_event:"Nuevo Evento",icon_save:"Guardar",icon_cancel:"Aceptar",icon_details:"Detalles",icon_edit:"Editar",icon_delete:"Eliminar",confirm_closing:"",confirm_deleting:"El evento sera eliminado permamentemente, Esta seguro?",section_description:"Descripci&oacute;n de la Reserva",section_time:"Periodo de tiempo"}};
+scheduler.locale={date:{month_full:["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"], month_short:["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"], day_full:["Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"], day_short:["Dom","Lun","Mar","Mie","Jue","Vie","Sab"]},labels:{dhx_cal_today_button:"Hoy",day_tab:"Dia",week_tab:"Semana",new_event:"Nuevo Evento",icon_save:"Guardar",icon_cancel:"Aceptar",icon_details:"Detalles",icon_edit:"Editar",icon_delete:"Eliminar",confirm_closing:"",confirm_deleting:"El evento sera eliminado permamentemente, Esta seguro?",section_description:"Descripci&oacute;n del Horario",section_time:"Periodo de tiempo"}};
 
 scheduler.config={default_date:"%d %M %Y",month_date:"%F %Y",week_date:"%l",day_date:"%D, %F %d",hour_date:"%H:%i",month_day:"%d",xml_date:"%m/%d/%Y %H:%i",api_date:"%d-%m-%Y %H:%i",hour_size_px:42,time_step:5,start_on_monday:1,first_hour:7,last_hour:19,drag_resize:1,drag_move:1,drag_create:1,edit_on_create:1,details_on_create:0,click_form_details:0,server_utc:false,positive_closing:false,icons_edit:["icon_save","icon_cancel"],icons_select:["icon_details"],lightbox:{sections:[{name:"description",height:200,map_to:"text",type:"textarea",focus:true},{name:"time",height:72,type:"time",map_to:"auto"}]}}	;
 
