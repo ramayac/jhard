@@ -235,6 +235,22 @@ public class Redireccion extends AbstractPageBean{
         return EMPTY_STRING;
     }
 
+
+    /**
+     * Método para redireccionar hacia jmlCrudAdmin.iface
+     * @return
+     */
+    public String jmlCrudAdmin(){
+        try {
+            n= (Navegacion)getBean(BEAN_NAME);
+            n.setModuloActual("ManLab");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("jmlCrudAdmin.iface");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return EMPTY_STRING;
+    }
+
     /**
      * Método para redireccionar hacia jmlHorarioAdmin.iface
      * @return

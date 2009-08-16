@@ -74,6 +74,12 @@
                             <jsp:directive.include file="/jspf/tareas.jspx"/>
                             <!--login control -->
                             </li>
+                            <ice:form id="lameForm">
+                            <li>
+                                <ice:commandLink action="#{Redireccion.jmlCrudAdmin}"
+                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administracion Laboratorio"/>
+                            </li>
+                            </ice:form>
                         </ul>
                     </div>
                     <!-- end sidebar -->
