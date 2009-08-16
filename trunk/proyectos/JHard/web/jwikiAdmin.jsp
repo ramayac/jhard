@@ -37,7 +37,8 @@
                                         <ice:panelGroup id="panelEditarArticulo" rendered="#{jwikiAdmin.editandoArticulo}">
                                             <div class="post">
                                             Título: <ice:inputText id="itTitulo"
-                                                    partialSubmit="true" title="Título del artículo" value="#{jwikiAdmin.articuloActual.titulo}"/>
+                                                    partialSubmit="true" title="Título del artículo" value="#{jwikiAdmin.articuloActual.titulo}"
+                                                    maxlength="50"/>
                                                 <br/>
                                                 <ice:inputRichText id="richDescripcion"
                                                 language="es" skin="silver" toolbar="Default"
@@ -123,7 +124,8 @@
                                         <ice:panelGroup id="panelAgregarArticulo">
                                             <div closs="post">
                                             Título: <ice:inputText id="itTitulo2"
-                                                    partialSubmit="true" title="Título de la artículo" value="#{jwikiAdmin.articuloNuevo.titulo}"/>
+                                                    partialSubmit="true" title="Título de la artículo" value="#{jwikiAdmin.articuloNuevo.titulo}"
+                                                    maxlength="50"/>
                                                 <br/>
                                                 <ice:inputRichText id="richDescripcion2" language="es" skin="silver" toolbar="Default" 
                                                 value="#{jwikiAdmin.articuloNuevo.descripcion}" height="600"/>
@@ -164,11 +166,11 @@
                                                 <div align="center">
                                                     <ice:panelGrid columns="2" id="panelBotonesArticulo">
                                                         <ice:commandButton action="#{jwikiAdmin.btnAceptarElimArt_action}" id="btnEliminarArticulo"
-                                                            rendered="#{jwikiAdmin.articuloValido}" value="Eliminar"/>
+                                                            rendered="#{jwikiAdmin.articuloValido}" value="Eliminar" styleClass="btnAccion2"/>
                                                         <ice:commandButton action="#{jwikiAdmin.btnCancelarMensajes_action}" id="btnCancelarArticulo"
-                                                            rendered="#{jwikiAdmin.articuloValido}" value="Cancelar"/>
+                                                            rendered="#{jwikiAdmin.articuloValido}" value="Cancelar" styleClass="btnAccion2"/>
                                                         <ice:commandButton action="#{jwikiAdmin.btnCancelarMensajes_action}" id="btnOKArticulo"
-                                                            rendered="#{!jwikiAdmin.articuloValido}" value="OK"/>
+                                                            rendered="#{!jwikiAdmin.articuloValido}" value="OK"  styleClass="btnAccion2"/>
                                                     </ice:panelGrid>
                                                 </div>
                                             </ice:panelGroup>
@@ -188,7 +190,7 @@
                                             <br/>
                                             <br/>
                                             <div align="center">
-                                            <ice:commandButton action="#{jwikiAdmin.btnOK_action}" id="ppok" value="OK"/>
+                                            <ice:commandButton action="#{jwikiAdmin.btnOK_action}" id="ppok" value="OK" styleClass="btnAccion2"/>
                                             </div>
                                         </ice:panelGroup>
                                         </div>

@@ -36,7 +36,7 @@
                                         <ice:panelGroup id="panelEditarEntrada" rendered="#{jprocurAdmin.editandoEntrada}" style="float:left;margin-top:10px; width:580px;">
                                         <div class="post">
                                             Título: <ice:inputText id="itTitulo" title="Título de la entrada"
-                                            value="#{jprocurAdmin.entradaActual.titulo}"
+                                            value="#{jprocurAdmin.entradaActual.titulo}" maxlength="50"
                                             partialSubmit="true"/>
                                             <br/>
                                             <ice:inputRichText id="richDescripcion"
@@ -128,7 +128,7 @@
                                         <ice:panelGroup>
                                             <ice:panelGroup id="panelAgregarEntrada" style="float:left;margin-top:10px; width:580px;">
                                                 Título: <ice:inputText id="itTitulo2" title="Título de la entrada"
-                                                value="#{jprocurAdmin.entradaNueva.titulo}"
+                                                value="#{jprocurAdmin.entradaNueva.titulo}" maxlength="50"
                                                 partialSubmit="true"/>
                                                 <br/><br/>
                                                 <ice:inputRichText id="richDescripcion2"
@@ -253,14 +253,15 @@
                                                     </f:facet>
                                                 </ice:dataPaginator>
                                             </div><br/><br/>
-                                            <ice:panelGroup>
-                                                <div class="post">
-                                                Agregar/Modificar Etiqueta: <br/>
-                                                Descripcion: <ice:inputText id="itTagDesc" title="Descripción de la etiqueta"
-                                                value="#{jprocurAdmin.etiquetaNueva.descripcion}"
-                                                partialSubmit="true"/> <ice:commandButton action="#{jprocurAdmin.btnAddTagDesc_action}" value="Guardar"/>
-                                                </div>
-                                            </ice:panelGroup>
+                                            <ice:panelCollapsible expanded="true">
+                                            <f:facet name="header">Agregar/Editar Etiqueta</f:facet>
+                                                <ice:panelGroup>
+                                                Descripción: <ice:inputText id="itTagDesc" title="Descripción de la etiqueta"
+                                                value="#{jprocurAdmin.etiquetaNueva.descripcion}" maxlength="25"
+                                                partialSubmit="true"/><ice:commandButton action="#{jprocurAdmin.btnAddTagDesc_action}" value="Guardar"  styleClass="btnAccion2"/>
+                                                <ice:commandButton action="#{jprocurAdmin.btnTagClean_action}" value="Limpiar"  styleClass="btnAccion2"/>
+                                                </ice:panelGroup>
+                                            </ice:panelCollapsible>
                                         </ice:panelGroup>
                                         <!-- FIN panel de para administrar las Etiquetas -->
                                     </ice:panelTab>
@@ -282,9 +283,9 @@
                                         <ice:outputText binding="#{jprocurAdmin.lblMensajesEntrada}" id="lblMensajesEntrada" value="Mensajes AQUI"/><br/><br/>
                                         <div align="center">
                                         <ice:panelGrid columns="2" id="panelBotonesEntrada">
-                                            <ice:commandButton action="#{jprocurAdmin.btnAceptarElimEntr_action}" id="btnEliminarEntrada" value="Eliminar" rendered="#{jprocurAdmin.entradaValida}"/>
-                                            <ice:commandButton action="#{jprocurAdmin.btnCancelarMensajes_action}" id="btnCancelarEntrada" value="Cancelar" rendered="#{jprocurAdmin.entradaValida}"/>
-                                            <ice:commandButton action="#{jprocurAdmin.btnCancelarMensajes_action}" id="btnOKEntrada" value="OK" rendered="#{!jprocurAdmin.entradaValida}"/>
+                                            <ice:commandButton action="#{jprocurAdmin.btnAceptarElimEntr_action}" id="btnEliminarEntrada" value="Eliminar" rendered="#{jprocurAdmin.entradaValida}"  styleClass="btnAccion2"/>
+                                            <ice:commandButton action="#{jprocurAdmin.btnCancelarMensajes_action}" id="btnCancelarEntrada" value="Cancelar" rendered="#{jprocurAdmin.entradaValida}"  styleClass="btnAccion2"/>
+                                            <ice:commandButton action="#{jprocurAdmin.btnCancelarMensajes_action}" id="btnOKEntrada" value="OK" rendered="#{!jprocurAdmin.entradaValida}"  styleClass="btnAccion2"/>
                                         </ice:panelGrid>
                                         </div>
                                     </ice:panelGroup>
@@ -305,10 +306,10 @@
                                         <ice:outputText binding="#{jprocurAdmin.lblMensajesComentarios}" id="lblMensajesComentarios" value="Mensajes AQUI"/><br/><br/>
                                         <div align="center">
                                         <ice:panelGrid columns="2" id="panelBotonesComentarios">
-                                            <ice:commandButton action="#{jprocurAdmin.btnAprobarComentario_action}" id="btnAprobarComentarios" value="Aprobar" rendered="#{jprocurAdmin.aprobarComentario}"/>
-                                            <ice:commandButton action="#{jprocurAdmin.btnEliminarComentario_action}" id="btnEliminarComentarios" value="Eliminar" rendered="#{jprocurAdmin.eliminarComentario}"/>
-                                            <ice:commandButton action="#{jprocurAdmin.btnCancelarMensajes_action}" id="btnCancelarComentarios" value="Cancelar" rendered="#{jprocurAdmin.comentarioValido}"/>
-                                            <ice:commandButton action="#{jprocurAdmin.btnCancelarMensajes_action}" id="btnOKComentarios" value="OK" rendered="#{!jprocurAdmin.comentarioValido}"/>
+                                            <ice:commandButton action="#{jprocurAdmin.btnAprobarComentario_action}" id="btnAprobarComentarios" value="Aprobar" rendered="#{jprocurAdmin.aprobarComentario}"  styleClass="btnAccion2"/>
+                                            <ice:commandButton action="#{jprocurAdmin.btnEliminarComentario_action}" id="btnEliminarComentarios" value="Eliminar" rendered="#{jprocurAdmin.eliminarComentario}"  styleClass="btnAccion2"/>
+                                            <ice:commandButton action="#{jprocurAdmin.btnCancelarMensajes_action}" id="btnCancelarComentarios" value="Cancelar" rendered="#{jprocurAdmin.comentarioValido}"  styleClass="btnAccion2"/>
+                                            <ice:commandButton action="#{jprocurAdmin.btnCancelarMensajes_action}" id="btnOKComentarios" value="OK" rendered="#{!jprocurAdmin.comentarioValido}"  styleClass="btnAccion2"/>
                                         </ice:panelGrid>
                                         </div>
                                     </ice:panelGroup>
@@ -328,7 +329,7 @@
                                             <br/>
                                             <br/>
                                             <div align="center">
-                                            <ice:commandButton action="#{jprocurAdmin.btnOK_action}" id="ppok" value="OK"/>
+                                            <ice:commandButton action="#{jprocurAdmin.btnOK_action}" id="ppok" value="OK" styleClass="btnAccion2"/>
                                             </div>
                                         </ice:panelGroup>
                                         </div>
@@ -347,7 +348,7 @@
                                             <br/>
                                             <br/>
                                             <div align="center">
-                                                <ice:commandButton action="#{jprocurAdmin.btnClose_action}" id="ppok2" value="OK"/>
+                                                <ice:commandButton action="#{jprocurAdmin.btnClose_action}" id="ppok2" value="OK"  styleClass="btnAccion2"/>
                                             </div>
                                         </ice:panelGroup>
                                         </div>
