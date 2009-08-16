@@ -1454,8 +1454,15 @@ public class BeanBaseJManLab extends BeanBase {
         return (List<Horario>) q.getResultList();
     }
 
+    /**
+     * Método para obtener todos los Horarios de un mismo día, enviándole la hora y el dia de la semana
+     * @param String hora
+     * @param Integer dia
+     * @return Integer cant
+     */
+
     public int getAllHorariosUnDia(String hora, int dia) {
-        int cant;
+        int cant=0;
 
         String[] time = hora.split("\\:");
         int hour = Integer.parseInt(time[0]);
@@ -1471,7 +1478,11 @@ public class BeanBaseJManLab extends BeanBase {
         List<Horario> h = (List<Horario>) q.getResultList();
 
         if (h.size() > 0) {
-            cant = 1;
+            for (int i = 0; i < h.size(); i++) {
+                if(h.get(i).getHorainicio().compareTo(t)>0 && h.get(i).getHorainicio().compareTo(t)<0){
+                    cant = 1;
+                }
+            }
         } else {
             cant = 0;
         }

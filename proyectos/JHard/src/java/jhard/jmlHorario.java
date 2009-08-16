@@ -234,6 +234,8 @@ public class jmlHorario extends AbstractPageBean {
         this.comboHoraFin.getChildren().clear();
 
         if(inicioFin==1){
+            this.comboHoraInicio.getChildren().clear();
+
             hours = new String []  {"7:35","8:25","9:15","10:05","10:55","11:45","12:35","13:00","13:50","14:40","15:30","16:20","17:10","18:00"};
 
             ArrayList h = new ArrayList();
@@ -313,8 +315,6 @@ public class jmlHorario extends AbstractPageBean {
     private void llenarCursos(){
         List<Curso> cursos =new BeanBaseJManLab().getAllCursos();
         
-        System.out.println("puta q basurecta "+ cursos.size());
-
         for(int i=0;i<cursos.size();i++){
             String label = cursos.get(i).getIdmateria().getNombre()+" - "+cursos.get(i).getNombre();
             getCur().add(new SelectItem(cursos.get(i).getIdcurso(),label));

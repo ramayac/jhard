@@ -292,10 +292,30 @@
                     <div id="sidebar">
                         <ul>
                             <li>
-                                <!--login control -->
-                                <jsp:directive.include file="/jspf/login.jspx"/>
-                                <!--login control -->
-
+                                <h2>
+                                <ice:outputLabel id="txtUserLogin" value="Sesión"/>
+                                </h2>
+                                <ice:form id="frmLogin" rendered="#{JHardminInstance.currentUser == null}">
+                                    <ice:outputText id="lblLoginFail" rendered="#{JHardminInstance.loginFail}" styleClass="errorText" value="Datos incorrectos"/>
+                                    <p>
+                                        <ice:outputLabel id="lblUser" value="Usuario:"/>
+                                        <ice:inputText id="txtUser" required="true" requiredMessage="El nombre de usuario es requerido" style="width: 120px" value="#{JHardminInstance.inputUsrName}" maxlength="25" />
+                                        <h:message for="txtUser" styleClass="errorText"/>
+                                    </p>
+                                    <p>
+                                        <ice:outputLabel id="lblPass" value="Clave:"/>
+                                        <ice:inputSecret id="txtPass" required="true" requiredMessage="La clave de acceso es requerida" style="width: 120px" value="#{JHardminInstance.inputUsrPassword}" maxlength="35" />
+                                        <h:message for="txtPass" styleClass="errorText"/>
+                                    </p>
+                                    <ice:commandButton action="#{JHardminInstance.login}" onclick="doLoad();" id="btnLogin" styleClass="btnAccion2" value="Login"/>
+                                </ice:form>
+                                <ice:form id="frmLogout" rendered="#{JHardminInstance.currentUser != null}">
+                                    <p>
+                                        <ice:outputLabel id="lblBienvenido" value="Bienvenido usuario"/>
+                                        <ice:outputLabel id="lblNomUsuario" styleClass="formValue" value="#{JHardminInstance.currentUser.userName}"/>
+                                    </p>
+                                    <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion2" value="Logout"/>
+                                </ice:form>
                             </li>
                             <li>
                                 <ice:form id="frmCommonTasks">
