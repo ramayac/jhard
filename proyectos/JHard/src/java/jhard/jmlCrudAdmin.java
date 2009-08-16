@@ -362,8 +362,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
        try {
             this.getJManLabInstance().deleteCurso(curso.getIdcurso());
             this.popup.setMensaje("El curso fué eliminado.");
-            this.listaCurso.clear();
-            this.listaCurso = this.getJManLabInstance().getAllCursos();
+            this.recargarListas();
        } catch (Exception e) {
             this.popup.setMensaje("Ocurrió un error al intentar eliminar la carrera.");
        } finally {
@@ -376,9 +375,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
         Integer id = this.nuevoCurso.getIdcurso();
         if(id==null) id = 0;
 
-        //TODO: Validaciones aqui... REM que instructor pueden ir null
-        this.nuevoCurso.setIdinstructor(selectedInstructor);
-
+        this.nuevoCurso.setIdinstructor(selectedInstructor); //puede ser null
         this.nuevoCurso.setIddocente(selectedDocente);
         this.nuevoCurso.setIdmateria(selectedMateria);
         this.nuevoCurso.setAnio(Utilidades.EsteAnyo());
@@ -393,9 +390,9 @@ public class jmlCrudAdmin extends BeanBaseJHard {
                 break;
         }
 
-        System.out.println(strCiclo+" - "+this.nuevoCurso.getAnio());
+        //System.out.println(strCiclo+" - "+this.nuevoCurso.getAnio());
         Cicloanyo cay = this.getJManLabInstance().searchCicloAnyoByDesc(strCiclo+" - "+this.nuevoCurso.getAnio());
-        System.out.println(cay.getDescripcion());
+        //System.out.println(cay.getDescripcion());
         
         this.nuevoCurso.setIdcicloanio(cay); //SHIIIIT! ;(
         this.nuevoCurso.setAnio(Utilidades.EsteAnyo());
@@ -405,8 +402,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
             if (this.getJManLabInstance().updateCurso(this.nuevoCurso)) {
                 this.popup.setMensaje("Curso modificado con éxito.");
                 this.popup.setVisible(true);
-                this.listaCurso.clear();
-                this.listaCurso = this.getJManLabInstance().getAllCursos();
+                this.recargarListas();
             } else {
                 this.popup.setMensaje("Ocurrió un error al intentar modificar el curso");
                 this.popup.setVisible(true);
@@ -415,8 +411,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
             if (this.getJManLabInstance().createCurso(this.nuevoCurso)) {
                 this.popup.setMensaje("Curso agregado con éxito.");
                 this.popup.setVisible(true);
-                this.listaCurso.clear();
-                this.listaCurso = this.getJManLabInstance().getAllCursos();
+                this.recargarListas();
             } else {
                 this.popup.setMensaje("Ocurrió un error al intentar agregar el curso.");
                 this.popup.setVisible(true);
@@ -456,8 +451,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
             if (this.getJManLabInstance().updateCarrera(this.nuevaCarrera)) {
                 this.popup.setMensaje("Carrera modificada con éxito.");
                 this.popup.setVisible(true);
-                this.listaCarrera.clear();
-                this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+                this.recargarListas();
             } else {
                 this.popup.setMensaje("Ocurrió un error al intentar modificar la carrera.");
                 this.popup.setVisible(true);
@@ -466,8 +460,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
             if (this.getJManLabInstance().createCarrera(this.nuevaCarrera)) {
                 this.popup.setMensaje("Carrera agregada con éxito.");
                 this.popup.setVisible(true);
-                this.listaCarrera.clear();
-                this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+                this.recargarListas();
             } else {
                 this.popup.setMensaje("Ocurrió un error al intentar agregar la carrera.");
                 this.popup.setVisible(true);
@@ -491,8 +484,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
        try {
             this.getJManLabInstance().deleteCarrera(carrera.getIdcarrera());
             this.popup.setMensaje("La Carrera fué eliminada.");
-            this.listaCarrera.clear();
-            this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+            recargarListas();
        } catch (Exception e) {
             this.popup.setMensaje("Ocurrió un error al intentar eliminar la carrera.");
        } finally {
@@ -510,8 +502,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
             if (this.getJManLabInstance().updateMateria(this.nuevaMateria)) {
                 this.popup.setMensaje("Materia modificada con éxito.");
                 this.popup.setVisible(true);
-                this.listaMateria.clear();
-                this.listaMateria = this.getJManLabInstance().getAllMaterias();
+                this.recargarListas();
                 //this.mySelCarreraItem = new SelectItem();
             } else {
                 this.popup.setMensaje("Ocurrió un error al intentar modificar la materia.");
@@ -521,8 +512,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
             if (this.getJManLabInstance().createMateria(this.nuevaMateria)) {
                 this.popup.setMensaje("Materia agregada con éxito.");
                 this.popup.setVisible(true);
-                this.listaMateria.clear();
-                this.listaMateria = this.getJManLabInstance().getAllMaterias();
+                this.recargarListas();
                 //this.mySelCarreraItem = new SelectItem();
             } else {
                 this.popup.setMensaje("Ocurrió un error al intentar agregar la materia.");
@@ -542,7 +532,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
        //THANKS ROBERTUX
        this.setCarreraSelStr(carr.getIdcarrera().toString());
 
-       System.out.println(carr.getCodigo()+"-"+carr.getNombre());
+       //System.out.println(carr.getCodigo()+"-"+carr.getNombre());
        //this.mySelCarreraItem = new SelectItem(carr.getIdcarrera(), carr.getCodigo()+"-"+carr.getNombre());
        return EMPTY_STRING;
     }
@@ -554,8 +544,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
        try {
             this.getJManLabInstance().deleteMateria(materia.getIdmateria());
             this.popup.setMensaje("La materia fué eliminada.");
-            this.listaCarrera.clear();
-            this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+            this.recargarListas();
        } catch (Exception e) {
             this.popup.setMensaje("Ocurrió un error al intentar eliminar la materia.");
        } finally {
@@ -611,9 +600,8 @@ public class jmlCrudAdmin extends BeanBaseJHard {
         }else
             this.lblUser.setValue(INVITADO);
 
-        this.listaCarrera = this.getJManLabInstance().getAllCarreras();
-        this.listaMateria = this.getJManLabInstance().getAllMaterias();
-        this.listaCurso = this.getJManLabInstance().getAllCursos();
+        this.recargarListas();
+
         this.listaFacultad = this.getJManLabInstance().getAllFacultades();
         this.listaDocente = this.getJManLabInstance().getAllDocentes();
         this.listaInstructor = this.getJManLabInstance().getAllInstructors();
@@ -673,5 +661,14 @@ public class jmlCrudAdmin extends BeanBaseJHard {
      * acquired during execution of an event handler).</p>
      */
     public void destroy() {
+    }
+
+    private void recargarListas() {
+        this.listaMateria.clear();
+        this.listaCurso.clear();
+        this.listaCarrera.clear();
+        this.listaCarrera = this.getJManLabInstance().getAllCarreras();
+        this.listaMateria = this.getJManLabInstance().getAllMaterias();
+        this.listaCurso = this.getJManLabInstance().getAllCursos();
     }
 }

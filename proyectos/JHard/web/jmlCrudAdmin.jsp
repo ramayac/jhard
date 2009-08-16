@@ -83,7 +83,7 @@
                                                 partialSubmit="true"/>
                                                 Nombre: <ice:inputText id="itCarrNombre" title="Nombre de la carrera"
                                                 value="#{jmlCrudAdmin.nuevaCarrera.nombre}"
-                                                partialSubmit="true"/><br/><ice:commandButton action="#{jmlCrudAdmin.btnCarrera_action}" value="Guardar"/><ice:commandButton action="#{jmlCrudAdmin.btnCarreraClean_action}" value="Limpiar"/>
+                                                partialSubmit="true"/><br/><ice:commandButton action="#{jmlCrudAdmin.btnCarrera_action}" value="Guardar"  styleClass="btnAccion2"/><ice:commandButton action="#{jmlCrudAdmin.btnCarreraClean_action}" value="Limpiar"  styleClass="btnAccion2"/>
                                                 </ice:panelGroup>
                                             </ice:panelCollapsible>
                                         </ice:panelGroup>
@@ -142,11 +142,11 @@
                                                 valueChangeListener="#{jmlCrudAdmin.selCarrera}">
                                                     <f:selectItems id="carrSel" value="#{jmlCrudAdmin.listaCarreraSel}"/>
                                                 </ice:selectOneMenu><br/>
-                                                Código: <ice:inputText id="itMatCode" title="Código de la materia"
+                                                Código: <ice:inputText id="itMatCode" title="Código de la materia" maxlength="7"
                                                 value="#{jmlCrudAdmin.nuevaMateria.codigo}" partialSubmit="true"/>
-                                                Nombre: <ice:inputText id="itMatNombre" title="Nombre de la asignatura"
+                                                Nombre: <ice:inputText id="itMatNombre" title="Nombre de la asignatura" maxlength="200"
                                                 value="#{jmlCrudAdmin.nuevaMateria.nombre}" partialSubmit="true"/>
-                                                <br/><ice:commandButton action="#{jmlCrudAdmin.btnMateria_action}" value="Guardar"/><ice:commandButton action="#{jmlCrudAdmin.btnMateriaClean_action}" value="Limpiar"/>
+                                                <br/><ice:commandButton action="#{jmlCrudAdmin.btnMateria_action}" value="Guardar" styleClass="btnAccion2"/><ice:commandButton action="#{jmlCrudAdmin.btnMateriaClean_action}" value="Limpiar"  styleClass="btnAccion2"/>
                                             </ice:panelGroup>
                                             </ice:panelCollapsible>
                                         </ice:panelGroup>
@@ -195,30 +195,60 @@
                                             <ice:panelCollapsible expanded="true">
                                             <f:facet name="header">Agregar/Editar Curso</f:facet>
                                             <ice:panelGroup>
-                                                Nombre: <ice:inputText id="itCursoNombre" title="Nombre del curso" value="#{jmlCrudAdmin.nuevoCurso.nombre}" partialSubmit="true"/>
-                                                Cupo: <ice:inputText id="itCupoMax" title="Cupo máximo" value="#{jmlCrudAdmin.nuevoCurso.cupomax}" partialSubmit="true"/>
-                                                <ice:selectInputDate id="popfecha" renderMonthAsDropdown="true" renderYearAsDropdown="true"
+                                                <table border="0">
+                                                    <tr>
+                                                        <td>Nombre:</td>
+                                                        <td><ice:inputText id="itCursoNombre" title="Nombre del curso" value="#{jmlCrudAdmin.nuevoCurso.nombre}"
+                                                        maxlength="200" partialSubmit="true"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Cupo:</td>
+                                                        <td><ice:inputText id="itCupoMax" title="Cupo máximo" value="#{jmlCrudAdmin.nuevoCurso.cupomax}"
+                                                        maxlength="2" partialSubmit="true"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Fecha de Inicio del Curso:</td>
+                                                        <td><ice:selectInputDate id="popfecha" renderMonthAsDropdown="true" renderYearAsDropdown="true"
                                                 value="#{jmlCrudAdmin.nuevoCurso.fechainicio}" title="Fecha de inicio" renderAsPopup="true">
                                                     <f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{jmlCrudAdmin.timeZone}"/>
-                                                </ice:selectInputDate>
-                                                Ciclo: <ice:selectOneMenu id="idSelCiclo" value="#{jmlCrudAdmin.nuevoCurso.ciclo}" partialSubmit="true">
-                                                    <f:selectItem itemLabel="Impar" itemValue="1" /> 
+                                                </ice:selectInputDate></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ciclo:</td>
+                                                        <td><ice:selectOneMenu id="idSelCiclo" value="#{jmlCrudAdmin.nuevoCurso.ciclo}" partialSubmit="true">
+                                                    <f:selectItem itemLabel="Impar" itemValue="1" />
                                                     <f:selectItem itemLabel="Par" itemValue="2" />
-                                                </ice:selectOneMenu><br/>
-                                                Habilitar inscripcion: <ice:selectOneRadio partialSubmit="true" value="#{jmlCrudAdmin.nuevoCurso.habilinscrip}">
+                                                </ice:selectOneMenu></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Habilitar inscripcion:</td>
+                                                        <td><ice:selectOneRadio partialSubmit="true" value="#{jmlCrudAdmin.nuevoCurso.habilinscrip}">
                                                     <f:selectItem itemLabel="Habilitar" itemValue="false"/>
                                                     <f:selectItem itemLabel="Deshabilitar" itemValue="true"/>
-                                                </ice:selectOneRadio><br/>
-                                                Docentes:<ice:selectOneMenu id="idSelDoc" partialSubmit="true" value="#{jmlCrudAdmin.docenteSelStr}" valueChangeListener="#{jmlCrudAdmin.selDocente}">
+                                                </ice:selectOneRadio></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Docentes:</td>
+                                                        <td><ice:selectOneMenu id="idSelDoc" partialSubmit="true" value="#{jmlCrudAdmin.docenteSelStr}" valueChangeListener="#{jmlCrudAdmin.selDocente}">
                                                     <f:selectItems id="docSel" value="#{jmlCrudAdmin.listaDocenteSel}"/>
-                                                </ice:selectOneMenu><br/>
-                                                Instructor:<ice:selectOneMenu id="idSelInst" partialSubmit="true" value="#{jmlCrudAdmin.instructorSelStr}" valueChangeListener="#{jmlCrudAdmin.selInstructor}">
+                                                </ice:selectOneMenu></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Instructor:</td>
+                                                        <td><ice:selectOneMenu id="idSelInst" partialSubmit="true" value="#{jmlCrudAdmin.instructorSelStr}" valueChangeListener="#{jmlCrudAdmin.selInstructor}">
                                                     <f:selectItems id="instSel" value="#{jmlCrudAdmin.listaInstructorSel}"/>
-                                                </ice:selectOneMenu><br/>
-                                                Materia:<ice:selectOneMenu id="idSelMat" partialSubmit="true" value="#{jmlCrudAdmin.materiaSelStr}" valueChangeListener="#{jmlCrudAdmin.selMateria}">
+                                                </ice:selectOneMenu></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Materia:</td>
+                                                        <td><ice:selectOneMenu id="idSelMat" partialSubmit="true" value="#{jmlCrudAdmin.materiaSelStr}" valueChangeListener="#{jmlCrudAdmin.selMateria}">
                                                     <f:selectItems id="matSel" value="#{jmlCrudAdmin.listaMateriaSel}"/>
-                                                </ice:selectOneMenu><br/>
-                                                <br/><ice:commandButton action="#{jmlCrudAdmin.btnCurso_action}" value="Guardar"/><ice:commandButton action="#{jmlCrudAdmin.btnCursoClean_action}" value="Limpiar"/>
+                                                </ice:selectOneMenu></td>
+                                                    </tr>    
+                                                </table>
+                                                <div align="left">
+                                                <ice:commandButton action="#{jmlCrudAdmin.btnCurso_action}" value="Guardar" styleClass="btnAccion2"/><ice:commandButton action="#{jmlCrudAdmin.btnCursoClean_action}" value="Limpiar"  styleClass="btnAccion2"/>
+                                                </div>
                                             </ice:panelGroup>
                                             </ice:panelCollapsible>
                                         </ice:panelGroup>
@@ -240,7 +270,7 @@
                                             <br/>
                                             <br/>
                                             <div align="center">
-                                                <ice:commandButton action="#{jmlCrudAdmin.btnOK_action}" id="ppok" value="OK"/>
+                                                <ice:commandButton action="#{jmlCrudAdmin.btnOK_action}" id="ppok" value="OK"  styleClass="btnAccion2"/>
                                             </div>
                                         </ice:panelGroup>
                                         </div>

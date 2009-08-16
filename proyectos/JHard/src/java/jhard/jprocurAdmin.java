@@ -770,6 +770,11 @@ public class jprocurAdmin extends AbstractPageBean {
         return this.U.getIdrol().getIdrol();
     }
 
+    public String btnTagClean_action() {
+        this.etiquetaNueva = new Tag();
+        return EMPTY_STRING;
+    }
+
     public boolean getPermisos(){
         switch(this.getRolUsuarioConectado()){
             case -1:
