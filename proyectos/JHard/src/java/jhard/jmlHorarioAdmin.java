@@ -38,7 +38,7 @@ public class jmlHorarioAdmin extends AbstractPageBean {
     private void _init() throws Exception {
         horaFin.setItems(new String[]{});
         horaInicio.setItems(new String[]{});
-        diaSemana.setItems(new String[]{"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"});
+        
 
     }
 
@@ -120,6 +120,7 @@ public class jmlHorarioAdmin extends AbstractPageBean {
 
         this.setListaHorarios(new BeanBaseJManLab().getAllHorarios());
         this.diaSemana.clear();
+        diaSemana.setItems(new String[]{"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"});
         this.horaInicio.clear();
         this.horaFin.clear();
         this.comboHoraFin.setDisabled(true);
@@ -249,11 +250,7 @@ public class jmlHorarioAdmin extends AbstractPageBean {
         return "done";
     }
 
-    public String EliminarHorarios(){
-
-        return "done";
-    }
-
+    
     /**
      * @return the renderPop
      */

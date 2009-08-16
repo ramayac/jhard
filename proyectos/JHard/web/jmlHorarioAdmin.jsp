@@ -103,12 +103,7 @@
                                             </ice:dataPaginator>
                                             <br/>
                                             <br/>
-                                            <h3>
-                                                <ice:outputLabel value="Otras Tareas"/>
-                                            </h3>
-                                            <br/>
-                                            <ice:commandLink action="#{jmlHorarioAdmin.EliminarHorarios}" value="Eliminar todos los horarios de este ciclo"/>
-                                        </ice:panelGroup>
+                                         </ice:panelGroup>
                                     </ice:panelCollapsible>
                                 </ice:panelGroup>
                                 <ice:panelPopup autoCentre="true" draggable="true" id="panelModHorario" modal="true" rendered="#{jmlHorarioAdmin.renderPop}" style="height: 141px; left: 264px; top: 144px; position: absolute; width: 333px;visibility: hidden;visibility: hidden;">
