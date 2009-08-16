@@ -88,7 +88,6 @@
                                             <ice:selectOneMenu binding="#{jmlHorario.comboCurso}" id="comboCurso" partialSubmit="true">
                                                 <f:selectItems id="selectOneMenu1selectItems1" value="#{jmlHorario.cur}"/>
                                             </ice:selectOneMenu>
-                                            <ice:commandButton action="#{jmlHorario.btnAgregarCurso_action}" id="btnAgregarCurso" styleClass="btnAccion2" value="Agregar Curso"/>
                                             <br/>
                                             <br/>
                                             <ice:outputLabel value="No se puede inscribir grupo en ese horario. No se encuentra disponible" style="font-size:14px" rendered="#{jmlHorario.noInscripcion}"/>

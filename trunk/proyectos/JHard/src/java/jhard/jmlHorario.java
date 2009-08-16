@@ -41,7 +41,6 @@ public class jmlHorario extends AbstractPageBean {
     private void _init() throws Exception {
         horaFin.setItems(new String[]{});
         horaInicio.setItems(new String[]{});
-        diaSemana.setItems(new String[]{"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"});
         curso.setItems(new String[]{});
     }
     public DefaultSelectionItems getCurso() {
@@ -144,14 +143,13 @@ public class jmlHorario extends AbstractPageBean {
     public jmlHorario() {
 
         this.diaSemana.clear();
+        diaSemana.setItems(new String[]{"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"});
         this.horaInicio.clear();
         this.horaFin.clear();
         this.comboHoraFin.setDisabled(true);
         this.comboHoraInicio.setDisabled(true);
         this.llenarCursos();
         this.renderPop=false;
-        
-
     }
 
     /**
@@ -358,14 +356,10 @@ public class jmlHorario extends AbstractPageBean {
         
         this.renderPop=true;
 
-
         return null;
     }
 
-    public String btnAgregarCurso_action() {
-        //return null means stay on the same page
-        return null;
-    }
+    
 
     public void listaDiaSemana_processValueChange(ValueChangeEvent vce) {
         this.comboHoraInicio.setDisabled(false);
