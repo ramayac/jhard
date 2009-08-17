@@ -71,7 +71,7 @@
                                         <br/>
                                         <ice:commandButton action="#{reportes.btnReportBit_action}" binding="#{reportes.btnReportBit}" id="btnReportBit"
                                             styleClass="btnAccion2" value="Generar Reporte"/>
-                                        <br/>
+                                        <br/>                                        
                                     </ice:panelGroup>
                                 </ice:panelCollapsible>
                                 <ice:panelCollapsible expanded="false" id="reservaEquipo" style="width: 600px">

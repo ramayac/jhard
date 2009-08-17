@@ -25,7 +25,7 @@ import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-
+import javax.servlet.ServletContext;
 
 /**
  * <p>Page bean that corresponds to a similarly named JSP page.  This
@@ -161,6 +161,7 @@ public class reportes extends AbstractPageBean {
         BeanBaseJRequest instance = new BeanBaseJRequest();
         this.listaTodosEquipos= instance.getListaEquipoSimple();
         this.listaTodasExistencias= instance.getListaExistencia();
+        String path = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getRealPath("/") + "reportes/";        
     }
 
     /**
@@ -351,8 +352,9 @@ public class reportes extends AbstractPageBean {
     }
 
     public String btnReportBit_action() {
-        if(this.checkEQ.isSelected())
-            JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=2&ideqsimple="+EquipoElegido.getIdEquipoSimple()+"\",\"Reporte\");");
+        if(this.checkEQ.isSelected()){
+            JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=2&ideqsimple="+EquipoElegido.getIdEquipoSimple()+"\",\"Reporte\");");            
+        }
         else
             JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=3&idexistencia="+ExistenciaElegida.getIdexistencia()+"\",\"Reporte\");");
         return null;
@@ -378,8 +380,7 @@ public class reportes extends AbstractPageBean {
         JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=4&diaI="+fechaI.getDate()+"&mesI="+(fechaI.getMonth()+1)+"&anioI="+(fechaI.getYear()+1900)+"&diaF="+fechaF.getDate()+"&mesF="+(fechaF.getMonth()+1)+"&anioF="+(fechaI.getYear()+1900)+" \",\"Reporte\");");
 
         return null;
-    }
-
+    }    
 
 }
 

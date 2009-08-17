@@ -26,6 +26,7 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.export.JRHtmlExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
@@ -207,48 +208,16 @@ public class reporte extends HttpServlet {
     protected void generarReporte(HttpServletRequest request, HttpServletResponse response, String reporte, Map parametros, String nombreReporte)
             throws ServletException, IOException {
         try {
-//            ServletOutputStream outputstream = null;
-//            outputstream = response.getOutputStream();
+            ServletOutputStream outputstream = null;
+            outputstream = response.getOutputStream();
 
-            response.setContentType("text/html; charset=iso-8859-1");
+            response.setContentType("application/pdf; charset=iso-8859-1");            
             response.setHeader("Content-disposition", "filename=" + nombreReporte + ".pdf");
-            response.setHeader("Cache-Control", "no-cache");
+            response.setHeader("Cache-Control", "no-cache");            
 
-                //JasperDesign jasperDesign = JRXmlLoader.load(reporte);
-                //JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-
-                System.out.println("AQUI CREO EL REPORTE");
-                JasperReport report = (JasperReport) JRLoader.loadObject(getServletContext().getRealPath(reporte));
-                System.out.println("HAGO LA IMPRESION");
-                JasperPrint jasperPrint = JasperFillManager.fillReport(report, parametros, this.conexionJdbc);
-
-                System.out.println("HAGO EL EXPORTADOR");
-
-                net.sf.jasperreports.view.JasperViewer jv = new net.sf.jasperreports.view.JasperViewer(jasperPrint, false);
-                jv.setVisible(true);
-
-//                JRExporter exporter = null;
-//
-//                exporter = new JRPdfExporter();
-//                System.out.println("PARAMETRO");
-//                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-//                System.out.println("PARAMETRO");
-//                exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getWriter());
-//                System.out.println("EXPORTO...");
-//                exporter.exportReport();
-
-//                JRHtmlExporter exporter = new JRHtmlExporter();
-//                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-//
-//                exporter.setParameter(JRExporterParameter.OUTPUT_WRITER, response.getWriter());
-//
-//        		exporter.exportReport();
-
-		/*
-                JRPdfExporter exporter = new JRPdfExporter();
-                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-                exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, outputstream);
-                exporter.exportReport();*/
+            outputstream.write(JasperRunManager.runReportToPdf(getServletContext().getRealPath("/") + "reportes/" + nombreReporte, parametros, this.conexionJdbc));
+            outputstream.flush();
+            outputstream.close();
 
 
         } catch (JRException jre) {
