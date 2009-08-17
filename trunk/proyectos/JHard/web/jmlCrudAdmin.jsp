@@ -74,9 +74,11 @@
                                                         <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
                                                     </f:facet>
                                                 </ice:dataPaginator>
-                                            </div><br/><br/>
-                                            <ice:panelCollapsible expanded="true">
-                                            <f:facet name="header">Agregar/Editar Carrera</f:facet>
+                                            </div><br/>
+                                            <ice:commandButton action="#{jmlCrudAdmin.btnNuevaCarrera_action}" value="Nueva carrera" styleClass="btnAccion2"/>
+                                            <br/><br/>
+                                            <ice:panelCollapsible expanded="#{jmlCrudAdmin.addModCarrera}">
+                                                <f:facet name="header"><ice:panelGroup><ice:outputText value="Agregar/Editar Carrera" /></ice:panelGroup></f:facet>
                                                 <ice:panelGroup>
                                                 Código: <ice:inputText id="itCarrCode" title="Código de la carrera"
                                                 value="#{jmlCrudAdmin.nuevaCarrera.codigo}"
@@ -132,9 +134,11 @@
                                                         <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
                                                     </f:facet>
                                                 </ice:dataPaginator>
-                                            </div><br/><br/>
-                                            <ice:panelCollapsible expanded="true">
-                                            <f:facet name="header">Agregar/Editar Materia</f:facet>
+                                            </div><br/>
+                                            <ice:commandButton action="#{jmlCrudAdmin.btnNuevaMateria_action}" value="Nueva materia" styleClass="btnAccion2"/>
+                                            <br/><br/>
+                                            <ice:panelCollapsible expanded="#{jmlCrudAdmin.addModMateria}">
+                                                <f:facet name="header"><ice:panelGroup><ice:outputText value="Agregar/Editar Materia"/></ice:panelGroup></f:facet>
                                             <ice:panelGroup>
                                                 Seleccione la carrera a la que pertenece la materia:<br/>
                                                 <ice:selectOneMenu id="idSelCarr" partialSubmit="true"
@@ -191,9 +195,11 @@
                                                         <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
                                                     </f:facet>
                                                 </ice:dataPaginator>
-                                            </div><br/><br/>
-                                            <ice:panelCollapsible expanded="true">
-                                            <f:facet name="header">Agregar/Editar Curso</f:facet>
+                                            </div><br/>
+                                            <ice:commandButton action="#{jmlCrudAdmin.btnNuevoCurso_action}" value="Nuevo curso" styleClass="btnAccion2"/>
+                                            <br/><br/>
+                                            <ice:panelCollapsible expanded="#{jmlCrudAdmin.addModCurso}">
+                                                <f:facet name="header"><ice:panelGroup><ice:outputText value="Agregar/Editar Curso"/></ice:panelGroup></f:facet>
                                             <ice:panelGroup>
                                                 <table border="0">
                                                     <tr>
