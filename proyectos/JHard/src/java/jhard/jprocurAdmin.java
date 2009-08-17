@@ -60,6 +60,16 @@ public class jprocurAdmin extends AbstractPageBean {
     private HtmlOutputText lblPPMesajes = new HtmlOutputText();
     private popUp popup = new popUp("Aviso", "", false);
 
+    private Boolean addModTag = new Boolean(false);
+
+    public Boolean getAddModTag() {
+        return addModTag;
+    }
+
+    public void setAddModTag(Boolean addModTag) {
+        this.addModTag = addModTag;
+    }
+
     public popUp getPopup() {
         return popup;
     }
@@ -712,6 +722,12 @@ public class jprocurAdmin extends AbstractPageBean {
         return EMPTY_STRING;
     }
 
+    public String btnNuevoTag_action() {
+        this.etiquetaNueva = new Tag();
+        this.setAddModTag(true);
+        return EMPTY_STRING;
+    }
+
     public String btnAddTagDesc_action() {
         Integer idtag = this.etiquetaNueva.getIdtag();
         if(idtag==null) idtag = 0;
@@ -739,6 +755,7 @@ public class jprocurAdmin extends AbstractPageBean {
         }
         this.etiquetaNueva = new Tag();
         this.showPPMesaje = false;
+        this.setAddModTag(false);
         return EMPTY_STRING;
     }
 
@@ -746,6 +763,7 @@ public class jprocurAdmin extends AbstractPageBean {
        String idS = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idTag");
        Integer id = new Integer(idS);
        this.etiquetaNueva = this.jprocurInstance.getEtiqueta(id.intValue());
+       this.setAddModTag(true);
        return EMPTY_STRING;
     }
 
@@ -771,6 +789,7 @@ public class jprocurAdmin extends AbstractPageBean {
     }
 
     public String btnTagClean_action() {
+        this.setAddModTag(false);
         this.etiquetaNueva = new Tag();
         return EMPTY_STRING;
     }

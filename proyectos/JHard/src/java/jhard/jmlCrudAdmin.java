@@ -69,6 +69,34 @@ public class jmlCrudAdmin extends BeanBaseJHard {
     private String docenteSelStr = EMPTY_STRING;
     private String instructorSelStr = EMPTY_STRING;
 
+     private Boolean addModMateria = new Boolean(false);
+     private Boolean addModCurso = new Boolean(false);
+     private Boolean addModCarrera = new Boolean(false);
+
+    public Boolean getAddModCarrera() {
+        return addModCarrera;
+    }
+
+    public void setAddModCarrera(Boolean addModCarrera) {
+        this.addModCarrera = addModCarrera;
+    }
+
+    public Boolean getAddModCurso() {
+        return addModCurso;
+    }
+
+    public void setAddModCurso(Boolean addModCurso) {
+        this.addModCurso = addModCurso;
+    }
+
+    public Boolean getAddModMateria() {
+        return addModMateria;
+    }
+
+    public void setAddModMateria(Boolean addModMateria) {
+        this.addModMateria = addModMateria;
+    }
+
     public String getDocenteSelStr() {
         return docenteSelStr;
     }
@@ -351,7 +379,8 @@ public class jmlCrudAdmin extends BeanBaseJHard {
        if(inst == null || inst == new Instructor()){
            this.setInstructorSelStr("-1");
        } else this.setInstructorSelStr(inst.getIdinstructor().toString());
-       
+
+       this.addModCurso = true;
        return EMPTY_STRING;
     }
 
@@ -417,21 +446,25 @@ public class jmlCrudAdmin extends BeanBaseJHard {
                 this.popup.setVisible(true);
             }
         }
+        this.addModCurso = false;
         this.nuevoCurso = new Curso();
         return EMPTY_STRING;
     }
 
     public String btnCursoClean_action() {
+        this.setAddModCurso(false);
         this.nuevoCurso = new Curso();
         return EMPTY_STRING;
     }
 
     public String btnMateriaClean_action() {
+        this.setAddModMateria(false);
         this.nuevaMateria = new Materia();
         return EMPTY_STRING;
     }
 
     public String btnCarreraClean_action() {
+        this.setAddModCarrera(false);
         this.nuevaCarrera = new Carrera();
         return EMPTY_STRING;
     }
@@ -466,6 +499,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
                 this.popup.setVisible(true);
             }
         }
+        this.addModCarrera = false;
         this.nuevaCarrera = new Carrera();
         return EMPTY_STRING;
     }
@@ -474,6 +508,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
        String idS = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idCarrera");
        Integer id = new Integer(idS);
        this.nuevaCarrera = this.getJManLabInstance().getCarrera(id.intValue());
+       this.addModCarrera = true;
        return EMPTY_STRING;
     }
 
@@ -519,6 +554,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
                 this.popup.setVisible(true);
             }
         }
+        this.addModMateria = false;
         this.nuevaMateria = new Materia();
         return EMPTY_STRING;
     }
@@ -534,6 +570,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
 
        //System.out.println(carr.getCodigo()+"-"+carr.getNombre());
        //this.mySelCarreraItem = new SelectItem(carr.getIdcarrera(), carr.getCodigo()+"-"+carr.getNombre());
+       this.addModMateria = true;
        return EMPTY_STRING;
     }
 
@@ -661,6 +698,24 @@ public class jmlCrudAdmin extends BeanBaseJHard {
      * acquired during execution of an event handler).</p>
      */
     public void destroy() {
+    }
+
+    public String btnNuevaCarrera_action() {
+        this.nuevaCarrera = new Carrera();
+        this.setAddModCarrera(true);
+        return EMPTY_STRING;
+    }
+
+    public String btnNuevaMateria_action() {
+        this.nuevaMateria = new Materia();
+        this.setAddModMateria(true);
+        return EMPTY_STRING;
+    }
+
+    public String btnNuevoCurso_action() {
+        this.nuevoCurso = new Curso();
+        this.setAddModCurso(true);
+        return EMPTY_STRING;
     }
 
     private void recargarListas() {

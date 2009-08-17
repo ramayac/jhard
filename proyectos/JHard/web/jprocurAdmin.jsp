@@ -252,13 +252,16 @@
                                                         <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
                                                     </f:facet>
                                                 </ice:dataPaginator>
-                                            </div><br/><br/>
-                                            <ice:panelCollapsible expanded="true">
-                                            <f:facet name="header">Agregar/Editar Etiqueta</f:facet>
+                                            </div><br/>
+                                                <ice:commandButton action="#{jprocurAdmin.btnNuevoTag_action}" value="Nueva etiqueta" styleClass="btnAccion2"/>
+                                            <br/>
+                                            <br/>
+                                            <ice:panelCollapsible expanded="#{jprocurAdmin.addModTag}">
+                                                <f:facet name="header"><ice:panelGroup><ice:outputText value="Agregar/Editar Etiqueta"/></ice:panelGroup></f:facet>
                                                 <ice:panelGroup>
                                                 Descripción: <ice:inputText id="itTagDesc" title="Descripción de la etiqueta"
                                                 value="#{jprocurAdmin.etiquetaNueva.descripcion}" maxlength="25"
-                                                partialSubmit="true"/><ice:commandButton action="#{jprocurAdmin.btnAddTagDesc_action}" value="Guardar"  styleClass="btnAccion2"/>
+                                                partialSubmit="true"/><ice:commandButton action="#{jprocurAdmin.btnAddTagDesc_action}" value="Guardar" styleClass="btnAccion2"/>
                                                 <ice:commandButton action="#{jprocurAdmin.btnTagClean_action}" value="Limpiar"  styleClass="btnAccion2"/>
                                                 </ice:panelGroup>
                                             </ice:panelCollapsible>
