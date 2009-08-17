@@ -371,9 +371,9 @@
                             <!--login control -->
                             </li>
                             <li>
-                            <!--login control -->
+                            <!--tareas control -->
                             <jsp:directive.include file="/jspf/tareas.jspx"/>
-                            <!--login control -->
+                            <!--tareas control -->
                             <ul>
                                 <ice:form id="anotherForm">
                                 <li>
