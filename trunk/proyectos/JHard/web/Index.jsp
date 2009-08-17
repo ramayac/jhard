@@ -188,7 +188,7 @@
                         </ul>
                     </div>
                     <!-- end sidebar -->
-                    <div style="clear: both;"></div>
+                    <div style="clear: both;"/>
                 </div>
                 <!-- end page -->
                 <!-- start footer -->

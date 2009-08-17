@@ -6,6 +6,7 @@
 -->
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:element name="text">
+        <div style="height: 25%;"></div>
         <div id="footer">
             <div id="footer-wrap">
                 <p id="legal" style="line-height: 13px">Universidad de El Salvador Facultad Multidisciplinaria de Occidente <br/> Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/>
