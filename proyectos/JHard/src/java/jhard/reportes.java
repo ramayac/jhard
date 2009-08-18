@@ -14,7 +14,9 @@ import com.icesoft.faces.component.selectinputdate.SelectInputDate;
 import com.icesoft.faces.component.selectinputtext.SelectInputText;
 import com.icesoft.faces.context.effects.JavascriptContext;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
+import edu.ues.jhard.beans.BeanBaseJManLab;
 import edu.ues.jhard.beans.BeanBaseJRequest;
+import edu.ues.jhard.jpa.Docente;
 import edu.ues.jhard.jpa.Equiposimple;
 import edu.ues.jhard.jpa.Existencia;
 import java.awt.event.ActionEvent;
@@ -103,9 +105,12 @@ public class reportes extends AbstractPageBean {
     // </editor-fold>
 
     private List eqs = new ArrayList();
+    private List doc = new ArrayList();
     private List<Equiposimple> listaTodosEquipos;
     private List<Existencia> listaTodasExistencias;
+    private List<Docente> listaTodosDocentes;
     private Equiposimple EquipoElegido;
+    private Docente DocenteElegido;
     private Existencia ExistenciaElegida;
     private SelectInputDateBean selectInputDate1Bean = new SelectInputDateBean();
 
@@ -152,6 +157,42 @@ public class reportes extends AbstractPageBean {
     public void setSelectFechaFinal(SelectInputDate sid) {
         this.selectFechaFinal = sid;
     }
+    private HtmlCommandButton btnListadoAccesorios = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnListadoAccesorios() {
+        return btnListadoAccesorios;
+    }
+
+    public void setBtnListadoAccesorios(HtmlCommandButton hcb) {
+        this.btnListadoAccesorios = hcb;
+    }
+    private HtmlCommandButton btnListadoPiezas = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnListadoPiezas() {
+        return btnListadoPiezas;
+    }
+
+    public void setBtnListadoPiezas(HtmlCommandButton hcb) {
+        this.btnListadoPiezas = hcb;
+    }
+    private HtmlCommandButton btnReservaDoc = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnReservaDoc() {
+        return btnReservaDoc;
+    }
+
+    public void setBtnReservaDoc(HtmlCommandButton hcb) {
+        this.btnReservaDoc = hcb;
+    }
+    private SelectInputText txtDocs = new SelectInputText();
+
+    public SelectInputText getTxtDocs() {
+        return txtDocs;
+    }
+
+    public void setTxtDocs(SelectInputText sit) {
+        this.txtDocs = sit;
+    }
 
 
     /**
@@ -159,8 +200,10 @@ public class reportes extends AbstractPageBean {
      */
     public reportes() {
         BeanBaseJRequest instance = new BeanBaseJRequest();
+        BeanBaseJManLab instance2 = new BeanBaseJManLab();
         this.listaTodosEquipos= instance.getListaEquipoSimple();
         this.listaTodasExistencias= instance.getListaExistencia();
+        this.listaTodosDocentes=instance2.getAllDocentes();
         String path = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getRealPath("/") + "reportes/";        
     }
 
@@ -353,10 +396,10 @@ public class reportes extends AbstractPageBean {
 
     public String btnReportBit_action() {
         if(this.checkEQ.isSelected()){
-            JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=2&ideqsimple="+EquipoElegido.getIdEquipoSimple()+"\",\"Reporte\");");            
+            JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=2&idEquipoSimple="+EquipoElegido.getIdEquipoSimple()+"\",\"Reporte\");");
         }
         else
-            JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=3&idexistencia="+ExistenciaElegida.getIdexistencia()+"\",\"Reporte\");");
+            JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=3&idequipoexistente="+ExistenciaElegida.getIdexistencia()+"\",\"Reporte\");");
         return null;
     }
 
@@ -376,11 +419,80 @@ public class reportes extends AbstractPageBean {
 
         Date fechaI = (Date)this.selectFechaInicial.getValue();
         Date fechaF = (Date)this.selectFechaFinal.getValue();
-
+        System.out.println(fechaI.getDate()+"-"+(fechaI.getMonth()+1)+"-"+(fechaI.getYear()+1900));
+        System.out.println(fechaF.getDate()+"-"+(fechaF.getMonth()+1)+"-"+(fechaF.getYear()+1900));
         JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=4&diaI="+fechaI.getDate()+"&mesI="+(fechaI.getMonth()+1)+"&anioI="+(fechaI.getYear()+1900)+"&diaF="+fechaF.getDate()+"&mesF="+(fechaF.getMonth()+1)+"&anioF="+(fechaI.getYear()+1900)+" \",\"Reporte\");");
 
         return null;
-    }    
+    }
+
+    public String btnListadoPiezas_action() {
+        JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=5\",\"Reporte\");");
+        return null;
+    }
+
+    public String btnListadoAccesorios_action() {
+        JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=6\",\"Reporte\");");
+        return null;
+    }
+
+    /**
+     * @return the listaTodosDocentes
+     */
+    public List<Docente> getListaTodosDocentes() {
+        return listaTodosDocentes;
+    }
+
+    /**
+     * @param listaTodosDocentes the listaTodosDocentes to set
+     */
+    public void setListaTodosDocentes(List<Docente> listaTodosDocentes) {
+        this.listaTodosDocentes = listaTodosDocentes;
+    }
+
+    /**
+     * @return the doc
+     */
+    public List getDoc() {
+        return doc;
+    }
+
+    /**
+     * @param doc the doc to set
+     */
+    public void setDoc(List doc) {
+        this.doc = doc;
+    }
+
+    public void txtDocs_processValueChange(ValueChangeEvent vce) {
+        String valorBusqueda = vce.getNewValue().toString().toUpperCase();
+        if(valorBusqueda.equalsIgnoreCase("")){
+            this.doc.clear();
+            return;
+        }
+        List<SelectItem> listaItemsBusqueda = new ArrayList<SelectItem>();
+
+        for(Docente d: this.getListaTodosDocentes()){
+            if(d.getApellidos().toUpperCase().contains(valorBusqueda) ||
+                d.getNombres().toUpperCase().contains(valorBusqueda)){
+                    this.doc.add(d);
+                    listaItemsBusqueda.add(new SelectItem(d.getIddocente(), d.getNombres() + " - " + d.getApellidos()));
+            }
+        }
+        this.doc = listaItemsBusqueda;
+    }
+
+    public String txtDocs_action() {
+        Integer id= (Integer) this.txtDocs.getSelectedItem().getValue();
+        Docente e=new BeanBaseJRequest().getEntityManager().find(Docente.class, id);
+        DocenteElegido=e;
+        return null;
+    }
+
+    public String btnReservaDoc_action() {
+        JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=7&iddocente="+DocenteElegido.getIddocente()+"\",\"Reporte\");");
+        return null;
+    }
 
 }
 

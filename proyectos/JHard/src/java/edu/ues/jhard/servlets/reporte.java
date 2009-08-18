@@ -5,7 +5,6 @@
 package edu.ues.jhard.servlets;
 
 import com.mysql.jdbc.Connection;
-import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,18 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporter;
-import net.sf.jasperreports.engine.JRExporterParameter;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.export.JRHtmlExporter;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import oracle.toplink.essentials.sessions.DatabaseLogin;
 
 /**
@@ -48,18 +36,28 @@ public class reporte extends HttpServlet {
     public static final int ID_EQSIMPLE = 2;
     public static final String RUTA_EQSIMPLE = "bitacoraEqSimple.jasper";
 
-    public static final String IDEQSIMPLE = "ideqsimple";
+    public static final String IDEQSIMPLE = "idEquipoSimple";
 
     public static final int ID_EXISTENCIA = 3;
     public static final String RUTA_EXISTENCIA = "bitacorasExistencia.jasper";
 
-    public static final String IDEXISTENCIA = "idexistencia";
+    public static final String IDEXISTENCIA = "idequipoexistente";
 
     public static final int ID_RESERVAFECHA = 4;
     public static final String RUTA_RESERVAFECHA = "reservasByFechas.jasper";
 
     public static final String IDRESERVAFECHAINICIAL = "fechaInicial";
     public static final String IDRESERVAFECHAFINAL = "fechaFinal";
+
+    public static final int ID_PIEZAS = 5;
+    public static final String RUTA_PIEZAS = "listadoPiezas.jasper";
+
+    public static final int ID_ACCESORIOS = 6;
+    public static final String RUTA_ACCESORIOS = "listadoAccesorios.jasper";
+
+    public static final int ID_RESERVASDOC = 7;
+    public static final String IDDOCENTE = "iddocente";
+    public static final String RUTA_RESERVASDOC = "reservasByDocente.jasper";
 
     public static final String RUTA_REPORTES = "/reportes/";
     public static final String PARAM_VAR = "rpid";
@@ -127,10 +125,10 @@ public class reporte extends HttpServlet {
                case ID_EQSIMPLE: //2
                     //Obtenemos los parametros necesarios para este reporte
 
-                    Integer ideqsimple = Integer.parseInt(request.getParameter(IDEQSIMPLE));
+                    Integer idEquipoSimple = Integer.parseInt(request.getParameter(IDEQSIMPLE));
 
                    //Asignamos los parametros al mapa
-                    parametros.put(IDEQSIMPLE, ideqsimple);
+                    parametros.put(IDEQSIMPLE, idEquipoSimple);
                     //Generamos la ruta real del archivo jrxml
                     //rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_EQSIMPLE);
                     rutareal = RUTA_REPORTES + RUTA_EQSIMPLE;
@@ -141,10 +139,10 @@ public class reporte extends HttpServlet {
                case ID_EXISTENCIA: //3
                     //Obtenemos los parametros necesarios para este reporte
                     
-                   Integer idexistencia = Integer.parseInt(request.getParameter(IDEXISTENCIA));
+                   Integer idequipoexistente = Integer.parseInt(request.getParameter(IDEXISTENCIA));
 
                    //Asignamos los parametros al mapa
-                    parametros.put(IDEXISTENCIA, idexistencia);
+                    parametros.put(IDEXISTENCIA, idequipoexistente);
                     //Generamos la ruta real del archivo jrxml
                     //rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_EXISTENCIA);
                     rutareal = RUTA_REPORTES + RUTA_EXISTENCIA;
@@ -161,20 +159,40 @@ public class reporte extends HttpServlet {
                     Integer mesF = Integer.parseInt(request.getParameter("mesF"));
                     Integer anioF = Integer.parseInt(request.getParameter("anioF"));
 
-                    Date INICIAL = new Date(diaI, mesI, anioI);
-                    Date FINAL = new Date(diaF, mesF, anioF);
-
+                    Date fechaInicial = new Date(anioI, mesI, diaI);
+                    System.out.println(fechaInicial);
+                    Date fechaFinal = new Date(anioF, mesF, diaF);
+                    System.out.println(fechaFinal);
                     //Asignamos los parametros al mapa
-                    parametros.put(IDRESERVAFECHAINICIAL, INICIAL);
-                    parametros.put(IDRESERVAFECHAFINAL, FINAL);
-                    //Generamos la ruta real del archivo jrxml
-                    //rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_RESERVAFECHA);
+                    parametros.put(IDRESERVAFECHAINICIAL, fechaInicial);
+                    parametros.put(IDRESERVAFECHAFINAL, fechaFinal);
+                    
                     rutareal = RUTA_REPORTES + RUTA_RESERVAFECHA;
                     //Asignamos el nombre al PDF
-                    nombreReporte = "BitacoraExistencia";
+                    nombreReporte = "reservasByFechas.jasper";
                     break;
+                case ID_PIEZAS: //5
+                    rutareal = RUTA_REPORTES + RUTA_PIEZAS;
+                    //Asignamos el nombre al PDF
+                    nombreReporte = "listadoPiezas.jasper";
+                    break;
+                case ID_ACCESORIOS: //6
+                    rutareal = RUTA_REPORTES + RUTA_ACCESORIOS;
+                    //Asignamos el nombre al PDF
+                    nombreReporte = "listadoAccesorios.jasper";
+                    break;
+               case ID_RESERVASDOC: //7
+                    //Obtenemos los parametros necesarios para este reporte
+                   Integer iddocente = Integer.parseInt(request.getParameter(IDDOCENTE));
 
-                //TODO: agregar los otros reportes
+                   //Asignamos los parametros al mapa
+                   parametros.put(IDDOCENTE, iddocente);
+                   //rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_EXISTENCIA);
+                   rutareal = RUTA_REPORTES + RUTA_RESERVASDOC;
+                   //Asignamos el nombre al PDF
+                   nombreReporte = "reservasByDocente.jasper";
+                   break;
+
                 default:
                     throw new Exception("(reporte Servlet): No coincide el parametro con las opciones existentes.");
             }

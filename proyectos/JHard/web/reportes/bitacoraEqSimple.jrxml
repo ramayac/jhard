@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bitacoraEqSimple" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<parameter name="idequipo" class="java.lang.Integer">
+	<parameter name="idEquipoSimple" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[new Integer(1)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -15,7 +15,7 @@ FROM
      INNER JOIN `estadoequipo` estadoequipo ON bitacoraestados.`idestado` = estadoequipo.`idestado`
      AND estadoequipo.`idestado` = equiposimple.`idestado`
 WHERE
-     `equiposimple`.idEquipoSimple = $P{idequipo}]]>
+     `equiposimple`.idEquipoSimple = $P{idEquipoSimple}]]>
 	</queryString>
 	<field name="estadoequipo_nombre" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -37,7 +37,7 @@ WHERE
 		<groupHeader>
 			<band height="27" splitType="Stretch">
 				<staticText>
-					<reportElement mode="Opaque" x="0" y="0" width="104" height="27" forecolor="#FFFFFF" backcolor="#BB3E28"/>
+					<reportElement mode="Opaque" x="0" y="0" width="105" height="27" forecolor="#FFFFFF" backcolor="#BB3E28"/>
 					<textElement>
 						<font size="18"/>
 					</textElement>
@@ -68,7 +68,7 @@ WHERE
 		<groupHeader>
 			<band height="33" splitType="Stretch">
 				<textField>
-					<reportElement mode="Opaque" x="104" y="0" width="451" height="27" forecolor="#FFFFFF" backcolor="#BB3E28"/>
+					<reportElement mode="Opaque" x="105" y="0" width="450" height="27" forecolor="#FFFFFF" backcolor="#BB3E28"/>
 					<textElement>
 						<font size="16"/>
 					</textElement>
@@ -193,7 +193,7 @@ WHERE
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Página " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement key="textField" x="1" y="6" width="209" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
