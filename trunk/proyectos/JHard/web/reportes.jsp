@@ -71,30 +71,39 @@
                                         <br/>
                                         <ice:commandButton action="#{reportes.btnReportBit_action}" binding="#{reportes.btnReportBit}" id="btnReportBit"
                                             styleClass="btnAccion2" value="Generar Reporte"/>
-                                        <br/>                                        
+                                        <br/>
                                     </ice:panelGroup>
                                 </ice:panelCollapsible>
                                 <ice:panelCollapsible expanded="false" id="reservaEquipo" style="width: 600px">
                                     <f:facet name="header">
                                         <ice:panelGroup id="panelTitReservaEquipo">
-                                            <ice:outputText id="titReservaEquipo" value="Reservas de Equipo Multimedia"/>
+                                            <ice:outputText id="titReservaEquipo" value="Reservas de Equipo Multimedia por Fechas"/>
                                         </ice:panelGroup>
                                     </f:facet>
                                     <ice:panelGroup id="panelReservaEquipo" style="">
                                         <ice:outputLabel id="fechaInicial" value="Fecha Inicial"/>
                                         <br/>
-                                        <ice:selectInputDate binding="#{reportes.selectFechaInicial}" id="selectFechaInicial"
-                                            style="height:212px; width: 190px" value="#{reportes.selectInputDate1Bean.date1}"/>
-                                        <br/>
+                                        <ice:selectInputDate binding="#{reportes.selectFechaInicial}" id="selectFechaInicial" style="height:212px; width: 190px" value="#{reportes.selectInputDate1Bean.date1}"/>
                                         <br/>
                                         <ice:outputLabel id="fechaFinal" value="Fecha Final"/>
                                         <br/>
-                                        <ice:selectInputDate binding="#{reportes.selectFechaFinal}" id="selectFechaFinal"
-                                            style="height: 212px; width: 190px" value="#{reportes.selectInputDate2Bean.date1}"/>
-                                        <br/>
+                                        <ice:selectInputDate binding="#{reportes.selectFechaFinal}" id="selectFechaFinal" style="height: 212px; width: 190px" value="#{reportes.selectInputDate2Bean.date1}"/>
                                         <br/>
                                         <ice:commandButton action="#{reportes.btnReportReserva_action}" binding="#{reportes.btnReportReserva}"
                                             id="btnReportReserva" styleClass="btnAccion2" value="Generar Reporte"/>
+                                    </ice:panelGroup>
+                                </ice:panelCollapsible>
+                                <ice:panelCollapsible expanded="false" id="reservaEquipoDoc" style="width: 600px">
+                                    <f:facet name="header">
+                                        <ice:panelGroup id="panelTitReservaEquipoDoc">
+                                            <ice:outputText id="titReservaEquipoDoc" value="Reservas de Equipo Multimedia por Docente"/>
+                                        </ice:panelGroup>
+                                    </f:facet>
+                                    <ice:panelGroup id="panelReservaEquipoDoc" style="">
+                                        <ice:selectInputText action="#{reportes.txtDocs_action}" binding="#{reportes.txtDocs}" id="txtDocs" valueChangeListener="#{reportes.txtDocs_processValueChange}">
+                                            <f:selectItems id="selectInputText1selectedItems1" value="#{reportes.doc}"/>
+                                        </ice:selectInputText>
+                                        <ice:commandButton action="#{reportes.btnReservaDoc_action}" binding="#{reportes.btnReservaDoc}" id="btnReservaDoc" value="Generar Reporte"/>
                                     </ice:panelGroup>
                                 </ice:panelCollapsible>
                                 <ice:panelCollapsible expanded="false" id="gruposLab" style="width: 600px">
@@ -105,13 +114,27 @@
                                     </f:facet>
                                     <ice:panelGroup id="panelGruposLab" style=""/>
                                 </ice:panelCollapsible>
-                                <ice:panelCollapsible expanded="false" id="estudiantesByCarrera" style="width: 600px">
+                                <ice:panelCollapsible expanded="false" id="listadoPiezas" style="width: 600px">
                                     <f:facet name="header">
-                                        <ice:panelGroup id="panelTitEstudiantesByCarrera">
-                                            <ice:outputText id="titEstudiantesByCarrera" value="Estudiantes por Carrera en Grupos de Laboratorio"/>
+                                        <ice:panelGroup id="panelTitListadoPiezas">
+                                            <ice:outputText id="titListadoPiezas" value="Piezas no asignadas a existencias"/>
                                         </ice:panelGroup>
                                     </f:facet>
-                                    <ice:panelGroup id="panelEstudiantesByCarrera" style=""/>
+                                    <ice:panelGroup id="panelListadoPiezas" style="">
+                                        <ice:commandButton action="#{reportes.btnListadoPiezas_action}" binding="#{reportes.btnListadoPiezas}"
+                                            id="btnListadoPiezas" styleClass="btnAccion2" value="Generar Reporte"/>
+                                    </ice:panelGroup>
+                                </ice:panelCollapsible>
+                                <ice:panelCollapsible expanded="false" id="listadoAccesorios" style="width: 600px">
+                                    <f:facet name="header">
+                                        <ice:panelGroup id="panelTitListadoAccesorios">
+                                            <ice:outputText id="titListadoAccesorios" value="Accesorios no asignados a existencias"/>
+                                        </ice:panelGroup>
+                                    </f:facet>
+                                    <ice:panelGroup id="panelListadoAccesorios" style="">
+                                        <ice:commandButton action="#{reportes.btnListadoAccesorios_action}" binding="#{reportes.btnListadoAccesorios}"
+                                            id="btnListadoAccesorios" styleClass="btnAccion2" value="Generar Reporte"/>
+                                    </ice:panelGroup>
                                 </ice:panelCollapsible>
                             </ice:panelGroup>
                         </ice:form>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bitacorasExistencia" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<parameter name="idexistencia" class="java.lang.Integer">
+	<parameter name="idequipoexistente" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[new Integer(1)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -13,7 +13,7 @@ FROM
      `existencia` existencia INNER JOIN `bitacoraestados` bitacoraestados ON existencia.`idexistencia` = bitacoraestados.`idequipoexistente`
      INNER JOIN `estadoequipo` estadoequipo ON bitacoraestados.`idestado` = estadoequipo.`idestado`
 WHERE
-     existencia.`idexistencia` = $P{idexistencia}]]>
+     existencia.`idexistencia` = $P{idequipoexistente}]]>
 	</queryString>
 	<field name="bitacoraestados_descripcion" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -157,7 +157,7 @@ WHERE
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement key="textField" x="1" y="6" width="209" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
