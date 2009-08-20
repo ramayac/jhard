@@ -25,54 +25,166 @@ import javax.servlet.http.HttpServletRequest;
 
 
 /**
- *
+ * Backing bean con toda la funcionalidad de eventos y manejo de objetos persistentes para ser usados en la pagina Admin.jspx
  * @author Robertux
  */
 public class BeanBaseJHardmin extends BeanBase {
 
+    /**
+     * Representa al usuario actualmente logueado en esta sesion
+     */
     private LoggedUser currentUser;
+    /**
+     * Nombre del usuario. Asociado al campo en pantalla para iniciar sesion
+     */
     private String inputUsrName;
+    /**
+     * Clave del usuario. Asociado al campo en pantalla para iniciar sesion
+     */
     private String inputUsrPassword;
+    /**
+     * Clave anterior del usuario. Asociado al campo en pantalla para cambiar clave
+     */
     private String inputChOldPwd;
+    /**
+     * Nueva clave del usuario. Asociado al campo en pantalla para cambiar clave
+     */
     private String inputChNewPwd;
+    /**
+     * Confirmacion de la nueva clave del usuario. Asoaciado al campo en pantalla para pedir la confirmacion de la nueva clave
+     */
     private String inputChNewPwdConfirm;
+    /**
+     * Representa el estado del ultimo intento de inicio de sesion: False = exitoso, True = fallido
+     */
     private Boolean loginFail;
+    /**
+     * Contiene la lista de todos los roles existentes en la base de datos
+     */
     private List<Rol> roleList;
+    /**
+     * Contiene la lista de todos los usuarios existentes en la base de datos
+     */
     private List<Usuario> userList;
+    /**
+     * Contiene la lista de todas las autorizaciones existentes en la base de datos
+     */
     private List<Autorizacion> listaAutorizaciones;
+    /**
+     * Contiene la lista de todos los estudiantes existentes en la base de datos
+     */
     private List<Estudiante> listaEstudiantes;
+    /**
+     * Contiene la lista de todos los instructores existentes en la base de datos
+     */
     private List<Instructor> listaInstructores;
+    /**
+     * Contiene la lista de todos los docentes existentes en la base de datos
+     */
     private List<Docente> listaDocentes;
+    /**
+     * Representa el mensaje en pantalla a mostrar, en una ventana de popUp generica
+     */
     private ActionMessage msg;
+    /**
+     * Representa la visibilidad de la popUp de mensajes genericos
+     */
     private Boolean popUpAddUserVisible;
+    /**
+     * Representa la visibilidad del popUp que muestra el formulario para editar usuarios
+     */
     private Boolean popUpEditUserVisible;
+    /**
+     * Representa a un nuevo usuario que se esta agregando al sistema
+     */
     private Usuario newUser;
-    private String newUserPwdConfirm;    
+    /**
+     * Representa la confirmacion de la clave del nuevo usuario que se esta agregando al sistema
+     */
+    private String newUserPwdConfirm;
+    /**
+     * Representa el id del rol seleccionado en el comboBox que lista todos los roles existentes
+     */
     private String rolSelected;
+    /**
+     * Representa todos los roles existentes en la base de datos en forma de objetos SelectItem para poder ser renderizados como un comboBox
+     */
     private SelectItemGroup roleItemList;
-    private int userListSize;
+    /**
+     * Representa la visibilidad del popUp que muestra una confirmacion al momento de intentar eliminar un usuario
+     */
     private Boolean popUpConfirmDelUserVisible;
+    /**
+     * Representa el mensaje de texto a mostrar en el popUp de confrimacion al momento de intentar eliminar un usuario
+     */
     private String popUpConfirmDelUserMessage;
+    /**
+     * Representa a un usuario que esta siendo editado en el sistema o al usuario que se desea eliminar
+     */
     private Usuario editDelUser;
+    /**
+     * Representa a un CrudManager para el manejo de eventos de agregacion/modificacion/eliminacion de autorizaciones
+     */
     private CrudManager crdAutorizaciones;
+    /**
+     * Representa a un CrudManager para el manejo de eventos de agregacion/modificacion/eliminacion de estudiantes
+     */
     private CrudManager crdEstudiantes;
+    /**
+     * Representa a un CrudManager para el manejo de eventos de agregacion/modificacion/eliminacion de instructores
+     */
     private CrudManager crdInstructores;
+    /**
+     * Representa a un crudManager para el manejo de eventos de agregacion/modificacion/eliminacion de docentes
+     */
     private CrudManager crdDocentes;
+    /**
+     * Representa a la autorizacion que actualmente esta siendo creada/editada o eliminada
+     */
     private Autorizacion currentAutorizacion;
+    /**
+     * Representa al usuario que actualmente se esta registrando en el sistema
+     */
     private Usuario usuarioRegistrado;
+    /**
+     * Representa al estudiante asociado al usuario que actualmente se esta registrando al sistema
+     */
     private Estudiante estudianteUsuarioRegistrado;
+    /**
+     * Representa la confirmacion de la clave del usuario que actualmente se esta registrando al sistema
+     */
     private String claveUsuarioConfirmacion;
+    /**
+     * Representa el codigo de autorizacion del usuario que actualmente se esta registrando al sistema
+     */
     private String autorizacionUsuario;
+    /**
+     * Representa la visibilidad del popUp que muestra el formulario para registrar nuevos usuarios en el sistema
+     */
     private boolean popupRegistrarUsuarioVisible;
+    /**
+     * Representa al estudiante que actualmente esta siendo agregado/modificado/eliminado
+     */
     private Estudiante currentEstudiante;
+    /**
+     * Representa al instructor que actualmente esta siendo agregado/modificado/eliminado
+     */
     private Instructor currentInstructor;
+    /**
+     * Representa al docente que actualmente esta siendo agregado/modificado/eliminado
+     */
     private Docente currentDocente;
 
 
+    /**
+     * Crea una nueva instancia de la clase JHardmin inicializando los componentes que se usan desde el principio que carga la pagina asociada a este bean
+     */
     public BeanBaseJHardmin(){
         this.loginFail = false;
+        //Se limpian las variables asociadas a los inputText para que estos no muestren ningun valor al inicio
         this.setInputUsrName("");
         this.setInputUsrPassword("");
+        //Se inicializan las listas asociadas a comboBoxes.
         this.roleList = this.getEntityManager().createNamedQuery("Rol.findAll").getResultList();
         this.userList = this.getEntityManager().createNamedQuery("Usuario.findAll").getResultList();
         this.listaAutorizaciones = this.getEntityManager().createQuery("SELECT a FROM Autorizacion a").getResultList();
@@ -99,6 +211,12 @@ public class BeanBaseJHardmin extends BeanBase {
         this.currentDocente = new Docente();
     }
 
+    /**
+     * Obtiene un usuario de la bas de datos segun su nombre y contraseña encriptada
+     * @param userName Nombre del usuario a obtener
+     * @param userPwd Clave encriptada del usuario a obtener
+     * @return un objeto Usuario correspondiente al nombre y clave recibidos como parametro o null
+     */
     public Usuario getUsuario(String userName, String userPwd){
         Usuario u = null;
         EntityManager eMgr = this.getEntityManager();
@@ -122,6 +240,11 @@ public class BeanBaseJHardmin extends BeanBase {
         return u;
     }
 
+    /**
+     * Obtiene un usuario de la base de datos en baes a su ID
+     * @param id el ID del usuario a obtener de la base
+     * @return un objeto usuario correspondiente al ID recibido como parametro o null
+     */
     public Usuario getUsuario(int id){
         Usuario u = null;
         try{            
@@ -179,6 +302,10 @@ public class BeanBaseJHardmin extends BeanBase {
         this.inputUsrPassword = inputUsrPassword;
     }
 
+    /**
+     * Realiza la autenticacion de un usuario en el sistema permitiendole, en caso exitoso, tener acceso a secciones del sistema basadas en el rol que este posee
+     * @return Una cadena vacia. Para saber el resultado del login verificar el estado de la variable loginFail
+     */
     public String login(){
         String remoteAddr = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
         int uid =LoginManager.getInstance().Login(this.inputUsrName, this.inputUsrPassword, remoteAddr);
@@ -193,6 +320,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "";
     }
 
+    /**
+     * Termina la sesion del usuario actualmente logueado al sistema.
+     * @return Una cadena vacia. Para saber si se termino la sesion exitosamente verificar si la variable currentUser es igual a null
+     */
     public String logout(){
         LoginManager.getInstance().Logout(this.currentUser.getUid());
         this.setCurrentUser(null);
@@ -222,11 +353,17 @@ public class BeanBaseJHardmin extends BeanBase {
         return roleList;
     }
 
+    /**
+     * Cambia la clave de acceso del usuario actualmente logueado al sistema
+     * @return una cadena con la palabra "success" en caso de exito o la palabra "fail" en caso de falla
+     */
     public String changePassword(){
         try{
             Usuario usr = LoginManager.getInstance().getUsuario(this.currentUser);
             EntityManager em = this.getEntityManager();
+            //Verifica si el valor introducido como claveAnterior, coincide con la clave actual del usuario
             if(usr.getClave().equalsIgnoreCase(LoginManager.getInstance().encrypt(this.getInputChOldPwd()))){
+                //Verifica si la nueva clave ingresada coincide con su confirmacion
                 if(this.getInputChNewPwd().equalsIgnoreCase(this.getInputChNewPwdConfirm())){                    
                     //this.getEntityManager().merge(usr);
                     //this.getEntityManager().getTransaction().begin();                    
@@ -261,6 +398,10 @@ public class BeanBaseJHardmin extends BeanBase {
         }
     }
 
+    /**
+     * Cierra la popup utilizada para mostrar mensajes genericos en pantalla
+     * @return una cadena vacia
+     */
     public String closePopup(){
         System.out.println("closePopup invocado.");
         this.msg.setVisible(false);
@@ -351,6 +492,10 @@ public class BeanBaseJHardmin extends BeanBase {
         this.popUpAddUserVisible = popUpAddUserVisible;        
     }
 
+    /**
+     * Muestra el popUp para agregar usuarios. Ademas, inicializa la variable newUser y sus atributos
+     * @return la palabra "success" si todo funciono exitosamente
+     */
     public String showPopupAddUser(){
         this.setPopUpAddUserVisible(true);
         this.newUser = new Usuario();
@@ -360,6 +505,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "success!";
     }
 
+    /**
+     * Agrega un nuevo usuario al sistema segun los datos contenidos en la variable newUser.
+     * @return la palabra "Done" si todo funciono exitosamente o "fail" en caso contrario
+     */
     public String commitAddUser(){
         this.setPopUpAddUserVisible(false);
         if(!this.newUser.getClave().equalsIgnoreCase(this.newUserPwdConfirm)){            
@@ -384,6 +533,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "Done.";
     }
 
+    /**
+     * Oculta el popUp para agregar usuarios
+     * @return la palabra "Done" si todo funciono exitosamente
+     */
     public String cancelAddUser(){
         this.setPopUpAddUserVisible(false);
         this.newUser = new Usuario();
@@ -448,6 +601,9 @@ public class BeanBaseJHardmin extends BeanBase {
         this.roleItemList = roleItemList;
     }
 
+    /**
+     * Inicializa la lista de SelectItems para la lista de roles, los cuales tienen valueBinding con un comboBox para poder seleccionar un rol en pantalla y asignarselo a un usuario
+     */
     private void initSelectItems() {
         this.roleItemList = new SelectItemGroup();
         SelectItem[] itemArray = new SelectItem[this.roleList.size()];
@@ -461,6 +617,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return this.userList.size();
     }
 
+    /**
+     * Muestra el popUp para editar un usuario de la lista de usuarios
+     * @returnla palabra "Done" si todo funciono exitosamente
+     */
    public String showPopupEditUsuario(){
        String idUsuario = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idUsuario");
        System.out.println("idUsuario: " + idUsuario);
@@ -476,6 +636,10 @@ public class BeanBaseJHardmin extends BeanBase {
        return "done";
    }
 
+   /**
+    * Guarda los cambios realizados al usuario actual mostrado en el popUp de editar usuario. Luego, cierra este popUp
+    * @return la palabra "done" si todo funciono exitosamente o "fail" en caso contrario
+    */
    public String editUsuario(){
        this.setPopUpEditUserVisible(false);
        if(!(this.editDelUser.getClave().isEmpty() && this.newUserPwdConfirm.isEmpty())){
@@ -499,11 +663,19 @@ public class BeanBaseJHardmin extends BeanBase {
        return "done";
    }
 
+   /**
+    * Cierra el popUp de editar usuario
+    * @return la palabra "done" si todo funciono exitosamente
+    */
    public String closePopupEditUsuario(){
        this.setPopUpEditUserVisible(false);
        return "done";
    }
 
+   /**
+    * Elimina un usuario de la base de datos
+    * @return la palabra "done" si todo funciono exitosamente
+    */
    public String delUsuario(){
        EntityManager em = this.getEntityManager();       
        this.editDelUser = (Usuario)em.createQuery("SELECT u FROM Usuario u WHERE u.idusuario = " + this.editDelUser.getIdusuario().toString()).getSingleResult();
@@ -518,6 +690,10 @@ public class BeanBaseJHardmin extends BeanBase {
        return "done";
    }
 
+   /**
+    * Muestra un popUp con un mensaje de confirmacion al usuario acerca de la eliminacion de un usuario
+    * @return la palabra "done" si todo funciono exitosamente
+    */
    public String showPopupConfirmDeleteUser(){
        this.setPopUpConfirmDelUserVisible(true);
        String idUsuario = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idUsuario");
@@ -532,6 +708,10 @@ public class BeanBaseJHardmin extends BeanBase {
        return "done";
    }
 
+   /**
+    * Oculta el popUp de confirmacion de eliminacion del usuario
+    * @return la palabra "done" si todo funciono exitosamente
+    */
    public String hidePopupConfirmDeleteUser(){
        this.setPopUpConfirmDelUserVisible(false);
        return "done";
@@ -634,11 +814,19 @@ public class BeanBaseJHardmin extends BeanBase {
     public void setCurrentAutorizacion(Autorizacion currentAutorizacion) {
         this.currentAutorizacion = currentAutorizacion;
     }
-        
+
+    /**
+     * Devuelve la cantidad de autorizaciones que posee la lista
+     * @return la cantidad de autorizaciones que posee la lista
+     */
     public int getListaAutorizacionesSize(){
         return this.listaAutorizaciones.size();
     }
 
+    /**
+     * Agrega una nueva autorizacion a la base de datos
+     * @return "done" si la operacion fue exitosa
+     */
     public String addAutorizacion(){
         EntityManager emgr = this.getEntityManager();
         emgr.getTransaction().begin();
@@ -653,6 +841,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    /**
+     * Elimina de la base de datos la autorizacion actual
+     * @return "done" si la operacion fue exitosa
+     */
     public String delAutorizacion(){
         EntityManager emgr = this.getEntityManager();
         this.currentAutorizacion = (Autorizacion)emgr.createQuery("SELECT a FROM Autorizacion a WHERE a.idautorizacion=" + this.crdAutorizaciones.getCurrentId()).getSingleResult();
@@ -679,16 +871,28 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    /**
+     * Hace visible el popUp que contiene el formulario para registrar usuarios
+     * @return "done" si la operacion fue exitosa
+     */
     public String showPopupRegistrarUsuario(){
         this.setPopupRegistrarUsuarioVisible(true);
         return "done";
     }
 
+    /**
+     * Hace invisible el popUp que contiene el formulario para registrar usuarios
+     * @return "done" si la operacion fue exitosa
+     */
     public String hidePopupRegistrarUsuario(){
         this.setPopupRegistrarUsuarioVisible(false);
         return "done";
     }
 
+    /**
+     * Agrega un nuevo usuario al sistema en base a un codigo de autorizacion asignandole automaticamente el rol de estudiante
+     * @return "done" si la operacion fue exitosa o "fail" en caso contrario
+     */
     public String registrarUsuario(){
         EntityManager emgr = this.getEntityManager();
         Rol rolEstudiante = (Rol)emgr.createQuery("SELECT r FROM Rol r WHERE r.idrol=5").getSingleResult();
@@ -946,18 +1150,34 @@ public class BeanBaseJHardmin extends BeanBase {
         this.currentDocente = currentDocente;
     }
 
+    /**
+     * Devuelve la cantidad de estudiantes que posee la lista
+     * @return la cantidad de estudiantes que posee la lista
+     */
     public int getSizeListaEstudiantes(){
         return this.listaEstudiantes.size();
     }
 
+    /**
+     * Devuelve la cantidad de instructores que posee la lista
+     * @return la cantidad de instructores que posee la lista
+     */
     public int getSizeListaInstructores(){
         return this.listaInstructores.size();
     }
 
+    /**
+     * Devuelve la cantidad de docentes que posee la lista
+     * @return la cantidad de docentes que posee la lista
+     */
     public int getSizeListaDocentes(){
         return this.listaDocentes.size();
     }
 
+    /**
+     * Agrega un nuevo estudiante al sistema, agregando y asociando tambien un nuevo usuario con el rol de estudiante y cuyo nombre y clave son el carnet del estudiante
+     * @return "done" si la operacion fue exitosa o "fail" en caso contrario
+     */
     public String addEstudiante(){
         EntityManager emgr = this.getEntityManager();
         if(emgr.createQuery("SELECT e FROM Estudiante e WHERE e.carnet='" + this.currentEstudiante.getCarnet() + "'").getResultList().size() > 0){
@@ -997,6 +1217,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    /**
+     * Muestra el popUp con el formulario de editar estudiante, inicializando primeramente el estudiante actualmente seleccionado
+     * @return "done" si la operacion fue exitosa
+     */
     public String beforeEditEstudiante(){
         String idEstudiante = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
         this.currentEstudiante = (Estudiante)this.getEntityManager().createQuery("SELECT e FROM Estudiante e WHERE e.idestudiante=" + idEstudiante).getSingleResult();
@@ -1004,6 +1228,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    /**
+     * Guarda los cambios del estudiante que estaba siendo editado
+     * @return "done" si la operacion fue exitosa
+     */
     public String editEstudiante(){
         EntityManager emgr = this.getEntityManager();
         emgr.getTransaction().begin();
@@ -1025,6 +1253,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    /**
+     * Elimina un estudiante de la base de datos, inactivando tambien el usuario asignado a el
+     * @return "done" si la operacion fue exitosa
+     */
     public String delEstudiante(){
         EntityManager emgr = this.getEntityManager();
         this.currentEstudiante = (Estudiante)emgr.createQuery("SELECT e FROM Estudiante e WHERE e.idestudiante=" + this.crdEstudiantes.getCurrentId()).getSingleResult();
@@ -1054,6 +1286,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    /**
+     * Agrega un nuevo instructor al sistema, agregando y asociando tambien un nuevo usuario con el rol de instructor y cuyo nombre y clave son el carnet del instructor
+     * @return "done" si la operacion fue exitosa o "fail" en caso contrario
+     */
     public String addInstructor(){
         EntityManager emgr = this.getEntityManager();
         if(emgr.createQuery("SELECT i FROM Instructor i WHERE i.carnet='" + this.currentInstructor.getCarnet() + "'").getResultList().size() > 0){
@@ -1093,6 +1329,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    /**
+     * Muestra el popUp con el formulario de editar instructor, inicializando primeramente el estudiante actualmente seleccionado
+     * @return "done" si la operacion fue exitosa
+     */
     public String beforeEditInstructor(){
         String idInstructor = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
         this.currentInstructor = (Instructor)this.getEntityManager().createQuery("SELECT i FROM Instructor i WHERE i.idinstructor=" + idInstructor).getSingleResult();
@@ -1100,6 +1340,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    /**
+     * Guarda los cambios del instructor que estaba siendo editado
+     * @return "done" si la operacion fue exitosa
+     */
     public String editInstructor(){
         EntityManager emgr = this.getEntityManager();
         emgr.getTransaction().begin();
@@ -1121,6 +1365,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    /**
+     * Elimina un instructor de la base de datos, inactivando tambien el usuario asignado a el
+     * @return "done" si la operacion fue exitosa
+     */
     public String delInstructor(){
         EntityManager emgr = this.getEntityManager();
         this.currentInstructor = (Instructor)emgr.createQuery("SELECT i FROM Instructor i WHERE i.idinstructor=" + this.crdInstructores.getCurrentId()).getSingleResult();
@@ -1150,6 +1398,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    /**
+     * Agrega un nuevo docente al sistema, agregando y asociando tambien un nuevo usuario con el rol de docente y cuyo nombre y clave son el primer nombre del docente
+     * @return "done" si la operacion fue exitosa o "fail" en caso contrario
+     */
     public String addDocente(){
         EntityManager emgr = this.getEntityManager();
 
@@ -1182,6 +1434,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    /**
+     * Muestra el popUp con el formulario de editar docente, inicializando primeramente el estudiante actualmente seleccionado
+     * @return "done" si la operacion fue exitosa
+     */
     public String beforeEditDocente(){
         String idDocente = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
         this.currentDocente = (Docente)this.getEntityManager().createQuery("SELECT d FROM Docente d WHERE d.iddocente=" + idDocente).getSingleResult();
@@ -1189,6 +1445,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    /**
+     * Guarda los cambios del docente que estaba siendo editado
+     * @return "done" si la operacion fue exitosa
+     */
     public String editDocente(){
         EntityManager emgr = this.getEntityManager();
         emgr.getTransaction().begin();
@@ -1209,6 +1469,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    /**
+     * Elimina un docente de la base de datos, inactivando tambien el usuario asignado a el
+     * @return "done" si la operacion fue exitosa
+     */
     public String delDocente(){
         EntityManager emgr = this.getEntityManager();
         this.currentDocente = (Docente)emgr.createQuery("SELECT d FROM Docente d WHERE d.iddocente=" + this.crdDocentes.getCurrentId()).getSingleResult();
@@ -1238,6 +1502,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return "done";
     }
 
+    /**
+     * Devuelve el estudiante asociado al usuario que actualmente se encuentra en sesion
+     * @return el estudiante asociado o null en caso que no tenga ninguno
+     */
     public Estudiante getEstudianteFromUser(){
         try{
             Usuario usr = (Usuario)this.getEntityManager().createQuery("SELECT u FROM Usuario u WHERE u.idusuario=" + this.currentUser.getUid()).getSingleResult();
@@ -1249,6 +1517,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return null;
     }
 
+    /**
+     * Devuelve el instructor asociado al usuario que actualmente se encuentra en sesion
+     * @return el instructor asociado o null en caso que no tenga ninguno
+     */
     public Instructor getInstructorFromUser(){
         try{
             Usuario usr = (Usuario)this.getEntityManager().createQuery("SELECT u FROM Usuario u WHERE u.idusuario=" + this.currentUser.getUid()).getSingleResult();
@@ -1260,6 +1532,10 @@ public class BeanBaseJHardmin extends BeanBase {
         return null;
     }
 
+    /**
+     * Devuelve el docente asociado al usuario que actualmente se encuentra en sesion
+     * @return el docente asociado o null en caso que no tenga ninguno
+     */
     public Docente getDocenteFromUser(){
         try{
             Usuario usr = (Usuario)this.getEntityManager().createQuery("SELECT u FROM Usuario u WHERE u.idusuario=" + this.currentUser.getUid()).getSingleResult();

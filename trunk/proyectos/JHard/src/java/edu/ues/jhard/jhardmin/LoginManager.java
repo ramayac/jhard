@@ -113,6 +113,11 @@ public class LoginManager {
         return this.loggedUsers.get(uid);
     }
 
+    /**
+     * Obtiene el objeto LoggedUser de la lista de usuarios actualmente logueados al sistema, en base a su nombre
+     * @param userName nombre del usuario a obtener
+     * @return el usuario de la lista, si se encontro alguna coincidencia o null en caso contrario
+     */
     public LoggedUser getUser(String userName){
         Iterator itUsers = this.loggedUsers.keySet().iterator();
         while(itUsers.hasNext()){
@@ -123,6 +128,11 @@ public class LoginManager {
         return null;
     }
 
+    /**
+     * Obtiene el MD5 de una cadena en texto plano, con el objetivo de encriptar las contraseñas al crear nuevos usuarios y al validar el inicio de sesion de un usuario
+     * @param plainText texto plano a encriptar
+     * @return el valor MD5 correspondiente al texto plano introducido
+     */
     public String encrypt(String plainText){
         String encripted = "";
 //
@@ -168,12 +178,23 @@ public class LoginManager {
 //        return encripted;
     }
 
+    /**
+     * Convierte un arreglo de bytes a su representacion de tipo String en base hexadecimal
+     * @param bytes arreglo de bytes a convertir
+     * @return una cadena con el valor hexadecimal correspondiente al arreglo de bytes
+     * @throws java.io.IOException
+     */
     public String bytesToHex(byte[] bytes) throws IOException{
         ByteArrayOutputStream bas = new ByteArrayOutputStream(bytes.length + bytes.length / 4 + 1);
         bas.write(bytes);
         return bas.toString();
     }
 
+    /**
+     * Obtiene una entity usuario en base a un LoggedUser
+     * @param usr LoggedUser en base al cual obtener la entity
+     * @return la entity asociada con el loggedUser o null en caso contrario
+     */
     public Usuario getUsuario(LoggedUser usr){
         if(this.isLogged(usr.getUid())){
             return new BeanBaseJHardmin().getUsuario(usr.getUid());

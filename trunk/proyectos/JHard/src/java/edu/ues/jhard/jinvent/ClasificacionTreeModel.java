@@ -15,15 +15,28 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 /**
- *
+ * Modelo jerarquico de arbol para mostrar la jerarquia de clasificaciones de los elementos del inventario
  * @author robertux
  */
 public class ClasificacionTreeModel {
 
+    /**
+     * Modelo base de las clasificaiones
+     */
     private DefaultTreeModel modelo;
+    /**
+     * EntityManager para manejar la persistencia
+     */
     private EntityManager em;
+    /**
+     * UserObject como representaciones de los nodos del treeModel, que al mismo tiempo se asocian con una clasificacion
+     */
     private ClasificacionUserObject currentUserObject;
 
+    /**
+     * Crea una nueva instancia de la clase ClasificacionTreeModel en base al parametro introducido
+     * @param emgr EntityManager para manejar la persistencia
+     */
     public ClasificacionTreeModel(EntityManager emgr){
         this.em = emgr;
         this.generarNodosModelo();
@@ -43,6 +56,9 @@ public class ClasificacionTreeModel {
         this.modelo = modelo;
     }
 
+    /**
+     * Genera la jerarquia inical de los nodos del modelo en base a las clasificaciones existentes en la base de datos
+     */
     public void generarNodosModelo(){
         Clasificacion cl = (Clasificacion)this.em.createQuery("SELECT c FROM Clasificacion c WHERE c.idsuperior IS NULL").getSingleResult();
         DefaultMutableTreeNode nodo = this.agregarNodo(null, cl);
@@ -52,6 +68,12 @@ public class ClasificacionTreeModel {
         this.generarNodoBusqueda(nodo);
     }
 
+    /**
+     * Agrega un nuevo nodo al modelo actual, debajo del nodoPadre y asociado a la clasificacion cl
+     * @param nodoPadre nodo del cual dependera, en caso de ser null, se agrega como nodo raiz
+     * @param cl clasificacion a la cual estara asociado este nuevo nodo del modelo
+     * @return el nuevo nodo agregado al modelo
+     */
     public DefaultMutableTreeNode agregarNodo(DefaultMutableTreeNode nodoPadre, Clasificacion cl){
         DefaultMutableTreeNode nodo = new DefaultMutableTreeNode();
         ClasificacionUserObject clUsrObj = new ClasificacionUserObject(nodo);
@@ -85,6 +107,10 @@ public class ClasificacionTreeModel {
         this.currentUserObject = currentUserObject;
     }
 
+    /**
+     * Genera los nodos hijos, en base a las clasificaciones dependientes de la clasificacion asociada al nodo recibido como parametro
+     * @param nodo nodo que contiene la clasificacion de la cual se tomaran las hijas para generar nuevos nodos
+     */
     public void generarNodosHijos(DefaultMutableTreeNode nodo){
         Clasificacion cl = ((ClasificacionUserObject)nodo.getUserObject()).getClasificacion();
         try{
@@ -99,6 +125,11 @@ public class ClasificacionTreeModel {
         }
     }
 
+    /**
+     * Asigna como nodo actual al nodo asociado con la clasificacion cuyo id es recibido como parametro
+     * @param idClasificacion id de la clasificacion asociada al nodo que se convertira en el nodo actual
+     * @return el nodo actual
+     */
     public DefaultMutableTreeNode seleccionarNodo(String idClasificacion){
         DefaultMutableTreeNode nodo = this.buscarNodo(idClasificacion);
         if(nodo != null)
@@ -106,6 +137,11 @@ public class ClasificacionTreeModel {
         return nodo;        
     }
 
+    /**
+     * Busca dentro del modelo el nodo cuya clasificacion asociada posee el id recibido como parametro
+     * @param idClasificacion id de la clasificacion cuyo nodo asociado se desea encontrar
+     * @return el nodo encontrado o null en caso de no haberlo encontrado
+     */
     public DefaultMutableTreeNode buscarNodo(String idClasificacion){
         DefaultMutableTreeNode nodoRaiz = (DefaultMutableTreeNode)this.modelo.getRoot();
         Enumeration nodos = nodoRaiz.depthFirstEnumeration();
@@ -119,6 +155,10 @@ public class ClasificacionTreeModel {
         return null;
     }
 
+    /**
+     * Actualiza la clasificacion asociada a un nodo del modelo
+     * @param nuevaCl nueva clasificacion a asociar
+     */
     public void actualizarNodo(Clasificacion nuevaCl){
         DefaultMutableTreeNode nodo = this.buscarNodo(nuevaCl.getIdclasificacion().toString());
         ClasificacionUserObject clUsrObj = new ClasificacionUserObject(nodo);
@@ -133,6 +173,10 @@ public class ClasificacionTreeModel {
         clUsrObj.setText(nuevaCl.getNombre() + " (" + (totalExistencias + nuevaCl.getSoftwareCollection().size() + nuevaCl.getAccesorioCollection().size() + nuevaCl.getPiezaCollection().size()) + ")");
     }
 
+    /**
+     * Genera un nodo en el modelo que no representa ninguna clasificacion de la jerarquia sino que nada mas sirve para activar el modo de busqueda de existencias
+     * @param nodoPadre nodo que sera el padre del nodo de busqueda
+     */
     private void generarNodoBusqueda(DefaultMutableTreeNode nodoPadre) {
         DefaultMutableTreeNode nodo = new DefaultMutableTreeNode();
         ClasificacionUserObject clUsrObj = new ClasificacionUserObject(nodo);
