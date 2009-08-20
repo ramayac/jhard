@@ -13,6 +13,8 @@ import javax.faces.FacesException;
 
 /**
  * @author ramayac
+ * Bean con funcionalidad de autenticacion comunes a todas las paginas
+ * que implementen el control login.jspx.
  */
 public class BeanBaseJHard extends AbstractPageBean {
 
@@ -83,44 +85,76 @@ public class BeanBaseJHard extends AbstractPageBean {
         return this.U.getNombre();
     }
 
+    /**
+     * Obtiene el rol del usuario conectado
+     * @return
+     */
     public Integer getRolUsuarioConectado() {
         if (this.U == null) {
             return INVALIDO;
         }
-        System.out.println(this.U.getIdrol().getIdrol());
+        //System.out.println(this.U.getIdrol().getIdrol());
         return this.U.getIdrol().getIdrol();
     }
 
+    /**
+     * Verificamos si el usuario actual tiene Rol Administrador
+     * @return
+     */
     public Boolean getEsRolAdministrador(){
         if(getRolUsuarioConectado()==ROL_ADMINISTRADOR) return true;
         return false;
     }
 
+    /**
+     * Verificamos si el usuario actual tiene Rol Administrativo
+     * @return
+     */
     public Boolean getEsRolAdministrativo(){
         if(getRolUsuarioConectado()==ROL_ADMINISTRADOR) return true;
         return false;
     }
 
+    /**
+     * Verificamos si el usuario actual tiene Rol Docente
+     * @return
+     */
     public Boolean getEsRolDocente(){
         if(getRolUsuarioConectado()==ROL_DOCENTE) return true;
         return false;
     }
 
+    /**
+     * Verificamos si el usuario actual tiene Rol Instructor
+     * @return
+     */
     public Boolean getEsRolInstructor(){
         if(getRolUsuarioConectado()==ROL_INSTRUCTOR) return true;
         return false;
     }
 
+    /**
+     * Verificamos si el usuario actual tiene Rol Estudiante
+     * @return
+     */
     public Boolean getEsRolEstudiante(){
         if(getRolUsuarioConectado()==ROL_ESTUDIANTE) return true;
         return false;
     }
 
+    /**
+     * Verificamos si el usuario actual tiene Rol de Editor de Contenidos
+     * @return
+     */
     public Boolean getEsRolEditor(){
         if(getRolUsuarioConectado()==ROL_EDITORCONTENIDO) return true;
         return false;
     }
 
+    /**
+     * Obtiene el objeto Usuario, a partir del LoggedUser actual en el sistema.
+     * @return
+     */
     public Usuario getUsuario(){
         if (this.lu == null) {
             return null;
@@ -138,6 +172,10 @@ public class BeanBaseJHard extends AbstractPageBean {
         return this.U;
     }
 
+    /**
+     * Obtiene el objeto Docente, a partir de un Usuario de sistema
+     * @return
+     */
     public Docente getDocenteUsuario(){
         try {
             return this.getUsuario().getDocenteList().get(0);
@@ -146,6 +184,10 @@ public class BeanBaseJHard extends AbstractPageBean {
         }
     }
 
+    /**
+     * Obtiene el objeto Estudiante, a partir de un Usuario de sistema
+     * @return
+     */
     public Estudiante getEstudianteUsuario(){
         try {
             return this.getUsuario().getEstudianteList().get(0);
@@ -155,6 +197,10 @@ public class BeanBaseJHard extends AbstractPageBean {
         }
     }
 
+    /**
+     * Obtiene el objeto Instructor, a partir de un Usuario de sistema
+     * @return
+     */
     public Instructor getInstructorUsuario(){
         try {
             return this.getUsuario().getInstructorList().get(0);

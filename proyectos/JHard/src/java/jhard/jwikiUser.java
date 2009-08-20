@@ -16,11 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.faces.FacesException;
 
 /**
- * <p>Page bean that corresponds to a similarly named JSP page.  This
- * class contains component definitions (and initialization code) for
- * all components that you have defined on this page, as well as
- * lifecycle methods and event handlers where you may add behavior
- * to respond to incoming events.</p>
+ * <p> Page Bean que corresponde a la pagina JSP de igual nombre.
+ * Esta clase contiene la definicion e inicializacion para todos
+ * los componentes que se usan en la pagina.
+ * Este bean hereda su funcionalidad de autenticacion de BeanBaseJHard.
+ * En este bean esta la logica para mostrar los articulos en el Wiki.
+ * </p>
  */
 public class jwikiUser extends BeanBaseJHard {
     public static final String WIKI_ID = "wkid";

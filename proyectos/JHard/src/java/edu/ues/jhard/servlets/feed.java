@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Servlet con funcionalidad para generar suscripciones ATOM al wiki y al cms de jhard.
  * @author rodrigo
  */
 public class feed extends HttpServlet {

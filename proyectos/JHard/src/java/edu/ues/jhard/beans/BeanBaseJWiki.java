@@ -10,12 +10,10 @@ import javax.persistence.*;
 
 /**
  * @author ramayac
- * Notas personales:
- * - Only use EntityManager method persist on a new entity.
- * - Only Refresh para obtener los ultimos datos de la BD
- * - remove to delete an entity from the database.
- * - method flush to send updates to the database within a transaction before the transaction is committed. (unicamente en el mismo contexto)
- * - Recuerda obtener el objeto usuario asociado con el id en la tabla Articulos!!!!!!
+ * BeanBase con los metodos necesarios para manejar los entity manager
+ * utilizados por jwikiUser y jwikiAdmin.
+ * Este bean es como una capa intermedia entre dichas clases y
+ * el entity manager de la aplicacion.
  */
 public class BeanBaseJWiki extends BeanBase {
 
