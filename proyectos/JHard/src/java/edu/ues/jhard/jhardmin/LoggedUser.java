@@ -9,16 +9,38 @@ import edu.ues.jhard.jpa.Rol;
 import java.util.Date;
 
 /**
- *
+ * Representa a un usuario que ha iniciaod sesion en JHard
  * @author robertux
  */
 public class LoggedUser {
+    /**
+     * ID del usuario logueado
+     */
     private Integer uid;
+    /**
+     * Nombre del usuario logueado
+     */
     private String userName;
+    /**
+     * URL del host donde se encuentra el usuario logueado
+     */
     private String loggedUrl;
+    /**
+     * fecha/hora a la que el usuario inicio sesion
+     */
     private Date loggedTime;
+    /**
+     * Rol del usuario logueado
+     */
     private Rol userRole;
 
+    /**
+     * Crea una nueva instancia de la clase LoggedUser en base a los parametros introducidos
+     * @param uid id del nuevo LoggedUser a crear
+     * @param userName nombre del nuevo LoggedUser a crear
+     * @param userRole rol del nuevo LoggedUser a crear
+     * @param loggedUrl url origen del nuevo LoggedUser a crear
+     */
     public LoggedUser(Integer uid, String userName, Rol userRole, String loggedUrl){
         this.uid = uid;
         this.userName = userName;

@@ -10,13 +10,20 @@ import edu.ues.jhard.jpa.Clasificacion;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
- *
+ * UserObject que representa a una clasificacion asociada a un nodo en el treeModel
  * @author robertux
  */
 public class ClasificacionUserObject extends IceUserObject {
 
+    /**
+     * Clasificacion a mostrar en el treeModel
+     */
     private Clasificacion clasificacion;
 
+    /**
+     * Crea una nueva instancia de la clase ClasificacionUserObject asociada al treeNode recibido como parametro
+     * @param treeNode treeNode al cual asociar este userObject
+     */
     public ClasificacionUserObject(DefaultMutableTreeNode treeNode){
         super(treeNode);
         this.setLeafIcon("tree_document.gif");
