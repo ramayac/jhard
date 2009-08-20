@@ -114,7 +114,6 @@
                                                         </ice:panelGrid>
                                                     </f:facet>
                                                     <f:facet name="body">
-                                                        <div class="post">
                                                         <ice:panelGroup id="panelGrid99" style="display:block;width:340px;height:240px;">
                                                             <ice:outputText id="outputText3" style="width: 310px" value="Para actualizar esta bitácora, modifique en el cuadro de texto inferior"/>
                                                             <br/><br/>
@@ -132,7 +131,6 @@
                                                                 styleClass="btnAccion2" value="Cerrar"/>
                                                             <br/>
                                                         </ice:panelGroup>
-                                                        </div>
                                                     </f:facet>
                                                 </ice:panelPopup>
                                             </ice:panelGroup>

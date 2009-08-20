@@ -357,15 +357,15 @@ public class jmlHorarioAdmin extends AbstractPageBean {
 
     public void comboHoraInicio_processValueChange(ValueChangeEvent vce) {
         this.horaSeleccionada=this.comboHoraInicio.getValue().toString();
-        if(new BeanBaseJManLab().getAllHorariosUnDia(this.horaSeleccionada, this.diaSeleccionado)==1){
-            this.setNoInscripcion(true);
-            boton=true;
-        }else{
+//        if(new BeanBaseJManLab().getAllHorariosUnDia(this.horaSeleccionada, this.diaSeleccionado)==1){
+//            this.setNoInscripcion(true);
+//            boton=true;
+//        }else{
             LlenarHora(2);
-            this.noInscripcion=false;
-            System.out.println("termino el proceso de cambiar el valor del combo de la hora inicial");
-            boton=false;
-        }
+//            this.noInscripcion=false;
+//            System.out.println("termino el proceso de cambiar el valor del combo de la hora inicial");
+//            boton=false;
+//        }
     }
 
     /**

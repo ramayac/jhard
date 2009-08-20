@@ -184,14 +184,21 @@ public class BeanBaseJRequest extends BeanBase{
 
     }
 
-     public void eliminarTecnico(Tecnico t){
-         
-         EntityManager em = this.getEntityManager();
+     public boolean eliminarTecnico(Tecnico t){
+         boolean sePudo=false;
+         try{
+            EntityManager em = this.getEntityManager();
          Tecnico T= em.find(Tecnico.class, t.getIdtecnico());
          System.out.println(T.getIdtecnico());
          em.getTransaction().begin();
          em.remove(T);
          em.getTransaction().commit();
+
+         }
+         catch(Exception ex){
+             ex.printStackTrace();
+         }
+         return sePudo;
      }
 
 
@@ -254,6 +261,17 @@ public class BeanBaseJRequest extends BeanBase{
 
          EntityManager em = this.getEntityManager();
          Solicitud S= em.find(Solicitud.class, s.getIdsolicitud());
+         Estadoequipo ee = this.getEntityManager().find(Estadoequipo.class, 1);
+         if(S.getIdequiposimple()!=null){
+             Equiposimple eq = this.getEntityManager().find(Equiposimple.class, S.getIdequiposimple().getIdEquipoSimple());
+             eq.setIdestado(ee);
+             this.modificarEquipoSImple(eq);
+         }else{
+             Existencia ex = this.getEntityManager().find(Existencia.class, S.getIdequipoexistente().getIdexistencia());
+             ex.setIdestado(ee);
+             this.modificarExistencia(ex);
+         }
+         
          em.getTransaction().begin();
          em.remove(S);
          em.getTransaction().commit();
@@ -425,13 +443,20 @@ public class BeanBaseJRequest extends BeanBase{
      * Método para eliminar un Equipo simple en la base de datos de JHard
      * @param Equiposimple e
      */
-    public void eliminarEquipoSimple(Equiposimple e){
-
-         EntityManager em = this.getEntityManager();
-         Equiposimple EQ= em.find(Equiposimple.class, e.getIdEquipoSimple());
-         em.getTransaction().begin();
-         em.remove(EQ);
-         em.getTransaction().commit();
+    public boolean eliminarEquipoSimple(Equiposimple e){
+        boolean sePudo=false;
+        try{
+            EntityManager em = this.getEntityManager();
+            Equiposimple EQ= em.find(Equiposimple.class, e.getIdEquipoSimple());
+            em.getTransaction().begin();
+            em.remove(EQ);
+            em.getTransaction().commit();
+            sePudo=true;
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return sePudo;
      }
 
 

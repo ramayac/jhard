@@ -459,20 +459,29 @@ public class JRequestAdministracion extends AbstractPageBean {
      * @return
      */
     public String btnEliminarTec_action() {
+        BeanBaseJRequest instance = new BeanBaseJRequest();
         if(TecnicoElegido!=null){
-            new BeanBaseJRequest().eliminarTecnico(this.TecnicoElegido);
+            if(instance.eliminarTecnico(this.TecnicoElegido)==true){
+                System.out.println("Técnico eliminado con éxito");
+                this.lblMensajes.setValue("Técnico eliminado con éxito");
+                this.popUpMensajes.setRendered(true);
+                System.out.println("RENDERICE");
+                this.popUpMensajes.setVisible(true);
+                System.out.println("PUSE VISIBLE");
+                this.popUpMensajes.setModal(true);
+                System.out.println("SOLO EL ES MODIFICABLE");
 
-            System.out.println("Técnico eliminado con éxito");
-            this.lblMensajes.setValue("Técnico eliminado con éxito");
-            this.popUpMensajes.setRendered(true);
-            System.out.println("RENDERICE");
-            this.popUpMensajes.setVisible(true);
-            System.out.println("PUSE VISIBLE");
-            this.popUpMensajes.setModal(true);
-            System.out.println("SOLO EL ES MODIFICABLE");
-
-            limpiarListasCombos();
-            llenarListasCombos();
+                limpiarListasCombos();
+                llenarListasCombos();
+            }else{
+                this.lblMensajes.setValue("No se puede eliminar dicho técnico. Existen órdenes de trabajo asociadas al mismo.");
+                this.popUpMensajes.setRendered(true);
+                System.out.println("RENDERICE");
+                this.popUpMensajes.setVisible(true);
+                System.out.println("PUSE VISIBLE");
+                this.popUpMensajes.setModal(true);
+                System.out.println("SOLO EL ES MODIFICABLE");
+            }
         }
         else{
             System.out.println("Seleccione un técnico");
@@ -671,18 +680,23 @@ public class JRequestAdministracion extends AbstractPageBean {
      * @return
      */
     public String btnEliminarEqS_action() {
+        BeanBaseJRequest instance = new BeanBaseJRequest();
         if(EquipoElegido!=null){
-            new BeanBaseJRequest().eliminarEquipoSimple(EquipoElegido);
-            System.out.println("Equipo Simple eliminado con éxito");
-            this.lblMensajes.setValue("Equipo Simple eliminado con éxito");
-            this.popUpMensajes.setRendered(true);
-            System.out.println("RENDERICE");
-            this.popUpMensajes.setVisible(true);
-            System.out.println("PUSE VISIBLE");
-            this.popUpMensajes.setModal(true);
-            System.out.println("SOLO EL ES MODIFICABLE");
-
-
+            if(instance.eliminarEquipoSimple(EquipoElegido)==true){
+                System.out.println("Equipo Simple eliminado con éxito");
+                this.lblMensajes.setValue("Equipo Simple eliminado con éxito");
+                this.popUpMensajes.setRendered(true);
+                System.out.println("RENDERICE");
+                this.popUpMensajes.setVisible(true);
+                System.out.println("PUSE VISIBLE");
+                this.popUpMensajes.setModal(true);
+                System.out.println("SOLO EL ES MODIFICABLE");
+            }else{
+                this.lblMensajes.setValue("No se puede eliminar el Equipo Simple seleccionado. Ya existen órdenes de trabajo asociados al mismo");
+                this.popUpMensajes.setRendered(true);
+                this.popUpMensajes.setVisible(true);
+                this.popUpMensajes.setModal(true);
+            }
         }
         else{
             System.out.println("Seleccione primero un Equipo Simple");
