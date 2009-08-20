@@ -288,14 +288,14 @@ public class jmlHorario extends AbstractPageBean {
 
     public void comboHoraInicio_processValueChange(ValueChangeEvent vce) {
         this.horaSeleccionada=this.comboHoraInicio.getValue().toString();
-        if(new BeanBaseJManLab().getAllHorariosUnDia(this.horaSeleccionada, this.diaSeleccionado)==1){
-            this.noInscripcion=true;
-            this.btnInscribirCurso.setDisabled(true);
-        }else{
+//        if(new BeanBaseJManLab().getAllHorariosUnDia(this.horaSeleccionada, this.diaSeleccionado)==1){
+//            this.noInscripcion=true;
+//            this.btnInscribirCurso.setDisabled(true);
+//        }else{
             LlenarHora(2);
-            this.noInscripcion=false;
-            this.btnInscribirCurso.setDisabled(false);
-        }
+//            this.noInscripcion=false;
+//            this.btnInscribirCurso.setDisabled(false);
+//        }
     }
 
     /**

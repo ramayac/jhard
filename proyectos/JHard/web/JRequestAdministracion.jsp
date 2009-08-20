@@ -27,7 +27,7 @@
                     <!-- start content -->
                     <div id="content">
                         <div class="post">
-                            <h2 class="title">Administracion de JRequest</h2>
+                            <h2 class="title">Administración de JRequest</h2>
                             <div class="entry">
                                 <ice:form id="form1" style="">
                                     <ice:panelGroup id="admin" style="width: 100%; ">
@@ -98,18 +98,16 @@
                                             </ice:panelGrid>
                                         </f:facet>
                                         <f:facet name="body">
-                                            <div class="post">
                                             <ice:panelGrid columns="2" id="panelGrid13" style="display:block;width:180px;height:80px;">
                                                 <ice:outputText id="lblNomEq" value="Nombre Equipo Simple"/>
                                                 <ice:inputText binding="#{JRequestAdministracion.txtNomEQ}" id="txtNomEQ"/>
                                                 <ice:outputLabel id="lblPropietario" value="Propietario del Equipo"/>
                                                 <ice:inputText binding="#{JRequestAdministracion.txtPropietarioEQ}" id="txtPropietarioEQ"/>
-                                                <ice:commandButton action="#{JRequestAdministracion.btnAceptarEQ_action}"
+                                                <ice:commandButton styleClass="btnAccion2" action="#{JRequestAdministracion.btnAceptarEQ_action}"
                                                     binding="#{JRequestAdministracion.btnAceptarEQ}" id="btnAceptarEQ" value="Aceptar"/>
-                                                <ice:commandButton action="#{JRequestAdministracion.btnCancelarEQ_action}"
+                                                <ice:commandButton styleClass="btnAccion2" action="#{JRequestAdministracion.btnCancelarEQ_action}"
                                                     binding="#{JRequestAdministracion.btnCancelarEQ}" id="btnCancelarEQ" value="Cancelar"/>
                                             </ice:panelGrid>
-                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                     <ice:panelPopup autoCentre="true" binding="#{JRequestAdministracion.popUpAgregarTec}" draggable="true" id="popUpAgregarTec"
@@ -120,18 +118,16 @@
                                             </ice:panelGrid>
                                         </f:facet>
                                         <f:facet name="body">
-                                            <div class="post">
                                             <ice:panelGrid columns="2" id="panelAddTec" style="display: block; height: 134px" width="278">
                                                 <ice:outputLabel id="outputLabel7" value="Nombres"/>
                                                 <ice:inputText binding="#{JRequestAdministracion.txtNomTec}" id="txtNomTec"/>
                                                 <ice:outputLabel id="outputLabel8" value="Apellidos"/>
                                                 <ice:inputText binding="#{JRequestAdministracion.txtApeTec}" id="txtApeTec"/>
-                                                <ice:commandButton action="#{JRequestAdministracion.btnOkTec_action}"
+                                                <ice:commandButton styleClass="btnAccion2" action="#{JRequestAdministracion.btnOkTec_action}"
                                                     binding="#{JRequestAdministracion.btnOkTec}" id="btnOkTec" value="Agregar"/>
-                                                <ice:commandButton action="#{JRequestAdministracion.btnCerrarTec_action}"
+                                                <ice:commandButton styleClass="btnAccion2" action="#{JRequestAdministracion.btnCerrarTec_action}"
                                                     binding="#{JRequestAdministracion.btnCerrarTec}" id="btnCerrarTec" value="Cerrar"/>
                                             </ice:panelGrid>
-                                            </div>
                                         </f:facet>
                                     </ice:panelPopup>
                                     <ice:panelPopup autoCentre="true" binding="#{JRequestAdministracion.popUpMensajes}" draggable="true" id="popUpMensajes"

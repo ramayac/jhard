@@ -30,7 +30,7 @@
                         </div>
                         <div class="post">
                             <ice:form id="formEntrada">
-                                <ice:panelTabSet id="panelAdmin" tabPlacement="Top" selectedIndex="#{jprocurAdmin.tabIndex}" rendered="#{jprocurAdmin.permisos}">
+                                <ice:panelTabSet style="margin-top: 0px; margin-bottom: 0px;" id="panelAdmin" tabPlacement="Top" selectedIndex="#{jprocurAdmin.tabIndex}" rendered="#{jprocurAdmin.permisos}">
                                     <ice:panelTab id="panelEntradas" label="Administrar Entradas">
                                         <!-- panel de para EDITAR UNA ENTRADAS -->
                                         <ice:panelGroup id="panelEditarEntrada" rendered="#{jprocurAdmin.editandoEntrada}" style="float:left;margin-top:10px; width:580px;">
