@@ -277,10 +277,6 @@
                                                 <ice:commandButton action="#{Redireccion.jcanonAdmin}" binding="#{jcanon.btnVerReservas}" id="btnVerReservas"
                                                     style="width: 250px" styleClass="btnAccion2" value="Administrar Reservas de Equipo"/>
                                             </p>
-                                            <p>
-                                                <ice:commandButton action="" binding="#{jcanon.btnVerSoloReservas}" id="btnVerSoloReservas" style="width: 250px"
-                                                    styleClass="btnAccion2" value="Ver Reportes"/>
-                                            </p>
                                         </ice:panelGroup>
                                     </ice:panelCollapsible>
                                 </ice:panelGroup>

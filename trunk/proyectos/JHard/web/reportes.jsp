@@ -32,22 +32,22 @@
                         </div>
                         <ice:form id="formArticulo">
                             <ice:panelGroup id="panelReportes" styleClass="entry">
-                                <ice:panelCollapsible expanded="false" id="asistenciaAlumnos" style="width: 600px">
-                                    <f:facet name="header">
-                                        <ice:panelGroup id="panelTitAsistenciaAlumnos">
-                                            <ice:outputText id="titAsistenciaAlumnos" value="Asistencia de Alumnos a Prácticas de Laboratorio"/>
-                                        </ice:panelGroup>
-                                    </f:facet>
-                                    <ice:panelGroup id="panelAsistenciaAlumnos" style=""/>
-                                </ice:panelCollapsible>
-                                <ice:panelCollapsible expanded="false" id="asistenciaInstructores" style="width: 600px">
-                                    <f:facet name="header">
-                                        <ice:panelGroup id="panelTitAsistenciaInstructores">
-                                            <ice:outputText id="titAsistenciaInstructores" value="Asistencia de Instructores a Prácticas de Laboratorio"/>
-                                        </ice:panelGroup>
-                                    </f:facet>
-                                    <ice:panelGroup id="panelAsistenciaInstructores" style=""/>
-                                </ice:panelCollapsible>
+                                <!--ice:panelCollapsible expanded="false" id="asistenciaAlumnos" style="width: 600px"-->
+                                    <!--f:facet name="header"-->
+                                        <!--ice:panelGroup id="panelTitAsistenciaAlumnos"-->
+                                            <!--ice:outputText id="titAsistenciaAlumnos" value="Asistencia de Alumnos a Prácticas de Laboratorio"/-->
+                                        <!--/ice:panelGroup-->
+                                    <!--/f:facet-->
+                                    <!--ice:panelGroup id="panelAsistenciaAlumnos" style=""/-->
+                                <!--/ice:panelCollapsible-->
+                                <!--ice:panelCollapsible expanded="false" id="asistenciaInstructores" style="width: 600px"-->
+                                    <!--f:facet name="header"-->
+                                        <!--ice:panelGroup id="panelTitAsistenciaInstructores"-->
+                                            <!--ice:outputText id="titAsistenciaInstructores" value="Asistencia de Instructores a Prácticas de Laboratorio"/-->
+                                        <!--/ice:panelGroup-->
+                                    <!--/f:facet-->
+                                    <!--ice:panelGroup id="panelAsistenciaInstructores" style=""/-->
+                                <!--/ice:panelCollapsible-->
                                 <ice:panelCollapsible expanded="false" id="bitacoraServicio" style="width: 600px">
                                     <f:facet name="header">
                                         <ice:panelGroup id="panelTitBitacoraServicio">
@@ -106,14 +106,14 @@
                                         <ice:commandButton action="#{reportes.btnReservaDoc_action}" binding="#{reportes.btnReservaDoc}" id="btnReservaDoc" value="Generar Reporte"/>
                                     </ice:panelGroup>
                                 </ice:panelCollapsible>
-                                <ice:panelCollapsible expanded="false" id="gruposLab" style="width: 600px">
-                                    <f:facet name="header">
-                                        <ice:panelGroup id="panelTitGruposLab">
-                                            <ice:outputText id="titGruposLab" value="Grupos de Laboratorio"/>
-                                        </ice:panelGroup>
-                                    </f:facet>
-                                    <ice:panelGroup id="panelGruposLab" style=""/>
-                                </ice:panelCollapsible>
+                                <!--ice:panelCollapsible expanded="false" id="gruposLab" style="width: 600px"-->
+                                    <!--f:facet name="header"-->
+                                        <!--ice:panelGroup id="panelTitGruposLab"-->
+                                            <!--ice:outputText id="titGruposLab" value="Grupos de Laboratorio"/-->
+                                        <!--/ice:panelGroup-->
+                                    <!--/f:facet-->
+                                    <!--ice:panelGroup id="panelGruposLab" style=""/-->
+                                <!--/ice:panelCollapsible-->
                                 <ice:panelCollapsible expanded="false" id="listadoPiezas" style="width: 600px">
                                     <f:facet name="header">
                                         <ice:panelGroup id="panelTitListadoPiezas">
