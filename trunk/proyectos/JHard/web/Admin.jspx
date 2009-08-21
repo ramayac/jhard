@@ -99,7 +99,7 @@
                                                 <ice:inputSecret id="txtClaveNuevaConfirm" value="#{JHardminInstance.inputChNewPwdConfirm}" maxlength="35" />
                                             </p>
                                             <p class="actionSection">
-                                                <ice:commandButton value="Cambiar clave" styleClass="btnAccion" action="#{JHardminInstance.changePassword}" disabled="#{!JHardminInstance.btnCambiarClaveEnabled}" />
+                                                <ice:commandButton value="Cambiar clave" styleClass="btnAccion" action="#{JHardminInstance.changePassword}" />
                                             </p>                                            
                                         </ice:panelGroup>
                                     </ice:panelCollapsible>
@@ -176,7 +176,7 @@
                                                                 </ice:selectOneListbox>
                                                             </p>
                                                             <p class="actionSection">
-                                                                <ice:commandButton id="cmdCommitAddUser" action="#{JHardminInstance.commitAddUser}" value="Agregar" disabled="#{!JHardminInstance.btnAddEditUsuarioEnabled}" />
+                                                                <ice:commandButton id="cmdCommitAddUser" action="#{JHardminInstance.commitAddUser}" value="Agregar" />
                                                                <ice:commandButton id="cmdCancelAddUser" action="#{JHardminInstance.cancelAddUser}" value="Cancelar" />
                                                             </p>
                                                         </ice:panelGroup>                                                    
@@ -209,7 +209,7 @@
                                                                 </ice:selectOneListbox>
                                                             </p>
                                                             <p class="actionSection">
-                                                                <ice:commandButton id="cmdCommitEditUser" action="#{JHardminInstance.editUsuario}" value="Agregar" disabled="#{!JHardminInstance.btnAddEditUsuarioEnabled}" />
+                                                                <ice:commandButton id="cmdCommitEditUser" action="#{JHardminInstance.editUsuario}" value="Agregar" />
                                                                 <ice:commandButton id="cmdCancelEditUser" action="#{JHardminInstance.closePopupEditUsuario}" value="Cancelar" />
                                                             </p>
                                                         </ice:panelGroup>
@@ -280,7 +280,7 @@
                                                         <ice:inputText id="txtCantMax" value="#{JHardminInstance.currentAutorizacion.cantmaxima}" maxlength="2" />
                                                     </p>
                                                     <p class="actionSection">
-                                                        <ice:commandButton id="cmdConfirmAddAutorizacion" value="Aceptar" action="#{JHardminInstance.addAutorizacion}" disabled="#{!JHardminInstance.btnAddEditAutorizacionEnabled}" />
+                                                        <ice:commandButton id="cmdConfirmAddAutorizacion" value="Aceptar" action="#{JHardminInstance.addAutorizacion}" />
                                                         <ice:commandButton id="cmdCancelAddAutorizacion" value="Cancelar" action="#{JHardminInstance.crdAutorizaciones.hidePopupAdd}" />
                                                     </p>
                                                 </ice:panelGroup>
@@ -357,7 +357,7 @@
                                                                     <ice:inputText id="txtNombresEstudiante" value="#{JHardminInstance.currentEstudiante.nombres}" maxlength="200" />
                                                                 </p>                                                                
                                                                 <p class="actionSection">
-                                                                    <ice:commandButton id="cmdCommitAgregarEstudiante" value="Agregar" action="#{JHardminInstance.addEstudiante}" disabled="#{!JHardminInstance.btnAddEditEstudianteEnabled}" />
+                                                                    <ice:commandButton id="cmdCommitAgregarEstudiante" value="Agregar" action="#{JHardminInstance.addEstudiante}" />
                                                                     <ice:commandButton id="cmdCancelAgregarEstudiante" value="Cancelar" action="#{JHardminInstance.crdEstudiantes.hidePopupAdd}" />
                                                                 </p>
                                                             </ice:panelGroup>
@@ -380,7 +380,7 @@
                                                                     <ice:inputText id="txtNombresEstudianteEdit" value="#{JHardminInstance.currentEstudiante.nombres}" maxlength="200" />
                                                                 </p>
                                                                 <p class="actionSection">
-                                                                    <ice:commandButton id="cmdCommitEditarEstudiante" value="Guardar cambios" action="#{JHardminInstance.editEstudiante}" disabled="#{!JHardminInstance.btnAddEditEstudianteEnabled}" />
+                                                                    <ice:commandButton id="cmdCommitEditarEstudiante" value="Guardar cambios" action="#{JHardminInstance.editEstudiante}" />
                                                                     <ice:commandButton id="cmdCancelEditarEstudiante" value="Cancelar" action="#{JHardminInstance.crdEstudiantes.hidePopupEdit}" />
                                                                 </p>
                                                             </ice:panelGroup>
@@ -459,7 +459,7 @@
                                                                     <ice:inputText id="txtNombresInstructor" value="#{JHardminInstance.currentInstructor.nombres}" maxlength="200" />
                                                                 </p>
                                                                 <p class="actionSection">
-                                                                    <ice:commandButton id="cmdCommitAgregarInstructor" value="Agregar" action="#{JHardminInstance.addInstructor}" disabled="#{!JHardminInstance.btnAddEditInstructorEnabled}" />
+                                                                    <ice:commandButton id="cmdCommitAgregarInstructor" value="Agregar" action="#{JHardminInstance.addInstructor}" />
                                                                     <ice:commandButton id="cmdCancelAgregarInstructor" value="Cancelar" action="#{JHardminInstance.crdInstructores.hidePopupAdd}" />
                                                                 </p>
                                                             </ice:panelGroup>
@@ -482,7 +482,7 @@
                                                                     <ice:inputText id="txtNombresInstructorEdit" value="#{JHardminInstance.currentInstructor.nombres}" maxlength="200" />
                                                                 </p>
                                                                 <p class="actionSection">
-                                                                    <ice:commandButton id="cmdCommitEditarInstructor" value="Guardar cambios" action="#{JHardminInstance.editInstructor}" disabled="#{!JHardminInstance.btnAddEditInstructorEnabled}" />
+                                                                    <ice:commandButton id="cmdCommitEditarInstructor" value="Guardar cambios" action="#{JHardminInstance.editInstructor}" />
                                                                     <ice:commandButton id="cmdCancelEditarInstructor" value="Cancelar" action="#{JHardminInstance.crdInstructores.hidePopupEdit}" />
                                                                 </p>
                                                             </ice:panelGroup>
@@ -553,7 +553,7 @@
                                                                     <ice:inputText id="txtNombresDocente" value="#{JHardminInstance.currentDocente.nombres}" maxlength="200" />
                                                                 </p>
                                                                 <p class="actionSection">
-                                                                    <ice:commandButton id="cmdCommitAgregarDocente" value="Agregar" action="#{JHardminInstance.addDocente}" disabled="#{!JHardminInstance.btnAddEditDocenteEnabled}" />
+                                                                    <ice:commandButton id="cmdCommitAgregarDocente" value="Agregar" action="#{JHardminInstance.addDocente}" />
                                                                     <ice:commandButton id="cmdCancelAgregarDocente" value="Cancelar" action="#{JHardminInstance.crdDocentes.hidePopupAdd}" />
                                                                 </p>
                                                             </ice:panelGroup>
@@ -572,7 +572,7 @@
                                                                     <ice:inputText id="txtNombresDocenteEdit" value="#{JHardminInstance.currentDocente.nombres}" maxlength="200" />
                                                                 </p>
                                                                 <p class="actionSection">
-                                                                    <ice:commandButton id="cmdCommitEditarDocente" value="Guardar cambios" action="#{JHardminInstance.editDocente}" disabled="#{!JHardminInstance.btnAddEditDocenteEnabled}" />
+                                                                    <ice:commandButton id="cmdCommitEditarDocente" value="Guardar cambios" action="#{JHardminInstance.editDocente}" />
                                                                     <ice:commandButton id="cmdCancelEditarDocente" value="Cancelar" action="#{JHardminInstance.crdDocentes.hidePopupEdit}" />
                                                                 </p>
                                                             </ice:panelGroup>
