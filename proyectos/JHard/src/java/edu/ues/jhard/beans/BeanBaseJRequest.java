@@ -188,12 +188,12 @@ public class BeanBaseJRequest extends BeanBase{
          boolean sePudo=false;
          try{
             EntityManager em = this.getEntityManager();
-         Tecnico T= em.find(Tecnico.class, t.getIdtecnico());
-         System.out.println(T.getIdtecnico());
-         em.getTransaction().begin();
-         em.remove(T);
-         em.getTransaction().commit();
-
+             Tecnico T= em.find(Tecnico.class, t.getIdtecnico());
+             System.out.println(T.getIdtecnico());
+             em.getTransaction().begin();
+             em.remove(T);
+             em.getTransaction().commit();
+             sePudo=true;
          }
          catch(Exception ex){
              ex.printStackTrace();
