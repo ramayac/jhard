@@ -277,6 +277,7 @@ public class jprocurUser extends BeanBaseJHard {
     }
 
     public boolean getHayEntradas(){
+        if(this.listaEntradas == null) return false;
         if(this.listaEntradas.size()==NONE) return false;
         return true;
     }
@@ -287,6 +288,7 @@ public class jprocurUser extends BeanBaseJHard {
     }
 
     public boolean getShowPagEntradas(){
+        if(this.listaEntradas == null) return false;
         if(this.listaEntradas.size()>MAX_ENTRADAS) return true;
         return false;
     }
@@ -335,6 +337,8 @@ public class jprocurUser extends BeanBaseJHard {
     }
 
     public String busquedaEntradas(){
+       this.entradaActual = new Entrada();
+       if(this.listaEntradas!=null) this.listaEntradas.clear();
        this.listaEntradas = this.jprocurInstance.searchEntradaPorEtiqueta(this.criteriosBusqueda);
        return EMPTY_STRING;
     }

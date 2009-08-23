@@ -118,7 +118,7 @@
                                             <br/>
                                             <div align="right"><small><ice:outputLabel id="lblEntradaFechaMultiple" value="#{indiceEntrada.fechahora}"/></small></div>
                                             <br/>
-                                            <ice:outputLabel id="lblDescripcion" value="#{indiceEntrada.descripcion}"/>
+                                            <ice:outputText id="lblDescripcion" value="#{indiceEntrada.descripcion}" escape="false"/>
                                             <br/>
                                         </div>
                                     </ice:column>

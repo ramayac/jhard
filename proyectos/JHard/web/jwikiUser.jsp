@@ -69,13 +69,9 @@
                                                 </ice:commandLink>
                                             </h2>
                                             <br/>
-                                            <div align="right">
-                                                <small>
-                                                    <ice:outputLabel id="lblArticuloFechaMultiple" value="#{indiceArticulo.fechahora}"/>
-                                                </small>
-                                            </div>
+                                            <div align="right"><small><ice:outputLabel id="lblArticuloFechaMultiple" value="#{indiceArticulo.fechahora}"/></small></div>
                                             <br/>
-                                            <ice:outputLabel id="lblDescripcion" value="#{indiceArticulo.descripcion}"/>
+                                            <ice:outputText id="lblDescripcion" value="#{indiceArticulo.descripcion}" escape="false"/>
                                             <br/>
                                         </div>
                                     </ice:column>
