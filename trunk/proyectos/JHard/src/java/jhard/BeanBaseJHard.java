@@ -26,6 +26,9 @@ public class BeanBaseJHard extends AbstractPageBean {
     static final int ROL_DOCENTE = 3;
     static final int ROL_ADMINISTRATIVO = 2;
     static final int ROL_ADMINISTRADOR = 1;
+
+    static final int MAX_COMENTARIOS = 10;
+    static final int MAX_ENTRADAS = 5;
     
     static final String EMPTY_STRING = "";
     static final String INVITADO = "Invitado";

@@ -35,7 +35,7 @@ public class BeanBaseJProcur extends BeanBase {
 
         String sql = BuildSQLSearchEntradas(arr);
 
-        System.out.println(sql);
+        //System.out.println(sql);
         Query q = em.createNativeQuery(sql); //sin clase, retorna un Vector
         Vector resultado = (Vector) q.getResultList();
 

@@ -28,8 +28,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class jprocurUser extends BeanBaseJHard {
     public static final String ART_ID = "artid";
-    static final int MAX_COMENTARIOS = 10;
-    static final int MAX_ENTRADAS = 5;
 
     private Entrada entradaActual = null;
     private Comentarios comentarioNuevo = new Comentarios();
