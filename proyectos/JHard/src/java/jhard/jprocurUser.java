@@ -10,8 +10,6 @@ import edu.ues.jhard.beans.BeanBaseJProcur;
 import edu.ues.jhard.jhardmin.LoginManager;
 import edu.ues.jhard.jpa.Comentarios;
 import edu.ues.jhard.jpa.Entrada;
-import edu.ues.jhard.jpa.Tag;
-import edu.ues.jhard.jpa.TagEntrada;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -226,44 +224,44 @@ public class jprocurUser extends BeanBaseJHard {
         return EMPTY_STRING;
     }
 
-    /**
-     * Metodo para obtener todos las Etiquetas asociados con la EntradaActual
-     * @param idEntrada
-     * @return
-     */
-    public List<Tag> getEtiquetas() {
-        List<TagEntrada> te = (List<TagEntrada>)this.entradaActual.getTagEntradaCollection();
-        List<Tag> tag = new ArrayList<Tag>();
-        for (TagEntrada tagEntrada : te) {
-            tag.add(tagEntrada.getIdtag());
-        }
-        return tag;
-    }
+//    /**
+//     * Metodo para obtener todos las Etiquetas asociados con la EntradaActual
+//     * @param idEntrada
+//     * @return
+//     */
+//    public List<Tag> getEtiquetas() {
+//        List<TagEntrada> te = (List<TagEntrada>)this.entradaActual.getTagEntradaCollection();
+//        List<Tag> tag = new ArrayList<Tag>();
+//        for (TagEntrada tagEntrada : te) {
+//            tag.add(tagEntrada.getIdtag());
+//        }
+//        return tag;
+//    }
 
-    /**
-     * Metodo para obtener todos las Etiquetas como un VIL STRING asociados con la EntradaActual
-     * @param idEntrada
-     * @return
-     */
-    public String getEtiquetasString() {
-        List<TagEntrada> te = (List<TagEntrada>)this.entradaActual.getTagEntradaCollection();
-        String resultado = new String();
-        switch (te.size()){
-            case 0:
-                return "No hay Etiquetas asociadas.";
-            case 1:
-                resultado = te.get(0).getIdtag().getDescripcion() + ".";
-                break;
-            case 2:
-                resultado = te.get(0).getIdtag().getDescripcion() + ", " + te.get(1).getIdtag().getDescripcion() + ".";
-                break;
-            default: //para los > de 2.
-                for (TagEntrada tagEntrada : te)
-                    resultado += tagEntrada.getIdtag().getDescripcion() + " ";
-                break;
-        }
-        return resultado;
-    }
+//    /**
+//     * Metodo para obtener todos las Etiquetas como un VIL STRING asociados con la EntradaActual
+//     * @param idEntrada
+//     * @return
+//     */
+//    public String getEtiquetasString() {
+//        List<TagEntrada> te = (List<TagEntrada>)this.entradaActual.getTagEntradaCollection();
+//        String resultado = new String();
+//        switch (te.size()){
+//            case 0:
+//                return "No hay Etiquetas asociadas.";
+//            case 1:
+//                resultado = te.get(0).getIdtag().getDescripcion() + ".";
+//                break;
+//            case 2:
+//                resultado = te.get(0).getIdtag().getDescripcion() + ", " + te.get(1).getIdtag().getDescripcion() + ".";
+//                break;
+//            default: //para los > de 2.
+//                for (TagEntrada tagEntrada : te)
+//                    resultado += tagEntrada.getIdtag().getDescripcion() + " ";
+//                break;
+//        }
+//        return resultado;
+//    }
 
     /**
      * Metodo para obtener los comentarios de un objeto Entrada, sin consultar a la BD
@@ -339,9 +337,7 @@ public class jprocurUser extends BeanBaseJHard {
     }
 
     public String busquedaEntradas(){
-       //System.out.println(this.criteriosBusqueda);
-       String[] arr=this.criteriosBusqueda.trim().split(",");
-       this.listaEntradas = this.jprocurInstance.searchListaEntradaPorEtiquetas(arr);
+       this.listaEntradas = this.jprocurInstance.searchEntradaPorEtiqueta(this.criteriosBusqueda);
        return EMPTY_STRING;
     }
 

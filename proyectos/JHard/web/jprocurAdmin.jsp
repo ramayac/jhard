@@ -50,21 +50,6 @@
                                             id="lblFechaHora" value="#{jprocurAdmin.entradaActual.fechahora}" title="Fecha y hora de la última modificacion en la entrada."/>
                                             </div>
                                             <br/>
-                                            <br/>
-                                            <ice:panelGroup id="editTags" style="float:left;margin-top:10px;margin-left:15px;">
-                                                <ice:dataTable id="listaEtiquetasEdit"
-                                                var="etiqueta" resizable="true" value="#{jprocurAdmin.listaSelTag}">
-                                                    <ice:column>
-                                                        <ice:rowSelector id="selected"
-                                                                         value="#{etiqueta.seleccionada}"
-                                                                         multiple="true"
-                                                                         preStyleOnSelection="true"/>
-                                                        <f:facet name="header"><ice:outputText id="etiqueta" value="Etiquetas"/></f:facet>
-                                                        <ice:outputText id="tagEditDesc" value="#{etiqueta.descripcion}"/>
-                                                    </ice:column>
-                                                </ice:dataTable>
-                                            </ice:panelGroup>
-                                            <br/>
                                             <div align="center">
                                             <ice:commandButton action="#{jprocurAdmin.modificarEntrada}" id="btnGuardar" styleClass="btnAccion2" value="Guardar"/>
                                             <ice:commandButton action="#{jprocurAdmin.cancelarGuardarEntrada}" id="btnCancelar" styleClass="btnAccion2" value="Cancelar"/>
@@ -141,19 +126,6 @@
                                                 value="#{jprocurAdmin.currentUserName}"/><div align="right"><ice:outputLabel
                                                 id="lblFechaHora2" value="#{jprocurAdmin.entradaActual.fechahora}" title="Fecha y hora de la creacion de la entrada."/></div>
                                             </ice:panelGroup>
-                                            <ice:panelGroup id="addTags" style="float:left;margin-top:10px;margin-left:15px;">
-                                                <ice:dataTable id="listaEtiquetasAdd"
-                                                var="etiqueta" resizable="true" value="#{jprocurAdmin.listaSelTag}">
-                                                    <ice:column>
-                                                        <ice:rowSelector id="selected"
-                                                                         value="#{etiqueta.seleccionada}"
-                                                                         multiple="true"
-                                                                         preStyleOnSelection="true"/>
-                                                        <f:facet name="header"><ice:outputText id="etiqueta" value="Etiquetas"/></f:facet>
-                                                        <ice:outputText id="tagDesc" value="#{etiqueta.descripcion}"/>
-                                                    </ice:column>
-                                                </ice:dataTable>
-                                            </ice:panelGroup>
                                             <ice:panelGroup>
                                                 <div align="center">
                                                 <ice:commandButton action="#{jprocurAdmin.agregarEntrada}" id="btnGuardar2" styleClass="btnAccion2" value="Guardar"/>
@@ -214,60 +186,6 @@
                                         </ice:panelGroup>
                                         <!-- FIN panel de para moderar los Comentarios -->
                                     </ice:panelTab>
-                                    <ice:panelTab id="panelEtiquetas" label="Administrar Etiquetas">
-                                        <!-- panel de para administrar las Etiquetas -->
-                                        <ice:panelGroup>
-                                            <ice:dataTable id="tablaEtiquetas" rendered="#{jprocurAdmin.hayEtiqueta}" rows="30" styleClass="mitablaetiquetas"
-                                            value="#{jprocurAdmin.listaEtiqueta}" var="indiceEtiqueta" resizable="true">
-                                                <ice:column>
-                                                    <f:facet name="header"><ice:outputText value="Nombre Etiqueta"/></f:facet>
-                                                    <ice:outputLabel style="font-weight:bold; " value="#{indiceEtiqueta.descripcion}"/>
-                                                </ice:column>
-                                                <ice:column>
-                                                    <f:facet name="header"><ice:outputText value="Editar Etiqueta"/></f:facet>
-                                                    <ice:commandLink action="#{jprocurAdmin.editarEtiqueta}" value="Editar">
-                                                        <f:param name="idTag" value="#{indiceEtiqueta.idtag}"/>
-                                                    </ice:commandLink>
-                                                </ice:column>
-                                                <ice:column>
-                                                    <f:facet name="header"><ice:outputText value="Eliminar Etiqueta"/></f:facet>
-                                                    <ice:commandLink action="#{jprocurAdmin.eliminarEtiqueta}" value="Eliminar">
-                                                        <f:param name="idTag" value="#{indiceEtiqueta.idtag}"/>
-                                                    </ice:commandLink>
-                                                </ice:column>
-                                            </ice:dataTable>
-                                            <div align="center">
-                                                <ice:dataPaginator for="tablaEtiquetas" id="paginadorEtiqueta" paginator="true"
-                                                rendered="#{jprocurAdmin.showPagEtiquetas}">
-                                                    <f:facet name="first">
-                                                        <ice:graphicImage style="border:none;" title="First Page" url="./xmlhttp/css/rime/css-images/arrow-first.gif"/>
-                                                    </f:facet>
-                                                    <f:facet name="previous">
-                                                        <ice:graphicImage style="border:none;" title="Prev Page" url="./xmlhttp/css/rime/css-images/arrow-previous.gif"/>
-                                                    </f:facet>
-                                                    <f:facet name="next">
-                                                        <ice:graphicImage style="border:none;" title="Next Page" url="./xmlhttp/css/rime/css-images/arrow-next.gif"/>
-                                                    </f:facet>
-                                                    <f:facet name="last">
-                                                        <ice:graphicImage style="border:none;" title="Last Page" url="./xmlhttp/css/rime/css-images/arrow-last.gif"/>
-                                                    </f:facet>
-                                                </ice:dataPaginator>
-                                            </div><br/>
-                                                <ice:commandButton action="#{jprocurAdmin.btnNuevoTag_action}" value="Nueva etiqueta" styleClass="btnAccion2"/>
-                                            <br/>
-                                            <br/>
-                                            <ice:panelCollapsible expanded="#{jprocurAdmin.addModTag}">
-                                                <f:facet name="header"><ice:panelGroup><ice:outputText value="Agregar/Editar Etiqueta"/></ice:panelGroup></f:facet>
-                                                <ice:panelGroup>
-                                                Descripción: <ice:inputText id="itTagDesc" title="Descripción de la etiqueta"
-                                                value="#{jprocurAdmin.etiquetaNueva.descripcion}" maxlength="25"
-                                                partialSubmit="true"/><ice:commandButton action="#{jprocurAdmin.btnAddTagDesc_action}" value="Guardar" styleClass="btnAccion2"/>
-                                                <ice:commandButton action="#{jprocurAdmin.btnTagClean_action}" value="Limpiar"  styleClass="btnAccion2"/>
-                                                </ice:panelGroup>
-                                            </ice:panelCollapsible>
-                                        </ice:panelGroup>
-                                        <!-- FIN panel de para administrar las Etiquetas -->
-                                    </ice:panelTab>
                                 </ice:panelTabSet>
                                 <ice:panelGroup  rendered="#{!jprocurAdmin.permisos}">
                                     <jsp:directive.include file="/jspf/nologin.jspx"/>
@@ -276,9 +194,7 @@
                                 <ice:panelPopup autoCentre="true" id="panelMensajeEntradas" modal="true"
                                 rendered="#{jprocurAdmin.popupElimEntrada}">
                                 <f:facet name="header">
-                                    <ice:panelGrid id="ppEntrada">
-                                        <ice:outputText id="otxtTituloEntrada" value="JProcur"/>
-                                    </ice:panelGrid>
+                                    <ice:panelGrid id="ppEntrada">Aviso:</ice:panelGrid>
                                 </f:facet>
                                 <f:facet name="body">
                                 <div class="post">
@@ -323,7 +239,7 @@
                                 <!-- panel de mensajes de avisos...-->
                                 <ice:panelPopup autoCentre="true" id="ppmsj2" modal="true" rendered="#{jprocurAdmin.showPPMesaje}">
                                     <f:facet name="header">
-                                        <ice:panelGrid><ice:outputText id="pptit" value="JWiki"/></ice:panelGrid>
+                                        <ice:panelGrid>Aviso:</ice:panelGrid>
                                     </f:facet>
                                     <f:facet name="body">
                                         <div class="post">

@@ -54,9 +54,6 @@
                                 </div>
                                 <br/>
                                 <br/>
-                                Etiquetas: <ice:outputLabel id="lblEtiquetas" style="font-weight:bold; " value="#{jprocurUser.etiquetasString}"/>
-                                <br/>
-                                <br/>
                                 Comentarios:<br/>
                                 <div class="post">
                                     <ice:dataTable id="tablaEntradaComentarios" rows="10"
@@ -145,9 +142,9 @@
                             <li id="search">
                                 <ice:form id="formBusqueda">
                                 <h2>Búsqueda</h2>
-                                <ice:inputText id="itBusqueda" title="Búsqueda por etiquetas"
+                                <ice:inputText id="itBusqueda" title="Búsqueda"
                                 value="#{jprocurUser.criteriosBusqueda}" partialSubmit="true"/><ice:commandButton action="#{jprocurUser.busquedaEntradas}"
-                                id="btnBusquedaEtiquetas" styleClass="btnAccion2"
+                                id="btnBusqueda" styleClass="btnAccion2"
                                 value="Buscar"/>
                                 </ice:form>
                             </li>

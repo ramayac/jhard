@@ -35,8 +35,6 @@
     <class>edu.ues.jhard.jpa.Rol</class>
     <class>edu.ues.jhard.jpa.Software</class>
     <class>edu.ues.jhard.jpa.Solicitud</class>
-    <class>edu.ues.jhard.jpa.Tag</class>
-    <class>edu.ues.jhard.jpa.TagEntrada</class>
     <class>edu.ues.jhard.jpa.Tecnico</class>
     <class>edu.ues.jhard.jpa.Ubicacion</class>
     <class>edu.ues.jhard.jpa.Usuario</class>

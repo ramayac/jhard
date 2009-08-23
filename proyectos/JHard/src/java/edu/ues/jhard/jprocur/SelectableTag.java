@@ -1,6 +1,5 @@
 package edu.ues.jhard.jprocur;
 
-import edu.ues.jhard.jpa.Tag;
 import java.io.Serializable;
 
 /**
@@ -31,12 +30,6 @@ public class SelectableTag implements Serializable {
         this.seleccionada = seleccionada;
     }
 
-    public SelectableTag(Tag t){
-        this.idtag = t.getIdtag();
-        this.descripcion = t.getDescripcion();
-        this.seleccionada = false; //Just in case...
-    }
-
     public Integer getIdtag() {
         return idtag;
     }
@@ -60,9 +53,4 @@ public class SelectableTag implements Serializable {
     public void setSeleccionada(Boolean seleccionado) {
         this.seleccionada = seleccionado;
     }
-
-    public Tag toTag(){
-        return new Tag(this.idtag, this.descripcion);
-    }
-
 }
