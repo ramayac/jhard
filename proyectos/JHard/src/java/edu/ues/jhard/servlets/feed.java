@@ -8,10 +8,12 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndFeedImpl;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedOutput;
+import edu.ues.jhard.beans.BeanBaseConfig;
 import edu.ues.jhard.beans.BeanBaseJProcur;
 import edu.ues.jhard.beans.BeanBaseJWiki;
 import edu.ues.jhard.jpa.Articulos;
 import edu.ues.jhard.jpa.Entrada;
+import edu.ues.jhard.util.Redireccion;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,14 +31,14 @@ public class feed extends HttpServlet {
     private static final int JWIKI = 1;
     private static final int JPROCUR = 2;
     private static final String DEFAULT_FEED_TYPE = "default.feed.type";
-    private static final String FEED_SITE_LINK = "http://www.jhard.com";
-    private static final String RSS2 = "rss_2.0";
     private static final String ATOM = "atom_0.3";
     private static final String FEED_TYPE = "type";
     private static final String OPCION = "opt";
     private static final String MIME_TYPE = "application/xml;charset=UTF-8"; //mime o content type
     private static final String COULD_NOT_GENERATE_FEED_ERROR = "No pude generar los datos para la suscripción";
     private static final int MAX_FEED_ITEMS = 10;
+
+    private String FEED_SITE_LINK = "";
 
     private String defaultFeedType;
 
@@ -60,7 +62,6 @@ public class feed extends HttpServlet {
     public void init() {
         defaultFeedType = getServletConfig().getInitParameter(DEFAULT_FEED_TYPE);
         defaultFeedType = (defaultFeedType!=null) ? defaultFeedType : ATOM;
-
         actualizar();
     }
 
@@ -145,7 +146,7 @@ public class feed extends HttpServlet {
 
         for (Articulos a : this.listaArticulos) {
             entry.setTitle(a.getTitulo());
-            entry.setLink("http://srbyte.com"); //TODO: cambiar.
+            entry.setLink(Redireccion.PAG_WIKI+"?wkid="+a.getIdarticulo());
             entry.setPublishedDate(a.getFechahora());
             description = new SyndContentImpl();
             description.setType("text/plain");
@@ -176,7 +177,7 @@ public class feed extends HttpServlet {
 
         for (Entrada e : this.listaEntradas) {
             entry.setTitle(e.getTitulo());
-            entry.setLink("http://srbyte.com"); //TODO: cambiar.
+            entry.setLink(Redireccion.PAG_PROC+"?artid="+e.getIdentrada());
             entry.setPublishedDate(e.getFechahora());
             description = new SyndContentImpl();
             description.setType("text/plain");
@@ -191,10 +192,18 @@ public class feed extends HttpServlet {
     }
 
     private void actualizar() {
-        this.listaArticulos = this.getJWikiInstance().getUltimosNArticulos(MAX_FEED_ITEMS);
-        this.listaEntradas = this.getJProcurInstance().getUltimasNEntradas(MAX_FEED_ITEMS);
-        feed.ultimaActualizacion = new Date();
-        System.out.println("(FEED Servlet) Se recargo la lista de articulos y entradas.");
+        try {
+            this.listaArticulos = this.getJWikiInstance().getUltimosNArticulos(MAX_FEED_ITEMS);
+            this.listaEntradas = this.getJProcurInstance().getUltimasNEntradas(MAX_FEED_ITEMS);
+            feed.ultimaActualizacion = new Date();
+
+            BeanBaseConfig.recargaConfiguracion();
+            FEED_SITE_LINK = BeanBaseConfig.getValor("url");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        System.out.println("(FEED Servlet) Se recargo la lista de articulos y entradas. " + FEED_SITE_LINK);
     }
 
     private boolean puedoActualizar(){

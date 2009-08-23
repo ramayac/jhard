@@ -25,8 +25,6 @@ import javax.faces.FacesException;
  */
 public class jwikiUser extends BeanBaseJHard {
     public static final String WIKI_ID = "wkid";
-    static final int MAX_COMENTARIOS = 10;
-    static final int MAX_ENTRADAS = 5;
 
     private Articulos articuloActual = null;
 

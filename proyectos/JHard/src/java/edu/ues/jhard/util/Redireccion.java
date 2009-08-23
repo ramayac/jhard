@@ -9,20 +9,35 @@ import com.sun.jsfcl.app.AbstractPageBean;
 import java.io.IOException;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import jhard.jprocurUser;
+import jhard.jwikiUser;
 
 /**
+ * @author Hugol
  * Clase para realizar redirecciones hacia todas las páginas disponibles en JHard
  * Cada página disponible de JHard tiene un método, que se nombre idénticamente a la página hacia la que
  * redirecciona
  *
  * Cada método también posiciona el bean de Navegacion en su respectivo módulo
  *
- * @author Hugol
+ * @author ramayac
+ * Modificado para que use constantes.
  */
 public class Redireccion extends AbstractPageBean{
+    public static final String MODNAME_INDEX = "Index";
+    public static final String MODNAME_JCANON = "JCanon";
+    public static final String MODNAME_JINVENT = "JInvent";
+    public static final String MODNAME_JPROCUR = "JProCur";
+    public static final String MODNAME_JREQUEST = "JRequest";
+    public static final String MODNAME_JWIKI = "JWiki";
+    public static final String MODNAME_MANLAB = "ManLab";
+
+    public static final String PAG_WIKI = "jwikiUser.iface";
+    public static final String PAG_PROC = "jprocurUser.iface";
 
     private static final String EMPTY_STRING = "";
     private static final String BEAN_NAME = "Navegacion";
+
     private Navegacion n;
 
     /**
@@ -32,7 +47,7 @@ public class Redireccion extends AbstractPageBean{
     public String index(){
         try {
             n = (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("Index");
+            n.setModuloActual(MODNAME_INDEX);
             FacesContext.getCurrentInstance().getExternalContext().redirect("Index.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -47,7 +62,7 @@ public class Redireccion extends AbstractPageBean{
     public String jrequestAdmin(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("JRequest");
+            n.setModuloActual(MODNAME_JREQUEST);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jrequestAdmin.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -62,7 +77,7 @@ public class Redireccion extends AbstractPageBean{
     public String jrequestUser(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("JRequest");
+            n.setModuloActual(MODNAME_JREQUEST);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jrequestUser.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -77,7 +92,7 @@ public class Redireccion extends AbstractPageBean{
     public String jrequestAdministracion(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("JRequest");
+            n.setModuloActual(MODNAME_JREQUEST);
             FacesContext.getCurrentInstance().getExternalContext().redirect("JRequestAdministracion.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -92,7 +107,7 @@ public class Redireccion extends AbstractPageBean{
     public String jrequestUserSolicitud(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("JRequest");
+            n.setModuloActual(MODNAME_JREQUEST);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jrequestUserSolicitud.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -107,7 +122,7 @@ public class Redireccion extends AbstractPageBean{
     public String admin(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("Index");
+            n.setModuloActual(MODNAME_INDEX);
             FacesContext.getCurrentInstance().getExternalContext().redirect("Admin.jspx");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -122,7 +137,7 @@ public class Redireccion extends AbstractPageBean{
     public String jinvent(){
         try {
             n = (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("JInvent");
+            n.setModuloActual(MODNAME_JINVENT);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jinvent.jspx");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -137,7 +152,7 @@ public class Redireccion extends AbstractPageBean{
     public String jcanon(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("JCanon");
+            n.setModuloActual(MODNAME_JCANON);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jcanon.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -152,7 +167,7 @@ public class Redireccion extends AbstractPageBean{
     public String jcanonAdmin(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("JCanon");
+            n.setModuloActual(MODNAME_JCANON);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jcanonAdmin.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -167,7 +182,7 @@ public class Redireccion extends AbstractPageBean{
     public String jmlLaboratorio(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("ManLab");
+            n.setModuloActual(MODNAME_MANLAB);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jmlLaboratorio.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -182,7 +197,7 @@ public class Redireccion extends AbstractPageBean{
     public String jmlGestionaClase(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("ManLab");
+            n.setModuloActual(MODNAME_MANLAB);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jmlGestionaClase.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -197,7 +212,7 @@ public class Redireccion extends AbstractPageBean{
     public String jmlAsistencia(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("ManLab");
+            n.setModuloActual(MODNAME_MANLAB);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jmlAsistencia.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -212,7 +227,7 @@ public class Redireccion extends AbstractPageBean{
     public String jmlInscripcion(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("ManLab");
+            n.setModuloActual(MODNAME_MANLAB);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jmlInscripcion.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -227,7 +242,7 @@ public class Redireccion extends AbstractPageBean{
     public String jmlHorario(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("ManLab");
+            n.setModuloActual(MODNAME_MANLAB);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jmlHorario.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -243,7 +258,7 @@ public class Redireccion extends AbstractPageBean{
     public String jmlCrudAdmin(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("ManLab");
+            n.setModuloActual(MODNAME_MANLAB);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jmlCrudAdmin.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -258,7 +273,7 @@ public class Redireccion extends AbstractPageBean{
     public String jmlHorarioAdmin(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("ManLab");
+            n.setModuloActual(MODNAME_MANLAB);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jmlHorarioAdmin.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -273,8 +288,8 @@ public class Redireccion extends AbstractPageBean{
     public String jWikiUser(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("JWiki");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("jwikiUser.iface");
+            n.setModuloActual(MODNAME_JWIKI);
+            FacesContext.getCurrentInstance().getExternalContext().redirect(PAG_WIKI);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -288,7 +303,7 @@ public class Redireccion extends AbstractPageBean{
     public String jWikiAdmin(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("JWiki");
+            n.setModuloActual(MODNAME_JWIKI);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jwikiAdmin.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -297,15 +312,31 @@ public class Redireccion extends AbstractPageBean{
     }
 
     /**
-     * Método para redireccionar hacia un artículo determinado de la WIki, según el ID de artículo enviado desde la JSP
+     * Método para redireccionar hacia un artículo determinado de la Wiki, según el ID de artículo enviado desde la JSP
      * @return
      */
     public String jWikiUserParam(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("JWiki");
+            n.setModuloActual(MODNAME_JWIKI);
             String wikiId = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("wikiId");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("jwikiUser.iface?wkid=" + wikiId);
+            FacesContext.getCurrentInstance().getExternalContext().redirect(PAG_WIKI+"?"+jwikiUser.WIKI_ID+"=" + wikiId);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return EMPTY_STRING;
+    }
+    
+    /**
+     * Método para redireccionar hacia una entrada determinado de la promocion de cursos, según el ID del curso enviado desde la JSP
+     * @return
+     */
+    public String jProcurUserParam(){
+        try {
+            n= (Navegacion)getBean(BEAN_NAME);
+            n.setModuloActual(MODNAME_JPROCUR);
+            String cursoId = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("cursoId");
+            FacesContext.getCurrentInstance().getExternalContext().redirect(PAG_PROC+"?"+jprocurUser.ART_ID+"=" + cursoId);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -319,8 +350,8 @@ public class Redireccion extends AbstractPageBean{
     public String jProCurUser(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("JProCur");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("jprocurUser.iface");
+            n.setModuloActual(MODNAME_JPROCUR);
+            FacesContext.getCurrentInstance().getExternalContext().redirect(PAG_PROC);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -334,7 +365,7 @@ public class Redireccion extends AbstractPageBean{
     public String jProCurAdmin(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("JProCur");
+            n.setModuloActual(MODNAME_JPROCUR);
             FacesContext.getCurrentInstance().getExternalContext().redirect("jprocurAdmin.iface");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -349,7 +380,7 @@ public class Redireccion extends AbstractPageBean{
     public String reportes(){
         try {
             n= (Navegacion)getBean(BEAN_NAME);
-            n.setModuloActual("Index");
+            n.setModuloActual(MODNAME_INDEX);
             FacesContext.getCurrentInstance().getExternalContext().redirect("reportes.iface");
         } catch (IOException ex) {
             ex.printStackTrace();

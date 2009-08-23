@@ -13,7 +13,7 @@
                     <ul>
                         <li>
                             <ice:commandLink rendered="#{Navegacion.moduloActual!='Index'}" action="#{Redireccion.index}" value="Principal"/>
-                            <ice:commandLink styleClass="current_page_item" rendered="#{Navegacion.moduloActual=='Index'}" action="#{Redireccion.index}" value="#{Navegacion.moduloActual}"/>
+                            <ice:commandLink styleClass="current_page_item" rendered="#{Navegacion.moduloActual=='Index'}" action="#{Redireccion.index}" value="Principal"/>
                         </li>
                         <li>
                             <ice:commandLink rendered="#{Navegacion.moduloActual!='JRequest'}" action="#{Redireccion.jrequestUser}" value="Mantenimientos"/>
