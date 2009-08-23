@@ -14,7 +14,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /**
- * Sensillo bean, con el unico objetivo de facilitar la obtencion de los valores
+ * Sencillo bean, con el unico objetivo de facilitar la obtencion de los valores
  * que se encuentran en la tabla "configuracion" de la base de datos.
  * @author rodrigo
  */

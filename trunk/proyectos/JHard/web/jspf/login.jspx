@@ -30,5 +30,6 @@
             </p>
             <ice:commandButton action="#{JHardminInstance.logout}" id="btnLogout" styleClass="btnAccion2" value="Logout"/>
         </ice:form>
+        <ice:form id="frmConectados"><div align="right"><small><ice:outputLabel id="usuariosConectados" value="#{UsuariosConectados.usuariosConectados}" /></small><img src="img/user.png"/></div></ice:form>
     </jsp:element>
 </jsp:root>

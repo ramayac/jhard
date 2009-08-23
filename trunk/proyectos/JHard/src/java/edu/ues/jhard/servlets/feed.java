@@ -49,6 +49,7 @@ public class feed extends HttpServlet {
     private List<Entrada> listaEntradas = new ArrayList<Entrada>();
 
     private static Date ultimaActualizacion;
+    private int MINUTOS_ACTUALIZAR;
 
     public  BeanBaseJWiki getJWikiInstance() {
         return this.jwikiInstance;
@@ -62,7 +63,7 @@ public class feed extends HttpServlet {
     public void init() {
         defaultFeedType = getServletConfig().getInitParameter(DEFAULT_FEED_TYPE);
         defaultFeedType = (defaultFeedType!=null) ? defaultFeedType : ATOM;
-        actualizar();
+        iniciar();
     }
 
     /** 
@@ -191,26 +192,31 @@ public class feed extends HttpServlet {
         return feed;
     }
 
-    private void actualizar() {
+    private void iniciar(){
         try {
-            this.listaArticulos = this.getJWikiInstance().getUltimosNArticulos(MAX_FEED_ITEMS);
-            this.listaEntradas = this.getJProcurInstance().getUltimasNEntradas(MAX_FEED_ITEMS);
-            feed.ultimaActualizacion = new Date();
+            actualizar();
 
             BeanBaseConfig.recargaConfiguracion();
             FEED_SITE_LINK = BeanBaseConfig.getValor("url");
+            MINUTOS_ACTUALIZAR = Integer.parseInt(BeanBaseConfig.getValor("actualizaFeed"));
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+    }
 
-        System.out.println("(FEED Servlet) Se recargo la lista de articulos y entradas. " + FEED_SITE_LINK);
+    private void actualizar() {
+        this.listaArticulos = this.getJWikiInstance().getUltimosNArticulos(MAX_FEED_ITEMS);
+        this.listaEntradas = this.getJProcurInstance().getUltimasNEntradas(MAX_FEED_ITEMS);
+        feed.ultimaActualizacion = new Date();            
+        System.out.println("(FEED Servlet) Se recargo la lista de articulos y entradas.");
     }
 
     private boolean puedoActualizar(){
-      Long miliultima = feed.ultimaActualizacion.getTime() + (10 * 60 * 1000);
-      Date haceDiezMinutos = new Date(miliultima);
+      Long miliultima = feed.ultimaActualizacion.getTime() + (MINUTOS_ACTUALIZAR * 60 * 1000);
+      Date haceTantosMinutos = new Date(miliultima);
       Date instante = new Date();
-      if (instante.compareTo(haceDiezMinutos)>0){ //pasaron 10 minutos...
+      if (instante.compareTo(haceTantosMinutos)>0){ //pasaron n minutos...
         actualizar();
         return true;
       }
