@@ -15,10 +15,7 @@ import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jhardmin.LoginManager;
 import edu.ues.jhard.jpa.Comentarios;
 import edu.ues.jhard.jpa.Entrada;
-import edu.ues.jhard.jpa.Tag;
-import edu.ues.jhard.jpa.TagEntrada;
 import edu.ues.jhard.jpa.Usuario;
-import edu.ues.jhard.jprocur.SelectableTag;
 import edu.ues.jhard.util.popUp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,11 +47,7 @@ public class jprocurAdmin extends AbstractPageBean {
     private List<Entrada> listaEntradas = new ArrayList<Entrada>();
     //private Comentarios comentarioActual = null;
     private List<Comentarios> listaComentarios = new ArrayList<Comentarios>();
-    private List<Tag> listaEtiqueta = new ArrayList<Tag>();
-    private Tag etiquetaNueva = new Tag();
     private Integer tabIndex = new Integer(0);
-    //lista de etiquetas de para el row selector
-    private List<SelectableTag> listaSelTag = new ArrayList<SelectableTag>();
     private HtmlOutputLabel lblUser = new HtmlOutputLabel();
     private Boolean showPPMesaje = new Boolean(false);
     private HtmlOutputText lblPPMesajes = new HtmlOutputText();
@@ -76,14 +69,6 @@ public class jprocurAdmin extends AbstractPageBean {
 
     public void setPopup(popUp popup) {
         this.popup = popup;
-    }
-
-    public Tag getEtiquetaNueva() {
-        return etiquetaNueva;
-    }
-
-    public void setEtiquetaNueva(Tag etiquetaNueva) {
-        this.etiquetaNueva = etiquetaNueva;
     }
 
     public HtmlOutputText getLblPPMesajes() {
@@ -168,10 +153,7 @@ public class jprocurAdmin extends AbstractPageBean {
         
         this.listaEntradas = this.getJProcurInstance().getAllEntradas();
         this.listaComentarios = this.getJProcurInstance().getComentariosNoAprobados();
-        this.listaEtiqueta = this.getJProcurInstance().getAllEtiquetas();
         if(this.listaEntradas.size()>0) this.entradaActual = this.listaEntradas.get(0);
-
-        llenarListaTags();
 
         if(this.lu!=null){
             this.U = LoginManager.getInstance().getUsuario(lu);
@@ -287,22 +269,6 @@ public class jprocurAdmin extends AbstractPageBean {
 
     /*----------------------------------------------------------------------------------*/
 
-    public List<Tag> getListaEtiqueta() {
-        return listaEtiqueta;
-    }
-
-    public void setListaEtiqueta(List<Tag> listaEtiqueta) {
-        this.listaEtiqueta = listaEtiqueta;
-    }
-
-    public List<SelectableTag> getListaSelTag() {
-        return listaSelTag;
-    }
-
-    public void setListaSelTag(List<SelectableTag> listaSelTag) {
-        this.listaSelTag = listaSelTag;
-    }
-
     public Entrada getEntradaNueva() {
         return entradaNueva;
     }
@@ -317,11 +283,6 @@ public class jprocurAdmin extends AbstractPageBean {
 
     public void setListaComentarios(List<Comentarios> listaComentarios) {
         this.listaComentarios = listaComentarios;
-    }
-
-    public Boolean getHayEtiqueta(){
-        if(this.listaEtiqueta.size()>0) return true;
-        return false;
     }
 
     private Boolean editandoEntrada = new Boolean(false);
@@ -372,27 +333,8 @@ public class jprocurAdmin extends AbstractPageBean {
         return EMPTY_STRING;
     }
 
-    /**
-     * Metodo para obtener todos las Etiquetas asociados con la EntradaActual
-     * @param idEntrada
-     * @return
-     */
-    public List<Tag> getEtiquetas() {
-        List<TagEntrada> te = (List<TagEntrada>)this.entradaActual.getTagEntradaCollection();
-        List<Tag> tag = new ArrayList<Tag>();
-        for (TagEntrada tagEntrada : te) {
-            tag.add(tagEntrada.getIdtag());
-        }
-        return tag;
-    }
-
     public boolean getShowPagEntradas(){
         if(this.listaEntradas.size()>MAX_ENTRADAS) return true;
-        return false;
-    }
-
-    public boolean getShowPagEtiquetas(){
-        if(this.listaEtiqueta.size()>MAX_ETIQUETAS) return true;
         return false;
     }
 
@@ -592,16 +534,6 @@ public class jprocurAdmin extends AbstractPageBean {
         String idComent = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idEntrada");
         Integer id = Integer.parseInt(idComent);
         this.entradaActual = this.jprocurInstance.getEntrada(id.intValue());
-        this.llenarListaTags();
-
-        List<TagEntrada> lte = this.entradaActual.getTagEntradaList();
-        //Shame shame shame on me... :P
-        for (int i = 0; i < this.listaSelTag.size(); i++) {
-            SelectableTag selTag = this.listaSelTag.get(i);
-            for (TagEntrada tagEnt : lte) {
-                if(tagEnt.getIdtag().getIdtag() == selTag.getIdtag()) selTag.setSeleccionada(true);
-            }
-        }
 
         this.setEditandoEntrada(true);
         return EMPTY_STRING;
@@ -617,22 +549,6 @@ public class jprocurAdmin extends AbstractPageBean {
 
     public String modificarEntrada(){
         this.entradaActual.setIdusuario(this.U);
-
-        //This is a tricky one...
-        List<TagEntrada> lte = new ArrayList<TagEntrada>();
-        for (SelectableTag st : this.listaSelTag) {
-            if(st.getSeleccionada()){
-                lte.add(new TagEntrada(0, st.toTag(), entradaActual));
-            }
-        }
-        for (TagEntrada te : this.entradaActual.getTagEntradaList())
-            this.jprocurInstance.deleteTagEntrada(te);
-
-//        System.out.println("Lista de TagEntradas que se asignaran a la entrada:");
-//        for (TagEntrada tagEntrada : lte) {
-//            System.out.println(tagEntrada.getIdtag().getIdtag() + "," +tagEntrada.getIdtag().getDescripcion());
-//        }
-        this.entradaActual.setTagEntradaCollection(lte);
         
         if(this.jprocurInstance.updateEntrada(this.entradaActual)!=null){
             this.lblPPMesajes.setValue("Se modificó la Entrada.");
@@ -644,8 +560,8 @@ public class jprocurAdmin extends AbstractPageBean {
             this.listaEntradas.clear();
             this.listaEntradas = this.getJProcurInstance().getAllEntradas();
         }
-        this.llenarListaTags();
         this.tabIndex = 0;
+        this.entradaActual = new Entrada();
         
         return EMPTY_STRING;
     }
@@ -654,23 +570,9 @@ public class jprocurAdmin extends AbstractPageBean {
         this.entradaNueva.setIdusuario(this.U);
         this.entradaNueva.setFechahora(new Date());
 
-        this.entradaNueva.getTagEntradaCollection().clear();
-        /*Agregamos las Etiquetas de acuerdo a la lista seleccionada*/
-        List<TagEntrada> lte = new ArrayList<TagEntrada>();
-        for (SelectableTag st : this.listaSelTag) {
-            if(st.getSeleccionada()){
-                TagEntrada te = new TagEntrada();
-                te.setIdentrada(entradaNueva);
-                te.setIdtag(st.toTag());
-                lte.add(te);
-            }
-        }
-        this.entradaNueva.setTagEntradaCollection(lte);
-
         if(this.jprocurInstance.createEntrada(this.entradaNueva)){
             this.lblPPMesajes.setValue("Entrada agregada con éxito.");
             this.showPPMesaje = true;
-            this.llenarListaTags();
             this.listaEntradas.clear();
             this.listaEntradas = this.getJProcurInstance().getAllEntradas();
         } else {
@@ -678,19 +580,13 @@ public class jprocurAdmin extends AbstractPageBean {
             this.showPPMesaje = true;
         }        
         this.setEditandoEntrada(false);
+
+        this.entradaNueva = new Entrada();
         return EMPTY_STRING;
     }
 
     public TimeZone getTimeZone() {
         return java.util.TimeZone.getDefault();
-    }
-
-    private void llenarListaTags() {
-        List<Tag> listaAllTags = this.getJProcurInstance().getAllEtiquetas();
-        this.listaSelTag.clear();
-        for (Tag t : listaAllTags) {
-            this.listaSelTag.add(new SelectableTag(t));
-        }
     }
     
     public Integer getTabIndex() {
@@ -722,76 +618,9 @@ public class jprocurAdmin extends AbstractPageBean {
         return EMPTY_STRING;
     }
 
-    public String btnNuevoTag_action() {
-        this.etiquetaNueva = new Tag();
-        this.setAddModTag(true);
-        return EMPTY_STRING;
-    }
-
-    public String btnAddTagDesc_action() {
-        Integer idtag = this.etiquetaNueva.getIdtag();
-        if(idtag==null) idtag = 0;
-
-        if(idtag>0){
-            if (this.jprocurInstance.mergeTag(etiquetaNueva)) {
-                this.lblPPMesajes.setValue("Etiqueta modificada con éxito.");
-                this.showPPMesaje = true;
-                this.listaEtiqueta.clear();
-                this.listaEtiqueta = this.getJProcurInstance().getAllEtiquetas();
-            } else {
-                this.lblPPMesajes.setValue("Ocurrió un error al intentar modificar la etiqueta.");
-                this.showPPMesaje = true;
-            }
-        } else {
-            if (this.jprocurInstance.createTag(this.etiquetaNueva)) {
-                this.lblPPMesajes.setValue("Etiqueta agregada con éxito.");
-                this.showPPMesaje = true;
-                this.listaEtiqueta.clear();
-                this.listaEtiqueta = this.getJProcurInstance().getAllEtiquetas();
-            } else {
-                this.lblPPMesajes.setValue("Ocurrió un error al intentar agregar la etiqueta.");
-                this.showPPMesaje = true;
-            }
-        }
-        this.etiquetaNueva = new Tag();
-        this.showPPMesaje = false;
-        this.setAddModTag(false);
-        return EMPTY_STRING;
-    }
-
-    public String getEditarEtiqueta(){
-       String idS = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idTag");
-       Integer id = new Integer(idS);
-       this.etiquetaNueva = this.jprocurInstance.getEtiqueta(id.intValue());
-       this.setAddModTag(true);
-       return EMPTY_STRING;
-    }
-
-    public String getEliminarEtiqueta(){
-       String idS = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("idTag");
-       Integer id = new Integer(idS);
-       Tag etiqueta = this.jprocurInstance.getEtiqueta(id.intValue());
-       try {
-            this.jprocurInstance.deleteTag(etiqueta.getIdtag());
-            this.popup.setMensaje("La etiqueta fué eliminada.");
-            this.listaEtiqueta = this.jprocurInstance.getAllEtiquetas();
-       } catch (Exception e) {
-            this.popup.setMensaje("Ocurrió un error al intentar eliminar la etiqueta.");
-       } finally {
-           this.popup.setVisible(true);
-       }
-       return EMPTY_STRING;
-    }
-
     public Integer getRolUsuarioConectado(){
         if(this.U==null) return -1;
         return this.U.getIdrol().getIdrol();
-    }
-
-    public String btnTagClean_action() {
-        this.setAddModTag(false);
-        this.etiquetaNueva = new Tag();
-        return EMPTY_STRING;
     }
 
     public boolean getPermisos(){

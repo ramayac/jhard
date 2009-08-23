@@ -59,8 +59,6 @@ public class Entrada implements Serializable {
     private Date fechahora;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "identrada")
     private Collection<Comentarios> comentariosCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "identrada")
-    private Collection<TagEntrada> tagEntradaCollection;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario", nullable = false)
     //@ManyToOne(optional = true)
     //@Column(name = "idusuario", nullable = false)
@@ -123,18 +121,6 @@ public class Entrada implements Serializable {
 
     public void setComentariosCollection(Collection<Comentarios> comentariosCollection) {
         this.comentariosCollection = comentariosCollection;
-    }
-
-    public Collection<TagEntrada> getTagEntradaCollection() {
-        return tagEntradaCollection;
-    }
-
-    public List<TagEntrada> getTagEntradaList() {
-        return (List<TagEntrada>)tagEntradaCollection;
-    }
-
-    public void setTagEntradaCollection(Collection<TagEntrada> tagEntradaCollection) {
-        this.tagEntradaCollection = tagEntradaCollection;
     }
 
     public Usuario getIdusuario() {

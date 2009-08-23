@@ -2,8 +2,6 @@ package edu.ues.jhard.beans;
 
 import edu.ues.jhard.jpa.Entrada;
 import edu.ues.jhard.jpa.Comentarios;
-import edu.ues.jhard.jpa.TagEntrada;
-import edu.ues.jhard.jpa.Tag;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,100 +18,93 @@ import javax.persistence.*;
  */
 public class BeanBaseJProcur extends BeanBase {
 
-    public List<Tag> getAllEtiquetas() {
-        EntityManager em = this.getEntityManager();
-        Query q = em.createNamedQuery("Tag.findAll");
-        List<Tag> lt = (List<Tag>)q.getResultList();
-        return lt;
-    }
-
     /**
      * Metodo para obtener uno o varios objeto entrada por UNA etiqueta, se asume que la entrada es nueva, asi que se hace
      * un em.persist sobre la misma.
      */
     public List<Entrada> searchEntradaPorEtiqueta(String etiqueta){
-        EntityManager em = this.getEntityManager();
-        //SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t
-        //WHERE(t.descripcion LIKE 'wiki') AND te.idtag=t.idtag  AND te.identrada=e.identrada;
-        String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE" +
-                "(t.descripcion LIKE ?1 ) AND te.idtag=t.idtag  AND te.identrada=e.identrada ORDER BY e.fechahora DESC";
-
-        Query q = em.createNativeQuery(sql, Entrada.class);
-        q.setParameter(1, etiqueta);
-
-        List<Entrada> e = q.getResultList();
-
-//        em.getTransaction().begin();
-//        for (Entrada entrada : e) {
-//            em.persist(entrada);
-//        }
-//        em.getTransaction().commit();
-        return e;
+//        EntityManager em = this.getEntityManager();
+//        //SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t
+//        //WHERE(t.descripcion LIKE 'wiki') AND te.idtag=t.idtag  AND te.identrada=e.identrada;
+//        String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE" +
+//                "(t.descripcion LIKE ?1 ) AND te.idtag=t.idtag  AND te.identrada=e.identrada ORDER BY e.fechahora DESC";
+//
+//        Query q = em.createNativeQuery(sql, Entrada.class);
+//        q.setParameter(1, etiqueta);
+//
+//        List<Entrada> e = q.getResultList();
+//
+////        em.getTransaction().begin();
+////        for (Entrada entrada : e) {
+////            em.persist(entrada);
+////        }
+////        em.getTransaction().commit();
+        return null;
     }
 
-    /**
-     * Metodo para obtener uno o varios objeto entrada por un array de etiquetas, se asume que la entrada es nueva, asi que se hace
-     * un em.persist sobre la misma.
-     */
-    public Entrada[] searchEntradaPorEtiquetas(String[] etiquetas){
-        EntityManager em = this.getEntityManager();
-
-        String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE";
-        for (int i = 0; i < etiquetas.length; i++) {
-            sql += "( t.descripcion LIKE ?"+i+" )";
-            if((i+1)<etiquetas.length) sql += " OR ";
-        }
-        sql += " AND te.idtag=t.idtag  AND te.identrada=e.identrada ORDER BY e.fechahora DESC";
-
-        Query q = em.createNativeQuery(sql, Entrada.class);
-
-        for (int i = 0; i < etiquetas.length; i++) {
-            String etiqueta = etiquetas[i];
-            q.setParameter(i, etiqueta);
-        }
-
-        Entrada[] entradas = (Entrada[])q.getResultList().toArray(new Entrada[0]);
-
-//        em.getTransaction().begin();
-//        for (Entrada entrada : entradas) {
-//            em.persist(entrada);
+//    /**
+//     * Metodo para obtener uno o varios objeto entrada por un array de etiquetas, se asume que la entrada es nueva, asi que se hace
+//     * un em.persist sobre la misma.
+//     */
+//    public Entrada[] searchEntradaPorEtiquetas(String[] etiquetas){
+//        EntityManager em = this.getEntityManager();
+//
+//        String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE";
+//        for (int i = 0; i < etiquetas.length; i++) {
+//            sql += "( t.descripcion LIKE ?"+i+" )";
+//            if((i+1)<etiquetas.length) sql += " OR ";
 //        }
-//        em.getTransaction().commit();
-        return entradas;
-    }
-
-    /**
-     * Metodo para obtener uno o varios objeto entrada por un array de etiquetas, se asume que la entrada es nueva, asi que se hace
-     * un em.persist sobre la misma.
-     */
-    public List<Entrada> searchListaEntradaPorEtiquetas(String[] etiquetas){
-        EntityManager em = this.getEntityManager();
-
-        /*SQL ADHOC*/
-        String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE";
-        for (int i = 0; i < etiquetas.length; i++) {
-            sql += "( t.descripcion LIKE ?"+i+" )";
-            if((i+1)<etiquetas.length) sql += " OR ";
-        }
-        sql += " AND te.idtag=t.idtag  AND te.identrada=e.identrada ORDER BY e.fechahora DESC";
-
-        System.out.println(sql);
-        Query q = em.createNativeQuery(sql, Entrada.class);
-
-        for (int i = 0; i < etiquetas.length; i++) {
-            String etiqueta = etiquetas[i];
-            q.setParameter(i, etiqueta);
-        }
-
-        List<Entrada> entradas = q.getResultList();
-
-//        em.getTransaction().begin();
-//        for (Entrada entrada : entradas) {
-//            em.persist(entrada);
+//        sql += " AND te.idtag=t.idtag  AND te.identrada=e.identrada ORDER BY e.fechahora DESC";
+//
+//        Query q = em.createNativeQuery(sql, Entrada.class);
+//
+//        for (int i = 0; i < etiquetas.length; i++) {
+//            String etiqueta = etiquetas[i];
+//            q.setParameter(i, etiqueta);
 //        }
-//        em.getTransaction().commit();
-        return entradas;
-    }
+//
+//        Entrada[] entradas = (Entrada[])q.getResultList().toArray(new Entrada[0]);
+//
+////        em.getTransaction().begin();
+////        for (Entrada entrada : entradas) {
+////            em.persist(entrada);
+////        }
+////        em.getTransaction().commit();
+//        return entradas;
+//    }
+
+//    /**
+//     * Metodo para obtener uno o varios objeto entrada por un array de etiquetas, se asume que la entrada es nueva, asi que se hace
+//     * un em.persist sobre la misma.
+//     */
+//    public List<Entrada> searchListaEntradaPorEtiquetas(String[] etiquetas){
+//        EntityManager em = this.getEntityManager();
+//
+//        /*SQL ADHOC*/
+//        String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE";
+//        for (int i = 0; i < etiquetas.length; i++) {
+//            sql += "( t.descripcion LIKE ?"+i+" )";
+//            if((i+1)<etiquetas.length) sql += " OR ";
+//        }
+//        sql += " AND te.idtag=t.idtag  AND te.identrada=e.identrada ORDER BY e.fechahora DESC";
+//
+//        System.out.println(sql);
+//        Query q = em.createNativeQuery(sql, Entrada.class);
+//
+//        for (int i = 0; i < etiquetas.length; i++) {
+//            String etiqueta = etiquetas[i];
+//            q.setParameter(i, etiqueta);
+//        }
+//
+//        List<Entrada> entradas = q.getResultList();
+//
+////        em.getTransaction().begin();
+////        for (Entrada entrada : entradas) {
+////            em.persist(entrada);
+////        }
+////        em.getTransaction().commit();
+//        return entradas;
+//    }
 
     /**
      * Metodo para obtener uno o varios objetos Entrada que coincidan con el criterio de busqueda.
@@ -137,63 +128,6 @@ public class BeanBaseJProcur extends BeanBase {
 //        em.getTransaction().commit();
         return e;
     }
-
-    /**
-     * Metodo para obtener una collection de Entradas de acuerdo a una collection de Etiquetas asociadas
-     */
-    public List<Entrada> searchEntradaPorEtiquetas(List<Tag> etiquetas){
-        EntityManager em = this.getEntityManager();
-
-        String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE";
-        for (int i = 0; i < etiquetas.size(); i++) {
-            sql += "( t.descripcion LIKE ?"+i+" )";
-            if((i+1)<etiquetas.size()) sql += " OR ";
-        }
-        sql += " AND te.idtag=t.idtag  AND te.identrada=e.identrada ";
-
-        Query q = em.createNativeQuery(sql, Entrada.class);
-
-        int i = 0;
-        for (Tag tag : etiquetas) {
-            q.setParameter(i, tag.getDescripcion());
-            i++;
-        }
-
-        List<Entrada> entradas = q.getResultList();
-
-//        em.getTransaction().begin();
-//        for (Entrada entrada : entradas) {
-//            em.persist(entrada);
-//        }
-//        em.getTransaction().commit();
-        return entradas;
-    }
-
-
-    /**
-     * busca un objeto TagEntrada por su entrada y etiqueta asociada.
-     * @param tag
-     */
-    public TagEntrada searchTagEntrada(Entrada entrada, Tag tag){
-        try{
-            EntityManager em = this.getEntityManager();
-
-            Query q = em.createNamedQuery("TagEntrada.findByIdentradaAndIdtag");
-            q.setParameter("identrada", entrada);
-            q.setParameter("idtag", tag);
-
-            TagEntrada tagentrada = (TagEntrada) q.getSingleResult();
-
-//            em.getTransaction().begin();
-//            em.persist(tagentrada);
-//            em.getTransaction().commit();
-
-            return tagentrada;
-        }catch (Exception e){
-            return null;
-        }
-    }
-
 
     /**
      * Metodo para obtener uno o varios objetos Entrada que coincidan con el criterio de busqueda.
@@ -235,60 +169,6 @@ public class BeanBaseJProcur extends BeanBase {
         EntityManager em = this.getEntityManager();
         Entrada e = em.find(Entrada.class, identrada);
         return e;
-    }
-
-     /**
-     * Metodo para obtener todos las Etiquetas asociados con el ID de una Entrada
-     * @param idEntrada
-     * @return
-     */
-    public List<Tag> getEtiquetasEntrada(Entrada entrada) {
-        EntityManager em = this.getEntityManager();
-        Entrada e = em.find(Entrada.class, entrada.getIdentrada());
-        List<TagEntrada> te = (List<TagEntrada>)e.getTagEntradaCollection();
-        List<Tag> tag = new ArrayList<Tag>();
-        for (TagEntrada tagEntrada : te) {
-            tag.add(tagEntrada.getIdtag());
-        }
-        return tag;
-    }
-
-    /**
-     * Este metodo recibe una entrada y retorna el arreglo de Tags de esa entrada, sin consultar a la BD
-     * @param e
-     * @return
-     */
-    public List<Tag> getEtiquetas(Entrada entrada) {
-        List<TagEntrada> te = (List<TagEntrada>)entrada.getTagEntradaCollection();
-        List<Tag> tag = new ArrayList<Tag>();
-        for (TagEntrada tagEntrada : te) {
-            tag.add(tagEntrada.getIdtag());
-        }
-        return tag;
-    }
-
-    /**
-     * Metodo para obtener una etiqueta (por su ID)
-     * @param entrada
-     * @return
-     */
-    public Tag getEtiqueta(Integer idetiqueta) {
-        EntityManager em = this.getEntityManager();
-        Tag t = em.find(Tag.class, idetiqueta);
-        return t;
-    }
-
-    /**
-     * Metodo para obtener una etiqueta (por su descripcion)
-     * @param entrada
-     * @return
-     */
-    public Tag getEtiqueta(String descripcion) {
-        EntityManager em = this.getEntityManager();
-        Query q = em.createNamedQuery("Tag.findByDescripcion");
-        q.setParameter("descripcion", descripcion);
-        Tag t = (Tag) q.getSingleResult();
-        return t;
     }
 
     /**
@@ -461,87 +341,6 @@ public class BeanBaseJProcur extends BeanBase {
     }
 
     /**
-     * Metodo para agregar un objeto etiqueta
-     * @param identrada
-     * @param comentario
-     * @return
-     */
-    public boolean createTag(Tag tag){
-        try {
-            EntityManager em = this.getEntityManager();
-            em.getTransaction().begin();
-            em.persist(tag);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Metodo para modificar un objeto etiqueta
-     * @param identrada
-     * @param comentario
-     * @return
-     */
-    public boolean mergeTag(Tag tag){
-        try {
-            EntityManager em = this.getEntityManager();
-            em.getTransaction().begin();
-            em.merge(tag);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Metodo para agregar etiquetas (una o varias) a una entrada.
-     * @param identrada
-     * @param comentario
-     * @return
-     */
-    public boolean createTagEntrada(Entrada e, List<Tag> etiquetas){
-        try {
-            EntityManager em = this.getEntityManager();
-            Entrada entrada = em.find(Entrada.class, e.getIdentrada());
-            Set<TagEntrada> te = new HashSet();
-
-            for (Tag t : etiquetas) {
-                TagEntrada aux = new TagEntrada();
-                aux.setIdentrada(entrada);
-                aux.setIdtag(t);
-                te.add(aux);
-            }
-
-            entrada.setTagEntradaCollection(te);
-
-            em.getTransaction().begin();
-            em.merge(entrada);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean createTagEntrada(List<TagEntrada> listaTagEntradas){
-        try {
-            EntityManager em = this.getEntityManager();
-            em.getTransaction().begin();
-            em.persist(listaTagEntradas);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            System.out.println("(createTagEntrada) "+ex.getMessage());
-            return false;
-        }
-        return true;
-    }
-
-
-
-    /**
      * Metodo para eliminar una Entrada por su ID
      * @param identrada
      */
@@ -592,62 +391,6 @@ public class BeanBaseJProcur extends BeanBase {
     }
 
     /**
-     * Elimina un TAG indiscriminadamente por su ID
-     * @param tag
-     */
-    public void deleteTag(Integer idtag){
-        EntityManager em = this.getEntityManager();
-        Tag t = (Tag)em.find(Tag.class, idtag);
-        em.getTransaction().begin();
-        em.remove(t);
-        em.getTransaction().commit();
-    }
-
-    /**
-     * Elimina la REFERENCIA de un Tag asociado con una entrada
-     */
-    public void deleteTagEntrada(Entrada entrada, Tag tag){
-        EntityManager em = this.getEntityManager();
-
-        Query q = em.createNamedQuery("TagEntrada.findByIdentradaAndIdtag");
-        q.setParameter("identrada", entrada);
-        q.setParameter("idtag", tag);
-
-        TagEntrada tagentrada = (TagEntrada) q.getSingleResult();
-
-        em.getTransaction().begin();
-        em.remove(tagentrada);
-        em.getTransaction().commit();
-    }
-
-    /**
-     * Elimina la REFERENCIA de un Tag asociado con una entrada
-     */
-    public void deleteTagEntrada(Entrada entrada){
-        EntityManager em = this.getEntityManager();
-
-        Query q = em.createNamedQuery("TagEntrada.findByIdentrada");
-        q.setParameter("identrada", entrada);
-
-        List<TagEntrada> lte = q.getResultList();
-
-        em.getTransaction().begin();
-        em.remove(lte);
-        em.getTransaction().commit();
-    }
-
-    public void deleteTagEntrada(TagEntrada tagentrada){
-        EntityManager em = this.getEntityManager();
-        TagEntrada te = em.find(TagEntrada.class, tagentrada.getIdtagentrada());
-
-        em.getTransaction().begin();
-        em.remove(te);
-        em.getTransaction().commit();
-    }
-
-
-
-    /**
      * Metodo para actualizar un objeto entrada
      * @param entrada
      */
@@ -674,19 +417,6 @@ public class BeanBaseJProcur extends BeanBase {
         EntityManager em = this.getEntityManager();
         Entrada e = em.find(Entrada.class, entrada.getIdentrada());
         e.getComentariosCollection().add(comentario);
-        em.getTransaction().begin();
-        em.merge(e);
-        em.getTransaction().commit();
-    }
-
-    /**
-     * Metodo para añadirle una etiqueta a una entrada
-     * @param entrada
-     */
-    public void updateTagEntradaEntrada(Entrada entrada, TagEntrada tagentrada){
-        EntityManager em = this.getEntityManager();
-        Entrada e = em.find(Entrada.class, entrada.getIdentrada());
-        e.getTagEntradaCollection().add(tagentrada);
         em.getTransaction().begin();
         em.merge(e);
         em.getTransaction().commit();
