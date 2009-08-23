@@ -13,12 +13,9 @@ import com.icesoft.faces.component.ext.HtmlOutputLabel;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBase;
 import edu.ues.jhard.beans.BeanBaseJCanon;
-import edu.ues.jhard.beans.BeanBaseJProcur;
-import edu.ues.jhard.beans.BeanBaseJRequest;
 import edu.ues.jhard.beans.BeanBaseJWiki;
 import edu.ues.jhard.jhardmin.LoggedUser;
 import edu.ues.jhard.jhardmin.LoginManager;
-import edu.ues.jhard.jpa.Entrada;
 import edu.ues.jhard.jpa.Equiposimple;
 import edu.ues.jhard.jpa.Existencia;
 import edu.ues.jhard.jpa.Reserva;
@@ -27,7 +24,6 @@ import java.util.Calendar;
 import java.util.List;
 import javax.faces.FacesException;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 /**
  * <p>Page bean that corresponds to a similarly named JSP page.  This

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package edu.ues.jhard.util;
 
 /**
@@ -15,16 +14,18 @@ package edu.ues.jhard.util;
  */
 public class Navegacion {
 
+    private static String MODULO_ACTUAL = "Index";
     private String ModuloActual;
 
-    public Navegacion(){
-        ModuloActual="Index";
+    public Navegacion() {
+        this.ModuloActual = MODULO_ACTUAL;
     }
+
     /**
      * @return the ModuloActual
      */
     public String getModuloActual() {
-        return ModuloActual;
+        return this.ModuloActual;
     }
 
     /**
@@ -33,6 +34,4 @@ public class Navegacion {
     public void setModuloActual(String ModuloActual) {
         this.ModuloActual = ModuloActual;
     }
-
-
 }
