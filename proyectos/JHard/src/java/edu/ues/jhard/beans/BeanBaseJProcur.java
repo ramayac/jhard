@@ -2,10 +2,12 @@ package edu.ues.jhard.beans;
 
 import edu.ues.jhard.jpa.Entrada;
 import edu.ues.jhard.jpa.Comentarios;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Vector;
 import javax.persistence.*;
 
 
@@ -17,29 +19,42 @@ import javax.persistence.*;
  * el entity manager de la aplicacion.
  */
 public class BeanBaseJProcur extends BeanBase {
+    private final static String ESPACIO = " ";
+    static final String EMPTY_STRING = "";
+    private final static int MIN_CRITERIO = 3;
+    private final static int MAX_ENTRADAS = 10;
 
     /**
      * Metodo para obtener uno o varios objeto entrada por UNA etiqueta, se asume que la entrada es nueva, asi que se hace
      * un em.persist sobre la misma.
      */
-    public List<Entrada> searchEntradaPorEtiqueta(String etiqueta){
-//        EntityManager em = this.getEntityManager();
-//        //SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t
-//        //WHERE(t.descripcion LIKE 'wiki') AND te.idtag=t.idtag  AND te.identrada=e.identrada;
-//        String sql = "SELECT DISTINCT(e.identrada), e.titulo, e.descripcion, e.fechahora, e.idusuario FROM entrada e, tag_entrada te, tag t WHERE" +
-//                "(t.descripcion LIKE ?1 ) AND te.idtag=t.idtag  AND te.identrada=e.identrada ORDER BY e.fechahora DESC";
-//
-//        Query q = em.createNativeQuery(sql, Entrada.class);
-//        q.setParameter(1, etiqueta);
-//
-//        List<Entrada> e = q.getResultList();
-//
-////        em.getTransaction().begin();
-////        for (Entrada entrada : e) {
-////            em.persist(entrada);
-////        }
-////        em.getTransaction().commit();
-        return null;
+    public List<Entrada> searchEntradaPorEtiqueta(String criterios){
+        if(criterios.length()<MIN_CRITERIO) return null;
+        EntityManager em = this.getEntityManager();
+        String[] arr = criterios.trim().split(ESPACIO);
+
+        String sql = BuildSQLSearchEntradas(arr);
+
+        System.out.println(sql);
+        Query q = em.createNativeQuery(sql); //sin clase, retorna un Vector
+        Vector resultado = (Vector) q.getResultList();
+
+        List<Integer> listaIds = new ArrayList();
+        for (Object o: resultado) {
+            Vector v = (Vector)o;
+            BigDecimal numero = (BigDecimal)v.get(1);
+            if(numero.intValue()>0) listaIds.add(Math.round((Long)v.get(0)));
+        }
+
+        List<Entrada> listEntradas = new ArrayList();
+        int limite = (listaIds.size()>MAX_ENTRADAS)?MAX_ENTRADAS:listaIds.size();
+        for (int i = 0; i < limite; i++) { //ni modo, asi es la vida. tengo que pedir uno por uno :S
+            Entrada ent = new Entrada();
+            ent = em.find(Entrada.class, listaIds.get(i));
+            listEntradas.add(ent);
+        }
+
+        return listEntradas;
     }
 
 //    /**
@@ -493,4 +508,24 @@ public class BeanBaseJProcur extends BeanBase {
 //        em.merge(this.entradaActual); //a merge, I hope.
 //        em.getTransaction().commit();
 //    }
+
+
+    private String BuildSQLSearchEntradas(String[] arr) {
+        //TODO: pasar a SQL parametrizado y filtrar arr[0]<3
+        String sql = "SELECT a.identrada, ( ";
+        if (arr.length == 1)
+            sql += "(LENGTH(a.descripcion) - LENGTH(REPLACE(a.descripcion, '" + arr[0] + "', '')))/" + arr[0].length();
+        if (arr.length > 1) {
+            for (int i = 0; i < arr.length; i++) {
+                String s = arr[i];
+                sql += "(LENGTH(a.descripcion) - LENGTH(REPLACE(a.descripcion, '" + s + "', '')))/" + s.length();
+                if (i + 1 >= arr.length) {
+                    break;
+                }
+                sql += " + ";
+            }
+        }
+        sql += " ) ocurrencias, a.titulo FROM entrada a GROUP BY a.identrada ORDER BY 2 DESC";
+        return sql;
+    }
 }

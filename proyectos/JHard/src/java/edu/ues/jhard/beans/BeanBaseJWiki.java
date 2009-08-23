@@ -50,7 +50,7 @@ public class BeanBaseJWiki extends BeanBase {
         EntityManager em = this.getEntityManager();
         String[] arr = criterios.trim().split(ESPACIO);
 
-        String sql = BuildSQLSearch(arr);
+        String sql = BuildSQLSearchArticulos(arr);
 
         //System.out.println(sql);
         Query q = em.createNativeQuery(sql); //sin clase, retorna un Vector
@@ -86,7 +86,7 @@ public class BeanBaseJWiki extends BeanBase {
         EntityManager em = this.getEntityManager();
         String[] arr = criterios.trim().split(ESPACIO);
 
-        String sql = BuildSQLSearch(arr);
+        String sql = BuildSQLSearchArticulos(arr);
 
         System.out.println(sql);
         Query q = em.createNativeQuery(sql);
@@ -247,7 +247,7 @@ public class BeanBaseJWiki extends BeanBase {
         return a;
     }
 
-    private String BuildSQLSearch(String[] arr) {
+    private String BuildSQLSearchArticulos(String[] arr) {
         //TODO: pasar a SQL parametrizado y filtrar arr[0]<3
         String sql = "SELECT a.idarticulo, ( ";
         if (arr.length == 1)
