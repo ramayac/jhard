@@ -1,0 +1,45 @@
+root@ubuntu:/# apt-get install sun-java6-jdk
+root@ubuntu:/# apt-get install wget
+root@ubuntu:~# wget http://apache.osuosl.org/tomcat/tomcat-6/v6.0.20/bin/apache-tomcat-6.0.20.tar.gz
+root@ubuntu:~# tar xf apache-tomcat-6.0.20.tar.gz
+root@ubuntu:~# mv apache-tomcat-6.0.20 /usr/local/tomcat
+root@ubuntu:~# nano  .bashrc 
+
+#para el javapath
+export JAVA_HOME=/usr/lib/jvm/java-6-sun
+export PATH=$JAVA_HOME/bin:$PATH
+
+root@ubuntu:~# nano /etc/init.d/tomcat
+
+--
+# Tomcat inicio automatico
+#
+# description: inicia automaticamente a Tomcat
+# processname: tomcat
+# pidfile: /var/run/tomcat.pid
+export JAVA_HOME=/usr/lib/jvm/java-6-sun
+export PATH=$JAVA_HOME/bin:$PATH
+case $1 in
+start)
+	sh /usr/local/tomcat/bin/startup.sh
+;;
+stop)
+	sh /usr/local/tomcat/bin/shutdown.sh
+;;
+restart)
+	sh /usr/local/tomcat/bin/shutdown.sh
+	sh /usr/local/tomcat/bin/startup.sh
+;;
+esac
+exit 0
+
+--
+
+root@ubuntu:/# chmod 755 etc/init.d/tomcat
+
+root@ubuntu:/# ln -s etc/init.d/tomcat etc/rc1.d/K99tomcat
+root@ubuntu:/# ln -s etc/init.d/tomcat etc/rc2.d/S99tomcat
+
+root@ubuntu:/# apt-get install mysql-server-5.0
+
+
