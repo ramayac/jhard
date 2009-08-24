@@ -650,18 +650,6 @@
                                     <li>
                                         <ice:commandLink value="Tareas Administrativas de JRequest" action="#{Redireccion.jrequestAdministracion}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}"></ice:commandLink>
                                     </li>
-                                    <li>
-                                        <ice:commandLink value="Emitir Solicitud de Soporte Técnico" action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
-                                    </li>
-                                    <li>
-                                        <a href="#">Otras Opciones</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Otras Opciones</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Otras Opciones</a>
-                                    </li>
                                 </ul>
                                 </ice:form>
                             </li>

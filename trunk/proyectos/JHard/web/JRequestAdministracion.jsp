@@ -30,7 +30,10 @@
                             <h2 class="title">Administración de JRequest</h2>
                             <div class="entry">
                                 <ice:form id="form1" style="">
-                                    <ice:panelGroup id="admin" style="width: 100%; ">
+                                    <ice:panelGroup rendered="#{JHardminInstance.currentUser == null}">
+                                        <jsp:directive.include file="/jspf/nologin.jspx"/>
+                                    </ice:panelGroup>
+                                    <ice:panelGroup rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" id="admin" style="width: 100%; ">
                                         <p></p>
                                         <ice:panelCollapsible expanded="true" id="panelCollapsible2" style="width: 520px">
                                             <f:facet name="header">
@@ -246,14 +249,7 @@
                 </div>
                 <!-- end page -->
                 <!-- start footer -->
-                <div id="footer">
-                    <div id="footer-wrap">
-                        <p id="legal" style="line-height: 13px">Universidad de El Salvador Facultad Multidisciplinaria de Occidente <br/>
-	Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/>
-                            <a href="#">Créditos</a> - <a href="http://www.uesocc.edu.sv">Pagina Principal de la UES FMOcc</a>
-                        </p>
-                    </div>
-                </div>
+                    <jsp:directive.include file="/jspf/bottom.jspx"/>
                 <!-- end footer -->
             </body>
         </html>

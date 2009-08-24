@@ -44,7 +44,10 @@
                             <h2 class="title">Administración de Reservas de Equipo Multimedia</h2>
                             <div class="entry">
                                 <ice:form id="form1">
-                                    <ice:panelGroup id="grupoJCanonAdmin" style="width: 100%; ">
+                                    <ice:panelGroup rendered="#{JHardminInstance.currentUser == null}">
+                                        <jsp:directive.include file="/jspf/nologin.jspx"/>
+                                    </ice:panelGroup>
+                                    <ice:panelGroup rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" id="grupoJCanonAdmin" style="width: 100%; ">
                                         <ice:panelCollapsible expanded="true" id="panelCollapsible1" style="width: 576px; margin-top:0px; margin-bottom:0px;">
                                             <f:facet name="header">
                                                 <ice:panelGroup id="panelGroup1" styleClass="">
