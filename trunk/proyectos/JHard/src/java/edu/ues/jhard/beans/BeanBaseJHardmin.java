@@ -16,6 +16,7 @@ import edu.ues.jhard.jpa.Rol;
 import edu.ues.jhard.jpa.Usuario;
 import edu.ues.jhard.util.ActionMessage;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
@@ -902,7 +903,10 @@ public class BeanBaseJHardmin extends BeanBase {
             autRegistro = (Autorizacion)emgr.createQuery("SELECT a FROM Autorizacion a WHERE a.codigo='" + this.autorizacionUsuario + "'").getSingleResult();            
         }
         catch(Exception ex){
-            //pass
+            this.hidePopupRegistrarUsuario();
+            this.msg.setText("Código de autorización inexistente");
+            this.msg.setVisible(true);
+            return "fail";
         }
         if(autRegistro == null){
             this.hidePopupRegistrarUsuario();
@@ -913,6 +917,12 @@ public class BeanBaseJHardmin extends BeanBase {
         if(autRegistro.getCantmaxima() == autRegistro.getUsuarioCollection().size()){
             this.hidePopupRegistrarUsuario();
             this.msg.setText("No se pueden crear mas usuarios con este codigo de autorización");
+            this.msg.setVisible(true);
+            return "fail";
+        }        
+        if(Calendar.getInstance().getTime().after(autRegistro.getFechavencimiento())){
+            this.hidePopupRegistrarUsuario();
+            this.msg.setText("Este codigo de autorización ha caducado");
             this.msg.setVisible(true);
             return "fail";
         }
@@ -1509,7 +1519,8 @@ public class BeanBaseJHardmin extends BeanBase {
     public Estudiante getEstudianteFromUser(){
         try{
             Usuario usr = (Usuario)this.getEntityManager().createQuery("SELECT u FROM Usuario u WHERE u.idusuario=" + this.currentUser.getUid()).getSingleResult();
-            return (Estudiante)usr.getEstudianteCollection().toArray()[0];
+            if(usr.getEstudianteCollection().size() > 0)
+                return (Estudiante)usr.getEstudianteCollection().toArray()[0];
         }
         catch(Exception ex){
             ex.printStackTrace();
@@ -1524,7 +1535,8 @@ public class BeanBaseJHardmin extends BeanBase {
     public Instructor getInstructorFromUser(){
         try{
             Usuario usr = (Usuario)this.getEntityManager().createQuery("SELECT u FROM Usuario u WHERE u.idusuario=" + this.currentUser.getUid()).getSingleResult();
-            return (Instructor)usr.getInstructorCollection().toArray()[0];
+            if(usr.getInstructorCollection().size() > 0)
+                return (Instructor)usr.getInstructorCollection().toArray()[0];
         }
         catch(Exception ex){
             ex.printStackTrace();
@@ -1539,7 +1551,8 @@ public class BeanBaseJHardmin extends BeanBase {
     public Docente getDocenteFromUser(){
         try{
             Usuario usr = (Usuario)this.getEntityManager().createQuery("SELECT u FROM Usuario u WHERE u.idusuario=" + this.currentUser.getUid()).getSingleResult();
-            return (Docente)usr.getDocenteCollection().toArray()[0];
+            if(usr.getDocenteCollection().size() > 0)
+                return (Docente)usr.getDocenteCollection().toArray()[0];
         }
         catch(Exception ex){
             ex.printStackTrace();

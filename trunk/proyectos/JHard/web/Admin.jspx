@@ -253,6 +253,10 @@
                                                     <ice:outputText value="#{autorizacion.cantmaxima}" />
                                                 </ice:column>
                                                 <ice:column>
+                                                    <f:facet name="header"><ice:outputText value="Fecha de vencimiento" /></f:facet>
+                                                    <ice:outputText value="#{autorizacion.fechavencimientoString}" />
+                                                </ice:column>
+                                                <ice:column>
                                                     <f:facet name="header"><ice:outputText value="Usuarios" /></f:facet>
                                                     <ice:outputText value="#{autorizacion.descListaUsuarios}" />
                                                 </ice:column>
@@ -276,11 +280,15 @@
                                                 <ice:panelGroup styleClass="frmElementList">
                                                     <p>
                                                         <ice:outputLabel id="lblCodigoAutorizacion" for="txtCodigoAutorizacion" value="Código:" />
-                                                        <ice:inputText id="txtCodigoAutorizacion" value="#{JHardminInstance.currentAutorizacion.codigo}" maxlength="10" />
+                                                        <ice:inputText id="txtCodigoAutorizacion" value="#{JHardminInstance.currentAutorizacion.codigo}" maxlength="10" style="width: 170px;" />
                                                     </p>
                                                     <p>
                                                         <ice:outputLabel id="lblCantMax" for="txtCantMax" value="Cantidad de usuarios:" />
-                                                        <ice:inputText id="txtCantMax" value="#{JHardminInstance.currentAutorizacion.cantmaxima}" maxlength="2" />
+                                                        <ice:inputText id="txtCantMax" value="#{JHardminInstance.currentAutorizacion.cantmaxima}" maxlength="2" style="width: 170px;" />
+                                                    </p>
+                                                    <p>
+                                                        <ice:outputLabel id="lblFechaVencimiento" for="dtpFechaVencimiento" value="Fecha de vencimiento:" />
+                                                        <ice:selectInputDate id="dtpFechaVencimiento" value="#{JHardminInstance.currentAutorizacion.fechavencimiento}" />
                                                     </p>
                                                     <p class="actionSection">
                                                         <ice:commandButton id="cmdConfirmAddAutorizacion" value="Aceptar" action="#{JHardminInstance.addAutorizacion}" />
