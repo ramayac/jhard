@@ -110,6 +110,7 @@ CREATE TABLE  `jhard`.`autorizacion` (
   `idautorizacion` int(10) unsigned NOT NULL auto_increment,
   `codigo` varchar(10) default NULL,
   `cantmaxima` int(10) unsigned default NULL,
+  `fechavencimiento` date NOT NULL COMMENT 'Fecha de vencimiento del codigo de autorizacion',
   PRIMARY KEY  (`idautorizacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 CREATE TABLE  `jhard`.`bitacoracambiosusuario` (

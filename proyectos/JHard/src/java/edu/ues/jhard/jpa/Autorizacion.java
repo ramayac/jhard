@@ -6,8 +6,12 @@
 package edu.ues.jhard.jpa;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +21,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -37,6 +43,10 @@ public class Autorizacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "cantmaxima")
     private Integer cantmaxima;
+    @Basic(optional=false)
+    @Column(name="fechavencimiento")
+    @Temporal(TemporalType.DATE)
+    private Date fechavencimiento;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idautorizacion")
     private Collection<Usuario> usuarioCollection;
 
@@ -122,5 +132,24 @@ public class Autorizacion implements Serializable {
      */
     public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
         this.usuarioCollection = usuarioCollection;
+    }
+
+    /**
+     * @return the fechavencimiento
+     */
+    public Date getFechavencimiento() {
+        return fechavencimiento;
+    }
+
+    public String getFechavencimientoString(){
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        return df.format(this.fechavencimiento);
+    }
+
+    /**
+     * @param fechavencimiento the fechavencimiento to set
+     */
+    public void setFechavencimiento(Date fechavencimiento) {
+        this.fechavencimiento = fechavencimiento;
     }
 }
