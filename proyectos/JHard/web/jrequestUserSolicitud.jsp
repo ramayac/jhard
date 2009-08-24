@@ -39,6 +39,9 @@
                             <h2 class="title">Solicitud de Mantenimiento de Hardware y Software</h2>
                             <div class="entry" style="">
                                 <ice:form id="form1" style="">
+                                    <ice:panelGroup rendered="#{JHardminInstance.currentUser == null}">
+                                        <jsp:directive.include file="/jspf/nologin.jspx"/>
+                                    </ice:panelGroup>
                                     <ice:panelPopup autoCentre="true" binding="#{jrequestUserSolicitud.panelPopup1}" rendered="#{jrequestUserSolicitud.renderPop1}" draggable="true" id="panelPopup1"
                                         modal="true" style="height: 261px; left: 576px; top: 288px; position: absolute; width: 261px;visibility: hidden;visibility: hidden;">
                                         <f:facet name="header">
@@ -61,9 +64,7 @@
                                             </div>
                                         </f:facet>
                                     </ice:panelPopup>
-                                    <ice:outputLabel id="labelError" rendered="#{JHardminInstance.currentUser == null}"
-                                        style="font-size: 14px; font-weight: bold" value="Debe de permanecer con sesión activa para realizar una petición de Soporte técnico"/>
-                                    <ice:panelCollapsible expanded="true" id="colap" style="width:576px">
+                                    <ice:panelCollapsible rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" expanded="true" id="colap" style="width:576px">
                                         <f:facet name="header">
                                             <ice:outputText value="Ingrese una nueva solicitud"/>
                                         </f:facet>
@@ -223,14 +224,7 @@
                 </div>
                 <!-- end page -->
                 <!-- start footer -->
-                <div id="footer">
-                    <div id="footer-wrap">
-                        <p id="legal" style="line-height: 13px">Universidad de El Salvador Facultad Multidisciplinaria de Occidente <br/>
-	Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/>
-                            <a href="#">Créditos</a> - <a href="http://www.uesocc.edu.sv">Pagina Principal de la UES FMOcc</a>
-                        </p>
-                    </div>
-                </div>
+                    <jsp:directive.include file="/jspf/bottom.jspx"/>
                 <!-- end footer -->
             </body>
         </html>

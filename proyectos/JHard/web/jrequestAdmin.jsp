@@ -31,6 +31,9 @@
                             <div class="entry">
                                 <p class="text">Administración de Solicitudes de Mantenimiento UES-FMOcc</p>
                                 <ice:form id="form1" style="">
+                                    <ice:panelGroup rendered="#{JHardminInstance.currentUser == null}">
+                                        <jsp:directive.include file="/jspf/nologin.jspx"/>
+                                    </ice:panelGroup>
                                     <ice:panelTabSet rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" id="tabJrequestAdmin" selectedIndex="2"
                                         tabChangeListener="#{jrequestAdmin.tabJrequestAdmin_processTabChange}" tabPlacement="Bottom" width="576">
                                         <ice:panelTab id="tabMantenimientos" label="Mantenimientos">
@@ -325,14 +328,7 @@
                 </div>
                 <!-- end page -->
                 <!-- start footer -->
-                <div id="footer">
-                    <div id="footer-wrap">
-                        <p id="legal" style="line-height: 13px">Universidad de El Salvador Facultad Multidisciplinaria de Occidente <br/>
-	Todos los Derechos (C) Reservados - Teléfonos:(503)2449-0349, Fax:(503)2449-0352 Apdo. 1908<br/>
-                            <a href="#">Créditos</a> - <a href="http://www.uesocc.edu.sv">Pagina Principal de la UES FMOcc</a>
-                        </p>
-                    </div>
-                </div>
+                    <jsp:directive.include file="/jspf/bottom.jspx"/>
                 <!-- end footer -->
             </body>
         </html>
