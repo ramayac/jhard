@@ -100,14 +100,14 @@ input, textarea, select {
 #header {
 	width: 860px;
 	height: 54px;
-	margin: 0 auto;
+	margin: auto;
 	background: url(../img/img02.jpg) no-repeat left top;
 }
 
 /* Menu */
 
 #menu {
-	float: left;
+	/*float: left;*/
 	width: 860px;
 	height: 54px;
 }

@@ -223,6 +223,8 @@ public class Existencia implements Serializable {
             return "imgFallido.png";
         if(this.getIdestado().getIdestado() == 3)
             return "imgEnReparacion.png";
+        if(this.getIdestado().getIdestado() == 4)
+            return "imgDeteriorado.png";
         return imgEstado;
     }
 

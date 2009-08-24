@@ -30,6 +30,9 @@
                         <div class="post">
                             <ice:form id="frmAdminTasks">
                             <h2 class="title">Administración de Usuarios</h2>
+                                <ice:panelGroup rendered="#{JHardminInstance.currentUser == null}">
+                                    <jsp:directive.include file="/jspf/nologin.jspx"/>
+                                </ice:panelGroup>
                                 <ice:panelGroup styleClass="entry" rendered="#{JHardminInstance.currentUser != null}">
                                     <ice:panelCollapsible expanded="true">
                                         <f:facet name="header">
@@ -118,27 +121,27 @@
                                                         <f:facet name="header">
                                                             <ice:outputText value="Nombre" />
                                                         </f:facet>
-                                                        <ice:outputText value="#{user.nombre}" />
+                                                        <ice:outputText value="#{user.nombre}" rendered="#{user.idusuario > 0}" />
                                                     </ice:column>
                                                     <ice:column>
                                                         <f:facet name="header">
                                                             <ice:outputText value="Rol" />
                                                         </f:facet>
-                                                        <ice:outputText value="#{user.idrol.nombre}" />
+                                                        <ice:outputText value="#{user.idrol.nombre}" rendered="#{user.idusuario > 0}" />
                                                     </ice:column>
                                                     <ice:column>
                                                         <f:facet name="header">
                                                             <ice:outputText value="Autorización" />
                                                         </f:facet>
-                                                        <ice:outputText value="#{user.idautorizacion.codigo}" />
+                                                        <ice:outputText value="#{user.idautorizacion.codigo}" rendered="#{user.idusuario > 0}" />
                                                     </ice:column>
                                                     <ice:column>
-                                                        <ice:commandLink value="Editar" action="#{JHardminInstance.showPopupEditUsuario}" rendered="#{JHardminInstance.currentUser.uid != user.idusuario}">
+                                                        <ice:commandLink value="Editar" action="#{JHardminInstance.showPopupEditUsuario}" rendered="#{JHardminInstance.currentUser.uid != user.idusuario and user.idusuario > 0}">
                                                             <f:param name="idUsuario" value="#{user.idusuario}" />
                                                         </ice:commandLink>
                                                     </ice:column>
                                                     <ice:column>
-                                                        <ice:commandLink value="Eliminar" action="#{JHardminInstance.showPopupConfirmDeleteUser}" rendered="#{JHardminInstance.currentUser.uid != user.idusuario}" >
+                                                        <ice:commandLink value="Eliminar" action="#{JHardminInstance.showPopupConfirmDeleteUser}" rendered="#{JHardminInstance.currentUser.uid != user.idusuario and user.idusuario > 0}" >
                                                             <f:param name="idUsuario" value="#{user.idusuario}" />
                                                         </ice:commandLink>
                                                     </ice:column>                                                    

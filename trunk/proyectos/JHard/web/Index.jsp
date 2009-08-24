@@ -85,7 +85,7 @@
                                         </ice:panelSeries>
                                     </ice:panelCollapsible>
                                     <ice:panelCollapsible expanded="true">
-                                        <f:facet name="header"><ice:panelGroup><ice:outputText value="Reservas para el dia de hoy" /></ice:panelGroup></f:facet>
+                                        <f:facet name="header"><ice:panelGroup><ice:outputText value="Reservas de equipo multimedia para el dia de hoy" /></ice:panelGroup></f:facet>
                                         <ice:panelSeries id="srsJCanon" var="reserva" value="#{Index.listaReservasHoy}">
                                             <ice:panelGroup>
                                                 <div style="margin: 5px 2px;">
