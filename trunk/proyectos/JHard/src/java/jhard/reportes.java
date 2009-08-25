@@ -194,6 +194,24 @@ public class reportes extends AbstractPageBean {
     public void setTxtDocs(SelectInputText sit) {
         this.txtDocs = sit;
     }
+    private HtmlCommandButton btnInventarioBueno = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnInventarioBueno() {
+        return btnInventarioBueno;
+    }
+
+    public void setBtnInventarioBueno(HtmlCommandButton hcb) {
+        this.btnInventarioBueno = hcb;
+    }
+    private HtmlCommandButton btnInventarioMalo = new HtmlCommandButton();
+
+    public HtmlCommandButton getBtnInventarioMalo() {
+        return btnInventarioMalo;
+    }
+
+    public void setBtnInventarioMalo(HtmlCommandButton hcb) {
+        this.btnInventarioMalo = hcb;
+    }
 
 
     /**
@@ -492,6 +510,16 @@ public class reportes extends AbstractPageBean {
 
     public String btnReservaDoc_action() {
         JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=7&iddocente="+DocenteElegido.getIddocente()+"\",\"Reporte\");");
+        return null;
+    }
+
+    public String btnInventarioBueno_action() {
+        JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=8\",\"Reporte\");");
+        return null;
+    }
+
+    public String btnInventarioMalo_action() {
+        JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=9\",\"Reporte\");");
         return null;
     }
 

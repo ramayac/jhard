@@ -33,20 +33,20 @@
                         <ice:form id="formArticulo">
                             <ice:panelGroup id="panelReportes" styleClass="entry">
                                 <!--ice:panelCollapsible expanded="false" id="asistenciaAlumnos" style="width: 600px"-->
-                                    <!--f:facet name="header"-->
-                                        <!--ice:panelGroup id="panelTitAsistenciaAlumnos"-->
-                                            <!--ice:outputText id="titAsistenciaAlumnos" value="Asistencia de Alumnos a Prácticas de Laboratorio"/-->
-                                        <!--/ice:panelGroup-->
-                                    <!--/f:facet-->
-                                    <!--ice:panelGroup id="panelAsistenciaAlumnos" style=""/-->
+                                <!--f:facet name="header"-->
+                                <!--ice:panelGroup id="panelTitAsistenciaAlumnos"-->
+                                <!--ice:outputText id="titAsistenciaAlumnos" value="Asistencia de Alumnos a Prácticas de Laboratorio"/-->
+                                <!--/ice:panelGroup-->
+                                <!--/f:facet-->
+                                <!--ice:panelGroup id="panelAsistenciaAlumnos" style=""/-->
                                 <!--/ice:panelCollapsible-->
                                 <!--ice:panelCollapsible expanded="false" id="asistenciaInstructores" style="width: 600px"-->
-                                    <!--f:facet name="header"-->
-                                        <!--ice:panelGroup id="panelTitAsistenciaInstructores"-->
-                                            <!--ice:outputText id="titAsistenciaInstructores" value="Asistencia de Instructores a Prácticas de Laboratorio"/-->
-                                        <!--/ice:panelGroup-->
-                                    <!--/f:facet-->
-                                    <!--ice:panelGroup id="panelAsistenciaInstructores" style=""/-->
+                                <!--f:facet name="header"-->
+                                <!--ice:panelGroup id="panelTitAsistenciaInstructores"-->
+                                <!--ice:outputText id="titAsistenciaInstructores" value="Asistencia de Instructores a Prácticas de Laboratorio"/-->
+                                <!--/ice:panelGroup-->
+                                <!--/f:facet-->
+                                <!--ice:panelGroup id="panelAsistenciaInstructores" style=""/-->
                                 <!--/ice:panelCollapsible-->
                                 <ice:panelCollapsible expanded="false" id="bitacoraServicio" style="width: 600px">
                                     <f:facet name="header">
@@ -107,12 +107,12 @@
                                     </ice:panelGroup>
                                 </ice:panelCollapsible>
                                 <!--ice:panelCollapsible expanded="false" id="gruposLab" style="width: 600px"-->
-                                    <!--f:facet name="header"-->
-                                        <!--ice:panelGroup id="panelTitGruposLab"-->
-                                            <!--ice:outputText id="titGruposLab" value="Grupos de Laboratorio"/-->
-                                        <!--/ice:panelGroup-->
-                                    <!--/f:facet-->
-                                    <!--ice:panelGroup id="panelGruposLab" style=""/-->
+                                <!--f:facet name="header"-->
+                                <!--ice:panelGroup id="panelTitGruposLab"-->
+                                <!--ice:outputText id="titGruposLab" value="Grupos de Laboratorio"/-->
+                                <!--/ice:panelGroup-->
+                                <!--/f:facet-->
+                                <!--ice:panelGroup id="panelGruposLab" style=""/-->
                                 <!--/ice:panelCollapsible-->
                                 <ice:panelCollapsible expanded="false" id="listadoPiezas" style="width: 600px">
                                     <f:facet name="header">
@@ -134,6 +134,28 @@
                                     <ice:panelGroup id="panelListadoAccesorios" style="">
                                         <ice:commandButton action="#{reportes.btnListadoAccesorios_action}" binding="#{reportes.btnListadoAccesorios}"
                                             id="btnListadoAccesorios" styleClass="btnAccion2" value="Generar Reporte"/>
+                                    </ice:panelGroup>
+                                </ice:panelCollapsible>
+                                <ice:panelCollapsible expanded="false" id="InventarioBueno" style="width: 600px">
+                                    <f:facet name="header">
+                                        <ice:panelGroup id="panelTitInventarioBueno">
+                                            <ice:outputText id="titInventarioBueno" value="Inventario LABCOM-1"/>
+                                        </ice:panelGroup>
+                                    </f:facet>
+                                    <ice:panelGroup id="panelInventarioBueno" style="">
+                                        <ice:commandButton action="#{reportes.btnInventarioBueno_action}" binding="#{reportes.btnInventarioBueno}"
+                                            id="btnInventarioBueno" styleClass="btnAccion2" value="Generar Reporte"/>
+                                    </ice:panelGroup>
+                                </ice:panelCollapsible>
+                                <ice:panelCollapsible expanded="false" id="InventarioDeteriorado" style="width: 600px">
+                                    <f:facet name="header">
+                                        <ice:panelGroup id="panelTitInventarioDeteriorado">
+                                            <ice:outputText id="titInventarioDeteriorado" value="Inventario Deteriorado de LABCOM-1"/>
+                                        </ice:panelGroup>
+                                    </f:facet>
+                                    <ice:panelGroup id="panelInventarioDeteriorado" style="">
+                                        <ice:commandButton action="#{reportes.btnInventarioMalo_action}" binding="#{reportes.btnInventarioMalo}"
+                                            id="btnInventarioMalo" styleClass="btnAccion2" value="Generar Reporte"/>
                                     </ice:panelGroup>
                                 </ice:panelCollapsible>
                             </ice:panelGroup>
