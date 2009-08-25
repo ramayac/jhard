@@ -153,15 +153,25 @@ public class reporte extends HttpServlet {
                     //Obtenemos los parametros necesarios para este reporte
 
                     Integer diaI = Integer.parseInt(request.getParameter("diaI"));
+                    System.out.println("diaI: " + diaI);
                     Integer mesI = Integer.parseInt(request.getParameter("mesI"));
+                    System.out.println("mesI: " + mesI);
                     Integer anioI = Integer.parseInt(request.getParameter("anioI"));
+                    System.out.println("anioI: " + anioI);
                     Integer diaF = Integer.parseInt(request.getParameter("diaF"));
+                    System.out.println("diaF: " + diaF);
                     Integer mesF = Integer.parseInt(request.getParameter("mesF"));
+                    System.out.println("mesF: " + mesF);
                     Integer anioF = Integer.parseInt(request.getParameter("anioF"));
+                    System.out.println("anioF: " + anioF);
 
                     Date fechaInicial = new Date(anioI, mesI, diaI);
+                    fechaInicial.setHours(0);
+                    fechaInicial.setMinutes(0);
                     System.out.println(fechaInicial);
                     Date fechaFinal = new Date(anioF, mesF, diaF);
+                    fechaFinal.setHours(23);
+                    fechaFinal.setMinutes(59);
                     System.out.println(fechaFinal);
                     //Asignamos los parametros al mapa
                     parametros.put(IDRESERVAFECHAINICIAL, fechaInicial);

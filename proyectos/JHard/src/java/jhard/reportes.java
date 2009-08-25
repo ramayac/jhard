@@ -21,6 +21,7 @@ import edu.ues.jhard.jpa.Equiposimple;
 import edu.ues.jhard.jpa.Existencia;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.faces.FacesException;
@@ -419,9 +420,9 @@ public class reportes extends AbstractPageBean {
 
         Date fechaI = (Date)this.selectFechaInicial.getValue();
         Date fechaF = (Date)this.selectFechaFinal.getValue();
-        System.out.println(fechaI.getDate()+"-"+(fechaI.getMonth()+1)+"-"+(fechaI.getYear()+1900));
-        System.out.println(fechaF.getDate()+"-"+(fechaF.getMonth()+1)+"-"+(fechaF.getYear()+1900));
-        JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=4&diaI="+fechaI.getDate()+"&mesI="+(fechaI.getMonth()+1)+"&anioI="+(fechaI.getYear()+1900)+"&diaF="+fechaF.getDate()+"&mesF="+(fechaF.getMonth()+1)+"&anioF="+(fechaI.getYear()+1900)+" \",\"Reporte\");");
+        System.out.println((fechaI.getDate()+1)+"-"+(fechaI.getMonth()+1)+"-"+fechaI.getYear());
+        System.out.println((fechaF.getDate()+1)+"-"+(fechaF.getMonth()+1)+"-"+fechaF.getYear());
+        JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=4&diaI="+(fechaI.getDate()+1)+"&mesI="+fechaI.getMonth()+"&anioI="+fechaI.getYear()+"&diaF="+(fechaF.getDate()+1)+"&mesF="+fechaF.getMonth()+"&anioF="+fechaI.getYear()+" \",\"Reporte\");");
 
         return null;
     }
