@@ -133,8 +133,35 @@ public class BeanBaseJRequest extends BeanBase{
       */
      public void registrarMantenimiento(Mantenimiento m) {
         EntityManager em=this.getEntityManager();
+        
+        Bitacoraestados b = new Bitacoraestados();
+        b.setDescripcion("Se ha enviado a Mantenimiento y será revisado por el Técnico "+m.getIdtecnico().getNombres() +" "+m.getIdtecnico().getApellidos());
+        b.setFecha(m.getFecha());
+
+        if(m.getIdequiposimple()==null){
+            Existencia e = this.getEntityManager().find(Existencia.class, m.getIdequipoexistente().getIdexistencia());
+            Estadoequipo ee = this.getEntityManager().find(Estadoequipo.class, 2);
+            e.setIdestado(ee);
+            this.modificarExistencia(e);
+            b.setIdequipoexistente(m.getIdequipoexistente());
+            b.setIdestado(ee);
+        }
+            
+        else{
+            Equiposimple e = this.getEntityManager().find(Equiposimple.class, m.getIdequiposimple().getIdEquipoSimple());
+            Estadoequipo ee = this.getEntityManager().find(Estadoequipo.class, 2);
+            e.setIdestado(ee);
+            this.modificarEquipoSImple(e);
+            b.setIdequiposimple(m.getIdequiposimple());
+            b.setIdestado(ee);
+        }
+
         em.getTransaction().begin();
         em.persist(m);
+        em.getTransaction().commit();
+
+        em.getTransaction().begin();
+        em.persist(b);
         em.getTransaction().commit();
 
     }

@@ -970,6 +970,9 @@ private List bit= new ArrayList();
             if(eq.getNombre().equals("En mantenimiento")){
                 this.changeIcon="imgEnReparacion.png";
             }
+            if(eq.getNombre().equals("Deteriorado")){
+                this.changeIcon="imgDeteriorado.png";
+            }
         }
     }
 

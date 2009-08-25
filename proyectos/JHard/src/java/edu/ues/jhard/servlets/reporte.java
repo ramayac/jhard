@@ -59,6 +59,12 @@ public class reporte extends HttpServlet {
     public static final String IDDOCENTE = "iddocente";
     public static final String RUTA_RESERVASDOC = "reservasByDocente.jasper";
 
+    public static final int ID_INVENTARIOBUENO = 8;
+    public static final String RUTA_INVENTARIOBUENO = "inventarioBueno.jasper";
+
+    public static final int ID_INVENTARIOMALO = 9;
+    public static final String RUTA_INVENTARIOMALO = "inventarioDeteriorado.jasper";
+
     public static final String RUTA_REPORTES = "/reportes/";
     public static final String PARAM_VAR = "rpid";
     
@@ -202,7 +208,16 @@ public class reporte extends HttpServlet {
                    //Asignamos el nombre al PDF
                    nombreReporte = "reservasByDocente.jasper";
                    break;
-
+                case ID_INVENTARIOBUENO: //8
+                    rutareal = RUTA_REPORTES + RUTA_INVENTARIOBUENO;
+                    //Asignamos el nombre al PDF
+                    nombreReporte = "inventarioBueno.jasper";
+                    break;
+                case ID_INVENTARIOMALO: //9
+                    rutareal = RUTA_REPORTES + RUTA_INVENTARIOMALO;
+                    //Asignamos el nombre al PDF
+                    nombreReporte = "inventarioDeteriorado.jasper";
+                    break;
                 default:
                     throw new Exception("(reporte Servlet): No coincide el parametro con las opciones existentes.");
             }
