@@ -215,10 +215,11 @@ CREATE TABLE  `jhard`.`comentarios` (
 INSERT INTO `jhard`.`comentarios` VALUES  (8,'¿Alguien tiene alguna duda?','2009-07-25 19:09:26',9,'ramayac',1);
 CREATE TABLE  `jhard`.`configuracion` (
   `clave` varchar(25) NOT NULL,
-  `valor` varchar(50) NOT NULL,
+  `valor` varchar(200) NOT NULL,
   PRIMARY KEY  (`clave`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de configuracion';
-INSERT INTO `jhard`.`configuracion` VALUES  ('url','http://uesocc.edu.sv/hardware');
+INSERT INTO `jhard`.`configuracion` VALUES ('url','http://uesocc.edu.sv/hardware');
+INSERT INTO `jhard`.`configuracion` VALUES ('actualizaFeed', '10');
 CREATE TABLE  `jhard`.`curso` (
   `idcurso` int(11) NOT NULL auto_increment COMMENT 'Id correlativo unico de cada curso',
   `nombre` varchar(200) NOT NULL COMMENT 'Nombre del curso (por si este difiere del nombre de la materia o por si no esta relacionado con una materia especifica)',
