@@ -154,7 +154,7 @@
                                 <ice:panelPopup autoCentre="true" id="panelMensajeArticulos" modal="true" rendered="#{jwikiAdmin.popupElimArticulo}">
                                     <f:facet name="header">
                                         <ice:panelGrid id="ppArticulo">
-                                            <ice:outputText id="otxtTituloArticulo" value="JWiki"/>
+                                            <ice:outputText id="otxtTituloArticulo" value="Aviso:"/>
                                         </ice:panelGrid>
                                     </f:facet>
                                     <f:facet name="body">
