@@ -156,7 +156,7 @@
                                                     <f:facet name="header">
                                                         <ice:outputText value="Fecha de Publicación"/>
                                                     </f:facet>
-                                                    <ice:outputLabel id="lblFecha" value="#{indiceEntrada.fechahorara}"/>
+                                                    <ice:outputLabel id="lblFecha" value="#{indiceComentario.fecha}"/>
                                                 </ice:column>
                                                 <ice:column>
                                                     <f:facet name="header">
@@ -216,7 +216,7 @@
                                 <ice:panelPopup autoCentre="true" id="panelMensajeComentarios" modal="true" rendered="#{jprocurAdmin.popupComentario}">
                                 <f:facet name="header">
                                     <ice:panelGrid id="ppComentarios">
-                                        <ice:outputText id="otxtTituloComentarios" value="JProcur"/>
+                                        <ice:outputText id="otxtTituloComentarios" value="Aviso:"/>
                                     </ice:panelGrid>
                                 </f:facet>
                                 <f:facet name="body">

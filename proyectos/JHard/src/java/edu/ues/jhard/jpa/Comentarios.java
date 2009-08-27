@@ -5,6 +5,7 @@
 
 package edu.ues.jhard.jpa;
 
+import edu.ues.jhard.util.Utilidades;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -94,6 +95,10 @@ public class Comentarios implements Serializable {
 
     public Date getFechahora() {
         return fechahorara;
+    }
+
+    public String getFecha(){
+        return Utilidades.FormatearFechaHora(this.fechahorara);
     }
 
     public void setFechahora(Date fechahorara) {
