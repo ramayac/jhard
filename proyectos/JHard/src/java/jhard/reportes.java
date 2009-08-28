@@ -9,6 +9,7 @@ package jhard;
 import com.icesoft.faces.component.ext.HtmlCommandButton;
 import com.icesoft.faces.component.ext.HtmlSelectBooleanCheckbox;
 import com.icesoft.faces.component.jsfcl.data.DefaultSelectedData;
+import com.icesoft.faces.component.jsfcl.data.DefaultSelectionItems;
 import com.icesoft.faces.component.jsfcl.data.SelectInputDateBean;
 import com.icesoft.faces.component.selectinputdate.SelectInputDate;
 import com.icesoft.faces.component.selectinputtext.SelectInputText;
@@ -16,12 +17,12 @@ import com.icesoft.faces.context.effects.JavascriptContext;
 import com.sun.rave.web.ui.appbase.AbstractPageBean;
 import edu.ues.jhard.beans.BeanBaseJManLab;
 import edu.ues.jhard.beans.BeanBaseJRequest;
+import edu.ues.jhard.jpa.Curso;
 import edu.ues.jhard.jpa.Docente;
 import edu.ues.jhard.jpa.Equiposimple;
 import edu.ues.jhard.jpa.Existencia;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.faces.FacesException;
@@ -47,7 +48,10 @@ public class reportes extends AbstractPageBean {
      * here is subject to being replaced.</p>
      */
     private void _init() throws Exception {
+        clasesFake.setItems(new String[]{});
     }
+    private SelectInputDateBean selectInputDate1Bean = new SelectInputDateBean();
+
     private DefaultSelectedData selectBooleanCheckbox1Bean = new DefaultSelectedData();
 
     public DefaultSelectedData getSelectBooleanCheckbox1Bean() {
@@ -102,19 +106,6 @@ public class reportes extends AbstractPageBean {
     public void setTxtBit(SelectInputText sit) {
         this.txtBit = sit;
     }
-
-    // </editor-fold>
-
-    private List eqs = new ArrayList();
-    private List doc = new ArrayList();
-    private List<Equiposimple> listaTodosEquipos;
-    private List<Existencia> listaTodasExistencias;
-    private List<Docente> listaTodosDocentes;
-    private Equiposimple EquipoElegido;
-    private Docente DocenteElegido;
-    private Existencia ExistenciaElegida;
-    private SelectInputDateBean selectInputDate1Bean = new SelectInputDateBean();
-
     public SelectInputDateBean getSelectInputDate1Bean() {
         return selectInputDate1Bean;
     }
@@ -212,8 +203,70 @@ public class reportes extends AbstractPageBean {
     public void setBtnInventarioMalo(HtmlCommandButton hcb) {
         this.btnInventarioMalo = hcb;
     }
+    private DefaultSelectedData selectOneMenu1Bean = new DefaultSelectedData();
+
+    public DefaultSelectedData getSelectOneMenu1Bean() {
+        return selectOneMenu1Bean;
+    }
+
+    public void setSelectOneMenu1Bean(DefaultSelectedData dsd) {
+        this.selectOneMenu1Bean = dsd;
+    }
+    private DefaultSelectionItems clasesFake = new DefaultSelectionItems();
+
+    public DefaultSelectionItems getClasesFake() {
+        return clasesFake;
+    }
+
+    public void setClasesFake(DefaultSelectionItems dsi) {
+        this.clasesFake = dsi;
+    }
+    private SelectInputDateBean selectInputDateBean1 = new SelectInputDateBean();
+
+    public SelectInputDateBean getSelectInputDateBean1() {
+        return selectInputDateBean1;
+    }
+
+    public void setSelectInputDateBean1(SelectInputDateBean sidb) {
+        this.selectInputDateBean1 = sidb;
+    }
 
 
+
+    // </editor-fold>
+
+    private List eqs = new ArrayList();
+    private List doc = new ArrayList();
+    private List cur = new ArrayList();
+    private List<Equiposimple> listaTodosEquipos;
+    private List<Existencia> listaTodasExistencias;
+    private List<Docente> listaTodosDocentes;
+    private List<Curso> listaTodosCursos;
+    private Equiposimple EquipoElegido;
+    private Docente DocenteElegido;
+    private Existencia ExistenciaElegida;
+    private Curso CursoElegido;
+    private SelectInputText comboClases = new SelectInputText();
+
+    public SelectInputText getComboClases() {
+        return comboClases;
+    }
+
+    public void setComboClases(SelectInputText sit) {
+        this.comboClases = sit;
+    }
+    private SelectInputDate fechaClases = new SelectInputDate();
+
+    public SelectInputDate getFechaClases() {
+        return fechaClases;
+    }
+
+    public void setFechaClases(SelectInputDate sid) {
+        this.fechaClases = sid;
+    }
+    
+
+    
     /**
      * <p>Construct a new Page bean instance.</p>
      */
@@ -223,7 +276,9 @@ public class reportes extends AbstractPageBean {
         this.listaTodosEquipos= instance.getListaEquipoSimple();
         this.listaTodasExistencias= instance.getListaExistencia();
         this.listaTodosDocentes=instance2.getAllDocentes();
-        String path = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getRealPath("/") + "reportes/";        
+        this.listaTodosCursos=instance2.getAllCursos();
+        this.clasesFake.clear();
+        //String path = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getRealPath("/") + "reportes/";
     }
 
     /**
@@ -523,5 +578,63 @@ public class reportes extends AbstractPageBean {
         return null;
     }
 
-}
+    /**
+     * @return the cur
+     */
+    public List getCur() {
+        return cur;
+    }
 
+    /**
+     * @param cur the cur to set
+     */
+    public void setCur(List cur) {
+        this.cur = cur;
+    }
+
+
+    public void comboClases_processValueChange(ValueChangeEvent vce) {
+        String valorBusqueda = vce.getNewValue().toString().toUpperCase();
+        if(valorBusqueda.equalsIgnoreCase("")){
+            this.cur.clear();
+            return;
+        }
+        List<SelectItem> listaItemsBusqueda = new ArrayList<SelectItem>();
+
+        for(Curso c: this.getListaTodosCursos()){
+            if(c.getNombre().toUpperCase().contains(valorBusqueda) ||
+                c.getIdmateria().getNombre().toUpperCase().contains(valorBusqueda)){
+                    this.cur.add(c);
+                    listaItemsBusqueda.add(new SelectItem(c.getIdcurso(), c.getIdmateria().getNombre() + " - " + c.getNombre()));
+            }
+        }
+        this.cur = listaItemsBusqueda;
+    }
+
+    /**
+     * @return the listaTodosCursos
+     */
+    public List<Curso> getListaTodosCursos() {
+        return listaTodosCursos;
+    }
+
+    /**
+     * @param listaTodosCursos the listaTodosCursos to set
+     */
+    public void setListaTodosCursos(List<Curso> listaTodosCursos) {
+        this.listaTodosCursos = listaTodosCursos;
+    }
+
+    public String comboClases_action() {
+        Integer id= (Integer) this.comboClases.getSelectedItem().getValue();
+        Curso c=new BeanBaseJRequest().getEntityManager().find(Curso.class, id);
+        CursoElegido=c;
+        return null;
+    }
+
+    public String btnAsistenciaAlumno_action() {
+        Date fecha = (Date)this.fechaClases.getValue();
+        JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=10&dia="+(fecha.getDate()+1)+"&mes="+fecha.getMonth()+"&anio="+fecha.getYear()+"&idcurso="+CursoElegido.getIdcurso()+"\",\"Reporte\");");
+        return null;
+    }
+}
