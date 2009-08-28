@@ -31,15 +31,29 @@
                             <h2 class="title">Reportes de JHard</h2>
                         </div>
                         <ice:form id="formArticulo">
-                            <ice:panelGroup id="panelReportes" styleClass="entry">
-                                <!--ice:panelCollapsible expanded="false" id="asistenciaAlumnos" style="width: 600px"-->
-                                <!--f:facet name="header"-->
-                                <!--ice:panelGroup id="panelTitAsistenciaAlumnos"-->
-                                <!--ice:outputText id="titAsistenciaAlumnos" value="Asistencia de Alumnos a Prácticas de Laboratorio"/-->
-                                <!--/ice:panelGroup-->
-                                <!--/f:facet-->
-                                <!--ice:panelGroup id="panelAsistenciaAlumnos" style=""/-->
-                                <!--/ice:panelCollapsible-->
+                            <ice:panelGroup rendered="#{JHardminInstance.currentUser == null}">
+                                <jsp:directive.include file="/jspf/nologin.jspx"/>
+                            </ice:panelGroup>
+                            <ice:panelGroup id="panelReportes" rendered="#{JHardminInstance.currentUser != null}" styleClass="entry">
+                                <ice:panelCollapsible expanded="false" id="asistenciaAlumnos" style="width: 600px">
+                                    <f:facet name="header">
+                                        <ice:panelGroup id="panelTitAsistenciaAlumnos">
+                                            <ice:outputText id="titAsistenciaAlumnos" value="Asistencia de Alumnos a Prácticas de Laboratorio"/>
+                                        </ice:panelGroup>
+                                    </f:facet>
+                                    <ice:panelGroup id="fechaClase" style="">
+                                        <ice:outputLabel id="outputLabel2" value="Nombre de Grupo de practica"/>
+                                        <br/>
+                                        <ice:selectInputText action="#{reportes.comboClases_action}" binding="#{reportes.comboClases}" id="comboClases"
+                                            partialSubmit="true" value="#{reportes.selectOneMenu1Bean.selectedObject}" valueChangeListener="#{reportes.comboClases_processValueChange}">
+                                            <f:selectItems id="selectOneMenu1selectItems" value="#{reportes.cur}"/>
+                                        </ice:selectInputText>
+                                        <br/>
+                                        <ice:selectInputDate binding="#{reportes.fechaClases}" id="fechaClases" style="height:212px; width: 190px" value="#{reportes.selectInputDateBean1.date1}"/>
+                                        <br/>
+                                        <ice:commandButton action="#{reportes.btnAsistenciaAlumno_action}" id="btnAsistenciaAlumno" styleClass="btnAccion2" value="Generar Reporte"/>
+                                    </ice:panelGroup>
+                                </ice:panelCollapsible>
                                 <!--ice:panelCollapsible expanded="false" id="asistenciaInstructores" style="width: 600px"-->
                                 <!--f:facet name="header"-->
                                 <!--ice:panelGroup id="panelTitAsistenciaInstructores"-->

@@ -319,8 +319,6 @@ public class jmlHorario extends AbstractPageBean {
             String label = cursos.get(i).getIdmateria().getNombre()+" - "+cursos.get(i).getNombre();
             getCur().add(new SelectItem(cursos.get(i).getIdcurso(),label));
         }
-
-
     }
 
     /**

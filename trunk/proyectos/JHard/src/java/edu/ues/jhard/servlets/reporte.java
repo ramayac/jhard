@@ -65,6 +65,11 @@ public class reporte extends HttpServlet {
     public static final int ID_INVENTARIOMALO = 9;
     public static final String RUTA_INVENTARIOMALO = "inventarioDeteriorado.jasper";
 
+    public static final int ID_ASISTENCIAALUMNOS = 10;
+    public static final String IDCURSO = "idcurso";
+    public static final String FECHA = "fecha";
+    public static final String RUTA_ASISTENCIAALUMNOS = "AsistenciasCursoP.jasper";
+
     public static final String RUTA_REPORTES = "/reportes/";
     public static final String PARAM_VAR = "rpid";
     
@@ -203,6 +208,7 @@ public class reporte extends HttpServlet {
 
                    //Asignamos los parametros al mapa
                    parametros.put(IDDOCENTE, iddocente);
+
                    //rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_EXISTENCIA);
                    rutareal = RUTA_REPORTES + RUTA_RESERVASDOC;
                    //Asignamos el nombre al PDF
@@ -217,6 +223,24 @@ public class reporte extends HttpServlet {
                     rutareal = RUTA_REPORTES + RUTA_INVENTARIOMALO;
                     //Asignamos el nombre al PDF
                     nombreReporte = "inventarioDeteriorado.jasper";
+                    break;
+                case ID_ASISTENCIAALUMNOS: //10
+                    rutareal = RUTA_REPORTES + RUTA_ASISTENCIAALUMNOS;
+
+                    Integer dia = Integer.parseInt(request.getParameter("dia"));
+                    Integer mes = Integer.parseInt(request.getParameter("mes"));
+                    Integer anio = Integer.parseInt(request.getParameter("anio"));
+                    Date fecha = new Date(anio, mes, dia);
+                    fecha.setHours(0);
+                    fecha.setMinutes(0);
+                    
+                    Integer idcurso = Integer.parseInt(request.getParameter(IDCURSO));
+
+                   //Asignamos los parametros al mapa
+                    parametros.put(IDCURSO, idcurso);
+                    parametros.put(FECHA, fecha);
+                    //Asignamos el nombre al PDF
+                    nombreReporte = "AsistenciasCursoP.jasper";
                     break;
                 default:
                     throw new Exception("(reporte Servlet): No coincide el parametro con las opciones existentes.");
