@@ -88,7 +88,7 @@ public class BeanBaseJWiki extends BeanBase {
 
         String sql = BuildSQLSearchArticulos(arr);
 
-        System.out.println(sql);
+        //System.out.println(sql);
         Query q = em.createNativeQuery(sql);
         Vector vectorArticulos = (Vector) q.getResultList();
 
