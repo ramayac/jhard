@@ -32,6 +32,8 @@ public class ApplicationBean1 extends AbstractApplicationBean {
     }
     // </editor-fold>
 
+    private final static String CODIFICACION = "ISO-8859-1";
+
     /**
      * <p>Construct a new application data bean instance.</p>
      */
@@ -95,6 +97,7 @@ public class ApplicationBean1 extends AbstractApplicationBean {
      * our superclass, <code>AbstractApplicationBean</code>.</p>
      */
     public String getLocaleCharacterEncoding() {
-        return super.getLocaleCharacterEncoding();
+        return CODIFICACION;
+        //return super.getLocaleCharacterEncoding();
     }
 }

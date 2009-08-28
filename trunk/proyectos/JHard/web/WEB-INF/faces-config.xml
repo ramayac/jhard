@@ -5,9 +5,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd">
     <application>
-        <view-handler>
+        <!--<view-handler>
             com.sun.rave.web.ui.appbase.faces.ViewHandlerImpl
-        </view-handler>
+        </view-handler>-->
     </application>
     <managed-bean>
         <managed-bean-name>SessionBean1</managed-bean-name>
@@ -66,7 +66,7 @@
     <managed-bean>
         <managed-bean-name>Redireccion</managed-bean-name>
         <managed-bean-class>edu.ues.jhard.util.Redireccion</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>application</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>Navegacion</managed-bean-name>
@@ -76,7 +76,7 @@
     <managed-bean>
         <managed-bean-name>UsuariosConectados</managed-bean-name>
         <managed-bean-class>edu.ues.jhard.util.UsuariosConectados</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
+        <managed-bean-scope>application</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>jprocurUser</managed-bean-name>
@@ -161,7 +161,7 @@
     <managed-bean>
         <managed-bean-name>Error500</managed-bean-name>
         <managed-bean-class>jhard.Error500</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
+        <managed-bean-scope>application</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>reportes</managed-bean-name>
