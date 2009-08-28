@@ -61,12 +61,13 @@
         <load-on-startup>3</load-on-startup>
     </servlet>
     <servlet>
-        <servlet-name>reservas</servlet-name>
-        <servlet-class>edu.ues.jhard.servlets.reservas</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>feed</servlet-name>
         <servlet-class>edu.ues.jhard.servlets.feed</servlet-class>
+        <load-on-startup>4</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>reservas</servlet-name>
+        <servlet-class>edu.ues.jhard.servlets.reservas</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>horarios</servlet-name>
