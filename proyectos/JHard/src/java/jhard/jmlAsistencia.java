@@ -47,14 +47,6 @@ public class jmlAsistencia extends BeanBaseJHard {
     //private Existencia existenciaSeleccionada = new Existencia();
     private BeanBaseJManLab jmanLabInstance = new BeanBaseJManLab();
 
-//    public List<Existencia> getListaExistencia() {
-//        return listaExistencia;
-//    }
-//
-//    public void setListaExistencia(List<Existencia> listaExistencia) {
-//        this.listaExistencia = listaExistencia;
-//    }
-
     public Clase getClaseSeleccionada() {
         return claseSeleccionada;
     }
@@ -147,17 +139,6 @@ public class jmlAsistencia extends BeanBaseJHard {
         return EMPTY_STRING;
     }
 
-//    public String elegirExistencia() {
-//        String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idExistencia");
-//        Integer id = Integer.parseInt(idS);
-//
-//        this.existenciaSeleccionada = this.jmanLabInstance.getExistencia(id);
-//
-//        this.paso(3);
-//        return EMPTY_STRING;
-//    }
-
-
     public String marcaAsistenciaClase() {
         String idS = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idClase");
         Integer id = Integer.parseInt(idS);
@@ -192,6 +173,7 @@ public class jmlAsistencia extends BeanBaseJHard {
     }
 
     public String cancelar(){
+        cargaCursosDeEstudiante();
         this.paso(1);
         return EMPTY_STRING;
     }
@@ -314,115 +296,5 @@ public class jmlAsistencia extends BeanBaseJHard {
      */
     public void destroy() {
     }
-
-
-    //    private List dictionary;
-//    private Clase currentClase = new Clase();
-//    private List matchesList = new ArrayList();
-//
-//
-//    public static final Comparator LABEL_COMPARATOR = new Comparator() {
-//        String s1;
-//        String s2;
-//
-//        // compare method for city entries.
-//        public int compare(Object o1, Object o2) {
-//
-//            if (o1 instanceof SelectItem) {
-//                s1 = ((SelectItem) o1).getLabel();
-//            } else {
-//                s1 = o1.toString();
-//            }
-//
-//            if (o2 instanceof SelectItem) {
-//                s2 = ((SelectItem) o2).getLabel();
-//            } else {
-//                s2 = o2.toString();
-//            }
-//            // compare ingnoring case, give the user a more automated feel when typing
-//            return s1.compareToIgnoreCase(s2);
-//        }
-//    };
-//
-//    /**
-//     * Called when a user has modifed the SelectInputText value.  This method
-//     * call causes the match list to be updated.
-//     *
-//     * @param event
-//     */
-//    public void updateList(ValueChangeEvent event) {
-//
-//        // get a new list of matches.
-//        setMatches(event);
-//
-//        // Get the auto complete component from the event and assing
-//        if (event.getComponent() instanceof SelectInputText) {
-//            SelectInputText autoComplete = (SelectInputText) event.getComponent();
-//            // if no selected item then return the previously selected item.
-//            if (autoComplete.getSelectedItem() != null) {
-//                currentClase = (Clase) autoComplete.getSelectedItem().getValue();
-//            }
-//            // otherwise if there is a selected item get the value from the match list
-//            else {
-//                Clase temp = getMatch(autoComplete.getValue().toString());
-//                if (temp != null) {
-//                    currentClase = temp;
-//                }
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Utility method for building the match list given the current value of the
-//     * SelectInputText component.
-//     *
-//     * @param event
-//     */
-//    private void setMatches(ValueChangeEvent event) {
-//        Object searchWord = event.getNewValue();
-//        int maxMatches = ((SelectInputText) event.getComponent()).getRows();
-//        List matchList = new ArrayList(maxMatches);
-//
-//        try {
-//            int insert = Collections.binarySearch(dictionary, searchWord, jmlAsistencia.LABEL_COMPARATOR);
-//
-//            if (insert < 0) { // less then zero if wer have a partial match
-//                insert = Math.abs(insert) - 1;
-//            }
-//
-//            for (int i = 0; i < maxMatches; i++) {
-//                // quit the match list creation if the index is larger then
-//                // max entries in the dictionary if we have added maxMatches.
-//                if ((insert + i) >= dictionary.size() ||
-//                    i >= maxMatches) {
-//                    break;
-//                }
-//                matchList.add(dictionary.get(insert + i));
-//            }
-//        } catch (Throwable e) {
-//           // log.error("Erorr finding autocomplete matches", e);
-//        }
-//        // assign new matchList
-//        if (this.matchesList != null) {
-//            this.matchesList.clear();
-//            this.matchesList = null;
-//        }
-//        this.matchesList = matchList;
-//    }
-//
-//    private Clase getMatch(String value) {
-//        Clase result = null;
-//        if (matchesList != null) {
-//            SelectItem si;
-//            Iterator iter = matchesList.iterator();
-//            while (iter.hasNext()) {
-//                si = (SelectItem) iter.next();
-//                if (value.equals(si.getLabel())) {
-//                    result = (Clase) si.getValue();
-//                }
-//            }
-//        }
-//        return result;
-//    }
 
 }
