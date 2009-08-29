@@ -410,6 +410,7 @@ public class jwikiAdmin extends AbstractPageBean {
             this.listaArticulos = this.getjwikiInstance().getAllArticulos();
             this.setEditandoArticulo(false);
             this.lblPPMesajes.setValue("Artículo agregado con éxito.");
+            this.articuloNuevo = new Articulos();
         } else {
             this.setEditandoArticulo(false);
             this.lblPPMesajes.setValue("Ocurrió un error al intentar agregar el Artículo.");
