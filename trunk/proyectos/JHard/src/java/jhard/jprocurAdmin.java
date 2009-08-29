@@ -575,6 +575,7 @@ public class jprocurAdmin extends AbstractPageBean {
             this.showPPMesaje = true;
             this.listaEntradas.clear();
             this.listaEntradas = this.getJProcurInstance().getAllEntradas();
+            this.entradaNueva = new Entrada();
         } else {
             this.lblPPMesajes.setValue("Ocurrió un error al intentar agregar una Entrada.");
             this.showPPMesaje = true;

@@ -181,7 +181,7 @@
                                 <!-- panel de mensajes de avisos...-->
                                 <ice:panelPopup autoCentre="true" id="ppmsj" modal="true" rendered="#{jwikiAdmin.showPPMesaje}">
                                     <f:facet name="header">
-                                        <ice:panelGrid><ice:outputText id="pptit" value="JWiki"/></ice:panelGrid>
+                                        <ice:panelGrid><ice:outputText id="pptit" value="Aviso:"/></ice:panelGrid>
                                     </f:facet>
                                     <f:facet name="body">
                                         <div class="post">
