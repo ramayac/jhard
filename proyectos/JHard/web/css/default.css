@@ -11,6 +11,7 @@ body {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	color: #333333;
+    text-align: center;
 }
 
 h1, h2, h3 {
@@ -102,6 +103,7 @@ input, textarea, select {
 	height: 54px;
 	margin: auto;
 	background: url(../img/img02.jpg) no-repeat left top;
+    text-align: left;
 }
 
 /* Menu */
@@ -159,6 +161,7 @@ input, textarea, select {
 	height: 100px;
 	margin: 0 auto;
 	background: url(../img/img15.jpg) no-repeat left top;
+    text-align: left;
 }
 
 #logo h1, #logo h2 {
@@ -196,6 +199,7 @@ input, textarea, select {
 #page {
 	width: 860px;
 	margin: 0 auto;
+    text-align: left;
 }
 
 /* Content */
@@ -376,6 +380,7 @@ input, textarea, select {
 	min-height: 64px;
 	padding: 0;
 	background: #D16E45 url(../img/img08.jpg) repeat-x;
+    text-align: left;
 }
 
 html>body #footer {
