@@ -334,7 +334,7 @@
                                                 </f:facet>
                                             </ice:panelDivider>
                                             <ice:panelGroup id="popUps">
-                                                <ice:panelPopup id="pupAddClasificacion" draggable="true" modal="true" rendered="#{JInventInstance.crdClasificacion.popupAddVisible}">
+                                                <ice:panelPopup id="pupAddClasificacion" draggable="true" modal="true" rendered="#{JInventInstance.crdClasificacion.popupAddVisible}" style="width: 320px;">
                                                     <f:facet name="header"><ice:outputText value="Agregar subclasificacion" /></f:facet>
                                                     <f:facet name="body">
                                                         <ice:panelGroup styleClass="frmElementList">
@@ -354,7 +354,7 @@
                                                         </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupEditarClasificacion" draggable="true" modal="true" rendered="#{JInventInstance.crdClasificacion.popupEditVisible}">
+                                                <ice:panelPopup id="pupEditarClasificacion" draggable="true" modal="true" rendered="#{JInventInstance.crdClasificacion.popupEditVisible}" style="width: 320px;">
                                                     <f:facet name="header"><ice:outputText value="Editar clasificacion" /></f:facet>
                                                         <f:facet name="body">
                                                             <ice:panelGroup styleClass="frmElementList">
@@ -373,7 +373,7 @@
                                                             </ice:panelGroup>
                                                         </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupEliminarClasificacion" draggable="true" modal="true" rendered="#{JInventInstance.crdClasificacion.popupDelVisible}" >
+                                                <ice:panelPopup id="pupEliminarClasificacion" draggable="true" modal="true" rendered="#{JInventInstance.crdClasificacion.popupDelVisible}" style="width: 300px;" >
                                                     <f:facet name="header"><ice:outputText value="Confirmacion" /></f:facet>
                                                     <f:facet name="body">
                                                         <ice:panelGroup styleClass="frmElementList">
@@ -387,7 +387,7 @@
                                                         </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupAgregarExistencia" modal="true" draggable="true" rendered="#{JInventInstance.crdExistencia.popupAddVisible or JInventInstance.crdExistencia.popupEditVisible}" >
+                                                <ice:panelPopup id="pupAgregarExistencia" modal="true" draggable="true" rendered="#{JInventInstance.crdExistencia.popupAddVisible or JInventInstance.crdExistencia.popupEditVisible}" style="width: 480px;" >
                                                     <f:facet name="header"><ice:panelGroup><ice:outputText value="Agregar nueva existencia" rendered="#{!JInventInstance.existenciaEditMode}" /><ice:outputText value="Editar existencia" rendered="#{JInventInstance.existenciaEditMode}" /></ice:panelGroup></f:facet>
                                                     <f:facet name="body">
                                                         <ice:panelGroup styleClass="frmElementList" style="background-color: #FCFCFC;">
@@ -500,7 +500,7 @@
                                                         </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupEliminarExistencia" draggable="true" modal="true" rendered="#{JInventInstance.crdExistencia.popupDelVisible}">
+                                                <ice:panelPopup id="pupEliminarExistencia" draggable="true" modal="true" rendered="#{JInventInstance.crdExistencia.popupDelVisible}" style="width: 300px;">
                                                     <f:facet name="header"><ice:outputText value="Confirmación" /></f:facet>
                                                     <f:facet name="body">
                                                         <ice:panelGroup styleClass="frmElementList">
@@ -565,7 +565,7 @@
                                                         </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupAgregarEquipo" modal="true" draggable="true" rendered="#{JInventInstance.crdEquipo.popupAddVisible}">
+                                                <ice:panelPopup id="pupAgregarEquipo" modal="true" draggable="true" rendered="#{JInventInstance.crdEquipo.popupAddVisible}" style="width: 350px;">
                                                     <f:facet name="header"><ice:outputText value="Agregar nuevo equipo" /></f:facet>
                                                     <f:facet name="body">
                                                         <ice:panelGroup styleClass="frmElementList">
@@ -594,7 +594,7 @@
                                                         </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupEditarEquipo" draggable="true" modal="true" rendered="#{JInventInstance.crdEquipo.popupEditVisible}">
+                                                <ice:panelPopup id="pupEditarEquipo" draggable="true" modal="true" rendered="#{JInventInstance.crdEquipo.popupEditVisible}" style="width: 350px;">
                                                     <f:facet name="header">
                                                         <ice:outputFormat value="Editar equipo {0}">
                                                             <f:param value="#{JInventInstance.currentEquipo.nombre}" />
@@ -628,7 +628,7 @@
                                                         </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupConfirmEliminarEquipo" modal="true" draggable="true" title="Confirmación" rendered="#{JInventInstance.crdEquipo.popupDelVisible}">
+                                                <ice:panelPopup id="pupConfirmEliminarEquipo" modal="true" draggable="true" title="Confirmación" rendered="#{JInventInstance.crdEquipo.popupDelVisible}" style="width: 300px;">
                                                     <f:facet name="header"><ice:outputText value="Confirmación" /></f:facet>
                                                     <f:facet name="body">
                                                         <ice:panelGroup>
@@ -637,7 +637,7 @@
                                                         </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupAgregarSoftware" modal="true" draggable="true" rendered="#{JInventInstance.crdSoftware.popupAddVisible}">
+                                                <ice:panelPopup id="pupAgregarSoftware" modal="true" draggable="true" rendered="#{JInventInstance.crdSoftware.popupAddVisible}" style="width: 320px;">
                                                     <f:facet name="header"><ice:outputText value="Agregar nuevo software" /></f:facet>
                                                     <f:facet name="body">
                                                         <ice:panelGroup>
@@ -668,7 +668,7 @@
                                                         </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupEditarSoftware" draggable="true" modal="true" rendered="#{JInventInstance.crdSoftware.popupEditVisible}">
+                                                <ice:panelPopup id="pupEditarSoftware" draggable="true" modal="true" rendered="#{JInventInstance.crdSoftware.popupEditVisible}" style="width: 320px;">
                                                     <f:facet name="header">
                                                         <ice:outputFormat value="Editando software {0}">
                                                             <f:param value="#{JInventInstance.currentSoftware.nombre}"/>
@@ -699,7 +699,7 @@
                                                         </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupConfirmEliminarSoftware" modal="true" draggable="true" title="Confirmación" rendered="#{JInventInstance.crdSoftware.popupDelVisible}" >
+                                                <ice:panelPopup id="pupConfirmEliminarSoftware" modal="true" draggable="true" title="Confirmación" rendered="#{JInventInstance.crdSoftware.popupDelVisible}" style="width: 300px;" >
                                                     <f:facet name="header"><ice:outputText value="Confirmación" /></f:facet>
                                                     <f:facet name="body">
                                                             <ice:panelGroup>
@@ -708,7 +708,7 @@
                                                         </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupAgregarAccesorio" modal="true" draggable="true" rendered="#{JInventInstance.crdAccesorio.popupAddVisible}" >
+                                                <ice:panelPopup id="pupAgregarAccesorio" modal="true" draggable="true" rendered="#{JInventInstance.crdAccesorio.popupAddVisible}" style="width: 320px;" >
                                                     <f:facet name="header"><ice:outputText value="Agregar nuevo accesorio" /></f:facet>
                                                     <f:facet name="body">
                                                         <ice:panelGroup>
@@ -737,7 +737,7 @@
                                                         </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupEditarAccesorio" draggable="true" modal="true" rendered="#{JInventInstance.crdAccesorio.popupEditVisible}" >
+                                                <ice:panelPopup id="pupEditarAccesorio" draggable="true" modal="true" rendered="#{JInventInstance.crdAccesorio.popupEditVisible}" style="width: 320px;" >
                                                     <f:facet name="header">
                                                         <ice:outputFormat value="Editando accesirio {0}">
                                                             <f:param value="#{JInventInstance.currentAccesorio.nombre}" />
@@ -766,7 +766,7 @@
                                                         </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupConfirmEliminarAccesorio" modal="true" draggable="true" rendered="#{JInventInstance.crdAccesorio.popupDelVisible}" >
+                                                <ice:panelPopup id="pupConfirmEliminarAccesorio" modal="true" draggable="true" rendered="#{JInventInstance.crdAccesorio.popupDelVisible}" style="width: 300px;" >
                                                 <f:facet name="header">
                                                     <ice:outputText value="Confirmación" />
                                                 </f:facet>
@@ -777,7 +777,7 @@
                                                     </ice:panelGroup>
                                                 </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupAgregarPieza" modal="true" draggable="true" rendered="#{JInventInstance.crdPieza.popupAddVisible}">
+                                                <ice:panelPopup id="pupAgregarPieza" modal="true" draggable="true" rendered="#{JInventInstance.crdPieza.popupAddVisible}" style="width: 320px;">
                                                     <f:facet name="header"><ice:outputText value="Agregar nueva pieza" /></f:facet>
                                                     <f:facet name="body">
                                                     <ice:panelGroup>
@@ -806,7 +806,7 @@
                                                     </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupModificarPieza" draggable="true" modal="true" rendered="#{JInventInstance.crdPieza.popupEditVisible}">
+                                                <ice:panelPopup id="pupModificarPieza" draggable="true" modal="true" rendered="#{JInventInstance.crdPieza.popupEditVisible}" style="width: 320px;">
                                                     <f:facet name="header">
                                                         <ice:outputFormat value="Editando pieza {0}">
                                                             <f:param value="#{JInventInstance.currentPieza.nombre}" />
@@ -835,7 +835,7 @@
                                                         </ice:panelGroup>
                                                     </f:facet>
                                                 </ice:panelPopup>
-                                                <ice:panelPopup id="pupConfirmEliminarPieza" modal="true" draggable="true" rendered="#{JInventInstance.crdPieza.popupDelVisible}">
+                                                <ice:panelPopup id="pupConfirmEliminarPieza" modal="true" draggable="true" rendered="#{JInventInstance.crdPieza.popupDelVisible}" style="width: 300px;">
                                                 <f:facet name="header">
                                                     <ice:outputText value="Confirmación" />
                                                 </f:facet>
@@ -884,7 +884,7 @@
                                                 <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
                                                 <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
                                             </ice:dataPaginator>
-                                            <ice:panelPopup id="pupAgregarMarca" draggable="true" modal="true" rendered="#{JInventInstance.crdMarcas.popupAddVisible}">
+                                            <ice:panelPopup id="pupAgregarMarca" draggable="true" modal="true" rendered="#{JInventInstance.crdMarcas.popupAddVisible}" style="width: 320px;">
                                                 <f:facet name="header"><ice:outputText value="Agregar nueva marca" /></f:facet>
                                                 <f:facet name="body">
                                                     <ice:panelGroup styleClass="frmElementList">
@@ -899,7 +899,7 @@
                                                     </ice:panelGroup>
                                                 </f:facet>
                                             </ice:panelPopup>
-                                            <ice:panelPopup id="pupEditarMarca" draggable="true" modal="true" rendered="#{JInventInstance.crdMarcas.popupEditVisible}">
+                                            <ice:panelPopup id="pupEditarMarca" draggable="true" modal="true" rendered="#{JInventInstance.crdMarcas.popupEditVisible}" style="width: 320px;">
                                                 <f:facet name="header"><ice:outputFormat value="Editar marca {0}"><f:param value="#{JInventInstance.currentMarca.nombre}" /></ice:outputFormat></f:facet>
                                                 <f:facet name="body">
                                                     <ice:panelGroup styleClass="frmElementList">
@@ -914,7 +914,7 @@
                                                     </ice:panelGroup>
                                                 </f:facet>
                                             </ice:panelPopup>
-                                            <ice:panelPopup id="pupDelMarca" draggable="true" modal="true" rendered="#{JInventInstance.crdMarcas.popupDelVisible}">
+                                            <ice:panelPopup id="pupDelMarca" draggable="true" modal="true" rendered="#{JInventInstance.crdMarcas.popupDelVisible}" style="width: 300px;">
                                                 <f:facet name="header"><ice:outputText value="Confirmación" /></f:facet>
                                                 <f:facet name="body">
                                                     <ice:panelGroup styleClass="frmElementList">
@@ -957,7 +957,7 @@
                                                 <f:facet name="next"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-next.gif" style="border:none;" title="Next Page"/></f:facet>
                                                 <f:facet name="last"><ice:graphicImage url="./xmlhttp/css/rime/css-images/arrow-last.gif" style="border:none;" title="Last Page"/></f:facet>
                                             </ice:dataPaginator>
-                                            <ice:panelPopup id="pupAgregarUbicacion" draggable="true" modal="true" rendered="#{JInventInstance.crdUbicaciones.popupAddVisible}">
+                                            <ice:panelPopup id="pupAgregarUbicacion" draggable="true" modal="true" rendered="#{JInventInstance.crdUbicaciones.popupAddVisible}" style="width: 320px;">
                                                 <f:facet name="header"><ice:outputText value="Agregar ubicación" /></f:facet>
                                                 <f:facet name="body">
                                                     <ice:panelGroup styleClass="frmElementList">
@@ -972,7 +972,7 @@
                                                     </ice:panelGroup>
                                                 </f:facet>
                                             </ice:panelPopup>
-                                            <ice:panelPopup id="pupEditarUbicacion" draggable="true" modal="true" rendered="#{JInventInstance.crdUbicaciones.popupEditVisible}" >
+                                            <ice:panelPopup id="pupEditarUbicacion" draggable="true" modal="true" rendered="#{JInventInstance.crdUbicaciones.popupEditVisible}" style="width: 320px;" >
                                                 <f:facet name="header"><ice:outputFormat value="Editar ubicación {0}"><f:param value="#{JInventInstance.currentUbicacion.nombre}" /></ice:outputFormat></f:facet>
                                                 <f:facet name="body">
                                                     <ice:panelGroup styleClass="frmElementList">
@@ -987,7 +987,7 @@
                                                     </ice:panelGroup>
                                                 </f:facet>
                                             </ice:panelPopup>
-                                            <ice:panelPopup id="pupEliminarUbicacion" draggable="true" modal="true" rendered="#{JInventInstance.crdUbicaciones.popupDelVisible}" >
+                                            <ice:panelPopup id="pupEliminarUbicacion" draggable="true" modal="true" rendered="#{JInventInstance.crdUbicaciones.popupDelVisible}" style="width: 300px;" >
                                                 <f:facet name="header"><ice:outputText value="Confirmación" /></f:facet>
                                                 <f:facet name="body">
                                                     <ice:panelGroup styleClass="frmElementList">
@@ -1006,7 +1006,7 @@
 
 
                                 </ice:panelGroup>
-                                <ice:panelPopup id="pupMensajes" draggable="true" modal="true" rendered="#{JInventInstance.msg.visible}">
+                                <ice:panelPopup id="pupMensajes" draggable="true" modal="true" rendered="#{JInventInstance.msg.visible}" style="width: 300px;" >
                                     <f:facet name="header"><ice:outputText value="Mensaje" /></f:facet>
                                     <f:facet name="body">
                                         <ice:panelGroup>

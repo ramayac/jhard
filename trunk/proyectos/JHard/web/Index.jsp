@@ -20,7 +20,7 @@
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
                 <link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
             </head>
-            <body id="outputBody1" style="-rave-layout: grid">
+            <body id="outputBody1">
                 <!--start header -->
                     <jsp:directive.include file="/jspf/menu.jspx"/>
                 <!-- end header -->
@@ -147,7 +147,7 @@
                                             <ice:commandLink action="#{Redireccion.jcanonAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Reserva de Equipo Multimedia"/>
                                         </li>
                                      </ul>
-                                    <ice:panelPopup id="pupCrearUsuario" draggable="true" modal="true" rendered="#{JHardminInstance.popupRegistrarUsuarioVisible}">
+                                    <ice:panelPopup id="pupCrearUsuario" draggable="true" modal="true" rendered="#{JHardminInstance.popupRegistrarUsuarioVisible}" style="width: 315px;">
                                         <f:facet name="header"><ice:outputText value="Agregar nuevo usuario" /></f:facet>
                                         <f:facet name="body">
                                             <ice:panelGroup styleClass="frmElementList">
