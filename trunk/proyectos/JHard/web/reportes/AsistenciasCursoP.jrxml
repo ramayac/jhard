@@ -21,8 +21,8 @@ FROM
      INNER JOIN `curso` curso ON horario.`idcurso` = curso.`idcurso`
      INNER JOIN `materia` materia ON curso.`idmateria` = materia.`idmateria`
 WHERE
-     clase.`idclase` = $P{idcurso}
- AND clase.`fecha` = $P{fecha}]]>
+     curso.`idcurso` = $P{idcurso}
+AND clase.`fecha` = $P{fecha}]]>
 	</queryString>
 	<field name="curso_nombre" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
