@@ -37,14 +37,12 @@ public class jmlAsistencia extends BeanBaseJHard {
     private List<Clase> listaClases = new ArrayList<Clase>();
     private List<Curso> listaCursos = new ArrayList<Curso>();
     private List<Horario> listaHorario = new ArrayList<Horario>();
-    //private List<Existencia> listaExistencia = new ArrayList<Existencia>();
 
     private Boolean paso1 = new Boolean(false);
     private Boolean paso2 = new Boolean(false);
 
     private Curso cursoSeleccionado = new Curso();
     private Clase claseSeleccionada = new Clase();
-    //private Existencia existenciaSeleccionada = new Existencia();
     private BeanBaseJManLab jmanLabInstance = new BeanBaseJManLab();
 
     public Clase getClaseSeleccionada() {
@@ -121,7 +119,6 @@ public class jmlAsistencia extends BeanBaseJHard {
 
         this.cursoSeleccionado = this.jmanLabInstance.getCurso(id.intValue());
         this.listaHorario = this.jmanLabInstance.getHorariosCurso(cursoSeleccionado);
-        //List<Existencia> lstExistencia = new ArrayList<Existencia>();
 
         for (Horario horario : listaHorario) {
             List<Clase>lstClase = (List<Clase>)horario.getClaseCollection();
@@ -130,7 +127,6 @@ public class jmlAsistencia extends BeanBaseJHard {
                     if(Utilidades.EsDeHoy(clase.getFecha())){
                         if(Utilidades.EsAntesDeHora(clase.getHorafin())){
                             this.listaClases.add(clase);
-                            //lstExistencia.addAll(horario.getIdaula().getExistenciaCollection());
                         }
                     }
         }
@@ -146,14 +142,13 @@ public class jmlAsistencia extends BeanBaseJHard {
 
         Asistencia nuevaAsistencia = new Asistencia();
         nuevaAsistencia.setIdclase(claseSeleccionada);
-        //nuevaAsistencia.setIdequipoexistente(existenciaSeleccionada);
         nuevaAsistencia.setIdestudiante(this.getEstudianteUsuario());
 
         List<Asistencia> lstAsistencia = new ArrayList<Asistencia>();
         lstAsistencia = this.jmanLabInstance.getAsistenciasClaseEstudiante(claseSeleccionada, this.getEstudianteUsuario());
 
         if(lstAsistencia.size()>0){
-            popup.setMensaje("Ya esta marcada la existencia.");
+            popup.setMensaje("Ya esta marcada la asistencia.");
         } else {
             if(this.jmanLabInstance.createAsistencia(nuevaAsistencia)){
                 popup.setMensaje("Asistencia confirmada.");
@@ -184,7 +179,7 @@ public class jmlAsistencia extends BeanBaseJHard {
             Estudiante est = this.getEstudianteUsuario();
             if (est!=null) {
                 this.listaCursos = jmanLabInstance.getCursosCicloEstudiante(est);
-                System.out.println("Es estudiante, y los cursos que puede ver el estudiante son: " + this.listaCursos.size());
+                //System.out.println("Es estudiante, y los cursos que puede ver el estudiante son: " + this.listaCursos.size());
             }
         }
     }

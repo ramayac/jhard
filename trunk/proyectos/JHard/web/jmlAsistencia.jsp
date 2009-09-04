@@ -62,6 +62,7 @@
                                                 <ul>
                                                     <li>No hay clases para esta hora.</li>
                                                     <li>La clase ha concluido.</li>
+                                                    <li>Parece que no esta inscrito a este curso.</li>
                                                 </ul>
                                                 <br/>
                                                 <ice:commandButton action="#{jmlAsistencia.cancelar}" styleClass="btnAccion2" value="Cancelar"/>

@@ -72,7 +72,9 @@ public class jmlInscripcion extends BeanBaseJHard {
         this.cursoSeleccionado = this.getJmanLabInstance().getCurso(id.intValue());
 
         Integer inscritos = this.getJmanLabInstance().getInscripcionCurso(cursoSeleccionado);
-        if (this.cursoSeleccionado.getCupomax() < inscritos) {
+        System.out.println("Alumnos inscritos a este curso: " + inscritos + ", max: " + this.cursoSeleccionado.getCupomax());
+
+        if (inscritos <= this.cursoSeleccionado.getCupomax()) {
             List<Inscripcion> lstInscripciones = this.getJmanLabInstance().getInscripcionCursoEstudiante(cursoSeleccionado, this.getEstudianteUsuario());
 
             if (lstInscripciones.size() > 0) {
@@ -102,7 +104,7 @@ public class jmlInscripcion extends BeanBaseJHard {
             Estudiante est = this.getEstudianteUsuario();
             if (est != null) {
                 this.listaCursos = jmanLabInstance.getCursosCicloEstudianteHabilitado(est);
-                System.out.println("Es estudiante, y los cursos que puede ver el estudiante son: " + this.listaCursos.size());
+                //System.out.println("Es estudiante, y los cursos que puede ver el estudiante son: " + this.listaCursos.size());
             }
         }
     }

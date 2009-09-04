@@ -154,7 +154,7 @@ public class jmlGestionaClase extends BeanBaseJHard {
     public List<Horario> getListaHorariosValidos(){
         List<Horario> listaHorariosValidos = new ArrayList<Horario>();
         for (Horario horario : this.listaHorario) {
-            System.out.println("getDiasemana: " + horario.getDiasemana() + "== DiaHoyEntero: " + Utilidades.DiaHoyEntero());
+            //System.out.println("getDiasemana: " + horario.getDiasemana() + "== DiaHoyEntero: " + Utilidades.DiaHoyEntero());
             if (horario.getDiasemana() == Utilidades.DiaHoyEntero()){
                 if (Utilidades.EsAntesDeHora(horario.getHorafin())) {
                     listaHorariosValidos.add(horario);
@@ -220,7 +220,7 @@ public class jmlGestionaClase extends BeanBaseJHard {
             this.popup.setMensaje("La clase/practica se marco como 'Terminada'.");
         } catch (Exception ex) {
             this.popup.setMensaje("Ocurrio un error al intentar terminar la clase.");
-            System.out.println(ex);
+            System.err.println("(jmlGestinaClase terminarClase()):"+ ex.getMessage());
         }
         this.popup.setVisible(true);
         return EMPTY_STRING;
@@ -242,7 +242,7 @@ public class jmlGestionaClase extends BeanBaseJHard {
             this.setPaso2(false);
             this.setPaso3(false);
             this.setYaHayClase(true);
-            System.out.println("Clases existentes: " + existenciaClase);
+            //System.out.println("Clases existentes: " + existenciaClase);
         }
 
         return EMPTY_STRING;
@@ -287,19 +287,19 @@ public class jmlGestionaClase extends BeanBaseJHard {
             if ((userDocente == null) && (userInstructor == null)) {
                 //algo salio terriblemente mal
                 this.listaCursos = getJmanLabInstance().getCursosCiclo();
-                System.out.println("No es docente ni instructor");
+                //System.out.println("No es docente ni instructor");
             }
             if (userDocente != null) {
                 this.listaCursos = getJmanLabInstance().getCursosDocenteCiclo(userDocente);
-                System.out.println("es Docente");
+                //System.out.println("es Docente");
             }
             if (userInstructor != null) {
                 this.listaCursos = getJmanLabInstance().getCursosInstructorCiclo(userInstructor);
-                System.out.println("es Instructor");
+                //System.out.println("es Instructor");
             }
-            System.out.println("Tamaño listaCursos: " + this.listaCursos.size());
+            //System.out.println("Tamaño listaCursos: " + this.listaCursos.size());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println("(jmlGestionaClase LlenarListaCursos()):"+e.getMessage());
         }
     }
 
