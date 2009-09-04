@@ -74,7 +74,10 @@
                                             <div class="dhx_cal_data"></div>
                                         </div>
                                     </ice:panelGroup>
-                                    <ice:panelCollapsible rendered="#{JHardminInstance.currentUser != null}" expanded="true" id="panelHorarios" style=" width: 500px" styleClass="entry">
+                                    <ice:panelGroup rendered="#{JHardminInstance.currentUser == null}">
+                                        <jsp:directive.include file="/jspf/nologin.jspx"/>
+                                    </ice:panelGroup>
+                                    <ice:panelCollapsible rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" expanded="true" id="panelHorarios" style=" width: 500px" styleClass="entry">
                                         <f:facet name="header">
                                             <ice:panelGroup id="panelGroup1">
                                                 <ice:outputText id="lblTitulo2" value="Agregar nuevo Horario"/>
@@ -203,18 +206,10 @@
                                             <ice:commandLink action="#{Redireccion.admin}" rendered="#{JHardminInstance.currentUser != null}" value="Cambiar clave de acceso"/>
                                         </li>
                                         <li>
-                                            <ice:commandLink action="#{Redireccion.jrequestAdmin}"
-                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Solicitudes de JRequest"/>
+                                            <ice:commandLink value="Ver Reportes de JHard" action="#{Redireccion.reportes}" rendered="#{JHardminInstance.currentUser != null}"></ice:commandLink>
                                         </li>
                                         <li>
-                                            <ice:commandLink action="#{Redireccion.jrequestAdministracion}"
-                                                rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Tareas Administrativas de JRequest"/>
-                                        </li>
-                                        <li>
-                                            <ice:commandLink action="#{Redireccion.jrequestUserSolicitud}" rendered="#{JHardminInstance.currentUser != null}" value="Emitir Solicitud de Soporte Técnico"/>
-                                        </li>
-                                        <li>
-                                            <ice:commandLink action="#{Redireccion.jcanonAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Reserva de Equipo Multimedia"/>
+                                            <ice:commandLink action="#{Redireccion.jmlHorarioAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Horarios"/>
                                         </li>
                                         <li>
                                             <ice:commandLink action="" rendered="#{JHardminInstance.currentUser == null}" value="Solo para usuarios registrados"/>
