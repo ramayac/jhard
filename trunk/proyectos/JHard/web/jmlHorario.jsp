@@ -12,7 +12,7 @@
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
                 <ice:outputStyle href="./xmlhttp/css/rime/rime.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
-                <title>.:: ManLab ::.</title>
+                <title>Horarios del Laboratorio</title>
                 <meta content="" name="keywords"/>
                 <meta content="" name="description"/>
                 <link href="css/defaultJCanon.css" rel="stylesheet" type="text/css"/>
@@ -137,7 +137,7 @@
                                 rendered="#{jmlHorario.renderPop}" style="height: 141px; left: 264px; top: 144px; position: absolute; width: 333px;visibility: hidden;visibility: hidden;">
                                             <f:facet name="header">
                                                 <ice:panelGrid id="panelGrid1" style="display:block;width:180px;height:20px;">
-                                                    <ice:outputText id="lblTitMensajes" value="ManLab"/>
+                                                    <ice:outputText id="lblTitMensajes" value="Aviso:"/>
                                                 </ice:panelGrid>
                                             </f:facet>
                                             <f:facet name="body">
