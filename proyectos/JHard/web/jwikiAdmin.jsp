@@ -28,6 +28,7 @@
                     <div id="content">
                         <div class="post">
                             <h2 class="title">Administración Wiki</h2>
+                            <div align="right"><img src="img/help.png" onclick="window.open('videos/creararticuloWiki.swf','Ayuda','status=no,menubar=no,toolbar=no,location=no,width=900,height=620')"/></div>
                         </div>
                         <div class="post">
                             <ice:form id="formArticulo">

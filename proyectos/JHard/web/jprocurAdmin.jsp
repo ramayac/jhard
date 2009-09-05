@@ -27,6 +27,7 @@
                     <div id="content">
                         <div class="post">
                             <h2 class="title">Administración Promoción de Cursos</h2>
+                            <div align="right"><img src="img/help.png" onclick="window.open('videos/crearEntradaProcur.swf','Ayuda','status=no,menubar=no,toolbar=no,location=no,width=900,height=620')"/></div>
                         </div>
                         <div class="post">
                             <ice:form id="formEntrada">
