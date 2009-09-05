@@ -221,20 +221,20 @@ public class BeanBaseJHardmin extends BeanBase {
     public Usuario getUsuario(String userName, String userPwd){
         Usuario u = null;
         EntityManager eMgr = this.getEntityManager();
-        System.out.println("nombre: " + userName);
-        System.out.println("clave: " + userPwd);
+        //System.out.println("nombre: " + userName);
+        //System.out.println("clave: " + userPwd);
         String strSql = "SELECT u FROM Usuario u WHERE u.nombre = '"+userName+"' AND u.clave = '"+userPwd+"'";
         Query q = eMgr.createQuery(strSql);
         try{                        
             u = (Usuario)q.getSingleResult();            
         }
         catch(Exception ex){
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             try{
                 u = (Usuario)q.getResultList().get(0);
             }
             catch(Exception innerEx){
-                System.out.println(ex.getMessage());
+                System.err.println(ex.getMessage());
                 //pass
             }
         }        
@@ -373,7 +373,7 @@ public class BeanBaseJHardmin extends BeanBase {
                     em.merge(usr);
                     em.getTransaction().commit();
                     //this.getEntityManager().getTransaction().commit();
-                    System.out.println("Nueva clave: " + usr.getClave());                    
+                    //System.out.println("Nueva clave: " + usr.getClave());
                     this.setInputChOldPwd("");
                     this.setInputChNewPwd("");
                     this.setInputChNewPwdConfirm("");
@@ -404,7 +404,7 @@ public class BeanBaseJHardmin extends BeanBase {
      * @return una cadena vacia
      */
     public String closePopup(){
-        System.out.println("closePopup invocado.");
+        //System.out.println("closePopup invocado.");
         this.msg.setVisible(false);
         return "";
     }
@@ -624,7 +624,7 @@ public class BeanBaseJHardmin extends BeanBase {
      */
    public String showPopupEditUsuario(){
        String idUsuario = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idUsuario");
-       System.out.println("idUsuario: " + idUsuario);
+       //System.out.println("idUsuario: " + idUsuario);
        for(Usuario u: this.userList){
            if(u.getIdusuario().toString().equalsIgnoreCase(idUsuario)){
                this.editDelUser = u;
@@ -698,7 +698,7 @@ public class BeanBaseJHardmin extends BeanBase {
    public String showPopupConfirmDeleteUser(){
        this.setPopUpConfirmDelUserVisible(true);
        String idUsuario = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("idUsuario");
-       System.out.println("idUsuario: " + idUsuario);
+       //System.out.println("idUsuario: " + idUsuario);
        for(Usuario u: this.userList){
            if(u.getIdusuario().toString().equalsIgnoreCase(idUsuario)){
                this.editDelUser = u;

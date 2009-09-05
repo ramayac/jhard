@@ -10,7 +10,8 @@
         <div align="center"><img src="img/lock.png"/></div>
         <ul>
             <li>Su usuario no tiene permiso para operar en esta página.</li>
-            <li>No se ha logueado al sistema.</li>
+            <li>No se ha registrado al sistema.</li>
         </ul>
+        
     </jsp:element>
 </jsp:root>

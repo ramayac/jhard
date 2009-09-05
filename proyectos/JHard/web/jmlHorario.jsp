@@ -212,6 +212,9 @@
                                             <ice:commandLink action="#{Redireccion.jmlHorarioAdmin}" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" value="Administrar Horarios"/>
                                         </li>
                                         <li>
+                                            <ice:commandLink action="#{Redireccion.jmlLaboratorio}" value="ir a Actividades del Laboratorio"/>
+                                        </li>
+                                        <li>
                                             <ice:commandLink action="" rendered="#{JHardminInstance.currentUser == null}" value="Solo para usuarios registrados"/>
                                         </li>
                                     </ul>

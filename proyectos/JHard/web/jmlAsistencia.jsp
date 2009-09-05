@@ -106,9 +106,16 @@
                             <!--login control -->
                             </li>
                             <li>
-                            <!--login control -->
+                            <!--tareas comunes -->
                             <jsp:directive.include file="/jspf/tareas.jspx"/>
-                            <!--login control -->
+                            <!--tareas comunes -->
+                            <ul>
+                                <ice:form id="anotherForm">
+                                <li>
+                                    <ice:commandLink action="#{Redireccion.jmlLaboratorio}" value="ir a Actividades del Laboratorio"/>
+                                </li>
+                                </ice:form>
+                            </ul>
                             </li>
                         </ul>
                     </div>

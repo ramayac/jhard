@@ -253,12 +253,12 @@ public class jmlHorario extends AbstractPageBean {
         }
         if (inicioFin==2){
             this.horaFin.clear();
-            System.out.println("Tamaño  "+ this.hours.length);
+            //System.out.println("Tamaño  "+ this.hours.length);
             for (int i = 0; i < this.hours.length; i++) {
 
                 if(horaSeleccionada.equals(this.hours[i])){
 
-                    System.out.println("Tamaño del otro vector  "+ (this.hours.length-i));
+                    //System.out.println("Tamaño del otro vector  "+ (this.hours.length-i));
 
                     horas = new String[this.hours.length-i-1];
 
@@ -266,7 +266,7 @@ public class jmlHorario extends AbstractPageBean {
 
                     for (int j = 0; j < (this.hours.length-i-1); j++) {
 
-                        System.out.println("Mete la hora  "+ this.hours[j+i+1]);
+                        //System.out.println("Mete la hora  "+ this.hours[j+i+1]);
                         horas[j]=this.hours[j+i+1];
 
                         String label = horas[j];
