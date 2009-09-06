@@ -373,12 +373,18 @@ public class jmlCrudAdmin extends BeanBaseJHard {
        Materia mat = this.nuevoCurso.getIdmateria();
 
        this.setDocenteSelStr(doc.getIddocente().toString());
+       this.selectedDocente = doc;
        this.setMateriaSelStr(mat.getIdmateria().toString());
+       this.selectedMateria = mat;
 
        Instructor inst = this.nuevoCurso.getIdinstructor();
        if(inst == null || inst == new Instructor()){
            this.setInstructorSelStr("-1");
-       } else this.setInstructorSelStr(inst.getIdinstructor().toString());
+           this.selectedInstructor = null;
+       } else {
+           this.setInstructorSelStr(inst.getIdinstructor().toString());
+           this.selectedInstructor = inst;
+       }
 
        this.addModCurso = true;
        return EMPTY_STRING;

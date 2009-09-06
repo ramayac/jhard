@@ -229,8 +229,8 @@
                                                     <tr>
                                                         <td>Habilitar inscripcion:</td>
                                                         <td><ice:selectOneRadio partialSubmit="true" value="#{jmlCrudAdmin.nuevoCurso.habilinscrip}">
-                                                    <f:selectItem itemLabel="Habilitar" itemValue="false"/>
-                                                    <f:selectItem itemLabel="Deshabilitar" itemValue="true"/>
+                                                    <f:selectItem itemLabel="Habilitar" itemValue="true"/>
+                                                    <f:selectItem itemLabel="Deshabilitar" itemValue="false"/>
                                                 </ice:selectOneRadio></td>
                                                     </tr>
                                                     <tr>
