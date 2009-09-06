@@ -70,6 +70,10 @@ public class reporte extends HttpServlet {
     public static final String FECHA = "fecha";
     public static final String RUTA_ASISTENCIAALUMNOS = "AsistenciasCursoP.jasper";
 
+    public static final int ID_INSTRUCTORES = 11;
+    public static final String IDINSTRUCTOR = "idinstructor";
+    public static final String RUTA_INSTRUCTORES = "AsistenciaInstructor.jasper";
+
     public static final String RUTA_REPORTES = "/reportes/";
     public static final String PARAM_VAR = "rpid";
     
@@ -242,6 +246,20 @@ public class reporte extends HttpServlet {
                     //Asignamos el nombre al PDF
                     nombreReporte = "AsistenciasCursoP.jasper";
                     break;
+                    case ID_INSTRUCTORES: //11
+                    //Obtenemos los parametros necesarios para este reporte
+
+                   Integer idinstructor = Integer.parseInt(request.getParameter(IDINSTRUCTOR));
+
+                   //Asignamos los parametros al mapa
+                    parametros.put(IDINSTRUCTOR, idinstructor);
+                    //Generamos la ruta real del archivo jrxml
+                    //rutareal = contexto.getRealPath(RUTA_REPORTES + RUTA_EXISTENCIA);
+                    rutareal = RUTA_REPORTES + RUTA_INSTRUCTORES;
+                    //Asignamos el nombre al PDF
+                    nombreReporte = "asistenciaInstructor.jasper";
+                    break;
+
                 default:
                     throw new Exception("(reporte Servlet): No coincide el parametro con las opciones existentes.");
             }
