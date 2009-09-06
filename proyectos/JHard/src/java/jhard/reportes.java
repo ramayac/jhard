@@ -21,6 +21,7 @@ import edu.ues.jhard.jpa.Curso;
 import edu.ues.jhard.jpa.Docente;
 import edu.ues.jhard.jpa.Equiposimple;
 import edu.ues.jhard.jpa.Existencia;
+import edu.ues.jhard.jpa.Instructor;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Date;
@@ -238,6 +239,8 @@ public class reportes extends AbstractPageBean {
     private List eqs = new ArrayList();
     private List doc = new ArrayList();
     private List cur = new ArrayList();
+    private List ins = new ArrayList();
+    private List<Instructor> listaTodosInstructores;
     private List<Equiposimple> listaTodosEquipos;
     private List<Existencia> listaTodasExistencias;
     private List<Docente> listaTodosDocentes;
@@ -246,6 +249,8 @@ public class reportes extends AbstractPageBean {
     private Docente DocenteElegido;
     private Existencia ExistenciaElegida;
     private Curso CursoElegido;
+    private Instructor instructorElegido;
+    private SelectInputText comboInstructores = new SelectInputText();
     private SelectInputText comboClases = new SelectInputText();
 
     public SelectInputText getComboClases() {
@@ -277,6 +282,7 @@ public class reportes extends AbstractPageBean {
         this.listaTodasExistencias= instance.getListaExistencia();
         this.listaTodosDocentes=instance2.getAllDocentes();
         this.listaTodosCursos=instance2.getAllCursos();
+        this.listaTodosInstructores=instance2.getAllInstructors();
         this.clasesFake.clear();
         //String path = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getRealPath("/") + "reportes/";
     }
@@ -423,6 +429,27 @@ public class reportes extends AbstractPageBean {
         this.eqs = listaItemsBusqueda;
     }
 
+    public void comboInstructores_processValueChange(ValueChangeEvent vce) {
+        String valorBusqueda = vce.getNewValue().toString().toUpperCase();
+        if(valorBusqueda.equalsIgnoreCase("")){
+            this.ins.clear();
+            return;
+        }
+        List<SelectItem> listaItemsBusqueda = new ArrayList<SelectItem>();
+
+            for(Instructor i: this.getListaTodosInstructores()){
+                if(i.getApellidos().toUpperCase().contains(valorBusqueda) ||
+                        i.getCarnet().toUpperCase().contains(valorBusqueda)
+                        ||
+                        i.getNombres().toUpperCase().contains(valorBusqueda)){
+                    this.ins.add(i);
+                    listaItemsBusqueda.add(new SelectItem(i.getIdinstructor(), i.getNombres() + " " + i.getApellidos()));
+                }
+            }
+
+        this.ins = listaItemsBusqueda;
+    }
+
     /**
      * @return the listaTodosEquipos
      */
@@ -464,6 +491,13 @@ public class reportes extends AbstractPageBean {
         return null;
     }
 
+    public String comboInstructores_action() {
+        Integer id= (Integer) this.getComboInstructores().getSelectedItem().getValue();
+        Instructor i=new BeanBaseJRequest().getEntityManager().find(Instructor.class, id);
+        instructorElegido=i;
+        return null;
+    }
+
     public void llamarReporte(ActionEvent e) {
         JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=1&idcarrera=1\",\"Reporte\");");
     }
@@ -474,6 +508,11 @@ public class reportes extends AbstractPageBean {
         }
         else
             JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=3&idequipoexistente="+ExistenciaElegida.getIdexistencia()+"\",\"Reporte\");");
+        return null;
+    }
+
+    public String btnReportIns_action() {
+            JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=11&idinstructor="+instructorElegido.getIdinstructor()+"\",\"Reporte\");");
         return null;
     }
 
@@ -636,5 +675,47 @@ public class reportes extends AbstractPageBean {
         Date fecha = (Date)this.fechaClases.getValue();
         JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "window.open (\"Reporte?rpid=10&dia="+(fecha.getDate()+1)+"&mes="+fecha.getMonth()+"&anio="+fecha.getYear()+"&idcurso="+CursoElegido.getIdcurso()+"\",\"Reporte\");");
         return null;
+    }
+
+    /**
+     * @return the ins
+     */
+    public List getIns() {
+        return ins;
+    }
+
+    /**
+     * @param ins the ins to set
+     */
+    public void setIns(List ins) {
+        this.ins = ins;
+    }
+
+    /**
+     * @return the listaTodosInstructores
+     */
+    public List<Instructor> getListaTodosInstructores() {
+        return listaTodosInstructores;
+    }
+
+    /**
+     * @param listaTodosInstructores the listaTodosInstructores to set
+     */
+    public void setListaTodosInstructores(List<Instructor> listaTodosInstructores) {
+        this.listaTodosInstructores = listaTodosInstructores;
+    }
+
+    /**
+     * @return the comboInstructores
+     */
+    public SelectInputText getComboInstructores() {
+        return comboInstructores;
+    }
+
+    /**
+     * @param comboInstructores the comboInstructores to set
+     */
+    public void setComboInstructores(SelectInputText comboInstructores) {
+        this.comboInstructores = comboInstructores;
     }
 }

@@ -54,14 +54,22 @@
                                         <ice:commandButton action="#{reportes.btnAsistenciaAlumno_action}" id="btnAsistenciaAlumno" styleClass="btnAccion2" value="Generar Reporte"/>
                                     </ice:panelGroup>
                                 </ice:panelCollapsible>
-                                <!--ice:panelCollapsible expanded="false" id="asistenciaInstructores" style="width: 600px"-->
-                                <!--f:facet name="header"-->
-                                <!--ice:panelGroup id="panelTitAsistenciaInstructores"-->
-                                <!--ice:outputText id="titAsistenciaInstructores" value="Asistencia de Instructores a Prácticas de Laboratorio"/-->
-                                <!--/ice:panelGroup-->
-                                <!--/f:facet-->
-                                <!--ice:panelGroup id="panelAsistenciaInstructores" style=""/-->
-                                <!--/ice:panelCollapsible-->
+                                <ice:panelCollapsible expanded="false" id="asistenciaInstructores" style="width: 600px">
+                                <f:facet name="header">
+                                <ice:panelGroup id="panelTitAsistenciaInstructores">
+                                <ice:outputText id="titAsistenciaInstructores" value="Asistencia de Instructores a Prácticas de Laboratorio"/>
+                                </ice:panelGroup>
+                                </f:facet>
+                                <ice:panelGroup id="panelAsistenciaInstructores" style="">
+                                <ice:selectInputText action="#{reportes.comboInstructores_action}" binding="#{reportes.comboInstructores}" id="comboInstructores"
+                                valueChangeListener="#{reportes.comboInstructores_processValueChange}" width="216">
+                                <f:selectItems id="selectInputText99selectedItems" value="#{reportes.ins}"/>
+                                </ice:selectInputText>
+                                <br/>
+                                <ice:commandButton action="#{reportes.btnReportIns_action}" id="btnReportIns"
+                                styleClass="btnAccion2" value="Generar Reporte"/>
+                                </ice:panelGroup>
+                                </ice:panelCollapsible>
                                 <ice:panelCollapsible expanded="false" id="bitacoraServicio" style="width: 600px">
                                     <f:facet name="header">
                                         <ice:panelGroup id="panelTitBitacoraServicio">
