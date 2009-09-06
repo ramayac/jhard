@@ -67,6 +67,7 @@
                             <h2 class="title">Reserva de Equipo Multimedia</h2>
                             <ice:form id="jCanon">
                                 <ice:panelGroup id="grupo1" style="margin:0px;" styleClass="entry">
+                                    <div align="right"><img src="img/help.png" onclick="window.open('videos/ReservaEquipo.swf','Ayuda','status=no,menubar=no,toolbar=no,location=no,width=900,height=620')"/></div>
                                     <ice:panelGroup id="grupoReservaScheduler" style="height: 450px; width: 800px" visible="true">
                                         <ice:outputLabel id="labelError" rendered="#{JHardminInstance.currentUser == null}"
                                             style="font-size: 14px; font-weight: bold" value="Debe permanecer con sesión activa para realizar una reserva de Equipo Multimedia"/>
