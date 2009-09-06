@@ -28,6 +28,7 @@
                             <ice:panelGroup rendered="#{jmlInscripcion.permisos}">
                                 <div class="post">
                                     <h2>Inscripcion a un Curso</h2>
+                                    <div align="right"><img src="img/help.png" onclick="window.open('videos/jmlInscripcion.swf','Ayuda','status=no,menubar=no,toolbar=no,location=no,width=900,height=620')"/></div>
                                     <br/>
                                     <ice:panelGroup>
                                         Seleccione a que curso (materia) se desea inscribir...

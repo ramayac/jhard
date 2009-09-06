@@ -29,6 +29,7 @@
                             <ice:panelGroup id="panelAccion" rendered="#{jmlGestionaClase.mostrarAcciones}">
                                 <div class="post">
                                     <h2>Gestiona Clase/Practica</h2>
+                                    <div align="right"><img src="img/help.png" onclick="window.open('videos/jmlGestionaClase.swf','Ayuda','status=no,menubar=no,toolbar=no,location=no,width=900,height=620')"/></div>
                                     Seleccione la acción que desea realizar...<br/><br/>
                                     <div align="center">
                                         <ice:commandButton action="#{jmlGestionaClase.btnGoPaso1_action}" id="btnGoPaso1" styleClass="btnAccion2" value="Iniciar una Clase/Practica"/>
