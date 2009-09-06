@@ -27,7 +27,9 @@
                         <ice:form id="formAsistencia">
                             <ice:panelGroup rendered="#{jmlAsistencia.permisos}">
                                 <div class="post">
-                                    <h2>Asistencia a una Clase</h2><br/>
+                                    <h2>Asistencia a una Clase</h2>
+                                    <div align="right"><img src="img/help.png" onclick="window.open('videos/jmlAsistencia.swf','Ayuda','status=no,menubar=no,toolbar=no,location=no,width=900,height=620')"/></div>
+                                    <br/>
                                     <ice:panelGroup id="panel1" rendered="#{jmlAsistencia.paso1}">
                                         Seleccione a que curso (materia) pertenece la clase ó practica:
                                         <ice:dataTable value="#{jmlAsistencia.listaCursos}" var="indiceCurso" width="100%">
