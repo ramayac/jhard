@@ -32,6 +32,7 @@
                                 <p class="text">Este es el sitio si requiere Soporte Técnico ya sea en Hardware o Software en la UES-FMOcc</p>
                                 <ice:form id="form1">
                                     <ice:panelGroup id="grupo2" style="width: 100%; ">
+                                        <div align="right"><img src="img/help.png" onclick="window.open('videos/solicitudMantenimiento.swf','Ayuda','status=no,menubar=no,toolbar=no,location=no,width=900,height=620')"/></div>
                                         <ice:panelCollapsible expanded="true" id="panelCollapsible1" style="width: 576px">
                                             <f:facet name="header">
                                                 <ice:panelGroup id="panelGroup1" styleClass="">

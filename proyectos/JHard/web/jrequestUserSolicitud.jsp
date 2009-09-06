@@ -39,6 +39,7 @@
                             <h2 class="title">Solicitud de Mantenimiento de Hardware y Software</h2>
                             <div class="entry" style="">
                                 <ice:form id="form1" style="">
+                                    <div align="right"><img src="img/help.png" onclick="window.open('videos/solicitudMantenimiento.swf','Ayuda','status=no,menubar=no,toolbar=no,location=no,width=900,height=620')"/></div>
                                     <ice:panelGroup rendered="#{JHardminInstance.currentUser == null}">
                                         <jsp:directive.include file="/jspf/nologin.jspx"/>
                                     </ice:panelGroup>
