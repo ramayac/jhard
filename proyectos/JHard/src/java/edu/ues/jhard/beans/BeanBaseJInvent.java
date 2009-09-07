@@ -735,11 +735,13 @@ public class BeanBaseJInvent extends BeanBase {
                 break;
             }
         }
-        this.clasificaciontm.actualizarNodo(this.currentExistencia.getIdhardware().getIdclasificacion());
+        Clasificacion currentNew = (Clasificacion)this.getEntityManager().createQuery("SELECT c FROM Clasificacion c WHERE c.idclasificacion=" + this.currentExistencia.getIdhardware().getIdclasificacion().getIdclasificacion()).getSingleResult();
+        this.clasificaciontm.actualizarNodo(currentNew);
+        this.clasificaciontm.seleccionarNodo(currentNew.getIdclasificacion().toString());
         this.crdExistencia.hidePopupAdd();
         this.msg.setText("Existencia " + this.currentExistencia.getCodigo() + " agregada exitosamente");
         this.msg.setVisible(true);
-        this.currentExistencia = null;
+        this.currentExistencia = new Existencia();
         this.actualizarCurrentNodoClasificacion();
         return "done";
     }
@@ -914,6 +916,7 @@ public class BeanBaseJInvent extends BeanBase {
         emgr.getTransaction().commit();
         this.crdEquipo.hidePopupDel();
         this.getCurrentClasificacion().getEquipoCollection().remove(eq);
+        this.listaTodosEquipos = this.getEntityManager().createNamedQuery("Equipo.findAll").getResultList();
         this.msg.setText("Equipo " + eq.getNombre() + " eliminado satisfactoriamente.");
         this.msg.setVisible(true);
         this.actualizarCurrentNodoClasificacion();
