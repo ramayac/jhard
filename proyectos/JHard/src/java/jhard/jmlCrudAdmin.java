@@ -203,7 +203,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
     public void selInstructor(ValueChangeEvent event) {
         //System.out.println("se ejecuto valueChange >>>>>>"+event.getNewValue().toString());
         Integer id = Integer.parseInt(event.getNewValue().toString());
-        if (id<0) this.selectedInstructor = new Instructor();
+        if (id<0) this.selectedInstructor = null;
         else this.selectedInstructor = this.getJManLabInstance().getInstructor(id);
         //this.mySelCarreraItem = new SelectItem(this.selectedCarrera.getIdcarrera(), this.selectedCarrera.getCodigo()+"-"+this.selectedCarrera.getNombre());
     }
@@ -385,6 +385,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
            this.setInstructorSelStr(inst.getIdinstructor().toString());
            this.selectedInstructor = inst;
        }
+       
 
        this.addModCurso = true;
        return EMPTY_STRING;
@@ -410,6 +411,7 @@ public class jmlCrudAdmin extends BeanBaseJHard {
         Integer id = this.nuevoCurso.getIdcurso();
         if(id==null) id = 0;
 
+        //if(selectedInstructor == new Instructor()) selectedInstructor = null;
         this.nuevoCurso.setIdinstructor(selectedInstructor); //puede ser null
         this.nuevoCurso.setIddocente(selectedDocente);
         this.nuevoCurso.setIdmateria(selectedMateria);
@@ -573,6 +575,11 @@ public class jmlCrudAdmin extends BeanBaseJHard {
        Carrera carr = this.nuevaMateria.getIdcarrera();
        //THANKS ROBERTUX
        this.setCarreraSelStr(carr.getIdcarrera().toString());
+       this.selectedCarrera = carr;
+
+       //Docente doc = this.nuevoCurso.getIddocente();
+       //this.setDocenteSelStr(doc.getIddocente().toString());
+       //this.selectedDocente = doc;
 
        //System.out.println(carr.getCodigo()+"-"+carr.getNombre());
        //this.mySelCarreraItem = new SelectItem(carr.getIdcarrera(), carr.getCodigo()+"-"+carr.getNombre());
