@@ -23,7 +23,7 @@
                     }
 
                     function refresh(){
-                        location.reload(true);
+                        window.location = "jrequestUserSolicitud.iface"
                     }
                     </script>
             </head>
