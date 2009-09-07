@@ -701,16 +701,31 @@ public class BeanBaseJInvent extends BeanBase {
         
         emgr.getTransaction().begin();
         emgr.persist(this.currentExistencia);
+        emgr.getTransaction().commit();
+
+        emgr.getTransaction().begin();
+        emgr.refresh(this.currentExistencia);
+        emgr.getTransaction().commit();
+
+        emgr.getTransaction().begin();        
+        //this.currentExistencia = (Existencia)emgr.createQuery("SELECT e1 FROM Existencia e1 WHERE e1.idexistencia = (SELECT max(e2.idexistencia) FROM Existencia e2)").getSingleResult();
         emgr.merge(this.currentExistencia.getIdhardware());
-        for(Accesorio acc: this.currentExistencia.getAccesorioCollection())
+        for(Accesorio acc: this.currentExistencia.getAccesorioCollection()){
+            acc.setIdexistencia(currentExistencia);
             emgr.merge(acc);
+        }
         
-        for(Instalacion inst: this.currentExistencia.getInstalacionCollection())
-            emgr.persist(inst);        
+        for(Instalacion inst: this.currentExistencia.getInstalacionCollection()){
+            inst.setIdequipoexistente(currentExistencia);
+            emgr.persist(inst);
+        }
         
-        for(Pieza pz: this.currentExistencia.getPiezaCollection())
+        for(Pieza pz: this.currentExistencia.getPiezaCollection()){
+            pz.setIdexistencia(currentExistencia);
             emgr.merge(pz);
-        
+        }
+
+        emgr.merge(this.currentExistencia);
         emgr.getTransaction().commit();
 
         for(Equipo eqEnClasificacion: this.getCurrentClasificacion().getEquipoCollection()){
@@ -1689,6 +1704,7 @@ public class BeanBaseJInvent extends BeanBase {
      */
     public String editExistencia(){
         String idExistencia = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("currentId");
+        System.out.println("idExistencia: " + idExistencia);
         this.currentExistencia = (Existencia)this.getEntityManager().createQuery("SELECT e FROM Existencia e WHERE e.idexistencia=" + idExistencia).getSingleResult();
         this.initItemsCombos();
         this.equipoSelected = this.currentExistencia.getIdhardware().getIdequipo().toString();

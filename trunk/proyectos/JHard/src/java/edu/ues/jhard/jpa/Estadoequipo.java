@@ -134,4 +134,17 @@ public class Estadoequipo implements Serializable {
         return "edu.ues.jhard.jpa.Estadoequipo[idestado=" + idestado + "]";
     }
 
+    public String getImagenEstado(){
+        String imgEstado = "";
+        if(this.getIdestado() == 1)
+            return "imgEstable.png";
+        if(this.getIdestado() == 2)
+            return "imgFallido.png";
+        if(this.getIdestado() == 3)
+            return "imgEnReparacion.png";
+        if(this.getIdestado() == 4)
+            return "imgDeteriorado.png";
+        return imgEstado;
+    }
+
 }

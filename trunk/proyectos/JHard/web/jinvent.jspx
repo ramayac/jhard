@@ -14,7 +14,7 @@
                 <ice:outputStyle href="css/stylesheet.css" id="outputStyle1"/>
                 <ice:outputStyle href="./xmlhttp/css/rime/rime.css" id="outputStyle2"/>
                 <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
-                <title>.:: JInvent ::.</title>
+                <title>Inventario</title>
                 <meta content="" name="keywords"/>
                 <meta content="" name="description"/>
                 <link href="css/default.css" rel="stylesheet" type="text/css"/>
@@ -37,6 +37,9 @@
                                     <jsp:directive.include file="/jspf/nologin.jspx"/>
                                 </ice:panelGroup>
                                 <ice:panelGroup styleClass="entry" rendered="#{JHardminInstance.currentUser != null}">
+                                    <div align="right"><img src="img/help.png" onclick="window.open('videos/JInvent-Clasificaciones.swf','Ayuda - Clasificaciones','status=no,menubar=no,toolbar=no,location=no,width=900,height=620')"/>
+                                    <img src="img/help.png" onclick="window.open('videos/JInvent-Existencias.swf','Ayuda - Existencias','status=no,menubar=no,toolbar=no,location=no,width=900,height=620')"/>
+                                    <img src="img/help.png" onclick="window.open('videos/JInvent-BusquedasMantenimiento.swf','Ayuda - Búsqueda y Mantenimiento','status=no,menubar=no,toolbar=no,location=no,width=900,height=620')"/></div>
                                     <ice:panelCollapsible expanded="true" rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" >
                                         <f:facet name="header">
                                             <ice:panelGroup>
@@ -529,7 +532,7 @@
                                                                 <ice:panelGroup id="grpBitacoraEstados">
                                                                     <ice:dataTable id="tblBitacoraEstados" value="#{JInventInstance.listaEstadosExistencia}" var="estado" rows="5">
                                                                         <ice:column>
-                                                                            <ice:graphicImage alt="#{estado.descripcion}" url="img/#{estado.idequipoexistente.imagenEstado}"  />
+                                                                            <ice:graphicImage alt="#{estado.descripcion}" url="img/#{estado.idestado.imagenEstado}"  />
                                                                         </ice:column>
                                                                         <ice:column>
                                                                             <f:facet name="header"><ice:outputText value="Fecha" /></f:facet>
