@@ -13,7 +13,7 @@
 FROM
      `equiposimple` equiposimple INNER JOIN `bitacoraestados` bitacoraestados ON equiposimple.`idEquipoSimple` = bitacoraestados.`idequiposimple`
      INNER JOIN `estadoequipo` estadoequipo ON bitacoraestados.`idestado` = estadoequipo.`idestado`
-     AND estadoequipo.`idestado` = equiposimple.`idestado`
+     
 WHERE
      `equiposimple`.idEquipoSimple = $P{idEquipoSimple}]]>
 	</queryString>
