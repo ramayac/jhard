@@ -54,14 +54,14 @@
                                                 </p>
                                                 <p>
                                                     <ice:commandButton action="#{JRequestAdministracion.btnAgregarEqS_action}" id="btnAgregarEqS"
-                                                    style="width: 150px" styleClass="btnAccion2" value="Agregar Equipo Simple"/>
+                                                     styleClass="btnAccion2" value="Agregar Equipo Simple"/>
                                                 </p>
                                                 <p>
-                                                    <ice:commandButton action="#{JRequestAdministracion.btnModEqS_action}" styleClass="btnAccion2" id="btnModEqS" style="width: 150px" value="Modificar Equipo Simple"/>
+                                                    <ice:commandButton action="#{JRequestAdministracion.btnModEqS_action}" styleClass="btnAccion2" id="btnModEqS" value="Modificar Equipo Simple"/>
                                                 </p>
                                                 <p>
                                                     <ice:commandButton action="#{JRequestAdministracion.btnEliminarEqS_action}" styleClass="btnAccion2" id="btnEliminarEqS"
-                                                        style="width: 150px" value="Eliminar Equipo Simple"/>
+                                                         value="Eliminar Equipo Simple"/>
                                                 </p>
                                             </ice:panelGroup>
                                         </ice:panelCollapsible>

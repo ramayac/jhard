@@ -140,7 +140,7 @@ public class BeanBaseJRequest extends BeanBase{
 
         if(m.getIdequiposimple()==null){
             Existencia e = this.getEntityManager().find(Existencia.class, m.getIdequipoexistente().getIdexistencia());
-            Estadoequipo ee = this.getEntityManager().find(Estadoequipo.class, 2);
+            Estadoequipo ee = this.getEntityManager().find(Estadoequipo.class, 3);
             e.setIdestado(ee);
             this.modificarExistencia(e);
             b.setIdequipoexistente(m.getIdequipoexistente());
