@@ -65,7 +65,7 @@
                                             </div>
                                         </f:facet>
                                     </ice:panelPopup>
-                                    <ice:panelCollapsible rendered="#{JHardminInstance.currentUser.userRole.idrol == 1}" expanded="true" id="colap" style="width:576px">
+                                    <ice:panelCollapsible rendered="#{JHardminInstance.currentUser != null}" expanded="true" id="colap" style="width:576px">
                                         <f:facet name="header">
                                             <ice:outputText value="Ingrese una nueva solicitud"/>
                                         </f:facet>
